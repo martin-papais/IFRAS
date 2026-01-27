@@ -2,11 +2,154 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IFRAS — Institut Français de Recherche Aéronautique et Spatiale</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #050b17, #0b1c33);
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 60px 20px;
+      text-align: center;
+      background: radial-gradient(circle at top, #142b52, #050b17);
+    }
+
+    header h1 {
+      font-size: 3.5rem;
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.85;
+      margin-bottom: 30px;
+    }
+
+    .cta {
+      display: inline-flex;
+      gap: 15px;
+    }
+
+    .cta a {
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      background: #1f6fff;
+      color: white;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .cta a:hover {
+      background: #3a86ff;
+      transform: translateY(-2px);
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 60px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 15px;
+      padding: 30px;
+      transition: 0.3s;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .card h3 {
+      margin-bottom: 15px;
+      color: #3a86ff;
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      opacity: 0.7;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+  </style>
 </head>
+
 <body>
-  <h1>IFRAS</h1>
-  <p>Institut Français de Recherche Aéronautique et Spatiale</p>
-  <p>Portail institutionnel</p>
+
+  <header>
+    <h1>IFRAS</h1>
+    <p>Institut Français de Recherche Aéronautique et Spatiale</p>
+
+    <div class="cta">
+      <a href="#">Nos projets</a>
+      <a href="#">Publications</a>
+      <a href="#">Nous contacter</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="card">
+      <h3>🚀 Recherche spatiale</h3>
+      <p>
+        Étude des systèmes orbitaux, propulsion spatiale, satellites et exploration
+        du système solaire.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>✈️ Aéronautique</h3>
+      <p>
+        Recherche avancée sur l’aérodynamique, les matériaux composites, les moteurs
+        et la sécurité aérienne.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>🔬 Innovation scientifique</h3>
+      <p>
+        Développement de technologies de rupture, simulation numérique,
+        intelligence artificielle et robotique.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>🌍 Coopérations internationales</h3>
+      <p>
+        Collaboration avec universités, laboratoires, agences spatiales
+        et industries à l’échelle mondiale.
+      </p>
+    </div>
+  </main>
+
+  <footer>
+    © 2026 — IFRAS · Institut Français de Recherche Aéronautique et Spatiale
+  </footer>
+
 </body>
 </html>
