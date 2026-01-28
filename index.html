@@ -1,258 +1,259 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>IFRAS — Institut Français de Recherche Aéronautique et Spatiale</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Institut Français de Recherche Aéronautique et Spatiale — Recherche, innovation et exploration scientifique." />
+<meta charset="UTF-8">
+<title>IFRAS — Institut Français de Recherche Aéronautique et Spatiale</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Roboto, Arial, sans-serif;
-      background-color: #050b1e;
-      color: #e6e6e6;
-      line-height: 1.6;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background-color: #050b1e;
+  color: #e6e6e6;
+}
 
-    header {
-      background: linear-gradient(180deg, #111827, ##050b1e);
-      padding: 40px 20px;
-      border-bottom: 1px solid #1f2937;
-    }
+/* ===== HERO BANNER ===== */
+.hero {
+  position: relative;
+  height: 70vh;
+  background: url("hero-space.jpg") center/cover no-repeat fixed;
+  display: flex;
+  align-items: center;
+}
 
-    .header-container {
-      max-width: 1100px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      gap: 30px;
-    }
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(5,11,30,0.4), #050b1e);
+}
 
-    .logo {
-      width: 120px;
-      height: auto;
-    }
+.hero-content {
+  position: relative;
+  max-width: 1100px;
+  padding: 40px;
+  margin: auto;
+}
 
-    .header-text h1 {
-      margin: 0;
-      font-size: 28px;
-      font-weight: 600;
-    }
+.hero h1 {
+  font-size: 42px;
+  margin-bottom: 15px;
+}
 
-    .header-text p {
-      margin-top: 8px;
-      color: #9ca3af;
-      max-width: 600px;
-    }
+.hero p {
+  font-size: 18px;
+  color: #c7d2fe;
+  max-width: 600px;
+}
 
-    nav {
-      background-color: #070f2b;
-      border-bottom: 1px solid #1f2937;
-    }
+/* ===== NAV ===== */
+nav {
+  background-color: #070f2b;
+  border-bottom: 1px solid #1f2937;
+}
 
-    nav ul {
-      max-width: 1100px;
-      margin: auto;
-      padding: 0;
-      list-style: none;
-      display: flex;
-      gap: 30px;
-    }
+nav ul {
+  max-width: 1100px;
+  margin: auto;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
 
-    nav li {
-      padding: 14px 0;
-    }
+nav li {
+  padding: 14px 0;
+}
 
-    nav a {
-      color: #d1d5db;
-      text-decoration: none;
-      font-size: 14px;
-    }
+nav a {
+  color: #d1d5db;
+  text-decoration: none;
+}
 
-    nav a:hover {
-      color: #ffffff;
-    }
+nav a:hover {
+  color: white;
+}
 
-    main {
-      max-width: 1100px;
-      margin: auto;
-      padding: 60px 20px;
-    }
+/* ===== MAIN ===== */
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 80px 20px;
+}
 
-    section {
-      margin-bottom: 60px;
-    }
+section {
+  margin-bottom: 80px;
+}
 
-    h2 {
-      font-size: 22px;
-      border-left: 4px solid #4f6bed;
-      padding-left: 12px;
-      margin-bottom: 20px;
-    }
+h2 {
+  font-size: 24px;
+  border-left: 4px solid #4f6bed;
+  padding-left: 14px;
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 30px;
-    }
+/* ===== GRID CARDS ===== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
 
-    .card {
-      background-color: #020617;
-      border: 1px solid #1f2937;
-      padding: 20px;
-      border-radius: 4px;
-    }
+.card {
+  background-color: #020617;
+  border: 1px solid #1f2937;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
 
-    .card h3 {
-      margin-top: 0;
-      font-size: 16px;
-    }
+.card:hover {
+  transform: translateY(-6px);
+}
 
-    .card p {
-      font-size: 14px;
-      color: #aab3d6;
-    }
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
 
-    .login-box {
-      background-color: #070f2b;
-      border: 1px solid #1b2555;
-      padding: 30px;
-      max-width: 420px;
-      border-radius: 4px;
-    }
+.card-content {
+  padding: 20px;
+}
 
-    .login-box h3 {
-      margin-top: 0;
-    }
+.card h3 {
+  margin-top: 0;
+}
 
-    .login-box p {
-      font-size: 14px;
-      color: #aab3d6;
-    }
+/* ===== ABOUT ===== */
+.about {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
 
-    .login-box a {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 10px 16px;
-      background-color: #2563eb;
-      color: white;
-      text-decoration: none;
-      font-size: 14px;
-      border-radius: 3px;
-    }
+.about img {
+  width: 100%;
+  border-radius: 6px;
+}
 
-    footer {
-      background-color: #020617;
-      border-top: 1px solid #1f2937;
-      padding: 30px 20px;
-      font-size: 12px;
-      color: #6b7280;
-    }
+/* ===== LOGIN ===== */
+.login-box {
+  background-color: #070f2b;
+  border: 1px solid #1b2555;
+  padding: 30px;
+  max-width: 420px;
+  border-radius: 6px;
+}
 
-    footer .footer-container {
-      max-width: 1100px;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
+.login-box a {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 16px;
+  background-color: #2563eb;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+}
 
-    .footer-note {
-      opacity: 0.6;
-    }
-  </style>
+/* ===== FOOTER ===== */
+footer {
+  background-color: #020617;
+  border-top: 1px solid #1f2937;
+  padding: 30px 20px;
+  font-size: 12px;
+  color: #6b7280;
+}
+</style>
 </head>
 
 <body>
 
-<header>
-  <div class="header-container">
-    <img src="logo.png" alt="Logo IFRAS" class="logo">
-    <div class="header-text">
-      <h1>Institut Français de Recherche Aéronautique et Spatiale</h1>
-      <p>
-        L’IFRAS est un organisme public dédié à la recherche scientifique,
-        à l’exploration spatiale et au développement de technologies
-        aéronautiques avancées.
-      </p>
-    </div>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <h1>Institut Français de Recherche Aéronautique et Spatiale</h1>
+    <p>
+      Recherche scientifique, exploration spatiale et technologies
+      avancées au service de la connaissance et de l’avenir.
+    </p>
   </div>
-</header>
+</div>
 
 <nav>
-  <ul>
-    <li><a href="#">Accueil</a></li>
-    <li><a href="recherche.html">Recherche</a></li>
-    <li><a href="programmes.html">Programmes</a></li>
-    <li><a href="publications.html#">Publications</a></li>
-    <li><a href="#">Recrutement</a></li>
-    <li><a href="#">Contact</a></li>
-  </ul>
+<ul>
+  <li><a href="#">Accueil</a></li>
+  <li><a href="#">Recherche</a></li>
+  <li><a href="#">Programmes</a></li>
+  <li><a href="#">Publications</a></li>
+  <li><a href="#">Recrutement</a></li>
+  <li><a href="#">Contact</a></li>
+</ul>
 </nav>
 
 <main>
 
-  <section>
-    <h2>Domaines de recherche</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>Exploration spatiale</h3>
-        <p>Étude et conception de missions scientifiques à destination des environnements planétaires extrêmes.</p>
-      </div>
-      <div class="card">
-        <h3>Sciences du vivant</h3>
-        <p>Recherche en exobiologie, biosignatures et adaptation du vivant aux conditions non terrestres.</p>
-      </div>
-      <div class="card">
-        <h3>Systèmes autonomes</h3>
-        <p>Développement de systèmes embarqués, intelligence artificielle et navigation autonome.</p>
-      </div>
+<section>
+<h2>Domaines de recherche</h2>
+<div class="grid">
+  <div class="card">
+    <img src="space-exploration.jpg">
+    <div class="card-content">
+      <h3>Exploration spatiale</h3>
+      <p>Missions scientifiques vers des environnements planétaires extrêmes.</p>
     </div>
-  </section>
+  </div>
+  <div class="card">
+    <img src="biology.jpg">
+    <div class="card-content">
+      <h3>Sciences du vivant</h3>
+      <p>Exobiologie, biosignatures et adaptation du vivant.</p>
+    </div>
+  </div>
+  <div class="card">
+    <img src="ai.jpg">
+    <div class="card-content">
+      <h3>Systèmes autonomes</h3>
+      <p>IA, robotique embarquée et navigation autonome.</p>
+    </div>
+  </div>
+</div>
+</section>
 
-  <section>
-    <h2>Programmes en cours</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>ARES-9</h3>
-        <p>Mission scientifique habitée de longue durée dédiée à l’étude de la vie en environnement extra-terrestre.</p>
-      </div>
-      <div class="card">
-        <h3>ORION-TRACE</h3>
-        <p>Programme de détection et d’analyse de signaux biologiques et chimiques à distance.</p>
-      </div>
-    </div>
-  </section>
+<section>
+<h2>Qui sommes-nous</h2>
+<div class="about">
+  <div>
+    <p>
+      L’IFRAS est un institut public français fondé pour répondre aux
+      enjeux scientifiques, technologiques et stratégiques liés
+      à l’aéronautique et à l’exploration spatiale.
+    </p>
+    <p>
+      Depuis sa création, l’IFRAS réunit chercheurs, ingénieurs et
+      experts internationaux afin de concevoir des programmes de
+      recherche de pointe, en collaboration avec les agences
+      spatiales et les universités.
+    </p>
+  </div>
+  <img src="laboratory.jpg">
+</div>
+</section>
 
-  <section>
-    <h2>Accès interne</h2>
-    <div class="login-box">
-      <h3>Espace sécurisé</h3>
-      <p>
-        Cet espace est réservé au personnel autorisé de l’IFRAS.
-        Toute tentative d’accès non autorisée est susceptible de faire
-        l’objet de mesures de sécurité.
-      </p>
-      <a href="login.html">Accéder à la messagerie interne</a>
-    </div>
-  </section>
+<section>
+<h2>Accès interne</h2>
+<div class="login-box">
+  <p>Espace réservé au personnel autorisé de l’IFRAS.</p>
+  <a href="#">Accéder à la messagerie interne</a>
+</div>
+</section>
 
 </main>
 
 <footer>
-  <div class="footer-container">
-    <div>
-      © IFRAS — Institut Français de Recherche Aéronautique et Spatiale<br>
-      Organisme public sous tutelle interministérielle
-    </div>
-    <div class="footer-note">
-      Dernière mise à jour : 17/03/2026 — Classification interne
-    </div>
-  </div>
+© IFRAS — Institut Français de Recherche Aéronautique et Spatiale
 </footer>
 
 </body>
 </html>
-
