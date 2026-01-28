@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Recherche — IFRAS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background-color: #050b1e;
+      color: #e6e6e6;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(180deg, #0a1a3a, #050b1e);
+      padding: 30px 20px;
+      border-bottom: 1px solid #1b2555;
+    }
+
+    .header-container {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .logo {
+      width: 90px;
+    }
+
+    nav {
+      background-color: #070f2b;
+      border-bottom: 1px solid #1b2555;
+    }
+
+    nav ul {
+      max-width: 1100px;
+      margin: auto;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    nav li {
+      padding: 14px 0;
+    }
+
+    nav a {
+      color: #d1d5db;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: white;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 60px 20px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      font-size: 22px;
+      border-left: 4px solid #4f6bed;
+      padding-left: 12px;
+      margin-top: 50px;
+      margin-bottom: 20px;
+    }
+
+    .section {
+      max-width: 800px;
+    }
+
+    .image-placeholder {
+      width: 100%;
+      height: 240px;
+      background: linear-gradient(135deg, #0a1a3a, #070f2b);
+      border: 1px dashed #3b2a6f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #aab3d6;
+      font-size: 14px;
+      margin: 25px 0;
+    }
+
+    .research-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .card {
+      background-color: #070f2b;
+      border: 1px solid #1b2555;
+      padding: 20px;
+      border-radius: 4px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      font-size: 16px;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #aab3d6;
+    }
+
+    footer {
+      background-color: #020617;
+      border-top: 1px solid #1b2555;
+      padding: 30px 20px;
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    footer .footer-container {
+      max-width: 1100px;
+      margin: auto;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-container">
+    <img src="logo.png" alt="Logo IFRAS" class="logo">
+    <h1>Recherche scientifique</h1>
+  </div>
+</header>
+
+<nav>
+  <ul>
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="recherche.html">Recherche</a></li>
+    <li><a href="#">Programmes</a></li>
+    <li><a href="#">Publications</a></li>
+    <li><a href="#">Recrutement</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <section class="section">
+    <p>
+      L’IFRAS conduit des programmes de recherche fondamentaux et appliqués
+      dans des environnements extrêmes, en lien avec l’exploration spatiale,
+      les sciences du vivant et les systèmes autonomes avancés.
+    </p>
+
+    <div class="image-placeholder">
+      Image de laboratoire / base de recherche (à venir)
+    </div>
+  </section>
+
+  <section>
+    <h2>Axes de recherche</h2>
+
+    <div class="research-grid">
+
+      <div class="card">
+        <h3>Exobiologie et biosignatures</h3>
+        <p>
+          Étude des formes de vie extrêmophiles, détection de signatures biologiques
+          et analyse de leur viabilité en conditions non terrestres.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Physiologie humaine en mission longue</h3>
+        <p>
+          Recherche sur l’adaptation cognitive et biologique de l’humain
+          à l’isolement, au confinement et aux environnements fermés.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Intelligence embarquée</h3>
+        <p>
+          Systèmes décisionnels autonomes, apprentissage adaptatif et gestion
+          des situations imprévues en mission critique.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Environnements planétaires simulés</h3>
+        <p>
+          Conception et exploitation de bases analogues terrestres
+          pour la préparation de missions habitées.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Diffusion et confidentialité</h2>
+    <p class="section">
+      Certaines activités de recherche menées par l’IFRAS font l’objet
+      de restrictions de diffusion. Les publications accessibles au public
+      sont mises à disposition après validation par les autorités compétentes.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-container">
+    © IFRAS — Institut Français de Recherche Aéronautique et Spatiale<br>
+    Données soumises à réglementation — diffusion contrôlée
+  </div>
+</footer>
+
+</body>
+</html>
