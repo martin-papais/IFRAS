@@ -26,7 +26,9 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(5,11,30,0.4), #050b1e);
+  background:
+    radial-gradient(circle at 70% 30%, rgba(79,107,237,0.25), transparent 60%),
+    linear-gradient(180deg, rgba(5,11,30,0.35), #050b1e 85%);
 }
 
 .hero-content {
@@ -36,15 +38,72 @@ body {
   margin: auto;
 }
 
+/* ===== BRAND ===== */
+.hero-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 30px;
+}
+
+.hero-brand img {
+  height: 56px;
+}
+
+.hero-brand span {
+  font-size: 20px;
+  letter-spacing: 4px;
+  font-weight: 600;
+  color: #c7d2fe;
+}
+
+/* ===== HERO TEXT ===== */
 .hero h1 {
-  font-size: 42px;
-  margin-bottom: 15px;
+  font-size: clamp(36px, 5vw, 54px);
+  line-height: 1.2;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, #ffffff, #c7d2fe);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .hero p {
   font-size: 18px;
   color: #c7d2fe;
-  max-width: 600px;
+  max-width: 650px;
+}
+
+/* ===== HERO ACTIONS ===== */
+.hero-actions {
+  margin-top: 30px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: #4f6bed;
+  color: white;
+  padding: 12px 22px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background: #3b55d9;
+}
+
+.btn-secondary {
+  border: 1px solid #4f6bed;
+  color: #c7d2fe;
+  padding: 12px 22px;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.btn-secondary:hover {
+  background: rgba(79,107,237,0.15);
 }
 
 /* ===== NAV ===== */
@@ -102,13 +161,14 @@ h2 {
 .card {
   background-color: #020617;
   border: 1px solid #1f2937;
-  border-radius: 6px;
+  border-radius: 8px;
   overflow: hidden;
-  transition: transform 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .card:hover {
   transform: translateY(-6px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
 }
 
 .card img {
@@ -121,10 +181,6 @@ h2 {
   padding: 20px;
 }
 
-.card h3 {
-  margin-top: 0;
-}
-
 /* ===== ABOUT ===== */
 .about {
   display: grid;
@@ -135,7 +191,7 @@ h2 {
 
 .about img {
   width: 100%;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
 /* ===== LOGIN ===== */
@@ -144,7 +200,7 @@ h2 {
   border: 1px solid #1b2555;
   padding: 30px;
   max-width: 420px;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
 .login-box a {
@@ -164,6 +220,20 @@ footer {
   padding: 30px 20px;
   font-size: 12px;
   color: #6b7280;
+  text-align: center;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .hero {
+    height: auto;
+    padding: 80px 0;
+    background-attachment: scroll;
+  }
+
+  .about {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
 </head>
@@ -173,11 +243,23 @@ footer {
 <!-- HERO -->
 <div class="hero">
   <div class="hero-content">
+
+    <div class="hero-brand">
+      <img src="assets/logo-ifras.svg" alt="Logo IFRAS">
+      <span>IFRAS</span>
+    </div>
+
     <h1>Institut Français de Recherche Aéronautique et Spatiale</h1>
     <p>
       Recherche scientifique, exploration spatiale et technologies
       avancées au service de la connaissance et de l’avenir.
     </p>
+
+    <div class="hero-actions">
+      <a href="#" class="btn-primary">Découvrir nos recherches</a>
+      <a href="#" class="btn-secondary">Nos publications</a>
+    </div>
+
   </div>
 </div>
 
@@ -204,6 +286,7 @@ footer {
       <p>Missions scientifiques vers des environnements planétaires extrêmes.</p>
     </div>
   </div>
+
   <div class="card">
     <img src="biology.jpg">
     <div class="card-content">
@@ -211,6 +294,7 @@ footer {
       <p>Exobiologie, biosignatures et adaptation du vivant.</p>
     </div>
   </div>
+
   <div class="card">
     <img src="ai.jpg">
     <div class="card-content">
@@ -232,9 +316,7 @@ footer {
     </p>
     <p>
       Depuis sa création, l’IFRAS réunit chercheurs, ingénieurs et
-      experts internationaux afin de concevoir des programmes de
-      recherche de pointe, en collaboration avec les agences
-      spatiales et les universités.
+      experts internationaux.
     </p>
   </div>
   <img src="laboratory.jpg">
