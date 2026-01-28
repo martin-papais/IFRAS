@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Publications — IFRAS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background-color: #050b1e;
+      color: #e6e6e6;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(180deg, #0a1a3a, #050b1e);
+      padding: 30px 20px;
+      border-bottom: 1px solid #1b2555;
+    }
+
+    .header-container {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .logo {
+      width: 90px;
+    }
+
+    nav {
+      background-color: #070f2b;
+      border-bottom: 1px solid #1b2555;
+    }
+
+    nav ul {
+      max-width: 1100px;
+      margin: auto;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    nav li {
+      padding: 14px 0;
+    }
+
+    nav a {
+      color: #d1d5db;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: white;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 60px 20px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 40px;
+    }
+
+    .publication {
+      display: flex;
+      gap: 40px;
+      margin-bottom: 80px;
+      align-items: center;
+    }
+
+    .publication:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    .pub-image {
+      width: 45%;
+      height: 240px;
+      background: linear-gradient(135deg, #0a1a3a, #070f2b);
+      border: 1px solid #1b2555;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #aab3d6;
+      font-size: 14px;
+    }
+
+    .pub-content {
+      width: 55%;
+    }
+
+    .pub-content h2 {
+      margin-top: 0;
+      font-size: 20px;
+    }
+
+    .pub-meta {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-bottom: 10px;
+    }
+
+    .pub-content p {
+      font-size: 14px;
+      color: #aab3d6;
+    }
+
+    .read-more {
+      margin-top: 15px;
+      display: inline-block;
+      color: #4f6bed;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .read-more:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      background-color: #020617;
+      border-top: 1px solid #1b2555;
+      padding: 30px 20px;
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    footer .footer-container {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    @media (max-width: 900px) {
+      .publication,
+      .publication:nth-child(even) {
+        flex-direction: column;
+      }
+
+      .pub-image,
+      .pub-content {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-container">
+    <img src="logo.png" alt="Logo IFRAS" class="logo">
+    <h1>Publications scientifiques</h1>
+  </div>
+</header>
+
+<nav>
+  <ul>
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="recherche.html">Recherche</a></li>
+    <li><a href="programmes.html">Programmes</a></li>
+    <li><a href="publications.html">Publications</a></li>
+    <li><a href="#">Recrutement</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <!-- Publication la plus récente -->
+  <div class="publication">
+    <div class="pub-image">Image publication (à venir)</div>
+    <div class="pub-content">
+      <div class="pub-meta">Mars 2026 — Programme ARES-9</div>
+      <h2>Variabilité inattendue des signatures biologiques en environnement confiné</h2>
+      <p>
+        Cette étude analyse des données issues de cultures biologiques soumises
+        à des conditions d’isolement prolongé. Des fluctuations inattendues
+        ont été observées, remettant en question certains modèles établis.
+      </p>
+      <a href="#" class="read-more">Lire la publication →</a>
+    </div>
+  </div>
+
+  <div class="publication">
+    <div class="pub-image">Image publication (à venir)</div>
+    <div class="pub-content">
+      <div class="pub-meta">Novembre 2025 — Physiologie humaine</div>
+      <h2>Effets cognitifs de la désynchronisation temporelle en mission longue</h2>
+      <p>
+        Analyse des troubles cognitifs et perceptifs observés chez des sujets
+        exposés à des cycles temporels artificiels prolongés.
+      </p>
+      <a href="#" class="read-more">Lire la publication →</a>
+    </div>
+  </div>
+
+  <div class="publication">
+    <div class="pub-image">Image publication (à venir)</div>
+    <div class="pub-content">
+      <div class="pub-meta">Avril 2025 — Bases analogues terrestres</div>
+      <h2>Adaptation comportementale en environnement isolé extrême</h2>
+      <p>
+        Étude longitudinale menée dans des bases analogues terrestres
+        simulant des missions extra-planétaires.
+      </p>
+      <a href="#" class="read-more">Lire la publication →</a>
+    </div>
+  </div>
+
+  <div class="publication">
+    <div class="pub-image">Image publication (à venir)</div>
+    <div class="pub-content">
+      <div class="pub-meta">Août 2024 — Intelligence embarquée</div>
+      <h2>Limites décisionnelles des systèmes autonomes en situation ambiguë</h2>
+      <p>
+        Cette publication explore les comportements émergents
+        d’algorithmes décisionnels confrontés à des données contradictoires.
+      </p>
+      <a href="#" class="read-more">Lire la publication →</a>
+    </div>
+  </div>
+
+  <div class="publication">
+    <div class="pub-image">Image publication (à venir)</div>
+    <div class="pub-content">
+      <div class="pub-meta">Janvier 2024 — Sciences du vivant</div>
+      <h2>Résilience microbienne en conditions extrêmes simulées</h2>
+      <p>
+        Étude des capacités d’adaptation de micro-organismes soumis
+        à des environnements hostiles prolongés.
+      </p>
+      <a href="#" class="read-more">Lire la publication →</a>
+    </div>
+  </div>
+
+  <!-- Publication la plus ancienne -->
+  <div class="publication">
+    <div class="pub-image">Image publication (à venir)</div>
+    <div class="pub-content">
+      <div class="pub-meta">Mai 2023 — Recherche fondamentale</div>
+      <h2>Cadres théoriques pour l’étude de la vie non terrestre</h2>
+      <p>
+        Article fondateur posant les bases conceptuelles
+        des recherches exobiologiques menées à l’IFRAS.
+      </p>
+      <a href="#" class="read-more">Lire la publication →</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-container">
+    © IFRAS — Institut Français de Recherche Aéronautique et Spatiale<br>
+    Publications soumises à validation institutionnelle
+  </div>
+</footer>
+
+</body>
+</html>
