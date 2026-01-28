@@ -17,47 +17,45 @@ body {
 .hero {
   position: relative;
   height: 70vh;
-  background: url("banniere.png") center/cover no-repeat;
+  background: url("banniere.png") center/cover no-repeat fixed; /* effet parallax */
   display: flex;
   align-items: center;
+  overflow: hidden;
 }
 
 .hero::after {
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(180deg, rgba(5,11,30,0.35), #050b1e 85%);
+  background: linear-gradient(180deg, rgba(5,11,30,0.35), #050b1e 85%);
 }
 
 .hero-content {
   position: relative;
+  width: 100%;
   max-width: 1100px;
-  padding: 40px;
   margin: auto;
+  padding: 0 40px;
 }
 
-/* ===== BRAND ===== */
-.hero-brand {
+.hero-inner {
   display: flex;
   align-items: center;
-  gap: 18px;
-  margin-bottom: 30px;
+  gap: 40px;
+  flex-wrap: wrap;
 }
 
+/* Logo à gauche */
 .hero-brand img {
-  height: 64px;
+  height: 80px;
 }
 
-.hero-brand span {
-  font-size: 22px;
-  letter-spacing: 4px;
-  font-weight: 600;
-  color: #c7d2fe;
+/* Texte à droite */
+.hero-text {
+  flex: 1;
 }
 
-/* ===== HERO TEXT ===== */
-.hero h1 {
+.hero-text h1 {
   font-size: clamp(36px, 5vw, 52px);
   line-height: 1.2;
   margin-bottom: 20px;
@@ -66,7 +64,7 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
-.hero p {
+.hero-text p {
   font-size: 18px;
   color: #c7d2fe;
   max-width: 650px;
@@ -191,9 +189,13 @@ footer {
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
-  .hero {
-    height: auto;
-    padding: 80px 0;
+  .hero-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .hero-brand img {
+    margin-bottom: 20px;
   }
 
   .about {
@@ -208,21 +210,24 @@ footer {
 <!-- HERO -->
 <div class="hero">
   <div class="hero-content">
-
-    <div class="hero-brand">
-      <img src="logo.png" alt="Logo IFRAS">
-      <span>IFRAS</span>
+    <div class="hero-inner">
+      <!-- Logo à gauche -->
+      <div class="hero-brand">
+        <img src="logo.png" alt="Logo IFRAS">
+      </div>
+      <!-- Texte à droite -->
+      <div class="hero-text">
+        <h1>Institut Français de Recherche Aéronautique et Spatiale</h1>
+        <p>
+          Recherche scientifique, exploration spatiale et technologies
+          avancées au service de la connaissance et de l’avenir.
+        </p>
+      </div>
     </div>
-
-    <h1>Institut Français de Recherche Aéronautique et Spatiale</h1>
-    <p>
-      Recherche scientifique, exploration spatiale et technologies
-      avancées au service de la connaissance et de l’avenir.
-    </p>
-
   </div>
 </div>
 
+<!-- NAV -->
 <nav>
 <ul>
   <li><a href="#">Accueil</a></li>
@@ -235,7 +240,6 @@ footer {
 </nav>
 
 <main>
-
 <section>
 <h2>Domaines de recherche</h2>
 <div class="grid">
@@ -289,7 +293,6 @@ footer {
   <a href="#">Accéder à la messagerie interne</a>
 </div>
 </section>
-
 </main>
 
 <footer>
