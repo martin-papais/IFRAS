@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Programmes — IFRAS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background-color: #050b1e;
+      color: #e6e6e6;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(180deg, #0a1a3a, #050b1e);
+      padding: 30px 20px;
+      border-bottom: 1px solid #1b2555;
+    }
+
+    .header-container {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .logo {
+      width: 90px;
+    }
+
+    nav {
+      background-color: #070f2b;
+      border-bottom: 1px solid #1b2555;
+    }
+
+    nav ul {
+      max-width: 1100px;
+      margin: auto;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    nav li {
+      padding: 14px 0;
+    }
+
+    nav a {
+      color: #d1d5db;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: white;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 60px 20px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      font-size: 22px;
+      border-left: 4px solid #4f6bed;
+      padding-left: 12px;
+      margin-top: 50px;
+      margin-bottom: 20px;
+    }
+
+    .intro {
+      max-width: 800px;
+    }
+
+    .program-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .program-card {
+      background-color: #070f2b;
+      border: 1px solid #1b2555;
+      padding: 25px;
+      border-radius: 4px;
+    }
+
+    .program-card h3 {
+      margin-top: 0;
+      font-size: 17px;
+    }
+
+    .program-card p {
+      font-size: 14px;
+      color: #aab3d6;
+    }
+
+    .status {
+      font-size: 12px;
+      margin-top: 15px;
+      color: #9ca3af;
+    }
+
+    .restricted {
+      color: #facc15;
+      font-weight: 500;
+    }
+
+    .image-placeholder {
+      width: 100%;
+      height: 220px;
+      background: linear-gradient(135deg, #0a1a3a, #070f2b);
+      border: 1px dashed #3b2a6f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #aab3d6;
+      font-size: 14px;
+      margin: 25px 0;
+    }
+
+    footer {
+      background-color: #020617;
+      border-top: 1px solid #1b2555;
+      padding: 30px 20px;
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    footer .footer-container {
+      max-width: 1100px;
+      margin: auto;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-container">
+    <img src="logo.png" alt="Logo IFRAS" class="logo">
+    <h1>Programmes de recherche</h1>
+  </div>
+</header>
+
+<nav>
+  <ul>
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="recherche.html">Recherche</a></li>
+    <li><a href="programmes.html">Programmes</a></li>
+    <li><a href="#">Publications</a></li>
+    <li><a href="#">Recrutement</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <section class="intro">
+    <p>
+      L’IFRAS développe et pilote des programmes scientifiques
+      nationaux et internationaux visant à repousser les limites
+      de la connaissance humaine et technologique.
+    </p>
+
+    <div class="image-placeholder">
+      Image de lancement / centre de contrôle (à venir)
+    </div>
+  </section>
+
+  <section>
+    <h2>Programmes actifs</h2>
+
+    <div class="program-grid">
+
+      <div class="program-card">
+        <h3>ARES-9</h3>
+        <p>
+          Mission scientifique habitée de longue durée destinée à l’étude
+          de la vie en environnement extra-planétaire.
+        </p>
+        <p>
+          Le programme ARES-9 s’inscrit dans une phase d’exploration
+          avancée et fait l’objet d’adaptations opérationnelles continues.
+        </p>
+        <div class="status restricted">
+          Statut : Diffusion restreinte
+        </div>
+      </div>
+
+      <div class="program-card">
+        <h3>ORION-TRACE</h3>
+        <p>
+          Programme d’observation et d’analyse de signaux
+          biologiques et chimiques à grande distance.
+        </p>
+        <div class="status">
+          Statut : Actif
+        </div>
+      </div>
+
+      <div class="program-card">
+        <h3>HERMES</h3>
+        <p>
+          Étude des communications longue portée et
+          de la transmission d’informations en conditions dégradées.
+        </p>
+        <div class="status">
+          Statut : Phase expérimentale
+        </div>
+      </div>
+
+      <div class="program-card">
+        <h3>ATLAS-SIM</h3>
+        <p>
+          Simulation d’environnements planétaires et
+          modélisation de scénarios extrêmes.
+        </p>
+        <div class="status">
+          Statut : Actif
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Accès aux données</h2>
+    <p class="intro">
+      L’accès détaillé aux données de programme est réservé
+      au personnel habilité. Certaines informations peuvent
+      être différées ou partiellement masquées pour des raisons
+      opérationnelles et de sécurité.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-container">
+    © IFRAS — Institut Français de Recherche Aéronautique et Spatiale<br>
+    Programmes soumis à autorisation — accès contrôlé
+  </div>
+</footer>
+
+</body>
+</html>
