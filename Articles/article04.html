@@ -348,13 +348,13 @@ La formule est la suivante :
   <ul>
   <li>E est l’entropie en bits</li>
   <li>L est le nombre de caractères du mot de passe</li>
-  <li>B est le nombre de caractères distincts possibles à chaque position.</li>
+  <li>B est le nombre de caractères distincts possibles à chaque position</li>
   </ul>
 </p>
-
-Voici un tableau représantant l'entropie de différents mots de passes en fonction du nombre de caractères utilisés et du nombre de pools possibles :
-​
 </p>
+Voici un tableau représantant l'entropie de différents mots de passes en fonction du nombre de caractères utilisés et du nombre de pools possibles :
+</p>​
+
   <table class="entropy-table">
   <thead>
     <tr>
@@ -411,6 +411,7 @@ Voici un tableau représantant l'entropie de différents mots de passes en fonct
   </tbody>
 </table>
 
+
 <p>
   Nous avons donc une première mesure possible d'estimation de robustesse d'un mot de passe. Ceci étant dis, il est possible de développer légèrement ces équations. En effet il faut savoir 
   que l'on peut déterminer le nombre total de combinaisons possibles par la formule :
@@ -423,13 +424,13 @@ Voici un tableau représantant l'entropie de différents mots de passes en fonct
   <ul>
   <li>C est le nombre total de combinaisons possibles</li>
   <li>L est le nombre de caractères du mot de passe</li>
-  <li>B est le nombre de caractères distincts possibles à chaque position.</li>
+  <li>B est le nombre de caractères distincts possibles à chaque position</li>
   <ul>
 <p>
-
-  Voici le même tableau, mais représentant cette fois le nombre total de combinaisons possibles en fonction du nombre de caractères utilisés et du nombre de pools possibles :
-​
 </p>
+  Voici le même tableau, mais représentant cette fois le nombre total de combinaisons possibles en fonction du nombre de caractères utilisés et du nombre de pools possibles :​
+</p>
+    
   <table class="entropy-table">
   <thead>
     <tr>
@@ -478,15 +479,14 @@ Voici un tableau représantant l'entropie de différents mots de passes en fonct
     </tr>
     <tr>
       <td><strong>Base 85</strong><br><span>(alphabet étendu + caractères spéciaux)</span></td>
-      <td>5.13e+15</td>
-      <td>3.67e+23</td>
-      <td>2.86e+29</td>
-      <td>2.22e+35</td>
+      <td>2.04e+15</td>
+      <td>9.24e+22</td>
+      <td>5.09e+28</td>
+      <td>2.80e+34</td>
     </tr>
   </tbody>
 </table>
 
-<p>
   
 <p>
 Par conséquant nous pouvons relier ce nombre avec l’entropie dans une seule et même équations :
@@ -495,6 +495,82 @@ Par conséquant nous pouvons relier ce nombre avec l’entropie dans une seule e
   </div>
 <p>
 
+<p>
+Nous pouvons grâce à cette entropie, en déuire le temps estimé de cassage. La complexité d’un mot de passe prend tout son sens lorsqu’on la relie à un temps de cassage estimé. 
+Celui-ci dépend non seulement de l’entropie, mais aussi de la puissance de calcul disponible pour l’attaquant. Une estimation simplifiée du temps nécessaire pour casser un mot de passe est donnée par :
+
+  <div class="equation">
+  \[ T = \frac{2^E}{R} \]
+  </div>
+<p>
+<p>
+  <ul>
+  <li>T est le temps moyen nécessaire (en secondes)</li>
+  <li>E est l’entropie en bits</li>
+  <li>R est le nombre de tentatives par seconde</li>
+  <ul>
+<p>	​
+<p>
+  Les systèmes modernes de craquage, notamment basés sur GPU, peuvent atteindre des milliards, voire des trillions de tentatives par seconde pour certains algorithmes mal protégés. 
+  Cela rend les mots de passe courts extrêmement vulnérables, même s’ils paraissent complexes. Voici l'estimation de temps des différents mots de passe en utlisant les mêmes entropies calculées 
+  dans le tableau précédent, et avec un valeur d'un milliard nombre de tentative par seconde (ce qui est déjà énorme) :
+</p>
+
+      <table class="entropy-table">
+  <thead>
+    <tr>
+      <th>Base / Longueur</th>
+      <th>8 caractères</th>
+      <th>12 caractères</th>
+      <th>15 caractères</th>
+      <th>18 caractères</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Base 10</strong><br><span>(chiffres)</span></td>
+      <td>Instantanément</td>
+      <td>17 minutes</td>
+      <td>12 jours</td>
+      <td>3.17e+1 années</td>
+    </tr>
+    <tr>
+      <td><strong>Base 26</strong><br><span>(minuscules)</span></td>
+      <td>3 minutes</td>
+      <td>3.03e+0 années</td>
+      <td>5.32e+4 années</td>
+      <td>Éternité</td>
+    </tr>
+    <tr>
+      <td><strong>Base 36</strong><br><span>(minuscules + chiffres)</span></td>
+      <td>47 minutes</td>
+      <td>1.50e+2 années</td>
+      <td>7.01e+6 années</td>
+      <td>Éternité</td>
+    </tr>
+    <tr>
+      <td><strong>Base 52</strong><br><span>(minuscules + majuscules)</span></td>
+      <td>15 heures</td>
+      <td>1.24e+4 années</td>
+      <td>Éternité</td>
+      <td>Éternité</td>
+    </tr>
+    <tr>
+      <td><strong>Base 62</strong><br><span>(minuscules + majuscules + chiffres)</span></td>
+      <td>3 jours</td>
+      <td>1.02e+5 années</td>
+      <td>Éternité</td>
+      <td>Éternité</td>
+    </tr>
+    <tr>
+      <td><strong>Base 85</strong><br><span>(alphabet étendu + caractères spéciaux)</span></td>
+      <td>24 jours</td>
+      <td>2.93e+6 années</td>
+      <td>Éternité</td>
+      <td>Éternité</td>
+    </tr>
+  </tbody>
+</table>
 
 
 <div class="split reverse">
