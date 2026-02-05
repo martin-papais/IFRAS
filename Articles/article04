@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>IFRAS — Sécurité des systèmes d’authentification à l’ère de l’IA</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<article class="publication">
+
+<h1>Sécurité des systèmes d’authentification face aux avancées récentes de l’intelligence artificielle</h1>
+
+<p class="meta">
+Institut Français de Recherche Aéronautique et Spatiale (IFRAS)<br>
+Département Systèmes & Infrastructures Numériques<br>
+Publié : <strong>Septembre 2024</strong>
+</p>
+
+<hr>
+
+<h2>Résumé</h2>
+
+<p>
+L’évolution rapide des capacités de calcul, combinée aux progrès récents des modèles d’intelligence artificielle spécialisés dans l’analyse de motifs, remet en question la robustesse de nombreux systèmes d’authentification encore utilisés dans des environnements critiques.  
+Cet article analyse l’obsolescence progressive de certaines politiques de mots de passe historiquement déployées au sein d’organismes institutionnels, et propose une transition vers des schémas de sécurité mieux adaptés aux menaces contemporaines.
+</p>
+
+---
+
+<h2>1. Contexte et état de l’art</h2>
+
+<p>
+Depuis les années 1990, la majorité des systèmes d’information institutionnels reposent sur des mécanismes d’authentification basés sur des secrets partagés de faible entropie.  
+Ces mécanismes ont été conçus à une époque où :
+</p>
+
+<ul>
+<li>la puissance de calcul disponible était limitée,</li>
+<li>les attaques par force brute étaient coûteuses,</li>
+<li>les attaques automatisées restaient marginales.</li>
+</ul>
+
+<p>
+Historiquement, certaines politiques internes adoptaient des schémas simples, par exemple des combinaisons courtes associant caractères alphabétiques et numériques, jugées suffisantes dans un contexte pré-IA.
+</p>
+
+<p>
+Or, les travaux récents (Goodfellow et al., 2022 ; OpenAI Security Review, 2023) démontrent que des modèles entraînés spécifiquement peuvent réduire l’espace effectif de recherche d’un mot de passe de plusieurs ordres de grandeur.
+</p>
+
+---
+
+<h2>2. Notions fondamentales : entropie et résistance au brute force</h2>
+
+<p>
+L’entropie d’un mot de passe peut être approximée par la formule suivante :
+</p>
+
+<p style="text-align:center;">
+<strong>H = L × log<sub>2</sub>(N)</strong>
+</p>
+
+<p>
+où :
+</p>
+
+<ul>
+<li><strong>L</strong> est la longueur du mot de passe,</li>
+<li><strong>N</strong> est la taille de l’ensemble de caractères utilisés.</li>
+</ul>
+
+<p>
+À titre d’exemple :
+</p>
+
+<ul>
+<li>Un mot de passe court composé uniquement de lettres minuscules et de chiffres présente une entropie limitée.</li>
+<li>À l’inverse, l’ajout de majuscules, de symboles et l’augmentation significative de la longueur augmentent drastiquement l’espace de recherche.</li>
+</ul>
+
+<img src="assets/img/fig1_entropy.png" alt="Comparaison entropie des mots de passe">
+
+<p class="caption">
+Figure 1 — Évolution de l’entropie en fonction de la longueur et de la diversité des caractères.
+</p>
+
+---
+
+<h2>3. Impact de l’intelligence artificielle sur les attaques par dictionnaire</h2>
+
+<p>
+Les attaques modernes ne reposent plus uniquement sur des essais aléatoires.  
+Les modèles de langage sont aujourd’hui capables de :
+</p>
+
+<ul>
+<li>générer des variantes plausibles à partir de données personnelles minimales,</li>
+<li>prioriser les combinaisons statistiquement probables,</li>
+<li>réduire drastiquement le temps moyen de compromission.</li>
+</ul>
+
+<p>
+Selon une étude interne IFRAS menée entre 2022 et 2024, un mot de passe court respectant d’anciennes politiques internes pouvait être compromis en moins de <strong>3 minutes</strong> sur un système exposé.
+</p>
+
+<img src="assets/img/fig2_bruteforce.png" alt="Temps moyen de compromission">
+
+<p class="caption">
+Figure 2 — Temps moyen de compromission en fonction du schéma de mot de passe.
+</p>
+
+---
+
+<h2>4. Évolution des politiques internes IFRAS</h2>
+
+<p>
+Dans ce contexte, l’IFRAS a engagé une révision progressive de ses politiques d’authentification.  
+Les systèmes historiques, mis en place lors de phases antérieures de développement, reposaient sur des contraintes aujourd’hui jugées insuffisantes face aux menaces actuelles.
+</p>
+
+<p>
+À compter du dernier trimestre 2024, les recommandations suivantes s’appliquent :
+</p>
+
+<ul>
+<li>Longueur minimale significativement augmentée,</li>
+<li>Obligation de combiner majuscules, minuscules, chiffres et symboles,</li>
+<li>Abandon des schémas courts autrefois tolérés.</li>
+</ul>
+
+<p>
+Il est important de noter que ces recommandations concernent exclusivement les <strong>nouveaux identifiants créés</strong> à partir de cette date.  
+Les identifiants existants conservent leur configuration initiale afin de garantir la continuité opérationnelle et la compatibilité avec les systèmes embarqués.
+</p>
+
+<img src="assets/img/fig3_policy_timeline.png" alt="Chronologie des politiques IFRAS">
+
+<p class="caption">
+Figure 3 — Chronologie simplifiée des politiques d’authentification IFRAS.
+</p>
+
+---
+
+<h2>5. Discussion et limites</h2>
+
+<p>
+Si l’allongement des mots de passe améliore mécaniquement la sécurité, il convient de rappeler que la sécurité globale repose également sur :
+</p>
+
+<ul>
+<li>la gestion des accès,</li>
+<li>la segmentation des privilèges,</li>
+<li>la surveillance des comportements anormaux.</li>
+</ul>
+
+<p>
+Dans des environnements contraints tels que les missions spatiales de longue durée, la stabilité des systèmes existants demeure un facteur critique, justifiant la coexistence temporaire de plusieurs générations de politiques de sécurité.
+</p>
+
+---
+
+<h2>6. Conclusion</h2>
+
+<p>
+Les progrès rapides de l’intelligence artificielle rendent obsolètes de nombreux schémas de sécurité hérités.  
+L’adaptation des politiques d’authentification constitue une étape nécessaire mais non suffisante pour garantir la résilience des infrastructures critiques.
+</p>
+
+<p>
+Les recommandations présentées ici s’inscrivent dans une démarche progressive, conciliant sécurité, continuité opérationnelle et contraintes spécifiques aux missions spatiales habitées.
+</p>
+
+---
+
+<h2>Références</h2>
+
+<ul>
+<li>Goodfellow I. et al., <em>Deep Learning Security</em>, MIT Press, 2022</li>
+<li>NIST SP 800-63B — Digital Identity Guidelines, 2023</li>
+<li>OpenAI Security Review, Internal Report, 2023</li>
+<li>IFRAS Internal Audit — Authentication Systems, 2024</li>
+</ul>
+
+</article>
+
+</body>
+</html>
