@@ -227,6 +227,12 @@
 }
 
   </style>
+  
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+  
 </head>
 
 <body>
@@ -313,7 +319,31 @@ les modèles de sécurité hérités de cette période. Mais alors, comment bien
 
 <section>
 <h2>2. Niveau de sécurité</h2>
+
+<p>
+Premèrement, nous devons définir la notion de « force » d’un mot de passe : On désigne communément par la « force » d’un mot de passe sa capacité à résister à une attaque par énumération exhaustive, 
+plus connue sous le nom d’attaque par force brute. Ce type d’attaque consiste à tester systématiquement toutes les combinaisons possibles jusqu’à trouver la bonne. D’un point de vue conceptuel, la force d’un mot 
+de passe peut être rapprochée de celle d’un mécanisme cryptographique : elle est comparable à la taille d’une clé de chiffrement. Plus cette « clé » est grande, plus l’effort nécessaire pour la casser augmente.
+</p>
+
+<p>
+La robustesse d’un mot de passe est généralement exprimée à l’aide de l’entropie de Shannon, mesurée en bits. Cette mesure permet de quantifier l’imprévisibilité d’un mot de passe de manière compacte, 
+sans avoir à manipuler directement des nombres de combinaisons souvent astronomiques. L’entropie représente la quantité d’information nécessaire pour deviner un mot de passe choisi aléatoirement dans 
+un ensemble donné. Plus l’entropie est élevée, plus le mot de passe est théoriquement difficile à deviner. Cependant, il est crucial de souligner que l’entropie n’est qu’une mesure théorique. 
+Un mot de passe peut afficher une entropie élevée sur le papier tout en étant extrêmement faible en pratique. Par exemple, Password123* respecte de nombreuses règles de complexité (majuscules, minuscules, 
+chiffres, caractères spéciaux), mais reste trivial à casser car il repose sur des motifs humains largement intégrés aux dictionnaires d’attaque modernes.
+C’est pourquoi la génération réellement aléatoire des mots de passe est un facteur déterminant de leur sécurité effective.  
+</p>
+
+<p>
+L’entropie d’un mot de passe est calculée à partir de la longueur du mot de passe (L), aisni que la taille du jeu de caractères utilisé (B), aussi appelée pool.
+La formule est la suivante :
+
+<div class="equation">
+H = L × log₂(N)
+</div>
   
+</p>
   <table class="entropy-table">
   <thead>
     <tr>
