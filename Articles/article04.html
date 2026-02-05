@@ -427,6 +427,67 @@ Voici un tableau représantant l'entropie de différents mots de passes en fonct
   <ul>
 <p>
 
+  Voici le même tableau, mais représentant cette fois le nombre total de combinaisons possibles en fonction du nombre de caractères utilisés et du nombre de pools possibles :
+​
+</p>
+  <table class="entropy-table">
+  <thead>
+    <tr>
+      <th>Base / Longueur</th>
+      <th>8 caractères</th>
+      <th>12 caractères</th>
+      <th>15 caractères</th>
+      <th>18 caractères</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Base 10</strong><br><span>(chiffres)</span></td>
+      <td>100,000,000</td>
+      <td>1,000,000,000,000</td>
+      <td>1.00e+15</td>
+      <td>1.00e+18</td>
+    </tr>
+    <tr>
+      <td><strong>Base 26</strong><br><span>(minuscules)</span></td>
+      <td>208,827,064,576</td>
+      <td>9.54e+16</td>
+      <td>1.67e+21</td>
+      <td>2.94e+25</td>
+    </tr>
+    <tr>
+      <td><strong>Base 36</strong><br><span>(minuscules + chiffres)</span></td>
+      <td>2,821,109,907,456</td>
+      <td>4.73e+18</td>
+      <td>2.21e+23</td>
+      <td>1.03e+28</td>
+    </tr>
+    <tr>
+      <td><strong>Base 52</strong><br><span>(minuscules + majuscules)</span></td>
+      <td>53,459,728,531,456</td>
+      <td>3.90e+20</td>
+      <td>5.49e+25</td>
+      <td>7.72e+30</td>
+    </tr>
+    <tr>
+      <td><strong>Base 62</strong><br><span>(minuscules + majuscules + chiffres)</span></td>
+      <td>2.18e+14</td>
+      <td>3.22e+21</td>
+      <td>7.68e+26</td>
+      <td>1.83e+32</td>
+    </tr>
+    <tr>
+      <td><strong>Base 85</strong><br><span>(alphabet étendu + caractères spéciaux)</span></td>
+      <td>5.13e+15</td>
+      <td>3.67e+23</td>
+      <td>2.86e+29</td>
+      <td>2.22e+35</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>
+  
 <p>
 Par conséquant nous pouvons relier ce nombre avec l’entropie dans une seule et même équations :
   <div class="equation">
