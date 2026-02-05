@@ -1,188 +1,310 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>IFRAS — Sécurité des systèmes d’authentification à l’ère de l’IA</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>IFRAS — Sécurité des systèmes d’authentification</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background-color: #050b1e;
+      color: #e6e6e6;
+      line-height: 1.7;
+    }
+
+    header {
+      background: linear-gradient(180deg, #0a1a3a, #050b1e);
+      padding: 30px 20px;
+      border-bottom: 1px solid #1b2555;
+    }
+
+    .header-container {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .logo {
+      width: 90px;
+    }
+
+    nav {
+      background-color: #070f2b;
+      border-bottom: 1px solid #1b2555;
+    }
+
+    nav ul {
+      max-width: 1100px;
+      margin: auto;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    nav li {
+      padding: 14px 0;
+    }
+
+    nav a {
+      color: #d1d5db;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: white;
+    }
+
+    main {
+      max-width: 900px;
+      margin: auto;
+      padding: 70px 20px;
+    }
+
+    h1 {
+      font-size: 34px;
+      margin-bottom: 10px;
+    }
+
+    .article-meta {
+      color: #9ca3af;
+      font-size: 14px;
+      margin-bottom: 40px;
+    }
+
+    .abstract {
+      background: #070f2b;
+      border: 1px solid #1b2555;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 50px;
+    }
+
+    .abstract h2 {
+      margin-top: 0;
+      font-size: 18px;
+      color: #c7d2fe;
+    }
+
+    section {
+      margin-bottom: 60px;
+    }
+
+    section h2 {
+      font-size: 22px;
+      margin-bottom: 15px;
+      color: #c7d2fe;
+    }
+
+    p {
+      color: #d1d5db;
+      font-size: 15px;
+    }
+
+    .figure {
+      margin: 40px 0;
+      text-align: center;
+    }
+
+    .figure img {
+      max-width: 100%;
+      border-radius: 10px;
+      border: 1px solid #1b2555;
+    }
+
+    .caption {
+      font-size: 13px;
+      color: #9ca3af;
+      margin-top: 10px;
+    }
+
+    .equation {
+      background: #020617;
+      border: 1px solid #1b2555;
+      padding: 20px;
+      border-radius: 10px;
+      font-family: "Courier New", monospace;
+      text-align: center;
+      margin: 30px 0;
+      color: #c7d2fe;
+    }
+
+    .note {
+      background: #050b1e;
+      border-left: 4px solid #4f6bed;
+      padding: 15px 20px;
+      margin: 30px 0;
+      color: #aab3d6;
+      font-size: 14px;
+    }
+
+    footer {
+      background-color: #020617;
+      border-top: 1px solid #1b2555;
+      padding: 30px 20px;
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    footer .footer-container {
+      max-width: 1100px;
+      margin: auto;
+    }
+  </style>
 </head>
+
 <body>
 
-<article class="publication">
+<header>
+  <div class="header-container">
+    <img src="../logo.png" alt="Logo IFRAS" class="logo">
+    <h1>Publications scientifiques</h1>
+  </div>
+</header>
 
-<h1>Sécurité des systèmes d’authentification face aux avancées récentes de l’intelligence artificielle</h1>
+<nav>
+  <ul>
+    <li><a href="../index.html">Accueil</a></li>
+    <li><a href="../recherche.html">Recherche</a></li>
+    <li><a href="../programmes.html">Programmes</a></li>
+    <li><a href="../publications.html">Publications</a></li>
+    <li><a href="#">Recrutement</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
 
-<p class="meta">
-Institut Français de Recherche Aéronautique et Spatiale (IFRAS)<br>
-Département Systèmes & Infrastructures Numériques<br>
-Publié : <strong>Septembre 2024</strong>
-</p>
+<main>
 
-<hr>
+<h1>Sécurité des systèmes d’authentification face aux avancées de l’intelligence artificielle</h1>
 
+<div class="article-meta">
+IFRAS — Département Systèmes & Infrastructures Numériques<br>
+Publication institutionnelle — Septembre 2024
+</div>
+
+<div class="abstract">
 <h2>Résumé</h2>
+<p>
+Les avancées récentes en intelligence artificielle, combinées à l’augmentation continue
+des capacités de calcul accessibles, remettent en question la robustesse de nombreux
+systèmes d’authentification encore déployés dans des environnements critiques.
+Cet article analyse l’obsolescence progressive de certaines politiques historiques
+et propose des orientations adaptées aux contraintes opérationnelles contemporaines.
+</p>
+</div>
+
+<section>
+<h2>1. Contexte général</h2>
+<p>
+Les mécanismes d’authentification reposant sur des secrets partagés ont été conçus
+dans un contexte technologique aujourd’hui largement dépassé.
+Dans les années 1990 et 2000, des schémas courts combinant caractères alphabétiques
+et numériques étaient considérés comme suffisants dans des environnements fermés.
+</p>
+</section>
+
+<section>
+<h2>2. Entropie et résistance aux attaques automatisées</h2>
 
 <p>
-L’évolution rapide des capacités de calcul, combinée aux progrès récents des modèles d’intelligence artificielle spécialisés dans l’analyse de motifs, remet en question la robustesse de nombreux systèmes d’authentification encore utilisés dans des environnements critiques.  
-Cet article analyse l’obsolescence progressive de certaines politiques de mots de passe historiquement déployées au sein d’organismes institutionnels, et propose une transition vers des schémas de sécurité mieux adaptés aux menaces contemporaines.
+La robustesse d’un mot de passe peut être approximée par l’entropie informationnelle :
 </p>
 
----
-
-<h2>1. Contexte et état de l’art</h2>
+<div class="equation">
+H = L × log₂(N)
+</div>
 
 <p>
-Depuis les années 1990, la majorité des systèmes d’information institutionnels reposent sur des mécanismes d’authentification basés sur des secrets partagés de faible entropie.  
-Ces mécanismes ont été conçus à une époque où :
+où <strong>L</strong> représente la longueur du secret et <strong>N</strong> la taille de l’ensemble
+de caractères autorisés.
+</p>
+
+<div class="figure">
+<img src="../Assets/articles/entropy.png" alt="Évolution de l’entropie">
+<div class="caption">
+Figure 1 — Croissance de l’entropie en fonction de la longueur et de la diversité des caractères.
+</div>
+</div>
+</section>
+
+<section>
+<h2>3. Apports de l’IA aux attaques par dictionnaire</h2>
+<p>
+Les modèles de langage contemporains sont capables de générer des hypothèses
+hautement probables à partir de données partielles, réduisant significativement
+l’espace effectif de recherche.
+</p>
+
+<p>
+Des tests internes menés entre 2022 et 2024 indiquent que certains schémas
+historiques peuvent être compromis en quelques minutes sur des systèmes exposés.
+</p>
+
+<div class="figure">
+<img src="../Assets/articles/bruteforce.png" alt="Temps de compromission">
+<div class="caption">
+Figure 2 — Temps moyen de compromission selon le schéma de mot de passe.
+</div>
+</div>
+</section>
+
+<section>
+<h2>4. Évolution des politiques internes</h2>
+
+<p>
+Face à ces constats, l’IFRAS a engagé une révision progressive de ses politiques
+d’authentification à partir de la fin de l’année 2024.
+</p>
+
+<p>
+Les recommandations actuelles pour les nouveaux identifiants incluent :
 </p>
 
 <ul>
-<li>la puissance de calcul disponible était limitée,</li>
-<li>les attaques par force brute étaient coûteuses,</li>
-<li>les attaques automatisées restaient marginales.</li>
+  <li>une longueur minimale accrue,</li>
+  <li>l’usage combiné de majuscules, minuscules, chiffres et symboles,</li>
+  <li>l’abandon des schémas courts antérieurement tolérés.</li>
 </ul>
 
+<div class="note">
+Ces recommandations s’appliquent exclusivement aux <strong>nouveaux comptes créés</strong>.
+Les identifiants existants conservent leur configuration initiale afin de garantir
+la continuité opérationnelle des systèmes critiques.
+</div>
+</section>
+
+<section>
+<h2>5. Conclusion</h2>
 <p>
-Historiquement, certaines politiques internes adoptaient des schémas simples, par exemple des combinaisons courtes associant caractères alphabétiques et numériques, jugées suffisantes dans un contexte pré-IA.
+L’adaptation des politiques d’authentification constitue une étape nécessaire
+dans un contexte de menaces automatisées croissantes.
+Toutefois, elle ne saurait se substituer à une approche globale intégrant
+segmentation des accès, surveillance comportementale et audit continu.
 </p>
+</section>
 
-<p>
-Or, les travaux récents (Goodfellow et al., 2022 ; OpenAI Security Review, 2023) démontrent que des modèles entraînés spécifiquement peuvent réduire l’espace effectif de recherche d’un mot de passe de plusieurs ordres de grandeur.
-</p>
-
----
-
-<h2>2. Notions fondamentales : entropie et résistance au brute force</h2>
-
-<p>
-L’entropie d’un mot de passe peut être approximée par la formule suivante :
-</p>
-
-<p style="text-align:center;">
-<strong>H = L × log<sub>2</sub>(N)</strong>
-</p>
-
-<p>
-où :
-</p>
-
-<ul>
-<li><strong>L</strong> est la longueur du mot de passe,</li>
-<li><strong>N</strong> est la taille de l’ensemble de caractères utilisés.</li>
-</ul>
-
-<p>
-À titre d’exemple :
-</p>
-
-<ul>
-<li>Un mot de passe court composé uniquement de lettres minuscules et de chiffres présente une entropie limitée.</li>
-<li>À l’inverse, l’ajout de majuscules, de symboles et l’augmentation significative de la longueur augmentent drastiquement l’espace de recherche.</li>
-</ul>
-
-<img src="assets/img/fig1_entropy.png" alt="Comparaison entropie des mots de passe">
-
-<p class="caption">
-Figure 1 — Évolution de l’entropie en fonction de la longueur et de la diversité des caractères.
-</p>
-
----
-
-<h2>3. Impact de l’intelligence artificielle sur les attaques par dictionnaire</h2>
-
-<p>
-Les attaques modernes ne reposent plus uniquement sur des essais aléatoires.  
-Les modèles de langage sont aujourd’hui capables de :
-</p>
-
-<ul>
-<li>générer des variantes plausibles à partir de données personnelles minimales,</li>
-<li>prioriser les combinaisons statistiquement probables,</li>
-<li>réduire drastiquement le temps moyen de compromission.</li>
-</ul>
-
-<p>
-Selon une étude interne IFRAS menée entre 2022 et 2024, un mot de passe court respectant d’anciennes politiques internes pouvait être compromis en moins de <strong>3 minutes</strong> sur un système exposé.
-</p>
-
-<img src="assets/img/fig2_bruteforce.png" alt="Temps moyen de compromission">
-
-<p class="caption">
-Figure 2 — Temps moyen de compromission en fonction du schéma de mot de passe.
-</p>
-
----
-
-<h2>4. Évolution des politiques internes IFRAS</h2>
-
-<p>
-Dans ce contexte, l’IFRAS a engagé une révision progressive de ses politiques d’authentification.  
-Les systèmes historiques, mis en place lors de phases antérieures de développement, reposaient sur des contraintes aujourd’hui jugées insuffisantes face aux menaces actuelles.
-</p>
-
-<p>
-À compter du dernier trimestre 2024, les recommandations suivantes s’appliquent :
-</p>
-
-<ul>
-<li>Longueur minimale significativement augmentée,</li>
-<li>Obligation de combiner majuscules, minuscules, chiffres et symboles,</li>
-<li>Abandon des schémas courts autrefois tolérés.</li>
-</ul>
-
-<p>
-Il est important de noter que ces recommandations concernent exclusivement les <strong>nouveaux identifiants créés</strong> à partir de cette date.  
-Les identifiants existants conservent leur configuration initiale afin de garantir la continuité opérationnelle et la compatibilité avec les systèmes embarqués.
-</p>
-
-<img src="assets/img/fig3_policy_timeline.png" alt="Chronologie des politiques IFRAS">
-
-<p class="caption">
-Figure 3 — Chronologie simplifiée des politiques d’authentification IFRAS.
-</p>
-
----
-
-<h2>5. Discussion et limites</h2>
-
-<p>
-Si l’allongement des mots de passe améliore mécaniquement la sécurité, il convient de rappeler que la sécurité globale repose également sur :
-</p>
-
-<ul>
-<li>la gestion des accès,</li>
-<li>la segmentation des privilèges,</li>
-<li>la surveillance des comportements anormaux.</li>
-</ul>
-
-<p>
-Dans des environnements contraints tels que les missions spatiales de longue durée, la stabilité des systèmes existants demeure un facteur critique, justifiant la coexistence temporaire de plusieurs générations de politiques de sécurité.
-</p>
-
----
-
-<h2>6. Conclusion</h2>
-
-<p>
-Les progrès rapides de l’intelligence artificielle rendent obsolètes de nombreux schémas de sécurité hérités.  
-L’adaptation des politiques d’authentification constitue une étape nécessaire mais non suffisante pour garantir la résilience des infrastructures critiques.
-</p>
-
-<p>
-Les recommandations présentées ici s’inscrivent dans une démarche progressive, conciliant sécurité, continuité opérationnelle et contraintes spécifiques aux missions spatiales habitées.
-</p>
-
----
-
+<section>
 <h2>Références</h2>
-
 <ul>
-<li>Goodfellow I. et al., <em>Deep Learning Security</em>, MIT Press, 2022</li>
-<li>NIST SP 800-63B — Digital Identity Guidelines, 2023</li>
-<li>OpenAI Security Review, Internal Report, 2023</li>
-<li>IFRAS Internal Audit — Authentication Systems, 2024</li>
+  <li>NIST SP 800-63B — Digital Identity Guidelines (2023)</li>
+  <li>Goodfellow et al., <em>Deep Learning Security</em>, MIT Press (2022)</li>
+  <li>IFRAS — Audit interne des systèmes d’authentification (2024)</li>
 </ul>
+</section>
 
-</article>
+</main>
+
+<footer>
+  <div class="footer-container">
+    © IFRAS — Institut Français de Recherche Aéronautique et Spatiale<br>
+    Document institutionnel — diffusion contrôlée
+  </div>
+</footer>
 
 </body>
 </html>
