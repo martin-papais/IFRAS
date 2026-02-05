@@ -186,6 +186,46 @@
         width: 100%;
       }
     }
+    .entropy-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 50px 0;
+  background-color: #070f2b;
+  border: 1px solid #1b2555;
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 14px;
+}
+
+.entropy-table th,
+.entropy-table td {
+  padding: 16px 14px;
+  text-align: center;
+  border-bottom: 1px solid #1b2555;
+}
+
+.entropy-table thead {
+  background: linear-gradient(180deg, #0a1a3a, #070f2b);
+}
+
+.entropy-table th {
+  color: #c7d2fe;
+  font-weight: 600;
+}
+
+.entropy-table td {
+  color: #d1d5db;
+}
+
+.entropy-table td span {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.entropy-table tbody tr:hover {
+  background-color: rgba(79, 107, 237, 0.08);
+}
+
   </style>
 </head>
 
@@ -253,10 +293,66 @@ progressifs mis en œuvre dans les politiques internes de l’IFRAS.
 
 <p>
 À titre indicatif, un mot de passe de 8 caractères alphanumériques offrait,
-au début des années 2000, un espace de recherche d’environ 2,18 × 10¹⁴ combinaisons.
+au début des années 2000, un espace de recherche d’environ 2,18 × 10¹⁴ combinaisons possible (2,821,109,907,456.
 À l’époque, un tel volume excédait largement les capacités de calcul disponibles
 dans un délai opérationnel réaliste.
 </p>
+  <table class="entropy-table">
+  <thead>
+    <tr>
+      <th>Base / Longueur</th>
+      <th>8 caractères</th>
+      <th>12 caractères</th>
+      <th>15 caractères</th>
+      <th>18 caractères</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Base 10</strong><br><span>(chiffres)</span></td>
+      <td>26 bits</td>
+      <td>39 bits</td>
+      <td>49 bits</td>
+      <td>59 bits</td>
+    </tr>
+    <tr>
+      <td><strong>Base 26</strong><br><span>(minuscules)</span></td>
+      <td>37 bits</td>
+      <td>56 bits</td>
+      <td>70 bits</td>
+      <td>84 bits</td>
+    </tr>
+    <tr>
+      <td><strong>Base 36</strong><br><span>(minuscules + chiffres)</span></td>
+      <td>41 bits</td>
+      <td>62 bits</td>
+      <td>77 bits</td>
+      <td>93 bits</td>
+    </tr>
+    <tr>
+      <td><strong>Base 52</strong><br><span>(minuscules + majuscules)</span></td>
+      <td>45 bits</td>
+      <td>68 bits</td>
+      <td>85 bits</td>
+      <td>102 bits</td>
+    </tr>
+    <tr>
+      <td><strong>Base 62</strong><br><span>(minuscules + majuscules + chiffres)</span></td>
+      <td>47 bits</td>
+      <td>71 bits</td>
+      <td>89 bits</td>
+      <td>107 bits</td>
+    </tr>
+    <tr>
+      <td><strong>Base 85</strong><br><span>(alphabet étendu + caractères spéciaux)</span></td>
+      <td>51 bits</td>
+      <td>77 bits</td>
+      <td>96 bits</td>
+      <td>115 bits</td>
+    </tr>
+  </tbody>
+</table>
+
 </section>
 
 <section>
