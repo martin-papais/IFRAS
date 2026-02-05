@@ -277,26 +277,46 @@ progressifs mis en œuvre dans les politiques internes de l’IFRAS.
 <div class="split">
   <div class="text">
     <p>
-    Les premiers systèmes d’authentification informatisés, déployés à grande échelle
-    dans les années 1980 et 1990, reposaient sur des hypothèses de menace aujourd’hui obsolètes.
-    À cette époque, les attaques nécessitaient un accès physique prolongé ou des ressources
-    matérielles coûteuses, limitant de facto leur faisabilité.
-    </p>
-
-    <p>
-    Des schémas courts, combinant lettres et chiffres sur une longueur réduite,
-    étaient alors jugés suffisants dans des environnements institutionnels fermés.
+    Les premiers systèmes d’authentification informatisés, déployés à grande échelle à partir des années 1980 et 1990, 
+    ont été conçus dans un contexte technologique et opérationnel très différent de celui d’aujourd’hui. Les modèles de 
+    menace alors retenus reposaient principalement sur l’idée que l’attaquant devait disposer soit d’un accès physique 
+    prolongé aux machines, soit de ressources matérielles lourdes, coûteuses et rares. Les attaques à distance étaient 
+    limitées par la faible interconnexion des systèmes, l’absence d’Internet grand public et des débits réseau très réduits.
     </p>
   </div>
   <img src="/Assets/articles/article04 image01.jpg" alt="Sécurité image">
-</div>
+  </div>
 
 <p>
-À titre indicatif, un mot de passe de 8 caractères alphanumériques offrait,
-au début des années 2000, un espace de recherche d’environ 2,18 × 10¹⁴ combinaisons possible (2,821,109,907,456.
-À l’époque, un tel volume excédait largement les capacités de calcul disponibles
-dans un délai opérationnel réaliste.
+Dans les environnements institutionnels de l’époque (universités, administrations, grandes entreprises), les systèmes étaient majoritairement fermés, 
+centralisés et administrés localement. Les comptes utilisateurs étaient hébergés sur des mainframes ou des serveurs Unix partagés, accessibles depuis des terminaux internes. 
+Dans ce cadre, le risque principal était l’usurpation par un utilisateur légitime ou la compromission locale, bien plus que l’attaque automatisée à grande échelle.
 </p>
+
+<p>
+C’est dans ce contexte que les politiques de mots de passe ont été définies. Des schémas courts, combinant lettres et chiffres sur une longueur limitée (souvent 6 à 8 caractères),
+étaient considérés comme suffisants. Cette perception était renforcée par les contraintes d’ergonomie (claviers de terminaux, mémorisation humaine) et par le coût des attaques par force brute.
+<p>
+
+<p>
+Au début des années 2000, un tel espace de recherche dépassait largement les capacités de calcul accessibles dans un cadre réaliste. Les processeurs grand public fonctionnaient à 
+quelques centaines de MHz, et les architectures parallèles restaient réservées à des centres de calcul spécialisés. Une attaque exhaustive sur un tel espace pouvait théoriquement 
+nécessiter des années, voire des décennies, même en supposant une vérification rapide des tentatives. De plus, les mécanismes de stockage des mots de passe reposaient souvent sur des 
+fonctions de hachage cryptographique conçues pour être relativement coûteuses en calcul (comme DES-based crypt, puis MD5 ou SHA-1 dans certains contextes), ce qui ralentissait encore les 
+tentatives hors ligne. La combinaison d’un espace de recherche large, d’une puissance de calcul limitée et d’un faible niveau d’exposition réseau rendait donc ces schémas acceptables 
+au regard des risques perçus.
+</p>
+
+<p>
+Cependant, ces hypothèses se sont progressivement effondrées avec la généralisation d’Internet, l’explosion de la puissance de calcul (CPU multicœurs, GPU, ASIC), la démocratisation du calcul 
+distribué et l’industrialisation des attaques automatisées. Ce qui constituait autrefois une barrière économique ou technique est devenu aujourd’hui trivialement accessible, rendant obsolètes 
+les modèles de sécurité hérités de cette période. Mais alors, comment bien se portéger et être certains de la robustesse de son mot de passe ? 
+</p>
+</section>
+
+<section>
+<h2>2. Niveau de sécurité</h2>
+  
   <table class="entropy-table">
   <thead>
     <tr>
@@ -353,10 +373,7 @@ dans un délai opérationnel réaliste.
   </tbody>
 </table>
 
-</section>
 
-<section>
-<h2>2. Accroissement des capacités de calcul</h2>
 
 <div class="split reverse">
   <div class="text">
