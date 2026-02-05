@@ -11,7 +11,7 @@
       font-family: "Segoe UI", Roboto, Arial, sans-serif;
       background-color: #050b1e;
       color: #e6e6e6;
-      line-height: 1.7;
+      line-height: 1.75;
     }
 
     header {
@@ -61,59 +61,80 @@
     }
 
     main {
-      max-width: 900px;
+      max-width: 950px;
       margin: auto;
-      padding: 70px 20px;
+      padding: 80px 20px;
     }
 
     h1 {
-      font-size: 34px;
-      margin-bottom: 10px;
+      font-size: 36px;
+      margin-bottom: 15px;
     }
 
     .article-meta {
-      color: #9ca3af;
       font-size: 14px;
-      margin-bottom: 40px;
+      color: #9ca3af;
+      margin-bottom: 50px;
     }
 
     .abstract {
       background: #070f2b;
       border: 1px solid #1b2555;
-      border-radius: 12px;
-      padding: 25px;
-      margin-bottom: 50px;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 70px;
     }
 
     .abstract h2 {
       margin-top: 0;
-      font-size: 18px;
+      font-size: 20px;
       color: #c7d2fe;
     }
 
     section {
-      margin-bottom: 60px;
+      margin-bottom: 80px;
     }
 
     section h2 {
-      font-size: 22px;
-      margin-bottom: 15px;
+      font-size: 24px;
+      margin-bottom: 20px;
       color: #c7d2fe;
     }
 
     p {
-      color: #d1d5db;
       font-size: 15px;
+      color: #d1d5db;
+    }
+
+    .split {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      margin: 50px 0;
+    }
+
+    .split.reverse {
+      flex-direction: row-reverse;
+    }
+
+    .split img {
+      width: 45%;
+      border-radius: 12px;
+      border: 1px solid #1b2555;
+    }
+
+    .split .text {
+      width: 55%;
     }
 
     .figure {
-      margin: 40px 0;
+      margin: 60px 0;
       text-align: center;
     }
 
     .figure img {
       max-width: 100%;
-      border-radius: 10px;
+      border-radius: 12px;
       border: 1px solid #1b2555;
     }
 
@@ -126,19 +147,20 @@
     .equation {
       background: #020617;
       border: 1px solid #1b2555;
-      padding: 20px;
-      border-radius: 10px;
+      padding: 25px;
+      border-radius: 12px;
       font-family: "Courier New", monospace;
       text-align: center;
-      margin: 30px 0;
+      margin: 40px 0;
       color: #c7d2fe;
+      font-size: 15px;
     }
 
     .note {
       background: #050b1e;
       border-left: 4px solid #4f6bed;
-      padding: 15px 20px;
-      margin: 30px 0;
+      padding: 20px 25px;
+      margin: 40px 0;
       color: #aab3d6;
       font-size: 14px;
     }
@@ -154,6 +176,15 @@
     footer .footer-container {
       max-width: 1100px;
       margin: auto;
+    }
+
+    @media (max-width: 900px) {
+      .split, .split.reverse {
+        flex-direction: column;
+      }
+      .split img, .split .text {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -180,39 +211,117 @@
 
 <main>
 
-<h1>Sécurité des systèmes d’authentification face aux avancées de l’intelligence artificielle</h1>
+<h1>Sécurité des systèmes d’authentification face à l’augmentation des capacités de calcul assistées par IA</h1>
 
 <div class="article-meta">
-IFRAS — Département Systèmes & Infrastructures Numériques<br>
+Département Systèmes & Infrastructures Numériques — IFRAS<br>
 Publication institutionnelle — Septembre 2024
 </div>
 
 <div class="abstract">
 <h2>Résumé</h2>
 <p>
-Les avancées récentes en intelligence artificielle, combinées à l’augmentation continue
-des capacités de calcul accessibles, remettent en question la robustesse de nombreux
-systèmes d’authentification encore déployés dans des environnements critiques.
-Cet article analyse l’obsolescence progressive de certaines politiques historiques
-et propose des orientations adaptées aux contraintes opérationnelles contemporaines.
+L’authentification par mot de passe demeure l’un des mécanismes de contrôle d’accès
+les plus largement déployés dans les infrastructures critiques civiles et scientifiques.
+Cependant, l’augmentation rapide des capacités de calcul, combinée aux progrès
+des modèles d’intelligence artificielle appliqués à l’optimisation des attaques,
+réduit significativement la durée de vie opérationnelle de schémas historiquement jugés sûrs.
+Cette étude présente une analyse quantitative de ces évolutions et examine les ajustements
+progressifs mis en œuvre dans les politiques internes de l’IFRAS.
 </p>
 </div>
 
 <section>
-<h2>1. Contexte général</h2>
+<h2>1. Évolution historique des schémas d’authentification</h2>
+
+<div class="split">
+  <div class="text">
+    <p>
+    Les premiers systèmes d’authentification informatisés, déployés à grande échelle
+    dans les années 1980 et 1990, reposaient sur des hypothèses de menace aujourd’hui obsolètes.
+    À cette époque, les attaques nécessitaient un accès physique prolongé ou des ressources
+    matérielles coûteuses, limitant de facto leur faisabilité.
+    </p>
+
+    <p>
+    Des schémas courts, combinant lettres et chiffres sur une longueur réduite,
+    étaient alors jugés suffisants dans des environnements institutionnels fermés.
+    </p>
+  </div>
+  <img src="../Assets/articles/history_auth.png" alt="Historique des systèmes d’authentification">
+</div>
+
 <p>
-Les mécanismes d’authentification reposant sur des secrets partagés ont été conçus
-dans un contexte technologique aujourd’hui largement dépassé.
-Dans les années 1990 et 2000, des schémas courts combinant caractères alphabétiques
-et numériques étaient considérés comme suffisants dans des environnements fermés.
+À titre indicatif, un mot de passe de 8 caractères alphanumériques offrait,
+au début des années 2000, un espace de recherche d’environ 2,18 × 10¹⁴ combinaisons.
+À l’époque, un tel volume excédait largement les capacités de calcul disponibles
+dans un délai opérationnel réaliste.
 </p>
 </section>
 
 <section>
-<h2>2. Entropie et résistance aux attaques automatisées</h2>
+<h2>2. Accroissement des capacités de calcul</h2>
+
+<div class="split reverse">
+  <div class="text">
+    <p>
+    Entre 2010 et 2024, la puissance de calcul accessible à des acteurs non étatiques
+    a connu une croissance exponentielle. Les GPU grand public, initialement conçus
+    pour le rendu graphique, sont désormais capables d’exécuter plusieurs milliards
+    d’opérations par seconde dans des contextes de calcul parallèle.
+    </p>
+
+    <p>
+    Des benchmarks récents indiquent qu’un cluster de cartes graphiques commerciales
+    peut tester plus de 10¹¹ combinaisons par seconde sur des fonctions de hachage
+    insuffisamment renforcées.
+    </p>
+  </div>
+  <img src="../Assets/articles/gpu_cluster.png" alt="Cluster de calcul GPU">
+</div>
+
+<div class="equation">
+Temps de compromission ≈ (Nombre total de combinaisons) / (Taux de test par seconde)
+</div>
 
 <p>
-La robustesse d’un mot de passe peut être approximée par l’entropie informationnelle :
+Ainsi, un espace de recherche qui nécessitait autrefois plusieurs années
+peut aujourd’hui être exploré en quelques heures, voire minutes,
+dans des conditions optimales.
+</p>
+</section>
+
+<section>
+<h2>3. Apport des modèles d’intelligence artificielle</h2>
+
+<p>
+Au-delà de la simple force brute, les modèles d’IA contemporains introduisent
+un changement qualitatif dans la nature des attaques.
+Plutôt que d’explorer uniformément l’espace des combinaisons,
+ces systèmes exploitent des corrélations statistiques issues
+de bases de données compromises et de comportements humains observés.
+</p>
+
+<div class="figure">
+<img src="../Assets/articles/ai_passwords.png" alt="Génération de mots de passe par IA">
+<div class="caption">
+Figure — Réduction de l’espace effectif de recherche par priorisation probabiliste.
+</div>
+</div>
+
+<p>
+Des études publiées entre 2021 et 2023 montrent que plus de 60 % des mots de passe
+utilisés dans des environnements professionnels suivent des structures
+hautement prévisibles, même lorsque des politiques formelles existent.
+</p>
+</section>
+
+<section>
+<h2>4. Analyse quantitative de l’entropie</h2>
+
+<p>
+L’entropie informationnelle reste un indicateur central pour évaluer
+la robustesse théorique d’un mot de passe.
 </p>
 
 <div class="equation">
@@ -220,71 +329,61 @@ H = L × log₂(N)
 </div>
 
 <p>
-où <strong>L</strong> représente la longueur du secret et <strong>N</strong> la taille de l’ensemble
-de caractères autorisés.
-</p>
-
-<div class="figure">
-<img src="../Assets/articles/entropy.png" alt="Évolution de l’entropie">
-<div class="caption">
-Figure 1 — Croissance de l’entropie en fonction de la longueur et de la diversité des caractères.
-</div>
-</div>
-</section>
-
-<section>
-<h2>3. Apports de l’IA aux attaques par dictionnaire</h2>
-<p>
-Les modèles de langage contemporains sont capables de générer des hypothèses
-hautement probables à partir de données partielles, réduisant significativement
-l’espace effectif de recherche.
+où <strong>L</strong> représente la longueur du mot de passe
+et <strong>N</strong> la cardinalité de l’ensemble de caractères autorisés.
 </p>
 
 <p>
-Des tests internes menés entre 2022 et 2024 indiquent que certains schémas
-historiques peuvent être compromis en quelques minutes sur des systèmes exposés.
-</p>
-
-<div class="figure">
-<img src="../Assets/articles/bruteforce.png" alt="Temps de compromission">
-<div class="caption">
-Figure 2 — Temps moyen de compromission selon le schéma de mot de passe.
-</div>
-</div>
-</section>
-
-<section>
-<h2>4. Évolution des politiques internes</h2>
-
-<p>
-Face à ces constats, l’IFRAS a engagé une révision progressive de ses politiques
-d’authentification à partir de la fin de l’année 2024.
-</p>
-
-<p>
-Les recommandations actuelles pour les nouveaux identifiants incluent :
+À titre comparatif :
 </p>
 
 <ul>
-  <li>une longueur minimale accrue,</li>
-  <li>l’usage combiné de majuscules, minuscules, chiffres et symboles,</li>
-  <li>l’abandon des schémas courts antérieurement tolérés.</li>
+  <li>8 caractères alphanumériques : ~47 bits d’entropie</li>
+  <li>12 caractères étendus : ~72 bits d’entropie</li>
+  <li>16 caractères avec symboles : &gt; 100 bits d’entropie</li>
 </ul>
+</section>
+
+<section>
+<h2>5. Ajustements progressifs des politiques internes</h2>
+
+<div class="split">
+  <div class="text">
+    <p>
+    Face à ces constats, l’IFRAS a engagé dès 2024 une révision graduelle
+    de ses recommandations en matière d’authentification,
+    en tenant compte des contraintes de continuité opérationnelle.
+    </p>
+
+    <p>
+    Les nouvelles créations d’identifiants sont désormais soumises
+    à des exigences accrues en termes de longueur et de diversité de caractères,
+    reflétant l’état actuel des menaces observées.
+    </p>
+  </div>
+  <img src="../Assets/articles/policy_update.png" alt="Mise à jour des politiques">
+</div>
 
 <div class="note">
-Ces recommandations s’appliquent exclusivement aux <strong>nouveaux comptes créés</strong>.
-Les identifiants existants conservent leur configuration initiale afin de garantir
-la continuité opérationnelle des systèmes critiques.
+Les identifiants existants ne sont pas rétroactivement modifiés.
+Cette décision vise à éviter toute perturbation des systèmes historiques
+dont la stabilité repose sur des configurations validées antérieurement.
 </div>
 </section>
 
 <section>
-<h2>5. Conclusion</h2>
+<h2>6. Conclusion générale</h2>
+
 <p>
-L’adaptation des politiques d’authentification constitue une étape nécessaire
-dans un contexte de menaces automatisées croissantes.
-Toutefois, elle ne saurait se substituer à une approche globale intégrant
-segmentation des accès, surveillance comportementale et audit continu.
+L’obsolescence progressive de certains schémas d’authentification
+ne résulte pas d’une défaillance conceptuelle initiale,
+mais de l’évolution rapide de l’écosystème technologique.
+</p>
+
+<p>
+L’approche retenue par l’IFRAS privilégie une transition graduelle,
+associant renforcement des politiques pour les nouveaux accès
+et maintien contrôlé des configurations existantes.
 </p>
 </section>
 
@@ -292,8 +391,8 @@ segmentation des accès, surveillance comportementale et audit continu.
 <h2>Références</h2>
 <ul>
   <li>NIST SP 800-63B — Digital Identity Guidelines (2023)</li>
-  <li>Goodfellow et al., <em>Deep Learning Security</em>, MIT Press (2022)</li>
-  <li>IFRAS — Audit interne des systèmes d’authentification (2024)</li>
+  <li>Veras et al., <em>On the Semantic Patterns of Passwords</em>, IEEE S&P</li>
+  <li>IFRAS — Rapport interne sur la résilience des systèmes d’accès (2024)</li>
 </ul>
 </section>
 
