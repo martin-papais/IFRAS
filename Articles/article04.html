@@ -419,15 +419,15 @@ Voici un tableau représantant l'entropie de différents mots de passes en fonct
     <div class="equation">
     \[ C = B^L \]
     </div>
- <p> 
+ </p> 
 <p>
   <ul>
   <li>C est le nombre total de combinaisons possibles</li>
   <li>L est le nombre de caractères du mot de passe</li>
   <li>B est le nombre de caractères distincts possibles à chaque position</li>
   <ul>
-<p>
 </p>
+<p>
   Voici le même tableau, mais représentant cette fois le nombre total de combinaisons possibles en fonction du nombre de caractères utilisés et du nombre de pools possibles :​
 </p>
     
@@ -493,7 +493,7 @@ Par conséquant nous pouvons relier ce nombre avec l’entropie dans une seule e
   <div class="equation">
   \[ E = \log_2(C) \]
   </div>
-<p>
+</p>
 
 <p>
 Nous pouvons grâce à cette entropie, en déuire le temps estimé de cassage. La complexité d’un mot de passe prend tout son sens lorsqu’on la relie à un temps de cassage estimé. 
@@ -502,14 +502,14 @@ Celui-ci dépend non seulement de l’entropie, mais aussi de la puissance de ca
   <div class="equation">
   \[ T = \frac{2^E}{R} \]
   </div>
-<p>
+</p>
 <p>
   <ul>
   <li>T est le temps moyen nécessaire (en secondes)</li>
   <li>E est l’entropie en bits</li>
   <li>R est le nombre de tentatives par seconde</li>
   <ul>
-<p>	​
+</p>	​
 <p>
   Les systèmes modernes de craquage, notamment basés sur GPU, peuvent atteindre des milliards, voire des trillions de tentatives par seconde pour certains algorithmes mal protégés. 
   Cela rend les mots de passe courts extrêmement vulnérables, même s’ils paraissent complexes. Voici l'estimation de temps des différents mots de passe en utlisant les mêmes entropies calculées 
