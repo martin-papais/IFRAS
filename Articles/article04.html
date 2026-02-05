@@ -354,8 +354,6 @@ La formule est la suivante :
 
 Voici un tableau représantant l'entropie de différents mots de passes en fonction du nombre de caractères utilisés et du nombre de pools possibles :
 ​
-
-(C) 
 </p>
   <table class="entropy-table">
   <thead>
@@ -414,13 +412,20 @@ Voici un tableau représantant l'entropie de différents mots de passes en fonct
 </table>
 
 <p>
-  Bien, nous avons donc une première mesure possible d'estimation de robustesse d'un mot de passe. Ceci étant dis, il est possible de développer légèrement ces équations. En effet il faut savoir 
+  Nous avons donc une première mesure possible d'estimation de robustesse d'un mot de passe. Ceci étant dis, il est possible de développer légèrement ces équations. En effet il faut savoir 
   que l'on peut déterminer le nombre total de combinaisons possibles par la formule :
 
     <div class="equation">
     \[ C = B^L \]
     </div>
  <p> 
+<p>
+  <ul>
+  <li>C est le nombre total de combinaisons possibles</li>
+  <li>L est le nombre de caractères du mot de passe</li>
+  <li>B est le nombre de caractères distincts possibles à chaque position.</li>
+  <ul>
+<p>
 
 <p>
 Par conséquant nous pouvons relier ce nombre avec l’entropie dans une seule et même équations :
@@ -428,9 +433,7 @@ Par conséquant nous pouvons relier ce nombre avec l’entropie dans une seule e
   \[ E = \log_2(C) \]
   </div>
 <p>
-=
-log
-⁡
+
 
 
 <div class="split reverse">
