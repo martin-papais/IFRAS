@@ -330,20 +330,32 @@ de passe peut être rapprochée de celle d’un mécanisme cryptographique : ell
 La robustesse d’un mot de passe est généralement exprimée à l’aide de l’entropie de Shannon, mesurée en bits. Cette mesure permet de quantifier l’imprévisibilité d’un mot de passe de manière compacte, 
 sans avoir à manipuler directement des nombres de combinaisons souvent astronomiques. L’entropie représente la quantité d’information nécessaire pour deviner un mot de passe choisi aléatoirement dans 
 un ensemble donné. Plus l’entropie est élevée, plus le mot de passe est théoriquement difficile à deviner. Cependant, il est crucial de souligner que l’entropie n’est qu’une mesure théorique. 
-Un mot de passe peut afficher une entropie élevée sur le papier tout en étant extrêmement faible en pratique. Par exemple, Password123* respecte de nombreuses règles de complexité (majuscules, minuscules, 
+Un mot de passe peut afficher une entropie élevée sur le papier tout en étant extrêmement faible en pratique. Par exemple, "Password123*" respecte de nombreuses règles de complexité (majuscules, minuscules, 
 chiffres, caractères spéciaux), mais reste trivial à casser car il repose sur des motifs humains largement intégrés aux dictionnaires d’attaque modernes.
 C’est pourquoi la génération réellement aléatoire des mots de passe est un facteur déterminant de leur sécurité effective.  
 </p>
 
 <p>
-L’entropie d’un mot de passe est calculée à partir de la longueur du mot de passe (L), aisni que la taille du jeu de caractères utilisé (B), aussi appelée pool.
+Cette entropie se calcule à partir de la longueur du mot de passe (L), aisni que la taille du jeu de caractères utilisé (B), aussi appelée pool.
 La formule est la suivante :
 
 <div class="equation">
 \[ E = L \times \log_2(B) \]
-
 </div>
-  
+
+<p>
+<p>
+  <ul>
+  <li>E est l’entropie en bits</li>
+  <li>L est le nombre de caractères du mot de passe</li>
+  <li>B est le nombre de caractères distincts possibles à chaque position.</li>
+  </ul>
+</p>
+
+Voici un tableau représantant l'entropie de différents mots de passes en fonction du nombre de caractères utilisés et du nombre de pools possibles :
+​
+
+(C) 
 </p>
   <table class="entropy-table">
   <thead>
@@ -401,6 +413,24 @@ La formule est la suivante :
   </tbody>
 </table>
 
+<p>
+  Bien, nous avons donc une première mesure possible d'estimation de robustesse d'un mot de passe. Ceci étant dis, il est possible de développer légèrement ces équations. En effet il faut savoir 
+  que l'on peut déterminer le nombre total de combinaisons possibles par la formule :
+
+    <div class="equation">
+    \[ C = B^L \]
+    </div>
+ <p> 
+
+<p>
+Par conséquant nous pouvons relier ce nombre avec l’entropie dans une seule et même équations :
+  <div class="equation">
+  \[ E = \log_2(C) \]
+  </div>
+<p>
+=
+log
+⁡
 
 
 <div class="split reverse">
