@@ -641,23 +641,20 @@ la formule :
 <section>
 <h2>4. Analyse et conclusion</h2>
 
+    
+<p>
+Pour mieux comprendre les tableaux précédents et différencier l'importance des deux paramètres B (nombre de pool) et L (nombre de caractères),
+nous avons séparé l'évolution de l'entropie en deux graphiques respectifs. Le premier affichera l'évolution de l'entropie en fonction de la taille du pool utilisé
+pour un longueur fixe données. De la même manière, le second graphique montre l’évolution de l’entropie en fonction de la longueur du mot de passe utilisé pour un pool fixé. 
+</p>
   
 <div class="split reverse">
   <div class="text">
-  
-<p>
-Ce graphique montre l’évolution de l’entropie en fonction de la taille du pool de caractères utilisé, pour différentes longueurs de mot de passe (8, 12, 15 et 18 caractères).
-</p>
 
 <p>
-On observe que, quelle que soit la longueur du mot de passe, l’entropie augmente lorsque le nombre de caractères possibles dans le pool augmente. Cela signifie que plus l’alphabet 
-utilisé est riche (minuscules, majuscules, chiffres, caractères spéciaux, etc.), plus le mot de passe est difficile à deviner.
-</p>
-
-<p>
-De plus, à pool constant, les courbes associées aux longueurs plus élevées sont systématiquement au-dessus des autres. Par exemple, pour un même pool, un mot de passe de 18 caractères 
-possède une entropie bien plus importante qu’un mot de passe de 8 caractères. L’écart entre les courbes s’accentue lorsque le pool devient plus grand, montrant un effet cumulatif entre
-longueur et diversité des caractères.</p>
+Sur ce premier graphique, on observe que, quelle que soit la longueur du mot de passe, l’entropie augmente toujours lorsque le nombre de caractères possibles dans le pool augmente. 
+De plus, on constate que les courbes associées aux longueurs plus élevées sont systématiquement au-dessus des autres. 
+L’écart entre les courbes s’accentue lorsque le pool devient plus grand, montrant un effet cumulatif entre longueur et diversité des caractères.</p>
 
 </div>
 <img src="/Assets/articles/article04 image02.png" alt="Entopie en fonction du nombre de pool">
@@ -666,17 +663,12 @@ longueur et diversité des caractères.</p>
 <div class="split">
   <div class="text">
 
-<p>
-Ce graphique présente l’évolution de l’entropie en fonction de la longueur du mot de passe, pour différents pools de caractères (10, 26, 36, 52, 62 et 85).
 </p>
-
+    
 <p>
-On constate que, pour tous les pools, l’entropie augmente de manière quasi linéaire avec la longueur du mot de passe. Chaque caractère supplémentaire apporte 
-un gain significatif en sécurité, surtout lorsque le pool est important.
-</p>
-
-<p>Par ailleurs, pour une longueur donnée, plus le pool est grand, plus l’entropie est élevée. Les courbes correspondant aux grands pools (62 et 85 caractères) sont 
-nettement au-dessus de celles des petits pools (10 ou 26). Cela confirme que l’ajout de caractères spéciaux, de chiffres et de majuscules améliore fortement la résistance aux attaques.
+Sur ce second graphique, on constate que,de la même manière, pour tous des pools fixés, l’entropie augmente de manière quasi linéaire avec la longueur du mot de passe.
+Chaque caractère supplémentaire rajouté à un mot de passe apporte un gain significatif en sécurité, surtout lorsque le pool est important.
+De plus, on observe aussi que les courbes associées aux pools plus élevés sont toujours au-dessus des autres, démontrant encore l'importance de ce paramètre
 </p>
 
 </div>
@@ -717,21 +709,6 @@ dont la stabilité repose sur des configurations validées antérieurement.
 </div>
 </section>
 
-<section>
-<h2>6. Conclusion générale</h2>
-
-<p>
-L’obsolescence progressive de certains schémas d’authentification
-ne résulte pas d’une défaillance conceptuelle initiale,
-mais de l’évolution rapide de l’écosystème technologique.
-</p>
-
-<p>
-L’approche retenue par l’IFRAS privilégie une transition graduelle,
-associant renforcement des politiques pour les nouveaux accès
-et maintien contrôlé des configurations existantes.
-</p>
-</section>
 
 <section>
 <h2>Références</h2>
