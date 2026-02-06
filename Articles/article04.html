@@ -318,7 +318,63 @@ les modèles de sécurité hérités de cette période. Mais alors, comment bien
 </section>
 
 <section>
-<h2>2. Niveau de sécurité</h2>
+<h2>2. Différents types d'attaque</h2>
+<p>
+Il existe plusieurs catégories d’attaques visant à compromettre les mécanismes d’authentification par mot de passe,
+chacune exploitant des leviers techniques, statistiques ou humains distincts.
+</p>
+
+<ul>
+  <li>
+    <strong>Attaque par force brute :</strong>
+    cette méthode consiste à tester systématiquement l’ensemble des combinaisons possibles jusqu’à l’obtention
+    du mot de passe correct. L’efficacité de cette approche dépend directement de la longueur du mot de passe
+    et de la taille du jeu de caractères utilisé. Plus ces paramètres sont élevés, plus l’espace de recherche
+    croît exponentiellement, rendant l’attaque coûteuse en temps et en ressources.
+  </li>
+
+  <li>
+    <strong>Attaque par dictionnaire :</strong>
+    elle repose sur l’exploitation de listes de mots de passe couramment utilisés, issues de bases de données
+    compromises ou de modèles statistiques du comportement humain. Un mot de passe réellement aléatoire
+    présente une probabilité extrêmement faible de figurer dans ces dictionnaires, ce qui réduit fortement
+    l’efficacité de cette technique.
+  </li>
+
+  <li>
+    <strong>Attaque par tables arc-en-ciel :</strong>
+    cette approche utilise des bases pré-calculées reliant des mots de passe à leurs empreintes cryptographiques.
+    Elle n’est applicable que si l’attaquant a accès aux mots de passe tels qu’ils sont stockés après hachage,
+    généralement à la suite d’une compromission de base de données. L’ajout d’un sel cryptographique
+    rend ce type d’attaque largement inefficace.
+  </li>
+
+  <li>
+    <strong>Attaque par ingénierie sociale :</strong>
+    elle exploite le facteur humain, soit en déduisant le mot de passe à partir d’informations personnelles,
+    soit en incitant la victime à le divulguer volontairement, notamment par des campagnes de phishing
+    ou de manipulation psychologique.
+  </li>
+
+  <li>
+    <strong>Attaques logicielles et système :</strong>
+    ces attaques tirent parti de vulnérabilités applicatives ou système. En cas de compromission,
+    il devient parfois possible d’extraire des mots de passe depuis la mémoire vive, des fichiers temporaires
+    ou des journaux insuffisamment protégés.
+  </li>
+</ul>
+
+<p>
+Dans une analyse strictement cryptographique, excluant les faiblesses humaines et les compromissions système,
+le vecteur d’attaque le plus dominants reste la force brute. Ce sont donc ces approches qui constituent les 
+principales références pour l’évaluation quantitative de la robustesse des mots de passe. Voyons maintenant comme
+
+</p>
+
+</section>
+  
+<section>
+<h2>2. Calcul de l'entropie</h2>
 
 <p>
 Premèrement, nous devons définir la notion de « force » d’un mot de passe : On désigne communément par la « force » d’un mot de passe sa capacité à résister à une attaque par énumération exhaustive, 
@@ -683,6 +739,17 @@ et <strong>N</strong> la cardinalité de l’ensemble de caractères autorisés.
     Les nouvelles créations d’identifiants sont désormais soumises
     à des exigences accrues en termes de longueur et de diversité de caractères,
     reflétant l’état actuel des menaces observées.
+      Ce qui caractérise un bon mot de passe
+
+De ces éléments, on peut tirer trois propriétés fondamentales d’un mot de passe robuste :
+
+Longueur : chaque caractère supplémentaire augmente exponentiellement l’espace de recherche.
+
+Diversité du jeu de caractères : une base plus large accroît le nombre de combinaisons possibles.
+
+Aléa réel : un mot de passe ne doit pas suivre de motifs humains prévisibles ni figurer dans des dictionnaires.
+
+En pratique, la longueur et l’aléatoire ont un impact bien plus important que la simple complexité visuelle.
     </p>
   </div>
   <img src="/Assets/articles/article04 image03.png" alt="Mise à jour des politiques">
