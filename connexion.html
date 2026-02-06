@@ -2,8 +2,10 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>IFRAS — Institut Français de Recherche Aéronautique et Spatiale</title>
+<title>IFRAS — Accès interne</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 body {
@@ -17,7 +19,7 @@ body {
 .hero {
   position: relative;
   height: 40vh;
-  background: url("banniere.png") center/cover no-repeat fixed; /* parallax */
+  background: url("banniere.png") center/cover no-repeat fixed;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -45,21 +47,18 @@ body {
   flex-wrap: wrap;
 }
 
-/*  à gauche */
 .hero-brand img {
-  height: 220px; /* logo agrandi */
+  height: 200px;
 }
 
-/* Texte à droite */
 .hero-text {
   flex: 1;
 }
 
 .hero-text h1 {
   font-size: clamp(22px, 3vw, 32px);
-  line-height: 1.2;
   margin-bottom: 20px;
-  color: #ffffff; /* texte plein blanc */
+  color: #ffffff;
 }
 
 .hero-text p {
@@ -103,76 +102,61 @@ main {
   padding: 80px 20px;
 }
 
-section {
-  margin-bottom: 80px;
-}
-
 h2 {
   font-size: 24px;
   border-left: 4px solid #4f6bed;
   padding-left: 14px;
 }
 
-/* ===== GRID CARDS ===== */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 30px;
-}
-
-.card {
-  background-color: #020617;
-  border: 1px solid #1f2937;
-  border-radius: 8px;
-  overflow: hidden;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-}
-
-.card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-}
-
-.card-content {
-  padding: 20px;
-}
-
-/* ===== ABOUT ===== */
-.about {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  align-items: center;
-}
-
-.about img {
-  width: 100%;
-  border-radius: 8px;
-}
-
 /* ===== LOGIN ===== */
 .login-box {
   background-color: #070f2b;
   border: 1px solid #1b2555;
-  padding: 30px;
+  padding: 40px;
   max-width: 420px;
-  border-radius: 8px;
+  border-radius: 10px;
+  margin-top: 30px;
 }
 
-.login-box a {
-  display: inline-block;
-  margin-top: 15px;
-  padding: 10px 16px;
-  background-color: #2563eb;
+.login-box label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #c7d2fe;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 18px;
+  border-radius: 6px;
+  border: 1px solid #1f2937;
+  background: #020617;
+  color: #fff;
+  font-size: 14px;
+}
+
+.login-box button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
   color: white;
-  text-decoration: none;
-  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.login-box button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 20px rgba(37,99,235,0.4);
+}
+
+.error {
+  margin-top: 15px;
+  color: #f87171;
+  font-size: 13px;
 }
 
 /* ===== FOOTER ===== */
@@ -194,11 +178,7 @@ footer {
   
   .hero-brand img {
     margin-bottom: 20px;
-    height: 120px; /* logo plus petit sur mobile */
-  }
-
-  .about {
-    grid-template-columns: 1fr;
+    height: 120px;
   }
 }
 </style>
@@ -210,16 +190,13 @@ footer {
 <div class="hero">
   <div class="hero-content">
     <div class="hero-inner">
-      <!-- Logo à gauche -->
       <div class="hero-brand">
         <img src="logo.png" alt="Logo IFRAS">
       </div>
-      <!-- Texte à droite -->
       <div class="hero-text">
-        <h1>Institut Français de Recherche Aéronautique et Spatiale</h1>
+        <h1>Accès interne sécurisé</h1>
         <p>
-          Recherche scientifique, exploration spatiale et technologies
-          avancées au service de la connaissance et de l’avenir.
+          Système d’authentification IFRAS — accès réservé au personnel scientifique autorisé.
         </p>
       </div>
     </div>
@@ -229,28 +206,63 @@ footer {
 <!-- NAV -->
 <nav>
 <ul>
-  <li><a href="#">Accueil</a></li>
+  <li><a href="index.html">Accueil</a></li>
   <li><a href="recherche.html">Recherche</a></li>
   <li><a href="programmes.html">Programmes</a></li>
   <li><a href="publications.html">Publications</a></li>
   <li><a href="connexion.html">Connexion</a></li>
-  <li><a href="#">Contact</a></li>
 </ul>
 </nav>
 
 <main>
 <section>
-<h2>Accès interne</h2>
+<h2>Authentification</h2>
+
 <div class="login-box">
-  <p>Espace réservé au personnel autorisé de l’IFRAS.</p>
-  <a href="#">Accéder à la messagerie interne</a>
+  <form onsubmit="login(event)">
+    <label>Email professionnel</label>
+    <input type="email" id="email" placeholder="prenom.nom@ifras.fr" required>
+
+    <label>Mot de passe</label>
+    <input type="password" id="password" placeholder="••••••••" required>
+
+    <button type="submit">Connexion sécurisée</button>
+    <div id="error" class="error"></div>
+  </form>
 </div>
+
 </section>
 </main>
 
 <footer>
 © IFRAS — Institut Français de Recherche Aéronautique et Spatiale
 </footer>
+
+<script>
+const supabase = supabase.createClient(
+  "https://fqijbltymdeudnlitcrs.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZxaWpibHR5bWRldWRubGl0Y3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzOTQ2NDQsImV4cCI6MjA4NTk3MDY0NH0.HZA0VxkaRTGLRTBA0Vz51mJjw8Xuj8f__yzaQKpGfbE"
+);
+
+async function login(event) {
+  event.preventDefault();
+
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  const { error } = await supabase.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if (error) {
+    document.getElementById("error").textContent = 
+      "Identifiants incorrects ou accès refusé.";
+  } else {
+    window.location.href = "mail.html";
+  }
+}
+</script>
 
 </body>
 </html>
