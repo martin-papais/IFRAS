@@ -554,9 +554,14 @@ Par conséquant nous pouvons relier ce nombre avec l’entropie dans une seule e
   </div>
 </p>
 
+</section>
+
+<section>
+<h2>4. Temps estimé de cassage</h2>
 <p>
 Nous pouvons grâce à cette entropie, en déuire le temps estimé de cassage. La complexité d’un mot de passe prend tout son sens lorsqu’on la relie à un temps de cassage estimé. 
-Celui-ci dépend non seulement de l’entropie, mais aussi de la puissance de calcul disponible pour l’attaquant. Une estimation simplifiée du temps nécessaire pour casser un mot de passe est donnée par :
+Celui-ci dépend non seulement de l’entropie, mais aussi de la puissance de calcul disponible pour l’attaquant. Une estimation simplifiée du temps nécessaire pour casser un mot de passe est donnée par 
+la formule :
 
   <div class="equation">
   \[ T = \frac{2^E}{R} \]
@@ -571,8 +576,8 @@ Celui-ci dépend non seulement de l’entropie, mais aussi de la puissance de ca
 </p>	​
 <p>
   Les systèmes modernes de craquage, notamment basés sur GPU, peuvent atteindre des milliards, voire des trillions de tentatives par seconde pour certains algorithmes mal protégés. 
-  Cela rend les mots de passe courts extrêmement vulnérables, même s’ils paraissent complexes. Voici l'estimation de temps des différents mots de passe en utlisant les mêmes entropies calculées 
-  dans le tableau précédent, et avec un valeur d'un milliard nombre de tentative par seconde (ce qui est déjà énorme) :
+  Cela rend les mots de passe courts extrêmement vulnérables, même s’ils paraissent complexes. En réutilisant les deux même tableaux utilisés précédémment, voici l'estimation du temps 
+  qu'il faudrait pour déchiffrer un mot de passe, avec un valeur arbitraire d'un milliard de tentative par seconde (ce qui est déjà énorme) :
 </p>
 
       <table class="entropy-table">
@@ -631,130 +636,80 @@ Celui-ci dépend non seulement de l’entropie, mais aussi de la puissance de ca
   </tbody>
 </table>
 
+</section>
 
+<section>
+<h2>4. Analyse et conclusion</h2>
+
+  
 <div class="split reverse">
   <div class="text">
-    <p>
-    Entre 2010 et 2024, la puissance de calcul accessible à des acteurs non étatiques
-    a connu une croissance exponentielle. Les GPU grand public, initialement conçus
-    pour le rendu graphique, sont désormais capables d’exécuter plusieurs milliards
-    d’opérations par seconde dans des contextes de calcul parallèle.
-    </p>
-
-    <p>
-    Des benchmarks récents indiquent qu’un cluster de cartes graphiques commerciales
-    peut tester plus de 10¹¹ combinaisons par seconde sur des fonctions de hachage
-    insuffisamment renforcées.
-    </p>
-  </div>
-  < src="/Assets/articles/article04 image02.png" alt="Entopie en fonction du nombre de pool">
-</div>
-
-<div class="split">
-  <img src="/Assets/articles/article04 image02.png" alt="Entopie en fonction du nombre de pool">
-  <img src="/Assets/articles/article04 image03.png" alt="Entopie en fonction de la longueur">
-</div>
-
-<div class="split">
-  <img src="/Assets/articles/article04 image03.png" alt="Image gauche">
-  <img src="/Assets/articles/article04 image02.png" alt="Image droite">
-</div>
   
-<div class="equation">
-Temps de compromission ≈ (Nombre total de combinaisons) / (Taux de test par seconde)
+<p>
+Ce graphique montre l’évolution de l’entropie en fonction de la taille du pool de caractères utilisé, pour différentes longueurs de mot de passe (8, 12, 15 et 18 caractères).
+</p>
+
+<p>
+On observe que, quelle que soit la longueur du mot de passe, l’entropie augmente lorsque le nombre de caractères possibles dans le pool augmente. Cela signifie que plus l’alphabet 
+utilisé est riche (minuscules, majuscules, chiffres, caractères spéciaux, etc.), plus le mot de passe est difficile à deviner.
+</p>
+
+<p>
+De plus, à pool constant, les courbes associées aux longueurs plus élevées sont systématiquement au-dessus des autres. Par exemple, pour un même pool, un mot de passe de 18 caractères 
+possède une entropie bien plus importante qu’un mot de passe de 8 caractères. L’écart entre les courbes s’accentue lorsque le pool devient plus grand, montrant un effet cumulatif entre
+longueur et diversité des caractères.</p>
+
 </div>
-
-<p>
-Ainsi, un espace de recherche qui nécessitait autrefois plusieurs années
-peut aujourd’hui être exploré en quelques heures, voire minutes,
-dans des conditions optimales.
-</p>
-</section>
-
-<section>
-<h2>3. Apport des modèles d’intelligence artificielle</h2>
-
-<p>
-Au-delà de la simple force brute, les modèles d’IA contemporains introduisent
-un changement qualitatif dans la nature des attaques.
-Plutôt que d’explorer uniformément l’espace des combinaisons,
-ces systèmes exploitent des corrélations statistiques issues
-de bases de données compromises et de comportements humains observés.
-</p>
-
-<div class="figure">
-< src="/Assets/articles/graphique02" alt="Génération de mots de passe par IA">
-<div class="caption">
-Figure — Réduction de l’espace effectif de recherche par priorisation probabiliste.
+<img src="/Assets/articles/article04 image02.png" alt="Entopie en fonction du nombre de pool">
 </div>
-</div>
-
-<p>
-Des études publiées entre 2021 et 2023 montrent que plus de 60 % des mots de passe
-utilisés dans des environnements professionnels suivent des structures
-hautement prévisibles, même lorsque des politiques formelles existent.
-</p>
-</section>
-
-<section>
-<h2>4. Analyse quantitative de l’entropie</h2>
-
-<p>
-L’entropie informationnelle reste un indicateur central pour évaluer
-la robustesse théorique d’un mot de passe.
-</p>
-
-<div class="equation">
-H = L × log₂(N)
-</div>
-
-<p>
-où <strong>L</strong> représente la longueur du mot de passe
-et <strong>N</strong> la cardinalité de l’ensemble de caractères autorisés.
-</p>
-
-<p>
-À titre comparatif :
-</p>
-
-<ul>
-  <li>8 caractères alphanumériques : ~47 bits d’entropie</li>
-  <li>12 caractères étendus : ~72 bits d’entropie</li>
-  <li>16 caractères avec symboles : &gt; 100 bits d’entropie</li>
-</ul>
-</section>
-
-<section>
-<h2>5. Ajustements progressifs des politiques internes</h2>
 
 <div class="split">
   <div class="text">
-    <p>
-    Face à ces constats, l’IFRAS a engagé dès 2024 une révision graduelle
-    de ses recommandations en matière d’authentification,
-    en tenant compte des contraintes de continuité opérationnelle.
-    </p>
 
-    <p>
-    Les nouvelles créations d’identifiants sont désormais soumises
-    à des exigences accrues en termes de longueur et de diversité de caractères,
-    reflétant l’état actuel des menaces observées.
-      Ce qui caractérise un bon mot de passe
+<p>
+Ce graphique présente l’évolution de l’entropie en fonction de la longueur du mot de passe, pour différents pools de caractères (10, 26, 36, 52, 62 et 85).
+</p>
 
-De ces éléments, on peut tirer trois propriétés fondamentales d’un mot de passe robuste :
+<p>
+On constate que, pour tous les pools, l’entropie augmente de manière quasi linéaire avec la longueur du mot de passe. Chaque caractère supplémentaire apporte 
+un gain significatif en sécurité, surtout lorsque le pool est important.
+</p>
 
-Longueur : chaque caractère supplémentaire augmente exponentiellement l’espace de recherche.
+<p>Par ailleurs, pour une longueur donnée, plus le pool est grand, plus l’entropie est élevée. Les courbes correspondant aux grands pools (62 et 85 caractères) sont 
+nettement au-dessus de celles des petits pools (10 ou 26). Cela confirme que l’ajout de caractères spéciaux, de chiffres et de majuscules améliore fortement la résistance aux attaques.
+</p>
 
-Diversité du jeu de caractères : une base plus large accroît le nombre de combinaisons possibles.
-
-Aléa réel : un mot de passe ne doit pas suivre de motifs humains prévisibles ni figurer dans des dictionnaires.
-
-En pratique, la longueur et l’aléatoire ont un impact bien plus important que la simple complexité visuelle.
-    </p>
-  </div>
-  <img src="/Assets/articles/article04 image03.png" alt="Mise à jour des politiques">
+</div>
+<img src="/Assets/articles/article04 image03.png" alt="Entopie en fonction du nombre de pool">
 </div>
 
+
+<p>
+<strong>
+Conclusion 
+</strong>
+</p>
+
+<p>
+Ces deux graphiques montrent clairement que la sécurité d’un mot de passe repose principalement sur deux facteurs : sa longueur et la diversité des caractères utilisés. 
+L’augmentation de l’un ou de l’autre améliore l’entropie, mais c’est leur combinaison qui produit le gain le plus important.
+Ainsi, pour créer des mots de passe réellement robustes, il est recommandé d’utiliser des mots de passe longs, composés d’un large éventail de caractères 
+(lettres minuscules et majuscules, chiffres et symboles). Cette approche permet de rendre les attaques par force brute et par dictionnaire beaucoup plus difficiles, voire irréalistes en pratique.
+</p>
+
+
+
+<p>
+De ces éléments, on peut tirer trois propriétés fondamentales d’un mot de passe robuste :
+</p>
+<p>
+  <ul>
+  <li>Longueur : chaque caractère supplémentaire augmente exponentiellement l’espace de recherche.</li>
+  <li>Diversité du jeu de caractères : une base plus large accroît le nombre de combinaisons possibles.</li>
+  <li>Aléa réel : un mot de passe ne doit pas suivre de motifs humains prévisibles ni figurer dans des dictionnaires.</li>
+  </ul>
+</p>
+    
 <div class="note">
 Les identifiants existants ne sont pas rétroactivement modifiés.
 Cette décision vise à éviter toute perturbation des systèmes historiques
