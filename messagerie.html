@@ -63,7 +63,7 @@ main {
 }
 
 .inbox {
-  width: 350px;
+  width: 360px;
   border-right: 1px solid #1b2555;
   overflow-y: auto;
 }
@@ -146,41 +146,54 @@ const supabaseClient = supabase.createClient(
 );
 
 async function loadMessages() {
+
   const { data: { user } } = await supabaseClient.auth.getUser();
+
   if (!user) {
     window.location.href = "connexion.html";
     return;
   }
 
+  const email = user.email;
+
   const { data, error } = await supabaseClient
-    .from("messages")
+    .from("emails")
     .select("*")
-    .eq("receiver", user.id)
-    .order("created_at", { ascending: false });
+    .eq("receiver", email)
+    .order("sent_at", { ascending: false });
+
+  if (error) {
+    console.error(error);
+    return;
+  }
 
   const inbox = document.getElementById("inbox");
   inbox.innerHTML = "";
 
-  data.forEach(msg => {
+  data.forEach(mail => {
     const div = document.createElement("div");
     div.className = "message";
     div.innerHTML = `
-      <strong>${msg.subject}</strong>
-      <span>${new Date(msg.created_at).toLocaleString()}</span>
+      <strong>${mail.sender}</strong>
+      ${mail.subject}<br>
+      <span>${new Date(mail.sent_at).toLocaleString()}</span>
     `;
-    div.onclick = () => openMessage(msg);
+    div.onclick = () => openMessage(mail);
     inbox.appendChild(div);
   });
+
+  if (data.length > 0) openMessage(data[0]);
 }
 
-function openMessage(msg) {
+function openMessage(mail) {
   document.getElementById("reader").innerHTML = `
-    <h2>${msg.subject}</h2>
+    <h2>${mail.subject}</h2>
     <div class="meta">
-      Classification : ${msg.classification || "Interne"}<br>
-      Reçu le ${new Date(msg.created_at).toLocaleString()}
+      De : ${mail.sender}<br>
+      À : ${mail.receiver}<br>
+      Reçu le ${new Date(mail.sent_at).toLocaleString()}
     </div>
-    <div class="content">${msg.content}</div>
+    <div class="content">${mail.body}</div>
   `;
 }
 
