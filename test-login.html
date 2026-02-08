@@ -14,7 +14,7 @@
 </form>
 
 <script>
-const supabase = supabase.createClient(
+const supabaseClient = supabase.createClient(
   "https://fqijbltymdeudnlitcrs.supabase.co",
   "TA_CLE_ANON_ICI"
 );
@@ -25,16 +25,16 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabaseClient.auth.signInWithPassword({
     email,
     password
   });
 
   if (error) {
-    alert(error.message);
+    alert("Erreur : " + error.message);
     console.error(error);
   } else {
-    alert("Connexion OK");
+    alert("Connexion réussie");
     console.log(data);
   }
 });
