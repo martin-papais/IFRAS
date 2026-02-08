@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Test Supabase Login</title>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<form id="login-form">
+  <input id="email" type="email" placeholder="Email" required><br><br>
+  <input id="password" type="password" placeholder="Mot de passe" required><br><br>
+  <button type="submit">Connexion</button>
+</form>
+
+<script>
+const supabase = supabase.createClient(
+  "https://fqijbltymdeudnlitcrs.supabase.co",
+  "TA_CLE_ANON_ICI"
+);
+
+document.getElementById("login-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if (error) {
+    alert(error.message);
+    console.error(error);
+  } else {
+    alert("Connexion OK");
+    console.log(data);
+  }
+});
+</script>
+
+</body>
+</html>
