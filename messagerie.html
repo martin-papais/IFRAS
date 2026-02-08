@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>IFRAS — Messagerie interne</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background-color: #050b1e;
+  color: #e6e6e6;
+}
+
+header {
+  background: linear-gradient(180deg, #0a1a3a, #050b1e);
+  padding: 25px 20px;
+  border-bottom: 1px solid #1b2555;
+}
+
+.header-container {
+  max-width: 1100px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo {
+  height: 60px;
+}
+
+main {
+  display: flex;
+  height: calc(100vh - 110px);
+}
+
+.sidebar {
+  width: 240px;
+  background: #070f2b;
+  border-right: 1px solid #1b2555;
+  padding: 20px;
+}
+
+.sidebar h3 {
+  margin-top: 0;
+  font-size: 16px;
+  color: #c7d2fe;
+}
+
+.folder {
+  margin: 10px 0;
+  font-size: 14px;
+  color: #aab3d6;
+  cursor: pointer;
+}
+
+.folder:hover {
+  color: white;
+}
+
+.inbox {
+  width: 350px;
+  border-right: 1px solid #1b2555;
+  overflow-y: auto;
+}
+
+.message {
+  padding: 15px 18px;
+  border-bottom: 1px solid #1b2555;
+  cursor: pointer;
+}
+
+.message:hover {
+  background: rgba(79,107,237,0.08);
+}
+
+.message strong {
+  display: block;
+  font-size: 14px;
+}
+
+.message span {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.reader {
+  flex: 1;
+  padding: 35px;
+  overflow-y: auto;
+}
+
+.reader h2 {
+  margin-top: 0;
+}
+
+.meta {
+  font-size: 13px;
+  color: #9ca3af;
+  margin-bottom: 20px;
+}
+
+.content {
+  font-size: 15px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-container">
+    <img src="logo.png" class="logo">
+    <h1>Messagerie interne sécurisée</h1>
+  </div>
+</header>
+
+<main>
+
+<div class="sidebar">
+  <h3>Dossiers</h3>
+  <div class="folder">📥 Boîte de réception</div>
+  <div class="folder">⭐ Prioritaires</div>
+  <div class="folder">🗂 Archives</div>
+  <div class="folder">🔒 Classifiés</div>
+</div>
+
+<div class="inbox" id="inbox"></div>
+
+<div class="reader" id="reader">
+  <p>Sélectionnez un message.</p>
+</div>
+
+</main>
+
+<script>
+const supabaseClient = supabase.createClient(
+  "https://fqijbltymdeudnlitcrs.supabase.co",
+  "TA_CLE_ANON_PUBLIQUE"
+);
+
+async function loadMessages() {
+  const { data: { user } } = await supabaseClient.auth.getUser();
+  if (!user) {
+    window.location.href = "connexion.html";
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from("messages")
+    .select("*")
+    .eq("receiver", user.id)
+    .order("created_at", { ascending: false });
+
+  const inbox = document.getElementById("inbox");
+  inbox.innerHTML = "";
+
+  data.forEach(msg => {
+    const div = document.createElement("div");
+    div.className = "message";
+    div.innerHTML = `
+      <strong>${msg.subject}</strong>
+      <span>${new Date(msg.created_at).toLocaleString()}</span>
+    `;
+    div.onclick = () => openMessage(msg);
+    inbox.appendChild(div);
+  });
+}
+
+function openMessage(msg) {
+  document.getElementById("reader").innerHTML = `
+    <h2>${msg.subject}</h2>
+    <div class="meta">
+      Classification : ${msg.classification || "Interne"}<br>
+      Reçu le ${new Date(msg.created_at).toLocaleString()}
+    </div>
+    <div class="content">${msg.content}</div>
+  `;
+}
+
+loadMessages();
+</script>
+
+</body>
+</html>
