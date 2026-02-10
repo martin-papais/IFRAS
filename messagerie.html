@@ -172,7 +172,7 @@ function openMessage(mail) {
     <div class="meta">
       De : ${mail.sender}<br>
       À : ${mail.receiver}<br>
-      ${new Date(mail.sent_at).toLocaleString()}
+      ${new Date(mail.send_at).toLocaleString()}
     </div>
     <div class="content">${mail.body}</div>
     ${mail.attachment ? `<div class="attach"><a href="${mail.attachment}" target="_blank">📎 Pièce jointe</a></div>` : ""}
