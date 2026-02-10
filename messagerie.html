@@ -126,8 +126,8 @@ main {
 <div class="sidebar">
   <h3>Dossiers</h3>
   <div class="folder">📥 Boîte de réception</div>
-  <div class="folder">⭐ Prioritaires</div>
-  <div class="folder">🗂 Archives</div>
+  <div class="folder">⭐ Favoris</div>
+  <div class="folder">🗂 Corbeille</div>
   <div class="folder">🔒 Classifiés</div>
 </div>
 
@@ -176,7 +176,7 @@ async function loadMessages() {
     div.innerHTML = `
       <strong>${mail.sender}</strong>
       ${mail.subject}<br>
-      <span>${new Date(mail.sent_at).toLocaleString()}</span>
+      <span>${new Date(mail.send_at).toLocaleString()}</span>
     `;
     div.onclick = () => openMessage(mail);
     inbox.appendChild(div);
