@@ -135,7 +135,7 @@ async function loadMessages() {
     .from("email")
     .select("*")
     .eq("folder", currentFolder)
-    .order("sent_at", { ascending: false });
+    .order("send_at", { ascending: false });
 
   if (currentFolder === "sent") {
     query = query.eq("sender", userEmail);
