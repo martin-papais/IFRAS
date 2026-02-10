@@ -14,71 +14,59 @@ body {
   background-color: #050b1e;
   color: #e6e6e6;
 }
-
 header {
   background: linear-gradient(180deg, #0a1a3a, #050b1e);
   padding: 20px;
   border-bottom: 1px solid #1b2555;
 }
-
 main {
   display: flex;
   height: calc(100vh - 90px);
 }
-
 .sidebar {
   width: 260px;
   background: #070f2b;
   border-right: 1px solid #1b2555;
   padding: 20px;
 }
-
 .folder {
   margin: 12px 0;
   font-size: 14px;
   color: #aab3d6;
   cursor: pointer;
 }
-
 .folder.active,
 .folder:hover {
   color: white;
   font-weight: 600;
 }
-
 .inbox {
   width: 360px;
   border-right: 1px solid #1b2555;
   overflow-y: auto;
 }
-
 .message {
   padding: 15px;
   border-bottom: 1px solid #1b2555;
   cursor: pointer;
 }
-
 .message:hover {
   background: rgba(79,107,237,0.08);
 }
-
 .reader {
   flex: 1;
   padding: 30px;
   overflow-y: auto;
 }
-
 .meta {
   font-size: 13px;
   color: #9ca3af;
   margin-bottom: 15px;
 }
-
 .content {
   white-space: pre-wrap;
   line-height: 1.7;
 }
-
 .attach {
   margin-top: 20px;
 }
@@ -102,7 +90,6 @@ main {
 </div>
 
 <div class="inbox" id="inbox"></div>
-
 <div class="reader" id="reader">
   <p>Sélectionnez un message.</p>
 </div>
@@ -131,16 +118,19 @@ async function loadMessages() {
 
   userEmail = user.email;
 
-  let query = supabaseClient
-    .from("email")
-    .select("*")
-    .eq("folder", currentFolder)
-    .order("send_at", { ascending: false });
+  let query = supabaseClient.from("email").select("*").order("send_at", { ascending: false });
 
   if (currentFolder === "sent") {
-    query = query.eq("sender", userEmail);
+    // Les mails envoyés par l'utilisateur dans le sender_folder correspondant
+    query = query.eq("sender", userEmail).eq("sender_folder", "sent");
+  } else if (currentFolder === "trash") {
+    // Corbeille : peut contenir mails envoyés ou reçus
+    query = query.or(
+      `receiver.eq.${userEmail}.and(folder.eq.trash),sender.eq.${userEmail}.and(sender_folder.eq.trash)`
+    );
   } else {
-    query = query.eq("receiver", userEmail);
+    // Tous les autres dossiers pour le receiver
+    query = query.eq("receiver", userEmail).eq("folder", currentFolder);
   }
 
   const { data, error } = await query;
@@ -156,9 +146,10 @@ async function loadMessages() {
   }
 
   data.forEach(mail => {
+    const contact = (mail.sender === userEmail) ? mail.receiver : mail.sender;
     const div = document.createElement("div");
     div.className = "message";
-    div.innerHTML = `<strong>${currentFolder === 'sent' ? mail.receiver : mail.sender}</strong><br>${mail.subject}`;
+    div.innerHTML = `<strong>${contact}</strong><br>${mail.subject}`;
     div.onclick = () => openMessage(mail);
     inbox.appendChild(div);
   });
