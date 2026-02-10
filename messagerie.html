@@ -10,45 +10,27 @@
 <style>
 body {
   margin: 0;
-  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  font-family: Segoe UI, Roboto, Arial, sans-serif;
   background-color: #050b1e;
   color: #e6e6e6;
 }
 
 header {
   background: linear-gradient(180deg, #0a1a3a, #050b1e);
-  padding: 25px 20px;
+  padding: 20px;
   border-bottom: 1px solid #1b2555;
-}
-
-.header-container {
-  max-width: 1100px;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.logo {
-  height: 60px;
 }
 
 main {
   display: flex;
-  height: calc(100vh - 110px);
+  height: calc(100vh - 90px);
 }
 
 .sidebar {
-  width: 240px;
+  width: 260px;
   background: #070f2b;
   border-right: 1px solid #1b2555;
   padding: 20px;
-}
-
-.sidebar h3 {
-  margin-top: 0;
-  font-size: 16px;
-  color: #c7d2fe;
 }
 
 .folder {
@@ -56,14 +38,10 @@ main {
   font-size: 14px;
   color: #aab3d6;
   cursor: pointer;
-  transition: 0.2s;
 }
 
+.folder.active,
 .folder:hover {
-  color: white;
-}
-
-.folder.active {
   color: white;
   font-weight: 600;
 }
@@ -75,7 +53,7 @@ main {
 }
 
 .message {
-  padding: 15px 18px;
+  padding: 15px;
   border-bottom: 1px solid #1b2555;
   cursor: pointer;
 }
@@ -84,36 +62,25 @@ main {
   background: rgba(79,107,237,0.08);
 }
 
-.message strong {
-  display: block;
-  font-size: 14px;
-}
-
-.message span {
-  font-size: 12px;
-  color: #9ca3af;
-}
-
 .reader {
   flex: 1;
-  padding: 35px;
+  padding: 30px;
   overflow-y: auto;
-}
-
-.reader h2 {
-  margin-top: 0;
 }
 
 .meta {
   font-size: 13px;
   color: #9ca3af;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .content {
-  font-size: 15px;
-  line-height: 1.7;
   white-space: pre-wrap;
+  line-height: 1.7;
+}
+
+.attach {
+  margin-top: 20px;
 }
 </style>
 </head>
@@ -121,20 +88,17 @@ main {
 <body>
 
 <header>
-  <div class="header-container">
-    <img src="logo.png" class="logo">
-    <h1>Messagerie interne sécurisée</h1>
-  </div>
+  <h1>Messagerie sécurisée IFRAS</h1>
 </header>
 
 <main>
 
 <div class="sidebar">
-  <h3>Dossiers</h3>
-  <div class="folder active" data-folder="inbox">📥 Boîte de réception</div>
-  <div class="folder" data-folder="favorites">⭐ Favoris</div>
-  <div class="folder" data-folder="trash">🗑 Corbeille</div>
-  <div class="folder" data-folder="classified">🔒 Classifiés</div>
+  <div class="folder active" onclick="loadFolder('inbox', this)">📥 Boîte de réception</div>
+  <div class="folder" onclick="loadFolder('sent', this)">📤 Envoyés</div>
+  <div class="folder" onclick="loadFolder('favorites', this)">⭐ Favoris</div>
+  <div class="folder" onclick="loadFolder('classified', this)">🔒 Classifiés</div>
+  <div class="folder" onclick="loadFolder('trash', this)">🗑 Corbeille</div>
 </div>
 
 <div class="inbox" id="inbox"></div>
@@ -152,35 +116,35 @@ const supabaseClient = supabase.createClient(
 );
 
 let currentFolder = "inbox";
+let userEmail = "";
 
-document.querySelectorAll(".folder").forEach(folder => {
-  folder.addEventListener("click", () => {
-    document.querySelectorAll(".folder").forEach(f => f.classList.remove("active"));
-    folder.classList.add("active");
-    currentFolder = folder.dataset.folder;
-    loadMessages();
-  });
-});
+async function loadFolder(folder, el) {
+  document.querySelectorAll(".folder").forEach(f => f.classList.remove("active"));
+  el.classList.add("active");
+  currentFolder = folder;
+  loadMessages();
+}
 
 async function loadMessages() {
   const { data: { user } } = await supabaseClient.auth.getUser();
+  if (!user) return window.location.href = "connexion.html";
 
-  if (!user) {
-    window.location.href = "connexion.html";
-    return;
-  }
+  userEmail = user.email;
 
-  const { data, error } = await supabaseClient
+  let query = supabaseClient
     .from("email")
     .select("*")
-    .eq("receiver", user.email)
     .eq("folder", currentFolder)
-    .order("send_at", { ascending: false });
+    .order("sent_at", { ascending: false });
 
-  if (error) {
-    console.error("Erreur chargement:", error);
-    return;
+  if (currentFolder === "sent") {
+    query = query.eq("sender", userEmail);
+  } else {
+    query = query.eq("receiver", userEmail);
   }
+
+  const { data, error } = await query;
+  if (error) return console.error(error);
 
   const inbox = document.getElementById("inbox");
   inbox.innerHTML = "";
@@ -194,11 +158,7 @@ async function loadMessages() {
   data.forEach(mail => {
     const div = document.createElement("div");
     div.className = "message";
-    div.innerHTML = `
-      <strong>${mail.sender}</strong>
-      ${mail.subject}<br>
-      <span>${new Date(mail.send_at).toLocaleString()}</span>
-    `;
+    div.innerHTML = `<strong>${currentFolder === 'sent' ? mail.receiver : mail.sender}</strong><br>${mail.subject}`;
     div.onclick = () => openMessage(mail);
     inbox.appendChild(div);
   });
@@ -212,9 +172,10 @@ function openMessage(mail) {
     <div class="meta">
       De : ${mail.sender}<br>
       À : ${mail.receiver}<br>
-      Reçu le ${new Date(mail.send_at).toLocaleString()}
+      ${new Date(mail.sent_at).toLocaleString()}
     </div>
     <div class="content">${mail.body}</div>
+    ${mail.attachment ? `<div class="attach"><a href="${mail.attachment}" target="_blank">📎 Pièce jointe</a></div>` : ""}
   `;
 }
 
