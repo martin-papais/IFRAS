@@ -157,10 +157,10 @@ async function loadMessages() {
   const email = user.email;
 
   const { data, error } = await supabaseClient
-    .from("emails")
+    .from("email")
     .select("*")
     .eq("receiver", email)
-    .order("sent_at", { ascending: false });
+    .order("send_at", { ascending: false });
 
   if (error) {
     console.error(error);
