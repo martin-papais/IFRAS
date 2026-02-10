@@ -52,14 +52,20 @@ main {
 }
 
 .folder {
-  margin: 10px 0;
+  margin: 12px 0;
   font-size: 14px;
   color: #aab3d6;
   cursor: pointer;
+  transition: 0.2s;
 }
 
 .folder:hover {
   color: white;
+}
+
+.folder.active {
+  color: white;
+  font-weight: 600;
 }
 
 .inbox {
@@ -125,10 +131,10 @@ main {
 
 <div class="sidebar">
   <h3>Dossiers</h3>
-  <div class="folder">📥 Boîte de réception</div>
-  <div class="folder">⭐ Favoris</div>
-  <div class="folder">🗂 Corbeille</div>
-  <div class="folder">🔒 Classifiés</div>
+  <div class="folder active" data-folder="inbox">📥 Boîte de réception</div>
+  <div class="folder" data-folder="favorites">⭐ Favoris</div>
+  <div class="folder" data-folder="trash">🗑 Corbeille</div>
+  <div class="folder" data-folder="classified">🔒 Classifiés</div>
 </div>
 
 <div class="inbox" id="inbox"></div>
@@ -142,11 +148,21 @@ main {
 <script>
 const supabaseClient = supabase.createClient(
   "https://fqijbltymdeudnlitcrs.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZxaWpibHR5bWRldWRubGl0Y3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzOTQ2NDQsImV4cCI6MjA4NTk3MDY0NH0.HZA0VxkaRTGLRTBA0Vz51mJjw8Xuj8f__yzaQKpGfbE"
+  "CLE_ANON_PUBLIQUE_ICI"
 );
 
-async function loadMessages() {
+let currentFolder = "inbox";
 
+document.querySelectorAll(".folder").forEach(folder => {
+  folder.addEventListener("click", () => {
+    document.querySelectorAll(".folder").forEach(f => f.classList.remove("active"));
+    folder.classList.add("active");
+    currentFolder = folder.dataset.folder;
+    loadMessages();
+  });
+});
+
+async function loadMessages() {
   const { data: { user } } = await supabaseClient.auth.getUser();
 
   if (!user) {
@@ -154,21 +170,26 @@ async function loadMessages() {
     return;
   }
 
-  const email = user.email;
-
   const { data, error } = await supabaseClient
     .from("email")
     .select("*")
-    .eq("receiver", email)
+    .eq("receiver", user.email)
+    .eq("folder", currentFolder)
     .order("send_at", { ascending: false });
 
   if (error) {
-    console.error(error);
+    console.error("Erreur chargement:", error);
     return;
   }
 
   const inbox = document.getElementById("inbox");
   inbox.innerHTML = "";
+
+  if (!data.length) {
+    inbox.innerHTML = "<p style='padding:20px;color:#777'>Aucun message</p>";
+    document.getElementById("reader").innerHTML = "<p>Sélectionnez un message.</p>";
+    return;
+  }
 
   data.forEach(mail => {
     const div = document.createElement("div");
@@ -182,7 +203,7 @@ async function loadMessages() {
     inbox.appendChild(div);
   });
 
-  if (data.length > 0) openMessage(data[0]);
+  openMessage(data[0]);
 }
 
 function openMessage(mail) {
@@ -191,7 +212,7 @@ function openMessage(mail) {
     <div class="meta">
       De : ${mail.sender}<br>
       À : ${mail.receiver}<br>
-      Reçu le ${new Date(mail.sent_at).toLocaleString()}
+      Reçu le ${new Date(mail.send_at).toLocaleString()}
     </div>
     <div class="content">${mail.body}</div>
   `;
