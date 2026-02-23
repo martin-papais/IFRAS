@@ -216,6 +216,10 @@ h2 {
 
 /* ===== AGENDA ===== */
 
+.agenda {
+  background: linear-gradient(135deg, #050b1e, #020617);
+}
+
 .agenda-list {
   display: grid;
   gap: 25px;
@@ -239,6 +243,21 @@ h2 {
   color: white;
 }
 
+.date-box span {
+  display: block;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.event h3 { margin: 0; }
+
+.event p {
+  margin-top: 8px;
+  color: var(--text-soft);
+  font-size: 14px;
+}
+/* ===== FOOTER ===== */
+
 footer {
   background: var(--bg-dark);
   border-top: 1px solid #1b2555;
@@ -247,6 +266,7 @@ footer {
   font-size: 12px;
   color: #6b7280;
 }
+
 
 </style>
 </head>
@@ -363,25 +383,41 @@ footer {
 </div>
 
 </div>
+
 </section>
+<section class="section agenda">
+  <div class="container">
+    <h2>Agenda</h2>
 
-<section class="section">
-<div class="container">
-<h2>Agenda</h2>
+    <div class="agenda-list">
 
-<div class="agenda-list">
+      <div class="event">
+        <div class="date-box"><span>12</span>Mars</div>
+        <div>
+          <h3>Conférence internationale d’astrophysique</h3>
+          <p>Présentation des résultats ORION-3 et échanges avec les partenaires européens.</p>
+        </div>
+      </div>
 
-<div class="event">
-<div class="date-box"><span>12</span>Mars</div>
-<div>
-<h3>Conférence spatiale</h3>
-<p>Présentation des programmes IFRAS.</p>
-</div>
-</div>
+      <div class="event">
+        <div class="date-box"><span>28</span>Avril</div>
+        <div>
+          <h3>Simulation habitabilité martienne</h3>
+          <p>Phase expérimentale grandeur nature du programme ATLAS.</p>
+        </div>
+      </div>
 
-</div>
+      <div class="event">
+        <div class="date-box"><span>15</span>Juin</div>
+        <div>
+          <h3>Sommet spatial international</h3>
+          <p>Rencontres stratégiques avec agences et industriels du secteur spatial.</p>
+        </div>
+      </div>
 
-</div>
+    </div>
+
+  </div>
 </section>
 
 </main>
