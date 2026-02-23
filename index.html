@@ -6,51 +6,63 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+
 :root {
   --bg-main: #050b1e;
   --bg-dark: #020617;
-  --bg-nav: #070f2b;
-  --border: #1f2937;
+  --bg-light: #070f2b;
   --accent: #4f6bed;
-  --text-soft: #c7d2fe;
+  --text-main: #e6e6e6;
+  --text-soft: #aab3d6;
 }
+
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
   font-family: "Segoe UI", Roboto, Arial, sans-serif;
-  background-color: var(--bg-main);
-  color: #e6e6e6;
+  background: var(--bg-main);
+  color: var(--text-main);
 }
 
 /* ===== HEADER ===== */
 header {
-  background: linear-gradient(180deg, #0a1a3a, #050b1e);
-  border-bottom: 1px solid var(--border);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(5,11,30,.75);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #1b2555;
 }
 
 .header-inner {
-  max-width: 1200px;
+  max-width: 1300px;
   margin: auto;
-  padding: 14px 24px;
+  padding: 12px 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
+.header-inner img {
+  height: 48px;
+}
 .header-left {
   display: flex;
   align-items: center;
-  gap: 45px;
+  gap: 40px;
 }
 
 .logo-link img {
   height: 48px;
+  cursor: pointer;
 }
 
 .main-nav {
+  list-style: none;
   display: flex;
   gap: 32px;
-  list-style: none;
   margin: 0;
   padding: 0;
 }
@@ -59,7 +71,7 @@ header {
   text-decoration: none;
   color: var(--text-soft);
   font-size: 14px;
-  letter-spacing: 0.04em;
+  letter-spacing: .05em;
   transition: 0.2s;
 }
 
@@ -81,87 +93,112 @@ header {
   background: var(--accent);
 }
 
-/* ===== HERO ===== */
-.hero {
-  position: relative;
-  height: 150vh;
-  background: url("banniere.png") center/cover no-repeat fixed;
+nav ul {
+  list-style: none;
   display: flex;
-  align-items: center;
+  gap: 35px;
+  margin: 0;
+  padding: 0;
 }
 
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(5,11,30,0), #050b1e 85%);
+nav a {
+  text-decoration: none;
+  color: var(--text-soft);
+  font-size: 14px;
+  letter-spacing: .04em;
+}
+
+nav a:hover {
+  color: white;
+}
+
+/* ===== HERO ===== */
+.hero {
+  height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(5,11,30,.25), rgba(5,11,30,.95)),
+    url("banniere.png") center / cover no-repeat;
+  display: flex;
+  align-items: center;
 }
 
 .hero-content {
-  position: relative;
-  max-width: 1200px;
+  max-width: 1300px;
   margin: auto;
-  padding: 0 24px;
+  padding: 0 30px;
 }
 
-.hero-inner {
+.hero h1 {
+  font-size: clamp(34px, 5vw, 56px);
+  max-width: 900px;
+  margin-bottom: 25px;
+  line-height: 1.1;
+}
+
+.hero p {
+  font-size: 20px;
+  max-width: 650px;
+  color: #c7d2fe;
+}
+
+.hero-btns {
+  margin-top: 40px;
   display: flex;
-  align-items: center;
-  gap: 45px;
-  flex-wrap: wrap;
+  gap: 20px;
 }
 
-.hero-brand img {
-  height: 190px;
+.hero-btns a {
+  padding: 14px 26px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
 }
 
-.hero-text h1 {
-  font-size: clamp(22px, 3vw, 32px);
-  margin-bottom: 15px;
+.hero-btns .primary {
+  background: var(--accent);
+  color: white;
 }
 
-.hero-text p {
-  font-size: 18px;
-  color: var(--text-soft);
-  max-width: 620px;
+.hero-btns .secondary {
+  border: 1px solid var(--accent);
+  color: white;
 }
 
-/* ===== MAIN ===== */
+/* ===== SECTIONS ===== */
 main {
-  max-width: 1200px;
+  max-width: 1300px;
   margin: auto;
-  padding: 80px 24px;
+  padding: 120px 30px;
 }
 
 section {
-  margin-bottom: 90px;
+  margin-bottom: 110px;
 }
 
 h2 {
-  font-size: 24px;
-  border-left: 4px solid var(--accent);
-  padding-left: 14px;
-  margin-bottom: 35px;
+  font-size: 26px;
+  margin-bottom: 40px;
 }
 
 /* ===== GRID ===== */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 35px;
+  gap: 30px;
 }
 
 .card {
-  background: var(--bg-dark);
-  border: 1px solid var(--border);
-  border-radius: 10px;
+  background: var(--bg-light);
+  border: 1px solid #1b2555;
+  border-radius: 8px;
   overflow: hidden;
   transition: 0.3s;
 }
 
 .card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 12px 30px rgba(0,0,0,.45);
+  box-shadow: 0 15px 35px rgba(0,0,0,.4);
 }
 
 .card img {
@@ -174,11 +211,20 @@ h2 {
   padding: 22px;
 }
 
+.card h3 {
+  margin-top: 0;
+}
+
+.card p {
+  color: var(--text-soft);
+  font-size: 14px;
+}
+
 /* ===== ABOUT ===== */
 .about {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 45px;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 50px;
   align-items: center;
 }
 
@@ -187,60 +233,41 @@ h2 {
   border-radius: 10px;
 }
 
-/* ===== LOGIN ===== */
-.login-box {
-  background: var(--bg-nav);
+/* ===== ACCESS ===== */
+.access-box {
+  background: linear-gradient(135deg,#070f2b,#050b1e);
   border: 1px solid #1b2555;
-  padding: 30px;
-  max-width: 420px;
+  padding: 40px;
   border-radius: 10px;
+  max-width: 520px;
 }
 
-.login-box a {
+.access-box a {
   display: inline-block;
-  margin-top: 15px;
-  padding: 10px 18px;
+  margin-top: 20px;
+  padding: 12px 24px;
   background: var(--accent);
   color: white;
+  border-radius: 5px;
   text-decoration: none;
-  border-radius: 6px;
 }
 
 /* ===== FOOTER ===== */
 footer {
-  background: #020617;
-  border-top: 1px solid var(--border);
-  padding: 35px 20px;
+  background: var(--bg-dark);
+  border-top: 1px solid #1b2555;
+  padding: 40px 30px;
+  text-align: center;
   font-size: 12px;
   color: #6b7280;
-  text-align: center;
 }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 900px) {
-  .header-inner {
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .header-left {
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .hero-inner {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .hero-brand img {
-    height: 120px;
-  }
-
-  .about {
-    grid-template-columns: 1fr;
-  }
+@media(max-width:900px){
+  .about { grid-template-columns: 1fr; }
+  nav ul { display: none; }
 }
+
 </style>
 </head>
 
@@ -248,6 +275,8 @@ footer {
 
 <header>
   <div class="header-inner">
+    
+    <!-- Bloc gauche : logo + menu -->
     <div class="header-left">
       <a href="index.html" class="logo-link">
         <img src="logo.png" alt="Logo IFRAS">
@@ -263,95 +292,96 @@ footer {
       </nav>
     </div>
 
+    <!-- Bloc droit : connexion -->
     <div class="header-right">
       <a href="connexion.html" class="login-btn">Connexion</a>
     </div>
+
   </div>
 </header>
 
-<!-- HERO -->
-<div class="hero">
+<section class="hero">
   <div class="hero-content">
-    <div class="hero-inner">
-      <div class="hero-brand">
-        <img src="logo.png" alt="Logo IFRAS">
-      </div>
-      <div class="hero-text">
-        <h1>Institut Français de Recherche Aéronautique et Spatiale</h1>
-        <p>
-          Recherche scientifique, exploration spatiale et technologies avancées
-          au service de la connaissance et de l’avenir.
-        </p>
-      </div>
+    <h1>Institut Français de Recherche Aéronautique et Spatiale</h1>
+    <p>
+      Recherche scientifique, innovation technologique et exploration
+      spatiale au service de la connaissance et de l’avenir.
+    </p>
+
+    <div class="hero-btns">
+      <a href="programmes.html" class="primary">Découvrir nos programmes</a>
+      <a href="recherche.html" class="secondary">Domaines de recherche</a>
     </div>
   </div>
-</div>
+</section>
 
 <main>
 
 <section>
-<h2>Domaines de recherche</h2>
+  <h2>Domaines de recherche</h2>
+  <div class="grid">
 
-<div class="grid">
-  <div class="card">
-    <img src="space-exploration.jpg">
-    <div class="card-content">
-      <h3>Exploration spatiale</h3>
-      <p>Missions scientifiques vers des environnements planétaires extrêmes.</p>
+    <div class="card">
+      <img src="space-exploration.jpg">
+      <div class="card-content">
+        <h3>Exploration spatiale</h3>
+        <p>Missions scientifiques habitées, exploration planétaire, infrastructures orbitales.</p>
+      </div>
     </div>
-  </div>
 
-  <div class="card">
-    <img src="biology.jpg">
-    <div class="card-content">
-      <h3>Sciences du vivant</h3>
-      <p>Exobiologie, biosignatures et adaptation du vivant.</p>
+    <div class="card">
+      <img src="biology.jpg">
+      <div class="card-content">
+        <h3>Sciences du vivant</h3>
+        <p>Exobiologie, biosignatures, adaptation physiologique en milieux extrêmes.</p>
+      </div>
     </div>
-  </div>
 
-  <div class="card">
-    <img src="ai.jpg">
-    <div class="card-content">
-      <h3>Systèmes autonomes</h3>
-      <p>IA, robotique embarquée et navigation autonome.</p>
+    <div class="card">
+      <img src="ai.jpg">
+      <div class="card-content">
+        <h3>Systèmes autonomes</h3>
+        <p>IA embarquée, robotique autonome, navigation intelligente.</p>
+      </div>
     </div>
+
   </div>
-</div>
 </section>
 
 <section>
-<h2>Qui sommes-nous</h2>
+  <h2>Présentation</h2>
+  <div class="about">
+    <div>
+      <p>
+        Fondé en 1967, l’Institut Français de Recherche Aéronautique et Spatiale (IFRAS) est
+        un établissement public dédié à la recherche scientifique avancée dans les
+        domaines de l’aéronautique, du spatial et des technologies émergentes.
+      </p>
 
-<div class="about">
-  <div>
-    <p>
-      Fondé en 1967, l’Institut Français de Recherche Aéronautique et Spatiale (IFRAS)
-      se consacre à l’excellence scientifique et technologique dans les domaines
-      de l’aéronautique et de l’exploration spatiale.
-    </p>
+      <p>
+        L’IFRAS conduit des programmes de recherche nationaux et internationaux
+        couvrant l’ensemble du spectre scientifique, de la recherche fondamentale
+        aux missions habitées de longue durée.
+      </p>
 
-    <p>
-      Depuis plus de cinquante ans, l’institut réunit des équipes pluridisciplinaires
-      de chercheurs, d’ingénieurs et d’experts internationaux, collaborant à la
-      conception de technologies de pointe.
-    </p>
+      <p>
+        Grâce à des partenariats stratégiques avec les agences spatiales, les
+        universités et les industriels, l’institut contribue activement à
+        l’avancement des connaissances et à la préparation des futures
+        générations d’explorateurs et de chercheurs.
+      </p>
+    </div>
 
-    <p>
-      L’IFRAS développe des partenariats stratégiques avec les plus grands acteurs
-      académiques, industriels et institutionnels afin de repousser les frontières
-      de la connaissance.
-    </p>
+    <img src="Assets/accueil/labo01.png">
   </div>
-
-  <img src="Assets/accueil/labo01.png">
-</div>
 </section>
 
 
 </main>
 
 <footer>
-© IFRAS — Institut Français de Recherche Aéronautique et Spatiale
+© IFRAS — Institut Français de Recherche Aéronautique et Spatiale<br>
+Établissement public — Accès réglementé
 </footer>
 
 </body>
