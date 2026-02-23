@@ -6,11 +6,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-
+/* ==== VARIABLES ==== */
 :root {
   --bg-main: #050b1e;
   --bg-dark: #020617;
   --bg-light: #070f2b;
+  --bg-soft: #060c23;
   --accent: #4f6bed;
   --text-main: #e6e6e6;
   --text-soft: #aab3d6;
@@ -25,7 +26,7 @@ body {
   color: var(--text-main);
 }
 
-/* ===== HEADER ===== */
+/* ===== HEADER + HERO (inchangés) ===== */
 header {
   position: fixed;
   top: 0;
@@ -45,9 +46,6 @@ header {
   justify-content: space-between;
 }
 
-.header-inner img {
-  height: 48px;
-}
 .header-left {
   display: flex;
   align-items: center;
@@ -56,7 +54,6 @@ header {
 
 .logo-link img {
   height: 64px;
-  cursor: pointer;
 }
 
 .main-nav {
@@ -72,12 +69,9 @@ header {
   color: var(--text-soft);
   font-size: 14px;
   letter-spacing: .05em;
-  transition: 0.2s;
 }
 
-.main-nav a:hover {
-  color: white;
-}
+.main-nav a:hover { color: white; }
 
 .header-right .login-btn {
   padding: 8px 18px;
@@ -86,33 +80,12 @@ header {
   color: white;
   text-decoration: none;
   font-size: 13px;
-  transition: 0.25s;
 }
 
 .header-right .login-btn:hover {
   background: var(--accent);
 }
 
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 35px;
-  margin: 0;
-  padding: 0;
-}
-
-nav a {
-  text-decoration: none;
-  color: var(--text-soft);
-  font-size: 14px;
-  letter-spacing: .04em;
-}
-
-nav a:hover {
-  color: white;
-}
-
-/* ===== HERO ===== */
 .hero {
   height: 100vh;
   background:
@@ -132,7 +105,6 @@ nav a:hover {
   font-size: clamp(34px, 5vw, 56px);
   max-width: 900px;
   margin-bottom: 25px;
-  line-height: 1.1;
 }
 
 .hero p {
@@ -141,115 +113,145 @@ nav a:hover {
   color: #c7d2fe;
 }
 
-.hero-btns {
-  margin-top: 40px;
-  display: flex;
-  gap: 20px;
-}
-
-.hero-btns a {
-  padding: 14px 26px;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 14px;
-}
-
-.hero-btns .primary {
-  background: var(--accent);
-  color: white;
-}
-
-.hero-btns .secondary {
-  border: 1px solid var(--accent);
-  color: white;
+/* ===== MAIN ===== */
+main {
+  padding-top: 120px;
 }
 
 /* ===== SECTIONS ===== */
-main {
+.section {
+  padding: 100px 30px;
+}
+
+.section-inner {
   max-width: 1300px;
   margin: auto;
-  padding: 120px 30px;
 }
 
-section {
-  margin-bottom: 110px;
+.section h2 {
+  font-size: 28px;
+  margin-bottom: 45px;
 }
 
-h2 {
-  font-size: 26px;
-  margin-bottom: 40px;
+/* ===== A LA UNE ===== */
+.une {
+  background: var(--bg-soft);
 }
 
-/* ===== GRID ===== */
-.grid {
+.une-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 30px;
 }
 
-.card {
+.une-card {
   background: var(--bg-light);
   border: 1px solid #1b2555;
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
-  transition: 0.3s;
+  transition: .3s;
 }
 
-.card:hover {
+.une-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 15px 35px rgba(0,0,0,.4);
+  box-shadow: 0 15px 40px rgba(0,0,0,.5);
 }
 
-.card img {
+.une-card img {
   width: 100%;
-  height: 190px;
+  height: 200px;
   object-fit: cover;
 }
 
-.card-content {
+.une-content {
   padding: 22px;
 }
 
-.card h3 {
-  margin-top: 0;
+.une-content h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
 }
 
-.card p {
-  color: var(--text-soft);
+.une-content p {
   font-size: 14px;
+  color: var(--text-soft);
 }
 
-/* ===== ABOUT ===== */
-.about {
-  display: grid;
-  grid-template-columns: 1.1fr .9fr;
-  gap: 50px;
-  align-items: center;
+/* ===== FIL ACTUALITÉ ===== */
+.news {
+  background: var(--bg-light);
 }
 
-.about img {
-  width: 100%;
-  border-radius: 10px;
+.news-strip {
+  display: flex;
+  gap: 25px;
+  overflow-x: auto;
+  padding-bottom: 10px;
 }
 
-/* ===== ACCESS ===== */
-.access-box {
-  background: linear-gradient(135deg,#070f2b,#050b1e);
-  border: 1px solid #1b2555;
-  padding: 40px;
-  border-radius: 10px;
-  max-width: 520px;
+.news-strip::-webkit-scrollbar {
+  height: 6px;
 }
-
-.access-box a {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 12px 24px;
+.news-strip::-webkit-scrollbar-thumb {
   background: var(--accent);
-  color: white;
-  border-radius: 5px;
-  text-decoration: none;
+  border-radius: 10px;
+}
+
+.news-item {
+  min-width: 300px;
+  background: var(--bg-dark);
+  border: 1px solid #1b2555;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.news-item span {
+  font-size: 12px;
+  color: var(--accent);
+}
+
+.news-item h4 {
+  margin: 8px 0 10px;
+  font-size: 15px;
+}
+
+.news-item p {
+  font-size: 13px;
+  color: var(--text-soft);
+}
+
+/* ===== AGENDA ===== */
+.agenda {
+  background: var(--bg-soft);
+}
+
+.agenda-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+  gap: 25px;
+}
+
+.event {
+  background: var(--bg-light);
+  border: 1px solid #1b2555;
+  border-radius: 8px;
+  padding: 22px;
+}
+
+.event .date {
+  font-size: 13px;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.event h4 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+.event p {
+  font-size: 13px;
+  color: var(--text-soft);
 }
 
 /* ===== FOOTER ===== */
@@ -262,12 +264,9 @@ footer {
   color: #6b7280;
 }
 
-/* ===== RESPONSIVE ===== */
 @media(max-width:900px){
-  .about { grid-template-columns: 1fr; }
-  nav ul { display: none; }
+  .main-nav { display:none; }
 }
-
 </style>
 </head>
 
@@ -275,107 +274,127 @@ footer {
 
 <header>
   <div class="header-inner">
-    
-    <!-- Bloc gauche : logo + menu -->
     <div class="header-left">
       <a href="index.html" class="logo-link">
-        <img src="logo.png" alt="Logo IFRAS">
+        <img src="logo.png">
       </a>
-
-      <nav>
-        <ul class="main-nav">
-          <li><a href="index.html">Accueil</a></li>
-          <li><a href="recherche.html">Recherche</a></li>
-          <li><a href="programmes.html">Programmes</a></li>
-          <li><a href="publications.html">Publications</a></li>
-        </ul>
-      </nav>
+      <ul class="main-nav">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="recherche.html">Recherche</a></li>
+        <li><a href="programmes.html">Programmes</a></li>
+        <li><a href="publications.html">Publications</a></li>
+      </ul>
     </div>
-
-    <!-- Bloc droit : connexion -->
     <div class="header-right">
       <a href="connexion.html" class="login-btn">Connexion</a>
     </div>
-
   </div>
 </header>
 
 <section class="hero">
   <div class="hero-content">
     <h1>Institut Français de Recherche Aéronautique et Spatiale</h1>
-    <p>
-      Recherche scientifique, innovation technologique et exploration
-      spatiale au service de la connaissance et de l’avenir.
-    </p>
-
-    <div class="hero-btns">
-      <a href="programmes.html" class="primary">Découvrir nos programmes</a>
-      <a href="recherche.html" class="secondary">Domaines de recherche</a>
-    </div>
+    <p>Recherche scientifique, innovation technologique et exploration spatiale.</p>
   </div>
 </section>
 
 <main>
 
-<section>
-  <h2>Domaines de recherche</h2>
-  <div class="grid">
+<!-- ===== A LA UNE ===== -->
+<section class="section une">
+  <div class="section-inner">
+    <h2>À la une</h2>
 
-    <div class="card">
-      <img src="space-exploration.jpg">
-      <div class="card-content">
-        <h3>Exploration spatiale</h3>
-        <p>Missions scientifiques habitées, exploration planétaire, infrastructures orbitales.</p>
+    <div class="une-grid">
+      <div class="une-card">
+        <img src="Assets/actu1.jpg">
+        <div class="une-content">
+          <h3>Lancement du programme ARTEMIS-9</h3>
+          <p>Première mission scientifique habitée dédiée à la terraformation expérimentale.</p>
+        </div>
+      </div>
+
+      <div class="une-card">
+        <img src="Assets/actu2.jpg">
+        <div class="une-content">
+          <h3>Nouveau centre de simulation planétaire</h3>
+          <p>Un complexe unique en Europe pour la reproduction d'environnements extrêmes.</p>
+        </div>
+      </div>
+
+      <div class="une-card">
+        <img src="Assets/actu3.jpg">
+        <div class="une-content">
+          <h3>Découverte majeure en exobiologie</h3>
+          <p>Identification de nouvelles biosignatures dans des environnements hostiles.</p>
+        </div>
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="card">
-      <img src="biology.jpg">
-      <div class="card-content">
-        <h3>Sciences du vivant</h3>
-        <p>Exobiologie, biosignatures, adaptation physiologique en milieux extrêmes.</p>
+<!-- ===== FIL ACTUALITE ===== -->
+<section class="section news">
+  <div class="section-inner">
+    <h2>Fil d’actualité</h2>
+
+    <div class="news-strip">
+      <div class="news-item">
+        <span>12 avril 2026</span>
+        <h4>Signature d’un partenariat international</h4>
+        <p>Coopération renforcée avec plusieurs agences spatiales.</p>
       </div>
-    </div>
 
-    <div class="card">
-      <img src="ai.jpg">
-      <div class="card-content">
-        <h3>Systèmes autonomes</h3>
-        <p>IA embarquée, robotique autonome, navigation intelligente.</p>
+      <div class="news-item">
+        <span>04 avril 2026</span>
+        <h4>Succès du test de propulsion ionique</h4>
+        <p>Une avancée majeure pour les missions longues distances.</p>
+      </div>
+
+      <div class="news-item">
+        <span>27 mars 2026</span>
+        <h4>Publication scientifique majeure</h4>
+        <p>Découverte sur la résistance biologique en milieu extrême.</p>
+      </div>
+
+      <div class="news-item">
+        <span>19 mars 2026</span>
+        <h4>Nouvelle plateforme IA embarquée</h4>
+        <p>Navigation autonome pour missions interplanétaires.</p>
       </div>
     </div>
 
   </div>
 </section>
 
-<section>
-  <h2>Présentation</h2>
-  <div class="about">
-    <div>
-      <p>
-        Fondé en 1967, l’Institut Français de Recherche Aéronautique et Spatiale (IFRAS) est
-        un établissement public dédié à la recherche scientifique avancée dans les
-        domaines de l’aéronautique, du spatial et des technologies émergentes.
-      </p>
+<!-- ===== AGENDA ===== -->
+<section class="section agenda">
+  <div class="section-inner">
+    <h2>Agenda</h2>
 
-      <p>
-        L’IFRAS conduit des programmes de recherche nationaux et internationaux
-        couvrant l’ensemble du spectre scientifique, de la recherche fondamentale
-        aux missions habitées de longue durée.
-      </p>
+    <div class="agenda-grid">
 
-      <p>
-        Grâce à des partenariats stratégiques avec les agences spatiales, les
-        universités et les industriels, l’institut contribue activement à
-        l’avancement des connaissances et à la préparation des futures
-        générations d’explorateurs et de chercheurs.
-      </p>
+      <div class="event">
+        <div class="date">22 avril 2026</div>
+        <h4>Conférence internationale IFRAS</h4>
+        <p>Présentation des projets de recherche stratégiques.</p>
+      </div>
+
+      <div class="event">
+        <div class="date">04 mai 2026</div>
+        <h4>Essai moteur orbital</h4>
+        <p>Phase de validation du nouveau système de propulsion.</p>
+      </div>
+
+      <div class="event">
+        <div class="date">18 mai 2026</div>
+        <h4>Briefing mission ARTEMIS-9</h4>
+        <p>Présentation de l’équipage et du calendrier.</p>
+      </div>
+
     </div>
-
-    <img src="Assets/accueil/labo01.png">
   </div>
 </section>
-
 
 </main>
 
