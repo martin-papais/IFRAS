@@ -2,60 +2,124 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Profil — IFRAS</title>
+<title>IFRAS — Coffre-fort sécurisé</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
 
 <style>
-body{
-  margin:0;
-  font-family:Segoe UI,Roboto,Arial,sans-serif;
-  background:#050b1e;
-  color:#e6e6e6;
+:root {
+  --bg-main: #050b1e;
+  --bg-dark: #020617;
+  --bg-light: #070f2b;
+  --accent: #4f6bed;
+  --text-main: #e6e6e6;
+  --text-soft: #aab3d6;
 }
 
-/* ===== Bandeaux identiques ===== */
+* { box-sizing: border-box; }
 
-header{
-  background:linear-gradient(180deg,#0a1a3a,#050b1e);
-  padding:30px 20px;
-  border-bottom:1px solid #1b2555;
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
 }
 
-.header-container{
-  max-width:1100px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  gap:25px;
+/* ===== HEADER ===== */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(5,11,30,.75);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #1b2555;
 }
 
-.logo{width:90px}
-
-nav{
-  background:#070f2b;
-  border-bottom:1px solid #1b2555;
+.header-inner {
+  max-width: 1300px;
+  margin: auto;
+  padding: 12px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-nav ul{
-  max-width:1100px;
-  margin:auto;
-  padding:0;
-  list-style:none;
-  display:flex;
-  gap:30px;
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 40px;
 }
 
-nav li{padding:14px 0}
-
-nav a{
-  color:#d1d5db;
-  text-decoration:none;
-  font-size:14px;
+.logo-link img {
+  height: 60px;
 }
 
-nav a:hover{color:white}
+.main-nav {
+  list-style: none;
+  display: flex;
+  gap: 32px;
+  margin: 0;
+  padding: 0;
+}
+
+.main-nav a {
+  text-decoration: none;
+  color: var(--text-soft);
+  font-size: 14px;
+}
+
+.main-nav a:hover { color: white; }
+
+.header-right .logout-btn {
+  padding: 8px 18px;
+  border-radius: 6px;
+  border: 1px solid var(--accent);
+  color: white;
+  text-decoration: none;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.header-right .logout-btn:hover {
+  background: var(--accent);
+}
+
+/* ===== SOUS NAV ===== */
+.sub-nav {
+  margin-top: 84px;
+  background: var(--bg-light);
+  border-bottom: 1px solid #1b2555;
+}
+
+.sub-nav ul {
+  max-width: 1300px;
+  margin: auto;
+  padding: 0 30px;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+}
+
+.sub-nav li {
+  padding: 14px 0;
+}
+
+.sub-nav a {
+  color: var(--text-soft);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.sub-nav a:hover,
+.sub-nav .active {
+  color: white;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 6px;
+}
 
 /* ===== Profil ===== */
 
@@ -129,8 +193,40 @@ main{
   font-weight:600;
 }
 
+
 </style>
 </head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-left">
+      <a href="index.html" class="logo-link">
+        <img src="logo.png" alt="Logo IFRAS">
+      </a>
+      <nav>
+        <ul class="main-nav">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="recherche.html">Recherche</a></li>
+          <li><a href="programmes.html">Programmes</a></li>
+          <li><a href="publications.html">Publications</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="header-right">
+      <a class="logout-btn" onclick="logout()">Déconnexion</a>
+    </div>
+  </div>
+</header>
+
+<nav class="sub-nav">
+  <ul>
+    <li><a href="messagerie.html">Messagerie</a></li>
+    <li><a href="coffre-fort.html" class="active">Coffre-fort</a></li>
+    <li><a href="profil.html">Profil</a></li>
+  </ul>
+</nav>
 
 <body>
 
