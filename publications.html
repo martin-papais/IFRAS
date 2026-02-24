@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Publications — IFRAS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  --bg-main: #050b1e;
+  --bg-dark: #020617;
+  --bg-light: #070f2b;
+  --border: #1b2555;
+  --accent: #4f6bed;
+  --text-main: #e6e6e6;
+  --text-soft: #aab3d6;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+}
+
+/* ===== HEADER IDENTIQUE INDEX ===== */
+
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(5,11,30,.75);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  max-width: 1300px;
+  margin: auto;
+  padding: 12px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.logo-link img {
+  height: 60px;
+  cursor: pointer;
+}
+
+.main-nav {
+  list-style: none;
+  display: flex;
+  gap: 32px;
+  margin: 0;
+  padding: 0;
+}
+
+.main-nav a {
+  text-decoration: none;
+  color: var(--text-soft);
+  font-size: 14px;
+  letter-spacing: .05em;
+}
+
+.main-nav a:hover { color: white; }
+
+.header-right .login-btn {
+  padding: 8px 18px;
+  border-radius: 6px;
+  border: 1px solid var(--accent);
+  color: white;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.header-right .login-btn:hover {
+  background: var(--accent);
+}
+
+/* ===== SOUS BANDEAU ===== */
+
+.sub-nav {
+  margin-top: 90px;
+  background: var(--bg-light);
+  border-bottom: 1px solid var(--border);
+}
+
+.sub-nav ul {
+  max-width: 1300px;
+  margin: auto;
+  padding: 0 30px;
+  list-style: none;
+  display: flex;
+  gap: 40px;
+}
+
+.sub-nav li {
+  padding: 14px 0;
+}
+
+.sub-nav a {
+  color: var(--text-soft);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.sub-nav a:hover {
+  color: white;
+}
+
+/* ===== MAIN ===== */
+
+main {
+  max-width: 1300px;
+  margin: auto;
+  padding: 70px 30px 90px;
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 50px;
+}
+
+/* ===== PUBLICATIONS ===== */
+
+.publication {
+  display: flex;
+  gap: 35px;
+  margin-bottom: 70px;
+  align-items: center;
+}
+
+.publication:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+.pub-image {
+  width: 45%;
+  height: 240px;
+  background: linear-gradient(135deg, #0a1a3a, #070f2b);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.pub-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .3s;
+}
+
+.pub-image img:hover {
+  transform: scale(1.05);
+}
+
+.pub-content {
+  width: 55%;
+}
+
+.pub-meta {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-bottom: 10px;
+}
+
+.pub-content h2 {
+  margin: 0 0 10px;
+  font-size: 20px;
+}
+
+.pub-content p {
+  font-size: 14px;
+  color: var(--text-soft);
+}
+
+.read-more {
+  display: inline-block;
+  margin-top: 14px;
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.read-more:hover {
+  text-decoration: underline;
+}
+
+/* ===== FOOTER ===== */
+
+footer {
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border);
+  padding: 40px 30px;
+  text-align: center;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 900px) {
+  .publication,
+  .publication:nth-child(even) {
+    flex-direction: column;
+  }
+
+  .pub-image,
+  .pub-content {
+    width: 100%;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+
+    <div class="header-left">
+      <a href="index.html" class="logo-link">
+        <img src="logo.png" alt="Logo IFRAS">
+      </a>
+
+      <nav>
+        <ul class="main-nav">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="recherche.html">Recherche</a></li>
+          <li><a href="programmes.html">Programmes</a></li>
+          <li><a href="publications.html">Publications</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="header-right">
+      <a href="connexion.html" class="login-btn">Connexion</a>
+    </div>
+
+  </div>
+</header>
+
+<!-- ===== SOUS BANDEAU ===== -->
+
+<div class="sub-nav">
+  <ul>
+    <li><a href="publications.html">Publications scientifiques</a></li>
+    <li><a href="#">Publications IFRAS</a></li>
+    <li><a href="#">Évènements</a></li>
+  </ul>
+</div>
+
+<main>
+
+<h1>Publications scientifiques</h1>
+
+<div class="publication">
+  <div class="pub-image">
+    <img src="Assets/publication/mars01.png">
+  </div>
+  <div class="pub-content">
+    <div class="pub-meta">Mars 2026 — Programme ARTEMIS-9</div>
+    <h2>Variabilité inattendue des signatures biologiques en environnement confiné</h2>
+    <p>
+      Analyse approfondie des fluctuations biologiques observées lors de missions d’isolement prolongé.
+    </p>
+    <a href="#" class="read-more">Lire la publication →</a>
+  </div>
+</div>
+
+<div class="publication">
+  <div class="pub-image">
+    <img src="Assets/publication/fusee01.png">
+  </div>
+  <div class="pub-content">
+    <div class="pub-meta">Novembre 2025 — Physiologie humaine</div>
+    <h2>Effets cognitifs de la désynchronisation temporelle en mission longue</h2>
+    <p>
+      Étude des perturbations neurologiques liées aux cycles temporels artificiels prolongés.
+    </p>
+    <a href="#" class="read-more">Lire la publication →</a>
+  </div>
+</div>
+
+<div class="publication">
+  <div class="pub-image">
+    <img src="Assets/publication/poisson01.png">
+  </div>
+  <div class="pub-content">
+    <div class="pub-meta">Avril 2025 — Bases analogues terrestres</div>
+    <h2>Adaptation comportementale en environnement isolé extrême</h2>
+    <p>
+      Étude longitudinale dans des bases analogues simulant des missions extra-planétaires.
+    </p>
+    <a href="#" class="read-more">Lire la publication →</a>
+  </div>
+</div>
+
+<div class="publication">
+  <div class="pub-image">
+    <img src="Assets/publication/puce01.png">
+  </div>
+  <div class="pub-content">
+    <div class="pub-meta">Août 2024 — Intelligence embarquée</div>
+    <h2>Limites décisionnelles des systèmes autonomes en situation ambiguë</h2>
+    <p>
+      Analyse des comportements émergents de systèmes d’IA confrontés à des données contradictoires.
+    </p>
+    <a href="Articles/article04.html" class="read-more">Lire la publication →</a>
+  </div>
+</div>
+
+<div class="publication">
+  <div class="pub-image">
+    <img src="Assets/publication/scientifique01.png">
+  </div>
+  <div class="pub-content">
+    <div class="pub-meta">Janvier 2024 — Sciences du vivant</div>
+    <h2>Résilience microbienne en conditions extrêmes simulées</h2>
+    <p>
+      Étude des capacités d’adaptation microbienne face aux environnements hostiles prolongés.
+    </p>
+    <a href="#" class="read-more">Lire la publication →</a>
+  </div>
+</div>
+
+</main>
+
+<footer>
+© IFRAS — Institut Français de Recherche Aéronautique et Spatiale<br>
+Publications soumises à validation institutionnelle
+</footer>
+
+</body>
+</html>
