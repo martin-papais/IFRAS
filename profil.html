@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Profil — IFRAS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+body{margin:0;font-family:Segoe UI,Roboto,Arial,sans-serif;background:#050b1e;color:#e6e6e6}
+main{max-width:900px;margin:auto;padding:60px 20px}
+.card{background:#070f2b;border:1px solid #1b2555;padding:30px;border-radius:4px}
+label{display:block;margin-top:20px;color:#9ca3af;font-size:13px}
+input,select{width:100%;margin-top:6px;padding:10px;background:#020617;border:1px solid #1b2555;color:white;border-radius:4px}
+button{margin-top:25px;padding:12px 20px;background:#4f6bed;border:none;border-radius:4px;color:white;font-weight:600;cursor:pointer}
+button:hover{opacity:.9}
+.info{margin-top:20px;font-size:13px;color:#aab3d6}
+</style>
+</head>
+
+<body>
+
+<main>
+
+  <h1>Profil utilisateur</h1>
+
+  <div class="card">
+    <label>Email</label>
+    <input id="email" disabled>
+
+    <label>Rôle</label>
+    <select id="role">
+      <option value="user">Utilisateur</option>
+      <option value="chercheur">Chercheur</option>
+      <option value="admin">Administrateur</option>
+    </select>
+
+    <label>Habilitation</label>
+    <select id="clearance">
+      <option value="public">Public</option>
+      <option value="restreint">Restreint</option>
+      <option value="secret">Secret</option>
+      <option value="top-secret">Top Secret</option>
+    </select>
+
+    <button onclick="saveProfile()">Enregistrer</button>
+
+    <div class="info" id="msg"></div>
+  </div>
+
+</main>
+
+<script>
+const supabase = supabase.createClient(
+  'https://TON-PROJET.supabase.co',
+  'TON-ANON-KEY'
+)
+
+let currentUser = null
+let isAdmin = false
+
+async function loadProfile() {
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) location.href = "connexion.html"
+  currentUser = user
+
+  document.getElementById('email').value = user.email
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', user.id)
+    .single()
+
+  document.getElementById('role').value = profile.role
+  document.getElementById('clearance').value = profile.clearance
+
+  isAdmin = profile.role === 'admin'
+
+  if (!isAdmin) {
+    document.getElementById('role').disabled = true
+    document.getElementById('clearance').disabled = true
+  }
+}
+
+async function saveProfile() {
+  if (!isAdmin) return
+
+  const role = document.getElementById('role').value
+  const clearance = document.getElementById('clearance').value
+
+  await supabase
+    .from('profiles')
+    .update({ role, clearance })
+    .eq('id', currentUser.id)
+
+  document.getElementById('msg').textContent = "Profil mis à jour ✔"
+}
+
+loadProfile()
+</script>
+
+</body>
+</html>
