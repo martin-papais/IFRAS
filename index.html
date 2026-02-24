@@ -186,9 +186,13 @@ h2 {
 }
 
 .carousel-track {
-  display: flex;
-  gap: 25px;
-  transition: transform 0.4s ease-in-out;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none;
 }
 
 .carousel-item {
@@ -456,60 +460,52 @@ footer {
 </footer>
 
 <script>
+const container = document.querySelector('.carousel');
 const track = document.querySelector('.carousel-track');
 const items = Array.from(document.querySelectorAll('.carousel-item'));
 const prev = document.querySelector('.prev');
 const next = document.querySelector('.next');
 
-const visibleCount = 4; // nombre de cartes visibles
-let index = visibleCount;
+const visible = 4;
+let index = visible;
 
-const itemWidth = items[0].offsetWidth + 25;
+// --- CLONAGE ---
+const head = items.slice(0, visible).map(el => el.cloneNode(true));
+const tail = items.slice(-visible).map(el => el.cloneNode(true));
 
-// --- CLONAGE POUR BOUCLE INFINIE ---
-const headClones = items.slice(0, visibleCount).map(el => el.cloneNode(true));
-const tailClones = items.slice(-visibleCount).map(el => el.cloneNode(true));
-
-tailClones.forEach(clone => track.insertBefore(clone, track.firstChild));
-headClones.forEach(clone => track.appendChild(clone));
+tail.forEach(el => track.prepend(el));
+head.forEach(el => track.append(el));
 
 const allItems = document.querySelectorAll('.carousel-item');
 
-track.style.transform = `translateX(-${index * itemWidth}px)`;
+// --- CALCUL EXACT ---
+const step = allItems[0].getBoundingClientRect().width + 25;
+
+// --- POSITION INITIALE ---
+track.scrollLeft = index * step;
 
 // --- DÉPLACEMENT ---
-function moveCarousel() {
-  track.style.transition = "transform 0.45s ease-in-out";
-  track.style.transform = `translateX(-${index * itemWidth}px)`;
+function slide(dir) {
+  track.scrollBy({ left: dir * step, behavior: "smooth" });
+
+  index += dir;
+
+  setTimeout(() => {
+    if (index >= items.length + visible) {
+      index = visible;
+      track.scrollLeft = index * step;
+    }
+
+    if (index < visible) {
+      index = items.length + visible - 1;
+      track.scrollLeft = index * step;
+    }
+  }, 450);
 }
 
-// --- RÉINITIALISATION SILENCIEUSE ---
-function resetIfNeeded() {
-  if (index >= items.length + visibleCount) {
-    index = visibleCount;
-    track.style.transition = "none";
-    track.style.transform = `translateX(-${index * itemWidth}px)`;
-  }
-
-  if (index < visibleCount) {
-    index = items.length + visibleCount - 1;
-    track.style.transition = "none";
-    track.style.transform = `translateX(-${index * itemWidth}px)`;
-  }
-}
-
-// --- BOUTONS ---
-next.onclick = () => {
-  index++;
-  moveCarousel();
-  setTimeout(resetIfNeeded, 500);
-};
-
-prev.onclick = () => {
-  index--;
-  moveCarousel();
-  setTimeout(resetIfNeeded, 500);
-};
+// --- EVENTS ---
+next.onclick = () => slide(1);
+prev.onclick = () => slide(-1);
 </script>
 
 
