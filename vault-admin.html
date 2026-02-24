@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Administration du coffre — IFRAS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+body{margin:0;font-family:Segoe UI,Roboto,Arial,sans-serif;background:#050b1e;color:#e6e6e6}
+main{max-width:1100px;margin:auto;padding:60px 20px}
+.card{background:#070f2b;border:1px solid #1b2555;padding:25px;border-radius:4px;margin-bottom:30px}
+input,select,button{padding:10px;background:#020617;border:1px solid #1b2555;color:white;border-radius:4px}
+button{background:#4f6bed;font-weight:600;cursor:pointer}
+table{width:100%;border-collapse:collapse;margin-top:20px}
+th,td{border-bottom:1px solid #1b2555;padding:10px;font-size:13px}
+</style>
+</head>
+
+<body>
+
+<main>
+
+<h1>Administration du coffre-fort</h1>
+
+<div class="card">
+  <h3>Upload sécurisé</h3>
+  <input type="file" id="file"><br><br>
+
+  <select id="programme">
+    <option value="ARTEMIS-9">ARTEMIS-9</option>
+    <option value="ORION-3">ORION-3</option>
+    <option value="HERMES">HERMES</option>
+    <option value="ATLAS">ATLAS</option>
+  </select>
+
+  <select id="classification">
+    <option value="public">Public</option>
+    <option value="restreint">Restreint</option>
+    <option value="secret">Secret</option>
+    <option value="top-secret">Top Secret</option>
+  </select>
+
+  <button onclick="upload()">Envoyer</button>
+</div>
+
+<div class="card">
+  <h3>Fichiers stockés</h3>
+  <table>
+    <thead>
+      <tr><th>Nom</th><th>Programme</th><th>Classification</th><th>Action</th></tr>
+    </thead>
+    <tbody id="files"></tbody>
+  </table>
+</div>
+
+</main>
+
+<script>
+const supabase = supabase.createClient(
+  'https://TON-PROJET.supabase.co',
+  'TON-ANON-KEY'
+)
+
+async function checkAdmin() {
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) location.href="connexion.html"
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('id', user.id)
+    .single()
+
+  if (profile.role !== 'admin') location.href="index.html"
+}
+
+async function upload() {
+  const file = document.getElementById('file').files[0]
+  const programme = document.getElementById('programme').value
+  const classification = document.getElementById('classification').value
+
+  if (!file) return alert("Aucun fichier")
+
+  const path = `${Date.now()}_${file.name}`
+
+  await supabase.storage.from('vault').upload(path, file)
+
+  await supabase.from('vault_files').insert({
+    filename: file.name,
+    storage_path: path,
+    programme,
+    classification
+  })
+
+  loadFiles()
+}
+
+async function loadFiles() {
+  const { data } = await supabase
+    .from('vault_files')
+    .select('*')
+    .order('created_at',{ascending:false})
+
+  const tbody = document.getElementById('files')
+  tbody.innerHTML=''
+
+  data.forEach(f=>{
+    tbody.innerHTML += `
+      <tr>
+        <td>${f.filename}</td>
+        <td>${f.programme}</td>
+        <td>${f.classification}</td>
+        <td><button onclick="del('${f.id}','${f.storage_path}')">Supprimer</button></td>
+      </tr>
+    `
+  })
+}
+
+async function del(id,path){
+  if(!confirm("Supprimer ce fichier ?"))return
+
+  await supabase.storage.from('vault').remove([path])
+  await supabase.from('vault_files').delete().eq('id',id)
+
+  loadFiles()
+}
+
+checkAdmin()
+loadFiles()
+</script>
+
+</body>
+</html>
