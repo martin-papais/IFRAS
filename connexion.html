@@ -8,114 +8,133 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
+:root {
+  --bg-main: #050b1e;
+  --bg-dark: #020617;
+  --bg-light: #070f2b;
+  --accent: #4f6bed;
+  --text-main: #e6e6e6;
+  --text-soft: #aab3d6;
+}
+
+* { box-sizing: border-box; }
+
 body {
   margin: 0;
   font-family: "Segoe UI", Roboto, Arial, sans-serif;
-  background-color: #050b1e;
-  color: #e6e6e6;
+  background: var(--bg-main);
+  color: var(--text-main);
 }
 
-/* ===== HERO BANNER ===== */
-.hero {
-  position: relative;
-  height: 40vh;
-  background: url("banniere.png") center/cover no-repeat fixed;
+/* ===== HEADER ===== */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(5,11,30,.75);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #1b2555;
+}
+
+.header-inner {
+  max-width: 1300px;
+  margin: auto;
+  padding: 12px 30px;
   display: flex;
   align-items: center;
-  overflow: hidden;
+  justify-content: space-between;
 }
 
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(5,11,30,0), #050b1e 85%);
-}
-
-.hero-content {
-  position: relative;
-  width: 100%;
-  max-width: 1100px;
-  margin: auto;
-  padding: 0 40px;
-}
-
-.hero-inner {
+.header-left {
   display: flex;
   align-items: center;
   gap: 40px;
-  flex-wrap: wrap;
 }
 
-.hero-brand img {
-  height: 200px;
+.logo-link img {
+  height: 60px;
+  cursor: pointer;
 }
 
-.hero-text {
-  flex: 1;
-}
-
-.hero-text h1 {
-  font-size: clamp(22px, 3vw, 32px);
-  margin-bottom: 20px;
-  color: #ffffff;
-}
-
-.hero-text p {
-  font-size: 18px;
-  color: #c7d2fe;
-  max-width: 650px;
-}
-
-/* ===== NAV ===== */
-nav {
-  background-color: #070f2b;
-  border-bottom: 1px solid #1f2937;
-}
-
-nav ul {
-  max-width: 1100px;
-  margin: auto;
-  padding: 0;
+.main-nav {
   list-style: none;
   display: flex;
-  gap: 30px;
+  gap: 32px;
+  margin: 0;
+  padding: 0;
 }
 
-nav li {
-  padding: 14px 0;
-}
-
-nav a {
-  color: #d1d5db;
+.main-nav a {
   text-decoration: none;
+  color: var(--text-soft);
+  font-size: 14px;
+  letter-spacing: .05em;
 }
 
-nav a:hover {
+.main-nav a:hover { color: white; }
+
+.header-right .login-btn {
+  padding: 8px 18px;
+  border-radius: 6px;
+  border: 1px solid var(--accent);
   color: white;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.header-right .login-btn:hover {
+  background: var(--accent);
+}
+
+/* ===== HERO ===== */
+.hero {
+  height: 45vh;
+  background:
+    linear-gradient(180deg, rgba(5,11,30,.25), rgba(5,11,30,.95)),
+    url("banniere.png") center / cover no-repeat;
+  display: flex;
+  align-items: center;
+  margin-top: 84px;
+}
+
+.hero-content {
+  max-width: 1300px;
+  margin: auto;
+  padding: 0 30px;
+}
+
+.hero h1 {
+  font-size: clamp(30px, 5vw, 46px);
+  max-width: 900px;
+}
+
+.hero p {
+  font-size: 18px;
+  max-width: 650px;
+  color: #c7d2fe;
 }
 
 /* ===== MAIN ===== */
 main {
-  max-width: 1100px;
+  max-width: 1300px;
   margin: auto;
-  padding: 80px 20px;
+  padding: 90px 30px;
 }
 
 h2 {
-  font-size: 24px;
-  border-left: 4px solid #4f6bed;
-  padding-left: 14px;
+  font-size: 28px;
+  margin-bottom: 30px;
 }
 
 /* ===== LOGIN ===== */
 .login-box {
-  background-color: #070f2b;
+  background: var(--bg-light);
   border: 1px solid #1b2555;
   padding: 40px;
   max-width: 420px;
   border-radius: 10px;
-  margin-top: 30px;
 }
 
 .login-box label {
@@ -161,61 +180,53 @@ h2 {
 
 /* ===== FOOTER ===== */
 footer {
-  background-color: #020617;
-  border-top: 1px solid #1f2937;
-  padding: 30px 20px;
+  background: var(--bg-dark);
+  border-top: 1px solid #1b2555;
+  padding: 40px 30px;
+  text-align: center;
   font-size: 12px;
   color: #6b7280;
-  text-align: center;
 }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-  .hero-inner {
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .hero-brand img {
-    margin-bottom: 20px;
-    height: 120px;
-  }
-}
 </style>
 </head>
 
 <body>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-content">
-    <div class="hero-inner">
-      <div class="hero-brand">
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="header-left">
+      <a href="index.html" class="logo-link">
         <img src="logo.png" alt="Logo IFRAS">
-      </div>
-      <div class="hero-text">
-        <h1>Accès interne sécurisé</h1>
-        <p>
-          Système d’authentification IFRAS — accès réservé au personnel scientifique autorisé.
-        </p>
-      </div>
+      </a>
+      <nav>
+        <ul class="main-nav">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="recherche.html">Recherche</a></li>
+          <li><a href="programmes.html">Programmes</a></li>
+          <li><a href="publications.html">Publications</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="header-right">
+      <a href="connexion.html" class="login-btn">Connexion</a>
     </div>
   </div>
-</div>
+</header>
 
-<!-- NAV -->
-<nav>
-<ul>
-  <li><a href="index.html">Accueil</a></li>
-  <li><a href="recherche.html">Recherche</a></li>
-  <li><a href="programmes.html">Programmes</a></li>
-  <li><a href="publications.html">Publications</a></li>
-  <li><a href="connexion.html">Connexion</a></li>
-</ul>
-</nav>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>Accès interne sécurisé</h1>
+    <p>
+      Système d’authentification IFRAS — accès réservé au personnel scientifique autorisé.
+    </p>
+  </div>
+</section>
 
 <main>
-<section>
+
 <h2>Authentification</h2>
 
 <div class="login-box">
@@ -231,7 +242,6 @@ footer {
   </form>
 </div>
 
-</section>
 </main>
 
 <footer>
@@ -256,7 +266,7 @@ async function login(event) {
   });
 
   if (error) {
-    document.getElementById("error").textContent = 
+    document.getElementById("error").textContent =
       "Identifiants incorrects ou accès refusé.";
   } else {
     window.location.href = "messagerie.html";
@@ -266,5 +276,3 @@ async function login(event) {
 
 </body>
 </html>
-
-
