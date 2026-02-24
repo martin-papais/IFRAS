@@ -8,64 +8,200 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-body{margin:0;font-family:Segoe UI,Roboto,Arial,sans-serif;background:#050b1e;color:#e6e6e6}
-main{max-width:900px;margin:auto;padding:60px 20px}
-.card{background:#070f2b;border:1px solid #1b2555;padding:30px;border-radius:4px}
-label{display:block;margin-top:20px;color:#9ca3af;font-size:13px}
-input,select{width:100%;margin-top:6px;padding:10px;background:#020617;border:1px solid #1b2555;color:white;border-radius:4px}
-button{margin-top:25px;padding:12px 20px;background:#4f6bed;border:none;border-radius:4px;color:white;font-weight:600;cursor:pointer}
-button:hover{opacity:.9}
-.info{margin-top:20px;font-size:13px;color:#aab3d6}
+body{
+  margin:0;
+  font-family:Segoe UI,Roboto,Arial,sans-serif;
+  background:#050b1e;
+  color:#e6e6e6;
+}
+
+/* ===== Bandeaux identiques ===== */
+
+header{
+  background:linear-gradient(180deg,#0a1a3a,#050b1e);
+  padding:30px 20px;
+  border-bottom:1px solid #1b2555;
+}
+
+.header-container{
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  gap:25px;
+}
+
+.logo{width:90px}
+
+nav{
+  background:#070f2b;
+  border-bottom:1px solid #1b2555;
+}
+
+nav ul{
+  max-width:1100px;
+  margin:auto;
+  padding:0;
+  list-style:none;
+  display:flex;
+  gap:30px;
+}
+
+nav li{padding:14px 0}
+
+nav a{
+  color:#d1d5db;
+  text-decoration:none;
+  font-size:14px;
+}
+
+nav a:hover{color:white}
+
+/* ===== Profil ===== */
+
+main{
+  max-width:1000px;
+  margin:auto;
+  padding:60px 20px;
+}
+
+.profile-card{
+  background:#070f2b;
+  border:1px solid #1b2555;
+  padding:35px;
+  border-radius:6px;
+  display:grid;
+  grid-template-columns:180px 1fr;
+  gap:40px;
+}
+
+.avatar{
+  width:160px;
+  height:160px;
+  border-radius:50%;
+  background:#020617;
+  border:2px solid #1b2555;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.info h2{
+  margin:0;
+  font-size:26px;
+}
+
+.info p{
+  margin:6px 0;
+  color:#aab3d6;
+  font-size:14px;
+}
+
+.grid{
+  margin-top:30px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.field{
+  background:#020617;
+  border:1px solid #1b2555;
+  padding:15px 18px;
+  border-radius:4px;
+  font-size:14px;
+}
+
+.label{
+  font-size:12px;
+  color:#9ca3af;
+}
+
+.value{
+  margin-top:5px;
+  font-weight:600;
+}
+
 </style>
 </head>
 
 <body>
 
+<header>
+  <div class="header-container">
+    <img src="logo.png" class="logo">
+    <h1>Espace personnel</h1>
+  </div>
+</header>
+
+<nav>
+  <ul>
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="messagerie.html">Messagerie</a></li>
+    <li><a href="coffre-fort.html">Coffre-fort</a></li>
+    <li><a href="profil.html">Profil</a></li>
+    <li><a href="#" onclick="logout()">Déconnexion</a></li>
+  </ul>
+</nav>
+
 <main>
 
-  <h1>Profil utilisateur</h1>
+<div class="profile-card">
 
-  <div class="card">
-    <label>Email</label>
-    <input id="email" disabled>
-
-    <label>Rôle</label>
-    <select id="role">
-      <option value="user">Utilisateur</option>
-      <option value="chercheur">Chercheur</option>
-      <option value="admin">Administrateur</option>
-    </select>
-
-    <label>Habilitation</label>
-    <select id="clearance">
-      <option value="public">Public</option>
-      <option value="restreint">Restreint</option>
-      <option value="secret">Secret</option>
-      <option value="top-secret">Top Secret</option>
-    </select>
-
-    <button onclick="saveProfile()">Enregistrer</button>
-
-    <div class="info" id="msg"></div>
+  <div class="avatar">
+    <img id="avatar" src="https://via.placeholder.com/160">
   </div>
+
+  <div class="info">
+    <h2 id="fullname">Chargement...</h2>
+    <p id="profession"></p>
+    <p id="email"></p>
+
+    <div class="grid">
+      <div class="field">
+        <div class="label">Date de naissance</div>
+        <div class="value" id="birth"></div>
+      </div>
+
+      <div class="field">
+        <div class="label">Statut</div>
+        <div class="value" id="status"></div>
+      </div>
+
+      <div class="field">
+        <div class="label">Rôle</div>
+        <div class="value" id="role"></div>
+      </div>
+
+      <div class="field">
+        <div class="label">Habilitation</div>
+        <div class="value" id="clearance"></div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
 
 </main>
 
 <script>
 const supabase = supabase.createClient(
-  'https://TON-PROJET.supabase.co',
-  'TON-ANON-KEY'
+  "https://TON-PROJET.supabase.co",
+  "TON-ANON-KEY"
 )
 
-let currentUser = null
-let isAdmin = false
+async function loadProfile(){
 
-async function loadProfile() {
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) location.href = "connexion.html"
-  currentUser = user
-
-  document.getElementById('email').value = user.email
+  const { data:{ user }} = await supabase.auth.getUser()
+  if(!user) location.href="connexion.html"
 
   const { data: profile } = await supabase
     .from('profiles')
@@ -73,29 +209,24 @@ async function loadProfile() {
     .eq('id', user.id)
     .single()
 
-  document.getElementById('role').value = profile.role
-  document.getElementById('clearance').value = profile.clearance
+  document.getElementById('fullname').textContent =
+    profile.first_name + " " + profile.last_name
 
-  isAdmin = profile.role === 'admin'
+  document.getElementById('profession').textContent = profile.profession
+  document.getElementById('email').textContent = user.email
+  document.getElementById('birth').textContent = profile.birth_date
+  document.getElementById('status').textContent = profile.status
+  document.getElementById('role').textContent = profile.role
+  document.getElementById('clearance').textContent = profile.clearance
 
-  if (!isAdmin) {
-    document.getElementById('role').disabled = true
-    document.getElementById('clearance').disabled = true
+  if(profile.avatar_url){
+    document.getElementById('avatar').src = profile.avatar_url
   }
 }
 
-async function saveProfile() {
-  if (!isAdmin) return
-
-  const role = document.getElementById('role').value
-  const clearance = document.getElementById('clearance').value
-
-  await supabase
-    .from('profiles')
-    .update({ role, clearance })
-    .eq('id', currentUser.id)
-
-  document.getElementById('msg').textContent = "Profil mis à jour ✔"
+async function logout(){
+  await supabase.auth.signOut()
+  location.href="connexion.html"
 }
 
 loadProfile()
