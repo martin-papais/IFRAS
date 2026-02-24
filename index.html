@@ -460,53 +460,63 @@ footer {
 </footer>
 
 <script>
-const container = document.querySelector('.carousel');
 const track = document.querySelector('.carousel-track');
 const items = Array.from(document.querySelectorAll('.carousel-item'));
 const prev = document.querySelector('.prev');
 const next = document.querySelector('.next');
 
-const visible = 4;
-let index = visible;
+const visibleCount = 4;
+let index = visibleCount;
 
-// --- CLONAGE ---
-const head = items.slice(0, visible).map(el => el.cloneNode(true));
-const tail = items.slice(-visible).map(el => el.cloneNode(true));
+// largeur EXACTE d'une carte (incluant le gap réel)
+const gap = parseFloat(getComputedStyle(track).gap);
+const itemWidth = items[0].getBoundingClientRect().width + gap;
 
-tail.forEach(el => track.prepend(el));
-head.forEach(el => track.append(el));
+// --- CLONAGE POUR BOUCLE ---
+const headClones = items.slice(0, visibleCount).map(el => el.cloneNode(true));
+const tailClones = items.slice(-visibleCount).map(el => el.cloneNode(true));
 
-const allItems = document.querySelectorAll('.carousel-item');
+tailClones.forEach(clone => track.insertBefore(clone, track.firstChild));
+headClones.forEach(clone => track.appendChild(clone));
 
-// --- CALCUL EXACT ---
-const step = allItems[0].getBoundingClientRect().width + 25;
+// position initiale
+track.style.transform = `translate3d(-${index * itemWidth}px, 0, 0)`;
 
-// --- POSITION INITIALE ---
-track.scrollLeft = index * step;
+// --- MOUVEMENT ---
+function move() {
+  track.style.transition = "transform 0.45s cubic-bezier(.4,0,.2,1)";
+  track.style.transform = `translate3d(-${index * itemWidth}px, 0, 0)`;
+}
 
-// --- DÉPLACEMENT ---
-function slide(dir) {
-  track.scrollBy({ left: dir * step, behavior: "smooth" });
+// --- RESET SILENCIEUX ---
+function resetIfNeeded() {
+  track.style.transition = "none";
 
-  index += dir;
+  if (index >= items.length + visibleCount) {
+    index = visibleCount;
+  }
 
-  setTimeout(() => {
-    if (index >= items.length + visible) {
-      index = visible;
-      track.scrollLeft = index * step;
-    }
+  if (index < visibleCount) {
+    index = items.length + visibleCount - 1;
+  }
 
-    if (index < visible) {
-      index = items.length + visible - 1;
-      track.scrollLeft = index * step;
-    }
-  }, 450);
+  track.style.transform = `translate3d(-${index * itemWidth}px, 0, 0)`;
 }
 
 // --- EVENTS ---
-next.onclick = () => slide(1);
-prev.onclick = () => slide(-1);
+next.onclick = () => {
+  index++;
+  move();
+  setTimeout(resetIfNeeded, 460);
+};
+
+prev.onclick = () => {
+  index--;
+  move();
+  setTimeout(resetIfNeeded, 460);
+};
 </script>
+
 
 
 </body>
