@@ -1,229 +1,330 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Recherche — IFRAS</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<title>Recherche — IFRAS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Roboto, Arial, sans-serif;
-      background-color: #050b1e;
-      color: #e6e6e6;
-      line-height: 1.6;
-    }
+<style>
 
-    header {
-      background: linear-gradient(180deg, #0a1a3a, #050b1e);
-      padding: 30px 20px;
-      border-bottom: 1px solid #1b2555;
-    }
+:root {
+  --bg-main: #050b1e;
+  --bg-dark: #020617;
+  --bg-light: #070f2b;
+  --bg-menu: #081235;
+  --accent: #4f6bed;
+  --text-main: #e6e6e6;
+  --text-soft: #aab3d6;
+}
 
-    .header-container {
-      max-width: 1100px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      gap: 25px;
-    }
+* { box-sizing: border-box; }
 
-    .logo {
-      width: 90px;
-    }
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+}
 
-    nav {
-      background-color: #070f2b;
-      border-bottom: 1px solid #1b2555;
-    }
+/* ===== HEADER PRINCIPAL ===== */
 
-    nav ul {
-      max-width: 1100px;
-      margin: auto;
-      padding: 0;
-      list-style: none;
-      display: flex;
-      gap: 30px;
-    }
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2000;
+  background: rgba(5,11,30,.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #1b2555;
+}
 
-    nav li {
-      padding: 14px 0;
-    }
+.header-inner {
+  max-width: 1300px;
+  margin: auto;
+  padding: 12px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-    nav a {
-      color: #d1d5db;
-      text-decoration: none;
-      font-size: 14px;
-    }
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
 
-    nav a:hover {
-      color: white;
-    }
+.logo-link img {
+  height: 60px;
+}
 
-    main {
-      max-width: 1100px;
-      margin: auto;
-      padding: 60px 20px;
-    }
+.main-nav {
+  list-style: none;
+  display: flex;
+  gap: 32px;
+  margin: 0;
+  padding: 0;
+}
 
-    h1 {
-      font-size: 28px;
-      margin-bottom: 30px;
-    }
+.main-nav a {
+  text-decoration: none;
+  color: var(--text-soft);
+  font-size: 14px;
+  letter-spacing: .05em;
+}
 
-    h2 {
-      font-size: 22px;
-      border-left: 4px solid #4f6bed;
-      padding-left: 12px;
-      margin-top: 50px;
-      margin-bottom: 20px;
-    }
+.main-nav a:hover { color: white; }
 
-    .section {
-      max-width: 800px;
-    }
+.header-right a {
+  padding: 8px 18px;
+  border-radius: 6px;
+  border: 1px solid var(--accent);
+  color: white;
+  text-decoration: none;
+  font-size: 13px;
+}
 
-    .image-placeholder {
-      width: 100%;
-      height: 240px;
-      background: linear-gradient(135deg, #0a1a3a, #070f2b);
-      border: 1px dashed #3b2a6f;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #aab3d6;
-      font-size: 14px;
-      margin: 25px 0;
-    }
+.header-right a:hover {
+  background: var(--accent);
+}
 
-    .research-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 30px;
-      margin-top: 30px;
-    }
+/* ===== SOUS-BANDEAU DEPARTEMENTS ===== */
 
-    .card {
-      background-color: #070f2b;
-      border: 1px solid #1b2555;
-      padding: 20px;
-      border-radius: 4px;
-    }
+.subnav {
+  margin-top: 84px;
+  background: var(--bg-menu);
+  border-bottom: 1px solid #1b2555;
+}
 
-    .card h3 {
-      margin-top: 0;
-      font-size: 16px;
-    }
+.subnav-inner {
+  max-width: 1300px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30px;
+}
 
-    .card p {
-      font-size: 14px;
-      color: #aab3d6;
-    }
+.subnav-item {
+  position: relative;
+}
 
-    footer {
-      background-color: #020617;
-      border-top: 1px solid #1b2555;
-      padding: 30px 20px;
-      font-size: 12px;
-      color: #6b7280;
-    }
+.subnav-item > a {
+  display: block;
+  padding: 14px 10px;
+  color: var(--text-soft);
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: .08em;
+}
 
-    footer .footer-container {
-      max-width: 1100px;
-      margin: auto;
-    }
-  </style>
+.subnav-item:hover > a {
+  color: white;
+}
+
+/* ===== MEGA MENU ===== */
+
+.megamenu {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  background: #060d28;
+  min-width: 320px;
+  border: 1px solid #1b2555;
+  border-top: none;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: .25s ease;
+  z-index: 1500;
+}
+
+.subnav-item:hover .megamenu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.megamenu h4 {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  color: white;
+}
+
+.megamenu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.megamenu li a {
+  display: block;
+  padding: 6px 0;
+  font-size: 13px;
+  color: var(--text-soft);
+  text-decoration: none;
+}
+
+.megamenu li a:hover {
+  color: white;
+}
+
+/* ===== CONTENU ===== */
+
+main {
+  max-width: 1300px;
+  margin: auto;
+  padding: 80px 30px 120px;
+}
+
+h1 {
+  font-size: 34px;
+}
+
+p {
+  max-width: 800px;
+  color: var(--text-soft);
+  line-height: 1.7;
+}
+
+footer {
+  background: var(--bg-dark);
+  border-top: 1px solid #1b2555;
+  padding: 40px 30px;
+  text-align: center;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+</style>
 </head>
 
 <body>
 
 <header>
-  <div class="header-container">
-    <img src="logo.png" alt="Logo IFRAS" class="logo">
-    <h1>Recherche scientifique</h1>
+  <div class="header-inner">
+    <div class="header-left">
+      <a href="index.html" class="logo-link">
+        <img src="logo.png">
+      </a>
+      <ul class="main-nav">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="recherche.html">Recherche</a></li>
+        <li><a href="programmes.html">Programmes</a></li>
+        <li><a href="publications.html">Publications</a></li>
+      </ul>
+    </div>
+    <div class="header-right">
+      <a href="connexion.html">Connexion</a>
+    </div>
   </div>
 </header>
 
-<nav>
-  <ul>
-    <li><a href="index.html">Accueil</a></li>
-    <li><a href="recherche.html">Recherche</a></li>
-    <li><a href="programmes.html">Programmes</a></li>
-    <li><a href="publications.html">Publications</a></li>
-    <li><a href="connexion.html">Connexion</a></li>
-  </ul>
+<!-- SOUS MENU DEPARTEMENTS -->
+<nav class="subnav">
+  <div class="subnav-inner">
+
+    <div class="subnav-item">
+      <a href="#">DAAA</a>
+      <div class="megamenu">
+        <h4><a href="#">Département Aérodynamique & Aéroacoustique</a></h4>
+        <ul>
+          <li><a href="#">Mécanique des fluides</a></li>
+          <li><a href="#">Turbulences</a></li>
+          <li><a href="#">Aéroacoustique</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subnav-item">
+      <a href="#">DMPE</a>
+      <div class="megamenu">
+        <h4><a href="#">Département Multi-Physique pour l’Énergétique</a></h4>
+        <ul>
+          <li><a href="#">Thermodynamique</a></li>
+          <li><a href="#">Combustion</a></li>
+          <li><a href="#">Échanges thermiques</a></li>
+          <li><a href="#">Énergétique spatiale</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subnav-item">
+      <a href="#">DTIS</a>
+      <div class="megamenu">
+        <h4><a href="#">Département Traitement de l’Information & Systèmes</a></h4>
+        <ul>
+          <li><a href="#">Intelligence artificielle</a></li>
+          <li><a href="#">Systèmes autonomes</a></li>
+          <li><a href="#">Traitement du signal</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subnav-item">
+      <a href="#">DEMR</a>
+      <div class="megamenu">
+        <h4><a href="#">Département Énergétique, Matériaux & Résistance</a></h4>
+        <ul>
+          <li><a href="#">Matériaux composites</a></li>
+          <li><a href="#">Structures avancées</a></li>
+          <li><a href="#">Fatigue & rupture</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subnav-item">
+      <a href="#">DOTA</a>
+      <div class="megamenu">
+        <h4><a href="#">Département Optique & Technologies Associées</a></h4>
+        <ul>
+          <li><a href="#">Instrumentation optique</a></li>
+          <li><a href="#">Photonique</a></li>
+          <li><a href="#">Capteurs avancés</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subnav-item">
+      <a href="#">DMAS</a>
+      <div class="megamenu">
+        <h4><a href="#">Département Mathématiques Appliquées & Simulation</a></h4>
+        <ul>
+          <li><a href="#">Calcul haute performance</a></li>
+          <li><a href="#">Modélisation numérique</a></li>
+          <li><a href="#">Simulation multi-physique</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subnav-item">
+      <a href="#">DPHY</a>
+      <div class="megamenu">
+        <h4><a href="#">Département Physique Fondamentale</a></h4>
+        <ul>
+          <li><a href="#">Astrophysique</a></li>
+          <li><a href="#">Physique des plasmas</a></li>
+          <li><a href="#">Rayonnements</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
 </nav>
 
 <main>
 
-  <section class="section">
-    <p>
-      L’IFRAS conduit des programmes de recherche fondamentaux et appliqués
-      dans des environnements extrêmes, en lien avec l’exploration spatiale,
-      les sciences du vivant et les systèmes autonomes avancés.
-    </p>
-
-    <div class="image-placeholder">
-      Image de laboratoire / base de recherche (à venir)
-    </div>
-  </section>
-
-  <section>
-    <h2>Axes de recherche</h2>
-
-    <div class="research-grid">
-
-      <div class="card">
-        <h3>Exobiologie et biosignatures</h3>
-        <p>
-          Étude des formes de vie extrêmophiles, détection de signatures biologiques
-          et analyse de leur viabilité en conditions non terrestres.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Physiologie humaine en mission longue</h3>
-        <p>
-          Recherche sur l’adaptation cognitive et biologique de l’humain
-          à l’isolement, au confinement et aux environnements fermés.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Intelligence embarquée</h3>
-        <p>
-          Systèmes décisionnels autonomes, apprentissage adaptatif et gestion
-          des situations imprévues en mission critique.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Environnements planétaires simulés</h3>
-        <p>
-          Conception et exploitation de bases analogues terrestres
-          pour la préparation de missions habitées.
-        </p>
-      </div>
-
-    </div>
-  </section>
-
-  <section>
-    <h2>Diffusion et confidentialité</h2>
-    <p class="section">
-      Certaines activités de recherche menées par l’IFRAS font l’objet
-      de restrictions de diffusion. Les publications accessibles au public
-      sont mises à disposition après validation par les autorités compétentes.
-    </p>
-  </section>
+<h1>Recherche scientifique</h1>
+<p>
+L’IFRAS conduit des travaux de recherche avancés dans l’ensemble des domaines
+stratégiques liés à l’aéronautique, au spatial et aux systèmes complexes.
+L’organisation scientifique est structurée en départements spécialisés,
+favorisant la transversalité et l’innovation.
+</p>
 
 </main>
 
 <footer>
-  <div class="footer-container">
-    © IFRAS — Institut Français de Recherche Aéronautique et Spatiale<br>
-    Données soumises à réglementation — diffusion contrôlée
-  </div>
+© IFRAS — Institut Français de Recherche Aéronautique et Spatiale
 </footer>
 
 </body>
