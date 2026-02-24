@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>IFRAS — Coffre-fort sécurisé</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root {
+  --bg-main: #050b1e;
+  --bg-dark: #020617;
+  --bg-light: #070f2b;
+  --accent: #4f6bed;
+  --text-main: #e6e6e6;
+  --text-soft: #aab3d6;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+}
+
+/* ===== HEADER ===== */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(5,11,30,.75);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #1b2555;
+}
+
+.header-inner {
+  max-width: 1300px;
+  margin: auto;
+  padding: 12px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.logo-link img {
+  height: 60px;
+}
+
+.main-nav {
+  list-style: none;
+  display: flex;
+  gap: 32px;
+  margin: 0;
+  padding: 0;
+}
+
+.main-nav a {
+  text-decoration: none;
+  color: var(--text-soft);
+  font-size: 14px;
+}
+
+.main-nav a:hover { color: white; }
+
+.header-right .logout-btn {
+  padding: 8px 18px;
+  border-radius: 6px;
+  border: 1px solid var(--accent);
+  color: white;
+  text-decoration: none;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.header-right .logout-btn:hover {
+  background: var(--accent);
+}
+
+/* ===== SOUS NAV ===== */
+.sub-nav {
+  margin-top: 84px;
+  background: var(--bg-light);
+  border-bottom: 1px solid #1b2555;
+}
+
+.sub-nav ul {
+  max-width: 1300px;
+  margin: auto;
+  padding: 0 30px;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+}
+
+.sub-nav li {
+  padding: 14px 0;
+}
+
+.sub-nav a {
+  color: var(--text-soft);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.sub-nav a:hover,
+.sub-nav .active {
+  color: white;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 6px;
+}
+
+/* ===== MAIN ===== */
+main {
+  margin-top: 140px;
+  padding: 60px 30px;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+}
+
+/* ===== SEARCH ===== */
+.search-box {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.search-box input {
+  flex: 1;
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid #1b2555;
+  background: var(--bg-light);
+  color: white;
+  font-size: 15px;
+}
+
+.search-box button {
+  padding: 14px 22px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* ===== RESULTS ===== */
+.results {
+  display: grid;
+  gap: 16px;
+}
+
+.file {
+  background: var(--bg-light);
+  border: 1px solid #1b2555;
+  border-radius: 8px;
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.file-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.file-icon {
+  font-size: 22px;
+}
+
+.file-info h3 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.file-info p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-soft);
+}
+
+.file a {
+  text-decoration: none;
+  color: white;
+  font-size: 13px;
+  border: 1px solid var(--accent);
+  padding: 6px 14px;
+  border-radius: 6px;
+}
+
+.file a:hover {
+  background: var(--accent);
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-left">
+      <a href="index.html" class="logo-link">
+        <img src="logo.png" alt="Logo IFRAS">
+      </a>
+      <nav>
+        <ul class="main-nav">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="recherche.html">Recherche</a></li>
+          <li><a href="programmes.html">Programmes</a></li>
+          <li><a href="publications.html">Publications</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="header-right">
+      <a class="logout-btn" onclick="logout()">Déconnexion</a>
+    </div>
+  </div>
+</header>
+
+<nav class="sub-nav">
+  <ul>
+    <li><a href="messagerie.html">Messagerie</a></li>
+    <li><a href="coffre-fort.html" class="active">Coffre-fort</a></li>
+    <li><a href="profil.html">Profil</a></li>
+  </ul>
+</nav>
+
+<main>
+  <div class="container">
+    <h1>🔐 Coffre-fort sécurisé IFRAS</h1>
+    <p>Recherche de documents classifiés par programme, mission ou mot-clé.</p>
+
+    <div class="search-box">
+      <input id="search" placeholder="Ex: ARTEMIS-9, ORION-3, rapport, simulation...">
+      <button onclick="searchFiles()">Rechercher</button>
+    </div>
+
+    <div class="results" id="results"></div>
+  </div>
+</main>
+
+<script>
+const supabaseClient = supabase.createClient(
+  "https://fqijbltymdeudnlitcrs.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZxaWpibHR5bWRldWRubGl0Y3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzOTQ2NDQsImV4cCI6MjA4NTk3MDY0NH0.HZA0VxkaRTGLRTBA0Vz51mJjw8Xuj8f__yzaQKpGfbE"
+);
+
+async function logout() {
+  await supabaseClient.auth.signOut();
+  window.location.href = "connexion.html";
+}
+
+async function searchFiles() {
+  const term = document.getElementById("search").value.trim();
+
+  if (!term) return;
+
+  const { data, error } = await supabaseClient
+    .from("vault_files")
+    .select("*")
+    .ilike("program", `%${term}%`);
+
+  if (error) return console.error(error);
+
+  renderResults(data);
+}
+
+function renderResults(files) {
+  const box = document.getElementById("results");
+  box.innerHTML = "";
+
+  if (!files.length) {
+    box.innerHTML = "<p style='color:#777'>Aucun fichier trouvé.</p>";
+    return;
+  }
+
+  files.forEach(file => {
+    const div = document.createElement("div");
+    div.className = "file";
+    div.innerHTML = `
+      <div class="file-left">
+        <div class="file-icon">📁</div>
+        <div class="file-info">
+          <h3>${file.filename}</h3>
+          <p>${file.program} — ${file.classification}</p>
+        </div>
+      </div>
+      <a href="${file.file_url}" target="_blank">Télécharger</a>
+    `;
+    box.appendChild(div);
+  });
+}
+</script>
+
+</body>
+</html>
