@@ -185,10 +185,11 @@ h2 {
   overflow: hidden;
 }
 
-.carousel-track {
-  display: flex;
-  gap: 25px;
-  transition: transform 0.4s ease-in-out;
+.carousel-track { 
+  display: flex; 
+  gap: 25px; 
+  transition: transform 0.4s ease-in-out; 
+}
   
 .carousel-item {
   min-width: 300px;
@@ -460,55 +461,54 @@ const items = Array.from(document.querySelectorAll('.carousel-item'));
 const prev = document.querySelector('.prev');
 const next = document.querySelector('.next');
 
-const visibleCount = 4;
+const visibleCount = 4; // nombre de cartes visibles
 let index = visibleCount;
 
-// largeur EXACTE d'une carte (incluant le gap réel)
-const gap = parseFloat(getComputedStyle(track).gap);
-const itemWidth = items[0].getBoundingClientRect().width + gap;
+const itemWidth = items[0].offsetWidth + 25;
 
-// --- CLONAGE POUR BOUCLE ---
+// --- CLONAGE POUR BOUCLE INFINIE ---
 const headClones = items.slice(0, visibleCount).map(el => el.cloneNode(true));
 const tailClones = items.slice(-visibleCount).map(el => el.cloneNode(true));
 
 tailClones.forEach(clone => track.insertBefore(clone, track.firstChild));
 headClones.forEach(clone => track.appendChild(clone));
 
-// position initiale
-track.style.transform = `translate3d(-${index * itemWidth}px, 0, 0)`;
+const allItems = document.querySelectorAll('.carousel-item');
 
-// --- MOUVEMENT ---
-function move() {
-  track.style.transition = "transform 0.45s cubic-bezier(.4,0,.2,1)";
-  track.style.transform = `translate3d(-${index * itemWidth}px, 0, 0)`;
+track.style.transform = `translateX(-${index * itemWidth}px)`;
+
+// --- DÉPLACEMENT ---
+function moveCarousel() {
+  track.style.transition = "transform 0.45s ease-in-out";
+  track.style.transform = `translateX(-${index * itemWidth}px)`;
 }
 
-// --- RESET SILENCIEUX ---
+// --- RÉINITIALISATION SILENCIEUSE ---
 function resetIfNeeded() {
-  track.style.transition = "none";
-
   if (index >= items.length + visibleCount) {
     index = visibleCount;
+    track.style.transition = "none";
+    track.style.transform = `translateX(-${index * itemWidth}px)`;
   }
 
   if (index < visibleCount) {
     index = items.length + visibleCount - 1;
+    track.style.transition = "none";
+    track.style.transform = `translateX(-${index * itemWidth}px)`;
   }
-
-  track.style.transform = `translate3d(-${index * itemWidth}px, 0, 0)`;
 }
 
-// --- EVENTS ---
+// --- BOUTONS ---
 next.onclick = () => {
   index++;
-  move();
-  setTimeout(resetIfNeeded, 460);
+  moveCarousel();
+  setTimeout(resetIfNeeded, 500);
 };
 
 prev.onclick = () => {
   index--;
-  move();
-  setTimeout(resetIfNeeded, 460);
+  moveCarousel();
+  setTimeout(resetIfNeeded, 500);
 };
 </script>
 
