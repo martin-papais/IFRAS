@@ -2,11 +2,10 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>IFRAS — Coffre-fort sécurisé</title>
+<title>IFRAS — Profil utilisateur</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  
 
 <style>
 :root {
@@ -121,12 +120,12 @@ header {
   padding-bottom: 6px;
 }
 
-/* ===== Profil ===== */
+/* ===== PROFIL ===== */
 
 main{
   max-width:1000px;
   margin:auto;
-  padding:60px 20px;
+  padding:160px 20px 60px;
 }
 
 .profile-card{
@@ -192,8 +191,6 @@ main{
   margin-top:5px;
   font-weight:600;
 }
-
-
 </style>
 </head>
 
@@ -203,7 +200,7 @@ main{
   <div class="header-inner">
     <div class="header-left">
       <a href="index.html" class="logo-link">
-        <img src="logo.png" alt="Logo IFRAS">
+        <img src="logo.png">
       </a>
       <nav>
         <ul class="main-nav">
@@ -223,8 +220,8 @@ main{
 <nav class="sub-nav">
   <ul>
     <li><a href="messagerie.html">Messagerie</a></li>
-    <li><a href="coffre-fort.html" class="active">Coffre-fort</a></li>
-    <li><a href="profil.html">Profil</a></li>
+    <li><a href="coffre-fort.html">Coffre-fort</a></li>
+    <li><a href="profil.html" class="active">Profil</a></li>
   </ul>
 </nav>
 
@@ -271,33 +268,39 @@ main{
 
 <script>
 const supabase = supabase.createClient(
-  "https://TON-PROJET.supabase.co",
-  "TON-ANON-KEY"
+  "https://fqijbltymdeudnlitcrs.supabase.co",
+  "TA_CLE_ANON"
 )
 
 async function loadProfile(){
 
-  const { data:{ user }} = await supabase.auth.getUser()
-  if(!user) location.href="connexion.html"
+  const { data:{ user }, error:authError } = await supabase.auth.getUser()
+  if(authError || !user) return location.href="connexion.html"
 
-  const { data: profile } = await supabase
+  const { data: profile, error } = await supabase
     .from('profiles')
     .select('*')
     .eq('id', user.id)
     .single()
 
+  if(error){
+    console.error("Erreur chargement profil:", error)
+    alert("Profil introuvable.")
+    return
+  }
+
   document.getElementById('fullname').textContent =
-    profile.first_name + " " + profiles.last_name
+    profile.first_name + " " + profile.last_name
 
-  document.getElementById('profession').textContent = profiles.profession
-  document.getElementById('email').textContent = users.email
-  document.getElementById('birth').textContent = profiles.birth_date
-  document.getElementById('status').textContent = profiles.status
-  document.getElementById('role').textContent = profiles.role
-  document.getElementById('clearance').textContent = profiles.clearance
+  document.getElementById('profession').textContent = profile.profession || ""
+  document.getElementById('email').textContent = user.email
+  document.getElementById('birth').textContent = profile.birth_date || "-"
+  document.getElementById('status').textContent = profile.status
+  document.getElementById('role').textContent = profile.role
+  document.getElementById('clearance').textContent = profile.clearance
 
-  if(profiles.avatar_url){
-    document.getElementById('avatar').src = profiles.avatar_url
+  if(profile.avatar_url){
+    document.getElementById('avatar').src = profile.avatar_url
   }
 }
 
