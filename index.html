@@ -187,7 +187,6 @@ h2 {
 
 .carousel-track { 
   display: flex; 
-  gap: 25px; 
   transition: transform 0.4s ease-in-out; 
 }
   
@@ -461,29 +460,27 @@ const items = Array.from(document.querySelectorAll('.carousel-item'));
 const prev = document.querySelector('.prev');
 const next = document.querySelector('.next');
 
-const visibleCount = 4; // nombre de cartes visibles
+const visibleCount = 4;
 let index = visibleCount;
 
-const itemWidth = items[0].offsetWidth + 25;
+const itemWidth = items[0].getBoundingClientRect().width + 25;
 
-// --- CLONAGE POUR BOUCLE INFINIE ---
+// --- CLONES ---
 const headClones = items.slice(0, visibleCount).map(el => el.cloneNode(true));
 const tailClones = items.slice(-visibleCount).map(el => el.cloneNode(true));
 
 tailClones.forEach(clone => track.insertBefore(clone, track.firstChild));
 headClones.forEach(clone => track.appendChild(clone));
 
-const allItems = document.querySelectorAll('.carousel-item');
-
 track.style.transform = `translateX(-${index * itemWidth}px)`;
 
-// --- DÉPLACEMENT ---
+// --- MOUVEMENT ---
 function moveCarousel() {
-  track.style.transition = "transform 0.45s ease-in-out";
+  track.style.transition = "transform 0.45s ease";
   track.style.transform = `translateX(-${index * itemWidth}px)`;
 }
 
-// --- RÉINITIALISATION SILENCIEUSE ---
+// --- RESET INVISIBLE ---
 function resetIfNeeded() {
   if (index >= items.length + visibleCount) {
     index = visibleCount;
@@ -510,6 +507,7 @@ prev.onclick = () => {
   moveCarousel();
   setTimeout(resetIfNeeded, 500);
 };
+
 </script>
 
 
