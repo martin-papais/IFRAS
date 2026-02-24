@@ -187,6 +187,7 @@ h2 {
 
 .carousel-track { 
   display: flex; 
+  gap: 25px;
   transition: transform 0.4s ease-in-out; 
 }
   
@@ -476,7 +477,7 @@ track.style.transform = `translateX(-${index * itemWidth}px)`;
 
 // --- MOUVEMENT ---
 function moveCarousel() {
-  track.style.transition = "transform 0.45s ease";
+  track.style.transition = "transform 0.4s ease-in-out";
   track.style.transform = `translateX(-${index * itemWidth}px)`;
 }
 
