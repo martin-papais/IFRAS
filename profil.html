@@ -278,7 +278,7 @@ async function loadProfile(){
   const { data:{ user }, error:authError } = await supabase.auth.getUser()
   if(authError || !user) return location.href="connexion.html"
 
-  const { data: profile, error } = await supabase
+  const { data: profiles, error } = await supabase
     .from('profiles')
     .select('*')
     .eq('id', user.id)
@@ -291,17 +291,17 @@ async function loadProfile(){
   }
 
   document.getElementById('fullname').textContent =
-    profile.first_name + " " + profile.last_name
+    profiles.first_name + " " + profiles.last_name
 
-  document.getElementById('profession').textContent = profile.profession || ""
+  document.getElementById('profession').textContent = profiles.profession || ""
   document.getElementById('email').textContent = user.email
-  document.getElementById('birth').textContent = profile.birth_date || "-"
-  document.getElementById('status').textContent = profile.status
-  document.getElementById('role').textContent = profile.role
-  document.getElementById('clearance').textContent = profile.clearance
+  document.getElementById('birth').textContent = profiles.birth_date || "-"
+  document.getElementById('status').textContent = profiles.status
+  document.getElementById('role').textContent = profiles.role
+  document.getElementById('clearance').textContent = profiles.clearance
 
-  if(profile.avatar_url){
-    document.getElementById('avatar').src = profile.avatar_url
+  if(profiles.avatar_url){
+    document.getElementById('avatar').src = profiles.avatar_url
   }
 }
 
