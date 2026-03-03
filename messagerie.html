@@ -321,7 +321,7 @@ async function loadMessages() {
 
   let query = supabaseClient
     .from("email")
-    .select("id, sender, receiver, subject, body, hidden_body, rgb, send_at, folder, sender_folder, attachment")
+    .select("*")
     .order("send_at", { ascending: false });
 
   if (currentFolder === "sent") {
