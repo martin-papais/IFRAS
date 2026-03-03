@@ -267,7 +267,7 @@ main{
 </main>
 
 <script>
-const supabase = supabase.createClient(
+const supabaseClient = supabase.createClient(
   "https://fqijbltymdeudnlitcrs.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZxaWpibHR5bWRldWRubGl0Y3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzOTQ2NDQsImV4cCI6MjA4NTk3MDY0NH0.HZA0VxkaRTGLRTBA0Vz51mJjw8Xuj8f__yzaQKpGfbE"
 
@@ -275,10 +275,10 @@ const supabase = supabase.createClient(
 
 async function loadProfile(){
 
-  const { data:{ user }, error:authError } = await supabase.auth.getUser()
+  const { data:{ user }, error:authError } = await supabaseClient.auth.getUser()
   if(authError || !user) return location.href="connexion.html"
 
-  const { data: profiles, error } = await supabase
+  const { data: profiles, error } = await supabaseClient
     .from('profiles')
     .select('*')
     .eq('id', user.id)
@@ -306,7 +306,7 @@ async function loadProfile(){
 }
 
 async function logout(){
-  await supabase.auth.signOut()
+  await supabaseClient.auth.signOut()
   location.href="connexion.html"
 }
 
