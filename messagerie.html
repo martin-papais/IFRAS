@@ -96,12 +96,24 @@ header {
 
 .settings-menu.active { display: block; }
 
-.settings-menu label {
-  display: block;
-  font-size: 14px;
-  margin-bottom: 6px;
+.settings-item {
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 4px;
   color: var(--text-soft);
+  font-size: 14px;
 }
+
+.settings-item:hover { background: rgba(79,107,237,0.1); color: white; }
+
+.sub-settings {
+  display: none;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #1b2555;
+}
+
+.sub-settings.active { display: block; }
 
 .color-picker-section {
   display: flex;
@@ -179,7 +191,15 @@ main {
 }
 
 .meta { font-size: 13px; color: #9ca3af; margin-bottom: 15px; }
-.content { white-space: pre-wrap; line-height: 1.7; }
+
+.content { 
+  white-space: pre-wrap; 
+  line-height: 1.7; 
+  padding: 10px;
+  border-radius: 4px;
+  background: var(--bg-main);
+}
+
 .attach { margin-top: 20px; }
 </style>
 </head>
@@ -202,15 +222,19 @@ main {
     <div class="header-right">
       <button class="settings-btn" onclick="toggleSettings()">⚙️</button>
       <div class="settings-menu" id="settingsMenu">
-        <div class="color-picker-section">
-          <label for="bgColorInput">Couleur de fond (palette)</label>
-          <input type="color" id="bgColorInput" value="#050b1e">
+        <div class="settings-item" onclick="toggleSubSettings('bgColorSub')">Couleur de fond</div>
+        <!-- futur paramètres ici -->
+        <div class="sub-settings" id="bgColorSub">
+          <div class="color-picker-section">
+            <label for="bgColorInput">Palette de couleur</label>
+            <input type="color" id="bgColorInput" value="#050b1e">
+          </div>
+          <div class="color-picker-section">
+            <label for="bgColorRGB">Saisie RGB (#rrggbb)</label>
+            <input type="text" id="bgColorRGB" placeholder="#050b1e">
+          </div>
+          <button onclick="saveBgColor()">Save</button>
         </div>
-        <div class="color-picker-section">
-          <label for="bgColorRGB">Ou saisie RGB (#rrggbb)</label>
-          <input type="text" id="bgColorRGB" placeholder="#050b1e">
-        </div>
-        <button onclick="saveBgColor()">Save</button>
       </div>
       <a class="logout-btn" onclick="logout()">Déconnexion</a>
     </div>
@@ -266,27 +290,18 @@ async function loadMessages() {
   if (!user) return window.location.href = "connexion.html";
   userEmail = user.email;
 
-  let query = supabaseClient
-    .from("email")
-    .select("*")
-    .order("send_at", { ascending: false });
-
-  if (currentFolder === "sent") {
-    query = query.eq("sender", userEmail).eq("sender_folder", "sent");
-  } else if (currentFolder === "trash") {
-    query = query.or(
-      `receiver.eq.${userEmail}.and(folder.eq.trash),sender.eq.${userEmail}.and(sender_folder.eq.trash)`
-    );
-  } else {
-    query = query.eq("receiver", userEmail).eq("folder", currentFolder);
-  }
+  let query = supabaseClient.from("email").select("*").order("send_at", { ascending: false });
+  if (currentFolder === "sent") query = query.eq("sender", userEmail).eq("sender_folder", "sent");
+  else if (currentFolder === "trash") query = query.or(
+    `receiver.eq.${userEmail}.and(folder.eq.trash),sender.eq.${userEmail}.and(sender_folder.eq.trash)`
+  );
+  else query = query.eq("receiver", userEmail).eq("folder", currentFolder);
 
   const { data, error } = await query;
   if (error) return console.error(error);
 
   const inbox = document.getElementById("inbox");
   inbox.innerHTML = "";
-
   if (!data.length) {
     inbox.innerHTML = "<p style='padding:20px;color:#777'>Aucun message</p>";
     document.getElementById("reader").innerHTML = "<p>Sélectionnez un message.</p>";
@@ -323,17 +338,20 @@ function toggleSettings() {
   document.getElementById("settingsMenu").classList.toggle("active");
 }
 
+function toggleSubSettings(id) {
+  document.querySelectorAll(".sub-settings").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.toggle("active");
+}
+
 function saveBgColor() {
   const colorInput = document.getElementById("bgColorInput").value;
   const rgbInput = document.getElementById("bgColorRGB").value.trim();
-
   let finalColor = colorInput;
-  if (rgbInput.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i)) {
-    finalColor = rgbInput;
-  }
+  if (rgbInput.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i)) finalColor = rgbInput;
 
-  document.querySelector(".inbox").style.background = finalColor;
-  document.querySelector(".reader").style.background = finalColor;
+  // Appliquer uniquement sur le contenu des messages
+  document.querySelectorAll(".content, .attach").forEach(el => el.style.background = finalColor);
+
   toggleSettings();
 }
 
