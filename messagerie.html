@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>IFRAS — Messagerie interne</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
@@ -14,197 +15,426 @@
   --accent: #4f6bed;
   --text-main: #e6e6e6;
   --text-soft: #aab3d6;
+  --content-bg: #050b1e;
 }
+
 * { box-sizing: border-box; }
+
 body {
   margin: 0;
   font-family: "Segoe UI", Roboto, Arial, sans-serif;
   background: var(--bg-main);
   color: var(--text-main);
 }
-header { position: fixed; top:0; width:100%; z-index:1000;
-  background: rgba(5,11,30,.75); backdrop-filter: blur(10px);
-  border-bottom:1px solid #1b2555; }
-.header-inner { max-width:1300px; margin:auto; padding:12px 30px;
-  display:flex; align-items:center; justify-content:space-between;}
-.header-left { display:flex; align-items:center; gap:40px;}
-.logo-link img { height:60px;}
-.main-nav { list-style:none; display:flex; gap:32px; margin:0; padding:0;}
-.main-nav a { text-decoration:none; color:var(--text-soft); font-size:14px;}
-.main-nav a:hover { color:white;}
-.header-right { display:flex; align-items:center; gap:12px;}
-.logout-btn { padding:8px 18px; border-radius:6px;
-  border:1px solid var(--accent); color:white; text-decoration:none;
-  font-size:13px; cursor:pointer;}
-.logout-btn:hover { background:var(--accent); }
 
-.settings-btn { background:none; border:none; color:white; cursor:pointer; font-size:20px; position:relative;}
-.settings-menu { display:none; position:absolute; right:0; top:35px;
-  background:var(--bg-light); border:1px solid #1b2555; border-radius:6px;
-  padding:10px; z-index:2000; min-width:200px;}
-.settings-menu.active { display:block;}
-.sub-settings { display:none; margin-top:8px; padding-top:8px;
-  border-top:1px solid #1b2555;}
-.sub-settings.active { display:block;}
+/* ===== HEADER ===== */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(5,11,30,.75);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #1b2555;
+}
 
-main { margin-top:140px; display:flex; height:calc(100vh - 140px);}
-.sidebar { width:260px; background:var(--bg-light);
-  border-right:1px solid #1b2555; padding:20px;}
-.folder { margin:12px 0; font-size:14px; color:var(--text-soft); cursor:pointer;}
-.folder.active, .folder:hover { color:white; font-weight:600;}
+.header-inner {
+  max-width: 1300px;
+  margin: auto;
+  padding: 12px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-.inbox { width:360px; border-right:1px solid #1b2555;
-  overflow-y:auto; background:var(--bg-main);}
-.message { padding:15px; border-bottom:1px solid #1b2555; cursor:pointer;}
-.message:hover { background:rgba(79,107,237,0.08);}
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
 
-.reader { flex:1; padding:30px; overflow-y:auto; background:var(--bg-main);}
-.meta { font-size:13px; color:#9ca3af; margin-bottom:15px;}
-.content { white-space:pre-wrap; line-height:1.7;
-  padding:15px; border-radius:4px; background:var(--bg-main);}
-.attach { margin-top:20px;}
+.logo-link img { height: 60px; }
+
+.main-nav { list-style: none; display: flex; gap: 32px; margin: 0; padding: 0; }
+.main-nav a { text-decoration: none; color: var(--text-soft); font-size: 14px; }
+.main-nav a:hover { color: white; }
+
+.header-right { display: flex; align-items: center; gap: 12px; }
+
+.header-right .logout-btn {
+  padding: 8px 18px;
+  border-radius: 6px;
+  border: 1px solid var(--accent);
+  color: white;
+  text-decoration: none;
+  font-size: 13px;
+  cursor: pointer;
+}
+.header-right .logout-btn:hover { background: var(--accent); }
+
+/* ===== Bouton Paramètres ===== */
+.settings-btn {
+  background: none;
+  border: none;
+  color: var(--text-main);
+  cursor: pointer;
+  font-size: 20px;
+  position: relative;
+}
+
+.settings-wrapper {
+  position: relative;
+}
+
+.settings-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 35px;
+  background: var(--bg-light);
+  border: 1px solid #1b2555;
+  border-radius: 6px;
+  padding: 10px;
+  z-index: 2000;
+  min-width: 200px;
+}
+
+.settings-menu.active { display: block; }
+
+.settings-item {
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 4px;
+  color: var(--text-soft);
+  font-size: 14px;
+}
+
+.settings-item:hover { background: rgba(79,107,237,0.1); color: white; }
+
+.sub-settings {
+  display: none;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #1b2555;
+}
+
+.sub-settings.active { display: block; }
+
+.color-picker-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+/* ===== SOUS BANDEAU ===== */
+.sub-nav {
+  margin-top: 84px;
+  background: var(--bg-light);
+  border-bottom: 1px solid #1b2555;
+}
+
+.sub-nav ul {
+  max-width: 1300px;
+  margin: auto;
+  padding: 0 30px;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+}
+
+.sub-nav li { padding: 14px 0; }
+.sub-nav a { color: var(--text-soft); text-decoration: none; font-size: 14px; letter-spacing: .05em; }
+.sub-nav a:hover, .sub-nav .active { color: white; border-bottom: 2px solid var(--accent); padding-bottom: 6px; }
+
+/* ===== LAYOUT ===== */
+main {
+  margin-top: 140px;
+  display: flex;
+  height: calc(100vh - 140px);
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: 260px;
+  background: var(--bg-light);
+  border-right: 1px solid #1b2555;
+  padding: 20px;
+}
+
+.folder {
+  margin: 12px 0;
+  font-size: 14px;
+  color: var(--text-soft);
+  cursor: pointer;
+}
+.folder.active,
+.folder:hover { color: white; font-weight: 600; }
+
+/* ===== LISTE MESSAGES ===== */
+.inbox {
+  width: 360px;
+  border-right: 1px solid #1b2555;
+  overflow-y: auto;
+  background: var(--bg-main);
+}
+
+.message {
+  padding: 15px;
+  border-bottom: 1px solid #1b2555;
+  cursor: pointer;
+}
+.message:hover { background: rgba(79,107,237,0.08); }
+
+/* ===== LECTURE ===== */
+.reader {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+  background: var(--bg-main);
+}
+
+.meta { font-size: 13px; color: #9ca3af; margin-bottom: 15px; }
+
+.content {
+  white-space: pre-wrap;
+  line-height: 1.7;
+  padding: 10px;
+  border-radius: 4px;
+  background: var(--content-bg);
+  transition: background 0.3s ease;
+}
+
+.attach { margin-top: 20px; }
 </style>
 </head>
 
 <body>
 
 <header>
-<div class="header-inner">
-<div class="header-left">
-<a href="index.html" class="logo-link"><img src="logo.png"></a>
-</div>
-<div class="header-right">
-<button class="settings-btn" onclick="toggleSettings()">⚙️</button>
-<div class="settings-menu" id="settingsMenu">
-<div onclick="toggleSubSettings('bgColorSub')">Couleur de fond</div>
-<div class="sub-settings" id="bgColorSub">
-<input type="color" id="bgColorInput" value="#050b1e"><br><br>
-<input type="text" id="bgColorRGB" placeholder="#050b1e"><br><br>
-<button onclick="saveBgColor()">Save</button>
-</div>
-</div>
-<a class="logout-btn" onclick="logout()">Déconnexion</a>
-</div>
-</div>
+  <div class="header-inner">
+    <div class="header-left">
+      <a href="index.html" class="logo-link"><img src="logo.png" alt="Logo IFRAS"></a>
+      <nav>
+        <ul class="main-nav">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="recherche.html">Recherche</a></li>
+          <li><a href="programmes.html">Programmes</a></li>
+          <li><a href="publications.html">Publications</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="header-right">
+      <div class="settings-wrapper">
+        <button class="settings-btn" onclick="toggleSettings()">⚙️</button>
+        <div class="settings-menu" id="settingsMenu">
+          <div class="settings-item" onclick="toggleSubSettings('bgColorSub')">Couleur de fond</div>
+          <!-- futur paramètres ici -->
+          <div class="sub-settings" id="bgColorSub">
+            <div class="color-picker-section">
+              <label for="bgColorInput">Palette de couleur</label>
+              <input type="color" id="bgColorInput" value="#050b1e" oninput="syncColorFromPicker(this.value)">
+            </div>
+            <div class="color-picker-section">
+              <label for="bgColorRGB">Saisie RGB (#rrggbb)</label>
+              <input type="text" id="bgColorRGB" placeholder="#050b1e" oninput="syncColorFromText(this.value)">
+            </div>
+            <button onclick="saveBgColor()">Save</button>
+          </div>
+        </div>
+      </div>
+      <a class="logout-btn" onclick="logout()">Déconnexion</a>
+    </div>
+  </div>
 </header>
 
-<main>
-<div class="sidebar">
-<div class="folder active" onclick="loadFolder('inbox', this)">📥 Boîte de réception</div>
-<div class="folder" onclick="loadFolder('sent', this)">📤 Envoyés</div>
-</div>
+<nav class="sub-nav">
+  <ul>
+    <li><a href="messagerie.html" class="active">Messagerie</a></li>
+    <li><a href="coffre-fort.html">Coffre-fort</a></li>
+    <li><a href="profil.html">Profil</a></li>
+  </ul>
+</nav>
 
-<div class="inbox" id="inbox"></div>
-<div class="reader" id="reader"><p>Sélectionnez un message.</p></div>
+<main>
+  <div class="sidebar">
+    <div class="folder active" onclick="loadFolder('inbox', this)">📥 Boîte de réception</div>
+    <div class="folder" onclick="loadFolder('sent', this)">📤 Envoyés</div>
+    <div class="folder" onclick="loadFolder('favorites', this)">⭐ Favoris</div>
+    <div class="folder" onclick="loadFolder('classified', this)">🔒 Classifiés</div>
+    <div class="folder" onclick="loadFolder('trash', this)">🗑 Corbeille</div>
+  </div>
+
+  <div class="inbox" id="inbox"></div>
+  <div class="reader" id="reader"><p>Sélectionnez un message.</p></div>
 </main>
 
 <script>
 const supabaseClient = supabase.createClient(
-"https://fqijbltymdeudnlitcrs.supabase.co",
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZxaWpibHR5bWRldWRubGl0Y3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzOTQ2NDQsImV4cCI6MjA4NTk3MDY0NH0.HZA0VxkaRTGLRTBA0Vz51mJjw8Xuj8f__yzaQKpGfbE"
+  "https://fqijbltymdeudnlitcrs.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZxaWpibHR5bWRldWRubGl0Y3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzOTQ2NDQsImV4cCI6MjA4NTk3MDY0NH0.HZA0VxkaRTGLRTBA0Vz51mJjw8Xuj8f__yzaQKpGfbE"
 );
 
-let currentFolder="inbox";
-let userEmail="";
-let currentMail=null;
-let currentBgColor="#050b1e";
+let currentFolder = "inbox";
+let userEmail = "";
+let currentMail = null;         // message actuellement affiché
+let currentContentBg = "#050b1e"; // couleur de fond active du contenu
 
-async function logout(){
-await supabaseClient.auth.signOut();
-window.location.href="connexion.html";
+/* ===== UTILS COULEUR ===== */
+
+// Normalise n'importe quel hex (#rgb ou #rrggbb) en #rrggbb minuscule
+function normalizeHex(hex) {
+  hex = hex.trim().toLowerCase();
+  if (/^#[0-9a-f]{3}$/.test(hex)) {
+    return "#" + hex[1]+hex[1] + hex[2]+hex[2] + hex[3]+hex[3];
+  }
+  if (/^#[0-9a-f]{6}$/.test(hex)) return hex;
+  return null;
 }
 
-async function loadFolder(folder,el){
-document.querySelectorAll(".folder").forEach(f=>f.classList.remove("active"));
-el.classList.add("active");
-currentFolder=folder;
-loadMessages();
+// Compare deux hex normalisés
+function colorsMatch(a, b) {
+  const na = normalizeHex(a);
+  const nb = normalizeHex(b);
+  return na && nb && na === nb;
 }
 
-async function loadMessages(){
-const { data:{ user } }=await supabaseClient.auth.getUser();
-if(!user) return window.location.href="connexion.html";
-userEmail=user.email;
-
-let query=supabaseClient.from("email").select("*").order("send_at",{ascending:false});
-if(currentFolder==="sent")
-query=query.eq("sender",userEmail).eq("sender_folder","sent");
-else
-query=query.eq("receiver",userEmail).eq("folder","inbox");
-
-const { data,error }=await query;
-if(error) return console.error(error);
-
-const inbox=document.getElementById("inbox");
-inbox.innerHTML="";
-if(!data.length){
-inbox.innerHTML="<p style='padding:20px;color:#777'>Aucun message</p>";
-return;
+/* ===== LOGOUT ===== */
+async function logout() {
+  await supabaseClient.auth.signOut();
+  window.location.href = "connexion.html";
 }
 
-data.forEach(mail=>{
-const div=document.createElement("div");
-div.className="message";
-div.innerHTML=`<strong>${mail.sender}</strong><br>${mail.subject}`;
-div.onclick=()=>openMessage(mail);
-inbox.appendChild(div);
-});
-
-openMessage(data[0]);
+/* ===== MESSAGES ===== */
+async function loadFolder(folder, el) {
+  document.querySelectorAll(".folder").forEach(f => f.classList.remove("active"));
+  el.classList.add("active");
+  currentFolder = folder;
+  loadMessages();
 }
 
-function openMessage(mail){
-currentMail=mail;
-renderMessage();
+async function loadMessages() {
+  const { data: { user } } = await supabaseClient.auth.getUser();
+  if (!user) return window.location.href = "connexion.html";
+  userEmail = user.email;
+
+  let query = supabaseClient
+    .from("email")
+    .select("id, sender, receiver, subject, body, hidden_body, rgb, send_at, folder, sender_folder, attachment")
+    .order("send_at", { ascending: false });
+
+  if (currentFolder === "sent") {
+    query = query.eq("sender", userEmail).eq("sender_folder", "sent");
+  } else if (currentFolder === "trash") {
+    query = query.or(
+      `receiver.eq.${userEmail}.and(folder.eq.trash),sender.eq.${userEmail}.and(sender_folder.eq.trash)`
+    );
+  } else {
+    query = query.eq("receiver", userEmail).eq("folder", currentFolder);
+  }
+
+  const { data, error } = await query;
+  if (error) return console.error(error);
+
+  const inbox = document.getElementById("inbox");
+  inbox.innerHTML = "";
+
+  if (!data.length) {
+    inbox.innerHTML = "<p style='padding:20px;color:#777'>Aucun message</p>";
+    document.getElementById("reader").innerHTML = "<p>Sélectionnez un message.</p>";
+    currentMail = null;
+    return;
+  }
+
+  data.forEach(mail => {
+    const contact = (mail.sender === userEmail) ? mail.receiver : mail.sender;
+    const div = document.createElement("div");
+    div.className = "message";
+    div.innerHTML = `<strong>${contact}</strong><br>${mail.subject}`;
+    div.onclick = () => openMessage(mail);
+    inbox.appendChild(div);
+  });
+
+  openMessage(data[0]);
 }
 
-function renderMessage(){
-if(!currentMail) return;
-
-let bodyToShow=currentMail.body;
-
-if(currentMail.magic_rgb &&
-currentMail.hidden_body &&
-currentBgColor.toLowerCase()===currentMail.magic_rgb.toLowerCase()){
-bodyToShow=currentMail.hidden_body;
+function openMessage(mail) {
+  currentMail = mail;
+  renderMessage();
 }
 
-document.getElementById("reader").innerHTML=`
-<h2>${currentMail.subject}</h2>
-<div class="meta">
-De : ${currentMail.sender}<br>
-À : ${currentMail.receiver}<br>
-${new Date(currentMail.send_at).toLocaleString()}
-</div>
-<div class="content" style="background:${currentBgColor}">
-${bodyToShow}
-</div>
-${currentMail.attachment?`<div class="attach">
-<a href="${currentMail.attachment}" target="_blank">📎 Pièce jointe</a>
-</div>`:""}
-`;
+// Détermine quel body afficher selon la couleur de fond actuelle
+function resolveBody(mail) {
+  if (
+    mail.hidden_body &&
+    mail.rgb &&
+    colorsMatch(currentContentBg, mail.rgb)
+  ) {
+    return mail.hidden_body;
+  }
+  return mail.body;
 }
 
-function toggleSettings(){
-document.getElementById("settingsMenu").classList.toggle("active");
+function renderMessage() {
+  if (!currentMail) return;
+  const mail = currentMail;
+  const bodyToShow = resolveBody(mail);
+
+  document.getElementById("reader").innerHTML = `
+    <h2>${mail.subject}</h2>
+    <div class="meta">
+      De : ${mail.sender}<br>
+      À : ${mail.receiver}<br>
+      ${new Date(mail.send_at).toLocaleString()}
+    </div>
+    <div class="content" style="background:${currentContentBg}">${bodyToShow}</div>
+    ${mail.attachment ? `<div class="attach"><a href="${mail.attachment}" target="_blank">📎 Pièce jointe</a></div>` : ""}
+  `;
 }
 
-function toggleSubSettings(id){
-document.querySelectorAll(".sub-settings").forEach(s=>s.classList.remove("active"));
-document.getElementById(id).classList.toggle("active");
+/* ===== PARAMÈTRES ===== */
+function toggleSettings() {
+  document.getElementById("settingsMenu").classList.toggle("active");
 }
 
-function saveBgColor(){
-const colorInput=document.getElementById("bgColorInput").value;
-const rgbInput=document.getElementById("bgColorRGB").value.trim();
-let finalColor=colorInput;
-if(rgbInput.match(/^#([0-9a-f]{6})$/i)) finalColor=rgbInput;
-
-currentBgColor=finalColor;
-renderMessage();
-toggleSettings();
+function toggleSubSettings(id) {
+  document.querySelectorAll(".sub-settings").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.toggle("active");
 }
 
+// Synchro picker → champ texte
+function syncColorFromPicker(value) {
+  document.getElementById("bgColorRGB").value = value;
+}
+
+// Synchro champ texte → picker (seulement si valeur valide)
+function syncColorFromText(value) {
+  const norm = normalizeHex(value);
+  if (norm) document.getElementById("bgColorInput").value = norm;
+}
+
+function saveBgColor() {
+  const colorInput = document.getElementById("bgColorInput").value;
+  const rgbInput   = document.getElementById("bgColorRGB").value.trim();
+
+  let finalColor = colorInput; // valeur picker par défaut
+  const norm = normalizeHex(rgbInput);
+  if (norm) finalColor = norm; // le champ texte prime s'il est valide
+
+  currentContentBg = finalColor;
+
+  // Met à jour le fond du contenu déjà affiché sans recharger tout le reader
+  const contentEl = document.querySelector("#reader .content");
+  if (contentEl) contentEl.style.background = finalColor;
+
+  // Redessine le message pour switcher body / hidden_body si besoin
+  renderMessage();
+
+  toggleSettings();
+}
+
+/* ===== LANCEMENT ===== */
 loadMessages();
 </script>
 
