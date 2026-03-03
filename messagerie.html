@@ -72,14 +72,13 @@ header {
 }
 .header-right .logout-btn:hover { background: var(--accent); }
 
-/* ===== Bouton Paramètres ===== */
+/* ===== Bouton Parametres ===== */
 .settings-btn {
   background: none;
   border: none;
   color: var(--text-main);
   cursor: pointer;
   font-size: 20px;
-  position: relative;
 }
 
 .settings-wrapper {
@@ -150,7 +149,7 @@ header {
 
 /* ===== LAYOUT ===== */
 main {
-  margin-top: 140px;
+  margin-top: 0;
   display: flex;
   height: calc(100vh - 140px);
 }
@@ -227,10 +226,10 @@ main {
     </div>
     <div class="header-right">
       <div class="settings-wrapper">
-        <button class="settings-btn" onclick="toggleSettings()">⚙️</button>
+        <button class="settings-btn" onclick="toggleSettings()">&#9881;&#65039;</button>
         <div class="settings-menu" id="settingsMenu">
           <div class="settings-item" onclick="toggleSubSettings('bgColorSub')">Couleur de fond</div>
-          <!-- futur paramètres ici -->
+          <!-- futur parametres ici -->
           <div class="sub-settings" id="bgColorSub">
             <div class="color-picker-section">
               <label for="bgColorInput">Palette de couleur</label>
@@ -244,7 +243,7 @@ main {
           </div>
         </div>
       </div>
-      <a class="logout-btn" onclick="logout()">Déconnexion</a>
+      <a class="logout-btn" onclick="logout()">Deconnexion</a>
     </div>
   </div>
 </header>
@@ -259,15 +258,15 @@ main {
 
 <main>
   <div class="sidebar">
-    <div class="folder active" onclick="loadFolder('inbox', this)">📥 Boîte de réception</div>
-    <div class="folder" onclick="loadFolder('sent', this)">📤 Envoyés</div>
-    <div class="folder" onclick="loadFolder('favorites', this)">⭐ Favoris</div>
-    <div class="folder" onclick="loadFolder('classified', this)">🔒 Classifiés</div>
-    <div class="folder" onclick="loadFolder('trash', this)">🗑 Corbeille</div>
+    <div class="folder active" onclick="loadFolder('inbox', this)">&#128229; Boite de reception</div>
+    <div class="folder" onclick="loadFolder('sent', this)">&#128228; Envoyes</div>
+    <div class="folder" onclick="loadFolder('favorites', this)">&#11088; Favoris</div>
+    <div class="folder" onclick="loadFolder('classified', this)">&#128274; Classes</div>
+    <div class="folder" onclick="loadFolder('trash', this)">&#128465; Corbeille</div>
   </div>
 
   <div class="inbox" id="inbox"></div>
-  <div class="reader" id="reader"><p>Sélectionnez un message.</p></div>
+  <div class="reader" id="reader"><p>Selectionnez un message.</p></div>
 </main>
 
 <script>
@@ -278,12 +277,11 @@ const supabaseClient = supabase.createClient(
 
 let currentFolder = "inbox";
 let userEmail = "";
-let currentMail = null;         // message actuellement affiché
-let currentContentBg = "#050b1e"; // couleur de fond active du contenu
+let currentMail = null;
+let currentContentBg = "#050b1e";
 
 /* ===== UTILS COULEUR ===== */
 
-// Normalise n'importe quel hex (#rgb ou #rrggbb) en #rrggbb minuscule
 function normalizeHex(hex) {
   hex = hex.trim().toLowerCase();
   if (/^#[0-9a-f]{3}$/.test(hex)) {
@@ -293,7 +291,6 @@ function normalizeHex(hex) {
   return null;
 }
 
-// Compare deux hex normalisés
 function colorsMatch(a, b) {
   const na = normalizeHex(a);
   const nb = normalizeHex(b);
@@ -328,7 +325,7 @@ async function loadMessages() {
     query = query.eq("sender", userEmail).eq("sender_folder", "sent");
   } else if (currentFolder === "trash") {
     query = query.or(
-      `receiver.eq.${userEmail}.and(folder.eq.trash),sender.eq.${userEmail}.and(sender_folder.eq.trash)`
+      "receiver.eq." + userEmail + ".and(folder.eq.trash),sender.eq." + userEmail + ".and(sender_folder.eq.trash)"
     );
   } else {
     query = query.eq("receiver", userEmail).eq("folder", currentFolder);
@@ -342,7 +339,7 @@ async function loadMessages() {
 
   if (!data.length) {
     inbox.innerHTML = "<p style='padding:20px;color:#777'>Aucun message</p>";
-    document.getElementById("reader").innerHTML = "<p>Sélectionnez un message.</p>";
+    document.getElementById("reader").innerHTML = "<p>Selectionnez un message.</p>";
     currentMail = null;
     return;
   }
@@ -351,7 +348,7 @@ async function loadMessages() {
     const contact = (mail.sender === userEmail) ? mail.receiver : mail.sender;
     const div = document.createElement("div");
     div.className = "message";
-    div.innerHTML = `<strong>${contact}</strong><br>${mail.subject}`;
+    div.innerHTML = "<strong>" + contact + "</strong><br>" + mail.subject;
     div.onclick = () => openMessage(mail);
     inbox.appendChild(div);
   });
@@ -364,7 +361,6 @@ function openMessage(mail) {
   renderMessage();
 }
 
-// Détermine quel body afficher selon la couleur de fond actuelle
 function resolveBody(mail) {
   if (
     mail.hidden_body &&
@@ -381,34 +377,39 @@ function renderMessage() {
   const mail = currentMail;
   const bodyToShow = resolveBody(mail);
 
-  document.getElementById("reader").innerHTML = `
-    <h2>${mail.subject}</h2>
-    <div class="meta">
-      De : ${mail.sender}<br>
-      À : ${mail.receiver}<br>
-      ${new Date(mail.send_at).toLocaleString()}
-    </div>
-    <div class="content" style="background:${currentContentBg}">${bodyToShow}</div>
-    ${mail.attachment ? `<div class="attach"><a href="${mail.attachment}" target="_blank">📎 Pièce jointe</a></div>` : ""}
-  `;
+  document.getElementById("reader").innerHTML =
+    "<h2>" + mail.subject + "</h2>" +
+    "<div class='meta'>De : " + mail.sender + "<br>A : " + mail.receiver + "<br>" + new Date(mail.send_at).toLocaleString() + "</div>" +
+    "<div class='content' style='background:" + currentContentBg + "'>" + bodyToShow + "</div>" +
+    (mail.attachment ? "<div class='attach'><a href='" + mail.attachment + "' target='_blank'>&#128206; Piece jointe</a></div>" : "");
 }
 
-/* ===== PARAMÈTRES ===== */
+/* ===== PARAMETRES ===== */
 function toggleSettings() {
-  document.getElementById("settingsMenu").classList.toggle("active");
+  const menu = document.getElementById("settingsMenu");
+  const isOpening = !menu.classList.contains("active");
+
+  // Quand on ferme le menu, on remet tous les sous-menus collapsed
+  // Ainsi a la prochaine ouverture tout est ferme
+  if (!isOpening) {
+    document.querySelectorAll(".sub-settings").forEach(s => s.classList.remove("active"));
+  }
+
+  menu.classList.toggle("active");
 }
 
 function toggleSubSettings(id) {
+  const target = document.getElementById(id);
+  // Si deja ouvert : on ferme. Sinon : on ferme les autres et on ouvre celui-ci.
+  const isActive = target.classList.contains("active");
   document.querySelectorAll(".sub-settings").forEach(s => s.classList.remove("active"));
-  document.getElementById(id).classList.toggle("active");
+  if (!isActive) target.classList.add("active");
 }
 
-// Synchro picker → champ texte
 function syncColorFromPicker(value) {
   document.getElementById("bgColorRGB").value = value;
 }
 
-// Synchro champ texte → picker (seulement si valeur valide)
 function syncColorFromText(value) {
   const norm = normalizeHex(value);
   if (norm) document.getElementById("bgColorInput").value = norm;
@@ -418,20 +419,20 @@ function saveBgColor() {
   const colorInput = document.getElementById("bgColorInput").value;
   const rgbInput   = document.getElementById("bgColorRGB").value.trim();
 
-  let finalColor = colorInput; // valeur picker par défaut
+  let finalColor = colorInput;
   const norm = normalizeHex(rgbInput);
-  if (norm) finalColor = norm; // le champ texte prime s'il est valide
+  if (norm) finalColor = norm;
 
   currentContentBg = finalColor;
 
-  // Met à jour le fond du contenu déjà affiché sans recharger tout le reader
   const contentEl = document.querySelector("#reader .content");
   if (contentEl) contentEl.style.background = finalColor;
 
-  // Redessine le message pour switcher body / hidden_body si besoin
   renderMessage();
 
-  toggleSettings();
+  // Ferme le menu et remet les sous-menus a zero
+  document.querySelectorAll(".sub-settings").forEach(s => s.classList.remove("active"));
+  document.getElementById("settingsMenu").classList.remove("active");
 }
 
 /* ===== LANCEMENT ===== */
