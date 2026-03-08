@@ -215,13 +215,85 @@ header {
   border-bottom: 1px solid var(--border);
 }
 
+/* ===== FILTRES & RECHERCHE ===== */
+
+.filters-bar {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 22px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Barre de recherche */
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 16px;
+  transition: border-color .2s;
+}
+
+.search-box:focus-within {
+  border-color: rgba(79,107,237,.5);
+}
+
+.search-icon { font-size: 14px; opacity: .5; flex-shrink: 0; }
+
+.search-box input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-main);
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.search-box input::placeholder { color: rgba(170,179,214,.45); }
+
+.search-clear {
+  background: transparent;
+  border: none;
+  color: var(--text-soft);
+  cursor: pointer;
+  font-size: 13px;
+  padding: 2px 4px;
+  display: none;
+  align-items: center;
+  transition: color .2s;
+}
+
+.search-clear:hover { color: white; }
+
+/* Ligne filtres + tri */
+.filters-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .filter-label {
   font-size: 11px;
   letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--text-soft);
   font-weight: 500;
-  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+.filter-group {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  flex: 1;
 }
 
 .filter-btn {
@@ -234,6 +306,7 @@ header {
   cursor: pointer;
   font-family: "DM Sans", sans-serif;
   transition: .2s;
+  white-space: nowrap;
 }
 
 .filter-btn:hover,
@@ -243,12 +316,136 @@ header {
   color: white;
 }
 
+/* Select tri */
+.sort-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.sort-box select {
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-soft);
+  font-family: "DM Sans", sans-serif;
+  font-size: 12px;
+  padding: 6px 12px;
+  cursor: pointer;
+  outline: none;
+  transition: border-color .2s;
+}
+
+.sort-box select:focus { border-color: rgba(79,107,237,.4); color: white; }
+
+/* Barre de résultats */
+.results-bar {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 14px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+
+#results-count {
+  font-size: 13px;
+  color: var(--text-soft);
+  font-weight: 300;
+}
+
+.reset-btn {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid rgba(79,107,237,.25);
+  border-radius: 20px;
+  padding: 5px 14px;
+  cursor: pointer;
+  font-family: "DM Sans", sans-serif;
+  transition: .2s;
+}
+
+.reset-btn:hover { background: rgba(79,107,237,.1); color: white; }
+
+/* ===== NOTICE ARCHIVES ===== */
+
+.archive-notice {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 30px 80px;
+}
+
+.archive-notice-inner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: rgba(79,107,237,.05);
+  border: 1px solid rgba(79,107,237,.15);
+  border-radius: 12px;
+  padding: 22px 28px;
+}
+
+.archive-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+  opacity: .7;
+}
+
+.archive-text {
+  flex: 1;
+}
+
+.archive-text strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 4px;
+}
+
+.archive-text p {
+  font-size: 13px;
+  color: var(--text-soft);
+  line-height: 1.6;
+  margin: 0;
+  font-weight: 300;
+}
+
+.archive-text a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.archive-text a:hover { text-decoration: underline; }
+
+.archive-cta {
+  flex-shrink: 0;
+  padding: 9px 18px;
+  border-radius: 8px;
+  border: 1px solid rgba(79,107,237,.3);
+  color: white;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 500;
+  transition: .2s;
+  white-space: nowrap;
+}
+
+.archive-cta:hover { background: rgba(79,107,237,.15); }
+
 /* ===== LISTE DES PUBLICATIONS ===== */
 
 .pub-list {
   max-width: 1300px;
   margin: 0 auto;
-  padding: 50px 30px 100px;
+  padding: 50px 30px 60px;
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -499,20 +696,45 @@ footer {
   </div>
 </div>
 
-<!-- ===== FILTRES ===== -->
+<!-- ===== FILTRES & RECHERCHE ===== -->
 <div class="filters-bar">
-  <span class="filter-label">Filtrer par :</span>
-  <button class="filter-btn active">Tous</button>
-  <button class="filter-btn">Biologie spatiale</button>
-  <button class="filter-btn">Propulsion</button>
-  <button class="filter-btn">IA embarquée</button>
-  <button class="filter-btn">Matériaux</button>
-  <button class="filter-btn">Astrophysique</button>
-  <button class="filter-btn">Physique</button>
+
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="search-input" placeholder="Rechercher par titre, auteur, domaine, mot-clé…">
+    <button class="search-clear" id="search-clear" title="Effacer">✕</button>
+  </div>
+
+  <div class="filters-right">
+    <span class="filter-label">Domaine :</span>
+    <div class="filter-group" id="filter-group">
+      <button class="filter-btn active" data-filter="tous">Tous</button>
+      <button class="filter-btn" data-filter="Biologie spatiale">Biologie spatiale</button>
+      <button class="filter-btn" data-filter="Propulsion">Propulsion</button>
+      <button class="filter-btn" data-filter="IA embarquée">IA embarquée</button>
+      <button class="filter-btn" data-filter="Matériaux">Matériaux</button>
+      <button class="filter-btn" data-filter="Astrophysique">Astrophysique</button>
+      <button class="filter-btn" data-filter="Physique quantique">Physique quantique</button>
+    </div>
+
+    <div class="sort-box">
+      <span class="filter-label">Trier :</span>
+      <select id="sort-select">
+        <option value="recent">Plus récent d'abord</option>
+        <option value="ancien">Plus ancien d'abord</option>
+      </select>
+    </div>
+  </div>
+
+</div>
+
+<div class="results-bar" id="results-bar">
+  <span id="results-count">8 publications</span>
+  <button class="reset-btn" id="reset-btn">Réinitialiser les filtres</button>
 </div>
 
 <!-- ===== LISTE DES PUBLICATIONS ===== -->
-<div class="pub-list">
+<div class="pub-list" id="pub-list">
 
   <!-- 1 — Mars 2026 -->
   <a class="pub-card" href="#">
@@ -734,19 +956,155 @@ footer {
 
 </div>
 
+<!-- ===== AVIS ARCHIVES ===== -->
+<div class="archive-notice">
+  <div class="archive-notice-inner">
+    <div class="archive-icon">🗂</div>
+    <div class="archive-text">
+      <strong>Publications antérieures à 2023</strong>
+      <p>Pour des raisons de capacité de stockage, seules les publications récentes sont accessibles directement sur ce site. L'ensemble du catalogue scientifique de l'IFRAS depuis 1962 est consultable sur demande auprès du <a href="mailto:archives@ifras.fr">Service Archives &amp; Documentation</a>.</p>
+    </div>
+    <a href="mailto:archives@ifras.fr" class="archive-cta">Contacter les archives →</a>
+  </div>
+</div>
+
 <footer>
   © IFRAS — Institut Français de Recherche Aéronautique et Spatiale<br>
   Publications soumises à validation institutionnelle
 </footer>
 
 <script>
-// Filtres (démo visuelle)
-document.querySelectorAll('.filter-btn').forEach(btn => {
+// ─── Données des publications (ordre chronologique décroissant) ───────────────
+const pubCards = Array.from(document.querySelectorAll('.pub-card'));
+
+// On attache les métadonnées directement depuis le DOM
+pubCards.forEach(card => {
+  // Date : lire le premier <span> de .pub-meta
+  const metaSpan = card.querySelector('.pub-meta span');
+  card.dataset.dateStr = metaSpan ? metaSpan.textContent.trim() : '';
+
+  // Catégorie principale : premier .pub-tag (sans pub-tag--secondary)
+  const mainTag = card.querySelector('.pub-tag:not(.pub-tag--secondary)');
+  card.dataset.category = mainTag ? mainTag.textContent.trim() : '';
+
+  // Texte complet pour la recherche (titre + auteurs + description + tags)
+  card.dataset.searchText = card.textContent.toLowerCase();
+});
+
+// Convertit "Janvier 2026" → timestamp pour le tri
+function parseDate(str) {
+  const months = {
+    'janvier':1,'février':2,'mars':3,'avril':4,'mai':5,'juin':6,
+    'juillet':7,'août':8,'septembre':9,'octobre':10,'novembre':11,'décembre':12
+  };
+  const parts = str.toLowerCase().split(' ');
+  if (parts.length < 2) return 0;
+  const m = months[parts[0]] || 0;
+  const y = parseInt(parts[1]) || 0;
+  return y * 100 + m;
+}
+
+const list = document.getElementById('pub-list');
+const searchInput = document.getElementById('search-input');
+const searchClear = document.getElementById('search-clear');
+const sortSelect = document.getElementById('sort-select');
+const filterBtns = document.querySelectorAll('.filter-btn');
+const resultsCount = document.getElementById('results-count');
+const resetBtn = document.getElementById('reset-btn');
+
+let activeFilter = 'tous';
+let searchQuery = '';
+let sortOrder = 'recent';
+
+function applyAll() {
+  let visible = 0;
+
+  // Trier
+  const sorted = [...pubCards].sort((a, b) => {
+    const da = parseDate(a.dataset.dateStr);
+    const db = parseDate(b.dataset.dateStr);
+    return sortOrder === 'recent' ? db - da : da - db;
+  });
+
+  // Réordonner dans le DOM
+  sorted.forEach(card => list.appendChild(card));
+
+  // Filtrer
+  sorted.forEach(card => {
+    const matchCat = activeFilter === 'tous' ||
+      card.dataset.category.toLowerCase() === activeFilter.toLowerCase();
+    const matchSearch = searchQuery === '' ||
+      card.dataset.searchText.includes(searchQuery);
+
+    if (matchCat && matchSearch) {
+      card.style.display = '';
+      visible++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  // Mettre à jour le compteur
+  resultsCount.textContent = visible === 0
+    ? 'Aucun résultat'
+    : `${visible} publication${visible > 1 ? 's' : ''}`;
+
+  // Afficher/masquer le bouton reset
+  resetBtn.style.display =
+    (activeFilter !== 'tous' || searchQuery !== '') ? 'inline-flex' : 'none';
+
+  // Afficher/masquer le ✕ de recherche
+  searchClear.style.display = searchQuery !== '' ? 'flex' : 'none';
+
+  // Remettre la bordure du haut sur le premier visible
+  document.querySelectorAll('.pub-card').forEach(c => c.style.borderTop = '');
+  const firstVisible = sorted.find(c => c.style.display !== 'none');
+  if (firstVisible) firstVisible.style.borderTop = '1px solid var(--border)';
+}
+
+// ─── Filtres par catégorie ────────────────────────────────────────────────────
+filterBtns.forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    filterBtns.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
+    applyAll();
   });
 });
+
+// ─── Recherche ────────────────────────────────────────────────────────────────
+searchInput.addEventListener('input', () => {
+  searchQuery = searchInput.value.toLowerCase().trim();
+  applyAll();
+});
+
+searchClear.addEventListener('click', () => {
+  searchInput.value = '';
+  searchQuery = '';
+  applyAll();
+  searchInput.focus();
+});
+
+// ─── Tri ─────────────────────────────────────────────────────────────────────
+sortSelect.addEventListener('change', () => {
+  sortOrder = sortSelect.value;
+  applyAll();
+});
+
+// ─── Reset ────────────────────────────────────────────────────────────────────
+resetBtn.addEventListener('click', () => {
+  activeFilter = 'tous';
+  searchQuery = '';
+  sortOrder = 'recent';
+  searchInput.value = '';
+  sortSelect.value = 'recent';
+  filterBtns.forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-filter="tous"]').classList.add('active');
+  applyAll();
+});
+
+// Init
+applyAll();
 </script>
 
 </body>
