@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Publications — IFRAS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 
 <style>
 
@@ -21,19 +22,19 @@
 
 body {
   margin: 0;
-  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  font-family: "DM Sans", "Segoe UI", sans-serif;
   background: var(--bg-main);
   color: var(--text-main);
 }
 
-/* ===== HEADER IDENTIQUE INDEX ===== */
+/* ===== HEADER ===== */
 
 header {
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
-  background: rgba(5,11,30,.75);
+  background: rgba(5,11,30,.85);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
 }
@@ -53,17 +54,13 @@ header {
   gap: 40px;
 }
 
-.logo-link img {
-  height: 60px;
-  cursor: pointer;
-}
+.logo-link img { height: 60px; cursor: pointer; }
 
 .main-nav {
   list-style: none;
   display: flex;
   gap: 32px;
-  margin: 0;
-  padding: 0;
+  margin: 0; padding: 0;
 }
 
 .main-nav a {
@@ -84,120 +81,583 @@ header {
   font-size: 13px;
 }
 
-.header-right .login-btn:hover {
-  background: var(--accent);
-}
+.header-right .login-btn:hover { background: var(--accent); }
 
 /* ===== SOUS BANDEAU ===== */
 
-
-
 .sub-nav {
-  margin-top: 90px;
+  margin-top: 84px;
   background: var(--bg-light);
   border-bottom: 1px solid var(--border);
 }
 
 .sub-nav ul {
   max-width: 1300px;
-  margin: auto;
+  margin: 0 auto;
   padding: 0 30px;
   list-style: none;
   display: flex;
   justify-content: space-between;
 }
 
-.sub-nav li {
-  padding: 14px 0;
-}
+.sub-nav li { padding: 14px 0; }
 
 .sub-nav a {
   color: var(--text-soft);
   text-decoration: none;
   font-size: 14px;
+  letter-spacing: .06em;
 }
 
-.sub-nav a:hover {
-  color: white;
+.sub-nav a:hover { color: white; }
+
+/* ===== HERO ===== */
+
+.hero {
+  position: relative;
+  padding: 90px 30px 80px;
+  overflow: hidden;
 }
 
-/* ===== MAIN ===== */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 65% 55% at 50% 40%, rgba(79,107,237,0.11) 0%, transparent 65%),
+    radial-gradient(ellipse 35% 45% at 90% 75%, rgba(52,211,153,0.07) 0%, transparent 60%);
+  pointer-events: none;
+}
 
-main {
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(79,107,237,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79,107,237,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+.hero-inner {
   max-width: 1300px;
   margin: auto;
-  padding: 70px 30px 90px;
-}
-
-h1 {
-  font-size: 28px;
-  margin-bottom: 50px;
-}
-
-/* ===== PUBLICATIONS ===== */
-
-.publication {
-  display: flex;
-  gap: 35px;
-  margin-bottom: 70px;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 80px;
   align-items: center;
 }
 
-.publication:nth-child(even) {
-  flex-direction: row-reverse;
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 28px;
+  font-weight: 500;
 }
 
-.pub-image {
-  width: 45%;
-  height: 240px;
-  background: linear-gradient(135deg, #0a1a3a, #070f2b);
-  border: 1px solid var(--border);
-  overflow: hidden;
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 28px; height: 1px;
+  background: var(--accent);
+}
+
+.hero h1 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(52px, 7.5vw, 100px);
+  font-weight: 800;
+  line-height: 0.88;
+  margin: 0 0 28px;
+  letter-spacing: -0.05em;
+  color: #fff;
+}
+
+.hero h1 span {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(79,107,237,0.6);
+}
+
+.hero-desc {
+  color: var(--text-soft);
+  font-size: 16px;
+  line-height: 1.75;
+  margin: 0 0 36px;
+  font-weight: 300;
+}
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.hero-stat {
+  background: rgba(79,107,237,0.06);
+  border: 1px solid rgba(79,107,237,0.15);
   border-radius: 10px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.pub-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform .3s;
+.hero-stat-value {
+  font-family: "Syne", sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.03em;
 }
 
-.pub-image img:hover {
-  transform: scale(1.05);
+.hero-stat-label {
+  font-size: 11px;
+  color: var(--text-soft);
+  letter-spacing: .1em;
+  text-transform: uppercase;
 }
 
-.pub-content {
-  width: 55%;
+/* Colonne droite hero : bento des dernières publis */
+.hero-right {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 12px;
 }
 
-.pub-meta {
+.hero-pub-tile {
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: fadeUp .5s ease both;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color .3s, transform .3s;
+}
+
+.hero-pub-tile:hover {
+  border-color: rgba(79,107,237,.3);
+  transform: translateY(-3px);
+}
+
+.hero-pub-tile--wide {
+  grid-column: 1 / 3;
+}
+
+.tile-date {
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.tile-title {
+  font-family: "Syne", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+  line-height: 1.3;
+}
+
+.tile-excerpt {
   font-size: 12px;
-  color: #9ca3af;
+  color: var(--text-soft);
+  line-height: 1.55;
+  font-weight: 300;
+}
+
+.tile-tag {
+  margin-top: auto;
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  background: rgba(79,107,237,.08);
+  border: 1px solid rgba(79,107,237,.18);
+  color: var(--text-soft);
+  width: fit-content;
+}
+
+/* ===== SECTIONS ===== */
+
+.pub-section {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 70px 30px;
+}
+
+.pub-section + .pub-section { padding-top: 10px; }
+
+.pub-section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  gap: 30px;
+}
+
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  font-weight: 500;
   margin-bottom: 10px;
 }
 
-.pub-content h2 {
-  margin: 0 0 10px;
-  font-size: 20px;
+.section-eyebrow::before {
+  content: '';
+  display: block;
+  width: 22px; height: 1px;
+  background: currentColor;
 }
 
-.pub-content p {
+.pub-section-header h2 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 700;
+  margin: 0;
+  color: white;
+}
+
+.pub-section-header p {
   font-size: 14px;
+  color: var(--text-soft);
+  max-width: 400px;
+  text-align: right;
+  line-height: 1.65;
+  margin: 0;
+  font-weight: 300;
+}
+
+/* ===== GRILLE PUBLICATIONS SCIENTIFIQUES ===== */
+/* Grande carte + petites */
+
+.sci-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 18px;
+}
+
+.sci-card {
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color .3s, transform .3s, box-shadow .3s;
+  animation: fadeUp .5s ease both;
+}
+
+.sci-card:hover {
+  border-color: rgba(79,107,237,.35);
+  transform: translateY(-4px);
+  box-shadow: 0 18px 48px rgba(0,0,10,.5);
+}
+
+.sci-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--card-accent, var(--accent));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .35s ease;
+}
+
+.sci-card:hover::after { transform: scaleX(1); }
+
+.sci-card--featured {
+  grid-column: 1 / 3;
+}
+
+.sci-card--featured .sci-title { font-size: 20px; }
+
+.sci-card--featured .sci-excerpt { font-size: 14.5px; }
+
+.sci-meta {
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--card-accent, var(--accent));
+  font-weight: 500;
+}
+
+.sci-title {
+  font-family: "Syne", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.sci-excerpt {
+  font-size: 13px;
+  color: var(--text-soft);
+  line-height: 1.7;
+  font-weight: 300;
+  flex: 1;
+}
+
+.sci-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 4px;
+}
+
+.sci-tag {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
   color: var(--text-soft);
 }
 
-.read-more {
-  display: inline-block;
-  margin-top: 14px;
-  color: var(--accent);
-  text-decoration: none;
-  font-size: 14px;
+.sci-arrow {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-size: 15px;
+  color: var(--card-accent, var(--accent));
+  opacity: 0;
+  transform: translateX(-5px);
+  transition: opacity .3s, transform .3s;
 }
 
-.read-more:hover {
-  text-decoration: underline;
+.sci-card:hover .sci-arrow { opacity: 1; transform: translateX(0); }
+
+.sci-card:nth-child(1) { animation-delay: .05s; }
+.sci-card:nth-child(2) { animation-delay: .10s; }
+.sci-card:nth-child(3) { animation-delay: .15s; }
+.sci-card:nth-child(4) { animation-delay: .20s; }
+.sci-card:nth-child(5) { animation-delay: .25s; }
+
+/* ===== PUBLICATIONS IFRAS (magazine cards) ===== */
+
+.ifras-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
 }
+
+.ifras-card {
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  transition: border-color .3s, transform .3s, box-shadow .3s;
+  animation: fadeUp .5s ease both;
+}
+
+.ifras-card:hover {
+  border-color: rgba(79,107,237,.3);
+  transform: translateY(-4px);
+  box-shadow: 0 18px 48px rgba(0,0,10,.5);
+}
+
+.ifras-cover {
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.ifras-cover-inner {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.ifras-cover-num {
+  font-family: "Syne", sans-serif;
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1;
+  opacity: .18;
+  letter-spacing: -0.05em;
+}
+
+.ifras-cover-label {
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  opacity: .5;
+  margin-top: -8px;
+}
+
+.ifras-body {
+  padding: 20px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.ifras-date {
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.ifras-title {
+  font-family: "Syne", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: white;
+  line-height: 1.3;
+}
+
+.ifras-desc {
+  font-size: 13px;
+  color: var(--text-soft);
+  line-height: 1.65;
+  font-weight: 300;
+  flex: 1;
+}
+
+.ifras-link {
+  font-size: 12px;
+  color: var(--accent);
+  margin-top: 8px;
+}
+
+.ifras-card:nth-child(1) { animation-delay: .05s; }
+.ifras-card:nth-child(2) { animation-delay: .10s; }
+.ifras-card:nth-child(3) { animation-delay: .15s; }
+.ifras-card:nth-child(4) { animation-delay: .20s; }
+.ifras-card:nth-child(5) { animation-delay: .25s; }
+.ifras-card:nth-child(6) { animation-delay: .30s; }
+
+/* ===== ÉVÉNEMENTS ===== */
+
+.events-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.event-card {
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px 28px;
+  display: grid;
+  grid-template-columns: 90px 1fr auto;
+  align-items: center;
+  gap: 28px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color .25s, transform .25s;
+  animation: fadeUp .4s ease both;
+}
+
+.event-card:hover {
+  border-color: rgba(79,107,237,.3);
+  transform: translateX(4px);
+}
+
+.event-date-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(79,107,237,.08);
+  border: 1px solid rgba(79,107,237,.18);
+  border-radius: 10px;
+  padding: 10px;
+  gap: 2px;
+}
+
+.event-day {
+  font-family: "Syne", sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: white;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.event-month {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.event-info {}
+
+.event-type {
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.event-title {
+  font-family: "Syne", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 4px;
+}
+
+.event-location {
+  font-size: 13px;
+  color: var(--text-soft);
+  font-weight: 300;
+}
+
+.event-badge {
+  font-size: 11px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.badge--open     { background: rgba(52,211,153,.1);  color: #34d399; border: 1px solid rgba(52,211,153,.25); }
+.badge--soon     { background: rgba(250,204,21,.1);  color: #facc15; border: 1px solid rgba(250,204,21,.25); }
+.badge--full     { background: rgba(156,163,175,.1); color: #9ca3af; border: 1px solid rgba(156,163,175,.2); }
+.badge--online   { background: rgba(96,165,250,.1);  color: #60a5fa; border: 1px solid rgba(96,165,250,.25); }
+
+.event-card:nth-child(1) { animation-delay: .05s; }
+.event-card:nth-child(2) { animation-delay: .10s; }
+.event-card:nth-child(3) { animation-delay: .15s; }
+.event-card:nth-child(4) { animation-delay: .20s; }
+.event-card:nth-child(5) { animation-delay: .25s; }
 
 /* ===== FOOTER ===== */
 
@@ -210,18 +670,11 @@ footer {
   color: #6b7280;
 }
 
-/* ===== RESPONSIVE ===== */
+/* ===== ANIMATIONS ===== */
 
-@media (max-width: 900px) {
-  .publication,
-  .publication:nth-child(even) {
-    flex-direction: column;
-  }
-
-  .pub-image,
-  .pub-content {
-    width: 100%;
-  }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 </style>
@@ -229,14 +682,11 @@ footer {
 
 <body>
 
+<!-- ===== HEADER ===== -->
 <header>
   <div class="header-inner">
-
     <div class="header-left">
-      <a href="index.html" class="logo-link">
-        <img src="logo.png" alt="Logo IFRAS">
-      </a>
-
+      <a href="index.html" class="logo-link"><img src="logo.png" alt="Logo IFRAS"></a>
       <nav>
         <ul class="main-nav">
           <li><a href="index.html">Accueil</a></li>
@@ -246,99 +696,359 @@ footer {
         </ul>
       </nav>
     </div>
-
     <div class="header-right">
       <a href="connexion.html" class="login-btn">Connexion</a>
     </div>
-
   </div>
 </header>
 
 <!-- ===== SOUS BANDEAU ===== -->
-
 <div class="sub-nav">
   <ul>
     <li><a href="publications-scientifiques.html">Publications scientifiques</a></li>
-    <li><a href="#">Publications IFRAS</a></li>
-    <li><a href="#">Évènements</a></li>
+    <li><a href="publications-ifras.html">Publications IFRAS</a></li>
+    <li><a href="evenements.html">Événements</a></li>
   </ul>
 </div>
 
-<main>
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-inner">
 
-<h1>Publications scientifiques</h1>
+    <div class="hero-left">
+      <div class="hero-eyebrow">Diffusion des savoirs</div>
+      <h1>Publica<span>tions</span></h1>
+      <p class="hero-desc">
+        L'IFRAS s'engage à diffuser l'ensemble de ses résultats scientifiques auprès de la communauté internationale.
+        Articles en revues à comité de lecture, rapports institutionnels, lettres de recherche et conférences —
+        retrouvez ici l'intégralité de notre production intellectuelle.
+      </p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-value">+1 240</span>
+          <span class="hero-stat-label">Articles publiés</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">38</span>
+          <span class="hero-stat-label">Revues partenaires</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">18</span>
+          <span class="hero-stat-label">Publications IFRAS</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">6</span>
+          <span class="hero-stat-label">Événements 2026</span>
+        </div>
+      </div>
+    </div>
 
-<div class="publication">
-  <div class="pub-image">
-    <img src="Assets/publication/mars01.png">
-  </div>
-  <div class="pub-content">
-    <div class="pub-meta">Mars 2026 — Programme ARTEMIS-9</div>
-    <h2>Variabilité inattendue des signatures biologiques en environnement confiné</h2>
-    <p>
-      Analyse approfondie des fluctuations biologiques observées lors de missions d’isolement prolongé.
-    </p>
-    <a href="#" class="read-more">Lire la publication →</a>
-  </div>
-</div>
+    <!-- Bento des 4 dernières publis -->
+    <div class="hero-right">
 
-<div class="publication">
-  <div class="pub-image">
-    <img src="Assets/publication/fusee01.png">
-  </div>
-  <div class="pub-content">
-    <div class="pub-meta">Novembre 2025 — Physiologie humaine</div>
-    <h2>Effets cognitifs de la désynchronisation temporelle en mission longue</h2>
-    <p>
-      Étude des perturbations neurologiques liées aux cycles temporels artificiels prolongés.
-    </p>
-    <a href="#" class="read-more">Lire la publication →</a>
-  </div>
-</div>
+      <a class="hero-pub-tile hero-pub-tile--wide" href="#" style="animation-delay:.05s">
+        <div class="tile-date">Mars 2026 · ARTEMIS-9</div>
+        <div class="tile-title">Variabilité inattendue des signatures biologiques en environnement confiné sous microgravité</div>
+        <div class="tile-excerpt">Première mise en évidence d'une dérive métabolique systématique après 90 jours en confinement orbital simulé.</div>
+        <span class="tile-tag">Biologie · Priorité éditoriale</span>
+      </a>
 
-<div class="publication">
-  <div class="pub-image">
-    <img src="Assets/publication/poisson01.png">
-  </div>
-  <div class="pub-content">
-    <div class="pub-meta">Avril 2025 — Bases analogues terrestres</div>
-    <h2>Adaptation comportementale en environnement isolé extrême</h2>
-    <p>
-      Étude longitudinale dans des bases analogues simulant des missions extra-planétaires.
-    </p>
-    <a href="#" class="read-more">Lire la publication →</a>
-  </div>
-</div>
+      <a class="hero-pub-tile" href="#" style="animation-delay:.10s">
+        <div class="tile-date">Jan 2026 · HERMES</div>
+        <div class="tile-title">Fidélité des protocoles quantiques en canal bruité longue portée</div>
+        <div class="tile-excerpt">Résultats expérimentaux sur 40 000 km de liaison simulée.</div>
+        <span class="tile-tag">Quantique</span>
+      </a>
 
-<div class="publication">
-  <div class="pub-image">
-    <img src="Assets/publication/puce01.png">
-  </div>
-  <div class="pub-content">
-    <div class="pub-meta">Août 2024 — Intelligence embarquée</div>
-    <h2>Limites décisionnelles des systèmes autonomes en situation ambiguë</h2>
-    <p>
-      Analyse des comportements émergents de systèmes d’IA confrontés à des données contradictoires.
-    </p>
-    <a href="Articles/article04.html" class="read-more">Lire la publication →</a>
-  </div>
-</div>
+      <a class="hero-pub-tile" href="#" style="animation-delay:.15s">
+        <div class="tile-date">Déc 2025 · PROMETHEUS</div>
+        <div class="tile-title">Impulsion spécifique record sur banc plasma froid</div>
+        <div class="tile-excerpt">Validation expérimentale à 6 800 s d'Isp en conditions représentatives.</div>
+        <span class="tile-tag">Propulsion</span>
+      </a>
 
-<div class="publication">
-  <div class="pub-image">
-    <img src="Assets/publication/scientifique01.png">
-  </div>
-  <div class="pub-content">
-    <div class="pub-meta">Janvier 2024 — Sciences du vivant</div>
-    <h2>Résilience microbienne en conditions extrêmes simulées</h2>
-    <p>
-      Étude des capacités d’adaptation microbienne face aux environnements hostiles prolongés.
-    </p>
-    <a href="#" class="read-more">Lire la publication →</a>
-  </div>
-</div>
+    </div>
 
-</main>
+  </div>
+</section>
+
+<!-- =========================================== -->
+<!-- PUBLICATIONS SCIENTIFIQUES                  -->
+<!-- =========================================== -->
+<section class="pub-section">
+
+  <div class="pub-section-header">
+    <div>
+      <div class="section-eyebrow" style="color: #60a5fa;">Publications scientifiques</div>
+      <h2>Articles & revues</h2>
+    </div>
+    <p>Articles peer-reviewed publiés dans les principales revues internationales. Pour une consultation exhaustive, accédez à la base documentaire complète.</p>
+  </div>
+
+  <div class="sci-grid">
+
+    <!-- Vedette -->
+    <a class="sci-card sci-card--featured" href="#" style="--card-accent: #60a5fa;">
+      <div class="sci-meta">Mars 2026 — Programme ARTEMIS-9 · Nature Astronautics</div>
+      <div class="sci-title">Variabilité inattendue des signatures biologiques en environnement confiné sous microgravité prolongée</div>
+      <p class="sci-excerpt">
+        Analyse approfondie des fluctuations métaboliques et immunitaires observées sur 6 sujets lors de 120 jours
+        de confinement en habitat orbital analogique. L'étude révèle une dérive systématique des biomarqueurs
+        après le 90e jour, ouvrant de nouvelles questions sur la tolérance humaine aux séjours de longue durée.
+        Ces résultats sont déterminants pour la planification médicale d'ARTEMIS-9.
+      </p>
+      <div class="sci-tags">
+        <span class="sci-tag">Biologie spatiale</span>
+        <span class="sci-tag">Microgravité</span>
+        <span class="sci-tag">Biomarqueurs</span>
+        <span class="sci-tag">Médecine isolement</span>
+      </div>
+      <div class="sci-arrow">→</div>
+    </a>
+
+    <!-- Colonne droite -->
+    <a class="sci-card" href="#" style="--card-accent: #f97316;">
+      <div class="sci-meta">Nov 2025 — Physiologie · J. Space Medicine</div>
+      <div class="sci-title">Effets cognitifs de la désynchronisation temporelle en mission longue</div>
+      <p class="sci-excerpt">Perturbations neurologiques et déclin des performances décisionnelles liés aux cycles temporels artificiels prolongés sur 18 mois.</p>
+      <div class="sci-tags">
+        <span class="sci-tag">Neurosciences</span>
+        <span class="sci-tag">Cognition</span>
+      </div>
+      <div class="sci-arrow">→</div>
+    </a>
+
+    <!-- 2e ligne -->
+    <a class="sci-card" href="#" style="--card-accent: #34d399;">
+      <div class="sci-meta">Avr 2025 — Bases analogues · Astrobiology</div>
+      <div class="sci-title">Adaptation comportementale en environnement isolé extrême</div>
+      <p class="sci-excerpt">Étude longitudinale sur 3 bases analogues simulant des conditions martiennes — dynamiques de groupe, stress chronique et résilience individuelle.</p>
+      <div class="sci-tags">
+        <span class="sci-tag">Psychologie</span>
+        <span class="sci-tag">Analogues</span>
+      </div>
+      <div class="sci-arrow">→</div>
+    </a>
+
+    <a class="sci-card" href="#" style="--card-accent: #c084fc;">
+      <div class="sci-meta">Août 2024 — IA embarquée · AI & Robotics</div>
+      <div class="sci-title">Limites décisionnelles des systèmes autonomes en situation ambiguë</div>
+      <p class="sci-excerpt">Comportements émergents d'architectures IA confrontées à des données contradictoires et à l'incertitude instrumentale en conditions dégradées.</p>
+      <div class="sci-tags">
+        <span class="sci-tag">IA</span>
+        <span class="sci-tag">Autonomie</span>
+      </div>
+      <div class="sci-arrow">→</div>
+    </a>
+
+    <a class="sci-card" href="#" style="--card-accent: #facc15;">
+      <div class="sci-meta">Jan 2024 — DSVT · Microbiology Letters</div>
+      <div class="sci-title">Résilience microbienne en conditions extrêmes simulées</div>
+      <p class="sci-excerpt">Capacités d'adaptation de souches bactériennes et fongiques face aux irradiations, pressions et températures représentatives de la surface martienne.</p>
+      <div class="sci-tags">
+        <span class="sci-tag">Astrobiologie</span>
+        <span class="sci-tag">Microbiologie</span>
+      </div>
+      <div class="sci-arrow">→</div>
+    </a>
+
+  </div>
+
+</section>
+
+<!-- =========================================== -->
+<!-- PUBLICATIONS IFRAS                          -->
+<!-- =========================================== -->
+<section class="pub-section" style="padding-top: 10px;">
+
+  <div class="pub-section-header">
+    <div>
+      <div class="section-eyebrow" style="color: #34d399;">Publications IFRAS</div>
+      <h2>Revues & rapports institutionnels</h2>
+    </div>
+    <p>Lettres trimestrielles, rapports annuels et numéros thématiques produits et édités directement par l'IFRAS.</p>
+  </div>
+
+  <div class="ifras-grid">
+
+    <!-- Lettre trimestrielle -->
+    <a class="ifras-card" href="#">
+      <div class="ifras-cover" style="background: linear-gradient(135deg, #0d1f4a, #0a1535);">
+        <div class="ifras-cover-inner">
+          <div class="ifras-cover-num" style="color:#60a5fa;">N°22</div>
+          <div class="ifras-cover-label" style="color:#60a5fa;">Lettre trimestrielle</div>
+        </div>
+      </div>
+      <div class="ifras-body">
+        <div class="ifras-date" style="color:#60a5fa;">T1 2026</div>
+        <div class="ifras-title">Lettre de la Direction Scientifique — Printemps 2026</div>
+        <div class="ifras-desc">Avancées ARTEMIS-9, résultats PROMETHEUS phase II, bilan des partenariats ESA et NASA signés en janvier.</div>
+        <div class="ifras-link">Consulter →</div>
+      </div>
+    </a>
+
+    <a class="ifras-card" href="#">
+      <div class="ifras-cover" style="background: linear-gradient(135deg, #1a0d3a, #0f0828);">
+        <div class="ifras-cover-inner">
+          <div class="ifras-cover-num" style="color:#c084fc;">N°21</div>
+          <div class="ifras-cover-label" style="color:#c084fc;">Lettre trimestrielle</div>
+        </div>
+      </div>
+      <div class="ifras-body">
+        <div class="ifras-date" style="color:#c084fc;">T4 2025</div>
+        <div class="ifras-title">Lettre de la Direction Scientifique — Hiver 2025</div>
+        <div class="ifras-desc">Bilan annuel de la recherche, transferts de technologie réalisés, ouverture du programme LYNX phase II.</div>
+        <div class="ifras-link">Consulter →</div>
+      </div>
+    </a>
+
+    <a class="ifras-card" href="#">
+      <div class="ifras-cover" style="background: linear-gradient(135deg, #0d2e1a, #071a0f);">
+        <div class="ifras-cover-inner">
+          <div class="ifras-cover-num" style="color:#34d399;">2025</div>
+          <div class="ifras-cover-label" style="color:#34d399;">Rapport annuel</div>
+        </div>
+      </div>
+      <div class="ifras-body">
+        <div class="ifras-date" style="color:#34d399;">Décembre 2025</div>
+        <div class="ifras-title">Rapport Annuel IFRAS 2025</div>
+        <div class="ifras-desc">Bilan complet de l'activité scientifique, financière et partenariale de l'institut. 148 pages — diffusion publique.</div>
+        <div class="ifras-link">Télécharger (PDF) →</div>
+      </div>
+    </a>
+
+    <a class="ifras-card" href="#">
+      <div class="ifras-cover" style="background: linear-gradient(135deg, #2a1a08, #180e04);">
+        <div class="ifras-cover-inner">
+          <div class="ifras-cover-num" style="color:#f97316;">HS·4</div>
+          <div class="ifras-cover-label" style="color:#f97316;">Hors-série thématique</div>
+        </div>
+      </div>
+      <div class="ifras-body">
+        <div class="ifras-date" style="color:#f97316;">Septembre 2025</div>
+        <div class="ifras-title">Hors-série : Propulsion du futur</div>
+        <div class="ifras-desc">Dossier spécial consacré aux nouvelles architectures de propulsion — ionique, nucléaire thermique et à voile solaire.</div>
+        <div class="ifras-link">Consulter →</div>
+      </div>
+    </a>
+
+    <a class="ifras-card" href="#">
+      <div class="ifras-cover" style="background: linear-gradient(135deg, #0d2535, #06131d);">
+        <div class="ifras-cover-inner">
+          <div class="ifras-cover-num" style="color:#38bdf8;">HS·3</div>
+          <div class="ifras-cover-label" style="color:#38bdf8;">Hors-série thématique</div>
+        </div>
+      </div>
+      <div class="ifras-body">
+        <div class="ifras-date" style="color:#38bdf8;">Mars 2025</div>
+        <div class="ifras-title">Hors-série : Intelligence artificielle embarquée</div>
+        <div class="ifras-desc">Panorama des architectures IA déployées sur systèmes autonomes spatiaux — cas d'usage, limites et perspectives réglementaires.</div>
+        <div class="ifras-link">Consulter →</div>
+      </div>
+    </a>
+
+    <a class="ifras-card" href="#">
+      <div class="ifras-cover" style="background: linear-gradient(135deg, #1a1208, #0e0a04);">
+        <div class="ifras-cover-inner">
+          <div class="ifras-cover-num" style="color:#facc15;">2024</div>
+          <div class="ifras-cover-label" style="color:#facc15;">Rapport annuel</div>
+        </div>
+      </div>
+      <div class="ifras-body">
+        <div class="ifras-date" style="color:#facc15;">Décembre 2024</div>
+        <div class="ifras-title">Rapport Annuel IFRAS 2024</div>
+        <div class="ifras-desc">Résultats scientifiques, faits marquants et données budgétaires de l'exercice 2024. 136 pages.</div>
+        <div class="ifras-link">Télécharger (PDF) →</div>
+      </div>
+    </a>
+
+  </div>
+
+</section>
+
+<!-- =========================================== -->
+<!-- ÉVÉNEMENTS                                  -->
+<!-- =========================================== -->
+<section class="pub-section" style="padding-top: 10px; padding-bottom: 110px;">
+
+  <div class="pub-section-header">
+    <div>
+      <div class="section-eyebrow" style="color: #f97316;">Événements</div>
+      <h2>Conférences & séminaires</h2>
+    </div>
+    <p>Colloques internationaux, journées portes ouvertes et séminaires internes organisés ou co-organisés par l'IFRAS en 2026.</p>
+  </div>
+
+  <div class="events-grid">
+
+    <a class="event-card" href="#">
+      <div class="event-date-block">
+        <div class="event-day">14</div>
+        <div class="event-month" style="color:#34d399;">Mai 2026</div>
+      </div>
+      <div class="event-info">
+        <div class="event-type" style="color:#34d399;">Colloque international</div>
+        <div class="event-title">ISABS 2026 — International Symposium on Astrobiology & Space Biology</div>
+        <div class="event-location">Palais des Congrès, Paris · Organisation IFRAS & CNES</div>
+      </div>
+      <span class="event-badge badge--open">Inscriptions ouvertes</span>
+    </a>
+
+    <a class="event-card" href="#">
+      <div class="event-date-block">
+        <div class="event-day">03</div>
+        <div class="event-month" style="color:#60a5fa;">Juin 2026</div>
+      </div>
+      <div class="event-info">
+        <div class="event-type" style="color:#60a5fa;">Séminaire interne</div>
+        <div class="event-title">Journées DSTI — Simulation multi-physique et IA générative</div>
+        <div class="event-location">Campus IFRAS, Toulouse · Accès personnel habilité</div>
+      </div>
+      <span class="event-badge badge--soon">Bientôt complet</span>
+    </a>
+
+    <a class="event-card" href="#">
+      <div class="event-date-block">
+        <div class="event-day">18</div>
+        <div class="event-month" style="color:#a78bfa;">Sep 2026</div>
+      </div>
+      <div class="event-info">
+        <div class="event-type" style="color:#a78bfa;">Conférence plénière</div>
+        <div class="event-title">PROPULSION EUROPE 2026 — Nouvelles architectures ioniques</div>
+        <div class="event-location">Convention Center, Munich · Co-organisation DLR–IFRAS</div>
+      </div>
+      <span class="event-badge badge--open">Inscriptions ouvertes</span>
+    </a>
+
+    <a class="event-card" href="#">
+      <div class="event-date-block">
+        <div class="event-day">07</div>
+        <div class="event-month" style="color:#38bdf8;">Oct 2026</div>
+      </div>
+      <div class="event-info">
+        <div class="event-type" style="color:#38bdf8;">Webinaire</div>
+        <div class="event-title">Série mensuelle IFRAS — Résultats scientifiques en accès libre</div>
+        <div class="event-location">En ligne — Accès public, inscription gratuite</div>
+      </div>
+      <span class="event-badge badge--online">En ligne</span>
+    </a>
+
+    <a class="event-card" href="#">
+      <div class="event-date-block">
+        <div class="event-day">20</div>
+        <div class="event-month" style="color:#fb7185;">Nov 2026</div>
+      </div>
+      <div class="event-info">
+        <div class="event-type" style="color:#fb7185;">Journée portes ouvertes</div>
+        <div class="event-title">IFRAS Open Day 2026 — Science & Société</div>
+        <div class="event-location">Tous sites IFRAS · Ouvert au grand public</div>
+      </div>
+      <span class="event-badge badge--full">Complet</span>
+    </a>
+
+  </div>
+
+</section>
 
 <footer>
 © IFRAS — Institut Français de Recherche Aéronautique et Spatiale<br>
