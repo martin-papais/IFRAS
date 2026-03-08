@@ -2,8 +2,9 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Publications — IFRAS</title>
+<title>Publications scientifiques — IFRAS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 
 <style>
 
@@ -21,19 +22,19 @@
 
 body {
   margin: 0;
-  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  font-family: "DM Sans", "Segoe UI", sans-serif;
   background: var(--bg-main);
   color: var(--text-main);
 }
 
-/* ===== HEADER IDENTIQUE INDEX ===== */
+/* ===== HEADER ===== */
 
 header {
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
-  background: rgba(5,11,30,.75);
+  background: rgba(5,11,30,.85);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
 }
@@ -53,17 +54,13 @@ header {
   gap: 40px;
 }
 
-.logo-link img {
-  height: 60px;
-  cursor: pointer;
-}
+.logo-link img { height: 60px; cursor: pointer; }
 
 .main-nav {
   list-style: none;
   display: flex;
   gap: 32px;
-  margin: 0;
-  padding: 0;
+  margin: 0; padding: 0;
 }
 
 .main-nav a {
@@ -84,150 +81,364 @@ header {
   font-size: 13px;
 }
 
-.header-right .login-btn:hover {
-  background: var(--accent);
-}
+.header-right .login-btn:hover { background: var(--accent); }
 
 /* ===== SOUS BANDEAU ===== */
 
-
-
 .sub-nav {
-  margin-top: 90px;
+  margin-top: 84px;
   background: var(--bg-light);
   border-bottom: 1px solid var(--border);
 }
 
 .sub-nav ul {
   max-width: 1300px;
-  margin: auto;
+  margin: 0 auto;
   padding: 0 30px;
   list-style: none;
   display: flex;
   justify-content: space-between;
 }
 
-.sub-nav li {
-  padding: 14px 0;
-}
+.sub-nav li { padding: 14px 0; }
 
 .sub-nav a {
   color: var(--text-soft);
   text-decoration: none;
   font-size: 14px;
+  letter-spacing: .06em;
 }
 
-.sub-nav a:hover {
+.sub-nav a:hover { color: white; }
+.sub-nav a.active { color: white; border-bottom: 2px solid var(--accent); padding-bottom: 12px; }
+
+/* ===== INTRO SECTION ===== */
+
+.intro-section {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 60px 30px 50px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.intro-left {}
+
+.intro-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.intro-eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px; height: 1px;
+  background: var(--accent);
+}
+
+.intro-left h1 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 0 0 20px;
   color: white;
 }
 
-/* ===== MAIN ===== */
+.intro-left p {
+  font-size: 15px;
+  color: var(--text-soft);
+  line-height: 1.75;
+  font-weight: 300;
+  margin: 0;
+}
 
-main {
+.intro-right {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.intro-stat {
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.intro-stat-value {
+  font-family: "Syne", sans-serif;
+  font-size: 30px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.intro-stat-label {
+  font-size: 12px;
+  color: var(--text-soft);
+  font-weight: 300;
+  line-height: 1.4;
+}
+
+.intro-stat-bar {
+  width: 24px; height: 2px;
+  background: var(--accent);
+  margin-top: 4px;
+}
+
+/* ===== FILTRES ===== */
+
+.filters-bar {
   max-width: 1300px;
-  margin: auto;
-  padding: 70px 30px 90px;
+  margin: 0 auto;
+  padding: 28px 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+}
 
+.filter-label {
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  font-weight: 500;
+  margin-right: 6px;
+}
 
+.filter-btn {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-soft);
+  font-size: 12px;
+  cursor: pointer;
+  font-family: "DM Sans", sans-serif;
+  transition: .2s;
+}
 
-    .h1 {
-      font-size: 28px;
-      margin-bottom: 40px;
-    }
+.filter-btn:hover,
+.filter-btn.active {
+  background: rgba(79,107,237,.12);
+  border-color: rgba(79,107,237,.35);
+  color: white;
+}
 
-    .publication {
-      display: flex;
-      gap: 40px;
-      margin-bottom: 80px;
-      align-items: center;
-    }
+/* ===== LISTE DES PUBLICATIONS ===== */
 
-    .publication:nth-child(even) {
-      flex-direction: row-reverse;
-    }
+.pub-list {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 50px 30px 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
 
-    .pub-image {
-      width: 45%;
-      height: 240px;
-      background: linear-gradient(135deg, #0a1a3a, #070f2b);
-      border: 1px solid #1b2555;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #aab3d6;
-      font-size: 14px;
-    }
+/* ===== CARTE PUBLICATION ===== */
 
-    .pub-content {
-      width: 55%;
-    }
+.pub-card {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  padding: 40px 0;
+  text-decoration: none;
+  color: inherit;
+  transition: background .25s;
+  position: relative;
+}
 
-    .pub-content h2 {
-      margin-top: 0;
-      font-size: 20px;
-    }
+.pub-card:first-child { border-top: 1px solid var(--border); }
 
-    .pub-meta {
-      font-size: 12px;
-      color: #9ca3af;
-      margin-bottom: 10px;
-    }
+.pub-card:hover { background: rgba(79,107,237,.03); }
 
-    .pub-content p {
-      font-size: 14px;
-      color: #aab3d6;
-    }
+.pub-card:hover .pub-img img { transform: scale(1.04); }
 
-    .read-more {
-      margin-top: 15px;
-      display: inline-block;
-      color: #4f6bed;
-      text-decoration: none;
-      font-size: 14px;
-    }
+.pub-card:hover .pub-read-more { color: white; gap: 10px; }
 
-    .read-more:hover {
-      text-decoration: underline;
-    }
+/* Image */
+.pub-img {
+  width: 340px;
+  height: 220px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  background: var(--bg-light);
+}
 
-    footer {
-      background-color: #020617;
-      border-top: 1px solid #1b2555;
-      padding: 30px 20px;
-      font-size: 12px;
-      color: #6b7280;
-    }
+.pub-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .45s ease;
+}
 
-    footer .footer-container {
-      max-width: 1100px;
-      margin: auto;
-    }
+/* Contenu */
+.pub-body {
+  padding: 4px 0 4px 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
-    @media (max-width: 900px) {
-      .publication,
-      .publication:nth-child(even) {
-        flex-direction: column;
-      }
+.pub-top {}
 
-      .pub-image,
-      .pub-content {
-        width: 100%;
-      }
-    }
-  </style>
+.pub-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 16px;
+}
+
+.pub-tag {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(79,107,237,.08);
+  border: 1px solid rgba(79,107,237,.2);
+  color: var(--accent);
+  letter-spacing: .04em;
+}
+
+.pub-tag--secondary {
+  background: rgba(255,255,255,.03);
+  border-color: rgba(255,255,255,.08);
+  color: var(--text-soft);
+}
+
+.pub-meta {
+  font-size: 12px;
+  color: var(--text-soft);
+  letter-spacing: .08em;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pub-meta-sep {
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: rgba(170,179,214,.4);
+}
+
+.pub-body h2 {
+  font-family: "Syne", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  margin: 0 0 14px;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.pub-body p {
+  font-size: 14px;
+  color: var(--text-soft);
+  line-height: 1.75;
+  font-weight: 300;
+  margin: 0;
+}
+
+.pub-bottom {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pub-authors {
+  font-size: 12px;
+  color: rgba(170,179,214,.55);
+  font-style: italic;
+  font-weight: 300;
+}
+
+.pub-read-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--accent);
+  font-weight: 500;
+  transition: gap .2s, color .2s;
+}
+
+/* Badge "Nouveau" */
+.pub-badge-new {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(52,211,153,.12);
+  border: 1px solid rgba(52,211,153,.3);
+  color: #34d399;
+}
+
+/* ===== FOOTER ===== */
+
+footer {
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border);
+  padding: 40px 30px;
+  text-align: center;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* ===== ANIMATIONS ===== */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.pub-card { animation: fadeUp .5s ease both; }
+.pub-card:nth-child(1) { animation-delay: .04s; }
+.pub-card:nth-child(2) { animation-delay: .08s; }
+.pub-card:nth-child(3) { animation-delay: .12s; }
+.pub-card:nth-child(4) { animation-delay: .16s; }
+.pub-card:nth-child(5) { animation-delay: .20s; }
+.pub-card:nth-child(6) { animation-delay: .24s; }
+.pub-card:nth-child(7) { animation-delay: .28s; }
+.pub-card:nth-child(8) { animation-delay: .32s; }
+
+</style>
 </head>
-
 
 <body>
 
+<!-- ===== HEADER ===== -->
 <header>
   <div class="header-inner">
-
     <div class="header-left">
-      <a href="index.html" class="logo-link">
-        <img src="logo.png" alt="Logo IFRAS">
-      </a>
-
+      <a href="index.html" class="logo-link"><img src="logo.png" alt="Logo IFRAS"></a>
       <nav>
         <ul class="main-nav">
           <li><a href="index.html">Accueil</a></li>
@@ -237,188 +448,306 @@ main {
         </ul>
       </nav>
     </div>
-
     <div class="header-right">
       <a href="connexion.html" class="login-btn">Connexion</a>
     </div>
-
   </div>
 </header>
 
 <!-- ===== SOUS BANDEAU ===== -->
-
 <div class="sub-nav">
   <ul>
-    <li><a href="publications-scientifiques.html">Publications scientifiques</a></li>
-    <li><a href="#">Publications IFRAS</a></li>
-    <li><a href="#">Évènements</a></li>
+    <li><a href="publications-scientifiques.html" class="active">Publications scientifiques</a></li>
+    <li><a href="publications-ifras.html">Publications IFRAS</a></li>
+    <li><a href="evenements.html">Événements</a></li>
   </ul>
 </div>
 
-
-  
-<main>
-
-  <!-- Publication la plus récente -->
-  <div class="publication">
-    <div class="pub-image">
-    <img src="Assets/publication/mars01.png" alt="Publication univers01" />
-    </div>
-    <div class="pub-content">
-      <div class="pub-meta">Mars 2026 — Programme ARES-9</div>
-      <h2>Variabilité inattendue des signatures biologiques en environnement confiné</h2>
-      <p>
-        Cette étude analyse des données issues de cultures biologiques soumises
-        à des conditions d’isolement prolongé. Des fluctuations inattendues
-        ont été observées, remettant en question certains modèles établis.
-      </p>
-      <a href="#" class="read-more">Lire la publication →</a>
-    </div>
-  </div>
-
-  <div class="publication">
-    <div class="pub-image">
-    <img src="Assets/publication/fusee01.png" alt="Publication univers01" />
-    </div>
-    <div class="pub-content">
-      <div class="pub-meta">Novembre 2025 — Physiologie humaine</div>
-      <h2>Effets cognitifs de la désynchronisation temporelle en mission longue</h2>
-      <p>
-        Analyse des troubles cognitifs et perceptifs observés chez des sujets
-        exposés à des cycles temporels artificiels prolongés.
-      </p>
-      <a href="#" class="read-more">Lire la publication →</a>
-    </div>
-  </div>
-
-  <div class="publication">
-    <div class="pub-image">
-    <img src="Assets/publication/poisson01.png" alt="Publication univers01" />
-    </div>
-    <div class="pub-content">
-      <div class="pub-meta">Avril 2025 — Bases analogues terrestres</div>
-      <h2>Adaptation comportementale en environnement isolé extrême</h2>
-      <p>
-        Étude longitudinale menée dans des bases analogues terrestres
-        simulant des missions extra-planétaires.
-      </p>
-      <a href="#" class="read-more">Lire la publication →</a>
-    </div>
-  </div>
-
-  <div class="publication">
-    <div class="pub-image">
-    <img src="Assets/publication/puce01.png" alt="Publication univers01" />
-    </div>
-    <div class="pub-content">
-      <div class="pub-meta">Août 2024 — Intelligence embarquée</div>
-      <h2>Limites décisionnelles des systèmes autonomes en situation ambiguë</h2>
-      <p>
-        Cette publication explore les comportements émergents
-        d’algorithmes décisionnels confrontés à des données contradictoires.
-      </p>
-      <a href="Articles/article04.html" class="read-more">Lire la publication →</a>
-    </div>
-  </div>
-
-  <div class="publication">
-    <div class="pub-image">
-    <img src="Assets/publication/scientifique01.png" alt="Publication univers01" />
-    </div>
-    <div class="pub-content">
-      <div class="pub-meta">Janvier 2024 — Sciences du vivant</div>
-      <h2>Résilience microbienne en conditions extrêmes simulées</h2>
-      <p>
-        Étude des capacités d’adaptation de micro-organismes soumis
-        à des environnements hostiles prolongés.
-      </p>
-      <a href="#" class="read-more">Lire la publication →</a>
-    </div>
-  </div>
-
-<div class="publication">
-  <div class="pub-image">
-    <img src="Assets/publication/univers01.png" alt="Publication univers01" />
-  </div>
-  <div class="pub-content">
-    <div class="pub-meta">Mai 2023 — Recherche fondamentale</div>
-    <h2>Cadres théoriques pour l’étude de la vie non terrestre</h2>
+<!-- ===== INTRO ===== -->
+<div class="intro-section">
+  <div class="intro-left">
+    <div class="intro-eyebrow">Base documentaire</div>
+    <h1>Publications<br>scientifiques</h1>
     <p>
-      Article fondateur posant les bases conceptuelles
-      des recherches exobiologiques menées à l’IFRAS.
+      Cette page répertorie l'ensemble des articles scientifiques produits par les chercheurs de l'IFRAS
+      et publiés dans des revues internationales à comité de lecture. Les travaux couvrent les domaines
+      de la biologie spatiale, de la physique, de la propulsion, de l'intelligence artificielle embarquée
+      et des sciences des matériaux. Les publications sont classées de la plus récente à la plus ancienne.
     </p>
-    <a href="#" class="read-more">Lire la publication →</a>
+  </div>
+  <div class="intro-right">
+    <div class="intro-stat">
+      <div class="intro-stat-value">+1 240</div>
+      <div class="intro-stat-label">Articles publiés depuis 1962</div>
+      <div class="intro-stat-bar"></div>
+    </div>
+    <div class="intro-stat">
+      <div class="intro-stat-value">38</div>
+      <div class="intro-stat-label">Revues partenaires internationales</div>
+      <div class="intro-stat-bar"></div>
+    </div>
+    <div class="intro-stat">
+      <div class="intro-stat-value">94</div>
+      <div class="intro-stat-label">Articles publiés en 2025</div>
+      <div class="intro-stat-bar"></div>
+    </div>
+    <div class="intro-stat">
+      <div class="intro-stat-value">8</div>
+      <div class="intro-stat-label">Départements contributeurs</div>
+      <div class="intro-stat-bar"></div>
+    </div>
   </div>
 </div>
 
-<style>
-.publication {
-  display: flex;
-  gap: 20px; /* espace entre image et contenu */
-  margin-bottom: 30px;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
+<!-- ===== FILTRES ===== -->
+<div class="filters-bar">
+  <span class="filter-label">Filtrer par :</span>
+  <button class="filter-btn active">Tous</button>
+  <button class="filter-btn">Biologie spatiale</button>
+  <button class="filter-btn">Propulsion</button>
+  <button class="filter-btn">IA embarquée</button>
+  <button class="filter-btn">Matériaux</button>
+  <button class="filter-btn">Astrophysique</button>
+  <button class="filter-btn">Physique</button>
+</div>
 
-.pub-image {
-  flex: 1 1 200px; /* largeur flexible, minimum 200px */
-  overflow: hidden;
-}
+<!-- ===== LISTE DES PUBLICATIONS ===== -->
+<div class="pub-list">
 
-.pub-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* l'image remplit le bloc sans déformation */
-  display: block;
-  transition: transform 0.3s ease;
-}
+  <!-- 1 — Mars 2026 -->
+  <a class="pub-card" href="#">
+    <span class="pub-badge-new">Nouveau</span>
+    <div class="pub-img">
+      <img src="Assets/publication/mars01.png" alt="Signatures biologiques">
+    </div>
+    <div class="pub-body">
+      <div class="pub-top">
+        <div class="pub-tags">
+          <span class="pub-tag">Biologie spatiale</span>
+          <span class="pub-tag pub-tag--secondary">ARTEMIS-9</span>
+          <span class="pub-tag pub-tag--secondary">Nature Astronautics</span>
+        </div>
+        <div class="pub-meta">
+          <span>Mars 2026</span>
+          <span class="pub-meta-sep"></span>
+          <span>Département DSVT</span>
+        </div>
+        <h2>Variabilité inattendue des signatures biologiques en environnement confiné sous microgravité prolongée</h2>
+        <p>Analyse approfondie des fluctuations métaboliques et immunitaires observées sur 6 sujets lors de 120 jours de confinement en habitat orbital analogique. L'étude révèle une dérive systématique des biomarqueurs après le 90e jour, remettant en question certains modèles établis d'adaptation humaine au long cours.</p>
+      </div>
+      <div class="pub-bottom">
+        <span class="pub-authors">Garnier É., Dupont A., Rousseau J-L. et al.</span>
+        <span class="pub-read-more">Lire la publication →</span>
+      </div>
+    </div>
+  </a>
 
-.pub-image img:hover {
-  transform: scale(1.05); /* petit zoom au survol */
-}
+  <!-- 2 — Jan 2026 -->
+  <a class="pub-card" href="#">
+    <span class="pub-badge-new">Nouveau</span>
+    <div class="pub-img">
+      <img src="Assets/publication/hermes01.png" alt="Quantique HERMES">
+    </div>
+    <div class="pub-body">
+      <div class="pub-top">
+        <div class="pub-tags">
+          <span class="pub-tag">Physique quantique</span>
+          <span class="pub-tag pub-tag--secondary">HERMES</span>
+          <span class="pub-tag pub-tag--secondary">Physical Review Letters</span>
+        </div>
+        <div class="pub-meta">
+          <span>Janvier 2026</span>
+          <span class="pub-meta-sep"></span>
+          <span>Département DSTI</span>
+        </div>
+        <h2>Fidélité des protocoles d'intrication quantique sur canal bruité en configuration longue portée</h2>
+        <p>Résultats expérimentaux d'un protocole de communication quantique testé sur une liaison simulée de 40 000 km. Le taux de fidélité mesuré dépasse 97,3 % dans les conditions nominales, validant le modèle théorique développé dans le cadre du programme HERMES.</p>
+      </div>
+      <div class="pub-bottom">
+        <span class="pub-authors">Lefebvre P., Martin N., Tissot V. et al.</span>
+        <span class="pub-read-more">Lire la publication →</span>
+      </div>
+    </div>
+  </a>
 
-.pub-content {
-  flex: 2 1 400px;
-  padding: 20px;
-}
+  <!-- 3 — Nov 2025 -->
+  <a class="pub-card" href="#">
+    <div class="pub-img">
+      <img src="Assets/publication/fusee01.png" alt="Effets cognitifs">
+    </div>
+    <div class="pub-body">
+      <div class="pub-top">
+        <div class="pub-tags">
+          <span class="pub-tag">Biologie spatiale</span>
+          <span class="pub-tag pub-tag--secondary">Physiologie humaine</span>
+          <span class="pub-tag pub-tag--secondary">J. Space Medicine</span>
+        </div>
+        <div class="pub-meta">
+          <span>Novembre 2025</span>
+          <span class="pub-meta-sep"></span>
+          <span>Département DSVT</span>
+        </div>
+        <h2>Effets cognitifs de la désynchronisation temporelle en mission longue durée</h2>
+        <p>Analyse des troubles cognitifs et perceptifs observés chez des sujets exposés à des cycles temporels artificiels prolongés sur 18 mois. L'étude quantifie le déclin des performances décisionnelles et propose un protocole de resynchronisation progressive.</p>
+      </div>
+      <div class="pub-bottom">
+        <span class="pub-authors">Garnier É., Bernard I., Collet B. et al.</span>
+        <span class="pub-read-more">Lire la publication →</span>
+      </div>
+    </div>
+  </a>
 
-.pub-meta {
-  font-size: 0.9rem;
-  color: #777;
-  margin-bottom: 8px;
-}
+  <!-- 4 — Déc 2025 -->
+  <a class="pub-card" href="#">
+    <div class="pub-img">
+      <img src="Assets/publication/propulsion01.png" alt="Propulsion PROMETHEUS">
+    </div>
+    <div class="pub-body">
+      <div class="pub-top">
+        <div class="pub-tags">
+          <span class="pub-tag">Propulsion</span>
+          <span class="pub-tag pub-tag--secondary">PROMETHEUS</span>
+          <span class="pub-tag pub-tag--secondary">Acta Astronautica</span>
+        </div>
+        <div class="pub-meta">
+          <span>Décembre 2025</span>
+          <span class="pub-meta-sep"></span>
+          <span>Département DPET</span>
+        </div>
+        <h2>Impulsion spécifique record sur banc de test plasma froid — validation expérimentale à 6 800 s</h2>
+        <p>Validation en chambre d'essai d'un prototype de propulseur ionique à plasma froid atteignant 6 800 s d'impulsion spécifique dans des conditions représentatives d'une mission interplanétaire. Ces résultats représentent une progression de 240 % par rapport à l'état de l'art.</p>
+      </div>
+      <div class="pub-bottom">
+        <span class="pub-authors">Roux F., Marchand R., Leroy Y. et al.</span>
+        <span class="pub-read-more">Lire la publication →</span>
+      </div>
+    </div>
+  </a>
 
-.pub-content h2 {
-  margin: 0 0 10px;
-  font-size: 1.4rem;
-}
+  <!-- 5 — Avr 2025 -->
+  <a class="pub-card" href="#">
+    <div class="pub-img">
+      <img src="Assets/publication/poisson01.png" alt="Adaptation comportementale">
+    </div>
+    <div class="pub-body">
+      <div class="pub-top">
+        <div class="pub-tags">
+          <span class="pub-tag">Biologie spatiale</span>
+          <span class="pub-tag pub-tag--secondary">Bases analogues</span>
+          <span class="pub-tag pub-tag--secondary">Astrobiology</span>
+        </div>
+        <div class="pub-meta">
+          <span>Avril 2025</span>
+          <span class="pub-meta-sep"></span>
+          <span>Département DSVT</span>
+        </div>
+        <h2>Adaptation comportementale en environnement isolé extrême — étude longitudinale sur bases analogues</h2>
+        <p>Étude menée sur trois bases analogues terrestres simulant des missions extra-planétaires. L'analyse porte sur les dynamiques de groupe, le stress chronique et les mécanismes de résilience individuelle sur des séjours de 90 jours. Les résultats alimentent directement la préparation psychologique des équipes ARTEMIS-9.</p>
+      </div>
+      <div class="pub-bottom">
+        <span class="pub-authors">Bernard I., Lejeune N., Vasseur C. et al.</span>
+        <span class="pub-read-more">Lire la publication →</span>
+      </div>
+    </div>
+  </a>
 
-.pub-content p {
-  margin-bottom: 12px;
-  line-height: 1.5;
-}
+  <!-- 6 — Août 2024 -->
+  <a class="pub-card" href="Articles/article04.html">
+    <div class="pub-img">
+      <img src="Assets/publication/puce01.png" alt="IA embarquée">
+    </div>
+    <div class="pub-body">
+      <div class="pub-top">
+        <div class="pub-tags">
+          <span class="pub-tag">IA embarquée</span>
+          <span class="pub-tag pub-tag--secondary">Systèmes autonomes</span>
+          <span class="pub-tag pub-tag--secondary">AI & Robotics</span>
+        </div>
+        <div class="pub-meta">
+          <span>Août 2024</span>
+          <span class="pub-meta-sep"></span>
+          <span>Département DSTI</span>
+        </div>
+        <h2>Limites décisionnelles des systèmes autonomes en situation ambiguë et données contradictoires</h2>
+        <p>Cette publication explore les comportements émergents d'architectures IA confrontées à des données contradictoires en conditions dégradées. Elle identifie trois régimes de défaillance décisionnelle et propose un cadre formel de détection précoce applicable aux systèmes embarqués spatiaux.</p>
+      </div>
+      <div class="pub-bottom">
+        <span class="pub-authors">Lefebvre P., Dubois M., Renaud Y. et al.</span>
+        <span class="pub-read-more">Lire la publication →</span>
+      </div>
+    </div>
+  </a>
 
-.read-more {
-  color: #007bff;
-  text-decoration: none;
-  font-weight: bold;
-}
+  <!-- 7 — Jan 2024 -->
+  <a class="pub-card" href="#">
+    <div class="pub-img">
+      <img src="Assets/publication/scientifique01.png" alt="Résilience microbienne">
+    </div>
+    <div class="pub-body">
+      <div class="pub-top">
+        <div class="pub-tags">
+          <span class="pub-tag">Biologie spatiale</span>
+          <span class="pub-tag pub-tag--secondary">Astrobiologie</span>
+          <span class="pub-tag pub-tag--secondary">Microbiology Letters</span>
+        </div>
+        <div class="pub-meta">
+          <span>Janvier 2024</span>
+          <span class="pub-meta-sep"></span>
+          <span>Département DSVT</span>
+        </div>
+        <h2>Résilience microbienne en conditions extrêmes simulées représentatives de la surface martienne</h2>
+        <p>Étude des capacités d'adaptation de souches bactériennes et fongiques soumises aux irradiations UV, aux pressions et aux températures représentatives de la surface de Mars. Trois souches présentent une résistance inattendue qui ouvre des perspectives en astrobiologie.</p>
+      </div>
+      <div class="pub-bottom">
+        <span class="pub-authors">Dupont A., Garnier É., Roux F. et al.</span>
+        <span class="pub-read-more">Lire la publication →</span>
+      </div>
+    </div>
+  </a>
 
-.read-more:hover {
-  text-decoration: underline;
-}
-</style>
+  <!-- 8 — Mai 2023 -->
+  <a class="pub-card" href="#">
+    <div class="pub-img">
+      <img src="Assets/publication/univers01.png" alt="Vie non terrestre">
+    </div>
+    <div class="pub-body">
+      <div class="pub-top">
+        <div class="pub-tags">
+          <span class="pub-tag">Astrophysique</span>
+          <span class="pub-tag pub-tag--secondary">Recherche fondamentale</span>
+          <span class="pub-tag pub-tag--secondary">Origins of Life</span>
+        </div>
+        <div class="pub-meta">
+          <span>Mai 2023</span>
+          <span class="pub-meta-sep"></span>
+          <span>Département DAI</span>
+        </div>
+        <h2>Cadres théoriques pour l'étude et la détection de la vie non terrestre — une approche unifiée</h2>
+        <p>Article fondateur posant les bases conceptuelles et méthodologiques des recherches exobiologiques menées à l'IFRAS. Il propose un cadre unifié intégrant biosignatures chimiques, signatures spectroscopiques et indicateurs thermodynamiques pour la détection de vie extraterrestre.</p>
+      </div>
+      <div class="pub-bottom">
+        <span class="pub-authors">Girard A., Martin N., Rousseau J-L. et al.</span>
+        <span class="pub-read-more">Lire la publication →</span>
+      </div>
+    </div>
+  </a>
 
-</main>
+</div>
 
 <footer>
-  <div class="footer-container">
-    © IFRAS — Institut Français de Recherche Aéronautique et Spatiale<br>
-    Publications soumises à validation institutionnelle
-  </div>
+  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale<br>
+  Publications soumises à validation institutionnelle
 </footer>
+
+<script>
+// Filtres (démo visuelle)
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+</script>
 
 </body>
 </html>
