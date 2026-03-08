@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Événements — IFRAS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+<style>
+
+:root {
+  --bg-main: #050b1e;
+  --bg-dark: #020617;
+  --bg-light: #070f2b;
+  --border: #1b2555;
+  --accent: #4f6bed;
+  --text-main: #e6e6e6;
+  --text-soft: #aab3d6;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "DM Sans", "Segoe UI", sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+}
+
+/* ===== HEADER ===== */
+
+header {
+  position: fixed; top: 0; width: 100%;
+  z-index: 1000;
+  background: rgba(5,11,30,.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  max-width: 1300px; margin: auto;
+  padding: 12px 30px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.header-left { display: flex; align-items: center; gap: 40px; }
+.logo-link img { height: 60px; cursor: pointer; }
+
+.main-nav {
+  list-style: none; display: flex; gap: 32px;
+}
+
+.main-nav a {
+  text-decoration: none; color: var(--text-soft);
+  font-size: 14px; letter-spacing: .05em;
+}
+
+.main-nav a:hover { color: white; }
+
+.header-right .login-btn {
+  padding: 8px 18px; border-radius: 6px;
+  border: 1px solid var(--accent);
+  color: white; text-decoration: none; font-size: 13px;
+}
+
+.header-right .login-btn:hover { background: var(--accent); }
+
+/* ===== SOUS BANDEAU ===== */
+
+.sub-nav {
+  margin-top: 84px;
+  background: var(--bg-light);
+  border-bottom: 1px solid var(--border);
+}
+
+.sub-nav ul {
+  max-width: 1300px; margin: 0 auto;
+  padding: 0 30px; list-style: none;
+  display: flex; justify-content: space-between;
+}
+
+.sub-nav li { padding: 14px 0; }
+
+.sub-nav a {
+  color: var(--text-soft); text-decoration: none;
+  font-size: 14px; letter-spacing: .06em;
+}
+
+.sub-nav a:hover { color: white; }
+.sub-nav a.active {
+  color: white;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 12px;
+}
+
+/* ===== INTRO ===== */
+
+.intro-section {
+  max-width: 1300px; margin: 0 auto;
+  padding: 60px 30px 50px;
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 40px; align-items: end;
+  border-bottom: 1px solid var(--border);
+}
+
+.intro-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--accent); font-weight: 500; margin-bottom: 16px;
+}
+
+.intro-eyebrow::before {
+  content: ''; display: block;
+  width: 24px; height: 1px; background: var(--accent);
+}
+
+.intro-left h1 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 800; letter-spacing: -0.03em;
+  line-height: 1.05; color: white; margin-bottom: 16px;
+}
+
+.intro-left p {
+  font-size: 15px; color: var(--text-soft);
+  line-height: 1.75; font-weight: 300;
+  max-width: 580px;
+}
+
+.intro-stats {
+  display: flex; gap: 32px; align-items: flex-end;
+}
+
+.intro-stat-pill {
+  text-align: center;
+  padding: 18px 24px;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.intro-stat-pill .val {
+  font-family: "Syne", sans-serif;
+  font-size: 28px; font-weight: 800;
+  color: white; letter-spacing: -0.04em; display: block;
+}
+
+.intro-stat-pill .lbl {
+  font-size: 11px; color: var(--text-soft);
+  font-weight: 300; margin-top: 4px; display: block;
+}
+
+/* ===== FILTRES ===== */
+
+.filters-bar {
+  max-width: 1300px; margin: 0 auto;
+  padding: 22px 30px;
+  display: flex; flex-direction: column; gap: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.search-box {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--bg-light); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px 16px; transition: border-color .2s;
+}
+
+.search-box:focus-within { border-color: rgba(79,107,237,.5); }
+.search-icon { font-size: 14px; opacity: .5; flex-shrink: 0; }
+
+.search-box input {
+  flex: 1; background: transparent; border: none; outline: none;
+  color: var(--text-main); font-family: "DM Sans", sans-serif;
+  font-size: 14px; font-weight: 300;
+}
+
+.search-box input::placeholder { color: rgba(170,179,214,.45); }
+
+.search-clear {
+  background: transparent; border: none; color: var(--text-soft);
+  cursor: pointer; font-size: 13px; padding: 2px 4px;
+  display: none; align-items: center; transition: color .2s;
+}
+
+.search-clear:hover { color: white; }
+
+.filters-right {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+
+.filter-label {
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--text-soft); font-weight: 500; flex-shrink: 0;
+}
+
+.filter-group { display: flex; gap: 8px; flex-wrap: wrap; flex: 1; }
+
+.filter-btn {
+  padding: 6px 14px; border-radius: 20px;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text-soft); font-size: 12px; cursor: pointer;
+  font-family: "DM Sans", sans-serif; transition: .2s; white-space: nowrap;
+}
+
+.filter-btn:hover, .filter-btn.active {
+  background: rgba(79,107,237,.12);
+  border-color: rgba(79,107,237,.35); color: white;
+}
+
+.sort-box {
+  display: flex; align-items: center; gap: 8px;
+  margin-left: auto; flex-shrink: 0;
+}
+
+.sort-box select {
+  background: var(--bg-light); border: 1px solid var(--border);
+  border-radius: 8px; color: var(--text-soft);
+  font-family: "DM Sans", sans-serif; font-size: 12px;
+  padding: 6px 12px; cursor: pointer; outline: none; transition: border-color .2s;
+}
+
+.sort-box select:focus { border-color: rgba(79,107,237,.4); color: white; }
+
+.results-bar {
+  max-width: 1300px; margin: 0 auto; padding: 14px 30px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+
+#results-count { font-size: 13px; color: var(--text-soft); font-weight: 300; }
+
+.reset-btn {
+  display: none; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--accent);
+  background: transparent; border: 1px solid rgba(79,107,237,.25);
+  border-radius: 20px; padding: 5px 14px; cursor: pointer;
+  font-family: "DM Sans", sans-serif; transition: .2s;
+}
+
+.reset-btn:hover { background: rgba(79,107,237,.1); color: white; }
+
+/* ===== LISTE ÉVÉNEMENTS ===== */
+
+.evt-list {
+  max-width: 1300px; margin: 0 auto;
+  padding: 50px 30px 60px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+/* ===== CARTE ÉVÉNEMENT ===== */
+
+.evt-card {
+  display: grid;
+  grid-template-columns: 90px 1fr auto;
+  gap: 0;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 14px; overflow: hidden;
+  text-decoration: none; color: inherit;
+  position: relative;
+  transition: border-color .3s, transform .25s, box-shadow .3s;
+  animation: fadeUp .45s ease both;
+}
+
+.evt-card:hover {
+  border-color: rgba(79,107,237,.4);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 44px rgba(0,0,10,.5);
+}
+
+.evt-card::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--evt-color, var(--accent));
+  opacity: 0; transition: opacity .3s;
+}
+
+.evt-card:hover::before { opacity: 1; }
+
+/* Bloc date */
+.evt-date-block {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 24px 0;
+  border-right: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+  gap: 2px; flex-shrink: 0;
+}
+
+.evt-day {
+  font-family: "Syne", sans-serif;
+  font-size: 30px; font-weight: 800;
+  line-height: 1; color: white;
+  letter-spacing: -0.04em;
+}
+
+.evt-month {
+  font-size: 11px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--text-soft); font-weight: 300;
+}
+
+.evt-year {
+  font-size: 11px; color: rgba(170,179,214,.4); font-weight: 300;
+}
+
+/* Corps */
+.evt-body {
+  padding: 22px 28px;
+  display: flex; flex-direction: column; justify-content: center; gap: 8px;
+}
+
+.evt-top-row {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+
+.evt-type-tag {
+  font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+  font-weight: 600; padding: 3px 10px; border-radius: 20px;
+}
+
+.evt-status {
+  font-size: 11px; font-weight: 500;
+  padding: 3px 10px; border-radius: 20px;
+}
+
+.evt-status--open {
+  background: rgba(52,211,153,.1);
+  border: 1px solid rgba(52,211,153,.3); color: #34d399;
+}
+
+.evt-status--soon {
+  background: rgba(251,146,60,.1);
+  border: 1px solid rgba(251,146,60,.3); color: #fb923c;
+}
+
+.evt-status--online {
+  background: rgba(96,165,250,.1);
+  border: 1px solid rgba(96,165,250,.3); color: #60a5fa;
+}
+
+.evt-status--full {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.1); color: rgba(170,179,214,.5);
+}
+
+.evt-status--past {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.07); color: rgba(170,179,214,.35);
+}
+
+.evt-title {
+  font-family: "Syne", sans-serif; font-size: 17px;
+  font-weight: 700; color: white; line-height: 1.3;
+}
+
+.evt-desc {
+  font-size: 13px; color: var(--text-soft);
+  line-height: 1.65; font-weight: 300;
+}
+
+.evt-meta-row {
+  display: flex; gap: 18px; flex-wrap: wrap; margin-top: 4px;
+}
+
+.evt-meta-item {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 12px; color: rgba(170,179,214,.55); font-weight: 300;
+}
+
+.evt-meta-item span:first-child { font-size: 13px; }
+
+/* Panneau droit */
+.evt-right {
+  padding: 22px 28px;
+  display: flex; flex-direction: column;
+  align-items: flex-end; justify-content: center; gap: 14px;
+  border-left: 1px solid var(--border); flex-shrink: 0;
+  min-width: 160px;
+}
+
+.evt-duration {
+  font-size: 12px; color: var(--text-soft); font-weight: 300;
+  text-align: right;
+}
+
+.evt-duration strong {
+  display: block; font-family: "Syne", sans-serif;
+  font-size: 18px; font-weight: 700; color: white;
+  letter-spacing: -0.02em;
+}
+
+.evt-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 18px; border-radius: 8px;
+  border: 1px solid rgba(79,107,237,.3);
+  background: transparent; color: white;
+  font-family: "DM Sans", sans-serif; font-size: 12px;
+  font-weight: 500; cursor: pointer; transition: .25s;
+  text-decoration: none; white-space: nowrap;
+}
+
+.evt-cta:hover { background: rgba(79,107,237,.15); }
+
+.evt-cta--disabled {
+  border-color: rgba(255,255,255,.08);
+  color: rgba(170,179,214,.35); cursor: default;
+}
+
+.evt-cta--disabled:hover { background: transparent; }
+
+/* Carte passée — atténuée */
+.evt-card.is-past { opacity: .55; }
+.evt-card.is-past:hover { opacity: .8; }
+
+/* ===== SÉPARATEUR "ÉVÉNEMENTS PASSÉS" ===== */
+
+.section-sep {
+  max-width: 1300px; margin: 0 auto;
+  padding: 10px 30px 0;
+  display: flex; align-items: center; gap: 16px;
+}
+
+.section-sep-label {
+  font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+  color: rgba(170,179,214,.35); font-weight: 500; white-space: nowrap;
+}
+
+.section-sep-line {
+  flex: 1; height: 1px; background: rgba(27,37,85,.8);
+}
+
+/* ===== NOTICE ===== */
+
+.archive-notice {
+  max-width: 1300px; margin: 0 auto; padding: 0 30px 80px;
+}
+
+.archive-notice-inner {
+  display: flex; align-items: center; gap: 20px;
+  background: rgba(79,107,237,.05);
+  border: 1px solid rgba(79,107,237,.15);
+  border-radius: 12px; padding: 22px 28px;
+}
+
+.archive-icon { font-size: 28px; flex-shrink: 0; opacity: .7; }
+.archive-text { flex: 1; }
+
+.archive-text strong {
+  display: block; font-size: 14px; font-weight: 600;
+  color: white; margin-bottom: 4px;
+}
+
+.archive-text p {
+  font-size: 13px; color: var(--text-soft);
+  line-height: 1.6; margin: 0; font-weight: 300;
+}
+
+.archive-text a { color: var(--accent); text-decoration: none; }
+.archive-text a:hover { text-decoration: underline; }
+
+.archive-cta {
+  flex-shrink: 0; padding: 9px 18px; border-radius: 8px;
+  border: 1px solid rgba(79,107,237,.3); color: white;
+  text-decoration: none; font-size: 12px; font-weight: 500;
+  transition: .2s; white-space: nowrap;
+}
+
+.archive-cta:hover { background: rgba(79,107,237,.15); }
+
+/* ===== FOOTER ===== */
+
+footer {
+  background: var(--bg-dark); border-top: 1px solid var(--border);
+  padding: 40px 30px; text-align: center;
+  font-size: 12px; color: #6b7280;
+}
+
+/* ===== NO RESULTS ===== */
+
+.no-results {
+  text-align: center; padding: 60px 0;
+  color: var(--text-soft); font-size: 14px;
+  font-weight: 300; display: none;
+}
+
+.no-results strong {
+  display: block; font-family: "Syne", sans-serif;
+  font-size: 18px; color: white; margin-bottom: 8px;
+}
+
+/* ===== ANIMATIONS ===== */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.evt-card:nth-child(1)  { animation-delay: .04s; }
+.evt-card:nth-child(2)  { animation-delay: .08s; }
+.evt-card:nth-child(3)  { animation-delay: .12s; }
+.evt-card:nth-child(4)  { animation-delay: .16s; }
+.evt-card:nth-child(5)  { animation-delay: .20s; }
+.evt-card:nth-child(6)  { animation-delay: .24s; }
+.evt-card:nth-child(7)  { animation-delay: .28s; }
+.evt-card:nth-child(8)  { animation-delay: .32s; }
+.evt-card:nth-child(9)  { animation-delay: .36s; }
+
+</style>
+</head>
+
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="header-inner">
+    <div class="header-left">
+      <a href="index.html" class="logo-link"><img src="logo.png" alt="Logo IFRAS"></a>
+      <nav>
+        <ul class="main-nav">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="recherche.html">Recherche</a></li>
+          <li><a href="programmes.html">Programmes</a></li>
+          <li><a href="publications.html">Publications</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="header-right">
+      <a href="connexion.html" class="login-btn">Connexion</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== SOUS BANDEAU ===== -->
+<div class="sub-nav">
+  <ul>
+    <li><a href="publications-scientifiques.html">Publications scientifiques</a></li>
+    <li><a href="publications-IFRAS.html">Publications IFRAS</a></li>
+    <li><a href="evenements.html" class="active">Événements</a></li>
+  </ul>
+</div>
+
+<!-- ===== INTRO ===== -->
+<div class="intro-section">
+  <div class="intro-left">
+    <div class="intro-eyebrow">Agenda scientifique</div>
+    <h1>Événements</h1>
+    <p>Colloques, conférences, séminaires, journées portes ouvertes et soutenances de thèse organisés ou co-organisés par l'IFRAS. Retrouvez ici l'intégralité du calendrier scientifique de l'institut, du plus récent au plus ancien.</p>
+  </div>
+  <div class="intro-stats">
+    <div class="intro-stat-pill">
+      <span class="val">4</span>
+      <span class="lbl">Événements à venir</span>
+    </div>
+    <div class="intro-stat-pill">
+      <span class="val">3</span>
+      <span class="lbl">Événements passés</span>
+    </div>
+    <div class="intro-stat-pill">
+      <span class="val">6</span>
+      <span class="lbl">Types d'événements</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FILTRES ===== -->
+<div class="filters-bar">
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="search-input" placeholder="Rechercher par titre, lieu, type, programme…">
+    <button class="search-clear" id="search-clear" title="Effacer">✕</button>
+  </div>
+  <div class="filters-right">
+    <span class="filter-label">Type :</span>
+    <div class="filter-group">
+      <button class="filter-btn active" data-filter="tous">Tous</button>
+      <button class="filter-btn" data-filter="Colloque">Colloque</button>
+      <button class="filter-btn" data-filter="Conférence">Conférence</button>
+      <button class="filter-btn" data-filter="Séminaire">Séminaire</button>
+      <button class="filter-btn" data-filter="Portes ouvertes">Portes ouvertes</button>
+      <button class="filter-btn" data-filter="Soutenance">Soutenance</button>
+      <button class="filter-btn" data-filter="Atelier">Atelier</button>
+    </div>
+    <div class="sort-box">
+      <span class="filter-label">Trier :</span>
+      <select id="sort-select">
+        <option value="recent">Plus récent d'abord</option>
+        <option value="ancien">Plus ancien d'abord</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="results-bar">
+  <span id="results-count">7 événements</span>
+  <button class="reset-btn" id="reset-btn">Réinitialiser les filtres</button>
+</div>
+
+<!-- ===== LISTE ===== -->
+<div class="evt-list" id="evt-list">
+
+  <!-- 1 · Colloque ISABS 2026 -->
+  <a class="evt-card" href="#"
+     style="--evt-color:#4f6bed"
+     data-date="2026-06-15" data-type="Colloque">
+    <div class="evt-date-block">
+      <div class="evt-day">15</div>
+      <div class="evt-month">Juin</div>
+      <div class="evt-year">2026</div>
+    </div>
+    <div class="evt-body">
+      <div class="evt-top-row">
+        <span class="evt-type-tag" style="background:rgba(79,107,237,.1);border:1px solid rgba(79,107,237,.3);color:#818cf8">Colloque</span>
+        <span class="evt-status evt-status--open">Inscriptions ouvertes</span>
+      </div>
+      <div class="evt-title">ISABS 2026 — Colloque International des Sciences Aérospatiales et Biologiques</div>
+      <p class="evt-desc">Grand colloque annuel de l'IFRAS réunissant chercheurs, ingénieurs et partenaires institutionnels autour des thématiques de biologie spatiale, propulsion et systèmes autonomes. Accueil de délégations ESA, NASA, JAXA et ISRO.</p>
+      <div class="evt-meta-row">
+        <span class="evt-meta-item"><span>📍</span> IFRAS — Amphithéâtre Gagarine, Toulouse</span>
+        <span class="evt-meta-item"><span>👥</span> 420 participants attendus</span>
+        <span class="evt-meta-item"><span>🌐</span> Retransmission en ligne</span>
+      </div>
+    </div>
+    <div class="evt-right">
+      <div class="evt-duration">
+        <strong>3 jours</strong>
+        15 → 17 juin
+      </div>
+      <a href="#" class="evt-cta">S'inscrire →</a>
+    </div>
+  </a>
+
+  <!-- 2 · Portes ouvertes -->
+  <a class="evt-card" href="#"
+     style="--evt-color:#34d399"
+     data-date="2026-05-23" data-type="Portes ouvertes">
+    <div class="evt-date-block">
+      <div class="evt-day">23</div>
+      <div class="evt-month">Mai</div>
+      <div class="evt-year">2026</div>
+    </div>
+    <div class="evt-body">
+      <div class="evt-top-row">
+        <span class="evt-type-tag" style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);color:#34d399">Portes ouvertes</span>
+        <span class="evt-status evt-status--open">Inscriptions ouvertes</span>
+      </div>
+      <div class="evt-title">Journée Portes Ouvertes IFRAS 2026</div>
+      <p class="evt-desc">Découvrez les laboratoires, plateaux techniques et simulateurs de l'IFRAS. Visites guidées, démonstrations en direct et rencontres avec les chercheurs des 8 départements. Ouvert au grand public et aux lycéens.</p>
+      <div class="evt-meta-row">
+        <span class="evt-meta-item"><span>📍</span> Campus IFRAS, Toulouse</span>
+        <span class="evt-meta-item"><span>👥</span> Grand public — entrée libre</span>
+      </div>
+    </div>
+    <div class="evt-right">
+      <div class="evt-duration">
+        <strong>1 jour</strong>
+        9h00 → 18h00
+      </div>
+      <a href="#" class="evt-cta">S'inscrire →</a>
+    </div>
+  </a>
+
+  <!-- 3 · Séminaire ARTEMIS -->
+  <a class="evt-card" href="#"
+     style="--evt-color:#f97316"
+     data-date="2026-04-08" data-type="Séminaire">
+    <div class="evt-date-block">
+      <div class="evt-day">08</div>
+      <div class="evt-month">Avr.</div>
+      <div class="evt-year">2026</div>
+    </div>
+    <div class="evt-body">
+      <div class="evt-top-row">
+        <span class="evt-type-tag" style="background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.3);color:#f97316">Séminaire</span>
+        <span class="evt-status evt-status--soon">Bientôt complet</span>
+      </div>
+      <div class="evt-title">Séminaire ARTEMIS-9 — Résultats intermédiaires de la Phase III</div>
+      <p class="evt-desc">Présentation des données biologiques et physiologiques collectées lors des 120 premiers jours de la phase III. Interventions des équipes DSVT et DOL, suivi de questions ouvertes. Réservé aux membres accrédités IFRAS et partenaires.</p>
+      <div class="evt-meta-row">
+        <span class="evt-meta-item"><span>📍</span> Salle Laplace, Bâtiment B — IFRAS</span>
+        <span class="evt-meta-item"><span>👥</span> 80 places · Accréditation requise</span>
+      </div>
+    </div>
+    <div class="evt-right">
+      <div class="evt-duration">
+        <strong>½ journée</strong>
+        14h00 → 18h30
+      </div>
+      <a href="#" class="evt-cta">Demander accès →</a>
+    </div>
+  </a>
+
+  <!-- 4 · Atelier IA embarquée -->
+  <a class="evt-card" href="#"
+     style="--evt-color:#38bdf8"
+     data-date="2026-03-20" data-type="Atelier">
+    <div class="evt-date-block">
+      <div class="evt-day">20</div>
+      <div class="evt-month">Mars</div>
+      <div class="evt-year">2026</div>
+    </div>
+    <div class="evt-body">
+      <div class="evt-top-row">
+        <span class="evt-type-tag" style="background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.3);color:#38bdf8">Atelier</span>
+        <span class="evt-status evt-status--online">En ligne</span>
+      </div>
+      <div class="evt-title">Atelier : IA embarquée et systèmes autonomes spatiaux</div>
+      <p class="evt-desc">Atelier technique animé par le département DSTI sur les architectures d'IA déployées sur systèmes autonomes à bord d'engins spatiaux. Exercices pratiques, retours d'expérience LYNX et ATLAS. Accès libre sur inscription.</p>
+      <div class="evt-meta-row">
+        <span class="evt-meta-item"><span>🖥</span> Webinaire — lien envoyé à l'inscription</span>
+        <span class="evt-meta-item"><span>👥</span> 200 places disponibles</span>
+      </div>
+    </div>
+    <div class="evt-right">
+      <div class="evt-duration">
+        <strong>1 journée</strong>
+        9h30 → 17h00
+      </div>
+      <a href="#" class="evt-cta">S'inscrire →</a>
+    </div>
+  </a>
+
+  <!-- ───── SÉPARATEUR PASSÉS ───── -->
+  <div class="section-sep" id="past-sep">
+    <span class="section-sep-label">Événements passés</span>
+    <div class="section-sep-line"></div>
+  </div>
+
+  <!-- 5 · Conférence propulsion (passé) -->
+  <a class="evt-card is-past" href="#"
+     style="--evt-color:#a78bfa"
+     data-date="2025-11-14" data-type="Conférence">
+    <div class="evt-date-block">
+      <div class="evt-day">14</div>
+      <div class="evt-month">Nov.</div>
+      <div class="evt-year">2025</div>
+    </div>
+    <div class="evt-body">
+      <div class="evt-top-row">
+        <span class="evt-type-tag" style="background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.3);color:#a78bfa">Conférence</span>
+        <span class="evt-status evt-status--past">Terminé</span>
+      </div>
+      <div class="evt-title">Conférence PROMETHEUS — Validation expérimentale du propulseur ionique à 6 800 s</div>
+      <p class="evt-desc">Présentation des résultats records obtenus en chambre d'essai sur le propulseur à plasma froid du programme PROMETHEUS. Conférence ouverte, retransmise en ligne.</p>
+      <div class="evt-meta-row">
+        <span class="evt-meta-item"><span>📍</span> Amphithéâtre Gagarine, IFRAS</span>
+        <span class="evt-meta-item"><span>👥</span> 340 participants</span>
+      </div>
+    </div>
+    <div class="evt-right">
+      <div class="evt-duration">
+        <strong>1 jour</strong>
+        14 novembre
+      </div>
+      <a href="#" class="evt-cta evt-cta--disabled">Terminé</a>
+    </div>
+  </a>
+
+  <!-- 6 · Soutenance (passé) -->
+  <a class="evt-card is-past" href="#"
+     style="--evt-color:#fb7185"
+     data-date="2025-09-26" data-type="Soutenance">
+    <div class="evt-date-block">
+      <div class="evt-day">26</div>
+      <div class="evt-month">Sep.</div>
+      <div class="evt-year">2025</div>
+    </div>
+    <div class="evt-body">
+      <div class="evt-top-row">
+        <span class="evt-type-tag" style="background:rgba(251,113,133,.1);border:1px solid rgba(251,113,133,.3);color:#fb7185">Soutenance</span>
+        <span class="evt-status evt-status--past">Terminé</span>
+      </div>
+      <div class="evt-title">Soutenance de thèse — Claire Fontaine, Département DSVT</div>
+      <p class="evt-desc">Soutenance de la thèse de doctorat de Claire Fontaine intitulée « Dynamiques immunitaires en microgravité prolongée : modélisation et prédiction ». Jury composé de 6 membres, dont deux représentants du CNES.</p>
+      <div class="evt-meta-row">
+        <span class="evt-meta-item"><span>📍</span> Salle des thèses, Bâtiment A — IFRAS</span>
+        <span class="evt-meta-item"><span>👥</span> Ouvert au public</span>
+      </div>
+    </div>
+    <div class="evt-right">
+      <div class="evt-duration">
+        <strong>3 h</strong>
+        14h00 → 17h00
+      </div>
+      <a href="#" class="evt-cta evt-cta--disabled">Terminé</a>
+    </div>
+  </a>
+
+  <!-- 7 · Séminaire annuel DMA (passé) -->
+  <a class="evt-card is-past" href="#"
+     style="--evt-color:#facc15"
+     data-date="2025-06-03" data-type="Séminaire">
+    <div class="evt-date-block">
+      <div class="evt-day">03</div>
+      <div class="evt-month">Juin</div>
+      <div class="evt-year">2025</div>
+    </div>
+    <div class="evt-body">
+      <div class="evt-top-row">
+        <span class="evt-type-tag" style="background:rgba(250,204,21,.08);border:1px solid rgba(250,204,21,.3);color:#facc15">Séminaire</span>
+        <span class="evt-status evt-status--past">Terminé</span>
+      </div>
+      <div class="evt-title">Séminaire annuel DMA — Matériaux extrêmes : état de l'art et perspectives</div>
+      <p class="evt-desc">Bilan des travaux du département DMA sur les composites céramiques et alliages réfractaires pour l'espace. Présentations des 4 équipes internes et discussion prospective sur les matériaux de rentrée atmosphérique de nouvelle génération.</p>
+      <div class="evt-meta-row">
+        <span class="evt-meta-item"><span>📍</span> Centre de conférences IFRAS, Toulouse</span>
+        <span class="evt-meta-item"><span>👥</span> 110 participants</span>
+      </div>
+    </div>
+    <div class="evt-right">
+      <div class="evt-duration">
+        <strong>1 jour</strong>
+        3 juin
+      </div>
+      <a href="#" class="evt-cta evt-cta--disabled">Terminé</a>
+    </div>
+  </a>
+
+  <div class="no-results" id="no-results">
+    <strong>Aucun résultat</strong>
+    Aucun événement ne correspond à votre recherche.
+  </div>
+
+</div>
+
+<!-- ===== NOTICE ===== -->
+<div class="archive-notice">
+  <div class="archive-notice-inner">
+    <div class="archive-icon">📅</div>
+    <div class="archive-text">
+      <strong>Événements antérieurs à 2025</strong>
+      <p>Les comptes-rendus, supports de présentation et enregistrements des événements passés sont consultables sur demande auprès du <a href="mailto:archives@ifras.fr">Service Archives &amp; Documentation</a>. Certains contenus sont soumis à accréditation.</p>
+    </div>
+    <a href="mailto:archives@ifras.fr" class="archive-cta">Contacter les archives →</a>
+  </div>
+</div>
+
+<footer>
+  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale<br>
+  Agenda scientifique mis à jour mensuellement
+</footer>
+
+<script>
+const evtCards = Array.from(document.querySelectorAll('.evt-card'));
+const list = document.getElementById('evt-list');
+const pastSep = document.getElementById('past-sep');
+const noResults = document.getElementById('no-results');
+const searchInput = document.getElementById('search-input');
+const searchClear = document.getElementById('search-clear');
+const sortSelect = document.getElementById('sort-select');
+const filterBtns = document.querySelectorAll('.filter-btn');
+const resultsCount = document.getElementById('results-count');
+const resetBtn = document.getElementById('reset-btn');
+
+evtCards.forEach(card => {
+  card.dataset.searchText = card.textContent.toLowerCase();
+});
+
+let activeFilter = 'tous';
+let searchQuery = '';
+let sortOrder = 'recent';
+
+function applyAll() {
+  const sorted = [...evtCards].sort((a, b) => {
+    const da = new Date(a.dataset.date).getTime();
+    const db = new Date(b.dataset.date).getTime();
+    return sortOrder === 'recent' ? db - da : da - db;
+  });
+
+  // Réinsérer les cartes dans l'ordre trié, avant le séparateur puis après
+  const future = sorted.filter(c => !c.classList.contains('is-past'));
+  const past    = sorted.filter(c =>  c.classList.contains('is-past'));
+
+  future.forEach(c => list.insertBefore(c, pastSep));
+  list.insertBefore(pastSep, noResults);
+  past.forEach(c => list.insertBefore(c, noResults));
+
+  let visible = 0;
+  sorted.forEach(card => {
+    const matchType = activeFilter === 'tous' ||
+      (card.dataset.type || '').toLowerCase() === activeFilter.toLowerCase();
+    const matchSearch = searchQuery === '' ||
+      card.dataset.searchText.includes(searchQuery);
+
+    if (matchType && matchSearch) {
+      card.style.display = '';
+      visible++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  // Masquer le séparateur si aucun passé visible
+  const anyPastVisible = past.some(c => c.style.display !== 'none');
+  pastSep.style.display = anyPastVisible ? '' : 'none';
+
+  noResults.style.display = visible === 0 ? 'block' : 'none';
+  resultsCount.textContent = visible === 0 ? 'Aucun résultat' :
+    `${visible} événement${visible > 1 ? 's' : ''}`;
+  resetBtn.style.display =
+    (activeFilter !== 'tous' || searchQuery !== '') ? 'inline-flex' : 'none';
+  searchClear.style.display = searchQuery !== '' ? 'flex' : 'none';
+}
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
+    applyAll();
+  });
+});
+
+searchInput.addEventListener('input', () => {
+  searchQuery = searchInput.value.toLowerCase().trim();
+  applyAll();
+});
+
+searchClear.addEventListener('click', () => {
+  searchInput.value = '';
+  searchQuery = '';
+  applyAll();
+  searchInput.focus();
+});
+
+sortSelect.addEventListener('change', () => {
+  sortOrder = sortSelect.value;
+  applyAll();
+});
+
+resetBtn.addEventListener('click', () => {
+  activeFilter = 'tous';
+  searchQuery = '';
+  sortOrder = 'recent';
+  searchInput.value = '';
+  sortSelect.value = 'recent';
+  filterBtns.forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-filter="tous"]').classList.add('active');
+  applyAll();
+});
+
+applyAll();
+</script>
+
+</body>
+</html>
