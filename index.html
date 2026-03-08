@@ -455,22 +455,26 @@ main { padding-top: 0; }
 }
 
 .carousel-wrapper {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 30px;
   position: relative;
 }
 
 .carousel {
   overflow: hidden;
-  padding: 8px 30px 20px;
+  padding: 8px 0 8px;
 }
 
 .carousel-track {
   display: flex;
-  gap: 22px;
+  gap: 20px;
   transition: transform 0.45s cubic-bezier(.4,0,.2,1);
 }
 
 .carousel-item {
-  min-width: 290px;
+  min-width: 260px;
+  max-width: 260px;
   background: var(--bg-light);
   border: 1px solid var(--border);
   border-radius: 14px;
@@ -486,7 +490,7 @@ main { padding-top: 0; }
 
 .carousel-item img {
   width: 100%;
-  height: 155px;
+  height: 200px;
   object-fit: cover;
   transition: transform .4s;
 }
@@ -526,7 +530,6 @@ main { padding-top: 0; }
   justify-content: center;
   gap: 12px;
   margin-top: 28px;
-  padding: 0 30px;
 }
 
 .carousel-btn {
@@ -1033,9 +1036,10 @@ const nextBtn = document.querySelector('.next');
 const visibleCount = 4;
 let index = visibleCount;
 let isTransitioning = false;
+let autoTimer;
 
 function getItemWidth() {
-  return items[0].getBoundingClientRect().width + 22;
+  return items[0].getBoundingClientRect().width + 20;
 }
 
 // Clones
@@ -1063,21 +1067,38 @@ function resetIfNeeded() {
   isTransitioning = false;
 }
 
-nextBtn.addEventListener('click', () => {
+function goNext() {
   if (isTransitioning) return;
   isTransitioning = true;
   index++;
   setPos(true);
   setTimeout(resetIfNeeded, 500);
-});
+}
 
-prevBtn.addEventListener('click', () => {
+function goPrev() {
   if (isTransitioning) return;
   isTransitioning = true;
   index--;
   setPos(true);
   setTimeout(resetIfNeeded, 500);
-});
+}
+
+function startAuto() {
+  autoTimer = setInterval(goNext, 3000);
+}
+
+function stopAuto() {
+  clearInterval(autoTimer);
+}
+
+// Pause on hover
+track.addEventListener('mouseenter', stopAuto);
+track.addEventListener('mouseleave', startAuto);
+
+nextBtn.addEventListener('click', () => { stopAuto(); goNext(); startAuto(); });
+prevBtn.addEventListener('click', () => { stopAuto(); goPrev(); startAuto(); });
+
+startAuto();
 </script>
 
 </body>
