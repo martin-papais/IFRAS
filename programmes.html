@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Programmes — IFRAS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -20,19 +21,19 @@
 
     body {
       margin: 0;
-      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      font-family: "DM Sans", "Segoe UI", Roboto, Arial, sans-serif;
       background: var(--bg-main);
       color: var(--text-main);
     }
 
-    /* ===== HEADER IDENTIQUE À INDEX ===== */
+    /* ===== HEADER ===== */
 
     header {
       position: fixed;
       top: 0;
       width: 100%;
       z-index: 1000;
-      background: rgba(5,11,30,.75);
+      background: rgba(5,11,30,.85);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border);
     }
@@ -72,9 +73,7 @@
       letter-spacing: .05em;
     }
 
-    .main-nav a:hover {
-      color: white;
-    }
+    .main-nav a:hover { color: white; }
 
     .header-right .login-btn {
       padding: 8px 18px;
@@ -92,7 +91,7 @@
     /* ===== BANDEAU PROGRAMMES ===== */
 
     .program-filter {
-      margin-top: 90px;
+      margin-top: 84px;
       background: var(--bg-light);
       border-bottom: 1px solid var(--border);
     }
@@ -104,6 +103,7 @@
       justify-content: space-between;
       list-style: none;
       padding: 0 30px;
+      margin: 0 auto;
     }
 
     .program-filter li {
@@ -112,6 +112,8 @@
       cursor: pointer;
       font-size: 14px;
       color: var(--text-soft);
+      font-family: "DM Sans", sans-serif;
+      letter-spacing: .06em;
     }
 
     .program-filter li:hover {
@@ -147,76 +149,627 @@
       color: white;
     }
 
-    .program-filter li:hover .dropdown {
-      display: block;
+    .program-filter li:hover .dropdown { display: block; }
+
+    /* ===== HERO ===== */
+
+    .hero {
+      position: relative;
+      padding: 90px 30px 80px;
+      overflow: hidden;
     }
 
-    /* ===== MAIN ===== */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 55% 45%, rgba(79,107,237,0.12) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 50% at 85% 70%, rgba(139,92,246,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
 
-    main {
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(79,107,237,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79,107,237,0.035) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
       max-width: 1300px;
       margin: auto;
-      padding: 70px 30px 90px;
-    }
-
-    h1 {
-      font-size: 28px;
-      margin-bottom: 30px;
-    }
-
-    h2 {
-      border-left: 4px solid var(--accent);
-      padding-left: 12px;
-      margin-top: 60px;
-    }
-
-    .intro {
-      max-width: 900px;
-      font-size: 15px;
-      color: #c7cbe6;
-    }
-
-    /* ===== GRILLE PROGRAMMES ===== */
-
-    .program-grid {
+      position: relative;
+      z-index: 1;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
-      margin-top: 40px;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 80px;
+      align-items: center;
     }
 
-    .program-card {
+    .hero-left {}
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+      font-weight: 500;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero h1 {
+      font-family: "Syne", sans-serif;
+      font-size: clamp(50px, 7vw, 90px);
+      font-weight: 800;
+      line-height: 0.95;
+      margin: 0 0 28px;
+      letter-spacing: -0.04em;
+      color: #fff;
+    }
+
+    .hero h1 span {
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(79,107,237,0.65);
+    }
+
+    .hero-desc {
+      color: var(--text-soft);
+      font-size: 16px;
+      line-height: 1.75;
+      margin: 0 0 36px;
+      font-weight: 300;
+    }
+
+    /* Stats héro */
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .hero-stat {
+      background: rgba(79,107,237,0.06);
+      border: 1px solid rgba(79,107,237,0.15);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .hero-stat-value {
+      font-family: "Syne", sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: white;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-stat-label {
+      font-size: 11px;
+      color: var(--text-soft);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    /* Timeline décorative droite */
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+    }
+
+    .hero-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-left: 1px solid rgba(79,107,237,0.22);
+      padding-left: 28px;
+      margin-left: 12px;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 26px;
+      animation: fadeUp .5s ease both;
+    }
+
+    .timeline-item:last-child { padding-bottom: 0; }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -35px;
+      top: 6px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--dot-color, var(--accent));
+      box-shadow: 0 0 12px var(--dot-color, var(--accent));
+    }
+
+    .tl-category {
+      font-size: 10px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--dot-color, var(--accent));
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+
+    .tl-name {
+      font-family: "Syne", sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 4px;
+    }
+
+    .tl-desc {
+      font-size: 13px;
+      color: var(--text-soft);
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    /* ===== SÉPARATEUR ===== */
+
+    .section-sep {
+      max-width: 1300px;
+      margin: 0 auto 0;
+      padding: 0 30px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ===== SECTION GÉNÉRIQUE ===== */
+
+    .prog-section {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 70px 30px;
+    }
+
+    .prog-section + .prog-section {
+      padding-top: 0;
+    }
+
+    .prog-section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 40px;
+      gap: 30px;
+    }
+
+    .prog-section-header-left {}
+
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .section-eyebrow::before {
+      content: '';
+      display: block;
+      width: 22px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    .prog-section-header h2 {
+      font-family: "Syne", sans-serif;
+      font-size: clamp(24px, 3vw, 34px);
+      font-weight: 700;
+      margin: 0;
+      color: white;
+    }
+
+    .prog-section-header p {
+      font-size: 14px;
+      color: var(--text-soft);
+      max-width: 420px;
+      text-align: right;
+      line-height: 1.65;
+      margin: 0;
+      font-weight: 300;
+    }
+
+    /* ===== GRILLE ACTIVE ===== */
+
+    .active-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 18px;
+    }
+
+    .prog-card {
       background: var(--bg-light);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 25px;
-      transition: 0.3s;
+      border-radius: 14px;
+      padding: 28px 30px;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      transition: border-color .3s, transform .3s, box-shadow .3s;
+      animation: fadeUp .5s ease both;
     }
 
-    .program-card:hover {
-      transform: translateY(-6px);
+    .prog-card:hover {
+      border-color: rgba(79,107,237,.35);
+      transform: translateY(-4px);
+      box-shadow: 0 18px 48px rgba(0,0,10,.5);
     }
 
-    .program-card h3 {
-      margin-top: 0;
+    .prog-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--card-accent, var(--accent));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .35s ease;
+    }
+
+    .prog-card:hover::after { transform: scaleX(1); }
+
+    /* Carte principale large */
+    .prog-card--featured {
+      grid-column: 1;
+      grid-row: 1 / 3;
+      padding: 36px;
+    }
+
+    .prog-card--featured .card-title {
+      font-size: 22px;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .card-code {
+      font-family: "Syne", sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      padding: 4px 12px;
+      border-radius: 5px;
+      background: rgba(79,107,237,0.1);
+      border: 1px solid rgba(79,107,237,0.2);
+      color: var(--card-accent, var(--accent));
+    }
+
+    .card-status {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 500;
+      letter-spacing: .05em;
+    }
+
+    .status--active    { background: rgba(52,211,153,.12); color: #34d399; border: 1px solid rgba(52,211,153,.25); }
+    .status--restricted{ background: rgba(250,204,21,.10); color: #facc15; border: 1px solid rgba(250,204,21,.25); }
+    .status--phase     { background: rgba(96,165,250,.12); color: #60a5fa; border: 1px solid rgba(96,165,250,.25); }
+    .status--archived  { background: rgba(156,163,175,.10); color: #9ca3af; border: 1px solid rgba(156,163,175,.2); }
+    .status--future    { background: rgba(167,139,250,.12); color: #a78bfa; border: 1px solid rgba(167,139,250,.25); }
+    .status--aborted   { background: rgba(251,113,133,.10); color: #fb7185; border: 1px solid rgba(251,113,133,.25); }
+
+    .card-title {
+      font-family: "Syne", sans-serif;
       font-size: 17px;
+      font-weight: 700;
+      color: white;
+      margin: 0 0 10px;
     }
 
-    .program-card p {
-      font-size: 14px;
+    .card-desc {
+      font-size: 13.5px;
+      color: var(--text-soft);
+      line-height: 1.7;
+      margin: 0 0 20px;
+      font-weight: 300;
+      flex: 1;
+    }
+
+    .card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    .card-tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
       color: var(--text-soft);
     }
 
-    .status {
-      margin-top: 15px;
-      font-size: 12px;
-      color: #9ca3af;
+    .card-arrow {
+      position: absolute;
+      bottom: 22px;
+      right: 22px;
+      font-size: 16px;
+      color: var(--card-accent, var(--accent));
+      opacity: 0;
+      transform: translateX(-6px);
+      transition: opacity .3s, transform .3s;
     }
 
-    .restricted {
-      color: #facc15;
-      font-weight: 500;
+    .prog-card:hover .card-arrow { opacity: 1; transform: translateX(0); }
+
+    /* Carte featured : chiffres clés */
+    .featured-kpis {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(79,107,237,0.15);
     }
+
+    .kpi {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .kpi-val {
+      font-family: "Syne", sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .kpi-label {
+      font-size: 11px;
+      color: var(--text-soft);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    /* ===== GRILLES SECONDAIRES ===== */
+
+    .standard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 18px;
+    }
+
+    /* ===== GRILLE ARCHIVÉS (horizontal cards) ===== */
+
+    .archive-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .archive-card {
+      background: var(--bg-light);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px 28px;
+      display: grid;
+      grid-template-columns: 110px 1fr auto;
+      align-items: center;
+      gap: 28px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color .25s, background .25s;
+      animation: fadeUp .4s ease both;
+    }
+
+    .archive-card:hover {
+      border-color: rgba(156,163,175,.3);
+      background: rgba(10,18,45,.6);
+    }
+
+    .archive-code {
+      font-family: "Syne", sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: rgba(156,163,175,.5);
+      letter-spacing: -0.02em;
+    }
+
+    .archive-info {}
+
+    .archive-name {
+      font-size: 15px;
+      font-weight: 500;
+      color: rgba(230,230,230,.7);
+      margin-bottom: 4px;
+    }
+
+    .archive-desc {
+      font-size: 13px;
+      color: rgba(170,179,214,.55);
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    .archive-dates {
+      font-size: 12px;
+      color: rgba(170,179,214,.4);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    /* ===== GRILLE FUTURS ===== */
+
+    .future-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 18px;
+    }
+
+    .future-card {
+      background: var(--bg-light);
+      border: 1px dashed rgba(167,139,250,.25);
+      border-radius: 14px;
+      padding: 28px 30px;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color .3s, transform .3s;
+      animation: fadeUp .5s ease both;
+    }
+
+    .future-card:hover {
+      border-color: rgba(167,139,250,.5);
+      transform: translateY(-3px);
+    }
+
+    .future-card-bg {
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 140px; height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(167,139,250,.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .future-year {
+      font-family: "Syne", sans-serif;
+      font-size: 40px;
+      font-weight: 800;
+      color: rgba(167,139,250,.18);
+      letter-spacing: -0.05em;
+      line-height: 1;
+    }
+
+    .future-title {
+      font-family: "Syne", sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: rgba(255,255,255,.75);
+    }
+
+    .future-desc {
+      font-size: 13.5px;
+      color: var(--text-soft);
+      line-height: 1.65;
+      font-weight: 300;
+    }
+
+    .future-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 4px;
+    }
+
+    .future-tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: rgba(167,139,250,.08);
+      border: 1px solid rgba(167,139,250,.18);
+      color: rgba(167,139,250,.8);
+    }
+
+    /* ===== GRILLE AVORTÉS ===== */
+
+    .aborted-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 18px;
+    }
+
+    .aborted-card {
+      background: rgba(251,113,133,.03);
+      border: 1px solid rgba(251,113,133,.12);
+      border-radius: 14px;
+      padding: 26px 28px;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      animation: fadeUp .4s ease both;
+    }
+
+    .aborted-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: rgba(251,113,133,.3);
+    }
+
+    .aborted-code {
+      font-family: "Syne", sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      color: rgba(251,113,133,.6);
+    }
+
+    .aborted-title {
+      font-family: "Syne", sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: rgba(255,255,255,.6);
+      text-decoration: line-through;
+      text-decoration-color: rgba(251,113,133,.35);
+    }
+
+    .aborted-desc {
+      font-size: 13px;
+      color: rgba(170,179,214,.5);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .aborted-reason {
+      font-size: 11px;
+      color: rgba(251,113,133,.6);
+      border-top: 1px solid rgba(251,113,133,.1);
+      padding-top: 10px;
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    /* ===== FOOTER ===== */
 
     footer {
       background: var(--bg-dark);
@@ -227,19 +780,39 @@
       text-align: center;
     }
 
+    /* ===== ANIMATIONS ===== */
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .prog-card:nth-child(1) { animation-delay: .05s; }
+    .prog-card:nth-child(2) { animation-delay: .10s; }
+    .prog-card:nth-child(3) { animation-delay: .15s; }
+    .prog-card:nth-child(4) { animation-delay: .20s; }
+    .archive-card:nth-child(1) { animation-delay: .05s; }
+    .archive-card:nth-child(2) { animation-delay: .10s; }
+    .archive-card:nth-child(3) { animation-delay: .15s; }
+    .future-card:nth-child(1) { animation-delay: .05s; }
+    .future-card:nth-child(2) { animation-delay: .10s; }
+    .future-card:nth-child(3) { animation-delay: .15s; }
+    .aborted-card:nth-child(1) { animation-delay: .05s; }
+    .aborted-card:nth-child(2) { animation-delay: .10s; }
+    .aborted-card:nth-child(3) { animation-delay: .15s; }
+
   </style>
 </head>
 
 <body>
 
+<!-- ===== HEADER ===== -->
 <header>
   <div class="header-inner">
-
     <div class="header-left">
       <a href="index.html" class="logo-link">
         <img src="logo.png" alt="Logo IFRAS">
       </a>
-
       <nav>
         <ul class="main-nav">
           <li><a href="index.html">Accueil</a></li>
@@ -249,102 +822,398 @@
         </ul>
       </nav>
     </div>
-
     <div class="header-right">
       <a href="connexion.html" class="login-btn">Connexion</a>
     </div>
-
   </div>
 </header>
 
 <!-- ===== BANDEAU PROGRAMMES ===== -->
-
 <div class="program-filter">
   <ul>
-
     <li>Programmes actifs
       <div class="dropdown">
         <a href="#">ARTEMIS-9</a>
         <a href="#">ORION-3</a>
         <a href="#">HERMES</a>
         <a href="#">ATLAS</a>
+        <a href="#">LYNX</a>
+        <a href="#">PROMETHEUS</a>
       </div>
     </li>
-
     <li>Programmes archivés
       <div class="dropdown">
         <a href="#">APOLLO-X</a>
         <a href="#">DELPHI</a>
+        <a href="#">CASSINI-R</a>
       </div>
     </li>
-
     <li>Programmes futurs
       <div class="dropdown">
         <a href="#">HERA</a>
         <a href="#">NOE</a>
+        <a href="#">TITAN-0</a>
       </div>
     </li>
-
     <li>Programmes avortés
       <div class="dropdown">
         <a href="#">PHOENIX</a>
         <a href="#">DAEDALUS</a>
+        <a href="#">ICARUS-2</a>
       </div>
     </li>
-
   </ul>
 </div>
 
-<main>
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-inner">
 
-  <h1>Programmes scientifiques</h1>
-
-  <section class="intro">
-    <p>
-      L’IFRAS conçoit, développe et supervise un ensemble de programmes scientifiques
-      nationaux et internationaux dédiés à l’exploration avancée, à l’étude du vivant
-      en conditions extrêmes et à la maîtrise des technologies spatiales de rupture.
-    </p>
-
-    <p>
-      Ces programmes constituent le cœur opérationnel de la stratégie scientifique
-      de l’institut et mobilisent des équipes pluridisciplinaires couvrant la biologie,
-      la physique, l’ingénierie spatiale, l’intelligence artificielle et les sciences des matériaux.
-    </p>
-  </section>
-
-  <h2>Programmes actifs</h2>
-
-  <div class="program-grid">
-
-    <div class="program-card">
-      <h3>ARTEMIS-9</h3>
-      <p>Première mission scientifique habitée de longue durée sur Mars.</p>
-      <p>Programme clé de l’adaptation humaine et de la terraformation avancée.</p>
-      <div class="status restricted">Statut : Diffusion restreinte</div>
+    <div class="hero-left">
+      <div class="hero-eyebrow">Portefeuille scientifique</div>
+      <h1>Programmes<br><span>IFRAS</span></h1>
+      <p class="hero-desc">
+        De la mission habitée longue durée aux sondes d'observation autonomes,
+        l'IFRAS pilote un portefeuille de programmes scientifiques ambitieux à l'échelle nationale et internationale.
+        Chaque programme engage des équipes transversales autour d'objectifs de rupture technologique.
+      </p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-value">6</span>
+          <span class="hero-stat-label">Programmes actifs</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">3</span>
+          <span class="hero-stat-label">En développement</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">+850</span>
+          <span class="hero-stat-label">Chercheurs mobilisés</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">12</span>
+          <span class="hero-stat-label">Agences partenaires</span>
+        </div>
+      </div>
     </div>
 
-    <div class="program-card">
-      <h3>ORION-3</h3>
-      <p>Observation et analyse de signaux biologiques et chimiques à grande distance.</p>
-      <div class="status">Statut : Actif</div>
-    </div>
+    <div class="hero-right">
+      <div class="hero-timeline">
 
-    <div class="program-card">
-      <h3>HERMES</h3>
-      <p>Recherche sur la communication longue portée en environnement dégradé.</p>
-      <div class="status">Statut : Phase expérimentale</div>
-    </div>
+        <div class="timeline-item" style="--dot-color: #34d399;">
+          <div class="tl-category">Actif · Phase III</div>
+          <div class="tl-name">ARTEMIS-9</div>
+          <div class="tl-desc">Mission Mars habitée longue durée — lancement T2 2027</div>
+        </div>
 
-    <div class="program-card">
-      <h3>ATLAS</h3>
-      <p>Simulation et modélisation d'environnements extraterrestres en laboratoire.</p>
-      <div class="status">Statut : Actif</div>
+        <div class="timeline-item" style="--dot-color: #60a5fa;">
+          <div class="tl-category">Actif · Phase II</div>
+          <div class="tl-name">PROMETHEUS</div>
+          <div class="tl-desc">Propulsion ionique nouvelle génération à plasma froid</div>
+        </div>
+
+        <div class="timeline-item" style="--dot-color: #f97316;">
+          <div class="tl-category">Phase expérimentale</div>
+          <div class="tl-name">HERMES</div>
+          <div class="tl-desc">Communications quantiques interplanétaires — premiers résultats 2026</div>
+        </div>
+
+        <div class="timeline-item" style="--dot-color: #a78bfa;">
+          <div class="tl-category">Futur · Horizon 2029</div>
+          <div class="tl-name">TITAN-0</div>
+          <div class="tl-desc">Sonde orbitale autour de Titan, analyse atmosphérique in situ</div>
+        </div>
+
+        <div class="timeline-item" style="--dot-color: #fb7185;">
+          <div class="tl-category">Archivé · Clôturé 2021</div>
+          <div class="tl-name">CASSINI-R</div>
+          <div class="tl-desc">Retraitement des données Cassini par IA — 48 publications produites</div>
+        </div>
+
+      </div>
     </div>
 
   </div>
+</section>
 
-</main>
+<!-- ===================================================== -->
+<!-- PROGRAMMES ACTIFS                                     -->
+<!-- ===================================================== -->
+<section class="prog-section">
+
+  <div class="prog-section-header">
+    <div class="prog-section-header-left">
+      <div class="section-eyebrow" style="color: #34d399;">Programmes actifs</div>
+      <h2>En cours d'exécution</h2>
+    </div>
+    <p>Six programmes mobilisent actuellement les équipes de l'IFRAS, couvrant exploration spatiale, propulsion, biologie en microgravité et modélisation numérique avancée.</p>
+  </div>
+
+  <div class="active-grid">
+
+    <!-- Carte vedette -->
+    <a class="prog-card prog-card--featured" href="artemis9.html" style="--card-accent: #34d399;">
+      <div class="card-top">
+        <span class="card-code" style="color:#34d399; border-color:rgba(52,211,153,.25); background:rgba(52,211,153,.08);">ARTEMIS-9</span>
+        <span class="card-status status--restricted">Diffusion restreinte</span>
+      </div>
+      <div class="card-title">Mission habitée longue durée sur Mars</div>
+      <p class="card-desc">
+        Programme phare de l'IFRAS, ARTEMIS-9 constitue la première mission scientifique habitée de longue durée sur la surface martienne.
+        À l'horizon 2027, six astronautes-chercheurs séjourneront 18 mois sur Mars dans une base pressurisée entièrement autonome
+        en énergie et en ressources vitales. Les axes prioritaires couvrent la biologie d'adaptation, la géologie sub-surfacique,
+        la terraformation expérimentale et la télémédecine de l'isolement extrême.
+      </p>
+      <div class="card-meta">
+        <span class="card-tag">Biologie d'adaptation</span>
+        <span class="card-tag">Terraformation</span>
+        <span class="card-tag">Autonomie système</span>
+        <span class="card-tag">Télémédecine</span>
+        <span class="card-tag">Géologie Mars</span>
+      </div>
+      <div class="featured-kpis">
+        <div class="kpi">
+          <span class="kpi-val">18 mois</span>
+          <span class="kpi-label">Durée de séjour</span>
+        </div>
+        <div class="kpi">
+          <span class="kpi-val">6</span>
+          <span class="kpi-label">Astronautes-chercheurs</span>
+        </div>
+        <div class="kpi">
+          <span class="kpi-val">2027</span>
+          <span class="kpi-label">Lancement prévu</span>
+        </div>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <!-- ORION-3 -->
+    <a class="prog-card" href="orion3.html" style="--card-accent: #60a5fa;">
+      <div class="card-top">
+        <span class="card-code" style="color:#60a5fa; border-color:rgba(96,165,250,.25); background:rgba(96,165,250,.08);">ORION-3</span>
+        <span class="card-status status--active">Actif</span>
+      </div>
+      <div class="card-title">Observation biosignature à grande distance</div>
+      <p class="card-desc">Détection et analyse spectroscopique de signatures biologiques et chimiques sur des exoplanètes candidates via un réseau d'observatoires conjugués.</p>
+      <div class="card-meta">
+        <span class="card-tag">Spectroscopie</span>
+        <span class="card-tag">Exoplanètes</span>
+        <span class="card-tag">Biosignatures</span>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <!-- PROMETHEUS -->
+    <a class="prog-card" href="prometheus.html" style="--card-accent: #f97316;">
+      <div class="card-top">
+        <span class="card-code" style="color:#f97316; border-color:rgba(249,115,22,.25); background:rgba(249,115,22,.08);">PROMETHEUS</span>
+        <span class="card-status status--active">Actif</span>
+      </div>
+      <div class="card-title">Propulsion ionique plasma froid</div>
+      <p class="card-desc">Développement d'un nouveau paradigme de propulsion ionique opérant à basse température, visant à tripler l'impulsion spécifique des systèmes actuels.</p>
+      <div class="card-meta">
+        <span class="card-tag">Propulsion</span>
+        <span class="card-tag">Plasma</span>
+        <span class="card-tag">Énergie</span>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <!-- HERMES -->
+    <a class="prog-card" href="hermes.html" style="--card-accent: #c084fc;">
+      <div class="card-top">
+        <span class="card-code" style="color:#c084fc; border-color:rgba(192,132,252,.25); background:rgba(192,132,252,.08);">HERMES</span>
+        <span class="card-status status--phase">Phase expérimentale</span>
+      </div>
+      <div class="card-title">Communication quantique interplanétaire</div>
+      <p class="card-desc">Protocoles de communication à longue portée reposant sur l'intrication quantique, insensibles aux délais de propagation classiques et aux interférences.</p>
+      <div class="card-meta">
+        <span class="card-tag">Quantique</span>
+        <span class="card-tag">Télécoms</span>
+        <span class="card-tag">Cryptographie</span>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <!-- ATLAS -->
+    <a class="prog-card" href="atlas.html" style="--card-accent: #34d399;">
+      <div class="card-top">
+        <span class="card-code" style="color:#34d399; border-color:rgba(52,211,153,.25); background:rgba(52,211,153,.08);">ATLAS</span>
+        <span class="card-status status--active">Actif</span>
+      </div>
+      <div class="card-title">Simulation d'environnements extraterrestres</div>
+      <p class="card-desc">Reproduction en laboratoire des conditions physico-chimiques de surface de Mars, Europa et Titan pour tester matériaux, équipements et organismes candidats.</p>
+      <div class="card-meta">
+        <span class="card-tag">Simulation</span>
+        <span class="card-tag">Matériaux</span>
+        <span class="card-tag">Astrobiologie</span>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <!-- LYNX -->
+    <a class="prog-card" href="lynx.html" style="--card-accent: #facc15;">
+      <div class="card-top">
+        <span class="card-code" style="color:#facc15; border-color:rgba(250,204,21,.25); background:rgba(250,204,21,.07);">LYNX</span>
+        <span class="card-status status--phase">Phase expérimentale</span>
+      </div>
+      <div class="card-title">Robotique autonome en milieu non coopératif</div>
+      <p class="card-desc">Développement d'une flotte de robots légers capables d'opérer, de se réparer et de prendre des décisions autonomes dans des environnements inconnus et dégradés.</p>
+      <div class="card-meta">
+        <span class="card-tag">Robotique</span>
+        <span class="card-tag">IA embarquée</span>
+        <span class="card-tag">Autonomie</span>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
+  </div>
+
+</section>
+
+<!-- ===================================================== -->
+<!-- PROGRAMMES ARCHIVÉS                                   -->
+<!-- ===================================================== -->
+<section class="prog-section" style="padding-top: 20px;">
+
+  <div class="prog-section-header">
+    <div class="prog-section-header-left">
+      <div class="section-eyebrow" style="color: #9ca3af;">Programmes archivés</div>
+      <h2>Missions clôturées</h2>
+    </div>
+    <p>Ces programmes ont atteint leurs objectifs et sont officiellement clos. Leurs données et publications restent accessibles dans la base documentaire de l'IFRAS.</p>
+  </div>
+
+  <div class="archive-grid">
+
+    <a class="archive-card" href="apollox.html">
+      <div class="archive-code">APOLLO-X</div>
+      <div class="archive-info">
+        <div class="archive-name">Exploration robotique des cratères polaires lunaires</div>
+        <div class="archive-desc">Première cartographie haute résolution de la glace d'eau subsurfacique dans les bassins permanemment ombragés du pôle Sud lunaire. 6 rovers déployés, 3 encore opérationnels.</div>
+      </div>
+      <div class="archive-dates">2014 – 2022<br><span style="color:rgba(156,163,175,.35); font-size:11px;">142 publications</span></div>
+    </a>
+
+    <a class="archive-card" href="delphi.html">
+      <div class="archive-code">DELPHI</div>
+      <div class="archive-info">
+        <div class="archive-name">Prédiction sismique par réseau de capteurs orbitaux</div>
+        <div class="archive-desc">Corrélation entre données ionosphériques satellitaires et précurseurs sismiques terrestres. Développement d'un modèle prédictif à 72h reconnu par l'ONU-Space.</div>
+      </div>
+      <div class="archive-dates">2016 – 2023<br><span style="color:rgba(156,163,175,.35); font-size:11px;">89 publications</span></div>
+    </a>
+
+    <a class="archive-card" href="cassinir.html">
+      <div class="archive-code">CASSINI-R</div>
+      <div class="archive-info">
+        <div class="archive-name">Retraitement IA des archives Cassini</div>
+        <div class="archive-desc">Application de modèles d'apprentissage profond aux 635 Go de données brutes de la sonde Cassini-Huygens, révélant de nouvelles structures dans les anneaux de Saturne et l'atmosphère de Titan.</div>
+      </div>
+      <div class="archive-dates">2019 – 2021<br><span style="color:rgba(156,163,175,.35); font-size:11px;">48 publications</span></div>
+    </a>
+
+  </div>
+
+</section>
+
+<!-- ===================================================== -->
+<!-- PROGRAMMES FUTURS                                     -->
+<!-- ===================================================== -->
+<section class="prog-section" style="padding-top: 20px;">
+
+  <div class="prog-section-header">
+    <div class="prog-section-header-left">
+      <div class="section-eyebrow" style="color: #a78bfa;">Programmes futurs</div>
+      <h2>En cours de développement</h2>
+    </div>
+    <p>Ces programmes sont en phase de conception ou d'approbation budgétaire. Leur démarrage effectif est conditionné à la validation des financements pluriannuels.</p>
+  </div>
+
+  <div class="future-grid">
+
+    <a class="future-card" href="hera.html">
+      <div class="future-card-bg"></div>
+      <div class="future-year">2028</div>
+      <div class="future-title">HERA — Habitabilité des exolunes</div>
+      <div class="future-desc">Étude des conditions d'habitabilité sur les lunes de géantes gazeuses, avec développement d'une sonde dédiée à l'analyse de l'océan sous-glaciaire d'Europa. Collaboration ESA–IFRAS.</div>
+      <div class="future-tags">
+        <span class="future-tag">Astrobiologie</span>
+        <span class="future-tag">Europa</span>
+        <span class="future-tag">ESA</span>
+        <span class="future-tag">Océanologie</span>
+      </div>
+    </a>
+
+    <a class="future-card" href="noe.html">
+      <div class="future-card-bg"></div>
+      <div class="future-year">2027</div>
+      <div class="future-title">NOE — Réseau d'observation exosphérique</div>
+      <div class="future-desc">Constellation de 24 microsatellites en orbite haute dédiée à l'étude des interactions entre le vent solaire et les magnétosphères planétaires du système interne.</div>
+      <div class="future-tags">
+        <span class="future-tag">Magnétosphère</span>
+        <span class="future-tag">Vent solaire</span>
+        <span class="future-tag">Constellation</span>
+      </div>
+    </a>
+
+    <a class="future-card" href="titan0.html">
+      <div class="future-card-bg"></div>
+      <div class="future-year">2029</div>
+      <div class="future-title">TITAN-0 — Sonde atmosphérique Titan</div>
+      <div class="future-desc">Première sonde orbitale entièrement conçue par l'IFRAS, destinée à analyser in situ la chimie prébiotique de l'atmosphère de Titan, analogue présumé de la Terre primitive.</div>
+      <div class="future-tags">
+        <span class="future-tag">Titan</span>
+        <span class="future-tag">Chimie prébiotique</span>
+        <span class="future-tag">Atmosphère</span>
+        <span class="future-tag">Sonde autonome</span>
+      </div>
+    </a>
+
+  </div>
+
+</section>
+
+<!-- ===================================================== -->
+<!-- PROGRAMMES AVORTÉS                                    -->
+<!-- ===================================================== -->
+<section class="prog-section" style="padding-top: 20px; padding-bottom: 100px;">
+
+  <div class="prog-section-header">
+    <div class="prog-section-header-left">
+      <div class="section-eyebrow" style="color: #fb7185;">Programmes avortés</div>
+      <h2>Projets interrompus</h2>
+    </div>
+    <p>Ces programmes ont été définitivement arrêtés avant leur terme, pour des raisons budgétaires, techniques ou stratégiques. Leur documentation reste archivée à des fins de retour d'expérience.</p>
+  </div>
+
+  <div class="aborted-grid">
+
+    <a class="aborted-card" href="#">
+      <div class="aborted-code">PHOENIX</div>
+      <div class="aborted-title">Réanimation cellulaire en hypothermie profonde</div>
+      <div class="aborted-desc">Programme visant à développer des protocoles de cryoconservation réversible pour équipages de longue durée. Résultats de phase II insuffisants sur la viabilité cellulaire à –80 °C.</div>
+      <div class="aborted-reason">Arrêt : Résultats phase II non concluants — 2020</div>
+    </a>
+
+    <a class="aborted-card" href="#">
+      <div class="aborted-code">DAEDALUS</div>
+      <div class="aborted-title">Voilier solaire interstellaire ultra-léger</div>
+      <div class="aborted-desc">Concept de propulsion par pression de radiation laser pour une sonde de 10 g capable d'atteindre Proxima Centauri en 20 ans. Annulé suite à la réévaluation des priorités du CSN.</div>
+      <div class="aborted-reason">Arrêt : Abandon stratégique CSN — 2019</div>
+    </a>
+
+    <a class="aborted-card" href="#">
+      <div class="aborted-code">ICARUS-2</div>
+      <div class="aborted-title">Plongeur atmosphérique vénusien autonome</div>
+      <div class="aborted-desc">Développement d'un drone capable de survivre et d'opérer 24 h dans l'atmosphère de Vénus à 50 km d'altitude. Destruction du prototype lors des essais thermiques en chambre.</div>
+      <div class="aborted-reason">Arrêt : Perte du prototype — incident chambre thermique 2022</div>
+    </a>
+
+  </div>
+
+</section>
 
 <footer>
   © IFRAS — Institut Français de Recherche Aéronautique et Spatiale<br>
