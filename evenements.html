@@ -250,7 +250,7 @@ header {
 
 .evt-card {
   display: grid;
-  grid-template-columns: 90px 1fr 200px;
+  grid-template-columns: 90px 1fr auto;
   align-items: stretch;
   gap: 0;
   background: var(--bg-light);
@@ -372,22 +372,23 @@ header {
 
 /* Panneau droit */
 .evt-right {
-  padding: 22px 28px;
-  display: flex; flex-direction: column;
-  align-items: flex-end; justify-content: center; gap: 14px;
+  padding: 0 24px;
+  display: flex; flex-direction: row;
+  align-items: center; justify-content: flex-end;
+  gap: 20px;
   border-left: 1px solid var(--border);
-  width: 100%;
+  white-space: nowrap;
 }
 
 .evt-duration {
   font-size: 12px; color: var(--text-soft); font-weight: 300;
-  text-align: right;
+  text-align: right; line-height: 1.4;
 }
 
 .evt-duration strong {
-  display: block; font-family: "Syne", sans-serif;
-  font-size: 18px; font-weight: 700; color: white;
-  letter-spacing: -0.02em;
+  display: inline; font-family: "Syne", sans-serif;
+  font-size: 14px; font-weight: 700; color: white;
+  letter-spacing: -0.01em;
 }
 
 .evt-cta {
@@ -860,6 +861,10 @@ let activeFilter = 'tous';
 let searchQuery = '';
 let sortOrder = 'recent';
 
+function normalize(str) {
+  return (str || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
 function applyAll() {
   const sorted = [...evtCards].sort((a, b) => {
     const da = new Date(a.dataset.date).getTime();
@@ -867,7 +872,7 @@ function applyAll() {
     return sortOrder === 'recent' ? db - da : da - db;
   });
 
-  // Réinsérer les cartes dans l'ordre trié, avant le séparateur puis après
+  // Réinsérer les cartes dans l'ordre trié
   const future = sorted.filter(c => !c.classList.contains('is-past'));
   const past    = sorted.filter(c =>  c.classList.contains('is-past'));
 
@@ -878,7 +883,7 @@ function applyAll() {
   let visible = 0;
   sorted.forEach(card => {
     const matchType = activeFilter === 'tous' ||
-      (card.dataset.type || '').toLowerCase() === activeFilter.toLowerCase();
+      normalize(card.dataset.type) === normalize(activeFilter);
     const matchSearch = searchQuery === '' ||
       card.dataset.searchText.includes(searchQuery);
 
