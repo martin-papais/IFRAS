@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Recherche — IFRAS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 
 <style>
 
@@ -21,7 +22,7 @@
 
 body {
   margin: 0;
-  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  font-family: "DM Sans", "Segoe UI", Roboto, Arial, sans-serif;
   background: var(--bg-main);
   color: var(--text-main);
 }
@@ -168,23 +169,361 @@ header {
   color: white;
 }
 
-/* ===== CONTENU ===== */
+/* ===== HERO ===== */
 
-main {
+.hero {
+  position: relative;
+  padding: 100px 30px 80px;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 60% 40%, rgba(79,107,237,0.13) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(99,57,237,0.10) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Grid lines decoration */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(79,107,237,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79,107,237,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+.hero-inner {
   max-width: 1300px;
   margin: auto;
-  padding: 80px 30px 120px;
+  position: relative;
+  z-index: 1;
 }
 
-h1 {
-  font-size: 34px;
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 28px;
+  font-family: "DM Sans", sans-serif;
+  font-weight: 500;
 }
 
-p {
-  max-width: 800px;
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.hero h1 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(38px, 5vw, 64px);
+  font-weight: 800;
+  line-height: 1.08;
+  margin: 0 0 24px;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.hero h1 span {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(79,107,237,0.7);
+}
+
+.hero-desc {
+  max-width: 680px;
+  color: var(--text-soft);
+  font-size: 16px;
+  line-height: 1.75;
+  margin: 0 0 50px;
+  font-weight: 300;
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 20px 28px;
+  background: rgba(79,107,237,0.07);
+  border: 1px solid rgba(79,107,237,0.18);
+  border-radius: 12px;
+  width: fit-content;
+}
+
+.hero-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hero-meta-value {
+  font-family: "Syne", sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: white;
+}
+
+.hero-meta-label {
+  font-size: 11px;
+  color: var(--text-soft);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.hero-meta-sep {
+  width: 1px;
+  height: 40px;
+  background: rgba(79,107,237,0.25);
+}
+
+.director-badge {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.director-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4f6bed, #7c3aed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: white;
+  flex-shrink: 0;
+}
+
+.director-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.director-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+}
+
+.director-title {
+  font-size: 12px;
+  color: var(--text-soft);
+  letter-spacing: .05em;
+}
+
+/* ===== SECTION DEPARTMENTS ===== */
+
+.section-depts {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 60px 30px 120px;
+}
+
+.section-header {
+  margin-bottom: 56px;
+}
+
+.section-eyebrow {
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-eyebrow::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.section-header h2 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(26px, 3vw, 38px);
+  font-weight: 700;
+  margin: 0;
+  color: white;
+}
+
+/* ===== GRILLE DEPARTEMENTS ===== */
+
+.dept-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 22px;
+}
+
+.dept-card {
+  background: var(--bg-light);
+  border: 1px solid #12204a;
+  border-radius: 14px;
+  padding: 28px 30px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color .3s ease, transform .3s ease, box-shadow .3s ease;
+  animation: fadeUp .5s ease both;
+  text-decoration: none;
+  display: block;
+  color: inherit;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.dept-card:nth-child(1) { animation-delay: .05s; }
+.dept-card:nth-child(2) { animation-delay: .10s; }
+.dept-card:nth-child(3) { animation-delay: .15s; }
+.dept-card:nth-child(4) { animation-delay: .20s; }
+.dept-card:nth-child(5) { animation-delay: .25s; }
+.dept-card:nth-child(6) { animation-delay: .30s; }
+.dept-card:nth-child(7) { animation-delay: .35s; }
+.dept-card:nth-child(8) { animation-delay: .40s; }
+
+.dept-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--card-color, var(--accent));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .35s ease;
+}
+
+.dept-card:hover {
+  border-color: rgba(79,107,237,0.35);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 50px rgba(0,0,10,0.5);
+}
+
+.dept-card:hover::before {
+  transform: scaleX(1);
+}
+
+.dept-card-glow {
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--card-color, rgba(79,107,237,.15)) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity .4s ease;
+  pointer-events: none;
+}
+
+.dept-card:hover .dept-card-glow {
+  opacity: 1;
+}
+
+.dept-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.dept-badge {
+  font-family: "Syne", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  padding: 5px 12px;
+  border-radius: 6px;
+  background: rgba(79,107,237,0.12);
+  border: 1px solid rgba(79,107,237,0.22);
+  color: var(--card-color, var(--accent));
+}
+
+.dept-icon {
+  font-size: 24px;
+  opacity: 0.6;
+}
+
+.dept-card h3 {
+  font-family: "Syne", sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0 0 10px;
+  color: white;
+  line-height: 1.3;
+}
+
+.dept-card p {
+  font-size: 13.5px;
   color: var(--text-soft);
   line-height: 1.7;
+  margin: 0 0 22px;
+  font-weight: 300;
 }
+
+.dept-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.dept-tag {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.09);
+  color: var(--text-soft);
+  letter-spacing: .03em;
+}
+
+.dept-arrow {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(79,107,237,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  font-size: 15px;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity .3s, transform .3s;
+}
+
+.dept-card:hover .dept-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ===== FOOTER ===== */
 
 footer {
   background: var(--bg-dark);
@@ -254,7 +593,7 @@ footer {
     <div class="subnav-item">
       <a href="#">DSTI</a>
       <div class="megamenu">
-        <h4><a href="#">Département Simulation & Traitement de l’Information </a></h4>
+        <h4><a href="#">Département Simulation & Traitement de l'Information</a></h4>
         <ul>
           <li><a href="#">Intelligence artificielle</a></li>
           <li><a href="#">Systèmes autonomes</a></li>
@@ -281,7 +620,7 @@ footer {
     <div class="subnav-item">
       <a href="#">DOL</a>
       <div class="megamenu">
-        <h4><a href="#">Département Optique et Lumière </a></h4>
+        <h4><a href="#">Département Optique et Lumière</a></h4>
         <ul>
           <li><a href="#">Instrumentation optique</a></li>
           <li><a href="#">Optique ondulatoire</a></li>
@@ -296,9 +635,9 @@ footer {
       <div class="megamenu">
         <h4><a href="#">Département Mathématiques Appliquées</a></h4>
         <ul>
-          <li><a href="#">Mathématiques Algebrique</a></li>
+          <li><a href="#">Mathématiques Algébrique</a></li>
           <li><a href="#">Mathématiques Analytique</a></li>
-          <li><a href="#">Mathématiques Topographiqe</a></li>
+          <li><a href="#">Mathématiques Topographique</a></li>
           <li><a href="#">Mathématiques Probabiliste</a></li>
         </ul>
       </div>
@@ -316,37 +655,233 @@ footer {
         </ul>
       </div>
     </div>
-    
+
     <div class="subnav-item">
       <a href="#">DAI</a>
       <div class="megamenu">
         <h4><a href="#">Département Astrophysique et Instrumentation</a></h4>
         <ul>
-          <li><a href="#">Physique des galaxiese</a></li>
+          <li><a href="#">Physique des galaxies</a></li>
           <li><a href="#">Cosmologie observationnelle</a></li>
           <li><a href="#">Dynamique orbitale</a></li>
           <li><a href="#">Spectroscopie & Interférométrie</a></li>
         </ul>
       </div>
     </div>
-  
+
   </div>
 </nav>
 
-<main>
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-inner">
 
-<h1>Recherche scientifique</h1>
-<p>
-L’IFRAS conduit des travaux de recherche avancés dans l’ensemble des domaines
-stratégiques liés à l’aéronautique, au spatial et aux systèmes complexes.
-L’organisation scientifique est structurée en départements spécialisés,
-favorisant la transversalité et l’innovation.
-</p>
+    <div class="hero-eyebrow">Direction Scientifique</div>
 
-</main>
+    <h1>Recherche<br><span>scientifique</span></h1>
+
+    <p class="hero-desc">
+      L'IFRAS structure ses activités de recherche au sein de huit départements scientifiques de haut niveau,
+      couvrant les domaines fondamentaux et appliqués de l'aéronautique, du spatial et des systèmes complexes.
+      Chaque département développe une expertise reconnue, tout en cultivant la transversalité indispensable
+      à l'innovation de rupture.
+    </p>
+
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="hero-meta-value">8</span>
+        <span class="hero-meta-label">Départements</span>
+      </div>
+      <div class="hero-meta-sep"></div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-value">34</span>
+        <span class="hero-meta-label">Disciplines</span>
+      </div>
+      <div class="hero-meta-sep"></div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-value">+200</span>
+        <span class="hero-meta-label">Chercheurs</span>
+      </div>
+      <div class="hero-meta-sep"></div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-value">14</span>
+        <span class="hero-meta-label">Partenaires intl.</span>
+      </div>
+    </div>
+
+    <div class="director-badge">
+      <div class="director-avatar">JLR</div>
+      <div class="director-info">
+        <span class="director-name">Jean-Luc Rousseau</span>
+        <span class="director-title">Directeur de la Direction Scientifique</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== GRILLE DES DEPARTEMENTS ===== -->
+<section class="section-depts">
+
+  <div class="section-header">
+    <div class="section-eyebrow">Nos expertises</div>
+    <h2>Les huit départements scientifiques</h2>
+  </div>
+
+  <div class="dept-grid">
+
+    <!-- DSVT -->
+    <a class="dept-card" href="dsvt.html" style="--card-color: #34d399;">
+      <div class="dept-card-glow" style="background: radial-gradient(circle, rgba(52,211,153,.12) 0%, transparent 70%);"></div>
+      <div class="dept-card-top">
+        <span class="dept-badge" style="color:#34d399; border-color:rgba(52,211,153,.25); background:rgba(52,211,153,.08);">DSVT</span>
+        <span class="dept-icon">🧬</span>
+      </div>
+      <h3>Sciences du Vivant et de la Terre</h3>
+      <p>Exploration des mécanismes du vivant et des systèmes géophysiques, de la biologie moléculaire à la paléontologie, en passant par les neurosciences et la génétique.</p>
+      <div class="dept-tags">
+        <span class="dept-tag">Biologie</span>
+        <span class="dept-tag">Neurosciences</span>
+        <span class="dept-tag">Génétique</span>
+        <span class="dept-tag">Géologie</span>
+        <span class="dept-tag">Paléontologie</span>
+      </div>
+      <div class="dept-arrow">→</div>
+    </a>
+
+    <!-- DPET -->
+    <a class="dept-card" href="dpet.html" style="--card-color: #f97316;">
+      <div class="dept-card-glow" style="background: radial-gradient(circle, rgba(249,115,22,.12) 0%, transparent 70%);"></div>
+      <div class="dept-card-top">
+        <span class="dept-badge" style="color:#f97316; border-color:rgba(249,115,22,.25); background:rgba(249,115,22,.08);">DPET</span>
+        <span class="dept-icon">🔥</span>
+      </div>
+      <h3>Physique Énergétique et Thermique</h3>
+      <p>Maîtrise des phénomènes énergétiques aux conditions extrêmes — combustion, transferts thermiques, plasmas — au service des propulsions avancées et de l'efficacité énergétique.</p>
+      <div class="dept-tags">
+        <span class="dept-tag">Thermodynamique</span>
+        <span class="dept-tag">Combustion</span>
+        <span class="dept-tag">Plasma</span>
+        <span class="dept-tag">Transferts thermiques</span>
+      </div>
+      <div class="dept-arrow">→</div>
+    </a>
+
+    <!-- DSTI -->
+    <a class="dept-card" href="dsti.html" style="--card-color: #818cf8;">
+      <div class="dept-card-glow" style="background: radial-gradient(circle, rgba(129,140,248,.12) 0%, transparent 70%);"></div>
+      <div class="dept-card-top">
+        <span class="dept-badge" style="color:#818cf8; border-color:rgba(129,140,248,.25); background:rgba(129,140,248,.08);">DSTI</span>
+        <span class="dept-icon">🤖</span>
+      </div>
+      <h3>Simulation & Traitement de l'Information</h3>
+      <p>Développement de méthodes numériques avancées, d'intelligences artificielles embarquées et de simulateurs multi-physiques pour modéliser des systèmes d'une complexité inédite.</p>
+      <div class="dept-tags">
+        <span class="dept-tag">IA</span>
+        <span class="dept-tag">Calcul HPC</span>
+        <span class="dept-tag">Modélisation</span>
+        <span class="dept-tag">Simulation</span>
+        <span class="dept-tag">Signal</span>
+      </div>
+      <div class="dept-arrow">→</div>
+    </a>
+
+    <!-- DSMR -->
+    <a class="dept-card" href="dsmr.html" style="--card-color: #fb7185;">
+      <div class="dept-card-glow" style="background: radial-gradient(circle, rgba(251,113,133,.12) 0%, transparent 70%);"></div>
+      <div class="dept-card-top">
+        <span class="dept-badge" style="color:#fb7185; border-color:rgba(251,113,133,.25); background:rgba(251,113,133,.08);">DSMR</span>
+        <span class="dept-icon">⚙️</span>
+      </div>
+      <h3>Structures, Matériaux & Résistance</h3>
+      <p>Conception et caractérisation de matériaux de nouvelle génération, analyse de la tenue structurale sous contraintes critiques, fatigue et rupture dans les environnements spatiaux et aéronautiques.</p>
+      <div class="dept-tags">
+        <span class="dept-tag">Composites</span>
+        <span class="dept-tag">Structures avancées</span>
+        <span class="dept-tag">Fatigue</span>
+        <span class="dept-tag">Rupture</span>
+      </div>
+      <div class="dept-arrow">→</div>
+    </a>
+
+    <!-- DOL -->
+    <a class="dept-card" href="dol.html" style="--card-color: #38bdf8;">
+      <div class="dept-card-glow" style="background: radial-gradient(circle, rgba(56,189,248,.12) 0%, transparent 70%);"></div>
+      <div class="dept-card-top">
+        <span class="dept-badge" style="color:#38bdf8; border-color:rgba(56,189,248,.25); background:rgba(56,189,248,.08);">DOL</span>
+        <span class="dept-icon">🔭</span>
+      </div>
+      <h3>Optique et Lumière</h3>
+      <p>Recherche fondamentale et appliquée sur la propagation, la mesure et l'exploitation de la lumière — instrumentation optique de précision, imagerie scientifique et systèmes laser embarqués.</p>
+      <div class="dept-tags">
+        <span class="dept-tag">Optique ondulatoire</span>
+        <span class="dept-tag">Instrumentation</span>
+        <span class="dept-tag">Laser</span>
+        <span class="dept-tag">Imagerie</span>
+      </div>
+      <div class="dept-arrow">→</div>
+    </a>
+
+    <!-- DMA -->
+    <a class="dept-card" href="dma.html" style="--card-color: #facc15;">
+      <div class="dept-card-glow" style="background: radial-gradient(circle, rgba(250,204,21,.10) 0%, transparent 70%);"></div>
+      <div class="dept-card-top">
+        <span class="dept-badge" style="color:#facc15; border-color:rgba(250,204,21,.25); background:rgba(250,204,21,.07);">DMA</span>
+        <span class="dept-icon">∑</span>
+      </div>
+      <h3>Mathématiques Appliquées</h3>
+      <p>Socle formel de l'ensemble des activités scientifiques de l'IFRAS — algèbre, analyse fonctionnelle, topologie et probabilités au service de la modélisation et de la preuve formelle des systèmes.</p>
+      <div class="dept-tags">
+        <span class="dept-tag">Algèbre</span>
+        <span class="dept-tag">Analyse</span>
+        <span class="dept-tag">Topologie</span>
+        <span class="dept-tag">Probabilités</span>
+      </div>
+      <div class="dept-arrow">→</div>
+    </a>
+
+    <!-- DPM -->
+    <a class="dept-card" href="dpm.html" style="--card-color: #c084fc;">
+      <div class="dept-card-glow" style="background: radial-gradient(circle, rgba(192,132,252,.12) 0%, transparent 70%);"></div>
+      <div class="dept-card-top">
+        <span class="dept-badge" style="color:#c084fc; border-color:rgba(192,132,252,.25); background:rgba(192,132,252,.08);">DPM</span>
+        <span class="dept-icon">🌊</span>
+      </div>
+      <h3>Physique & Mécanique</h3>
+      <p>Étude des lois fondamentales gouvernant la matière et le mouvement — du solide déformable aux fluides turbulents, de la mécanique classique aux effets quantiques dans les systèmes miniaturisés.</p>
+      <div class="dept-tags">
+        <span class="dept-tag">Mécanique du solide</span>
+        <span class="dept-tag">Fluides</span>
+        <span class="dept-tag">Turbulence</span>
+        <span class="dept-tag">Quantique</span>
+      </div>
+      <div class="dept-arrow">→</div>
+    </a>
+
+    <!-- DAI -->
+    <a class="dept-card" href="dai.html" style="--card-color: #67e8f9;">
+      <div class="dept-card-glow" style="background: radial-gradient(circle, rgba(103,232,249,.10) 0%, transparent 70%);"></div>
+      <div class="dept-card-top">
+        <span class="dept-badge" style="color:#67e8f9; border-color:rgba(103,232,249,.25); background:rgba(103,232,249,.07);">DAI</span>
+        <span class="dept-icon">🌌</span>
+      </div>
+      <h3>Astrophysique et Instrumentation</h3>
+      <p>Observation et modélisation de l'univers à toutes les échelles — physique des galaxies, cosmologie observationnelle, dynamique orbitale et développement d'instruments à la pointe de la spectroscopie.</p>
+      <div class="dept-tags">
+        <span class="dept-tag">Cosmologie</span>
+        <span class="dept-tag">Galaxies</span>
+        <span class="dept-tag">Dynamique orbitale</span>
+        <span class="dept-tag">Spectroscopie</span>
+      </div>
+      <div class="dept-arrow">→</div>
+    </a>
+
+  </div>
+
+</section>
 
 <footer>
-© IFRAS — Institut Français de Recherche Aéronautique et Spatiale
+  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale
 </footer>
 
 </body>
