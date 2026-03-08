@@ -243,21 +243,24 @@ header {
 .evt-list {
   max-width: 1300px; margin: 0 auto;
   padding: 50px 30px 60px;
-  display: flex; flex-direction: column; gap: 16px;
+  display: block;
+}
+
+.evt-card {
+  margin-bottom: 16px;
 }
 
 /* ===== CARTE ÉVÉNEMENT ===== */
 
 .evt-card {
   display: grid;
-  grid-template-columns: 90px 1fr auto;
+  grid-template-columns: 93px 1fr;
   align-items: stretch;
   gap: 0;
   background: var(--bg-light);
   border: 1px solid var(--border);
   border-radius: 14px; overflow: hidden;
   text-decoration: none; color: inherit;
-  position: relative;
   transition: border-color .3s, transform .25s, box-shadow .3s;
   animation: fadeUp .45s ease both;
 }
@@ -268,16 +271,6 @@ header {
   box-shadow: 0 16px 44px rgba(0,0,10,.5);
 }
 
-.evt-card::before {
-  content: '';
-  position: absolute; left: 0; top: 0; bottom: 0;
-  width: 3px;
-  background: var(--evt-color, var(--accent));
-  opacity: 0; transition: opacity .3s;
-}
-
-.evt-card:hover::before { opacity: 1; }
-
 /* Bloc date */
 .evt-date-block {
   display: flex; flex-direction: column;
@@ -286,6 +279,12 @@ header {
   border-right: 1px solid var(--border);
   background: rgba(0,0,0,.15);
   gap: 2px; flex-shrink: 0;
+  border-left: 3px solid transparent;
+  transition: border-left-color .3s;
+}
+
+.evt-card:hover .evt-date-block {
+  border-left-color: var(--evt-color, var(--accent));
 }
 
 .evt-day {
@@ -370,24 +369,26 @@ header {
 
 .evt-meta-item span:first-child { font-size: 13px; }
 
-/* Panneau droit */
+/* Panneau droit — compact, collé en bas à droite de la carte */
 .evt-right {
-  padding: 0 24px;
-  display: flex; flex-direction: row;
-  align-items: center; justify-content: flex-end;
-  gap: 20px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 10px;
   border-left: 1px solid var(--border);
-  white-space: nowrap;
+  overflow: hidden;
 }
 
 .evt-duration {
   font-size: 12px; color: var(--text-soft); font-weight: 300;
-  text-align: right; line-height: 1.4;
+  text-align: right; line-height: 1.5;
 }
 
 .evt-duration strong {
-  display: inline; font-family: "Syne", sans-serif;
-  font-size: 14px; font-weight: 700; color: white;
+  display: block; font-family: "Syne", sans-serif;
+  font-size: 15px; font-weight: 700; color: white;
   letter-spacing: -0.01em;
 }
 
@@ -617,17 +618,11 @@ footer {
       <div class="evt-title">ISABS 2026 — Colloque International des Sciences Aérospatiales et Biologiques</div>
       <p class="evt-desc">Grand colloque annuel de l'IFRAS réunissant chercheurs, ingénieurs et partenaires institutionnels autour des thématiques de biologie spatiale, propulsion et systèmes autonomes. Accueil de délégations ESA, NASA, JAXA et ISRO.</p>
       <div class="evt-meta-row">
+        <span class="evt-meta-item"><span>⏱</span> 3 jours · 15 → 17 juin</span>
         <span class="evt-meta-item"><span>📍</span> IFRAS — Amphithéâtre Gagarine, Toulouse</span>
         <span class="evt-meta-item"><span>👥</span> 420 participants attendus</span>
         <span class="evt-meta-item"><span>🌐</span> Retransmission en ligne</span>
       </div>
-    </div>
-    <div class="evt-right">
-      <div class="evt-duration">
-        <strong>3 jours</strong>
-        15 → 17 juin
-      </div>
-      <a href="#" class="evt-cta">S'inscrire →</a>
     </div>
   </a>
 
@@ -648,16 +643,10 @@ footer {
       <div class="evt-title">Journée Portes Ouvertes IFRAS 2026</div>
       <p class="evt-desc">Découvrez les laboratoires, plateaux techniques et simulateurs de l'IFRAS. Visites guidées, démonstrations en direct et rencontres avec les chercheurs des 8 départements. Ouvert au grand public et aux lycéens.</p>
       <div class="evt-meta-row">
+        <span class="evt-meta-item"><span>⏱</span> 1 jour · 9h00 → 18h00</span>
         <span class="evt-meta-item"><span>📍</span> Campus IFRAS, Toulouse</span>
         <span class="evt-meta-item"><span>👥</span> Grand public — entrée libre</span>
       </div>
-    </div>
-    <div class="evt-right">
-      <div class="evt-duration">
-        <strong>1 jour</strong>
-        9h00 → 18h00
-      </div>
-      <a href="#" class="evt-cta">S'inscrire →</a>
     </div>
   </a>
 
@@ -678,16 +667,10 @@ footer {
       <div class="evt-title">Séminaire ARTEMIS-9 — Résultats intermédiaires de la Phase III</div>
       <p class="evt-desc">Présentation des données biologiques et physiologiques collectées lors des 120 premiers jours de la phase III. Interventions des équipes DSVT et DOL, suivi de questions ouvertes. Réservé aux membres accrédités IFRAS et partenaires.</p>
       <div class="evt-meta-row">
+        <span class="evt-meta-item"><span>⏱</span> ½ journée · 14h00 → 18h30</span>
         <span class="evt-meta-item"><span>📍</span> Salle Laplace, Bâtiment B — IFRAS</span>
         <span class="evt-meta-item"><span>👥</span> 80 places · Accréditation requise</span>
       </div>
-    </div>
-    <div class="evt-right">
-      <div class="evt-duration">
-        <strong>½ journée</strong>
-        14h00 → 18h30
-      </div>
-      <a href="#" class="evt-cta">Demander accès →</a>
     </div>
   </a>
 
@@ -708,16 +691,10 @@ footer {
       <div class="evt-title">Atelier : IA embarquée et systèmes autonomes spatiaux</div>
       <p class="evt-desc">Atelier technique animé par le département DSTI sur les architectures d'IA déployées sur systèmes autonomes à bord d'engins spatiaux. Exercices pratiques, retours d'expérience LYNX et ATLAS. Accès libre sur inscription.</p>
       <div class="evt-meta-row">
+        <span class="evt-meta-item"><span>⏱</span> 1 journée · 9h30 → 17h00</span>
         <span class="evt-meta-item"><span>🖥</span> Webinaire — lien envoyé à l'inscription</span>
         <span class="evt-meta-item"><span>👥</span> 200 places disponibles</span>
       </div>
-    </div>
-    <div class="evt-right">
-      <div class="evt-duration">
-        <strong>1 journée</strong>
-        9h30 → 17h00
-      </div>
-      <a href="#" class="evt-cta">S'inscrire →</a>
     </div>
   </a>
 
@@ -744,16 +721,10 @@ footer {
       <div class="evt-title">Conférence PROMETHEUS — Validation expérimentale du propulseur ionique à 6 800 s</div>
       <p class="evt-desc">Présentation des résultats records obtenus en chambre d'essai sur le propulseur à plasma froid du programme PROMETHEUS. Conférence ouverte, retransmise en ligne.</p>
       <div class="evt-meta-row">
+        <span class="evt-meta-item"><span>⏱</span> 1 jour · 14 novembre 2025</span>
         <span class="evt-meta-item"><span>📍</span> Amphithéâtre Gagarine, IFRAS</span>
         <span class="evt-meta-item"><span>👥</span> 340 participants</span>
       </div>
-    </div>
-    <div class="evt-right">
-      <div class="evt-duration">
-        <strong>1 jour</strong>
-        14 novembre
-      </div>
-      <a href="#" class="evt-cta evt-cta--disabled">Terminé</a>
     </div>
   </a>
 
@@ -774,16 +745,10 @@ footer {
       <div class="evt-title">Soutenance de thèse — Claire Fontaine, Département DSVT</div>
       <p class="evt-desc">Soutenance de la thèse de doctorat de Claire Fontaine intitulée « Dynamiques immunitaires en microgravité prolongée : modélisation et prédiction ». Jury composé de 6 membres, dont deux représentants du CNES.</p>
       <div class="evt-meta-row">
+        <span class="evt-meta-item"><span>⏱</span> 3 h · 14h00 → 17h00</span>
         <span class="evt-meta-item"><span>📍</span> Salle des thèses, Bâtiment A — IFRAS</span>
         <span class="evt-meta-item"><span>👥</span> Ouvert au public</span>
       </div>
-    </div>
-    <div class="evt-right">
-      <div class="evt-duration">
-        <strong>3 h</strong>
-        14h00 → 17h00
-      </div>
-      <a href="#" class="evt-cta evt-cta--disabled">Terminé</a>
     </div>
   </a>
 
@@ -804,16 +769,10 @@ footer {
       <div class="evt-title">Séminaire annuel DMA — Matériaux extrêmes : état de l'art et perspectives</div>
       <p class="evt-desc">Bilan des travaux du département DMA sur les composites céramiques et alliages réfractaires pour l'espace. Présentations des 4 équipes internes et discussion prospective sur les matériaux de rentrée atmosphérique de nouvelle génération.</p>
       <div class="evt-meta-row">
+        <span class="evt-meta-item"><span>⏱</span> 1 jour · 3 juin 2025</span>
         <span class="evt-meta-item"><span>📍</span> Centre de conférences IFRAS, Toulouse</span>
         <span class="evt-meta-item"><span>👥</span> 110 participants</span>
       </div>
-    </div>
-    <div class="evt-right">
-      <div class="evt-duration">
-        <strong>1 jour</strong>
-        3 juin
-      </div>
-      <a href="#" class="evt-cta evt-cta--disabled">Terminé</a>
     </div>
   </a>
 
@@ -841,51 +800,58 @@ footer {
   Agenda scientifique mis à jour mensuellement
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-const evtCards = Array.from(document.querySelectorAll('.evt-card'));
-const list = document.getElementById('evt-list');
-const pastSep = document.getElementById('past-sep');
-const noResults = document.getElementById('no-results');
-const searchInput = document.getElementById('search-input');
-const searchClear = document.getElementById('search-clear');
-const sortSelect = document.getElementById('sort-select');
-const filterBtns = document.querySelectorAll('.filter-btn');
+<script>
+// ─── Init ────────────────────────────────────────────────────────────────────
+const evtCards   = Array.from(document.querySelectorAll('.evt-card'));
+const list       = document.getElementById('evt-list');
+const pastSep    = document.getElementById('past-sep');
+const noResults  = document.getElementById('no-results');
+const searchInput  = document.getElementById('search-input');
+const searchClear  = document.getElementById('search-clear');
+const sortSelect   = document.getElementById('sort-select');
+const filterBtns   = document.querySelectorAll('.filter-btn');
 const resultsCount = document.getElementById('results-count');
-const resetBtn = document.getElementById('reset-btn');
+const resetBtn     = document.getElementById('reset-btn');
 
+// Pré-calculer le texte de recherche sur chaque carte
 evtCards.forEach(card => {
   card.dataset.searchText = card.textContent.toLowerCase();
 });
 
 let activeFilter = 'tous';
-let searchQuery = '';
-let sortOrder = 'recent';
+let searchQuery  = '';
+let sortOrder    = 'recent';
 
-function normalize(str) {
+// ─── Normalisation (accents) ─────────────────────────────────────────────────
+function norm(str) {
   return (str || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
+// ─── Logique principale ───────────────────────────────────────────────────────
 function applyAll() {
+
+  // 1. Trier par date
   const sorted = [...evtCards].sort((a, b) => {
     const da = new Date(a.dataset.date).getTime();
     const db = new Date(b.dataset.date).getTime();
     return sortOrder === 'recent' ? db - da : da - db;
   });
 
-  // Réinsérer les cartes dans l'ordre trié
+  // 2. Réordonner dans le DOM : futurs → séparateur → passés → no-results
   const future = sorted.filter(c => !c.classList.contains('is-past'));
-  const past    = sorted.filter(c =>  c.classList.contains('is-past'));
+  const past   = sorted.filter(c =>  c.classList.contains('is-past'));
 
   future.forEach(c => list.insertBefore(c, pastSep));
   list.insertBefore(pastSep, noResults);
   past.forEach(c => list.insertBefore(c, noResults));
 
+  // 3. Filtrer visibilité
   let visible = 0;
   sorted.forEach(card => {
-    const matchType = activeFilter === 'tous' ||
-      normalize(card.dataset.type) === normalize(activeFilter);
+    const matchType   = activeFilter === 'tous' ||
+                        norm(card.dataset.type) === norm(activeFilter);
     const matchSearch = searchQuery === '' ||
-      card.dataset.searchText.includes(searchQuery);
+                        card.dataset.searchText.includes(searchQuery);
 
     if (matchType && matchSearch) {
       card.style.display = '';
@@ -895,18 +861,19 @@ function applyAll() {
     }
   });
 
-  // Masquer le séparateur si aucun passé visible
-  const anyPastVisible = past.some(c => c.style.display !== 'none');
-  pastSep.style.display = anyPastVisible ? '' : 'none';
+  // 4. Séparateur visible seulement si au moins un passé affiché
+  pastSep.style.display = past.some(c => c.style.display !== 'none') ? '' : 'none';
 
-  noResults.style.display = visible === 0 ? 'block' : 'none';
-  resultsCount.textContent = visible === 0 ? 'Aucun résultat' :
-    `${visible} événement${visible > 1 ? 's' : ''}`;
-  resetBtn.style.display =
-    (activeFilter !== 'tous' || searchQuery !== '') ? 'inline-flex' : 'none';
-  searchClear.style.display = searchQuery !== '' ? 'flex' : 'none';
+  // 5. Mise à jour compteur & boutons
+  noResults.style.display    = visible === 0 ? 'block' : 'none';
+  resultsCount.textContent   = visible === 0 ? 'Aucun résultat'
+                               : `${visible} événement${visible > 1 ? 's' : ''}`;
+  resetBtn.style.display     = (activeFilter !== 'tous' || searchQuery !== '')
+                               ? 'inline-flex' : 'none';
+  searchClear.style.display  = searchQuery !== '' ? 'flex' : 'none';
 }
 
+// ─── Listeners ───────────────────────────────────────────────────────────────
 filterBtns.forEach(btn => {
   btn.addEventListener('click', () => {
     filterBtns.forEach(b => b.classList.remove('active'));
@@ -935,7 +902,18 @@ sortSelect.addEventListener('change', () => {
 
 resetBtn.addEventListener('click', () => {
   activeFilter = 'tous';
-  searchQuery = '';
-  sortOrder = 'recent';
-  searchInput.value = '';
-  sortSelect.value = 'recent';
+  searchQuery  = '';
+  sortOrder    = 'recent';
+  searchInput.value  = '';
+  sortSelect.value   = 'recent';
+  filterBtns.forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-filter="tous"]').classList.add('active');
+  applyAll();
+});
+
+// ─── Lancement initial ────────────────────────────────────────────────────────
+applyAll();
+</script>
+
+</body>
+</html>
