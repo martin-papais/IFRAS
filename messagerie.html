@@ -951,16 +951,15 @@ function applyHex() {
     inp.classList.add('invalid'); return;
   }
   inp.classList.remove('invalid');
-  // Mettre à jour currentContentBg directement avec le HEX saisi
+
   const norm = normalizeHex(val);
-  if (norm) {
-    currentContentBg = norm;
-    if (currentMail) openMessage(currentMail);
-  }
-  // Convertir hex → hsl pour le thème visuel
-  let hex = val.length === 4
-    ? val[1]+val[1]+val[2]+val[2]+val[3]+val[3]
-    : val.slice(1);
+  if (!norm) return;
+
+  // 1. Mettre à jour currentContentBg avec le HEX exact — ne pas laisser applyTheme l'écraser
+  currentContentBg = norm;
+
+  // 2. Changer le thème visuel sans toucher à currentContentBg
+  let hex = norm.slice(1);
   const r = parseInt(hex.slice(0,2),16)/255;
   const g = parseInt(hex.slice(2,4),16)/255;
   const b = parseInt(hex.slice(4,6),16)/255;
@@ -975,7 +974,38 @@ function applyHex() {
       case b: hh = ((r-g)/d + 4)/6; break;
     }
   }
-  applyTheme(Math.round(hh*360), Math.round(ss*100));
+  applyThemeVisualOnly(Math.round(hh*360), Math.round(ss*100));
+
+  // 3. Re-render le message ouvert avec le nouveau currentContentBg
+  if (currentMail) openMessage(currentMail);
+}
+
+// Applique uniquement le visuel du thème sans toucher à currentContentBg
+function applyThemeVisualOnly(h, s) {
+  currentH = h; currentS = s; currentSpecial = null;
+  const root = document.documentElement;
+  document.querySelector('header').style.background = '';
+  document.querySelector('.sub-nav').style.background = '';
+  root.style.removeProperty('--bg-dark');
+  root.style.removeProperty('--bg-main');
+  root.style.removeProperty('--bg-light');
+  root.style.removeProperty('--bg-hover');
+  root.style.removeProperty('--border');
+  root.style.removeProperty('--border-sub');
+  root.style.removeProperty('--accent');
+  root.style.removeProperty('--accent-dim');
+  root.style.removeProperty('--text-main');
+  root.style.removeProperty('--text-soft');
+  root.style.removeProperty('--text-muted');
+  root.style.removeProperty('--unread-dot');
+  root.style.setProperty('--hue', h);
+  root.style.setProperty('--sat', s + '%');
+  document.getElementById('satRange').style.background =
+    `linear-gradient(90deg, hsl(${h},0%,55%), hsl(${h},100%,55%))`;
+  document.getElementById('satRange').value = s;
+  updateHueThumb(h);
+  updateSwatches(h, s, null);
+  updateHexPreview();
 }
 
 // Build swatches
