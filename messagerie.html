@@ -901,16 +901,12 @@ function applyTheme(h, s, special) {
   updateSwatches(h, s, special);
   updateHexPreview();
 
-  // Mettre à jour currentContentBg avec la couleur courante et re-render si un mail est ouvert
-  if (special === 'light') {
-    currentContentBg = '#f2f3f7';
-  } else if (special === 'dark') {
-    currentContentBg = '#080808';
-  } else {
-    // Convertir HSL → HEX approximatif pour la comparaison
-    currentContentBg = hslToHex(h, s, 7);
-  }
+  // Vider le champ HEX (on n'a plus tapé de valeur manuelle) et re-render le message ouvert
+  const hexInp = document.getElementById('hexInput');
+  if (hexInp) { hexInp.value = ''; hexInp.classList.remove('invalid'); }
   if (currentMail) openMessage(currentMail);
+
+
 }
 
 function updateHueThumb(h) {
