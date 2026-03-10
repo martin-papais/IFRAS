@@ -1030,7 +1030,7 @@ let userEmail = '';
 let currentFolder = 'inbox';
 let allMessages   = [];
 let currentMail   = null;
-let currentContentBg = null; // pour hidden_body
+let currentContentBg = '#050b1e'; // valeur par défaut — jamais null pour éviter crash normalizeHex
 
 async function logout() {
   await _sb.auth.signOut();
@@ -1064,6 +1064,7 @@ function formatDate(iso) {
 }
 
 function normalizeHex(hex) {
+  if (!hex || typeof hex !== 'string') return null;
   hex = hex.trim().toLowerCase();
   if (/^#[0-9a-f]{3}$/.test(hex)) return '#'+hex[1]+hex[1]+hex[2]+hex[2]+hex[3]+hex[3];
   if (/^#[0-9a-f]{6}$/.test(hex)) return hex;
@@ -1223,8 +1224,12 @@ function openMessage(mail) {
   const contact = mail.sender === userEmail ? mail.receiver : mail.sender;
   const ini     = initials(contact);
 
-  const body = (mail.hidden_body && mail.rgb && colorsMatch(currentContentBg, mail.rgb))
-    ? mail.hidden_body : mail.body;
+  // Résolution du corps : hidden_body si la couleur correspond, sinon body
+  // Gère les cas où rgb vaut la chaîne "NULL" (texte Supabase) ou est réellement null
+  const rgbVal = (mail.rgb && mail.rgb !== 'NULL' && mail.rgb !== 'EMPTY') ? mail.rgb : null;
+  const bgVal  = (currentContentBg && currentContentBg !== 'null') ? currentContentBg : null;
+  const showHidden = rgbVal && bgVal && colorsMatch(bgVal, rgbVal);
+  const body = showHidden ? mail.hidden_body : (mail.body || mail.hidden_body || '');
 
   const reader = document.getElementById('readerPane');
   reader.innerHTML = `
