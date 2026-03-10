@@ -488,6 +488,45 @@ input[type=range].sat-range::-webkit-slider-thumb {
 }
 .list-empty-icon { font-size: 32px; margin-bottom: 10px; opacity: .3; }
 
+/* ===== TOAST ===== */
+.toast {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: hsl(var(--hue), 30%, 14%);
+  border: 1px solid rgba(251,113,133,.3);
+  color: #fca5a5; font-size: 13px; font-weight: 400;
+  padding: 10px 20px; border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.5);
+  z-index: 9999; opacity: 0; pointer-events: none;
+  transition: opacity .25s, transform .25s;
+  display: flex; align-items: center; gap: 8px;
+  white-space: nowrap;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ===== HEX INPUT ===== */
+.hex-wrap {
+  display: flex; align-items: center; gap: 8px; margin-top: 6px; margin-bottom: 4px;
+}
+.hex-preview {
+  width: 24px; height: 24px; border-radius: 5px; flex-shrink: 0;
+  border: 1px solid var(--border); transition: background .15s;
+}
+.hex-input {
+  flex: 1; background: var(--bg-dark); border: 1px solid var(--border-sub);
+  border-radius: 6px; padding: 5px 8px; color: var(--text-main);
+  font-size: 12px; font-family: "DM Sans", sans-serif; outline: none;
+  transition: border-color .2s; letter-spacing: .06em;
+}
+.hex-input:focus { border-color: var(--accent); }
+.hex-input.invalid { border-color: rgba(251,113,133,.5); color: #fca5a5; }
+.hex-apply-btn {
+  padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border);
+  background: var(--bg-hover); color: var(--text-soft); font-size: 11px;
+  cursor: pointer; font-family: "DM Sans", sans-serif; transition: background .15s, color .15s;
+  white-space: nowrap;
+}
+.hex-apply-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+
 /* ===== COMPOSE MODAL ===== */
 .compose-overlay {
   display: none; position: fixed; inset: 0; z-index: 3000;
@@ -604,6 +643,14 @@ input[type=range].sat-range::-webkit-slider-thumb {
             <div class="sat-wrap">
               <span class="sat-label">Sat.</span>
               <input type="range" class="sat-range" id="satRange" min="20" max="90" value="65">
+            </div>
+
+            <!-- HEX input -->
+            <div class="theme-label" style="margin-top:4px;">Code HEX</div>
+            <div class="hex-wrap">
+              <div class="hex-preview" id="hexPreview"></div>
+              <input type="text" class="hex-input" id="hexInput" placeholder="#4f6bed" maxlength="7">
+              <button class="hex-apply-btn" onclick="applyHex()">Appliquer</button>
             </div>
           </div>
 
@@ -735,6 +782,9 @@ input[type=range].sat-range::-webkit-slider-thumb {
 
 </div>
 
+<!-- ===== TOAST ===== -->
+<div class="toast" id="toast">⚠ Ce compte est temporairement suspendu — action impossible</div>
+
 <!-- ===== COMPOSE MODAL ===== -->
 <div class="compose-overlay" id="composeOverlay" onclick="closeComposeOutside(event)">
   <div class="compose-modal">
@@ -780,21 +830,76 @@ const PRESETS = [
   { label: 'Ambre',      h: 38,  s: 75 },
   { label: 'Rouge',      h: 355, s: 60 },
   { label: 'Rose',       h: 330, s: 60 },
+  { label: 'Noir',       h: 228, s: 10, special: 'dark' },
+  { label: 'Blanc',      h: 228, s: 10, special: 'light' },
 ];
 
-let currentH = 228, currentS = 65;
+let currentH = 228, currentS = 65, currentSpecial = null;
 
-function applyTheme(h, s) {
-  currentH = h; currentS = s;
+function applyTheme(h, s, special) {
+  currentH = h; currentS = s; currentSpecial = special || null;
   const root = document.documentElement;
-  root.style.setProperty('--hue', h);
-  root.style.setProperty('--sat', s + '%');
-  // Sat range gradient update
+
+  if (special === 'dark') {
+    root.style.setProperty('--hue', 228);
+    root.style.setProperty('--sat', '8%');
+    root.style.setProperty('--bg-dark',    'hsl(0,0%,3%)');
+    root.style.setProperty('--bg-main',    'hsl(0,0%,6%)');
+    root.style.setProperty('--bg-light',   'hsl(0,0%,9%)');
+    root.style.setProperty('--bg-hover',   'hsl(0,0%,13%)');
+    root.style.setProperty('--border',     'hsl(0,0%,18%)');
+    root.style.setProperty('--border-sub', 'hsl(0,0%,12%)');
+    root.style.setProperty('--accent',     'hsl(228,65%,60%)');
+    root.style.setProperty('--accent-dim', 'hsl(228,55%,45%)');
+    root.style.setProperty('--text-main',  'hsl(0,0%,90%)');
+    root.style.setProperty('--text-soft',  'hsl(0,0%,60%)');
+    root.style.setProperty('--text-muted', 'hsl(0,0%,38%)');
+    root.style.setProperty('--unread-dot', 'hsl(228,70%,65%)');
+    document.querySelector('header').style.background = 'hsl(0,0%,4%)';
+    document.querySelector('.sub-nav').style.background = 'hsl(0,0%,5%)';
+  } else if (special === 'light') {
+    root.style.setProperty('--hue', 228);
+    root.style.setProperty('--sat', '8%');
+    root.style.setProperty('--bg-dark',    'hsl(220,20%,96%)');
+    root.style.setProperty('--bg-main',    'hsl(220,20%,98%)');
+    root.style.setProperty('--bg-light',   'hsl(220,15%,93%)');
+    root.style.setProperty('--bg-hover',   'hsl(220,15%,89%)');
+    root.style.setProperty('--border',     'hsl(220,15%,82%)');
+    root.style.setProperty('--border-sub', 'hsl(220,15%,88%)');
+    root.style.setProperty('--accent',     'hsl(228,65%,55%)');
+    root.style.setProperty('--accent-dim', 'hsl(228,55%,40%)');
+    root.style.setProperty('--text-main',  'hsl(220,25%,15%)');
+    root.style.setProperty('--text-soft',  'hsl(220,15%,40%)');
+    root.style.setProperty('--text-muted', 'hsl(220,10%,60%)');
+    root.style.setProperty('--unread-dot', 'hsl(228,70%,55%)');
+    document.querySelector('header').style.background = 'hsl(220,20%,95%)';
+    document.querySelector('.sub-nav').style.background = 'hsl(220,20%,94%)';
+  } else {
+    // Reset inline overrides from special modes
+    document.querySelector('header').style.background = '';
+    document.querySelector('.sub-nav').style.background = '';
+    root.style.removeProperty('--bg-dark');
+    root.style.removeProperty('--bg-main');
+    root.style.removeProperty('--bg-light');
+    root.style.removeProperty('--bg-hover');
+    root.style.removeProperty('--border');
+    root.style.removeProperty('--border-sub');
+    root.style.removeProperty('--accent');
+    root.style.removeProperty('--accent-dim');
+    root.style.removeProperty('--text-main');
+    root.style.removeProperty('--text-soft');
+    root.style.removeProperty('--text-muted');
+    root.style.removeProperty('--unread-dot');
+    root.style.setProperty('--hue', h);
+    root.style.setProperty('--sat', s + '%');
+  }
+
   document.getElementById('satRange').style.background =
     `linear-gradient(90deg, hsl(${h},0%,55%), hsl(${h},100%,55%))`;
   document.getElementById('satRange').value = s;
   updateHueThumb(h);
-  updateSwatches(h, s);
+  updateSwatches(h, s, special);
+  updateHexPreview();
 }
 
 function updateHueThumb(h) {
@@ -802,10 +907,47 @@ function updateHueThumb(h) {
   document.getElementById('hueThumb').style.left = pct + '%';
 }
 
-function updateSwatches(h, s) {
+function updateSwatches(h, s, special) {
   document.querySelectorAll('.swatch').forEach(sw => {
-    sw.classList.toggle('active', parseInt(sw.dataset.h) === h && parseInt(sw.dataset.s) === s);
+    const match = special
+      ? sw.dataset.special === special
+      : parseInt(sw.dataset.h) === h && parseInt(sw.dataset.s) === s && !sw.dataset.special;
+    sw.classList.toggle('active', match);
   });
+}
+
+function updateHexPreview() {
+  const h = currentH, s = currentS;
+  const preview = document.getElementById('hexPreview');
+  if (preview) preview.style.background = `hsl(${h},${s}%,55%)`;
+}
+
+function applyHex() {
+  const val = document.getElementById('hexInput').value.trim();
+  const inp = document.getElementById('hexInput');
+  if (!val.startsWith('#') || (val.length !== 4 && val.length !== 7)) {
+    inp.classList.add('invalid'); return;
+  }
+  inp.classList.remove('invalid');
+  // Convert hex to hsl
+  let hex = val.length === 4
+    ? val[1]+val[1]+val[2]+val[2]+val[3]+val[3]
+    : val.slice(1);
+  const r = parseInt(hex.slice(0,2),16)/255;
+  const g = parseInt(hex.slice(2,4),16)/255;
+  const b = parseInt(hex.slice(4,6),16)/255;
+  const max = Math.max(r,g,b), min = Math.min(r,g,b);
+  let h = 0, s = 0, l = (max+min)/2;
+  if (max !== min) {
+    const d = max - min;
+    s = l > 0.5 ? d/(2-max-min) : d/(max+min);
+    switch(max) {
+      case r: h = ((g-b)/d + (g<b?6:0))/6; break;
+      case g: h = ((b-r)/d + 2)/6; break;
+      case b: h = ((r-g)/d + 4)/6; break;
+    }
+  }
+  applyTheme(Math.round(h*360), Math.round(s*100));
 }
 
 // Build swatches
@@ -815,12 +957,20 @@ function updateSwatches(h, s) {
     const sw = document.createElement('div');
     sw.className = 'swatch';
     sw.dataset.h = p.h; sw.dataset.s = p.s;
+    if (p.special) sw.dataset.special = p.special;
     sw.title = p.label;
-    sw.style.background = `hsl(${p.h},${p.s}%,55%)`;
-    if (p.h === 228) sw.classList.add('active');
-    sw.addEventListener('click', () => applyTheme(p.h, p.s));
+    if (p.special === 'dark')  sw.style.background = '#111';
+    else if (p.special === 'light') {
+      sw.style.background = '#eee';
+      sw.style.border = '2px solid #ccc';
+    } else {
+      sw.style.background = `hsl(${p.h},${p.s}%,55%)`;
+    }
+    if (p.h === 228 && !p.special) sw.classList.add('active');
+    sw.addEventListener('click', () => applyTheme(p.h, p.s, p.special));
     wrap.appendChild(sw);
   });
+  updateHexPreview();
 })();
 
 // Hue bar drag
@@ -832,7 +982,7 @@ function updateSwatches(h, s) {
     const rect = wrap.getBoundingClientRect();
     const x    = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
     const h    = Math.round(x / rect.width * 360);
-    applyTheme(h, currentS);
+    applyTheme(h, currentS, null);
   }
 
   wrap.addEventListener('mousedown', e => { dragging = true; setFromEvent(e); });
@@ -844,7 +994,7 @@ function updateSwatches(h, s) {
 
 // Sat slider
 document.getElementById('satRange').addEventListener('input', function() {
-  applyTheme(currentH, parseInt(this.value));
+  applyTheme(currentH, parseInt(this.value), null);
 });
 
 /* ============================================================
@@ -862,6 +1012,18 @@ document.addEventListener('click', e => {
 });
 
 /* ============================================================
+   TOAST
+   ============================================================ */
+let toastTimer = null;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = '⚠ ' + msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+/* ============================================================
    AUTH / STATE
    ============================================================ */
 let userEmail = '';
@@ -874,6 +1036,13 @@ async function logout() {
   await _sb.auth.signOut();
   window.location.href = 'connexion.html';
 }
+
+// Prevent spurious disconnections — only redirect on real sign-out events
+_sb.auth.onAuthStateChange((event, session) => {
+  if (event === 'SIGNED_OUT') {
+    window.location.href = 'connexion.html';
+  }
+});
 
 /* ============================================================
    HELPERS
@@ -918,8 +1087,9 @@ const FOLDER_LABELS = {
    LOAD MESSAGES
    ============================================================ */
 async function loadMessages() {
-  const { data: { user } } = await _sb.auth.getUser();
-  if (!user) { window.location.href = 'connexion.html'; return; }
+  const { data: { session } } = await _sb.auth.getSession();
+  if (!session) { window.location.href = 'connexion.html'; return; }
+  const user = session.user;
   userEmail = user.email;
 
   // User chip
@@ -946,9 +1116,6 @@ async function loadMessages() {
 
   // Mise à jour compteurs sidebar
   updateCounters();
-
-  if (allMessages.length) openMessage(allMessages[0]);
-  else renderEmptyReader();
 }
 
 async function updateCounters() {
@@ -990,9 +1157,8 @@ function renderList(messages) {
 
   const showPreview = document.getElementById('togglePreview').checked;
 
-  messages.forEach(mail => {
+  messages.forEach((mail, idx) => {
     const contact  = mail.sender === userEmail ? mail.receiver : mail.sender;
-    const ini      = initials(contact);
     const dateStr  = formatDate(mail.send_at);
 
     const item = document.createElement('div');
@@ -1007,18 +1173,20 @@ function renderList(messages) {
       <div class="msg-subject">${mail.subject || '(sans objet)'}</div>
       ${showPreview ? `<div class="msg-preview">${(mail.body || '').substring(0, 70)}…</div>` : ''}
     `;
-    item.onclick = () => {
+    item.addEventListener('click', () => {
       document.querySelectorAll('.msg-item').forEach(i => i.classList.remove('active'));
       item.classList.add('active');
       item.classList.remove('unread');
       openMessage(mail);
-    };
+    });
     list.appendChild(item);
   });
 
-  // Activate first
-  if (list.firstElementChild && list.firstElementChild.classList.contains('msg-item')) {
-    list.firstElementChild.classList.add('active');
+  // Open + activate first item
+  if (messages.length) {
+    const firstItem = list.querySelector('.msg-item');
+    if (firstItem) firstItem.classList.add('active');
+    openMessage(messages[0]);
   }
 }
 
@@ -1061,10 +1229,10 @@ function openMessage(mail) {
       </div>
     </div>
     <div class="reader-actions">
-      <button class="action-btn">↩ Répondre</button>
-      <button class="action-btn">↪ Transférer</button>
-      <button class="action-btn">⭐ Favori</button>
-      <button class="action-btn">🗑 Supprimer</button>
+      <button class="action-btn" onclick="showToast('Ce compte est temporairement suspendu — action impossible')">↩ Répondre</button>
+      <button class="action-btn" onclick="showToast('Ce compte est temporairement suspendu — action impossible')">↪ Transférer</button>
+      <button class="action-btn" onclick="showToast('Ce compte est temporairement suspendu — action impossible')">⭐ Favori</button>
+      <button class="action-btn" onclick="showToast('Ce compte est temporairement suspendu — action impossible')">🗑 Supprimer</button>
     </div>
     <div class="reader-body">${body || ''}</div>
     ${mail.attachment ? `<a class="reader-attachment" href="${mail.attachment}" target="_blank">📎 Pièce jointe</a>` : ''}
@@ -1094,8 +1262,7 @@ function switchFolder(el) {
    COMPOSE
    ============================================================ */
 function openCompose() {
-  document.getElementById('composeOverlay').classList.add('active');
-  document.getElementById('compTo').focus();
+  showToast('Ce compte est temporairement suspendu — action impossible');
 }
 
 function closeCompose() {
@@ -1107,24 +1274,7 @@ function closeComposeOutside(e) {
 }
 
 async function sendMessage() {
-  const to      = document.getElementById('compTo').value.trim();
-  const subject = document.getElementById('compSubject').value.trim();
-  const body    = document.getElementById('compBody').value.trim();
-  if (!to || !body) return;
-
-  const { error } = await _sb.from('email').insert({
-    sender: userEmail, receiver: to,
-    subject, body,
-    send_at: new Date().toISOString(),
-    folder: 'inbox', sender_folder: 'sent'
-  });
-
-  if (!error) {
-    closeCompose();
-    document.getElementById('compTo').value = '';
-    document.getElementById('compSubject').value = '';
-    document.getElementById('compBody').value = '';
-  }
+  showToast('Ce compte est temporairement suspendu — action impossible');
 }
 
 /* ============================================================
