@@ -900,6 +900,17 @@ function applyTheme(h, s, special) {
   updateHueThumb(h);
   updateSwatches(h, s, special);
   updateHexPreview();
+
+  // Mettre à jour currentContentBg avec la couleur courante et re-render si un mail est ouvert
+  if (special === 'light') {
+    currentContentBg = '#f2f3f7';
+  } else if (special === 'dark') {
+    currentContentBg = '#080808';
+  } else {
+    // Convertir HSL → HEX approximatif pour la comparaison
+    currentContentBg = hslToHex(h, s, 7);
+  }
+  if (currentMail) openMessage(currentMail);
 }
 
 function updateHueThumb(h) {
@@ -922,6 +933,17 @@ function updateHexPreview() {
   if (preview) preview.style.background = `hsl(${h},${s}%,55%)`;
 }
 
+function hslToHex(h, s, l) {
+  s /= 100; l /= 100;
+  const a = s * Math.min(l, 1 - l);
+  const f = n => {
+    const k = (n + h / 30) % 12;
+    const c = l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1));
+    return Math.round(255 * c).toString(16).padStart(2, '0');
+  };
+  return `#${f(0)}${f(8)}${f(4)}`;
+}
+
 function applyHex() {
   const val = document.getElementById('hexInput').value.trim();
   const inp = document.getElementById('hexInput');
@@ -929,7 +951,13 @@ function applyHex() {
     inp.classList.add('invalid'); return;
   }
   inp.classList.remove('invalid');
-  // Convert hex to hsl
+  // Mettre à jour currentContentBg directement avec le HEX saisi
+  const norm = normalizeHex(val);
+  if (norm) {
+    currentContentBg = norm;
+    if (currentMail) openMessage(currentMail);
+  }
+  // Convertir hex → hsl pour le thème visuel
   let hex = val.length === 4
     ? val[1]+val[1]+val[2]+val[2]+val[3]+val[3]
     : val.slice(1);
@@ -937,17 +965,17 @@ function applyHex() {
   const g = parseInt(hex.slice(2,4),16)/255;
   const b = parseInt(hex.slice(4,6),16)/255;
   const max = Math.max(r,g,b), min = Math.min(r,g,b);
-  let h = 0, s = 0, l = (max+min)/2;
+  let hh = 0, ss = 0, ll = (max+min)/2;
   if (max !== min) {
     const d = max - min;
-    s = l > 0.5 ? d/(2-max-min) : d/(max+min);
+    ss = ll > 0.5 ? d/(2-max-min) : d/(max+min);
     switch(max) {
-      case r: h = ((g-b)/d + (g<b?6:0))/6; break;
-      case g: h = ((b-r)/d + 2)/6; break;
-      case b: h = ((r-g)/d + 4)/6; break;
+      case r: hh = ((g-b)/d + (g<b?6:0))/6; break;
+      case g: hh = ((b-r)/d + 2)/6; break;
+      case b: hh = ((r-g)/d + 4)/6; break;
     }
   }
-  applyTheme(Math.round(h*360), Math.round(s*100));
+  applyTheme(Math.round(hh*360), Math.round(ss*100));
 }
 
 // Build swatches
