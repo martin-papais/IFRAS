@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Programmes actifs — IFRAS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+<style>
+
+:root {
+  --bg-main:  #050b1e;
+  --bg-dark:  #020617;
+  --bg-light: #070f2b;
+  --bg-menu:  #081235;
+  --border:   #1b2555;
+  --accent:   #4f6bed;
+  --text-main: #e6e6e6;
+  --text-soft: #aab3d6;
+  --sidebar-w: 270px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: "DM Sans", sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+}
+
+/* ===== HEADER ===== */
+
+header {
+  position: fixed; top: 0; width: 100%;
+  z-index: 2000;
+  background: rgba(5,11,30,.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  max-width: 1300px; margin: auto;
+  padding: 12px 30px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.header-left { display: flex; align-items: center; gap: 40px; }
+.logo-link img { height: 60px; }
+.main-nav { list-style: none; display: flex; gap: 32px; }
+
+.main-nav a {
+  text-decoration: none; color: var(--text-soft);
+  font-size: 14px; letter-spacing: .05em;
+}
+
+.main-nav a:hover,
+.main-nav a.active-nav { color: white; }
+
+.header-right a {
+  padding: 8px 18px; border-radius: 6px;
+  border: 1px solid var(--accent);
+  color: white; text-decoration: none; font-size: 13px;
+}
+
+.header-right a:hover { background: var(--accent); }
+
+/* ===== BANDEAU PROGRAMMES ===== */
+
+.program-filter {
+  margin-top: 84px;
+  background: var(--bg-light);
+  border-bottom: 1px solid var(--border);
+}
+
+.program-filter ul {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  padding: 0 30px;
+}
+
+.program-filter li {
+  position: relative;
+  padding: 14px 18px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-soft);
+  letter-spacing: .06em;
+  transition: color .2s;
+}
+
+.program-filter li.active-filter {
+  color: white;
+  border-bottom: 2px solid var(--accent);
+}
+
+.program-filter li:hover { color: white; background: rgba(79,107,237,.1); border-radius: 6px; }
+
+.dropdown {
+  position: absolute;
+  top: 48px; left: 0;
+  background: #050b1e;
+  border: 1px solid var(--border);
+  min-width: 220px;
+  display: none;
+  z-index: 200;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(0,0,0,.4);
+}
+
+.dropdown a {
+  display: block; padding: 10px 16px;
+  font-size: 13px; color: var(--text-soft);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(27,37,85,.5);
+  transition: background .15s, color .15s;
+}
+
+.dropdown a:hover { background: rgba(79,107,237,.12); color: white; }
+.program-filter li:hover .dropdown { display: block; }
+
+/* ===== LAYOUT ===== */
+
+.page-wrap {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 30px;
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  gap: 0;
+  align-items: start;
+}
+
+/* ===== SIDEBAR ===== */
+
+.sidebar {
+  position: sticky;
+  top: 148px;
+  padding: 48px 32px 48px 0;
+}
+
+.sidebar-label {
+  font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(170,179,214,.35); font-weight: 500;
+  margin-bottom: 24px; padding-left: 16px;
+}
+
+.sidebar-nav { list-style: none; position: relative; }
+
+.sidebar-progress {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 2px; background: rgba(79,107,237,.08);
+}
+
+.sidebar-nav a {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 16px; font-size: 13px;
+  color: var(--text-soft); text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: color .2s, border-color .2s, background .2s;
+  border-radius: 0 6px 6px 0; font-weight: 300;
+  line-height: 1.4;
+}
+
+.sidebar-nav a:hover {
+  color: white; background: rgba(255,255,255,.03);
+  border-left-color: rgba(79,107,237,.3);
+}
+
+.sidebar-nav a.active {
+  color: white; font-weight: 500;
+  background: rgba(79,107,237,.07);
+  border-left-color: var(--accent);
+}
+
+.sidebar-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  flex-shrink: 0; opacity: .85;
+}
+
+.sidebar-divider { height: 1px; background: var(--border); margin: 20px 16px; }
+
+.sidebar-back {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 16px; font-size: 12px;
+  color: rgba(170,179,214,.4); text-decoration: none;
+  transition: color .2s; font-weight: 300;
+}
+
+.sidebar-back:hover { color: white; }
+
+/* ===== CONTENU PRINCIPAL ===== */
+
+.main-content {
+  padding: 48px 0 100px 52px;
+  border-left: 1px solid var(--border);
+  min-width: 0;
+}
+
+/* ===== SECTION PRÉSENTATION ===== */
+
+.intro-section {
+  padding-bottom: 60px;
+  border-bottom: 1px solid var(--border);
+  scroll-margin-top: 160px;
+}
+
+.section-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+  color: #34d399; font-weight: 500; margin-bottom: 20px;
+}
+
+.section-eyebrow::before {
+  content: ''; display: block;
+  width: 24px; height: 1px; background: currentColor;
+}
+
+.intro-section h1 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(28px, 3.5vw, 46px);
+  font-weight: 800; letter-spacing: -0.03em;
+  line-height: 1.05; color: white; margin-bottom: 24px;
+}
+
+.intro-section h1 span {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(52,211,153,.5);
+}
+
+.intro-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 36px;
+  margin-top: 32px;
+}
+
+.intro-grid p {
+  font-size: 14.5px; color: var(--text-soft);
+  line-height: 1.85; font-weight: 300;
+}
+
+.intro-stats {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  margin-top: 36px;
+}
+
+.intro-stat {
+  background: rgba(79,107,237,.05);
+  border: 1px solid rgba(79,107,237,.14);
+  border-radius: 10px; padding: 16px 20px;
+}
+
+.intro-stat-val {
+  font-family: "Syne", sans-serif; font-size: 24px;
+  font-weight: 800; color: white; letter-spacing: -0.03em;
+}
+
+.intro-stat-lbl {
+  font-size: 11px; color: var(--text-soft); font-weight: 300;
+  text-transform: uppercase; letter-spacing: .1em; margin-top: 3px;
+}
+
+/* ===== SECTIONS PROGRAMME ===== */
+
+.prog-section {
+  padding: 70px 0;
+  border-bottom: 1px solid var(--border);
+  scroll-margin-top: 160px;
+}
+
+.prog-section:last-child { border-bottom: none; }
+
+/* En-tête programme */
+
+.prog-header {
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 24px;
+  margin-bottom: 36px;
+}
+
+.prog-code-badge {
+  font-family: "Syne", sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: .16em;
+  padding: 4px 12px; border-radius: 5px;
+  margin-bottom: 12px; display: inline-block;
+}
+
+.prog-header h2 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 700; color: white;
+  letter-spacing: -0.02em; line-height: 1.15;
+}
+
+.prog-status-badge {
+  font-size: 11px; padding: 5px 12px; border-radius: 20px;
+  font-weight: 500; letter-spacing: .05em;
+  white-space: nowrap; flex-shrink: 0; margin-top: 4px;
+}
+
+.status-active    { background: rgba(52,211,153,.12); color: #34d399; border: 1px solid rgba(52,211,153,.25); }
+.status-restricted{ background: rgba(250,204,21,.10); color: #facc15; border: 1px solid rgba(250,204,21,.25); }
+.status-phase     { background: rgba(96,165,250,.12); color: #60a5fa; border: 1px solid rgba(96,165,250,.25); }
+
+/* Corps du programme */
+
+.prog-intro {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+  margin-bottom: 32px;
+}
+
+.prog-intro p {
+  font-size: 14.5px; color: var(--text-soft);
+  line-height: 1.85; font-weight: 300;
+}
+
+.prog-intro p + p { margin-top: 14px; }
+
+/* Bloc fiche technique */
+.prog-fiche {
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 26px 28px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+.fiche-label {
+  font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(170,179,214,.4); font-weight: 500;
+}
+
+.fiche-rows { display: flex; flex-direction: column; gap: 10px; }
+
+.fiche-row {
+  display: flex; align-items: baseline;
+  justify-content: space-between; gap: 12px;
+  font-size: 13px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(27,37,85,.6);
+}
+
+.fiche-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+.fiche-key {
+  color: rgba(170,179,214,.5); font-weight: 300; flex-shrink: 0;
+}
+
+.fiche-val {
+  color: var(--text-main); text-align: right; font-weight: 400;
+}
+
+/* KPIs programme */
+.prog-kpis {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  margin-bottom: 32px;
+}
+
+.prog-kpi {
+  border-radius: 10px; padding: 16px 18px;
+  border: 1px solid; display: flex; flex-direction: column; gap: 4px;
+}
+
+.prog-kpi-val {
+  font-family: "Syne", sans-serif; font-size: 22px;
+  font-weight: 800; letter-spacing: -0.03em;
+}
+
+.prog-kpi-lbl {
+  font-size: 11px; color: var(--text-soft);
+  font-weight: 300; line-height: 1.4;
+  text-transform: uppercase; letter-spacing: .08em;
+}
+
+/* Axes scientifiques */
+.prog-axes-wrap {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  margin-bottom: 32px;
+}
+
+.prog-axe {
+  background: rgba(255,255,255,.02);
+  border: 1px solid rgba(255,255,255,.05);
+  border-radius: 10px; padding: 18px 20px;
+  display: flex; gap: 14px; align-items: flex-start;
+  transition: background .2s, border-color .2s;
+}
+
+.prog-axe:hover {
+  background: rgba(79,107,237,.04);
+  border-color: rgba(79,107,237,.15);
+}
+
+.axe-icon {
+  font-size: 20px; flex-shrink: 0; margin-top: 2px;
+}
+
+.axe-title {
+  font-size: 13px; font-weight: 500; color: white;
+  margin-bottom: 4px;
+}
+
+.axe-desc {
+  font-size: 12.5px; color: var(--text-soft);
+  font-weight: 300; line-height: 1.6;
+}
+
+/* Partenaires */
+.prog-partners {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px;
+}
+
+.partner-chip {
+  font-size: 12px; padding: 5px 14px; border-radius: 6px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.07);
+  color: var(--text-soft); font-weight: 300;
+}
+
+/* Divider interne */
+.inner-divider {
+  height: 1px; background: var(--border);
+  margin: 28px 0;
+}
+
+/* Publications liées */
+.prog-pubs { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+
+.pubs-label {
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(170,179,214,.35); margin-bottom: 4px;
+}
+
+.pub-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 11px 16px;
+  background: rgba(255,255,255,.02);
+  border: 1px solid rgba(255,255,255,.05);
+  border-radius: 8px; text-decoration: none; color: inherit;
+  transition: background .2s, border-color .2s; font-size: 13px;
+}
+
+.pub-item:hover { background: rgba(79,107,237,.06); border-color: rgba(79,107,237,.2); }
+
+.pub-chip {
+  font-size: 10px; padding: 2px 8px; border-radius: 4px;
+  background: rgba(79,107,237,.1); border: 1px solid rgba(79,107,237,.2);
+  color: #818cf8; font-weight: 500; white-space: nowrap; flex-shrink: 0;
+}
+
+.pub-text { color: var(--text-soft); font-weight: 300; flex: 1; }
+.pub-arrow { color: rgba(170,179,214,.3); font-size: 12px; }
+
+/* ===== FOOTER ===== */
+
+footer {
+  background: var(--bg-dark); border-top: 1px solid var(--border);
+  padding: 40px 30px; text-align: center;
+  font-size: 12px; color: #6b7280;
+}
+
+/* ===== ANIMATIONS ===== */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.prog-section { animation: fadeUp .55s ease both; }
+.prog-section:nth-child(1) { animation-delay: .05s; }
+.prog-section:nth-child(2) { animation-delay: .10s; }
+.prog-section:nth-child(3) { animation-delay: .15s; }
+.prog-section:nth-child(4) { animation-delay: .20s; }
+.prog-section:nth-child(5) { animation-delay: .25s; }
+.prog-section:nth-child(6) { animation-delay: .30s; }
+
+</style>
+</head>
+
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="header-inner">
+    <div class="header-left">
+      <a href="index.html" class="logo-link"><img src="logo.png" alt="Logo IFRAS"></a>
+      <ul class="main-nav">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="recherche.html">Recherche</a></li>
+        <li><a href="programmes.html" class="active-nav">Programmes</a></li>
+        <li><a href="publications.html">Publications</a></li>
+      </ul>
+    </div>
+    <div class="header-right">
+      <a href="connexion.html">Connexion</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== BANDEAU PROGRAMMES ===== -->
+<div class="program-filter">
+  <ul>
+    <li class="active-filter">Programmes actifs
+      <div class="dropdown">
+        <a href="programmes-actifs.html#artemis9">ARTEMIS-9</a>
+        <a href="programmes-actifs.html#orion3">ORION-3</a>
+        <a href="programmes-actifs.html#hermes">HERMES</a>
+        <a href="programmes-actifs.html#atlas">ATLAS</a>
+        <a href="programmes-actifs.html#lynx">LYNX</a>
+        <a href="programmes-actifs.html#prometheus">PROMETHEUS</a>
+      </div>
+    </li>
+    <li>Programmes archivés
+      <div class="dropdown">
+        <a href="#">APOLLO-X</a>
+        <a href="#">DELPHI</a>
+        <a href="#">CASSINI-R</a>
+      </div>
+    </li>
+    <li>Programmes futurs
+      <div class="dropdown">
+        <a href="#">HERA</a>
+        <a href="#">NOE</a>
+        <a href="#">TITAN-0</a>
+      </div>
+    </li>
+    <li>Programmes avortés
+      <div class="dropdown">
+        <a href="#">PHOENIX</a>
+        <a href="#">DAEDALUS</a>
+        <a href="#">ICARUS-2</a>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<!-- ===== LAYOUT ===== -->
+<div class="page-wrap">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <div class="sidebar-label">Programmes actifs</div>
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <div class="sidebar-progress"></div>
+      <li>
+        <a href="#presentation" class="active">
+          <span class="sidebar-dot" style="background:#34d399;"></span>
+          Vue d'ensemble
+        </a>
+      </li>
+      <li>
+        <a href="#artemis9">
+          <span class="sidebar-dot" style="background:#34d399;"></span>
+          ARTEMIS-9
+        </a>
+      </li>
+      <li>
+        <a href="#orion3">
+          <span class="sidebar-dot" style="background:#60a5fa;"></span>
+          ORION-3
+        </a>
+      </li>
+      <li>
+        <a href="#prometheus">
+          <span class="sidebar-dot" style="background:#f97316;"></span>
+          PROMETHEUS
+        </a>
+      </li>
+      <li>
+        <a href="#hermes">
+          <span class="sidebar-dot" style="background:#c084fc;"></span>
+          HERMES
+        </a>
+      </li>
+      <li>
+        <a href="#atlas">
+          <span class="sidebar-dot" style="background:#34d399;"></span>
+          ATLAS
+        </a>
+      </li>
+      <li>
+        <a href="#lynx">
+          <span class="sidebar-dot" style="background:#facc15;"></span>
+          LYNX
+        </a>
+      </li>
+    </ul>
+    <div class="sidebar-divider"></div>
+    <a href="programmes.html" class="sidebar-back">← Retour aux Programmes</a>
+  </aside>
+
+  <!-- ===== CONTENU ===== -->
+  <main class="main-content">
+
+    <!-- ── PRÉSENTATION ── -->
+    <section class="intro-section" id="presentation">
+      <div class="section-eyebrow">Vue d'ensemble</div>
+      <h1>Programmes<br><span>actifs</span></h1>
+
+      <div class="intro-grid">
+        <div>
+          <p>Les six programmes actifs de l'IFRAS représentent le cœur battant de l'activité scientifique de l'institut. Chacun engage des équipes pluridisciplinaires sur des horizons de 5 à 15 ans, autour d'objectifs de rupture technologique ou de découverte scientifique de première importance. Ils couvrent l'ensemble de la chaîne — de la recherche fondamentale à la démonstration en conditions réelles.</p>
+          <p>Ces programmes sont pilotés par des comités de direction dédiés, font l'objet d'évaluations externes annuelles par des comités scientifiques internationaux, et sont soumis à des jalons de validation rigoureux. Leur financement repose sur une combinaison de crédits publics nationaux, de dotations de l'ESA et de contrats de recherche partenariale avec le secteur industriel.</p>
+        </div>
+        <div>
+          <p>La diversité thématique du portefeuille — exploration habitée, observation astrophysique, propulsion avancée, simulation expérimentale, robotique autonome et communications quantiques — reflète la volonté de l'IFRAS d'adresser simultanément les grands défis scientifiques de la décennie spatiale 2020–2035.</p>
+          <p>Les pages qui suivent détaillent pour chaque programme son contexte, ses objectifs, ses axes scientifiques, ses partenaires et ses publications récentes les plus significatives.</p>
+        </div>
+      </div>
+
+      <div class="intro-stats">
+        <div class="intro-stat">
+          <div class="intro-stat-val">6</div>
+          <div class="intro-stat-lbl">Programmes en cours</div>
+        </div>
+        <div class="intro-stat">
+          <div class="intro-stat-val">+850</div>
+          <div class="intro-stat-lbl">Chercheurs mobilisés</div>
+        </div>
+        <div class="intro-stat">
+          <div class="intro-stat-val">12</div>
+          <div class="intro-stat-lbl">Agences partenaires</div>
+        </div>
+        <div class="intro-stat">
+          <div class="intro-stat-val">2027</div>
+          <div class="intro-stat-lbl">Prochain lancement majeur</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ARTEMIS-9                                                     -->
+    <!-- ============================================================ -->
+    <section class="prog-section" id="artemis9">
+
+      <div class="prog-header">
+        <div>
+          <span class="prog-code-badge" style="color:#34d399; background:rgba(52,211,153,.08); border:1px solid rgba(52,211,153,.22);">ARTEMIS-9</span>
+          <h2>Mission habitée longue durée sur Mars</h2>
+        </div>
+        <span class="prog-status-badge status-restricted">Diffusion restreinte</span>
+      </div>
+
+      <div class="prog-kpis">
+        <div class="prog-kpi" style="background:rgba(52,211,153,.04); border-color:rgba(52,211,153,.14);">
+          <span class="prog-kpi-val" style="color:#34d399;">18 mois</span>
+          <span class="prog-kpi-lbl">Durée de séjour sur Mars</span>
+        </div>
+        <div class="prog-kpi" style="background:rgba(52,211,153,.04); border-color:rgba(52,211,153,.14);">
+          <span class="prog-kpi-val" style="color:#34d399;">6</span>
+          <span class="prog-kpi-lbl">Astronautes-chercheurs</span>
+        </div>
+        <div class="prog-kpi" style="background:rgba(52,211,153,.04); border-color:rgba(52,211,153,.14);">
+          <span class="prog-kpi-val" style="color:#34d399;">2027</span>
+          <span class="prog-kpi-lbl">Lancement prévu</span>
+        </div>
+      </div>
+
+      <div class="prog-intro">
+        <div>
+          <p>ARTEMIS-9 est le programme le plus ambitieux jamais conduit par l'IFRAS. Il vise à envoyer six astronautes-chercheurs sur la surface martienne pour un séjour scientifique de dix-huit mois, dans une base pressurisée entièrement autonome en énergie, en eau et en nourriture. Le programme constitue une rupture fondamentale avec les approches précédentes : pour la première fois, les équipages ne seront pas des explorateurs mais des scientifiques résidents, dont la mission principale est de produire des données irréproductibles sur site.</p>
+          <p>La base ARTEMIS, actuellement en assemblage final en orbite basse, repose sur une architecture modulaire en carbone pressé renforcé de Zylon — un matériau développé conjointement par le DSMR et un partenaire industriel — capable de résister aux tempêtes de poussière martiennes et aux fluctuations thermiques de ±120 °C de la surface. La production d'oxygène s'appuie sur un électrolyseur alimenté par une centrale nucléaire de petite taille à réacteur de sel fondu, une première pour une mission habitée.</p>
+          <p style="margin-top:14px">Sur le plan médical, le programme développe un protocole sans précédent de surveillance biologique continue des équipages, incluant séquençage ADN embarqué, biomarqueurs immunologiques et IRM portable — des technologies portées par le DSVT qui constitueront autant d'innovations médicales directement transférables à la médecine terrestre en milieu isolé.</p>
+        </div>
+        <div class="prog-fiche">
+          <span class="fiche-label">Fiche programme</span>
+          <div class="fiche-rows">
+            <div class="fiche-row">
+              <span class="fiche-key">Statut</span>
+              <span class="fiche-val">Phase III — Intégration finale</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Début programme</span>
+              <span class="fiche-val">Janvier 2018</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Budget total</span>
+              <span class="fiche-val">Classifié</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Département pilote</span>
+              <span class="fiche-val">DSVT / DSMR</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Chercheurs impliqués</span>
+              <span class="fiche-val">+340</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Partenaires principaux</span>
+              <span class="fiche-val">ESA, CNES, NASA, Airbus</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Publications produites</span>
+              <span class="fiche-val">127 à ce jour</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="inner-divider"></div>
+
+      <div style="margin-bottom:16px; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(170,179,214,.4);">Axes scientifiques prioritaires</div>
+      <div class="prog-axes-wrap">
+        <div class="prog-axe">
+          <span class="axe-icon">🧬</span>
+          <div>
+            <div class="axe-title">Biologie d'adaptation</div>
+            <div class="axe-desc">Étude des effets de la gravité martienne (0,38 g), du rayonnement cosmique et de l'isolement prolongé sur la physiologie et la psychologie humaines sur 18 mois consécutifs.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">🌍</span>
+          <div>
+            <div class="axe-title">Géologie sub-surfacique</div>
+            <div class="axe-desc">Forage jusqu'à 50 mètres de profondeur pour prélèvement de carottes, recherche d'eau liquide fossile et de traces chimiques de vie passée dans les couches sédimentaires martiennes.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">🌱</span>
+          <div>
+            <div class="axe-title">Terraformation expérimentale</div>
+            <div class="axe-desc">Tests à l'échelle de parcelles de 100 m² de protocoles de modification du sol martien par introduction de micro-organismes extremophiles et de mélanges minéraux précurseurs.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">🏥</span>
+          <div>
+            <div class="axe-title">Télémédecine de l'isolement</div>
+            <div class="axe-desc">Développement et validation des protocoles de diagnostic et d'intervention médicale autonome avec un délai de communication Terre-Mars pouvant atteindre 24 minutes.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">⚡</span>
+          <div>
+            <div class="axe-title">Autonomie énergétique</div>
+            <div class="axe-desc">Opération d'un réacteur nucléaire à sel fondu de 40 kWe, d'une ferme solaire de 600 m² et d'un système de stockage par électrolyse de l'eau martienne produite in situ.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">🤖</span>
+          <div>
+            <div class="axe-title">Robotique assistante</div>
+            <div class="axe-desc">Déploiement de 8 robots autonomes de type LYNX pré-positionnés avant l'arrivée de l'équipage, chargés de la construction partielle de la base et de l'exploration du périmètre proche.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prog-partners">
+        <span class="partner-chip">ESA</span>
+        <span class="partner-chip">CNES</span>
+        <span class="partner-chip">NASA JPL</span>
+        <span class="partner-chip">Airbus Defence & Space</span>
+        <span class="partner-chip">Safran</span>
+        <span class="partner-chip">CEA</span>
+        <span class="partner-chip">Institut Pasteur</span>
+        <span class="partner-chip">DLR</span>
+      </div>
+
+      <div class="prog-pubs">
+        <div class="pubs-label">Publications récentes</div>
+        <a href="publications-scientifiques.html" class="pub-item">
+          <span class="pub-chip">Mars 2026</span>
+          <span class="pub-text">Variabilité inattendue des signatures biologiques en environnement confiné sous microgravité prolongée — cohorte ARTEMIS-9</span>
+          <span class="pub-arrow">→</span>
+        </a>
+        <a href="publications-scientifiques.html" class="pub-item">
+          <span class="pub-chip">Nov. 2025</span>
+          <span class="pub-text">Protocole de surveillance immunitaire embarquée pour mission interplanétaire habitée longue durée</span>
+          <span class="pub-arrow">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ORION-3                                                       -->
+    <!-- ============================================================ -->
+    <section class="prog-section" id="orion3">
+
+      <div class="prog-header">
+        <div>
+          <span class="prog-code-badge" style="color:#60a5fa; background:rgba(96,165,250,.08); border:1px solid rgba(96,165,250,.22);">ORION-3</span>
+          <h2>Observation des biosignatures à grande distance</h2>
+        </div>
+        <span class="prog-status-badge status-active">Actif</span>
+      </div>
+
+      <div class="prog-kpis">
+        <div class="prog-kpi" style="background:rgba(96,165,250,.04); border-color:rgba(96,165,250,.14);">
+          <span class="prog-kpi-val" style="color:#60a5fa;">14</span>
+          <span class="prog-kpi-lbl">Exoplanètes candidates ciblées</span>
+        </div>
+        <div class="prog-kpi" style="background:rgba(96,165,250,.04); border-color:rgba(96,165,250,.14);">
+          <span class="prog-kpi-val" style="color:#60a5fa;">3</span>
+          <span class="prog-kpi-lbl">Observatoires conjugués</span>
+        </div>
+        <div class="prog-kpi" style="background:rgba(96,165,250,.04); border-color:rgba(96,165,250,.14);">
+          <span class="prog-kpi-val" style="color:#60a5fa;">R = 80 000</span>
+          <span class="prog-kpi-lbl">Résolution spectrale atteinte</span>
+        </div>
+      </div>
+
+      <div class="prog-intro">
+        <div>
+          <p>ORION-3 est le programme de l'IFRAS consacré à la recherche de la vie au-delà du système solaire. Son approche repose sur la spectroscopie de transmission à très haute résolution : lors de chaque transit d'une exoplanète devant son étoile, une fraction infime du rayonnement stellaire filtre à travers l'atmosphère planétaire et y laisse des empreintes spectrales caractéristiques des molécules présentes. Ces empreintes, séparées de la signature stellaire par des méthodes d'analyse en composantes indépendantes développées au DSTI, constituent les "biosignatures" dont la détection ferait l'effet d'une bombe dans la communauté scientifique mondiale.</p>
+          <p>Pour atteindre la résolution nécessaire à cette analyse, ORION-3 combine les observations de trois grands télescopes — l'IFRAS-Obs en altitude, le VLT de l'ESO au Chili et le télescope spatial Euclid en orbite — dans un protocole d'observation synchronisée élaboré par le DAI. Les molécules prioritairement recherchées sont l'oxygène moléculaire (O₂), le méthane (CH₄), la vapeur d'eau (H₂O) et la phosphine (PH₃), dont la présence simultanée constituerait une signature quasi-certaine d'activité métabolique.</p>
+          <p style="margin-top:14px">En janvier 2026, l'équipe ORION-3 a publié une détection candidate d'oxygène moléculaire dans l'atmosphère de Kepler-442b, exoplanète rocheuse en zone habitable à 1 206 années-lumière. Le résultat, à 4,2 sigma de significativité, est considéré comme prometteur mais pas encore conclusif — une campagne d'observations de confirmation est en cours avec le James Webb Space Telescope.</p>
+        </div>
+        <div class="prog-fiche">
+          <span class="fiche-label">Fiche programme</span>
+          <div class="fiche-rows">
+            <div class="fiche-row">
+              <span class="fiche-key">Statut</span>
+              <span class="fiche-val">Phase II — Observations actives</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Début programme</span>
+              <span class="fiche-val">Septembre 2020</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Département pilote</span>
+              <span class="fiche-val">DAI / DOL</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Chercheurs impliqués</span>
+              <span class="fiche-val">+85</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Partenaires principaux</span>
+              <span class="fiche-val">ESO, ESA, NASA JWST</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Publications produites</span>
+              <span class="fiche-val">43 à ce jour</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prog-partners">
+        <span class="partner-chip">ESO — VLT</span>
+        <span class="partner-chip">ESA — Euclid</span>
+        <span class="partner-chip">NASA — JWST</span>
+        <span class="partner-chip">Observatoire de Paris</span>
+        <span class="partner-chip">Max Planck Institute</span>
+      </div>
+
+      <div class="prog-pubs">
+        <div class="pubs-label">Publications récentes</div>
+        <a href="publications-scientifiques.html" class="pub-item">
+          <span class="pub-chip">Jan. 2026</span>
+          <span class="pub-text">Détection candidate d'oxygène moléculaire dans l'atmosphère de Kepler-442b — première analyse ORION-3/JWST</span>
+          <span class="pub-arrow">→</span>
+        </a>
+        <a href="publications-scientifiques.html" class="pub-item">
+          <span class="pub-chip">Août 2025</span>
+          <span class="pub-text">Séparation des signatures atmosphériques planétaires par ICA haute résolution sur spectres de transit</span>
+          <span class="pub-arrow">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- PROMETHEUS                                                    -->
+    <!-- ============================================================ -->
+    <section class="prog-section" id="prometheus">
+
+      <div class="prog-header">
+        <div>
+          <span class="prog-code-badge" style="color:#f97316; background:rgba(249,115,22,.08); border:1px solid rgba(249,115,22,.22);">PROMETHEUS</span>
+          <h2>Propulsion ionique à plasma froid</h2>
+        </div>
+        <span class="prog-status-badge status-active">Actif</span>
+      </div>
+
+      <div class="prog-kpis">
+        <div class="prog-kpi" style="background:rgba(249,115,22,.04); border-color:rgba(249,115,22,.14);">
+          <span class="prog-kpi-val" style="color:#f97316;">6 800 s</span>
+          <span class="prog-kpi-lbl">Impulsion spécifique record</span>
+        </div>
+        <div class="prog-kpi" style="background:rgba(249,115,22,.04); border-color:rgba(249,115,22,.14);">
+          <span class="prog-kpi-val" style="color:#f97316;">×3</span>
+          <span class="prog-kpi-lbl">vs propulsion ionique actuelle</span>
+        </div>
+        <div class="prog-kpi" style="background:rgba(249,115,22,.04); border-color:rgba(249,115,22,.14);">
+          <span class="prog-kpi-val" style="color:#f97316;">2028</span>
+          <span class="prog-kpi-lbl">1ère mise en orbite qualifiée</span>
+        </div>
+      </div>
+
+      <div class="prog-intro">
+        <div>
+          <p>Le programme PROMETHEUS repose sur un pari technologique audacieux : utiliser un plasma d'hélium ionisé à basse température (environ 800 K, contre 15 000 K pour les propulseurs à effet Hall actuels) pour générer une poussée d'une efficacité sans précédent. Cette approche, théorisée dans les années 2000 mais jamais mise en œuvre à l'échelle d'un propulseur de vol, est rendue possible par les avancées du DPET en physique des plasmas froids et par les nouveaux matériaux céramiques ultra-résistants du DSMR.</p>
+          <p>Le principe fondamental est celui de l'accélération électrostatique d'ions issus d'un plasma dit "négatif" — une configuration où les électrons sont majoritaires — ce qui permet d'extraire des ions lourds avec une énergie d'ionisation bien inférieure aux procédés classiques. Le résultat expérimental clé du programme : une impulsion spécifique de 6 800 secondes mesurée sur le banc PROMETHEUS-II du DPET, record mondial toutes filières confondues.</p>
+          <p style="margin-top:14px">La miniaturisation de ce propulseur pour le vol spatial représente le défi majeur de la phase actuelle. Les équipes travaillent sur une version qualifiée de 500 W propulsant un satellite de 200 kg avec une poussée de 80 mN — suffisante pour les missions de maintien à poste en GEO et les transferts orbitaux de petits engins dans le système solaire interne. La mise en orbite de qualification est prévue pour 2028.</p>
+        </div>
+        <div class="prog-fiche">
+          <span class="fiche-label">Fiche programme</span>
+          <div class="fiche-rows">
+            <div class="fiche-row">
+              <span class="fiche-key">Statut</span>
+              <span class="fiche-val">Phase II — Qualification vol</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Début programme</span>
+              <span class="fiche-val">Mars 2017</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Département pilote</span>
+              <span class="fiche-val">DPET / DSMR</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Chercheurs impliqués</span>
+              <span class="fiche-val">+130</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Partenaires principaux</span>
+              <span class="fiche-val">Safran, ESA, Thales Alenia</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Publications produites</span>
+              <span class="fiche-val">74 à ce jour</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prog-partners">
+        <span class="partner-chip">Safran Aircraft Engines</span>
+        <span class="partner-chip">ESA — ESTEC</span>
+        <span class="partner-chip">Thales Alenia Space</span>
+        <span class="partner-chip">CNRS</span>
+        <span class="partner-chip">Polytechnique</span>
+      </div>
+
+      <div class="prog-pubs">
+        <div class="pubs-label">Publications récentes</div>
+        <a href="publications-scientifiques.html" class="pub-item">
+          <span class="pub-chip">Déc. 2025</span>
+          <span class="pub-text">Record d'impulsion spécifique à 6 800 s sur propulseur ionique plasma froid — résultats banc PROMETHEUS-II</span>
+          <span class="pub-arrow">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- HERMES                                                        -->
+    <!-- ============================================================ -->
+    <section class="prog-section" id="hermes">
+
+      <div class="prog-header">
+        <div>
+          <span class="prog-code-badge" style="color:#c084fc; background:rgba(192,132,252,.08); border:1px solid rgba(192,132,252,.22);">HERMES</span>
+          <h2>Communication quantique interplanétaire</h2>
+        </div>
+        <span class="prog-status-badge status-phase">Phase expérimentale</span>
+      </div>
+
+      <div class="prog-kpis">
+        <div class="prog-kpi" style="background:rgba(192,132,252,.04); border-color:rgba(192,132,252,.14);">
+          <span class="prog-kpi-val" style="color:#c084fc;">100 Gbps</span>
+          <span class="prog-kpi-lbl">Débit lien FSO démontré</span>
+        </div>
+        <div class="prog-kpi" style="background:rgba(192,132,252,.04); border-color:rgba(192,132,252,.14);">
+          <span class="prog-kpi-val" style="color:#c084fc;">0 bit</span>
+          <span class="prog-kpi-lbl">Erreur sur lien quantique (QKD)</span>
+        </div>
+        <div class="prog-kpi" style="background:rgba(192,132,252,.04); border-color:rgba(192,132,252,.14);">
+          <span class="prog-kpi-val" style="color:#c084fc;">2026</span>
+          <span class="prog-kpi-lbl">Premiers résultats en orbite</span>
+        </div>
+      </div>
+
+      <div class="prog-intro">
+        <div>
+          <p>HERMES s'attaque à l'un des problèmes les plus fondamentaux de l'exploration spatiale profonde : la communication. Lorsqu'une mission habitée s'éloigne vers Mars ou au-delà, le délai de propagation des signaux radio peut atteindre 24 minutes, rendant impossible tout échange en temps réel et toute assistance à distance. HERMES explore la possibilité de dépasser cette limitation grâce à deux approches complémentaires : les communications optiques à très haut débit (FSO) et les protocoles cryptographiques quantiques (QKD) à longue portée.</p>
+          <p>La première partie du programme, développée par le DOL, porte sur les liaisons optiques inter-satellites à 100 Gbps — des "lasers de communication" permettant de transmettre en quelques secondes des volumes de données qui exigeraient des heures via les antennes radio actuelles. Ces liaisons ne réduisent pas le délai de propagation physique, mais elles permettent de compresser les créneaux de communication et d'augmenter massivement la quantité d'information échangée pendant ces fenêtres.</p>
+          <p style="margin-top:14px">La seconde partie, plus fondamentale, est portée par le DPM (optique quantique). Elle explore la distribution de clés cryptographiques quantiques (QKD) via satellite, rendant les communications Terre-sonde impossible à intercepter sans détection immédiate. Un démonstrateur en orbite basse est en cours d'intégration et devrait produire ses premiers résultats fin 2026.</p>
+        </div>
+        <div class="prog-fiche">
+          <span class="fiche-label">Fiche programme</span>
+          <div class="fiche-rows">
+            <div class="fiche-row">
+              <span class="fiche-key">Statut</span>
+              <span class="fiche-val">Phase expérimentale — Démonstrateur LEO</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Début programme</span>
+              <span class="fiche-val">Juin 2021</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Département pilote</span>
+              <span class="fiche-val">DOL / DPM</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Chercheurs impliqués</span>
+              <span class="fiche-val">+70</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Partenaires principaux</span>
+              <span class="fiche-val">ESA, Thales, ID Quantique</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Publications produites</span>
+              <span class="fiche-val">29 à ce jour</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prog-partners">
+        <span class="partner-chip">ESA</span>
+        <span class="partner-chip">Thales Alenia Space</span>
+        <span class="partner-chip">ID Quantique</span>
+        <span class="partner-chip">École Polytechnique</span>
+        <span class="partner-chip">DLR</span>
+        <span class="partner-chip">Sorbonne Université</span>
+      </div>
+
+      <div class="prog-pubs">
+        <div class="pubs-label">Publications récentes</div>
+        <a href="publications-scientifiques.html" class="pub-item">
+          <span class="pub-chip">Jan. 2026</span>
+          <span class="pub-text">Peigne de fréquences optiques embarqué à base de micro-résonateur — stabilité sub-femtoseconde pour liaison FSO</span>
+          <span class="pub-arrow">→</span>
+        </a>
+        <a href="publications-scientifiques.html" class="pub-item">
+          <span class="pub-chip">Sep. 2025</span>
+          <span class="pub-text">Distribution de clés quantiques QKD par satellite en orbite basse — protocole BB84 adapté aux pertes atmosphériques</span>
+          <span class="pub-arrow">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ATLAS                                                         -->
+    <!-- ============================================================ -->
+    <section class="prog-section" id="atlas">
+
+      <div class="prog-header">
+        <div>
+          <span class="prog-code-badge" style="color:#34d399; background:rgba(52,211,153,.08); border:1px solid rgba(52,211,153,.22);">ATLAS</span>
+          <h2>Simulation d'environnements extraterrestres</h2>
+        </div>
+        <span class="prog-status-badge status-active">Actif</span>
+      </div>
+
+      <div class="prog-kpis">
+        <div class="prog-kpi" style="background:rgba(52,211,153,.04); border-color:rgba(52,211,153,.14);">
+          <span class="prog-kpi-val" style="color:#34d399;">3</span>
+          <span class="prog-kpi-lbl">Environnements simulés (Mars, Europa, Titan)</span>
+        </div>
+        <div class="prog-kpi" style="background:rgba(52,211,153,.04); border-color:rgba(52,211,153,.14);">
+          <span class="prog-kpi-val" style="color:#34d399;">120 m³</span>
+          <span class="prog-kpi-lbl">Volume chambre principale</span>
+        </div>
+        <div class="prog-kpi" style="background:rgba(52,211,153,.04); border-color:rgba(52,211,153,.14);">
+          <span class="prog-kpi-val" style="color:#34d399;">−140 °C</span>
+          <span class="prog-kpi-lbl">Température minimale atteinte</span>
+        </div>
+      </div>
+
+      <div class="prog-intro">
+        <div>
+          <p>ATLAS est une infrastructure de simulation unique en Europe. Son cœur est une chambre à environnement contrôlé de 120 m³ — la plus grande d'Europe occidentale — capable de reproduire simultanément la pression atmosphérique, la composition chimique, le régime thermique, l'irradiation UV et le champ gravitationnel apparent de trois environnements extraterrestres : la surface de Mars, la glace de surface d'Europa et les nuages de Titan.</p>
+          <p>L'intérêt de disposer d'une telle infrastructure est double. D'abord, elle permet de tester matériaux, équipements, combinaisons spatiales et systèmes robotiques dans des conditions d'une fidélité bien supérieure à ce que permettent les bancs spécialisés existants. La résine époxy modifiée du bouclier thermique d'ARTEMIS-9 a ainsi été validée après 14 cycles jour-nuit martiens complets dans la chambre ATLAS, révélant une fragilisation insoupçonnée à −120 °C qui a conduit à reformuler le matériau.</p>
+          <p style="margin-top:14px">Ensuite, ATLAS permet de tester la survie et l'activité métabolique d'organismes candidats à la vie dans ces environnements. Des dizaines d'espèces d'extremophiles terrestres ont été exposées aux conditions martiennes simulées, produisant des données cruciales pour évaluer si une contamination biologique accidentelle d'une mission pourrait effectivement proliférer sur Mars — une question centrale pour la politique de protection planétaire internationale.</p>
+        </div>
+        <div class="prog-fiche">
+          <span class="fiche-label">Fiche programme</span>
+          <div class="fiche-rows">
+            <div class="fiche-row">
+              <span class="fiche-key">Statut</span>
+              <span class="fiche-val">Actif — Opérations continues</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Mise en service</span>
+              <span class="fiche-val">Novembre 2019</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Département pilote</span>
+              <span class="fiche-val">DSVT / DSMR / DOL</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Chercheurs impliqués</span>
+              <span class="fiche-val">+160</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Partenaires d'accès</span>
+              <span class="fiche-val">ESA, JAXA, équipes ext.</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Publications produites</span>
+              <span class="fiche-val">91 à ce jour</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prog-partners">
+        <span class="partner-chip">ESA — ESTEC</span>
+        <span class="partner-chip">JAXA</span>
+        <span class="partner-chip">CNRS INSU</span>
+        <span class="partner-chip">Institut de Chimie de Strasbourg</span>
+        <span class="partner-chip">Université Paris-Cité</span>
+        <span class="partner-chip">CEA Saclay</span>
+      </div>
+
+      <div class="prog-pubs">
+        <div class="pubs-label">Publications récentes</div>
+        <a href="publications-scientifiques.html" class="pub-item">
+          <span class="pub-chip">Fév. 2025</span>
+          <span class="pub-text">Comportement des aérosols stratosphériques martiens en chambre ATLAS — caractérisation spectroscopique et dynamique</span>
+          <span class="pub-arrow">→</span>
+        </a>
+        <a href="publications-scientifiques.html" class="pub-item">
+          <span class="pub-chip">Jan. 2024</span>
+          <span class="pub-text">Résilience microbienne en conditions extrêmes simulées représentatives de la surface martienne — résultats ATLAS cycle 7</span>
+          <span class="pub-arrow">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- LYNX                                                          -->
+    <!-- ============================================================ -->
+    <section class="prog-section" id="lynx">
+
+      <div class="prog-header">
+        <div>
+          <span class="prog-code-badge" style="color:#facc15; background:rgba(250,204,21,.07); border:1px solid rgba(250,204,21,.22);">LYNX</span>
+          <h2>Robotique autonome en milieu non coopératif</h2>
+        </div>
+        <span class="prog-status-badge status-phase">Phase expérimentale</span>
+      </div>
+
+      <div class="prog-kpis">
+        <div class="prog-kpi" style="background:rgba(250,204,21,.04); border-color:rgba(250,204,21,.12);">
+          <span class="prog-kpi-val" style="color:#facc15;">8</span>
+          <span class="prog-kpi-lbl">Robots pré-positionnés ARTEMIS-9</span>
+        </div>
+        <div class="prog-kpi" style="background:rgba(250,204,21,.04); border-color:rgba(250,204,21,.12);">
+          <span class="prog-kpi-val" style="color:#facc15;">12 kg</span>
+          <span class="prog-kpi-lbl">Masse unitaire du robot LYNX-3</span>
+        </div>
+        <div class="prog-kpi" style="background:rgba(250,204,21,.04); border-color:rgba(250,204,21,.12);">
+          <span class="prog-kpi-val" style="color:#facc15;">96 h</span>
+          <span class="prog-kpi-lbl">Autonomie max. sans recharge</span>
+        </div>
+      </div>
+
+      <div class="prog-intro">
+        <div>
+          <p>La promesse du programme LYNX est de concevoir des robots capables de faire ce que les humains ne peuvent pas ou ne devraient pas faire dans l'espace : arriver en premier, préparer l'environnement, survivre aux pannes et s'auto-réparer. L'ambition n'est pas de faire des robots qui reproduisent les gestes humains, mais des machines qui prennent des décisions adaptées à des situations qui n'ont pas été anticipées lors de leur programmation.</p>
+          <p>Le robot LYNX-3, la troisième génération du programme, est une plateforme hexapode de 12 kg équipée de 6 jambes articulées à 3 degrés de liberté chacune, capable de traverser des terrains accidentés sans tomber même si deux jambes sont défaillantes. Son système de navigation est fondé sur des réseaux de neurones de type Transformer entraînés sur les données du terrain martien simulé dans la chambre ATLAS, lui permettant d'anticiper sa trajectoire sur des horizons de 4 secondes — suffisant pour éviter les obstacles imprévus à vitesse de marche.</p>
+          <p style="margin-top:14px">Les huit robots de la flotte ARTEMIS-9 seront envoyés 18 mois avant l'équipage humain pour construire l'ossature de la base pressurisée, creuser les tranchées d'accès aux couches protectrices du sol martien et tester les systèmes de production d'oxygène et d'eau. Leur travail autonome, guidé uniquement par les instructions générales transmises depuis la Terre, sera la première démonstration grandeur nature de la robotique spatiale autonome à longue durée.</p>
+        </div>
+        <div class="prog-fiche">
+          <span class="fiche-label">Fiche programme</span>
+          <div class="fiche-rows">
+            <div class="fiche-row">
+              <span class="fiche-key">Statut</span>
+              <span class="fiche-val">Phase expérimentale — Tests terrains</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Début programme</span>
+              <span class="fiche-val">Avril 2019</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Département pilote</span>
+              <span class="fiche-val">DSTI / DPM</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Chercheurs impliqués</span>
+              <span class="fiche-val">+95</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Partenaires principaux</span>
+              <span class="fiche-val">CNES, Boston Dynamics R, INRIA</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Publications produites</span>
+              <span class="fiche-val">52 à ce jour</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prog-partners">
+        <span class="partner-chip">CNES</span>
+        <span class="partner-chip">INRIA</span>
+        <span class="partner-chip">Boston Dynamics Research</span>
+        <span class="partner-chip">Airbus Defence</span>
+        <span class="partner-chip">Université de Bordeaux</span>
+      </div>
+
+      <div class="prog-pubs">
+        <div class="pubs-label">Publications récentes</div>
+        <a href="publications-scientifiques.html" class="pub-item">
+          <span class="pub-chip">Oct. 2025</span>
+          <span class="pub-text">Navigation anticipative à horizon court pour robots hexapodes sur terrain martien simulé — résultats LYNX-3 / ATLAS</span>
+          <span class="pub-arrow">→</span>
+        </a>
+        <a href="publications-scientifiques.html" class="pub-item">
+          <span class="pub-chip">Avr. 2025</span>
+          <span class="pub-text">Auto-réparation par reconfiguration de démarche sur robot multi-jambes — démonstration en environnement dégradé</span>
+          <span class="pub-arrow">→</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale ·
+  Programmes actifs
+</footer>
+
+<script>
+// Scroll spy sidebar
+const sections = document.querySelectorAll('.intro-section, .prog-section');
+const navLinks  = document.querySelectorAll('#sidebar-nav a');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, {
+  rootMargin: '-148px 0px -60% 0px',
+  threshold: 0
+});
+
+sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
