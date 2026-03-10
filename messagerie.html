@@ -271,7 +271,7 @@ input[type=range].sat-range::-webkit-slider-thumb {
 /* ===== SIDEBAR ===== */
 .sidebar {
   width: var(--sidebar-w);
-  background: hsl(var(--hue), var(--sat), 6%);
+  background: var(--bg-dark);
   border-right: 1px solid var(--border-sub);
   display: flex; flex-direction: column;
   padding: 16px 12px;
@@ -1152,18 +1152,19 @@ function renderList(messages) {
       <div class="list-empty-icon">📭</div>
       <div>Aucun message dans ce dossier</div>
     </div>`;
+    renderEmptyReader();
     return;
   }
 
   const showPreview = document.getElementById('togglePreview').checked;
 
   messages.forEach((mail, idx) => {
-    const contact  = mail.sender === userEmail ? mail.receiver : mail.sender;
-    const dateStr  = formatDate(mail.send_at);
+    const contact = mail.sender === userEmail ? mail.receiver : mail.sender;
+    const dateStr = formatDate(mail.send_at);
 
     const item = document.createElement('div');
     item.className = 'msg-item';
-    item.dataset.id = mail.id;
+    item._mail = mail; // attach directly to avoid closure/reference issues
     item.innerHTML = `
       <div class="unread-dot"></div>
       <div class="msg-item-top">
@@ -1173,20 +1174,21 @@ function renderList(messages) {
       <div class="msg-subject">${mail.subject || '(sans objet)'}</div>
       ${showPreview ? `<div class="msg-preview">${(mail.body || '').substring(0, 70)}…</div>` : ''}
     `;
-    item.addEventListener('click', () => {
+    item.addEventListener('click', function(e) {
+      e.stopPropagation();
       document.querySelectorAll('.msg-item').forEach(i => i.classList.remove('active'));
-      item.classList.add('active');
-      item.classList.remove('unread');
-      openMessage(mail);
+      this.classList.add('active');
+      this.classList.remove('unread');
+      openMessage(this._mail);
     });
     list.appendChild(item);
   });
 
-  // Open + activate first item
-  if (messages.length) {
-    const firstItem = list.querySelector('.msg-item');
-    if (firstItem) firstItem.classList.add('active');
-    openMessage(messages[0]);
+  // Activate + open first item after DOM is ready
+  const firstItem = list.querySelector('.msg-item');
+  if (firstItem) {
+    firstItem.classList.add('active');
+    setTimeout(() => openMessage(firstItem._mail), 0);
   }
 }
 
