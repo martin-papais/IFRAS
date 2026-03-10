@@ -6,211 +6,562 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 
 <style>
+/* ============================================================
+   THEME SYSTEM
+   H  = hue (0-360)
+   S  = saturation %
+   L  = lightness offset base
+   ============================================================ */
 :root {
-  --bg-main: #050b1e;
-  --bg-dark: #020617;
-  --bg-light: #070f2b;
-  --accent: #4f6bed;
-  --text-main: #e6e6e6;
-  --text-soft: #aab3d6;
-  --content-bg: #050b1e;
+  --hue: 228;
+  --sat: 65%;
+
+  /* dérivées automatiques */
+  --bg-dark:    hsl(var(--hue), var(--sat), 4%);
+  --bg-main:    hsl(var(--hue), var(--sat), 7%);
+  --bg-light:   hsl(var(--hue), var(--sat), 10%);
+  --bg-hover:   hsl(var(--hue), var(--sat), 13%);
+  --bg-card:    hsl(var(--hue), var(--sat), 8%);
+  --border:     hsl(var(--hue), calc(var(--sat) - 10%), 20%);
+  --border-sub: hsl(var(--hue), calc(var(--sat) - 10%), 14%);
+  --accent:     hsl(var(--hue), 70%, 60%);
+  --accent-dim: hsl(var(--hue), 60%, 45%);
+  --accent-glow:hsl(var(--hue), 70%, 60%);
+  --text-main:  hsl(var(--hue), 20%, 88%);
+  --text-soft:  hsl(var(--hue), 20%, 62%);
+  --text-muted: hsl(var(--hue), 15%, 40%);
+  --unread-dot: hsl(var(--hue), 80%, 65%);
+
+  --sidebar-w:  220px;
+  --list-w:     320px;
+  --header-h:   84px;
+  --subnav-h:   48px;
 }
 
-* { box-sizing: border-box; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  margin: 0;
-  font-family: "Segoe UI", Roboto, Arial, sans-serif;
-  background: var(--bg-main);
+  font-family: "DM Sans", sans-serif;
+  background: var(--bg-dark);
   color: var(--text-main);
+  height: 100vh;
+  overflow: hidden;
 }
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
 /* ===== HEADER ===== */
 header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-  background: rgba(5,11,30,.75);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid #1b2555;
+  position: fixed; top: 0; width: 100%; z-index: 1000;
+  height: var(--header-h);
+  background: hsl(var(--hue), var(--sat), 5%);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center;
 }
 
 .header-inner {
-  max-width: 1300px;
-  margin: auto;
-  padding: 12px 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  width: 100%; padding: 0 28px;
+  display: flex; align-items: center; justify-content: space-between;
 }
 
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 40px;
+.header-left { display: flex; align-items: center; gap: 40px; }
+.logo-link img { height: 54px; }
+
+.main-nav { list-style: none; display: flex; gap: 28px; }
+.main-nav a {
+  text-decoration: none; color: var(--text-soft);
+  font-size: 13.5px; letter-spacing: .05em; transition: color .2s;
+}
+.main-nav a:hover { color: var(--text-main); }
+
+.header-right { display: flex; align-items: center; gap: 10px; }
+
+/* User chip */
+.user-chip {
+  display: flex; align-items: center; gap: 9px;
+  padding: 5px 12px 5px 6px;
+  background: var(--bg-light); border: 1px solid var(--border);
+  border-radius: 20px; font-size: 12.5px; color: var(--text-soft);
 }
 
-.logo-link img { height: 60px; }
-
-.main-nav { list-style: none; display: flex; gap: 32px; margin: 0; padding: 0; }
-.main-nav a { text-decoration: none; color: var(--text-soft); font-size: 14px; }
-.main-nav a:hover { color: white; }
-
-.header-right { display: flex; align-items: center; gap: 12px; }
-
-.header-right .logout-btn {
-  padding: 8px 18px;
-  border-radius: 6px;
-  border: 1px solid var(--accent);
-  color: white;
-  text-decoration: none;
-  font-size: 13px;
-  cursor: pointer;
-}
-.header-right .logout-btn:hover { background: var(--accent); }
-
-/* ===== Bouton Parametres ===== */
-.settings-btn {
-  background: none;
-  border: none;
-  color: var(--text-main);
-  cursor: pointer;
-  font-size: 20px;
+.user-avatar {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-dim), var(--accent));
+  display: flex; align-items: center; justify-content: center;
+  font-family: "Syne", sans-serif; font-weight: 700; font-size: 10px; color: white;
 }
 
-.settings-wrapper {
-  position: relative;
+/* Icon buttons */
+.icon-btn {
+  width: 34px; height: 34px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--bg-light);
+  color: var(--text-soft); cursor: pointer; font-size: 15px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.icon-btn:hover { background: var(--bg-hover); color: var(--text-main); border-color: var(--accent); }
+
+/* Settings dropdown */
+.settings-wrapper { position: relative; }
+
+.settings-panel {
+  display: none; position: absolute; right: 0; top: calc(100% + 8px);
+  width: 260px; background: var(--bg-light); border: 1px solid var(--border);
+  border-radius: 12px; padding: 16px; z-index: 2000;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  animation: panelIn .15s ease;
 }
 
-.settings-menu {
-  display: none;
-  position: absolute;
-  right: 0;
-  top: 35px;
-  background: var(--bg-light);
-  border: 1px solid #1b2555;
-  border-radius: 6px;
-  padding: 10px;
-  z-index: 2000;
-  min-width: 200px;
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.settings-menu.active { display: block; }
+.settings-panel.active { display: block; }
 
-.settings-item {
-  cursor: pointer;
-  padding: 6px 8px;
-  border-radius: 4px;
-  color: var(--text-soft);
-  font-size: 14px;
+.panel-title {
+  font-family: "Syne", sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted);
+  margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border-sub);
 }
 
-.settings-item:hover { background: rgba(79,107,237,0.1); color: white; }
+.theme-section { margin-bottom: 16px; }
 
-.sub-settings {
-  display: none;
-  margin-top: 8px;
-  padding-top: 8px;
-  border-top: 1px solid #1b2555;
+.theme-label {
+  font-size: 11px; color: var(--text-soft); margin-bottom: 8px;
+  font-weight: 400; letter-spacing: .04em;
 }
 
-.sub-settings.active { display: block; }
-
-.color-picker-section {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+/* Hue picker */
+.hue-wrap {
+  position: relative; height: 20px; border-radius: 10px; overflow: hidden; cursor: pointer;
+  background: linear-gradient(90deg,
+    hsl(0,65%,55%), hsl(30,65%,55%), hsl(60,65%,55%), hsl(90,65%,55%),
+    hsl(120,65%,55%), hsl(150,65%,55%), hsl(180,65%,55%), hsl(210,65%,55%),
+    hsl(240,65%,55%), hsl(270,65%,55%), hsl(300,65%,55%), hsl(330,65%,55%), hsl(360,65%,55%)
+  );
   margin-bottom: 10px;
 }
 
-/* ===== SOUS BANDEAU ===== */
+.hue-thumb {
+  position: absolute; top: 50%; transform: translate(-50%, -50%);
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 2px solid white; box-shadow: 0 2px 6px rgba(0,0,0,.4);
+  pointer-events: none; transition: left .1s;
+}
+
+/* Sat slider */
+.sat-wrap { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.sat-label { font-size: 11px; color: var(--text-muted); width: 24px; }
+
+input[type=range].sat-range {
+  flex: 1; height: 4px; border-radius: 4px; outline: none; border: none; cursor: pointer;
+  -webkit-appearance: none; appearance: none;
+  background: linear-gradient(90deg, hsl(var(--hue),0%,55%), hsl(var(--hue),100%,55%));
+}
+input[type=range].sat-range::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%;
+  background: var(--accent); border: 2px solid white; box-shadow: 0 1px 4px rgba(0,0,0,.3);
+  cursor: pointer;
+}
+
+/* Preset swatches */
+.swatches { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 14px; }
+
+.swatch {
+  width: 24px; height: 24px; border-radius: 6px; cursor: pointer;
+  border: 2px solid transparent; transition: transform .15s, border-color .15s;
+}
+.swatch:hover { transform: scale(1.15); }
+.swatch.active { border-color: white; }
+
+/* Panel divider */
+.panel-divider { height: 1px; background: var(--border-sub); margin: 14px 0; }
+
+/* Panel items */
+.panel-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 10px; border-radius: 7px; font-size: 13px; color: var(--text-soft);
+  cursor: pointer; transition: background .15s, color .15s;
+  margin-bottom: 2px;
+}
+.panel-item:hover { background: var(--bg-hover); color: var(--text-main); }
+.panel-item-label { display: flex; align-items: center; gap: 8px; }
+.panel-item-icon { font-size: 14px; opacity: .65; }
+
+/* Toggle switch */
+.toggle {
+  position: relative; width: 32px; height: 18px;
+}
+.toggle input { opacity: 0; width: 0; height: 0; }
+.toggle-track {
+  position: absolute; inset: 0; border-radius: 9px;
+  background: var(--border); transition: background .2s; cursor: pointer;
+}
+.toggle input:checked + .toggle-track { background: var(--accent); }
+.toggle-thumb {
+  position: absolute; top: 3px; left: 3px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: white; transition: left .2s; pointer-events: none;
+}
+.toggle input:checked ~ .toggle-thumb { left: 17px; }
+
+.logout-btn {
+  padding: 7px 14px; border-radius: 7px;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text-soft); cursor: pointer; font-size: 12.5px;
+  font-family: "DM Sans", sans-serif;
+  transition: background .15s, color .15s, border-color .15s;
+  display: flex; align-items: center; gap: 6px;
+}
+.logout-btn:hover { background: rgba(251,113,133,.1); color: #fb7185; border-color: rgba(251,113,133,.3); }
+
+/* ===== SOUS-BANDEAU ===== */
 .sub-nav {
-  margin-top: 84px;
-  background: var(--bg-light);
-  border-bottom: 1px solid #1b2555;
+  position: fixed; top: var(--header-h); width: 100%; z-index: 900;
+  height: var(--subnav-h);
+  background: hsl(var(--hue), var(--sat), 6%);
+  border-bottom: 1px solid var(--border-sub);
+  display: flex; align-items: center;
 }
 
-.sub-nav ul {
-  max-width: 1300px;
-  margin: auto;
-  padding: 0 30px;
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  gap: 60px;
+.sub-nav-inner {
+  padding: 0 28px; display: flex; gap: 4px;
 }
 
-.sub-nav li { padding: 14px 0; }
-.sub-nav a { color: var(--text-soft); text-decoration: none; font-size: 14px; letter-spacing: .05em; }
-.sub-nav a:hover, .sub-nav .active { color: white; border-bottom: 2px solid var(--accent); padding-bottom: 6px; }
+.sub-tab {
+  padding: 6px 16px; border-radius: 7px; font-size: 13px;
+  color: var(--text-soft); text-decoration: none; letter-spacing: .04em;
+  display: flex; align-items: center; gap: 7px;
+  transition: background .15s, color .15s;
+  position: relative;
+}
+.sub-tab:hover { background: var(--bg-hover); color: var(--text-main); }
+.sub-tab.active { background: var(--bg-light); color: var(--text-main); font-weight: 500; }
+.sub-tab.active::after {
+  content: ''; position: absolute; bottom: -1px; left: 16px; right: 16px;
+  height: 2px; background: var(--accent); border-radius: 2px 2px 0 0;
+}
 
-/* ===== LAYOUT ===== */
-main {
-  margin-top: 0;
+.tab-icon { font-size: 13px; opacity: .7; }
+
+.tab-badge {
+  background: var(--accent); color: white;
+  font-size: 10px; font-weight: 700; min-width: 16px; height: 16px;
+  border-radius: 8px; padding: 0 4px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ===== LAYOUT PRINCIPAL ===== */
+.app-layout {
+  position: fixed;
+  top: calc(var(--header-h) + var(--subnav-h));
+  left: 0; right: 0;
+  bottom: 0;
   display: flex;
-  height: calc(100vh - 140px);
 }
 
 /* ===== SIDEBAR ===== */
 .sidebar {
-  width: 260px;
-  background: var(--bg-light);
-  border-right: 1px solid #1b2555;
-  padding: 20px;
+  width: var(--sidebar-w);
+  background: hsl(var(--hue), var(--sat), 6%);
+  border-right: 1px solid var(--border-sub);
+  display: flex; flex-direction: column;
+  padding: 16px 12px;
+  flex-shrink: 0;
 }
 
-.folder {
-  margin: 12px 0;
-  font-size: 14px;
-  color: var(--text-soft);
-  cursor: pointer;
+.compose-btn {
+  width: 100%; padding: 10px; margin-bottom: 20px; border-radius: 8px;
+  border: none; cursor: pointer; font-family: "DM Sans", sans-serif;
+  font-size: 13px; font-weight: 500;
+  background: var(--accent); color: white;
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  transition: opacity .15s, transform .15s;
 }
-.folder.active,
-.folder:hover { color: white; font-weight: 600; }
+.compose-btn:hover { opacity: .88; transform: translateY(-1px); }
+
+.sidebar-section { margin-bottom: 20px; }
+
+.sidebar-section-label {
+  font-size: 10px; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--text-muted); font-weight: 500; padding: 0 8px; margin-bottom: 6px;
+}
+
+.folder-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px; border-radius: 7px; cursor: pointer;
+  font-size: 13px; color: var(--text-soft);
+  transition: background .15s, color .15s;
+  position: relative;
+}
+.folder-item:hover { background: var(--bg-hover); color: var(--text-main); }
+.folder-item.active { background: var(--bg-light); color: var(--text-main); font-weight: 500; }
+
+.folder-icon { font-size: 14px; width: 20px; text-align: center; flex-shrink: 0; }
+.folder-count {
+  margin-left: auto; font-size: 11px; color: var(--text-muted);
+  background: var(--bg-hover); padding: 1px 7px; border-radius: 10px;
+}
+.folder-count.has-new { background: var(--accent); color: white; font-weight: 600; }
+
+.sidebar-divider { height: 1px; background: var(--border-sub); margin: 8px 2px 16px; }
 
 /* ===== LISTE MESSAGES ===== */
-.inbox {
-  width: 360px;
-  border-right: 1px solid #1b2555;
-  overflow-y: auto;
+.msg-list-pane {
+  width: var(--list-w);
   background: var(--bg-main);
+  border-right: 1px solid var(--border-sub);
+  display: flex; flex-direction: column;
+  flex-shrink: 0;
 }
 
-.message {
-  padding: 15px;
-  border-bottom: 1px solid #1b2555;
-  cursor: pointer;
-}
-.message:hover { background: rgba(79,107,237,0.08); }
-
-/* ===== LECTURE ===== */
-.reader {
-  flex: 1;
-  padding: 30px;
-  overflow-y: auto;
-  background: var(--bg-main);
+.msg-list-header {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid var(--border-sub);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
 }
 
-.meta { font-size: 13px; color: #9ca3af; margin-bottom: 15px; }
+.msg-list-title {
+  font-family: "Syne", sans-serif; font-size: 14px; font-weight: 700;
+  color: var(--text-main);
+}
 
-.content {
+.msg-list-count {
+  font-size: 11px; color: var(--text-muted); background: var(--bg-light);
+  padding: 2px 8px; border-radius: 10px;
+}
+
+/* Search bar */
+.search-bar {
+  padding: 10px 14px; border-bottom: 1px solid var(--border-sub); flex-shrink: 0;
+}
+
+.search-input-wrap {
+  position: relative; display: flex; align-items: center;
+}
+
+.search-icon {
+  position: absolute; left: 10px; font-size: 13px; color: var(--text-muted);
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%; padding: 7px 10px 7px 32px; border-radius: 7px;
+  border: 1px solid var(--border-sub); background: var(--bg-light);
+  color: var(--text-main); font-size: 13px; font-family: "DM Sans", sans-serif;
+  outline: none; transition: border-color .2s;
+}
+.search-input::placeholder { color: var(--text-muted); }
+.search-input:focus { border-color: var(--accent); }
+
+.msg-list-scroll { overflow-y: auto; flex: 1; }
+
+/* Message item */
+.msg-item {
+  padding: 12px 16px; border-bottom: 1px solid var(--border-sub);
+  cursor: pointer; transition: background .12s;
+  position: relative;
+}
+.msg-item:hover { background: var(--bg-light); }
+.msg-item.active { background: var(--bg-hover); }
+
+.msg-item-top {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 3px;
+}
+
+.msg-sender {
+  font-size: 13px; font-weight: 500; color: var(--text-main);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px;
+}
+
+.msg-item.unread .msg-sender { font-weight: 700; }
+
+.msg-date { font-size: 11px; color: var(--text-muted); flex-shrink: 0; }
+
+.msg-subject {
+  font-size: 12.5px; color: var(--text-soft); font-weight: 300;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  margin-bottom: 2px;
+}
+.msg-item.unread .msg-subject { color: var(--text-main); font-weight: 500; }
+
+.msg-preview {
+  font-size: 11.5px; color: var(--text-muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* Unread dot */
+.unread-dot {
+  position: absolute; left: 5px; top: 50%; transform: translateY(-50%);
+  width: 5px; height: 5px; border-radius: 50%; background: var(--unread-dot);
+  display: none;
+}
+.msg-item.unread .unread-dot { display: block; }
+
+/* ===== READER ===== */
+.reader-pane {
+  flex: 1; background: var(--bg-main); overflow-y: auto;
+  display: flex; flex-direction: column;
+}
+
+.reader-empty {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: var(--text-muted); gap: 12px;
+}
+.reader-empty-icon { font-size: 40px; opacity: .3; }
+.reader-empty-text { font-size: 13px; font-weight: 300; }
+
+/* Reader header */
+.reader-header {
+  padding: 24px 28px 16px; border-bottom: 1px solid var(--border-sub);
+  flex-shrink: 0;
+}
+
+.reader-subject {
+  font-family: "Syne", sans-serif; font-size: 20px; font-weight: 700;
+  color: var(--text-main); line-height: 1.2; margin-bottom: 16px;
+}
+
+.reader-meta-row {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 4px;
+}
+
+.meta-avatar {
+  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--accent-dim), var(--accent));
+  display: flex; align-items: center; justify-content: center;
+  font-family: "Syne", sans-serif; font-weight: 700; font-size: 12px; color: white;
+}
+
+.meta-info { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+
+.meta-from { font-size: 13px; font-weight: 500; color: var(--text-main); }
+.meta-to   { font-size: 12px; color: var(--text-soft); font-weight: 300; }
+.meta-date { font-size: 12px; color: var(--text-muted); flex-shrink: 0; }
+
+/* Reader actions */
+.reader-actions {
+  display: flex; gap: 8px; padding: 12px 28px;
+  border-bottom: 1px solid var(--border-sub); flex-shrink: 0;
+}
+
+.action-btn {
+  padding: 6px 14px; border-radius: 6px; font-size: 12.5px;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text-soft); cursor: pointer; font-family: "DM Sans", sans-serif;
+  display: flex; align-items: center; gap: 6px;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.action-btn:hover { background: var(--bg-hover); color: var(--text-main); border-color: var(--accent); }
+
+/* Reader body */
+.reader-body {
+  padding: 28px; flex: 1;
+  font-size: 14px; line-height: 1.85; color: var(--text-soft); font-weight: 300;
   white-space: pre-wrap;
-  line-height: 1.7;
-  padding: 10px;
-  border-radius: 4px;
-  background: var(--content-bg);
-  transition: background 0.3s ease;
 }
 
-.attach { margin-top: 20px; }
+.reader-attachment {
+  margin: 0 28px 28px;
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 16px; border-radius: 8px;
+  background: var(--bg-light); border: 1px solid var(--border-sub);
+  font-size: 13px; color: var(--text-soft); text-decoration: none;
+  transition: background .15s, color .15s;
+  width: fit-content;
+}
+.reader-attachment:hover { background: var(--bg-hover); color: var(--text-main); }
+
+/* ===== EMPTY STATE (list) ===== */
+.list-empty {
+  padding: 40px 20px; text-align: center;
+  color: var(--text-muted); font-size: 13px; font-weight: 300;
+}
+.list-empty-icon { font-size: 32px; margin-bottom: 10px; opacity: .3; }
+
+/* ===== COMPOSE MODAL ===== */
+.compose-overlay {
+  display: none; position: fixed; inset: 0; z-index: 3000;
+  background: rgba(0,0,0,.55); backdrop-filter: blur(4px);
+  align-items: flex-end; justify-content: flex-end; padding: 20px;
+}
+.compose-overlay.active { display: flex; }
+
+.compose-modal {
+  width: 480px; background: var(--bg-light); border: 1px solid var(--border);
+  border-radius: 14px; overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,.6);
+  animation: slideUp .2s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.compose-header {
+  padding: 14px 16px; background: var(--bg-hover);
+  border-bottom: 1px solid var(--border-sub);
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: "Syne", sans-serif; font-size: 13px; font-weight: 700; color: var(--text-main);
+}
+
+.compose-close {
+  background: none; border: none; color: var(--text-muted); cursor: pointer;
+  font-size: 18px; line-height: 1;
+  transition: color .15s;
+}
+.compose-close:hover { color: var(--text-main); }
+
+.compose-field {
+  display: flex; align-items: center;
+  border-bottom: 1px solid var(--border-sub); padding: 10px 16px; gap: 10px;
+}
+
+.compose-field-label {
+  font-size: 11px; color: var(--text-muted); width: 34px; flex-shrink: 0;
+  text-transform: uppercase; letter-spacing: .08em;
+}
+
+.compose-field input, .compose-body-area {
+  flex: 1; background: none; border: none; outline: none;
+  color: var(--text-main); font-size: 13.5px; font-family: "DM Sans", sans-serif;
+}
+.compose-field input::placeholder { color: var(--text-muted); }
+
+.compose-body-area {
+  width: 100%; padding: 14px 16px; min-height: 180px;
+  resize: none; line-height: 1.7; font-size: 13.5px;
+}
+.compose-body-area::placeholder { color: var(--text-muted); }
+
+.compose-footer {
+  padding: 12px 16px; border-top: 1px solid var(--border-sub);
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.compose-send-btn {
+  padding: 8px 20px; background: var(--accent); border: none; border-radius: 7px;
+  color: white; font-size: 13px; font-weight: 500; font-family: "DM Sans", sans-serif;
+  cursor: pointer; display: flex; align-items: center; gap: 7px;
+  transition: opacity .15s;
+}
+.compose-send-btn:hover { opacity: .85; }
 </style>
 </head>
 
 <body>
 
+<!-- ===== HEADER ===== -->
 <header>
   <div class="header-inner">
     <div class="header-left">
@@ -225,218 +576,575 @@ main {
       </nav>
     </div>
     <div class="header-right">
+      <div class="user-chip" id="userChip">
+        <div class="user-avatar" id="userAvatar">?</div>
+        <span id="userLabel" style="font-size:12px">—</span>
+      </div>
+
       <div class="settings-wrapper">
-        <button class="settings-btn" onclick="toggleSettings()">&#9881;&#65039;</button>
-        <div class="settings-menu" id="settingsMenu">
-          <div class="settings-item" onclick="toggleSubSettings('bgColorSub')">Couleur de fond</div>
-          <!-- futur parametres ici -->
-          <div class="sub-settings" id="bgColorSub">
-            <div class="color-picker-section">
-              <label for="bgColorInput">Palette de couleur</label>
-              <input type="color" id="bgColorInput" value="#050b1e" oninput="syncColorFromPicker(this.value)">
+        <button class="icon-btn" onclick="toggleSettings()" title="Paramètres">⚙</button>
+
+        <div class="settings-panel" id="settingsPanel">
+          <div class="panel-title">Apparence</div>
+
+          <!-- Hue picker -->
+          <div class="theme-section">
+            <div class="theme-label">Couleur principale</div>
+
+            <!-- Presets -->
+            <div class="swatches" id="swatches"></div>
+
+            <!-- Hue bar -->
+            <div class="theme-label" style="margin-top:6px;">Personnalisée</div>
+            <div class="hue-wrap" id="hueWrap">
+              <div class="hue-thumb" id="hueThumb"></div>
             </div>
-            <div class="color-picker-section">
-              <label for="bgColorRGB">Saisie RGB (#rrggbb)</label>
-              <input type="text" id="bgColorRGB" placeholder="#050b1e" oninput="syncColorFromText(this.value)">
+
+            <!-- Saturation -->
+            <div class="sat-wrap">
+              <span class="sat-label">Sat.</span>
+              <input type="range" class="sat-range" id="satRange" min="20" max="90" value="65">
             </div>
-            <button onclick="saveBgColor()">Save</button>
           </div>
+
+          <div class="panel-divider"></div>
+          <div class="panel-title">Options</div>
+
+          <label class="panel-item" style="cursor:pointer">
+            <span class="panel-item-label"><span class="panel-item-icon">🔔</span> Notifications sonores</span>
+            <div class="toggle">
+              <input type="checkbox" id="toggleSound">
+              <div class="toggle-track"></div>
+              <div class="toggle-thumb"></div>
+            </div>
+          </label>
+
+          <label class="panel-item" style="cursor:pointer">
+            <span class="panel-item-label"><span class="panel-item-icon">👁</span> Aperçu des messages</span>
+            <div class="toggle">
+              <input type="checkbox" id="togglePreview" checked>
+              <div class="toggle-track"></div>
+              <div class="toggle-thumb"></div>
+            </div>
+          </label>
+
+          <label class="panel-item" style="cursor:pointer">
+            <span class="panel-item-label"><span class="panel-item-icon">⚡</span> Rafraîchissement auto</span>
+            <div class="toggle">
+              <input type="checkbox" id="toggleRefresh" checked>
+              <div class="toggle-track"></div>
+              <div class="toggle-thumb"></div>
+            </div>
+          </label>
+
+          <div class="panel-divider"></div>
+
+          <button class="logout-btn" onclick="logout()" style="width:100%;justify-content:center;margin-top:2px;">
+            <span>↩</span> Déconnexion
+          </button>
         </div>
       </div>
-      <a class="logout-btn" onclick="logout()">Deconnexion</a>
     </div>
   </div>
 </header>
 
+<!-- ===== SOUS-BANDEAU ===== -->
 <nav class="sub-nav">
-  <ul>
-    <li><a href="messagerie.html" class="active">Messagerie</a></li>
-    <li><a href="coffre-fort.html">Coffre-fort</a></li>
-    <li><a href="profil.html">Profil</a></li>
-  </ul>
+  <div class="sub-nav-inner">
+    <a href="messagerie.html" class="sub-tab active">
+      <span class="tab-icon">✉</span> Messagerie
+      <span class="tab-badge" id="inboxBadge" style="display:none">0</span>
+    </a>
+    <a href="coffre-fort.html" class="sub-tab">
+      <span class="tab-icon">🔐</span> Coffre-fort
+    </a>
+    <a href="profil.html" class="sub-tab">
+      <span class="tab-icon">👤</span> Profil
+    </a>
+    <a href="tableau-de-bord.html" class="sub-tab">
+      <span class="tab-icon">📊</span> Tableau de bord
+    </a>
+    <a href="annuaire.html" class="sub-tab">
+      <span class="tab-icon">📋</span> Annuaire
+    </a>
+  </div>
 </nav>
 
-<main>
-  <div class="sidebar">
-    <div class="folder active" onclick="loadFolder('inbox', this)">&#128229; Boite de reception</div>
-    <div class="folder" onclick="loadFolder('sent', this)">&#128228; Envoyes</div>
-    <div class="folder" onclick="loadFolder('favorites', this)">&#11088; Favoris</div>
-    <div class="folder" onclick="loadFolder('classified', this)">&#128274; Classes</div>
-    <div class="folder" onclick="loadFolder('trash', this)">&#128465; Corbeille</div>
+<!-- ===== APP LAYOUT ===== -->
+<div class="app-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <button class="compose-btn" onclick="openCompose()">
+      <span>✏</span> Nouveau message
+    </button>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Dossiers</div>
+      <div class="folder-item active" data-folder="inbox" onclick="switchFolder(this)">
+        <span class="folder-icon">📥</span> Réception
+        <span class="folder-count has-new" id="cnt-inbox">—</span>
+      </div>
+      <div class="folder-item" data-folder="sent" onclick="switchFolder(this)">
+        <span class="folder-icon">📤</span> Envoyés
+        <span class="folder-count" id="cnt-sent"></span>
+      </div>
+      <div class="folder-item" data-folder="favorites" onclick="switchFolder(this)">
+        <span class="folder-icon">⭐</span> Favoris
+        <span class="folder-count" id="cnt-favorites"></span>
+      </div>
+      <div class="folder-item" data-folder="classified" onclick="switchFolder(this)">
+        <span class="folder-icon">🔒</span> Classés
+        <span class="folder-count" id="cnt-classified"></span>
+      </div>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Système</div>
+      <div class="folder-item" data-folder="trash" onclick="switchFolder(this)">
+        <span class="folder-icon">🗑</span> Corbeille
+        <span class="folder-count" id="cnt-trash"></span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- LISTE -->
+  <div class="msg-list-pane">
+    <div class="msg-list-header">
+      <span class="msg-list-title" id="listTitle">Réception</span>
+      <span class="msg-list-count" id="listCount">0 message</span>
+    </div>
+    <div class="search-bar">
+      <div class="search-input-wrap">
+        <span class="search-icon">🔍</span>
+        <input class="search-input" type="text" placeholder="Rechercher…" oninput="filterMessages(this.value)">
+      </div>
+    </div>
+    <div class="msg-list-scroll" id="msgList"></div>
   </div>
 
-  <div class="inbox" id="inbox"></div>
-  <div class="reader" id="reader"><p>Selectionnez un message.</p></div>
-</main>
+  <!-- READER -->
+  <div class="reader-pane" id="readerPane">
+    <div class="reader-empty">
+      <div class="reader-empty-icon">✉</div>
+      <div class="reader-empty-text">Sélectionnez un message</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== COMPOSE MODAL ===== -->
+<div class="compose-overlay" id="composeOverlay" onclick="closeComposeOutside(event)">
+  <div class="compose-modal">
+    <div class="compose-header">
+      Nouveau message
+      <button class="compose-close" onclick="closeCompose()">×</button>
+    </div>
+    <div class="compose-field">
+      <span class="compose-field-label">À</span>
+      <input type="email" id="compTo" placeholder="destinataire@ifras.fr">
+    </div>
+    <div class="compose-field">
+      <span class="compose-field-label">Objet</span>
+      <input type="text" id="compSubject" placeholder="Objet du message">
+    </div>
+    <textarea class="compose-body-area" id="compBody" placeholder="Rédigez votre message…"></textarea>
+    <div class="compose-footer">
+      <div style="font-size:12px; color:var(--text-muted)">Chiffrement IFRAS activé 🔒</div>
+      <button class="compose-send-btn" onclick="sendMessage()"><span>↗</span> Envoyer</button>
+    </div>
+  </div>
+</div>
 
 <script>
-const supabaseClient = supabase.createClient(
+/* ============================================================
+   SUPABASE
+   ============================================================ */
+const _sb = supabase.createClient(
   "https://fqijbltymdeudnlitcrs.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZxaWpibHR5bWRldWRubGl0Y3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzOTQ2NDQsImV4cCI6MjA4NTk3MDY0NH0.HZA0VxkaRTGLRTBA0Vz51mJjw8Xuj8f__yzaQKpGfbE"
 );
 
-let currentFolder = "inbox";
-let userEmail = "";
-let currentMail = null;
-let currentContentBg = "#050b1e";
+/* ============================================================
+   THEME SYSTEM
+   ============================================================ */
+const PRESETS = [
+  { label: 'Bleu IFRAS', h: 228, s: 65 },
+  { label: 'Indigo',     h: 248, s: 60 },
+  { label: 'Violet',     h: 270, s: 55 },
+  { label: 'Cyan',       h: 195, s: 65 },
+  { label: 'Vert',       h: 152, s: 55 },
+  { label: 'Emeraude',   h: 168, s: 60 },
+  { label: 'Ambre',      h: 38,  s: 75 },
+  { label: 'Rouge',      h: 355, s: 60 },
+  { label: 'Rose',       h: 330, s: 60 },
+];
 
-/* ===== UTILS COULEUR ===== */
+let currentH = 228, currentS = 65;
+
+function applyTheme(h, s) {
+  currentH = h; currentS = s;
+  const root = document.documentElement;
+  root.style.setProperty('--hue', h);
+  root.style.setProperty('--sat', s + '%');
+  // Sat range gradient update
+  document.getElementById('satRange').style.background =
+    `linear-gradient(90deg, hsl(${h},0%,55%), hsl(${h},100%,55%))`;
+  document.getElementById('satRange').value = s;
+  updateHueThumb(h);
+  updateSwatches(h, s);
+}
+
+function updateHueThumb(h) {
+  const pct = h / 360 * 100;
+  document.getElementById('hueThumb').style.left = pct + '%';
+}
+
+function updateSwatches(h, s) {
+  document.querySelectorAll('.swatch').forEach(sw => {
+    sw.classList.toggle('active', parseInt(sw.dataset.h) === h && parseInt(sw.dataset.s) === s);
+  });
+}
+
+// Build swatches
+(function buildSwatches() {
+  const wrap = document.getElementById('swatches');
+  PRESETS.forEach(p => {
+    const sw = document.createElement('div');
+    sw.className = 'swatch';
+    sw.dataset.h = p.h; sw.dataset.s = p.s;
+    sw.title = p.label;
+    sw.style.background = `hsl(${p.h},${p.s}%,55%)`;
+    if (p.h === 228) sw.classList.add('active');
+    sw.addEventListener('click', () => applyTheme(p.h, p.s));
+    wrap.appendChild(sw);
+  });
+})();
+
+// Hue bar drag
+(function initHueBar() {
+  const wrap  = document.getElementById('hueWrap');
+  let dragging = false;
+
+  function setFromEvent(e) {
+    const rect = wrap.getBoundingClientRect();
+    const x    = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+    const h    = Math.round(x / rect.width * 360);
+    applyTheme(h, currentS);
+  }
+
+  wrap.addEventListener('mousedown', e => { dragging = true; setFromEvent(e); });
+  document.addEventListener('mousemove', e => { if (dragging) setFromEvent(e); });
+  document.addEventListener('mouseup', () => { dragging = false; });
+
+  updateHueThumb(currentH);
+})();
+
+// Sat slider
+document.getElementById('satRange').addEventListener('input', function() {
+  applyTheme(currentH, parseInt(this.value));
+});
+
+/* ============================================================
+   SETTINGS PANEL
+   ============================================================ */
+function toggleSettings() {
+  document.getElementById('settingsPanel').classList.toggle('active');
+}
+
+document.addEventListener('click', e => {
+  const wrap = document.querySelector('.settings-wrapper');
+  if (!wrap.contains(e.target)) {
+    document.getElementById('settingsPanel').classList.remove('active');
+  }
+});
+
+/* ============================================================
+   AUTH / STATE
+   ============================================================ */
+let userEmail = '';
+let currentFolder = 'inbox';
+let allMessages   = [];
+let currentMail   = null;
+let currentContentBg = null; // pour hidden_body
+
+async function logout() {
+  await _sb.auth.signOut();
+  window.location.href = 'connexion.html';
+}
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+function initials(email) {
+  const parts = email.split('@')[0].split('.');
+  return (parts[0][0] + (parts[1] ? parts[1][0] : '')).toUpperCase();
+}
+
+function formatDate(iso) {
+  const d = new Date(iso);
+  const now = new Date();
+  const diff = now - d;
+  if (diff < 86400000 && d.getDate() === now.getDate())
+    return d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+  if (diff < 86400000 * 7)
+    return d.toLocaleDateString('fr-FR', { weekday: 'short' });
+  return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' });
+}
 
 function normalizeHex(hex) {
   hex = hex.trim().toLowerCase();
-  if (/^#[0-9a-f]{3}$/.test(hex)) {
-    return "#" + hex[1]+hex[1] + hex[2]+hex[2] + hex[3]+hex[3];
-  }
+  if (/^#[0-9a-f]{3}$/.test(hex)) return '#'+hex[1]+hex[1]+hex[2]+hex[2]+hex[3]+hex[3];
   if (/^#[0-9a-f]{6}$/.test(hex)) return hex;
   return null;
 }
 
 function colorsMatch(a, b) {
-  const na = normalizeHex(a);
-  const nb = normalizeHex(b);
+  const na = normalizeHex(a); const nb = normalizeHex(b);
   return na && nb && na === nb;
 }
 
-/* ===== LOGOUT ===== */
-async function logout() {
-  await supabaseClient.auth.signOut();
-  window.location.href = "connexion.html";
-}
+/* ============================================================
+   FOLDER NAMES
+   ============================================================ */
+const FOLDER_LABELS = {
+  inbox: 'Réception', sent: 'Envoyés', favorites: 'Favoris',
+  classified: 'Classés', trash: 'Corbeille'
+};
 
-/* ===== MESSAGES ===== */
-async function loadFolder(folder, el) {
-  document.querySelectorAll(".folder").forEach(f => f.classList.remove("active"));
-  el.classList.add("active");
-  currentFolder = folder;
-  loadMessages();
-}
-
+/* ============================================================
+   LOAD MESSAGES
+   ============================================================ */
 async function loadMessages() {
-  const { data: { user } } = await supabaseClient.auth.getUser();
-  if (!user) return window.location.href = "connexion.html";
+  const { data: { user } } = await _sb.auth.getUser();
+  if (!user) { window.location.href = 'connexion.html'; return; }
   userEmail = user.email;
 
-  let query = supabaseClient
-    .from("email")
-    .select("*")
-    .order("send_at", { ascending: false });
+  // User chip
+  document.getElementById('userAvatar').textContent = initials(userEmail);
+  document.getElementById('userLabel').textContent  = userEmail.split('@')[0];
 
-  if (currentFolder === "sent") {
-    query = query.eq("sender", userEmail).eq("sender_folder", "sent");
-  } else if (currentFolder === "trash") {
+  let query = _sb.from('email').select('*').order('send_at', { ascending: false });
+
+  if (currentFolder === 'sent') {
+    query = query.eq('sender', userEmail).eq('sender_folder', 'sent');
+  } else if (currentFolder === 'trash') {
     query = query.or(
-      "receiver.eq." + userEmail + ".and(folder.eq.trash),sender.eq." + userEmail + ".and(sender_folder.eq.trash)"
+      `receiver.eq.${userEmail}.and(folder.eq.trash),sender.eq.${userEmail}.and(sender_folder.eq.trash)`
     );
   } else {
-    query = query.eq("receiver", userEmail).eq("folder", currentFolder);
+    query = query.eq('receiver', userEmail).eq('folder', currentFolder);
   }
 
   const { data, error } = await query;
-  if (error) return console.error(error);
+  if (error) { console.error(error); return; }
 
-  const inbox = document.getElementById("inbox");
-  inbox.innerHTML = "";
+  allMessages = data || [];
+  renderList(allMessages);
 
-  if (!data.length) {
-    inbox.innerHTML = "<p style='padding:20px;color:#777'>Aucun message</p>";
-    document.getElementById("reader").innerHTML = "<p>Selectionnez un message.</p>";
-    currentMail = null;
+  // Mise à jour compteurs sidebar
+  updateCounters();
+
+  if (allMessages.length) openMessage(allMessages[0]);
+  else renderEmptyReader();
+}
+
+async function updateCounters() {
+  const folders = ['inbox', 'sent', 'favorites', 'classified', 'trash'];
+  for (const f of folders) {
+    let q = _sb.from('email').select('id', { count: 'exact', head: true });
+    if (f === 'sent') q = q.eq('sender', userEmail).eq('sender_folder', 'sent');
+    else if (f === 'trash') q = q.or(`receiver.eq.${userEmail}.and(folder.eq.trash),sender.eq.${userEmail}.and(sender_folder.eq.trash)`);
+    else q = q.eq('receiver', userEmail).eq('folder', f);
+    const { count } = await q;
+    const el = document.getElementById('cnt-' + f);
+    if (el) {
+      el.textContent = count || '';
+      el.className = 'folder-count' + (f === 'inbox' && count > 0 ? ' has-new' : '');
+    }
+  }
+}
+
+/* ============================================================
+   RENDER LIST
+   ============================================================ */
+function renderList(messages) {
+  const list  = document.getElementById('msgList');
+  const title = document.getElementById('listTitle');
+  const count = document.getElementById('listCount');
+
+  title.textContent = FOLDER_LABELS[currentFolder] || currentFolder;
+  count.textContent = messages.length + ' message' + (messages.length > 1 ? 's' : '');
+
+  list.innerHTML = '';
+
+  if (!messages.length) {
+    list.innerHTML = `<div class="list-empty">
+      <div class="list-empty-icon">📭</div>
+      <div>Aucun message dans ce dossier</div>
+    </div>`;
     return;
   }
 
-  data.forEach(mail => {
-    const contact = (mail.sender === userEmail) ? mail.receiver : mail.sender;
-    const div = document.createElement("div");
-    div.className = "message";
-    div.innerHTML = "<strong>" + contact + "</strong><br>" + mail.subject;
-    div.onclick = () => openMessage(mail);
-    inbox.appendChild(div);
+  const showPreview = document.getElementById('togglePreview').checked;
+
+  messages.forEach(mail => {
+    const contact  = mail.sender === userEmail ? mail.receiver : mail.sender;
+    const ini      = initials(contact);
+    const dateStr  = formatDate(mail.send_at);
+
+    const item = document.createElement('div');
+    item.className = 'msg-item';
+    item.dataset.id = mail.id;
+    item.innerHTML = `
+      <div class="unread-dot"></div>
+      <div class="msg-item-top">
+        <span class="msg-sender">${contact}</span>
+        <span class="msg-date">${dateStr}</span>
+      </div>
+      <div class="msg-subject">${mail.subject || '(sans objet)'}</div>
+      ${showPreview ? `<div class="msg-preview">${(mail.body || '').substring(0, 70)}…</div>` : ''}
+    `;
+    item.onclick = () => {
+      document.querySelectorAll('.msg-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+      item.classList.remove('unread');
+      openMessage(mail);
+    };
+    list.appendChild(item);
   });
 
-  openMessage(data[0]);
+  // Activate first
+  if (list.firstElementChild && list.firstElementChild.classList.contains('msg-item')) {
+    list.firstElementChild.classList.add('active');
+  }
 }
 
+/* ============================================================
+   FILTER
+   ============================================================ */
+function filterMessages(query) {
+  const q = query.toLowerCase();
+  const filtered = allMessages.filter(m =>
+    (m.subject || '').toLowerCase().includes(q) ||
+    m.sender.toLowerCase().includes(q) ||
+    m.receiver.toLowerCase().includes(q) ||
+    (m.body || '').toLowerCase().includes(q)
+  );
+  renderList(filtered);
+}
+
+/* ============================================================
+   OPEN MESSAGE
+   ============================================================ */
 function openMessage(mail) {
   currentMail = mail;
-  renderMessage();
+  const contact = mail.sender === userEmail ? mail.receiver : mail.sender;
+  const ini     = initials(contact);
+
+  const body = (mail.hidden_body && mail.rgb && colorsMatch(currentContentBg, mail.rgb))
+    ? mail.hidden_body : mail.body;
+
+  const reader = document.getElementById('readerPane');
+  reader.innerHTML = `
+    <div class="reader-header">
+      <div class="reader-subject">${mail.subject || '(sans objet)'}</div>
+      <div class="reader-meta-row">
+        <div class="meta-avatar">${ini}</div>
+        <div class="meta-info">
+          <span class="meta-from">${mail.sender}</span>
+          <span class="meta-to">À : ${mail.receiver}</span>
+        </div>
+        <span class="meta-date">${new Date(mail.send_at).toLocaleString('fr-FR')}</span>
+      </div>
+    </div>
+    <div class="reader-actions">
+      <button class="action-btn">↩ Répondre</button>
+      <button class="action-btn">↪ Transférer</button>
+      <button class="action-btn">⭐ Favori</button>
+      <button class="action-btn">🗑 Supprimer</button>
+    </div>
+    <div class="reader-body">${body || ''}</div>
+    ${mail.attachment ? `<a class="reader-attachment" href="${mail.attachment}" target="_blank">📎 Pièce jointe</a>` : ''}
+  `;
 }
 
-function resolveBody(mail) {
-  if (
-    mail.hidden_body &&
-    mail.rgb &&
-    colorsMatch(currentContentBg, mail.rgb)
-  ) {
-    return mail.hidden_body;
+function renderEmptyReader() {
+  document.getElementById('readerPane').innerHTML = `
+    <div class="reader-empty">
+      <div class="reader-empty-icon">✉</div>
+      <div class="reader-empty-text">Sélectionnez un message</div>
+    </div>`;
+}
+
+/* ============================================================
+   FOLDER SWITCH
+   ============================================================ */
+function switchFolder(el) {
+  document.querySelectorAll('.folder-item').forEach(f => f.classList.remove('active'));
+  el.classList.add('active');
+  currentFolder = el.dataset.folder;
+  renderEmptyReader();
+  loadMessages();
+}
+
+/* ============================================================
+   COMPOSE
+   ============================================================ */
+function openCompose() {
+  document.getElementById('composeOverlay').classList.add('active');
+  document.getElementById('compTo').focus();
+}
+
+function closeCompose() {
+  document.getElementById('composeOverlay').classList.remove('active');
+}
+
+function closeComposeOutside(e) {
+  if (e.target === document.getElementById('composeOverlay')) closeCompose();
+}
+
+async function sendMessage() {
+  const to      = document.getElementById('compTo').value.trim();
+  const subject = document.getElementById('compSubject').value.trim();
+  const body    = document.getElementById('compBody').value.trim();
+  if (!to || !body) return;
+
+  const { error } = await _sb.from('email').insert({
+    sender: userEmail, receiver: to,
+    subject, body,
+    send_at: new Date().toISOString(),
+    folder: 'inbox', sender_folder: 'sent'
+  });
+
+  if (!error) {
+    closeCompose();
+    document.getElementById('compTo').value = '';
+    document.getElementById('compSubject').value = '';
+    document.getElementById('compBody').value = '';
   }
-  return mail.body;
 }
 
-function renderMessage() {
-  if (!currentMail) return;
-  const mail = currentMail;
-  const bodyToShow = resolveBody(mail);
+/* ============================================================
+   AUTO-REFRESH
+   ============================================================ */
+let refreshInterval = null;
 
-  document.getElementById("reader").innerHTML =
-    "<h2>" + mail.subject + "</h2>" +
-    "<div class='meta'>De : " + mail.sender + "<br>A : " + mail.receiver + "<br>" + new Date(mail.send_at).toLocaleString() + "</div>" +
-    "<div class='content' style='background:" + currentContentBg + "'>" + bodyToShow + "</div>" +
-    (mail.attachment ? "<div class='attach'><a href='" + mail.attachment + "' target='_blank'>&#128206; Piece jointe</a></div>" : "");
-}
-
-/* ===== PARAMETRES ===== */
-function toggleSettings() {
-  const menu = document.getElementById("settingsMenu");
-  const isOpening = !menu.classList.contains("active");
-
-  // Quand on ferme le menu, on remet tous les sous-menus collapsed
-  // Ainsi a la prochaine ouverture tout est ferme
-  if (!isOpening) {
-    document.querySelectorAll(".sub-settings").forEach(s => s.classList.remove("active"));
+document.getElementById('toggleRefresh').addEventListener('change', function() {
+  if (this.checked) {
+    refreshInterval = setInterval(loadMessages, 30000);
+  } else {
+    clearInterval(refreshInterval);
   }
+});
 
-  menu.classList.toggle("active");
-}
-
-function toggleSubSettings(id) {
-  const target = document.getElementById(id);
-  // Si deja ouvert : on ferme. Sinon : on ferme les autres et on ouvre celui-ci.
-  const isActive = target.classList.contains("active");
-  document.querySelectorAll(".sub-settings").forEach(s => s.classList.remove("active"));
-  if (!isActive) target.classList.add("active");
-}
-
-function syncColorFromPicker(value) {
-  document.getElementById("bgColorRGB").value = value;
-}
-
-function syncColorFromText(value) {
-  const norm = normalizeHex(value);
-  if (norm) document.getElementById("bgColorInput").value = norm;
-}
-
-function saveBgColor() {
-  const colorInput = document.getElementById("bgColorInput").value;
-  const rgbInput   = document.getElementById("bgColorRGB").value.trim();
-
-  let finalColor = colorInput;
-  const norm = normalizeHex(rgbInput);
-  if (norm) finalColor = norm;
-
-  currentContentBg = finalColor;
-
-  const contentEl = document.querySelector("#reader .content");
-  if (contentEl) contentEl.style.background = finalColor;
-
-  renderMessage();
-
-  // Ferme le menu et remet les sous-menus a zero
-  document.querySelectorAll(".sub-settings").forEach(s => s.classList.remove("active"));
-  document.getElementById("settingsMenu").classList.remove("active");
-}
-
-/* ===== LANCEMENT ===== */
+/* ============================================================
+   BOOT
+   ============================================================ */
 loadMessages();
+refreshInterval = setInterval(loadMessages, 30000);
 </script>
 
 </body>
