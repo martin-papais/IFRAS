@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Programmes avortés — IFRAS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+<style>
+
+:root {
+  --bg-main:  #050b1e;
+  --bg-dark:  #020617;
+  --bg-light: #070f2b;
+  --bg-menu:  #081235;
+  --border:   #1b2555;
+  --accent:   #4f6bed;
+  --aborted:  #fb7185;
+  --text-main: #e6e6e6;
+  --text-soft: #aab3d6;
+  --sidebar-w: 270px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: "DM Sans", sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+}
+
+/* ===== HEADER ===== */
+
+header {
+  position: fixed; top: 0; width: 100%;
+  z-index: 2000;
+  background: rgba(5,11,30,.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  max-width: 1300px; margin: auto;
+  padding: 12px 30px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.header-left { display: flex; align-items: center; gap: 40px; }
+.logo-link img { height: 60px; }
+.main-nav { list-style: none; display: flex; gap: 32px; }
+
+.main-nav a {
+  text-decoration: none; color: var(--text-soft);
+  font-size: 14px; letter-spacing: .05em;
+}
+
+.main-nav a:hover,
+.main-nav a.active-nav { color: white; }
+
+.header-right a {
+  padding: 8px 18px; border-radius: 6px;
+  border: 1px solid var(--accent);
+  color: white; text-decoration: none; font-size: 13px;
+}
+
+.header-right a:hover { background: var(--accent); }
+
+/* ===== BANDEAU PROGRAMMES ===== */
+
+.program-filter {
+  margin-top: 84px;
+  background: var(--bg-light);
+  border-bottom: 1px solid var(--border);
+}
+
+.program-filter ul {
+  max-width: 1300px; margin: 0 auto;
+  display: flex; justify-content: space-between;
+  list-style: none; padding: 0 30px;
+}
+
+.program-filter li {
+  position: relative; padding: 14px 18px;
+  cursor: pointer; font-size: 14px;
+  color: var(--text-soft); letter-spacing: .06em;
+  transition: color .2s;
+}
+
+.program-filter li.active-filter {
+  color: white;
+  border-bottom: 2px solid var(--aborted);
+}
+
+.program-filter li:hover { color: white; background: rgba(79,107,237,.1); border-radius: 6px; }
+
+.dropdown {
+  position: absolute; top: 48px; left: 0;
+  background: #050b1e; border: 1px solid var(--border);
+  min-width: 220px; display: none;
+  z-index: 200; border-radius: 8px; overflow: hidden;
+  box-shadow: 0 16px 40px rgba(0,0,0,.4);
+}
+
+.dropdown a {
+  display: block; padding: 10px 16px;
+  font-size: 13px; color: var(--text-soft);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(27,37,85,.5);
+  transition: background .15s, color .15s;
+}
+
+.dropdown a:hover { background: rgba(79,107,237,.12); color: white; }
+.program-filter li:hover .dropdown { display: block; }
+
+/* ===== LAYOUT ===== */
+
+.page-wrap {
+  max-width: 1300px; margin: 0 auto;
+  padding: 0 30px;
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  gap: 0; align-items: start;
+}
+
+/* ===== SIDEBAR ===== */
+
+.sidebar {
+  position: sticky; top: 148px;
+  padding: 48px 32px 48px 0;
+}
+
+.sidebar-label {
+  font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(170,179,214,.35); font-weight: 500;
+  margin-bottom: 24px; padding-left: 16px;
+}
+
+.sidebar-nav { list-style: none; position: relative; }
+
+.sidebar-progress {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 2px; background: rgba(251,113,133,.07);
+}
+
+.sidebar-nav a {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 16px; font-size: 13px;
+  color: var(--text-soft); text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: color .2s, border-color .2s, background .2s;
+  border-radius: 0 6px 6px 0; font-weight: 300; line-height: 1.4;
+}
+
+.sidebar-nav a:hover {
+  color: white; background: rgba(255,255,255,.03);
+  border-left-color: rgba(251,113,133,.3);
+}
+
+.sidebar-nav a.active {
+  color: white; font-weight: 500;
+  background: rgba(251,113,133,.06);
+  border-left-color: var(--aborted);
+}
+
+.sidebar-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  flex-shrink: 0; opacity: .7;
+}
+
+.sidebar-divider { height: 1px; background: var(--border); margin: 20px 16px; }
+
+.sidebar-back {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 16px; font-size: 12px;
+  color: rgba(170,179,214,.4); text-decoration: none;
+  transition: color .2s; font-weight: 300;
+}
+
+.sidebar-back:hover { color: white; }
+
+/* ===== CONTENU ===== */
+
+.main-content {
+  padding: 48px 0 100px 52px;
+  border-left: 1px solid var(--border);
+  min-width: 0;
+}
+
+/* ===== INTRO ===== */
+
+.intro-section {
+  padding-bottom: 60px;
+  border-bottom: 1px solid var(--border);
+  scroll-margin-top: 160px;
+}
+
+.section-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--aborted); font-weight: 500; margin-bottom: 20px;
+}
+
+.section-eyebrow::before {
+  content: ''; display: block;
+  width: 24px; height: 1px; background: currentColor;
+}
+
+.intro-section h1 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(28px, 3.5vw, 46px);
+  font-weight: 800; letter-spacing: -0.03em;
+  line-height: 1.05; color: white; margin-bottom: 24px;
+}
+
+.intro-section h1 span {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(251,113,133,.45);
+}
+
+.intro-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 36px;
+  margin-top: 32px;
+}
+
+.intro-grid p {
+  font-size: 14.5px; color: var(--text-soft);
+  line-height: 1.85; font-weight: 300;
+}
+
+.intro-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  margin-top: 36px;
+}
+
+.intro-stat {
+  background: rgba(251,113,133,.04);
+  border: 1px solid rgba(251,113,133,.1);
+  border-radius: 10px; padding: 16px 20px;
+}
+
+.intro-stat-val {
+  font-family: "Syne", sans-serif; font-size: 24px;
+  font-weight: 800; color: white; letter-spacing: -0.03em;
+}
+
+.intro-stat-lbl {
+  font-size: 11px; color: var(--text-soft); font-weight: 300;
+  text-transform: uppercase; letter-spacing: .1em; margin-top: 3px;
+}
+
+/* ===== SECTION PROGRAMME ===== */
+
+.prog-section {
+  padding: 70px 0;
+  border-bottom: 1px solid var(--border);
+  scroll-margin-top: 160px;
+  position: relative;
+  overflow: hidden;
+}
+
+.prog-section:last-child { border-bottom: none; }
+
+/* Diagonale décorative */
+.prog-section::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 180px; height: 100%;
+  background: linear-gradient(135deg, transparent 40%, rgba(251,113,133,.025) 100%);
+  pointer-events: none;
+}
+
+/* Code en filigrane */
+.prog-code-bg {
+  position: absolute;
+  top: 40px; right: -8px;
+  font-family: "Syne", sans-serif;
+  font-size: clamp(52px, 7vw, 88px);
+  font-weight: 800;
+  color: rgba(251,113,133,.04);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  text-decoration: line-through;
+  text-decoration-color: rgba(251,113,133,.06);
+}
+
+/* En-tête */
+
+.prog-header {
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 24px;
+  margin-bottom: 28px;
+}
+
+.prog-code-badge {
+  font-family: "Syne", sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: .16em;
+  padding: 4px 12px; border-radius: 5px;
+  margin-bottom: 12px; display: inline-block;
+}
+
+.prog-header h2 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 700; color: rgba(255,255,255,.65);
+  letter-spacing: -0.02em; line-height: 1.15;
+  text-decoration: line-through;
+  text-decoration-color: rgba(251,113,133,.3);
+  text-decoration-thickness: 1px;
+}
+
+.prog-status-badge {
+  font-size: 11px; padding: 5px 12px; border-radius: 20px;
+  font-weight: 500; letter-spacing: .05em;
+  white-space: nowrap; flex-shrink: 0; margin-top: 4px;
+  background: rgba(251,113,133,.1); color: var(--aborted);
+  border: 1px solid rgba(251,113,133,.25);
+}
+
+/* Bannière arrêt */
+.prog-stop-banner {
+  display: flex; align-items: flex-start; gap: 18px;
+  margin-bottom: 36px;
+  padding: 18px 22px;
+  background: rgba(251,113,133,.05);
+  border: 1px solid rgba(251,113,133,.18);
+  border-left: 3px solid rgba(251,113,133,.5);
+  border-radius: 0 12px 12px 0;
+}
+
+.stop-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+
+.stop-content { display: flex; flex-direction: column; gap: 4px; }
+
+.stop-label {
+  font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(251,113,133,.6); font-weight: 500;
+}
+
+.stop-reason {
+  font-size: 14px; color: rgba(230,230,230,.7); font-weight: 400;
+  line-height: 1.5;
+}
+
+.stop-date {
+  font-size: 12px; color: rgba(251,113,133,.5); font-weight: 300;
+  margin-top: 2px;
+}
+
+/* KPIs */
+.prog-kpis {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  margin-bottom: 32px;
+}
+
+.prog-kpi {
+  border-radius: 10px; padding: 16px 18px;
+  background: rgba(251,113,133,.03);
+  border: 1px solid rgba(251,113,133,.1);
+  display: flex; flex-direction: column; gap: 4px;
+}
+
+.prog-kpi-val {
+  font-family: "Syne", sans-serif; font-size: 22px;
+  font-weight: 800; letter-spacing: -0.03em;
+  color: rgba(251,113,133,.65);
+}
+
+.prog-kpi-lbl {
+  font-size: 11px; color: rgba(170,179,214,.5);
+  font-weight: 300; line-height: 1.4;
+  text-transform: uppercase; letter-spacing: .08em;
+}
+
+/* Corps */
+
+.prog-intro {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+  margin-bottom: 32px;
+}
+
+.prog-intro p {
+  font-size: 14.5px; color: rgba(170,179,214,.7);
+  line-height: 1.85; font-weight: 300;
+}
+
+.prog-intro p + p { margin-top: 14px; }
+
+/* Fiche */
+.prog-fiche {
+  background: rgba(7,15,43,.7);
+  border: 1px solid rgba(27,37,85,.8);
+  border-radius: 14px; padding: 26px 28px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+.fiche-label {
+  font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(170,179,214,.3); font-weight: 500;
+}
+
+.fiche-rows { display: flex; flex-direction: column; gap: 0; }
+
+.fiche-row {
+  display: flex; align-items: baseline;
+  justify-content: space-between; gap: 12px;
+  font-size: 13px; padding: 10px 0;
+  border-bottom: 1px solid rgba(27,37,85,.5);
+}
+
+.fiche-row:last-child { border-bottom: none; }
+
+.fiche-key { color: rgba(170,179,214,.4); font-weight: 300; flex-shrink: 0; }
+.fiche-val { color: rgba(230,230,230,.6); text-align: right; font-weight: 400; }
+.fiche-val--aborted { color: rgba(251,113,133,.65); font-style: italic; }
+
+/* Timeline arrêt */
+.prog-timeline {
+  display: flex; flex-direction: column; gap: 0;
+  border-left: 1px solid rgba(251,113,133,.15);
+  padding-left: 28px; margin-left: 8px;
+  margin-bottom: 32px;
+}
+
+.timeline-label {
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(170,179,214,.3); margin-bottom: 20px;
+  margin-left: -28px; padding-left: 28px;
+}
+
+.tl-item {
+  position: relative; padding-bottom: 24px;
+}
+
+.tl-item:last-child { padding-bottom: 0; }
+
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -34px; top: 5px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--dot-color, rgba(251,113,133,.35));
+  border: 2px solid var(--bg-main);
+}
+
+.tl-item.tl-ok::before   { background: rgba(52,211,153,.5); }
+.tl-item.tl-warn::before { background: rgba(250,204,21,.5); }
+.tl-item.tl-stop::before {
+  background: rgba(251,113,133,.7);
+  box-shadow: 0 0 10px rgba(251,113,133,.3);
+}
+
+.tl-date {
+  font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  font-weight: 500; margin-bottom: 4px;
+}
+
+.tl-item.tl-ok   .tl-date { color: rgba(52,211,153,.55); }
+.tl-item.tl-warn .tl-date { color: rgba(250,204,21,.55); }
+.tl-item.tl-stop .tl-date { color: rgba(251,113,133,.65); }
+.tl-item         .tl-date { color: rgba(170,179,214,.4); }
+
+.tl-title {
+  font-size: 13.5px; font-weight: 500;
+  color: rgba(255,255,255,.65); margin-bottom: 3px;
+}
+
+.tl-item.tl-stop .tl-title { color: rgba(251,113,133,.8); }
+
+.tl-desc {
+  font-size: 12.5px; color: rgba(170,179,214,.5);
+  font-weight: 300; line-height: 1.55;
+}
+
+/* Enseignements */
+.prog-lessons {
+  display: flex; flex-direction: column; gap: 10px;
+  margin-bottom: 28px;
+}
+
+.lessons-label {
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(170,179,214,.3); margin-bottom: 4px;
+}
+
+.lesson-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 14px 18px;
+  background: rgba(255,255,255,.02);
+  border: 1px solid rgba(255,255,255,.04);
+  border-radius: 10px;
+}
+
+.lesson-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; opacity: .65; }
+
+.lesson-text {
+  font-size: 13.5px; color: rgba(170,179,214,.65);
+  font-weight: 300; line-height: 1.6;
+}
+
+.lesson-text strong { color: rgba(230,230,230,.7); font-weight: 500; }
+
+/* Partenaires */
+.prog-partners {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px;
+}
+
+.partner-chip {
+  font-size: 12px; padding: 5px 14px; border-radius: 6px;
+  background: rgba(251,113,133,.03);
+  border: 1px solid rgba(251,113,133,.1);
+  color: rgba(170,179,214,.45); font-weight: 300;
+}
+
+.inner-divider { height: 1px; background: rgba(27,37,85,.7); margin: 28px 0; }
+
+/* Note archives */
+.archive-note {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px 20px; margin-top: 28px;
+  background: rgba(79,107,237,.04);
+  border: 1px solid rgba(79,107,237,.1);
+  border-radius: 10px;
+  font-size: 13px; color: rgba(170,179,214,.55); font-weight: 300;
+  line-height: 1.65;
+}
+
+.archive-note a {
+  color: rgba(79,107,237,.6); text-decoration: none; transition: color .2s;
+}
+
+.archive-note a:hover { color: #818cf8; }
+
+/* ===== FOOTER ===== */
+
+footer {
+  background: var(--bg-dark); border-top: 1px solid var(--border);
+  padding: 40px 30px; text-align: center;
+  font-size: 12px; color: #6b7280;
+}
+
+/* ===== ANIMATIONS ===== */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.prog-section { animation: fadeUp .55s ease both; }
+.prog-section:nth-child(1) { animation-delay: .05s; }
+.prog-section:nth-child(2) { animation-delay: .10s; }
+.prog-section:nth-child(3) { animation-delay: .15s; }
+
+</style>
+</head>
+
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="header-inner">
+    <div class="header-left">
+      <a href="index.html" class="logo-link"><img src="logo.png" alt="Logo IFRAS"></a>
+      <ul class="main-nav">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="recherche.html">Recherche</a></li>
+        <li><a href="programmes.html" class="active-nav">Programmes</a></li>
+        <li><a href="publications.html">Publications</a></li>
+      </ul>
+    </div>
+    <div class="header-right">
+      <a href="connexion.html">Connexion</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== BANDEAU PROGRAMMES ===== -->
+<div class="program-filter">
+  <ul>
+    <li>Programmes actifs
+      <div class="dropdown">
+        <a href="programmes-actifs.html#artemis9">ARTEMIS-9</a>
+        <a href="programmes-actifs.html#orion3">ORION-3</a>
+        <a href="programmes-actifs.html#hermes">HERMES</a>
+        <a href="programmes-actifs.html#atlas">ATLAS</a>
+        <a href="programmes-actifs.html#lynx">LYNX</a>
+        <a href="programmes-actifs.html#prometheus">PROMETHEUS</a>
+      </div>
+    </li>
+    <li>Programmes archivés
+      <div class="dropdown">
+        <a href="programmes-archives.html#apollox">APOLLO-X</a>
+        <a href="programmes-archives.html#delphi">DELPHI</a>
+        <a href="programmes-archives.html#cassinir">CASSINI-R</a>
+      </div>
+    </li>
+    <li>Programmes futurs
+      <div class="dropdown">
+        <a href="programmes-futurs.html#hera">HERA</a>
+        <a href="programmes-futurs.html#noe">NOE</a>
+        <a href="programmes-futurs.html#titan0">TITAN-0</a>
+      </div>
+    </li>
+    <li class="active-filter">Programmes avortés
+      <div class="dropdown">
+        <a href="programmes-avortes.html#phoenix">PHOENIX</a>
+        <a href="programmes-avortes.html#daedalus">DAEDALUS</a>
+        <a href="programmes-avortes.html#icarus2">ICARUS-2</a>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<!-- ===== LAYOUT ===== -->
+<div class="page-wrap">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <div class="sidebar-label">Programmes avortés</div>
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <div class="sidebar-progress"></div>
+      <li>
+        <a href="#presentation" class="active">
+          <span class="sidebar-dot" style="background:#fb7185;"></span>
+          Vue d'ensemble
+        </a>
+      </li>
+      <li>
+        <a href="#phoenix">
+          <span class="sidebar-dot" style="background:#f97316;"></span>
+          PHOENIX
+        </a>
+      </li>
+      <li>
+        <a href="#daedalus">
+          <span class="sidebar-dot" style="background:#a78bfa;"></span>
+          DAEDALUS
+        </a>
+      </li>
+      <li>
+        <a href="#icarus2">
+          <span class="sidebar-dot" style="background:#facc15;"></span>
+          ICARUS-2
+        </a>
+      </li>
+    </ul>
+    <div class="sidebar-divider"></div>
+    <a href="programmes.html" class="sidebar-back">← Retour aux Programmes</a>
+  </aside>
+
+  <!-- ===== CONTENU ===== -->
+  <main class="main-content">
+
+    <!-- ── PRÉSENTATION ── -->
+    <section class="intro-section" id="presentation">
+      <div class="section-eyebrow">Projets interrompus</div>
+      <h1>Programmes<br><span>avortés</span></h1>
+
+      <div class="intro-grid">
+        <div>
+          <p>Les programmes avortés sont une part inséparable de l'histoire de l'IFRAS. Ils témoignent des prises de risque scientifiques et technologiques inhérentes à toute institution d'exploration de frontière. Un programme avorté n'est pas un échec — c'est la trace d'une ambition qui s'est heurtée à la réalité physique, technique, budgétaire ou stratégique d'une époque. À ce titre, chacun de ces programmes mérite une documentation rigoureuse et une analyse honnête de ses causes d'arrêt.</p>
+          <p>Les trois programmes présentés ici — PHOENIX, DAEDALUS et ICARUS-2 — ont tous été arrêtés définitivement avant d'avoir atteint leurs objectifs opérationnels. Leurs dossiers complets, incluant les résultats partiels de phases terminées, les rapports d'incident et les analyses de défaillance, sont consultables sur demande dans les archives de l'IFRAS. Leurs enseignements ont directement influencé la conception de plusieurs programmes actifs.</p>
+        </div>
+        <div>
+          <p>L'IFRAS a fait le choix de documenter publiquement ses programmes avortés, y compris les incidents techniques et les erreurs de jugement stratégique qui ont conduit à leur arrêt. Cette transparence est un engagement éthique envers la communauté scientifique internationale et un outil de progrès collectif : les échecs bien documentés sont souvent plus précieux que les succès, car ils balisent explicitement les voies sans issue et permettent d'éviter de les réemprunter.</p>
+          <p>Les données, modèles et publications partiels issus de ces programmes restent accessibles. Certains résultats de phases précoces ont trouvé des applications dans d'autres contextes — un rappel que la recherche fondamentale ne produit jamais de travail entièrement vain, même lorsque son programme d'origine est interrompu.</p>
+        </div>
+      </div>
+
+      <div class="intro-stats">
+        <div class="intro-stat">
+          <div class="intro-stat-val">3</div>
+          <div class="intro-stat-lbl">Programmes interrompus</div>
+        </div>
+        <div class="intro-stat">
+          <div class="intro-stat-val">~340 M€</div>
+          <div class="intro-stat-lbl">Investissement total engagé</div>
+        </div>
+        <div class="intro-stat">
+          <div class="intro-stat-val">47</div>
+          <div class="intro-stat-lbl">Publications partielles produites</div>
+        </div>
+        <div class="intro-stat">
+          <div class="intro-stat-val">2019</div>
+          <div class="intro-stat-lbl">Premier arrêt (DAEDALUS)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- PHOENIX                                                       -->
+    <!-- ============================================================ -->
+    <section class="prog-section" id="phoenix">
+      <div class="prog-code-bg">PHOENIX</div>
+
+      <div class="prog-header">
+        <div>
+          <span class="prog-code-badge" style="color:rgba(249,115,22,.55); background:rgba(249,115,22,.06); border:1px solid rgba(249,115,22,.15);">PHOENIX</span>
+          <h2>Réanimation cellulaire en hypothermie profonde</h2>
+        </div>
+        <span class="prog-status-badge">Arrêté · 2020</span>
+      </div>
+
+      <div class="prog-stop-banner">
+        <span class="stop-icon">🛑</span>
+        <div class="stop-content">
+          <span class="stop-label">Cause d'arrêt</span>
+          <span class="stop-reason">Résultats de Phase II non concluants — viabilité cellulaire post-réanimation insuffisante à −80 °C. Taux de récupération fonctionnelle inférieur à 12 % sur toutes les lignées testées, seuil minimal défini à 60 %.</span>
+          <span class="stop-date">Décision d'arrêt : Comité de Direction Scientifique · 14 novembre 2020</span>
+        </div>
+      </div>
+
+      <div class="prog-kpis">
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">2015 – 2020</span>
+          <span class="prog-kpi-lbl">Période d'activité</span>
+        </div>
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">~95 M€</span>
+          <span class="prog-kpi-lbl">Budget engagé à l'arrêt</span>
+        </div>
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">18</span>
+          <span class="prog-kpi-lbl">Publications partielles produites</span>
+        </div>
+      </div>
+
+      <div class="prog-intro">
+        <div>
+          <p>PHOENIX visait à développer des protocoles de cryoconservation réversible applicables aux équipages de missions spatiales longue durée — typiquement un trajet de 9 mois vers Mars — permettant de réduire la consommation de ressources vitales et de limiter les effets délétères de l'exposition prolongée aux rayonnements cosmiques. Le programme s'inscrivait dans la continuité des recherches sur l'hibernation induite chez les mammifères et de la cryogénie médicale d'urgence.</p>
+          <p>Les travaux portaient sur deux axes parallèles : la cryoprotection cellulaire par agents exogènes (glycérol, DMSO, tréhalose) et la suppression métabolique par modulation pharmacologique de l'activité mitochondriale. En Phase I, les résultats sur cellules isolées avaient semblé encourageants, avec des taux de viabilité post-dégel de 45 à 70 % selon les lignées et les protocoles testés.</p>
+          <p style="margin-top:14px">La Phase II, portant sur des tissus multicellulaires puis sur des organes complets, s'est révélée radicalement différente. Les dommages aux jonctions intercellulaires et aux structures vasculaires lors de la formation des cristaux de glace extracellulaires se sont avérés irréparables dans tous les systèmes testés à −80 °C, malgré une quinzaine de formulations cryoprotectrices différentes. Le programme a été arrêté lorsqu'il est devenu évident que le verrou scientifique fondamental — la prévention des dommages cristallins à l'échelle tissulaire — ne pouvait pas être levé dans l'état des connaissances et des technologies disponibles.</p>
+        </div>
+        <div class="prog-fiche">
+          <span class="fiche-label">Fiche programme</span>
+          <div class="fiche-rows">
+            <div class="fiche-row">
+              <span class="fiche-key">Statut</span>
+              <span class="fiche-val fiche-val--aborted">Arrêté définitivement</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Début programme</span>
+              <span class="fiche-val">Janvier 2015</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Phase atteinte à l'arrêt</span>
+              <span class="fiche-val">Phase II — Tissus multicellulaires</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Département pilote</span>
+              <span class="fiche-val">DSVT / DPET</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Chercheurs impliqués</span>
+              <span class="fiche-val">+65 (pic 2019)</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Partenaires principaux</span>
+              <span class="fiche-val">INSERM, NASA, Université de Tokyo</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Résultats archivés</span>
+              <span class="fiche-val">Oui — accès sur demande</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="inner-divider"></div>
+
+      <div class="prog-timeline">
+        <div class="timeline-label">Chronologie du programme</div>
+
+        <div class="tl-item tl-ok">
+          <div class="tl-date">2015 – 2017</div>
+          <div class="tl-title">Phase I — Cellules isolées</div>
+          <div class="tl-desc">Résultats encourageants sur 14 lignées cellulaires humaines. Taux de viabilité post-dégel entre 45 et 71 % selon les protocoles. Trois formulations cryoprotectrices sélectionnées pour la Phase II.</div>
+        </div>
+
+        <div class="tl-item tl-ok">
+          <div class="tl-date">2017</div>
+          <div class="tl-title">Publication Phase I et approbation Phase II</div>
+          <div class="tl-desc">Publication des résultats Phase I dans Cryobiology (2017). Approbation du passage en Phase II par le Comité Scientifique avec budget de 48 M€ supplémentaires. Optimisme général dans l'équipe.</div>
+        </div>
+
+        <div class="tl-item tl-warn">
+          <div class="tl-date">2018</div>
+          <div class="tl-title">Premiers signaux d'alerte — Tissus multicellulaires</div>
+          <div class="tl-desc">Les protocoles Phase I ne se transposent pas aux tissus organisés. Apparition de dommages vasculaires irréversibles à la décongélation. L'équipe développe 11 nouvelles formulations mais les résultats restent décevants.</div>
+        </div>
+
+        <div class="tl-item tl-warn">
+          <div class="tl-date">2019</div>
+          <div class="tl-title">Revue critique intermédiaire</div>
+          <div class="tl-desc">Revue externe commandée par la Direction. Les experts concluent que le verrou est fondamental et non contournable à court terme. Recommandation de poursuite conditionnelle sur 18 mois avec objectif minimal de 30 % de récupération.</div>
+        </div>
+
+        <div class="tl-item tl-stop">
+          <div class="tl-date">14 novembre 2020</div>
+          <div class="tl-title">Arrêt définitif du programme</div>
+          <div class="tl-desc">Après 18 mois supplémentaires, le meilleur résultat obtenu reste à 12 % de récupération fonctionnelle, loin du seuil minimal de 30 % et très loin de l'objectif initial de 60 %. Le Comité de Direction Scientifique vote l'arrêt à l'unanimité.</div>
+        </div>
+      </div>
+
+      <div class="inner-divider"></div>
+
+      <div class="lessons-label">Enseignements et réutilisations</div>
+      <div class="prog-lessons">
+        <div class="lesson-item">
+          <span class="lesson-icon">🔬</span>
+          <div class="lesson-text">
+            <strong>Verrou scientifique identifié et documenté :</strong> les résultats négatifs de PHOENIX ont été publiés intégralement dans Cryobiology et Nature Protocols (2021), établissant une référence méthodologique qui a permis à trois autres équipes mondiales d'éviter de reproduire les mêmes impasses.
+          </div>
+        </div>
+        <div class="lesson-item">
+          <span class="lesson-icon">💊</span>
+          <div class="lesson-text">
+            <strong>Applications médicales dérivées :</strong> les 3 formulations cryoprotectrices Phase I ont été licenciées à l'INSERM pour des applications de biobanque de cellules souches. Un dérivé commercial est en cours d'évaluation clinique pour la conservation de greffons cardiaques.
+          </div>
+        </div>
+        <div class="lesson-item">
+          <span class="lesson-icon">📋</span>
+          <div class="lesson-text">
+            <strong>Méthodologie de décision :</strong> la procédure de revue critique intermédiaire avec objectifs minaux chiffrés et délai fixe, développée ad hoc pour PHOENIX, a été formalisée et intégrée au manuel de gestion des programmes de l'IFRAS. Elle est aujourd'hui appliquée à tous les programmes en Phase II et au-delà.
+          </div>
+        </div>
+      </div>
+
+      <div class="prog-partners">
+        <span class="partner-chip">INSERM</span>
+        <span class="partner-chip">NASA — Johnson Space Center</span>
+        <span class="partner-chip">Université de Tokyo — Médecine</span>
+        <span class="partner-chip">CEA Saclay</span>
+        <span class="partner-chip">Institut Pasteur</span>
+      </div>
+
+      <div class="archive-note">
+        📁 Les données complètes de Phase I et Phase II sont archivées et disponibles sur demande motivée. Les 11 formulations cryoprotectrices testées sont documentées dans un rapport technique interne (RT-PHOENIX-2020-04). <a href="mailto:archives@ifras.fr">Contacter les archives →</a>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- DAEDALUS                                                      -->
+    <!-- ============================================================ -->
+    <section class="prog-section" id="daedalus">
+      <div class="prog-code-bg">DAEDALUS</div>
+
+      <div class="prog-header">
+        <div>
+          <span class="prog-code-badge" style="color:rgba(167,139,250,.55); background:rgba(167,139,250,.06); border:1px solid rgba(167,139,250,.15);">DAEDALUS</span>
+          <h2>Voilier solaire interstellaire ultra-léger</h2>
+        </div>
+        <span class="prog-status-badge">Arrêté · 2019</span>
+      </div>
+
+      <div class="prog-stop-banner">
+        <span class="stop-icon">🛑</span>
+        <div class="stop-content">
+          <span class="stop-label">Cause d'arrêt</span>
+          <span class="stop-reason">Abandon stratégique décidé par le Conseil Scientifique National — réévaluation des priorités de l'IFRAS pour la période 2020-2030. Le programme a été jugé trop éloigné des axes stratégiques validés et son horizon de résultats (20+ ans) incompatible avec les cycles de financement institutionnels.</span>
+          <span class="stop-date">Décision d'arrêt : Conseil Scientifique National · 3 juin 2019</span>
+        </div>
+      </div>
+
+      <div class="prog-kpis">
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">2016 – 2019</span>
+          <span class="prog-kpi-lbl">Période d'activité</span>
+        </div>
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">~38 M€</span>
+          <span class="prog-kpi-lbl">Budget engagé à l'arrêt</span>
+        </div>
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">21</span>
+          <span class="prog-kpi-lbl">Publications partielles produites</span>
+        </div>
+      </div>
+
+      <div class="prog-intro">
+        <div>
+          <p>DAEDALUS était un programme de propulsion radicalement différent de tout ce que l'IFRAS avait conduit jusqu'alors. Son ambition : concevoir une sonde de 10 grammes — une "puce spatiale" — propulsée par un laser terrestre de haute puissance via un voilier solaire en graphène de quelques mètres carrés, capable d'atteindre 20 % de la vitesse de la lumière et d'arriver à Proxima Centauri — l'étoile la plus proche du Soleil à 4,2 années-lumière — en une vingtaine d'années.</p>
+          <p>Le programme s'inscrivait dans le sillage de l'initiative Breakthrough Starshot annoncée en 2016. L'IFRAS y apportait ses expertises uniques en physique des matériaux extrêmes (DSMR), en optique de haute puissance (DOL) et en miniaturisation des systèmes embarqués (DSTI). Les travaux portaient sur trois défis majeurs : la synthèse de films de graphène monofeuillets de grande surface (> 4 m²), la résistance des matériaux à l'ablation laser à 10^11 W/m², et la conception d'instruments scientifiques fonctionnels à l'échelle du gramme.</p>
+          <p style="margin-top:14px">Les résultats techniques obtenus en trois ans étaient en réalité prometteurs : l'équipe du DSMR avait réussi à produire des films de graphène de 0,8 m² en salle blanche, un record mondial à l'époque, et le DOL avait démontré la faisabilité de miroirs de renvoi adaptatifs pour la mise en phase d'un réseau de lasers kilowatts. Mais le programme a été stoppé pour des raisons purement stratégiques et budgétaires lors de la révision quinquennale du portefeuille de l'IFRAS en 2019.</p>
+        </div>
+        <div class="prog-fiche">
+          <span class="fiche-label">Fiche programme</span>
+          <div class="fiche-rows">
+            <div class="fiche-row">
+              <span class="fiche-key">Statut</span>
+              <span class="fiche-val fiche-val--aborted">Arrêté définitivement</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Début programme</span>
+              <span class="fiche-val">Octobre 2016</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Phase atteinte à l'arrêt</span>
+              <span class="fiche-val">Phase A+ — Démonstrateurs partiels</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Département pilote</span>
+              <span class="fiche-val">DSMR / DOL / DSTI</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Chercheurs impliqués</span>
+              <span class="fiche-val">+48</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Partenaires principaux</span>
+              <span class="fiche-val">Breakthrough Starshot, Caltech, CNRS</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Résultats archivés</span>
+              <span class="fiche-val">Oui — partiellement open access</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="inner-divider"></div>
+
+      <div class="prog-timeline">
+        <div class="timeline-label">Chronologie du programme</div>
+
+        <div class="tl-item tl-ok">
+          <div class="tl-date">Octobre 2016</div>
+          <div class="tl-title">Lancement du programme</div>
+          <div class="tl-desc">Création d'une équipe dédiée de 48 chercheurs en réponse à l'initiative Breakthrough Starshot. Financement initial de 12 M€ sur 3 ans pour une phase exploratoire.</div>
+        </div>
+
+        <div class="tl-item tl-ok">
+          <div class="tl-date">2017</div>
+          <div class="tl-title">Record mondial de surface graphène</div>
+          <div class="tl-desc">Le DSMR produit un film de graphène monofeuillets de 0,8 m² en conditions salle blanche, record mondial à la date. Publication dans Nature Materials. Ce résultat seul justifie rétrospectivement une partie de l'investissement.</div>
+        </div>
+
+        <div class="tl-item tl-ok">
+          <div class="tl-date">2018</div>
+          <div class="tl-title">Démonstrateur optique validé</div>
+          <div class="tl-desc">Le DOL démontre la mise en phase cohérente d'un réseau de 16 lasers de 1 kW chacun avec une précision de λ/20 — un prérequis pour le système de propulsion laser à grande échelle.</div>
+        </div>
+
+        <div class="tl-item tl-warn">
+          <div class="tl-date">Mars 2019</div>
+          <div class="tl-title">Révision quinquennale du portefeuille IFRAS</div>
+          <div class="tl-desc">Le Conseil Scientifique National engage une révision des priorités pour la décennie 2020-2030. DAEDALUS est identifié comme "programme à horizon temporel incompatible" avec les cycles de financement publics à 5 ans.</div>
+        </div>
+
+        <div class="tl-item tl-stop">
+          <div class="tl-date">3 juin 2019</div>
+          <div class="tl-title">Arrêt stratégique</div>
+          <div class="tl-desc">Le CSN vote l'arrêt de DAEDALUS à 7 voix contre 4. Contrairement aux autres programmes avortés, l'arrêt n'est pas motivé par un échec technique mais par un choix de politique scientifique institutionnelle.</div>
+        </div>
+      </div>
+
+      <div class="inner-divider"></div>
+
+      <div class="lessons-label">Enseignements et réutilisations</div>
+      <div class="prog-lessons">
+        <div class="lesson-item">
+          <span class="lesson-icon">🔷</span>
+          <div class="lesson-text">
+            <strong>Technologie graphène grande surface :</strong> le procédé de dépôt CVD développé par le DSMR pour DAEDALUS est aujourd'hui utilisé dans la fabrication des boucliers thermiques de prochaine génération du programme PROMETHEUS. Le record de 0,8 m² a depuis été porté à 2,3 m² par la même équipe.
+          </div>
+        </div>
+        <div class="lesson-item">
+          <span class="lesson-icon">🔦</span>
+          <div class="lesson-text">
+            <strong>Réseaux laser cohérents :</strong> la technologie de mise en phase développée par le DOL pour DAEDALUS a été directement réutilisée dans le programme HERMES pour la conception des liaisons optiques inter-satellites FSO à 100 Gbps.
+          </div>
+        </div>
+        <div class="lesson-item">
+          <span class="lesson-icon">📌</span>
+          <div class="lesson-text">
+            <strong>Leçon institutionnelle :</strong> l'arrêt de DAEDALUS a mis en évidence le besoin d'un cadre spécifique pour les programmes à très long horizon (20+ ans) dans les institutions de recherche publique. Un groupe de travail a été créé en 2020 pour proposer des mécanismes de financement pluridécennaux adaptés à ce type de recherche.
+          </div>
+        </div>
+      </div>
+
+      <div class="prog-partners">
+        <span class="partner-chip">Breakthrough Starshot Initiative</span>
+        <span class="partner-chip">Caltech — Optical Physics Group</span>
+        <span class="partner-chip">CNRS — Institut Néel</span>
+        <span class="partner-chip">UC Berkeley</span>
+        <span class="partner-chip">Airbus Defence — R&T</span>
+      </div>
+
+      <div class="archive-note">
+        📁 Les résultats sur la synthèse de graphène grande surface et la mise en phase laser sont publiés en open access. Les rapports techniques internes sont disponibles sur demande. Le code de simulation de la trajectoire interstellaire est publié sur GitHub IFRAS. <a href="mailto:archives@ifras.fr">Contacter les archives →</a>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ICARUS-2                                                      -->
+    <!-- ============================================================ -->
+    <section class="prog-section" id="icarus2">
+      <div class="prog-code-bg">ICARUS-2</div>
+
+      <div class="prog-header">
+        <div>
+          <span class="prog-code-badge" style="color:rgba(250,204,21,.55); background:rgba(250,204,21,.05); border:1px solid rgba(250,204,21,.15);">ICARUS-2</span>
+          <h2>Drone atmosphérique vénusien longue durée</h2>
+        </div>
+        <span class="prog-status-badge">Arrêté · 2022</span>
+      </div>
+
+      <div class="prog-stop-banner">
+        <span class="stop-icon">🛑</span>
+        <div class="stop-content">
+          <span class="stop-label">Cause d'arrêt</span>
+          <span class="stop-reason">Perte du prototype de vol P3 lors des essais en chambre thermique haute température — destruction complète à T+4h22 d'exposition à 465 °C sous pression de 92 bar de CO₂. Rapport d'incident : défaillance catastrophique du joint de pression de l'actuateur d'aile tribale, causant une dépressurisation interne et l'inflammation des circuits électroniques.</span>
+          <span class="stop-date">Incident : 17 mars 2022 · Décision d'arrêt : Comité de Direction · 9 mai 2022</span>
+        </div>
+      </div>
+
+      <div class="prog-kpis">
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">2018 – 2022</span>
+          <span class="prog-kpi-lbl">Période d'activité</span>
+        </div>
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">~207 M€</span>
+          <span class="prog-kpi-lbl">Budget engagé à l'arrêt</span>
+        </div>
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">8</span>
+          <span class="prog-kpi-lbl">Publications partielles produites</span>
+        </div>
+      </div>
+
+      <div class="prog-intro">
+        <div>
+          <p>ICARUS-2 était le programme le plus techniquement audacieux — et financièrement lourd — de la liste des avortés. Son objectif était de développer un drone capable de voler de manière autonome pendant 24 heures dans l'atmosphère de Vénus à 50 km d'altitude, là où la pression est de 1 bar et la température de 75 °C — des conditions relativement clémentes comparées à la surface à 465 °C et 92 bar. Ce niveau d'altitude est identifié comme la "zone habitable" de Vénus, où des micro-organismes hypothétiques pourraient survivre dans les gouttelettes de nuages.</p>
+          <p>L'architecture retenue était celle d'un drone à voilure variable — un aéronef hybride entre un ballon dirigeable et un avion — exploitant la dynamique atmosphérique vénusienne pour maintenir son altitude sans dépenser de carburant, et déployant ses panneaux solaires pendant les périodes de lumière pour recharger ses batteries. La durée de mission de 24 heures était un objectif délibérément ambitieux : aucun engin n'a jamais survécu plus de 2 heures dans l'atmosphère de Vénus.</p>
+          <p style="margin-top:14px">Après quatre ans de développement et trois générations de prototypes, le prototype de vol P3 — le premier à intégrer l'ensemble du système de gestion thermique en version quasi-nominale — a été détruit lors des essais finaux en chambre thermique. L'analyse post-incident a révélé que la cause racine était une erreur de spécification du joint d'étanchéité de l'actuateur d'aile : le matériau PTFE sélectionné présente une fluence accélérée au-delà de 420 °C, un phénomène non identifié lors des tests de qualification composant réalisés sous azote plutôt que sous CO₂ — le gaz atmosphérique réel de Vénus.</p>
+        </div>
+        <div class="prog-fiche">
+          <span class="fiche-label">Fiche programme</span>
+          <div class="fiche-rows">
+            <div class="fiche-row">
+              <span class="fiche-key">Statut</span>
+              <span class="fiche-val fiche-val--aborted">Arrêté définitivement</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Début programme</span>
+              <span class="fiche-val">Juin 2018</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Phase atteinte à l'arrêt</span>
+              <span class="fiche-val">Tests qualification prototype P3</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Département pilote</span>
+              <span class="fiche-val">DPET / DSMR / DSTI</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Chercheurs impliqués</span>
+              <span class="fiche-val">+120 (pic 2021)</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Partenaires principaux</span>
+              <span class="fiche-val">ESA, CNES, Safran, Airbus</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Rapport d'incident</span>
+              <span class="fiche-val">Publié · RI-ICARUS2-2022-01</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="inner-divider"></div>
+
+      <div class="prog-timeline">
+        <div class="timeline-label">Chronologie du programme</div>
+
+        <div class="tl-item tl-ok">
+          <div class="tl-date">2018 – 2019</div>
+          <div class="tl-title">Phase A/B — Conception et prototype P1</div>
+          <div class="tl-desc">Définition de l'architecture aéronef hybride. Construction et tests du prototype P1 à température ambiante. Validation aérodynamique et du système de contrôle de voilure en soufflerie atmosphérique.</div>
+        </div>
+
+        <div class="tl-item tl-ok">
+          <div class="tl-date">2020</div>
+          <div class="tl-title">Prototype P2 — Tests à 350 °C</div>
+          <div class="tl-desc">Le P2, intégrant le système de gestion thermique à caloduc, survit 18h22 à 350 °C sous 1 bar de CO₂ — un résultat encourageant, bien au-delà des 24h visées. Décision de monter en température pour le P3.</div>
+        </div>
+
+        <div class="tl-item tl-ok">
+          <div class="tl-date">2021</div>
+          <div class="tl-title">Prototype P3 — Intégration complète</div>
+          <div class="tl-desc">Construction du P3 avec la suite instrumentale complète et le système de propulsion intégral. Premier prototype à intégrer tous les sous-systèmes en configuration quasi-nominale. Budget engagé total : 185 M€.</div>
+        </div>
+
+        <div class="tl-item tl-warn">
+          <div class="tl-date">Janv. – Févr. 2022</div>
+          <div class="tl-title">Anomalies lors des pré-tests</div>
+          <div class="tl-desc">Trois anomalies mineures détectées sur les joints d'étanchéité lors des pré-tests à 400 °C. Chaque anomalie a été traitée par remplacement composant sans analyse de la cause racine systémique. Erreur d'appréciation du risque.</div>
+        </div>
+
+        <div class="tl-item tl-stop">
+          <div class="tl-date">17 mars 2022 · T+4h22</div>
+          <div class="tl-title">Destruction du prototype P3</div>
+          <div class="tl-desc">Défaillance catastrophique du joint PTFE de l'actuateur d'aile à 465 °C sous 92 bar CO₂. Dépressurisation interne suivie d'une inflammation de l'électronique. Le prototype est entièrement détruit. Coût de la perte : ~22 M€.</div>
+        </div>
+
+        <div class="tl-item tl-stop">
+          <div class="tl-date">9 mai 2022</div>
+          <div class="tl-title">Décision d'arrêt</div>
+          <div class="tl-desc">Après analyse du rapport d'incident, le Comité de Direction conclut que la correction du défaut aurait nécessité de reprendre le programme depuis la Phase B, avec un investissement supplémentaire de 80 à 120 M€. Le programme est arrêté.</div>
+        </div>
+      </div>
+
+      <div class="inner-divider"></div>
+
+      <div class="lessons-label">Enseignements et réutilisations</div>
+      <div class="prog-lessons">
+        <div class="lesson-item">
+          <span class="lesson-icon">⚠️</span>
+          <div class="lesson-text">
+            <strong>Procédure de qualification sous atmosphère réelle :</strong> suite à l'incident, l'IFRAS a révisé l'ensemble de ses procédures de qualification des matériaux et composants pour les missions atmosphériques. Toute qualification est désormais obligatoirement conduite sous l'atmosphère réelle de la cible (composition et pression), et non sous atmosphère de substitution.
+          </div>
+        </div>
+        <div class="lesson-item">
+          <span class="lesson-icon">🌡</span>
+          <div class="lesson-text">
+            <strong>Matériaux haute température sous CO₂ :</strong> la caractérisation complète du comportement des matériaux polymères sous CO₂ haute pression et haute température, réalisée lors de l'analyse post-incident, a été publiée et est aujourd'hui utilisée comme référence par l'ESA pour les missions atmosphériques vénusiennes de future génération.
+          </div>
+        </div>
+        <div class="lesson-item">
+          <span class="lesson-icon">🏗</span>
+          <div class="lesson-text">
+            <strong>Architecture aéronef hybride :</strong> les travaux de conception aérodynamique d'ICARUS-2 — en particulier le système de voilure variable à géométrie adaptative — ont été repris par le programme LYNX pour le développement d'un drone d'exploration atmosphérique martien prévu dans la version LYNX-4.
+          </div>
+        </div>
+        <div class="lesson-item">
+          <span class="lesson-icon">📄</span>
+          <div class="lesson-text">
+            <strong>Rapport d'incident public :</strong> le rapport complet RI-ICARUS2-2022-01, incluant l'analyse de la cause racine et les déficiences identifiées dans le processus de gestion des anomalies, a été publié intégralement — une démarche rare dans le secteur aérospatial qui a été saluée par la communauté internationale.
+          </div>
+        </div>
+      </div>
+
+      <div class="prog-partners">
+        <span class="partner-chip">ESA — Venus exploration</span>
+        <span class="partner-chip">CNES</span>
+        <span class="partner-chip">Safran Aircraft Engines</span>
+        <span class="partner-chip">Airbus Defence & Space</span>
+        <span class="partner-chip">ONERA</span>
+        <span class="partner-chip">NASA — GISS</span>
+      </div>
+
+      <div class="archive-note">
+        📁 Le rapport d'incident RI-ICARUS2-2022-01 est publié en open access. Les données de conception des prototypes P1 et P2 sont disponibles sur demande. Les résultats de caractérisation des matériaux haute température sous CO₂ sont publiés dans Materials & Design (2023). <a href="mailto:archives@ifras.fr">Contacter les archives →</a>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale ·
+  Programmes avortés
+</footer>
+
+<script>
+const sections = document.querySelectorAll('.intro-section, .prog-section');
+const navLinks  = document.querySelectorAll('#sidebar-nav a');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, {
+  rootMargin: '-148px 0px -60% 0px',
+  threshold: 0
+});
+
+sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
