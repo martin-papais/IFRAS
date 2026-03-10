@@ -1282,11 +1282,10 @@ function openMessage(mail) {
   const contact = mail.sender === userEmail ? mail.receiver : mail.sender;
   const ini     = initials(contact);
 
-  // Résolution du corps : hidden_body si la couleur correspond, sinon body
-  // Gère les cas où rgb vaut la chaîne "NULL" (texte Supabase) ou est réellement null
-  const rgbVal = (mail.rgb && mail.rgb !== 'NULL' && mail.rgb !== 'EMPTY') ? mail.rgb : null;
-  const bgVal  = (currentContentBg && currentContentBg !== 'null') ? currentContentBg : null;
-  const showHidden = rgbVal && bgVal && colorsMatch(bgVal, rgbVal);
+  // Résolution du corps : comparer rgb du mail avec le HEX tapé dans le champ paramètres
+  const rgbVal   = (mail.rgb && mail.rgb !== 'NULL' && mail.rgb !== 'EMPTY') ? mail.rgb : null;
+  const hexTyped = normalizeHex((document.getElementById('hexInput').value || '').trim());
+  const showHidden = rgbVal && hexTyped && colorsMatch(hexTyped, rgbVal);
   const body = showHidden ? mail.hidden_body : (mail.body || mail.hidden_body || '');
 
   const reader = document.getElementById('readerPane');
