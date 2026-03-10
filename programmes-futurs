@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Programmes futurs — IFRAS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+<style>
+
+:root {
+  --bg-main:  #050b1e;
+  --bg-dark:  #020617;
+  --bg-light: #070f2b;
+  --bg-menu:  #081235;
+  --border:   #1b2555;
+  --accent:   #4f6bed;
+  --future:   #a78bfa;
+  --text-main: #e6e6e6;
+  --text-soft: #aab3d6;
+  --sidebar-w: 270px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: "DM Sans", sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+}
+
+/* ===== HEADER ===== */
+
+header {
+  position: fixed; top: 0; width: 100%;
+  z-index: 2000;
+  background: rgba(5,11,30,.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  max-width: 1300px; margin: auto;
+  padding: 12px 30px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.header-left { display: flex; align-items: center; gap: 40px; }
+.logo-link img { height: 60px; }
+.main-nav { list-style: none; display: flex; gap: 32px; }
+
+.main-nav a {
+  text-decoration: none; color: var(--text-soft);
+  font-size: 14px; letter-spacing: .05em;
+}
+
+.main-nav a:hover,
+.main-nav a.active-nav { color: white; }
+
+.header-right a {
+  padding: 8px 18px; border-radius: 6px;
+  border: 1px solid var(--accent);
+  color: white; text-decoration: none; font-size: 13px;
+}
+
+.header-right a:hover { background: var(--accent); }
+
+/* ===== BANDEAU PROGRAMMES ===== */
+
+.program-filter {
+  margin-top: 84px;
+  background: var(--bg-light);
+  border-bottom: 1px solid var(--border);
+}
+
+.program-filter ul {
+  max-width: 1300px; margin: 0 auto;
+  display: flex; justify-content: space-between;
+  list-style: none; padding: 0 30px;
+}
+
+.program-filter li {
+  position: relative; padding: 14px 18px;
+  cursor: pointer; font-size: 14px;
+  color: var(--text-soft); letter-spacing: .06em;
+  transition: color .2s;
+}
+
+.program-filter li.active-filter {
+  color: white;
+  border-bottom: 2px solid var(--future);
+}
+
+.program-filter li:hover { color: white; background: rgba(79,107,237,.1); border-radius: 6px; }
+
+.dropdown {
+  position: absolute; top: 48px; left: 0;
+  background: #050b1e; border: 1px solid var(--border);
+  min-width: 220px; display: none;
+  z-index: 200; border-radius: 8px; overflow: hidden;
+  box-shadow: 0 16px 40px rgba(0,0,0,.4);
+}
+
+.dropdown a {
+  display: block; padding: 10px 16px;
+  font-size: 13px; color: var(--text-soft);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(27,37,85,.5);
+  transition: background .15s, color .15s;
+}
+
+.dropdown a:hover { background: rgba(79,107,237,.12); color: white; }
+.program-filter li:hover .dropdown { display: block; }
+
+/* ===== LAYOUT ===== */
+
+.page-wrap {
+  max-width: 1300px; margin: 0 auto;
+  padding: 0 30px;
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  gap: 0; align-items: start;
+}
+
+/* ===== SIDEBAR ===== */
+
+.sidebar {
+  position: sticky; top: 148px;
+  padding: 48px 32px 48px 0;
+}
+
+.sidebar-label {
+  font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(170,179,214,.35); font-weight: 500;
+  margin-bottom: 24px; padding-left: 16px;
+}
+
+.sidebar-nav { list-style: none; position: relative; }
+
+.sidebar-progress {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 2px; background: rgba(167,139,250,.07);
+}
+
+.sidebar-nav a {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 16px; font-size: 13px;
+  color: var(--text-soft); text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: color .2s, border-color .2s, background .2s;
+  border-radius: 0 6px 6px 0; font-weight: 300; line-height: 1.4;
+}
+
+.sidebar-nav a:hover {
+  color: white; background: rgba(255,255,255,.03);
+  border-left-color: rgba(167,139,250,.3);
+}
+
+.sidebar-nav a.active {
+  color: white; font-weight: 500;
+  background: rgba(167,139,250,.07);
+  border-left-color: var(--future);
+}
+
+.sidebar-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  flex-shrink: 0; opacity: .85;
+}
+
+.sidebar-divider { height: 1px; background: var(--border); margin: 20px 16px; }
+
+.sidebar-back {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 16px; font-size: 12px;
+  color: rgba(170,179,214,.4); text-decoration: none;
+  transition: color .2s; font-weight: 300;
+}
+
+.sidebar-back:hover { color: white; }
+
+/* ===== CONTENU ===== */
+
+.main-content {
+  padding: 48px 0 100px 52px;
+  border-left: 1px solid var(--border);
+  min-width: 0;
+}
+
+/* ===== INTRO ===== */
+
+.intro-section {
+  padding-bottom: 60px;
+  border-bottom: 1px solid var(--border);
+  scroll-margin-top: 160px;
+}
+
+.section-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--future); font-weight: 500; margin-bottom: 20px;
+}
+
+.section-eyebrow::before {
+  content: ''; display: block;
+  width: 24px; height: 1px; background: currentColor;
+}
+
+.intro-section h1 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(28px, 3.5vw, 46px);
+  font-weight: 800; letter-spacing: -0.03em;
+  line-height: 1.05; color: white; margin-bottom: 24px;
+}
+
+.intro-section h1 span {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(167,139,250,.5);
+}
+
+.intro-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 36px;
+  margin-top: 32px;
+}
+
+.intro-grid p {
+  font-size: 14.5px; color: var(--text-soft);
+  line-height: 1.85; font-weight: 300;
+}
+
+.intro-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  margin-top: 36px;
+}
+
+.intro-stat {
+  background: rgba(167,139,250,.04);
+  border: 1px solid rgba(167,139,250,.12);
+  border-radius: 10px; padding: 16px 20px;
+}
+
+.intro-stat-val {
+  font-family: "Syne", sans-serif; font-size: 24px;
+  font-weight: 800; color: white; letter-spacing: -0.03em;
+}
+
+.intro-stat-lbl {
+  font-size: 11px; color: var(--text-soft); font-weight: 300;
+  text-transform: uppercase; letter-spacing: .1em; margin-top: 3px;
+}
+
+/* ===== SECTION PROGRAMME ===== */
+
+.prog-section {
+  padding: 70px 0;
+  border-bottom: 1px solid var(--border);
+  scroll-margin-top: 160px;
+  position: relative;
+}
+
+.prog-section:last-child { border-bottom: none; }
+
+/* Filigrane année */
+.prog-year-bg {
+  position: absolute;
+  top: 48px; right: 0;
+  font-family: "Syne", sans-serif;
+  font-size: clamp(80px, 10vw, 130px);
+  font-weight: 800;
+  color: rgba(167,139,250,.04);
+  letter-spacing: -0.06em;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* En-tête */
+
+.prog-header {
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 24px;
+  margin-bottom: 28px;
+}
+
+.prog-code-badge {
+  font-family: "Syne", sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: .16em;
+  padding: 4px 12px; border-radius: 5px;
+  margin-bottom: 12px; display: inline-block;
+}
+
+.prog-header h2 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 700; color: white;
+  letter-spacing: -0.02em; line-height: 1.15;
+}
+
+.prog-status-badge {
+  font-size: 11px; padding: 5px 12px; border-radius: 20px;
+  font-weight: 500; letter-spacing: .05em;
+  white-space: nowrap; flex-shrink: 0; margin-top: 4px;
+  background: rgba(167,139,250,.1); color: var(--future);
+  border: 1px solid rgba(167,139,250,.25);
+}
+
+/* Bannière horizon */
+.prog-horizon-banner {
+  display: flex; align-items: center; gap: 20px;
+  margin-bottom: 36px;
+  padding: 16px 22px;
+  background: rgba(167,139,250,.04);
+  border: 1px dashed rgba(167,139,250,.2);
+  border-radius: 12px;
+}
+
+.horizon-year {
+  font-family: "Syne", sans-serif; font-size: 32px;
+  font-weight: 800; color: rgba(167,139,250,.7);
+  letter-spacing: -0.04em; line-height: 1;
+}
+
+.horizon-sep { width: 1px; height: 36px; background: rgba(167,139,250,.2); }
+
+.horizon-info { display: flex; flex-direction: column; gap: 4px; }
+
+.horizon-label {
+  font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(167,139,250,.5); font-weight: 500;
+}
+
+.horizon-desc {
+  font-size: 13px; color: var(--text-soft); font-weight: 300;
+}
+
+.horizon-badge {
+  margin-left: auto;
+  font-size: 11px; padding: 4px 12px; border-radius: 20px;
+  border: 1px solid rgba(167,139,250,.2);
+  color: rgba(167,139,250,.6); font-weight: 300;
+  white-space: nowrap;
+}
+
+/* Corps */
+
+.prog-intro {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+  margin-bottom: 32px;
+}
+
+.prog-intro p {
+  font-size: 14.5px; color: var(--text-soft);
+  line-height: 1.85; font-weight: 300;
+}
+
+.prog-intro p + p { margin-top: 14px; }
+
+/* Fiche technique */
+.prog-fiche {
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 26px 28px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+.fiche-label {
+  font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(170,179,214,.4); font-weight: 500;
+}
+
+.fiche-rows { display: flex; flex-direction: column; gap: 0; }
+
+.fiche-row {
+  display: flex; align-items: baseline;
+  justify-content: space-between; gap: 12px;
+  font-size: 13px; padding: 10px 0;
+  border-bottom: 1px solid rgba(27,37,85,.6);
+}
+
+.fiche-row:last-child { border-bottom: none; }
+
+.fiche-key { color: rgba(170,179,214,.5); font-weight: 300; flex-shrink: 0; }
+.fiche-val { color: var(--text-main); text-align: right; font-weight: 400; }
+
+/* Condition spéciale */
+.fiche-val--pending {
+  color: rgba(167,139,250,.7);
+  font-style: italic;
+}
+
+/* KPIs */
+.prog-kpis {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  margin-bottom: 32px;
+}
+
+.prog-kpi {
+  border-radius: 10px; padding: 16px 18px;
+  background: rgba(167,139,250,.04);
+  border: 1px solid rgba(167,139,250,.12);
+  display: flex; flex-direction: column; gap: 4px;
+}
+
+.prog-kpi-val {
+  font-family: "Syne", sans-serif; font-size: 22px;
+  font-weight: 800; letter-spacing: -0.03em;
+  color: var(--future);
+}
+
+.prog-kpi-lbl {
+  font-size: 11px; color: var(--text-soft);
+  font-weight: 300; line-height: 1.4;
+  text-transform: uppercase; letter-spacing: .08em;
+}
+
+/* Axes scientifiques */
+.prog-axes-wrap {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  margin-bottom: 32px;
+}
+
+.prog-axe {
+  background: rgba(255,255,255,.02);
+  border: 1px solid rgba(255,255,255,.05);
+  border-radius: 10px; padding: 18px 20px;
+  display: flex; gap: 14px; align-items: flex-start;
+  transition: background .2s, border-color .2s;
+}
+
+.prog-axe:hover {
+  background: rgba(167,139,250,.04);
+  border-color: rgba(167,139,250,.15);
+}
+
+.axe-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+
+.axe-title {
+  font-size: 13px; font-weight: 500; color: white; margin-bottom: 4px;
+}
+
+.axe-desc {
+  font-size: 12.5px; color: var(--text-soft);
+  font-weight: 300; line-height: 1.6;
+}
+
+/* Jalons */
+.prog-milestones {
+  display: flex; flex-direction: column; gap: 0;
+  border-left: 1px solid rgba(167,139,250,.18);
+  padding-left: 28px; margin-left: 8px;
+  margin-bottom: 32px;
+}
+
+.milestones-label {
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(170,179,214,.35); margin-bottom: 20px;
+  margin-left: -28px; padding-left: 28px;
+}
+
+.milestone-item {
+  position: relative;
+  padding-bottom: 24px;
+}
+
+.milestone-item:last-child { padding-bottom: 0; }
+
+.milestone-item::before {
+  content: '';
+  position: absolute;
+  left: -34px; top: 5px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--dot-color, rgba(167,139,250,.4));
+  border: 2px solid var(--bg-main);
+  box-shadow: 0 0 0 1px var(--dot-color, rgba(167,139,250,.3));
+}
+
+.milestone-item.done::before {
+  background: #34d399;
+  box-shadow: 0 0 8px rgba(52,211,153,.3);
+}
+
+.milestone-item.active-m::before {
+  background: var(--future);
+  box-shadow: 0 0 10px rgba(167,139,250,.4);
+  animation: pulseDot 2s ease infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(167,139,250,.4); }
+  50%       { box-shadow: 0 0 0 6px rgba(167,139,250,.0); }
+}
+
+.milestone-date {
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(167,139,250,.55); font-weight: 500; margin-bottom: 4px;
+}
+
+.milestone-item.done .milestone-date { color: rgba(52,211,153,.6); }
+
+.milestone-title {
+  font-size: 13.5px; font-weight: 500; color: rgba(255,255,255,.8);
+  margin-bottom: 3px;
+}
+
+.milestone-item.done .milestone-title { color: rgba(255,255,255,.5); }
+
+.milestone-desc {
+  font-size: 12.5px; color: var(--text-soft); font-weight: 300; line-height: 1.55;
+}
+
+.milestone-item.done .milestone-desc { color: rgba(170,179,214,.45); }
+
+/* Partenaires */
+.prog-partners {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px;
+}
+
+.partner-chip {
+  font-size: 12px; padding: 5px 14px; border-radius: 6px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.07);
+  color: var(--text-soft); font-weight: 300;
+}
+
+/* Note de financement */
+.funding-note {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px 20px; margin-top: 28px;
+  background: rgba(167,139,250,.04);
+  border: 1px solid rgba(167,139,250,.12);
+  border-radius: 10px;
+  font-size: 13px; color: var(--text-soft); font-weight: 300;
+  line-height: 1.65;
+}
+
+.funding-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; opacity: .7; }
+
+.inner-divider { height: 1px; background: var(--border); margin: 28px 0; }
+
+/* ===== FOOTER ===== */
+
+footer {
+  background: var(--bg-dark); border-top: 1px solid var(--border);
+  padding: 40px 30px; text-align: center;
+  font-size: 12px; color: #6b7280;
+}
+
+/* ===== ANIMATIONS ===== */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.prog-section { animation: fadeUp .55s ease both; }
+.prog-section:nth-child(1) { animation-delay: .05s; }
+.prog-section:nth-child(2) { animation-delay: .10s; }
+.prog-section:nth-child(3) { animation-delay: .15s; }
+
+</style>
+</head>
+
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="header-inner">
+    <div class="header-left">
+      <a href="index.html" class="logo-link"><img src="logo.png" alt="Logo IFRAS"></a>
+      <ul class="main-nav">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="recherche.html">Recherche</a></li>
+        <li><a href="programmes.html" class="active-nav">Programmes</a></li>
+        <li><a href="publications.html">Publications</a></li>
+      </ul>
+    </div>
+    <div class="header-right">
+      <a href="connexion.html">Connexion</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== BANDEAU PROGRAMMES ===== -->
+<div class="program-filter">
+  <ul>
+    <li>Programmes actifs
+      <div class="dropdown">
+        <a href="programmes-actifs.html#artemis9">ARTEMIS-9</a>
+        <a href="programmes-actifs.html#orion3">ORION-3</a>
+        <a href="programmes-actifs.html#hermes">HERMES</a>
+        <a href="programmes-actifs.html#atlas">ATLAS</a>
+        <a href="programmes-actifs.html#lynx">LYNX</a>
+        <a href="programmes-actifs.html#prometheus">PROMETHEUS</a>
+      </div>
+    </li>
+    <li>Programmes archivés
+      <div class="dropdown">
+        <a href="programmes-archives.html#apollox">APOLLO-X</a>
+        <a href="programmes-archives.html#delphi">DELPHI</a>
+        <a href="programmes-archives.html#cassinir">CASSINI-R</a>
+      </div>
+    </li>
+    <li class="active-filter">Programmes futurs
+      <div class="dropdown">
+        <a href="programmes-futurs.html#hera">HERA</a>
+        <a href="programmes-futurs.html#noe">NOE</a>
+        <a href="programmes-futurs.html#titan0">TITAN-0</a>
+      </div>
+    </li>
+    <li>Programmes avortés
+      <div class="dropdown">
+        <a href="#">PHOENIX</a>
+        <a href="#">DAEDALUS</a>
+        <a href="#">ICARUS-2</a>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<!-- ===== LAYOUT ===== -->
+<div class="page-wrap">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <div class="sidebar-label">Programmes futurs</div>
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <div class="sidebar-progress"></div>
+      <li>
+        <a href="#presentation" class="active">
+          <span class="sidebar-dot" style="background:#a78bfa;"></span>
+          Vue d'ensemble
+        </a>
+      </li>
+      <li>
+        <a href="#hera">
+          <span class="sidebar-dot" style="background:#38bdf8;"></span>
+          HERA
+        </a>
+      </li>
+      <li>
+        <a href="#noe">
+          <span class="sidebar-dot" style="background:#34d399;"></span>
+          NOE
+        </a>
+      </li>
+      <li>
+        <a href="#titan0">
+          <span class="sidebar-dot" style="background:#f97316;"></span>
+          TITAN-0
+        </a>
+      </li>
+    </ul>
+    <div class="sidebar-divider"></div>
+    <a href="programmes.html" class="sidebar-back">← Retour aux Programmes</a>
+  </aside>
+
+  <!-- ===== CONTENU ===== -->
+  <main class="main-content">
+
+    <!-- ── PRÉSENTATION ── -->
+    <section class="intro-section" id="presentation">
+      <div class="section-eyebrow">En cours de développement</div>
+      <h1>Programmes<br><span>futurs</span></h1>
+
+      <div class="intro-grid">
+        <div>
+          <p>Les programmes futurs de l'IFRAS sont les projets scientifiques en phase de conception, de définition ou d'approbation budgétaire qui constitueront la prochaine génération de l'activité de l'institut. Leur démarrage opérationnel est conditionné à la validation de leur financement pluriannuel et, pour certains, à l'aboutissement de programmes actifs dont ils prennent la suite ou utilisent les résultats.</p>
+          <p>Chaque programme futur traverse une série de jalons de maturité technologique — de la phase A (étude de faisabilité) à la phase D (qualification) — avant d'être officiellement lancé. Les pages qui suivent présentent l'état d'avancement de chaque programme, ses objectifs scientifiques, ses axes de travail actuels et les conditions de son démarrage effectif.</p>
+        </div>
+        <div>
+          <p>Ces trois programmes — HERA, NOE et TITAN-0 — ont été retenus après une sélection compétitive parmi douze propositions de programmes long terme soumises au Conseil Scientifique de l'IFRAS en 2023. Leur sélection reflète les priorités de la Stratégie Spatiale Nationale 2030 : l'habitabilité des lunes de géantes gazeuses, la physique du vent solaire et les analogues de la Terre primitive.</p>
+          <p>Les budgets de ces programmes n'étant pas encore définitivement arrêtés, certaines informations demeurent indicatives. Les données présentées reflètent l'état des dossiers de définition approuvés par la Direction Scientifique en janvier 2026.</p>
+        </div>
+      </div>
+
+      <div class="intro-stats">
+        <div class="intro-stat">
+          <div class="intro-stat-val">3</div>
+          <div class="intro-stat-lbl">Programmes en développement</div>
+        </div>
+        <div class="intro-stat">
+          <div class="intro-stat-val">2027</div>
+          <div class="intro-stat-lbl">Premier lancement (NOE)</div>
+        </div>
+        <div class="intro-stat">
+          <div class="intro-stat-val">~1,4 Md€</div>
+          <div class="intro-stat-lbl">Budget total estimé</div>
+        </div>
+        <div class="intro-stat">
+          <div class="intro-stat-val">+420</div>
+          <div class="intro-stat-lbl">Chercheurs à mobiliser</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- HERA                                                          -->
+    <!-- ============================================================ -->
+    <section class="prog-section" id="hera">
+      <div class="prog-year-bg">2028</div>
+
+      <div class="prog-header">
+        <div>
+          <span class="prog-code-badge" style="color:#38bdf8; background:rgba(56,189,248,.08); border:1px solid rgba(56,189,248,.22);">HERA</span>
+          <h2>Habitabilité et océanologie des lunes de géantes gazeuses</h2>
+        </div>
+        <span class="prog-status-badge">Phase B · Financement en cours</span>
+      </div>
+
+      <div class="prog-horizon-banner">
+        <span class="horizon-year">2028</span>
+        <div class="horizon-sep"></div>
+        <div class="horizon-info">
+          <span class="horizon-label">Horizon de lancement</span>
+          <span class="horizon-desc">Lancement de la sonde Europa-1 prévu au 1er trimestre 2028</span>
+        </div>
+        <span class="horizon-badge">Collaboration ESA–IFRAS</span>
+      </div>
+
+      <div class="prog-kpis">
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">2</span>
+          <span class="prog-kpi-lbl">Lunes cibles (Europa, Ganymède)</span>
+        </div>
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">3 ans</span>
+          <span class="prog-kpi-lbl">Durée de mission orbitale</span>
+        </div>
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">~620 M€</span>
+          <span class="prog-kpi-lbl">Budget estimé (part IFRAS)</span>
+        </div>
+      </div>
+
+      <div class="prog-intro">
+        <div>
+          <p>HERA est le programme le plus ambitieux du pipeline futur de l'IFRAS. Son objectif central est d'envoyer une sonde orbitale autour d'Europa — la lune de Jupiter abritant très probablement un océan d'eau liquide sous sa croûte de glace — pour y mener la première caractérisation complète de la chimie de cet océan depuis l'orbite, et en évaluer le potentiel astrobiologique avec une précision inégalée.</p>
+          <p>Le programme s'appuie sur une architecture innovante : une sonde mère orbitant à 200 km au-dessus de la surface d'Europa, équipée d'un spectromètre de masse à haute résolution capable de détecter les molécules organiques dans les panaches de vapeur émis naturellement à travers les fractures de la croûte glaciaire, et d'un radar de pénétration capable de cartographier l'interface glace-océan jusqu'à 15 km de profondeur.</p>
+          <p style="margin-top:14px">HERA est développé en partenariat prioritaire avec l'ESA dans le cadre du programme Cosmic Vision. L'IFRAS est responsable de deux des six instruments scientifiques embarqués — le spectromètre organique HERMES-S et le module de navigation autonome LYNX-Space, dérivé du programme robotique terrestre. La sonde sera lancée par Ariane 6 en configuration lourde depuis le Centre Spatial Guyanais.</p>
+        </div>
+        <div class="prog-fiche">
+          <span class="fiche-label">Fiche programme</span>
+          <div class="fiche-rows">
+            <div class="fiche-row">
+              <span class="fiche-key">Statut</span>
+              <span class="fiche-val">Phase B — Définition détaillée</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Début des études</span>
+              <span class="fiche-val">Septembre 2022</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Lancement prévu</span>
+              <span class="fiche-val">T1 2028 (sous réserve)</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Département pilote</span>
+              <span class="fiche-val">DAI / DSVT / DSTI</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Chercheurs mobilisés</span>
+              <span class="fiche-val">~180 (cible)</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Partenaires confirmés</span>
+              <span class="fiche-val">ESA, CNES, Airbus, JPL</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Budget total estimé</span>
+              <span class="fiche-val fiche-val--pending">~620 M€ (indicatif)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="inner-divider"></div>
+
+      <div style="margin-bottom:20px; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(170,179,214,.35);">Axes scientifiques prioritaires</div>
+      <div class="prog-axes-wrap">
+        <div class="prog-axe">
+          <span class="axe-icon">🌊</span>
+          <div>
+            <div class="axe-title">Chimie de l'océan d'Europa</div>
+            <div class="axe-desc">Caractérisation de la composition organique et inorganique de l'océan sub-glaciaire par analyse spectroscopique des panaches de vapeur. Recherche de molécules prébiotiques et de signatures métaboliques.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">❄️</span>
+          <div>
+            <div class="axe-title">Structure de la croûte glaciaire</div>
+            <div class="axe-desc">Cartographie radar de l'épaisseur et de la structure interne de la croûte de glace d'Europa (estimée entre 3 et 30 km). Identification des zones de renouvellement et des fractures actives.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">🔭</span>
+          <div>
+            <div class="axe-title">Géologie de surface comparée</div>
+            <div class="axe-desc">Imagerie haute résolution de la surface d'Europa et de Ganymède. Analyse comparative des processus géologiques actifs — cryovolcanisme, tectonique glaciaire, impacts récents.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">🧬</span>
+          <div>
+            <div class="axe-title">Astrobiologie des environnements océaniques</div>
+            <div class="axe-desc">Définition des biosignatures chimiques et physiques détectables depuis l'orbite dans un océan extraterrestre. Élaboration d'un cadre théorique universel pour la détection de la vie non terrestre.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">🛰</span>
+          <div>
+            <div class="axe-title">Navigation autonome en milieu radiatif</div>
+            <div class="axe-desc">Qualification du module LYNX-Space pour une navigation autonome dans les ceintures de radiations de Jupiter — l'un des environnements les plus hostiles pour l'électronique du système solaire.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">🧲</span>
+          <div>
+            <div class="axe-title">Magnétosphère jovidienne</div>
+            <div class="axe-desc">Mesure in situ des interactions entre le champ magnétique de Jupiter et les lunes galiléennes. Caractérisation des courants d'Alfvén et de leur rôle dans le chauffage de l'océan d'Europa.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="inner-divider"></div>
+
+      <div class="prog-milestones">
+        <div class="milestones-label">Jalons du programme</div>
+
+        <div class="milestone-item done">
+          <div class="milestone-date">Septembre 2022</div>
+          <div class="milestone-title">Phase A — Étude de faisabilité</div>
+          <div class="milestone-desc">Validation du concept scientifique et de l'architecture de mission par le Conseil Scientifique IFRAS et le comité Cosmic Vision ESA. Sélection officielle du programme.</div>
+        </div>
+
+        <div class="milestone-item done">
+          <div class="milestone-date">Juin 2024</div>
+          <div class="milestone-title">Phase A/B1 — Définition préliminaire</div>
+          <div class="milestone-desc">Finalisation de l'architecture de la sonde, sélection des 6 instruments scientifiques et attribution des responsabilités aux équipes partenaires (IFRAS : HERMES-S + LYNX-Space).</div>
+        </div>
+
+        <div class="milestone-item active-m">
+          <div class="milestone-date">En cours · 2025–2026</div>
+          <div class="milestone-title">Phase B2 — Définition détaillée</div>
+          <div class="milestone-desc">Conception détaillée de tous les sous-systèmes. Revue de définition préliminaire (PDR) prévue pour le 3e trimestre 2026. Développement des prototypes des deux instruments IFRAS.</div>
+        </div>
+
+        <div class="milestone-item">
+          <div class="milestone-date">2026–2027</div>
+          <div class="milestone-title">Phase C/D — Réalisation et intégration</div>
+          <div class="milestone-desc">Fabrication de la sonde, intégration des instruments et campagnes de tests environnementaux (thermique, vibratoire, radiatif). Revue de qualification finale prévue fin 2027.</div>
+        </div>
+
+        <div class="milestone-item">
+          <div class="milestone-date">T1 2028</div>
+          <div class="milestone-title">Lancement — Ariane 6</div>
+          <div class="milestone-desc">Lancement depuis le Centre Spatial Guyanais. Trajet de 6,5 ans jusqu'à Jupiter via assist gravitationnel terrestre et vénusien. Mise en orbite jovidienne prévue mi-2034.</div>
+        </div>
+      </div>
+
+      <div class="prog-partners">
+        <span class="partner-chip">ESA — Cosmic Vision</span>
+        <span class="partner-chip">CNES</span>
+        <span class="partner-chip">Airbus Defence & Space</span>
+        <span class="partner-chip">NASA — JPL</span>
+        <span class="partner-chip">DLR</span>
+        <span class="partner-chip">SRON Pays-Bas</span>
+        <span class="partner-chip">Observatoire de Paris</span>
+      </div>
+
+      <div class="funding-note">
+        <span class="funding-icon">💶</span>
+        <div>Le budget de 620 M€ est une estimation indicative issue du dossier de définition approuvé en janvier 2026. La validation définitive du financement pluriannuel est attendue pour le 4e trimestre 2026, conditionnant le passage officiel en phase C. La part IFRAS représente environ 35 % du budget total de la mission, le solde étant porté par l'ESA et les autres partenaires nationaux.</div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- NOE                                                           -->
+    <!-- ============================================================ -->
+    <section class="prog-section" id="noe">
+      <div class="prog-year-bg">2027</div>
+
+      <div class="prog-header">
+        <div>
+          <span class="prog-code-badge" style="color:#34d399; background:rgba(52,211,153,.08); border:1px solid rgba(52,211,153,.22);">NOE</span>
+          <h2>Réseau d'observation exosphérique — Vent solaire et magnétosphères</h2>
+        </div>
+        <span class="prog-status-badge">Phase C · Financement acquis</span>
+      </div>
+
+      <div class="prog-horizon-banner">
+        <span class="horizon-year">2027</span>
+        <div class="horizon-sep"></div>
+        <div class="horizon-info">
+          <span class="horizon-label">Horizon de lancement</span>
+          <span class="horizon-desc">Déploiement de la constellation en 3 lancements groupés entre jan. et juin 2027</span>
+        </div>
+        <span class="horizon-badge">Financement acquis</span>
+      </div>
+
+      <div class="prog-kpis">
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">24</span>
+          <span class="prog-kpi-lbl">Microsatellites dans la constellation</span>
+        </div>
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">L1 + L5</span>
+          <span class="prog-kpi-lbl">Points de Lagrange ciblés</span>
+        </div>
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">~210 M€</span>
+          <span class="prog-kpi-lbl">Budget total (acquis)</span>
+        </div>
+      </div>
+
+      <div class="prog-intro">
+        <div>
+          <p>NOE est le programme futur le plus avancé de l'IFRAS — son financement est entièrement acquis et ses premières unités de vol sont en cours d'assemblage. L'objectif est de déployer une constellation de 24 microsatellites répartis entre les points de Lagrange L1 et L5 du système Terre-Soleil pour constituer un réseau d'observation en temps réel du vent solaire et de ses interactions avec les magnétosphères des planètes internes.</p>
+          <p>L'enjeu scientifique est double. D'une part, comprendre la physique fondamentale du vent solaire à des résolutions spatiales et temporelles inaccessibles aux missions mono-satellites. D'autre part, développer un système opérationnel de prévision de la météo spatiale — les tempêtes géomagnétiques et les éruptions solaires qui menacent les satellites, les réseaux électriques et les astronautes en dehors de la magnétosphère terrestre.</p>
+          <p style="margin-top:14px">Chaque microsatellite NOE pèse 45 kg et embarque une suite instrumentale minimale mais cohérente : magnétomètre triaxial fluxgate, analyseur de plasma ionique et électronique, et spectromètre de particules énergétiques. La synchronisation des 24 satellites permet de reconstituer des structures tridimensionnelles dans le vent solaire — fronts d'éjection de masse coronale, discontinuités rotationelles, chocs inter-planétaires — qui restent invisibles aux observatoires uniques actuels.</p>
+        </div>
+        <div class="prog-fiche">
+          <span class="fiche-label">Fiche programme</span>
+          <div class="fiche-rows">
+            <div class="fiche-row">
+              <span class="fiche-key">Statut</span>
+              <span class="fiche-val">Phase C — Réalisation</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Début des études</span>
+              <span class="fiche-val">Mars 2021</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Lancement prévu</span>
+              <span class="fiche-val">Jan. – Juin 2027</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Département pilote</span>
+              <span class="fiche-val">DAI / DPM / DSTI</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Chercheurs mobilisés</span>
+              <span class="fiche-val">~140 (en cours)</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Partenaires confirmés</span>
+              <span class="fiche-val">ESA, NOAA, JAXA, CNRS</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Budget total</span>
+              <span class="fiche-val">210 M€ (financement acquis)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="inner-divider"></div>
+
+      <div style="margin-bottom:20px; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(170,179,214,.35);">Axes scientifiques prioritaires</div>
+      <div class="prog-axes-wrap">
+        <div class="prog-axe">
+          <span class="axe-icon">☀️</span>
+          <div>
+            <div class="axe-title">Physique du vent solaire</div>
+            <div class="axe-desc">Mesures in situ multi-points des propriétés du plasma solaire — densité, vitesse, température, composition — permettant de reconstruire les structures 3D des éjections de masse coronale.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">🌍</span>
+          <div>
+            <div class="axe-title">Magnétosphères planétaires</div>
+            <div class="axe-desc">Étude comparative des interactions vent solaire–magnétosphère pour Mercure, Vénus, la Terre et Mars. Quantification des taux d'érosion atmosphérique et de perte ionique.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">⛈</span>
+          <div>
+            <div class="axe-title">Météorologie spatiale opérationnelle</div>
+            <div class="axe-desc">Développement d'un système d'alerte précoce des tempêtes géomagnétiques à 24-48 heures, transmis en temps réel aux agences NOAA, ESA-SSA et aux opérateurs satellites commerciaux.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">🛰</span>
+          <div>
+            <div class="axe-title">Technologies constellation</div>
+            <div class="axe-desc">Qualification de solutions de maintien en formation autonome pour 24 satellites répartis sur 300 millions de km. Architecture de communication inter-satellite en bande Ka miniaturisée.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="inner-divider"></div>
+
+      <div class="prog-milestones">
+        <div class="milestones-label">Jalons du programme</div>
+
+        <div class="milestone-item done">
+          <div class="milestone-date">Mars 2021</div>
+          <div class="milestone-title">Sélection et Phase A</div>
+          <div class="milestone-desc">Validation scientifique et technique du concept. Accord de financement préliminaire du CSN et de l'ESA dans le cadre du programme Space Safety.</div>
+        </div>
+
+        <div class="milestone-item done">
+          <div class="milestone-date">Décembre 2023</div>
+          <div class="milestone-title">Phase B — CDR (Critical Design Review)</div>
+          <div class="milestone-desc">Revue de conception critique passée avec succès. Gel de l'architecture des microsatellites et des instruments. Attribution des contrats de fabrication à Thales Alenia Space.</div>
+        </div>
+
+        <div class="milestone-item done">
+          <div class="milestone-date">Juillet 2025</div>
+          <div class="milestone-title">Financement total acquis</div>
+          <div class="milestone-desc">Validation définitive du budget de 210 M€ par le Parlement dans le cadre de la LPM Espace 2025-2030. Passage officiel en phase C de réalisation.</div>
+        </div>
+
+        <div class="milestone-item active-m">
+          <div class="milestone-date">En cours · 2025–2026</div>
+          <div class="milestone-title">Phase C — Assemblage et tests</div>
+          <div class="milestone-desc">Assemblage des 24 unités de vol en salle blanche. Tests unitaires d'acceptance thermique et vibratoire. Livraison des premiers satellites qualifiés attendue en septembre 2026.</div>
+        </div>
+
+        <div class="milestone-item">
+          <div class="milestone-date">Jan. – Juin 2027</div>
+          <div class="milestone-title">3 lancements groupés</div>
+          <div class="milestone-desc">Mise en orbite en 3 vagues de 8 satellites chacune. Lanceurs : Ariane 6 (vague 1), Vega-C (vagues 2 et 3). Déploiement de la constellation complète prévu fin juin 2027.</div>
+        </div>
+
+        <div class="milestone-item">
+          <div class="milestone-date">2027–2032</div>
+          <div class="milestone-title">Phase opérationnelle (5 ans)</div>
+          <div class="milestone-desc">Opérations scientifiques continues avec transmission de données en temps réel vers le Centre de Contrôle IFRAS-Toulouse et les partenaires. Production de prévisions météo spatiale 24/7.</div>
+        </div>
+      </div>
+
+      <div class="prog-partners">
+        <span class="partner-chip">ESA — Space Safety Programme</span>
+        <span class="partner-chip">NOAA — Space Weather Center</span>
+        <span class="partner-chip">JAXA</span>
+        <span class="partner-chip">CNRS — LPP</span>
+        <span class="partner-chip">Thales Alenia Space</span>
+        <span class="partner-chip">Université d'Orléans — LPC2E</span>
+        <span class="partner-chip">IWF Graz (Autriche)</span>
+      </div>
+
+      <div class="funding-note">
+        <span class="funding-icon">✅</span>
+        <div>NOE est le seul programme futur dont le financement est entièrement acquis et sécurisé. Le budget de 210 M€ est inscrit dans la Loi de Programmation Militaire Espace 2025-2030 votée par le Parlement en juillet 2025. Les premiers satellites en configuration de vol sont actuellement en assemblage et les lancements sont confirmés pour 2027.</div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- TITAN-0                                                       -->
+    <!-- ============================================================ -->
+    <section class="prog-section" id="titan0">
+      <div class="prog-year-bg">2029</div>
+
+      <div class="prog-header">
+        <div>
+          <span class="prog-code-badge" style="color:#f97316; background:rgba(249,115,22,.08); border:1px solid rgba(249,115,22,.22);">TITAN-0</span>
+          <h2>Sonde atmosphérique Titan — Chimie prébiotique in situ</h2>
+        </div>
+        <span class="prog-status-badge">Phase A · Étude de faisabilité</span>
+      </div>
+
+      <div class="prog-horizon-banner">
+        <span class="horizon-year">2029</span>
+        <div class="horizon-sep"></div>
+        <div class="horizon-info">
+          <span class="horizon-label">Horizon de lancement</span>
+          <span class="horizon-desc">Fenêtre de lancement optimale calculée en septembre 2029 (assist gravitationnel Saturne)</span>
+        </div>
+        <span class="horizon-badge">Financement en négociation</span>
+      </div>
+
+      <div class="prog-kpis">
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">50 km</span>
+          <span class="prog-kpi-lbl">Altitude d'opération dans l'atmosphère</span>
+        </div>
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">180 jours</span>
+          <span class="prog-kpi-lbl">Durée de mission nominale</span>
+        </div>
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">~570 M€</span>
+          <span class="prog-kpi-lbl">Budget estimé (en négociation)</span>
+        </div>
+      </div>
+
+      <div class="prog-intro">
+        <div>
+          <p>TITAN-0 est le programme le plus audacieux — et le plus incertain — du pipeline futur de l'IFRAS. Son ambition est d'envoyer la première sonde entièrement conçue par l'IFRAS en orbite autour de Titan, la plus grande lune de Saturne, pour y analyser in situ la chimie de son atmosphère épaisse et orange. Titan est fascinant parce qu'il possède une atmosphère riche en azote et méthane, avec une chimie organique complexe qui constitue l'analogue le plus fidèle connu de la Terre primitive il y a 4 milliards d'années — avant l'apparition de la vie.</p>
+          <p>La particularité de l'architecture TITAN-0 est le déploiement d'un aérostat gonflable — un ballon stratosphérique de 8 mètres de diamètre — libéré depuis la sonde orbitale lors de son premier survol à basse altitude. Cet aérostat dérivant à 50 km d'altitude dans la couche nuageuse de Titan pourra prélever des échantillons d'aérosols et d'espèces gazeuses directement dans les brumes tholin — ces composés organiques complexes qui donnent à Titan sa couleur caractéristique et dont la chimie reste largement inconnue.</p>
+          <p style="margin-top:14px">Le programme est directement inspiré des travaux du pôle Paléontologie du DSVT sur les biosignatures et des résultats de CASSINI-R qui ont révélé de nouvelles structures dans l'atmosphère de Titan. Son développement dépend de la validation du concept d'aérostat en atmosphère d'azote-méthane, actuellement testée en chambre ATLAS, et du succès des négociations de cofinancement avec la NASA dont l'intérêt pour Titan s'est exprimé dans la mission Dragonfly actuellement en développement.</p>
+        </div>
+        <div class="prog-fiche">
+          <span class="fiche-label">Fiche programme</span>
+          <div class="fiche-rows">
+            <div class="fiche-row">
+              <span class="fiche-key">Statut</span>
+              <span class="fiche-val">Phase A — Faisabilité</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Début des études</span>
+              <span class="fiche-val">Janvier 2024</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Lancement prévu</span>
+              <span class="fiche-val">Sep. 2029 (sous réserve)</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Département pilote</span>
+              <span class="fiche-val">DAI / DSVT / DPET</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Chercheurs mobilisés</span>
+              <span class="fiche-val">~100 (cible)</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Partenaires pressentis</span>
+              <span class="fiche-val">NASA, ESA, CNES, ASI</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Budget total estimé</span>
+              <span class="fiche-val fiche-val--pending">~570 M€ (en négociation)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="inner-divider"></div>
+
+      <div style="margin-bottom:20px; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(170,179,214,.35);">Axes scientifiques prioritaires</div>
+      <div class="prog-axes-wrap">
+        <div class="prog-axe">
+          <span class="axe-icon">🟠</span>
+          <div>
+            <div class="axe-title">Chimie des aérosols tholin</div>
+            <div class="axe-desc">Prélèvement et analyse directe des particules tholin dans la stratosphère de Titan. Identification des précurseurs des acides aminés et des bases nucléiques dans une atmosphère réductrice analogue à la Terre primitive.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">💧</span>
+          <div>
+            <div class="axe-title">Cycle méthane-éthane</div>
+            <div class="axe-desc">Étude du cycle hydrologique d'hydrocarbures liquides de Titan — précipitations de méthane, lacs d'éthane polaires, évaporation et recharge de l'atmosphère. Analogue cryogénique du cycle de l'eau terrestre.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">🌬</span>
+          <div>
+            <div class="axe-title">Dynamique atmosphérique</div>
+            <div class="axe-desc">Mesures in situ des vents, températures et pressions à 50 km d'altitude pendant 180 jours. Validation des modèles de circulation générale développés depuis les données Cassini-Huygens.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">⚗️</span>
+          <div>
+            <div class="axe-title">Photochimie de l'azote</div>
+            <div class="axe-desc">Caractérisation des réactions photochimiques initées par le rayonnement UV solaire dans la haute atmosphère. Mesure des taux de production des nitriles et des polymères azotés complexes.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">🎈</span>
+          <div>
+            <div class="axe-title">Technologie aérostat atmosphérique</div>
+            <div class="axe-desc">Développement et qualification d'un aérostat gonflable opérant à −180 °C dans une atmosphère de 1,5 bar composée d'azote et de méthane — première mondiale pour une mission scientifique.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">🦠</span>
+          <div>
+            <div class="axe-title">Exobiologie prébiotique</div>
+            <div class="axe-desc">Évaluation de la probabilité d'existence de formes de vie méthanogènes dans les lacs d'hydrocarbures de surface et dans la stratosphère. Définition de nouvelles biosignatures non oxygéniques.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="inner-divider"></div>
+
+      <div class="prog-milestones">
+        <div class="milestones-label">Jalons du programme</div>
+
+        <div class="milestone-item done">
+          <div class="milestone-date">Janvier 2024</div>
+          <div class="milestone-title">Lancement des études Phase A</div>
+          <div class="milestone-desc">Démarrage officiel des études de faisabilité. Constitution de l'équipe de science (28 chercheurs IFRAS) et dépôt du dossier de candidature au programme Horizon Europe.</div>
+        </div>
+
+        <div class="milestone-item active-m">
+          <div class="milestone-date">En cours · 2024–2026</div>
+          <div class="milestone-title">Phase A — Faisabilité et concept</div>
+          <div class="milestone-desc">Tests du concept d'aérostat en chambre ATLAS (simulation atmosphère Titan). Négociations de cofinancement avec la NASA et l'ESA. Rédaction du dossier de définition scientifique (SRD) final.</div>
+        </div>
+
+        <div class="milestone-item">
+          <div class="milestone-date">Fin 2026</div>
+          <div class="milestone-title">Décision de lancement (go/no-go)</div>
+          <div class="milestone-desc">Décision finale du Conseil Scientifique IFRAS et des partenaires sur le passage en Phase B, conditionnée à la validation du concept aérostat et à l'obtention du cofinancement NASA/ESA.</div>
+        </div>
+
+        <div class="milestone-item">
+          <div class="milestone-date">2027–2028</div>
+          <div class="milestone-title">Phase B/C — Définition et réalisation</div>
+          <div class="milestone-desc">En cas de go-ahead, développement de la sonde orbitale et de l'aérostat. Intégration des 5 instruments scientifiques. Campagne de tests environnementaux au CNES-Toulouse.</div>
+        </div>
+
+        <div class="milestone-item">
+          <div class="milestone-date">Septembre 2029</div>
+          <div class="milestone-title">Lancement · Fenêtre optimale</div>
+          <div class="milestone-desc">Lancement sur une fenêtre de 3 semaines en septembre 2029 permettant un assist gravitationnel de Jupiter en 2031 et une arrivée à Saturne en 2036. Prochaine fenêtre favorable : 2031 (sous-optimale).</div>
+        </div>
+      </div>
+
+      <div class="prog-partners">
+        <span class="partner-chip">NASA — APL (Dragonfly)</span>
+        <span class="partner-chip">ESA — SciProg</span>
+        <span class="partner-chip">CNES</span>
+        <span class="partner-chip">ASI (Italie)</span>
+        <span class="partner-chip">Laboratoire de Météorologie Dynamique</span>
+        <span class="partner-chip">Université Paris-Saclay</span>
+        <span class="partner-chip">Cornell University</span>
+      </div>
+
+      <div class="funding-note">
+        <span class="funding-icon">⚠️</span>
+        <div>TITAN-0 est le programme futur dont le statut est le plus incertain. Son lancement en 2029 est conditionné à deux facteurs indépendants : la réussite du concept d'aérostat atmosphérique en chambre ATLAS (résultats attendus T3 2026) et l'accord de cofinancement avec la NASA, dont la décision dépend de l'avancement de sa propre mission Dragonfly vers Titan. En l'absence d'accord avant fin 2026, la fenêtre de lancement 2029 ne pourra pas être maintenue. La prochaine fenêtre favorable est prévue pour 2031, ce qui décalerait l'arrivée à Saturne à 2038.</div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale ·
+  Programmes futurs
+</footer>
+
+<script>
+const sections = document.querySelectorAll('.intro-section, .prog-section');
+const navLinks  = document.querySelectorAll('#sidebar-nav a');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, {
+  rootMargin: '-148px 0px -60% 0px',
+  threshold: 0
+});
+
+sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
