@@ -1099,11 +1099,14 @@ async function loadMessages() {
   let query = _sb.from('email').select('*').order('send_at', { ascending: false });
 
   if (currentFolder === 'sent') {
-    query = query.eq('sender', userEmail).eq('sender_folder', 'sent');
+    // sender_folder peut valoir 'sent', 'EMPTY', null, ou être absent
+    query = query.eq('sender', userEmail).not('sender_folder', 'eq', 'trash');
   } else if (currentFolder === 'trash') {
     query = query.or(
       `receiver.eq.${userEmail}.and(folder.eq.trash),sender.eq.${userEmail}.and(sender_folder.eq.trash)`
     );
+  } else if (currentFolder === 'inbox') {
+    query = query.eq('receiver', userEmail).or('folder.eq.inbox,folder.is.null,folder.eq.EMPTY');
   } else {
     query = query.eq('receiver', userEmail).eq('folder', currentFolder);
   }
@@ -1122,9 +1125,15 @@ async function updateCounters() {
   const folders = ['inbox', 'sent', 'favorites', 'classified', 'trash'];
   for (const f of folders) {
     let q = _sb.from('email').select('id', { count: 'exact', head: true });
-    if (f === 'sent') q = q.eq('sender', userEmail).eq('sender_folder', 'sent');
-    else if (f === 'trash') q = q.or(`receiver.eq.${userEmail}.and(folder.eq.trash),sender.eq.${userEmail}.and(sender_folder.eq.trash)`);
-    else q = q.eq('receiver', userEmail).eq('folder', f);
+    if (f === 'sent') {
+      q = q.eq('sender', userEmail).not('sender_folder', 'eq', 'trash');
+    } else if (f === 'trash') {
+      q = q.or(`receiver.eq.${userEmail}.and(folder.eq.trash),sender.eq.${userEmail}.and(sender_folder.eq.trash)`);
+    } else if (f === 'inbox') {
+      q = q.eq('receiver', userEmail).or('folder.eq.inbox,folder.is.null,folder.eq.EMPTY');
+    } else {
+      q = q.eq('receiver', userEmail).eq('folder', f);
+    }
     const { count } = await q;
     const el = document.getElementById('cnt-' + f);
     if (el) {
