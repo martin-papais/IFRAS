@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 
 <style>
 
@@ -16,150 +17,391 @@
   --accent: #4f6bed;
   --text-main: #e6e6e6;
   --text-soft: #aab3d6;
+  --border: #1b2555;
 }
 
-* { box-sizing: border-box; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  margin: 0;
-  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  font-family: "DM Sans", sans-serif;
   background: var(--bg-main);
   color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* ===== HEADER ===== */
 header {
   position: fixed;
-  top: 0;
-  width: 100%;
+  top: 0; width: 100%;
   z-index: 1000;
   background: rgba(5,11,30,.75);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid #1b2555;
+  border-bottom: 1px solid var(--border);
 }
 
 .header-inner {
-  max-width: 1300px;
-  margin: auto;
+  max-width: 1300px; margin: auto;
   padding: 12px 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: flex; align-items: center; justify-content: space-between;
 }
 
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-}
-
-.logo-link img {
-  height: 60px;
-  cursor: pointer;
-}
-
-.main-nav {
-  list-style: none;
-  display: flex;
-  gap: 32px;
-  margin: 0;
-  padding: 0;
-}
+.header-left { display: flex; align-items: center; gap: 40px; }
+.logo-link img { height: 60px; cursor: pointer; }
+.main-nav { list-style: none; display: flex; gap: 32px; }
 
 .main-nav a {
-  text-decoration: none;
-  color: var(--text-soft);
-  font-size: 14px;
-  letter-spacing: .05em;
+  text-decoration: none; color: var(--text-soft);
+  font-size: 14px; letter-spacing: .05em;
+  transition: color .2s;
 }
 
 .main-nav a:hover { color: white; }
 
 .header-right .login-btn {
-  padding: 8px 18px;
-  border-radius: 6px;
+  padding: 8px 18px; border-radius: 6px;
   border: 1px solid var(--accent);
-  color: white;
-  text-decoration: none;
-  font-size: 13px;
+  color: white; text-decoration: none; font-size: 13px;
+  transition: background .2s;
 }
 
-.header-right .login-btn:hover {
-  background: var(--accent);
+.header-right .login-btn:hover { background: var(--accent); }
+
+/* ===== CANVAS BACKGROUND ===== */
+#bg-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
 }
 
+/* ===== RADIAL GLOW ===== */
+.bg-glow {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 55% 55% at 70% 55%, rgba(79,107,237,.10) 0%, transparent 65%),
+    radial-gradient(ellipse 35% 45% at 20% 35%, rgba(99,57,237,.07) 0%, transparent 60%);
+}
 
+/* Grid lines */
+.bg-grid {
+  position: fixed;
+  inset: 0; z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(79,107,237,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79,107,237,.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ===== SCAN LINE ===== */
+.scan-line {
+  position: fixed;
+  left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(79,107,237,.0) 20%,
+    rgba(79,107,237,.35) 50%,
+    rgba(79,107,237,.0) 80%,
+    transparent 100%
+  );
+  z-index: 1;
+  animation: scanMove 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes scanMove {
+  0%   { top: 84px; opacity: 0; }
+  5%   { opacity: 1; }
+  95%  { opacity: 1; }
+  100% { top: 100vh; opacity: 0; }
+}
+
+/* ===== FLOATING RINGS ===== */
+.ring-container {
+  position: fixed;
+  inset: 0; z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(79,107,237,.08);
+  animation: ringPulse var(--duration, 12s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes ringPulse {
+  0%   { transform: translate(-50%,-50%) scale(.9); opacity: .3; }
+  50%  { transform: translate(-50%,-50%) scale(1.05); opacity: .08; }
+  100% { transform: translate(-50%,-50%) scale(.9); opacity: .3; }
+}
+
+/* ===== PARTICLES ===== */
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(79,107,237,.55);
+  animation: particleFloat var(--dur, 20s) linear infinite;
+  animation-delay: var(--delay, 0s);
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes particleFloat {
+  0%   { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: .6; }
+  100% { transform: translateY(-20px) translateX(var(--drift,0px)) scale(1); opacity: 0; }
+}
 
 /* ===== MAIN ===== */
 main {
-  max-width: 1300px;
-  margin: auto;
-  padding: 90px 30px;
+  position: relative; z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 84px 30px 60px;
 }
 
-h2 {
-  font-size: 28px;
-  margin-bottom: 30px;
-}
-
-/* ===== LOGIN ===== */
-.login-box {
-  background: var(--bg-light);
-  border: 1px solid #1b2555;
-  padding: 40px;
+/* ===== LOGIN WRAP ===== */
+.login-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
   max-width: 420px;
-  border-radius: 10px;
+  animation: fadeUp .7s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Icon / badge IFRAS */
+.login-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.login-badge-ring {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  border: 1px solid rgba(79,107,237,.3);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  animation: badgeSpin 20s linear infinite;
+}
+
+@keyframes badgeSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.login-badge-ring::before {
+  content: '';
+  position: absolute;
+  inset: -6px; border-radius: 50%;
+  border: 1px dashed rgba(79,107,237,.15);
+}
+
+.login-badge-ring-inner {
+  animation: badgeSpin 20s linear infinite reverse;
+  font-family: "Syne", sans-serif;
+  font-weight: 800; font-size: 13px;
+  color: rgba(79,107,237,.85);
+  letter-spacing: .06em;
+}
+
+.login-badge-label {
+  font-size: 10px; letter-spacing: .22em; text-transform: uppercase;
+  color: rgba(170,179,214,.4); font-weight: 500;
+}
+
+/* ===== LOGIN BOX ===== */
+.login-box {
+  width: 100%;
+  background: rgba(7,15,43,.75);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(79,107,237,.18);
+  border-radius: 16px;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(79,107,237,.04) inset,
+    0 32px 80px rgba(0,0,0,.5);
+}
+
+/* Top accent line */
+.login-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(79,107,237,.6), transparent);
+}
+
+/* Corner brackets */
+.login-box::after {
+  content: '';
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 18px; height: 18px;
+  border-top: 1px solid rgba(79,107,237,.25);
+  border-right: 1px solid rgba(79,107,237,.25);
+  border-radius: 0 4px 0 0;
+}
+
+.corner-br {
+  position: absolute;
+  bottom: 16px; left: 16px;
+  width: 18px; height: 18px;
+  border-bottom: 1px solid rgba(79,107,237,.25);
+  border-left: 1px solid rgba(79,107,237,.25);
+  border-radius: 0 0 0 4px;
+}
+
+.login-box-title {
+  font-family: "Syne", sans-serif;
+  font-size: 20px; font-weight: 700;
+  color: white; margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+
+.login-box-sub {
+  font-size: 13px; color: rgba(170,179,214,.55);
+  font-weight: 300; margin-bottom: 32px;
 }
 
 .login-box label {
   display: block;
-  margin-bottom: 6px;
-  font-size: 14px;
-  color: #c7d2fe;
+  margin-bottom: 7px;
+  font-size: 12px; font-weight: 400;
+  color: rgba(170,179,214,.65);
+  letter-spacing: .05em;
 }
 
-.login-box input {
+.input-wrap {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-wrap input {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 18px;
-  border-radius: 6px;
-  border: 1px solid #1f2937;
-  background: #020617;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(79,107,237,.2);
+  background: rgba(5,11,30,.8);
   color: #fff;
   font-size: 14px;
+  font-family: "DM Sans", sans-serif;
+  outline: none;
+  transition: border-color .25s, box-shadow .25s;
 }
 
-.login-box button {
+.input-wrap input::placeholder { color: rgba(170,179,214,.25); }
+
+.input-wrap input:focus {
+  border-color: rgba(79,107,237,.55);
+  box-shadow: 0 0 0 3px rgba(79,107,237,.08);
+}
+
+/* Focus indicator line */
+.input-focus-line {
+  position: absolute;
+  bottom: 0; left: 50%; right: 50%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), #818cf8);
+  border-radius: 0 0 8px 8px;
+  transition: left .25s, right .25s;
+  pointer-events: none;
+}
+
+.input-wrap input:focus ~ .input-focus-line {
+  left: 0; right: 0;
+}
+
+/* Submit button */
+.login-btn-submit {
   width: 100%;
-  padding: 12px;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  padding: 13px;
+  background: linear-gradient(135deg, #3b5bdb 0%, #4f6bed 50%, #6366f1 100%);
   border: none;
-  border-radius: 6px;
-  font-size: 15px;
+  border-radius: 8px;
+  font-size: 14px; font-weight: 500;
+  font-family: "DM Sans", sans-serif;
   color: white;
   cursor: pointer;
-  transition: transform 0.15s, box-shadow 0.15s;
+  letter-spacing: .04em;
+  position: relative; overflow: hidden;
+  transition: transform .15s, box-shadow .2s, opacity .2s;
+  margin-top: 8px;
 }
 
-.login-box button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 5px 20px rgba(37,99,235,0.4);
+.login-btn-submit::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
+  transition: left .5s ease;
 }
 
+.login-btn-submit:hover::before { left: 160%; }
+
+.login-btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(79,107,237,.45);
+}
+
+.login-btn-submit:active { transform: translateY(0); }
+
+.login-btn-submit.loading { opacity: .7; pointer-events: none; }
+
+/* Error */
 .error {
-  margin-top: 15px;
-  color: #f87171;
-  font-size: 13px;
+  margin-top: 14px;
+  color: #fca5a5;
+  font-size: 12.5px;
+  font-weight: 300;
+  display: flex; align-items: center; gap: 6px;
+  min-height: 20px;
 }
 
-/* ===== FOOTER ===== */
-footer {
-  background: var(--bg-dark);
-  border-top: 1px solid #1b2555;
-  padding: 40px 30px;
-  text-align: center;
+.error::before {
+  content: '⚠';
   font-size: 12px;
-  color: #6b7280;
+  display: none;
+}
+
+.error:not(:empty)::before { display: inline; }
+
+/* Footer note */
+.login-footer-note {
+  font-size: 11.5px; color: rgba(170,179,214,.25);
+  text-align: center; font-weight: 300; line-height: 1.6;
+}
+
+/* ===== PAGE FOOTER ===== */
+footer {
+  position: relative; z-index: 2;
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border);
+  padding: 28px 30px;
+  text-align: center;
+  font-size: 12px; color: #6b7280;
 }
 
 </style>
@@ -167,7 +409,16 @@ footer {
 
 <body>
 
-<!-- HEADER -->
+<!-- ===== BACKGROUND LAYERS ===== -->
+<div class="bg-glow"></div>
+<div class="bg-grid"></div>
+<canvas id="bg-canvas"></canvas>
+<div class="scan-line"></div>
+
+<!-- Rings -->
+<div class="ring-container" id="rings"></div>
+
+<!-- ===== HEADER ===== -->
 <header>
   <div class="header-inner">
     <div class="header-left">
@@ -189,31 +440,167 @@ footer {
   </div>
 </header>
 
-
+<!-- ===== MAIN ===== -->
 <main>
+  <div class="login-wrap">
 
-<h2>Authentification</h2>
+    <!-- Badge -->
+    <div class="login-badge">
+      <div class="login-badge-ring">
+        <span class="login-badge-ring-inner">IFRAS</span>
+      </div>
+      <span class="login-badge-label">Accès interne sécurisé</span>
+    </div>
 
-<div class="login-box">
-  <form onsubmit="login(event)">
-    <label>Email professionnel</label>
-    <input type="email" id="email" placeholder="prenom.nom@ifras.fr" required>
+    <!-- Box -->
+    <div class="login-box">
+      <div class="corner-br"></div>
 
-    <label>Mot de passe</label>
-    <input type="password" id="password" placeholder="••••••••" required>
+      <div class="login-box-title">Authentification</div>
+      <div class="login-box-sub">Réservé au personnel de l'IFRAS</div>
 
-    <button type="submit">Connexion sécurisée</button>
-    <div id="error" class="error"></div>
-  </form>
-</div>
+      <form onsubmit="login(event)">
 
+        <label for="email">Email professionnel</label>
+        <div class="input-wrap">
+          <input type="email" id="email" placeholder="prenom.nom@ifras.fr" required autocomplete="email">
+          <div class="input-focus-line"></div>
+        </div>
+
+        <label for="password">Mot de passe</label>
+        <div class="input-wrap">
+          <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+          <div class="input-focus-line"></div>
+        </div>
+
+        <button type="submit" class="login-btn-submit" id="submitBtn">
+          Connexion sécurisée
+        </button>
+
+        <div id="error" class="error"></div>
+      </form>
+    </div>
+
+    <div class="login-footer-note">
+      Accès réservé aux agents et chercheurs de l'IFRAS.<br>
+      En cas de problème, contactez <a href="mailto:dsi@ifras.fr" style="color:rgba(79,107,237,.5);text-decoration:none;">dsi@ifras.fr</a>
+    </div>
+
+  </div>
 </main>
 
 <footer>
-© IFRAS — Institut Français de Recherche Aéronautique et Spatiale
+  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale
 </footer>
 
+<!-- ===== SCRIPTS ===== -->
 <script>
+
+/* ── RINGS ── */
+const ringsEl = document.getElementById('rings');
+const ringData = [
+  { cx: '68%', cy: '55%', size: 420, dur: 14, delay: 0 },
+  { cx: '68%', cy: '55%', size: 640, dur: 18, delay: 2 },
+  { cx: '68%', cy: '55%', size: 860, dur: 22, delay: 4 },
+  { cx: '22%', cy: '38%', size: 300, dur: 11, delay: 1 },
+  { cx: '22%', cy: '38%', size: 500, dur: 16, delay: 3 },
+];
+
+ringData.forEach(r => {
+  const el = document.createElement('div');
+  el.className = 'ring';
+  el.style.cssText = `
+    width:${r.size}px; height:${r.size}px;
+    left:${r.cx}; top:${r.cy};
+    --duration:${r.dur}s; --delay:${r.delay}s;
+  `;
+  ringsEl.appendChild(el);
+});
+
+/* ── PARTICLES ── */
+const particleCount = 18;
+for (let i = 0; i < particleCount; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  const size = Math.random() * 2.5 + 1;
+  const left = Math.random() * 100;
+  const dur  = Math.random() * 16 + 14;
+  const delay = Math.random() * 20;
+  const drift = (Math.random() - .5) * 120;
+  p.style.cssText = `
+    width:${size}px; height:${size}px;
+    left:${left}%;
+    bottom:0;
+    --dur:${dur}s; --delay:-${delay}s; --drift:${drift}px;
+    opacity:.0;
+  `;
+  ringsEl.appendChild(p);
+}
+
+/* ── CANVAS CONSTELLATION ── */
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+
+function resize() {
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+const NODES = 55;
+const nodes = Array.from({length: NODES}, () => ({
+  x: Math.random() * window.innerWidth,
+  y: Math.random() * window.innerHeight,
+  vx: (Math.random() - .5) * .35,
+  vy: (Math.random() - .5) * .35,
+  r: Math.random() * 1.5 + .5,
+}));
+
+const CONNECT_DIST = 160;
+
+function drawFrame() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  /* Update */
+  nodes.forEach(n => {
+    n.x += n.vx; n.y += n.vy;
+    if (n.x < 0 || n.x > canvas.width)  n.vx *= -1;
+    if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
+  });
+
+  /* Edges */
+  for (let i = 0; i < NODES; i++) {
+    for (let j = i + 1; j < NODES; j++) {
+      const dx = nodes[i].x - nodes[j].x;
+      const dy = nodes[i].y - nodes[j].y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < CONNECT_DIST) {
+        const alpha = (1 - dist / CONNECT_DIST) * 0.09;
+        ctx.beginPath();
+        ctx.moveTo(nodes[i].x, nodes[i].y);
+        ctx.lineTo(nodes[j].x, nodes[j].y);
+        ctx.strokeStyle = `rgba(79,107,237,${alpha})`;
+        ctx.lineWidth = .7;
+        ctx.stroke();
+      }
+    }
+  }
+
+  /* Nodes */
+  nodes.forEach(n => {
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(79,107,237,0.25)';
+    ctx.fill();
+  });
+
+  requestAnimationFrame(drawFrame);
+}
+
+drawFrame();
+
+/* ── SUPABASE LOGIN ── */
 const supabaseClient = supabase.createClient(
   "https://fqijbltymdeudnlitcrs.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZxaWpibHR5bWRldWRubGl0Y3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzOTQ2NDQsImV4cCI6MjA4NTk3MDY0NH0.HZA0VxkaRTGLRTBA0Vz51mJjw8Xuj8f__yzaQKpGfbE"
@@ -221,22 +608,24 @@ const supabaseClient = supabase.createClient(
 
 async function login(event) {
   event.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  btn.classList.add('loading');
+  btn.textContent = 'Connexion…';
 
-  const email = document.getElementById("email").value;
+  const email    = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  const { error } = await supabaseClient.auth.signInWithPassword({
-    email,
-    password
-  });
+  const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
 
   if (error) {
-    document.getElementById("error").textContent =
-      "Identifiants incorrects ou accès refusé.";
+    document.getElementById("error").textContent = "Identifiants incorrects ou accès refusé.";
+    btn.classList.remove('loading');
+    btn.textContent = 'Connexion sécurisée';
   } else {
     window.location.href = "messagerie.html";
   }
 }
+
 </script>
 
 </body>
