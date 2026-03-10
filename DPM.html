@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>DPM — Physique & Mécanique · IFRAS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+<style>
+
+:root {
+  --bg-main:  #050b1e;
+  --bg-dark:  #020617;
+  --bg-light: #070f2b;
+  --bg-menu:  #081235;
+  --border:   #1b2555;
+  --accent:   #4f6bed;
+  --dept:     #c084fc;
+  --text-main: #e6e6e6;
+  --text-soft: #aab3d6;
+  --sidebar-w: 260px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: "DM Sans", sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+}
+
+/* ===== HEADER ===== */
+
+header {
+  position: fixed; top: 0; width: 100%;
+  z-index: 2000;
+  background: rgba(5,11,30,.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  max-width: 1300px; margin: auto;
+  padding: 12px 30px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.header-left { display: flex; align-items: center; gap: 40px; }
+.logo-link img { height: 60px; }
+.main-nav { list-style: none; display: flex; gap: 32px; }
+
+.main-nav a {
+  text-decoration: none; color: var(--text-soft);
+  font-size: 14px; letter-spacing: .05em;
+}
+
+.main-nav a:hover { color: white; }
+
+.header-right a {
+  padding: 8px 18px; border-radius: 6px;
+  border: 1px solid var(--accent);
+  color: white; text-decoration: none; font-size: 13px;
+}
+
+.header-right a:hover { background: var(--accent); }
+
+/* ===== SOUS BANDEAU ===== */
+
+.subnav {
+  margin-top: 84px;
+  background: var(--bg-menu);
+  border-bottom: 1px solid var(--border);
+}
+
+.subnav-inner {
+  max-width: 1300px; margin: auto;
+  display: flex; justify-content: space-between;
+  padding: 0 30px;
+}
+
+.subnav-item { position: relative; }
+
+.subnav-item > a {
+  display: block; padding: 14px 10px;
+  color: var(--text-soft); text-decoration: none;
+  font-size: 13px; letter-spacing: .08em;
+}
+
+.subnav-item.active > a { color: white; }
+.subnav-item > a:hover { color: white; }
+
+.megamenu {
+  position: absolute; left: 0; top: 100%;
+  background: #060d28; min-width: 320px;
+  border: 1px solid var(--border); border-top: none;
+  padding: 20px;
+  opacity: 0; pointer-events: none;
+  transform: translateY(10px);
+  transition: .25s ease; z-index: 1500;
+}
+
+.subnav-item:hover .megamenu {
+  opacity: 1; pointer-events: auto; transform: translateY(0);
+}
+
+.megamenu h4 { margin: 0 0 10px; font-size: 14px; color: white; }
+.megamenu h4 a { color: white; text-decoration: none; }
+.megamenu h4 a:hover { color: var(--dept); }
+.megamenu ul { list-style: none; }
+
+.megamenu li a {
+  display: block; padding: 6px 0;
+  font-size: 13px; color: var(--text-soft); text-decoration: none;
+}
+
+.megamenu li a:hover { color: white; }
+
+/* ===== LAYOUT ===== */
+
+.page-layout {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 30px;
+  align-items: start;
+}
+
+/* ===== SIDEBAR ===== */
+
+.sidebar {
+  position: sticky;
+  top: 160px;
+  padding: 40px 32px 40px 0;
+}
+
+.sidebar-label {
+  font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(170,179,214,.4); font-weight: 500;
+  margin-bottom: 20px; padding-left: 16px;
+}
+
+.sidebar-dept {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 28px; padding-left: 16px;
+}
+
+.sidebar-dept-badge {
+  font-family: "Syne", sans-serif;
+  font-size: 13px; font-weight: 700;
+  padding: 4px 10px; border-radius: 6px;
+  background: rgba(192,132,252,.1);
+  border: 1px solid rgba(192,132,252,.25);
+  color: var(--dept);
+}
+
+.sidebar-nav { list-style: none; position: relative; }
+
+.sidebar-progress {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 2px; background: rgba(192,132,252,.08);
+}
+
+.sidebar-nav a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 16px; font-size: 13px;
+  color: var(--text-soft); text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: color .2s, border-color .2s, background .2s;
+  border-radius: 0 6px 6px 0; font-weight: 300;
+}
+
+.sidebar-nav a:hover {
+  color: white; background: rgba(255,255,255,.03);
+  border-left-color: rgba(192,132,252,.3);
+}
+
+.sidebar-nav a.active {
+  color: var(--dept); background: rgba(192,132,252,.06);
+  border-left-color: var(--dept); font-weight: 500;
+}
+
+.nav-icon { font-size: 14px; width: 18px; text-align: center; flex-shrink: 0; }
+
+.sidebar-divider { height: 1px; background: var(--border); margin: 20px 16px; }
+
+.sidebar-back {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 16px; font-size: 12px;
+  color: rgba(170,179,214,.4); text-decoration: none;
+  transition: color .2s; font-weight: 300;
+}
+
+.sidebar-back:hover { color: white; }
+
+/* ===== CONTENU ===== */
+
+.main-content {
+  padding: 50px 0 100px 48px;
+  border-left: 1px solid var(--border);
+}
+
+/* ===== EN-TÊTE ===== */
+
+.dept-header {
+  padding-bottom: 56px;
+  border-bottom: 1px solid var(--border);
+  scroll-margin-top: 170px;
+}
+
+.dept-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--dept); font-weight: 500; margin-bottom: 20px;
+}
+
+.dept-eyebrow::before {
+  content: ''; display: block;
+  width: 24px; height: 1px; background: var(--dept);
+}
+
+.dept-header h1 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(30px, 4vw, 52px);
+  font-weight: 800; letter-spacing: -0.03em;
+  line-height: 1.05; color: white;
+}
+
+.dept-header h1 span {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(192,132,252,.6);
+}
+
+.dept-tagline {
+  font-size: 16px; color: var(--text-soft);
+  font-weight: 300; line-height: 1.7;
+  margin: 20px 0 36px; max-width: 680px;
+}
+
+.dept-info-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: 12px;
+  overflow: hidden; margin-bottom: 36px;
+}
+
+.dept-info-cell {
+  background: var(--bg-light); padding: 18px 20px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+
+.dept-info-val {
+  font-family: "Syne", sans-serif; font-size: 22px;
+  font-weight: 800; color: white; letter-spacing: -0.03em;
+}
+
+.dept-info-lbl {
+  font-size: 11px; color: var(--text-soft);
+  font-weight: 300; text-transform: uppercase; letter-spacing: .1em;
+}
+
+.dept-intro {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 40px; margin-top: 40px;
+}
+
+.dept-intro p {
+  font-size: 14.5px; color: var(--text-soft);
+  line-height: 1.8; font-weight: 300;
+}
+
+.dept-director-card {
+  background: var(--bg-light); border: 1px solid var(--border);
+  border-radius: 12px; padding: 24px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+.dept-director-card .label {
+  font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(170,179,214,.4); font-weight: 500;
+}
+
+.director-row { display: flex; align-items: center; gap: 14px; }
+
+.director-avatar {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: linear-gradient(135deg, #c084fc, #7e22ce);
+  display: flex; align-items: center; justify-content: center;
+  font-family: "Syne", sans-serif; font-weight: 700;
+  font-size: 15px; color: white; flex-shrink: 0;
+}
+
+.director-name { font-size: 15px; font-weight: 500; color: white; }
+.director-title { font-size: 12px; color: var(--text-soft); font-weight: 300; }
+
+.dept-axes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+
+.dept-axe-tag {
+  font-size: 11px; padding: 4px 12px; border-radius: 20px;
+  background: rgba(192,132,252,.06);
+  border: 1px solid rgba(192,132,252,.18);
+  color: rgba(192,132,252,.85);
+}
+
+/* ===== SECTIONS ===== */
+
+.subject-section {
+  padding: 64px 0;
+  border-bottom: 1px solid var(--border);
+  scroll-margin-top: 170px;
+}
+
+.subject-section:last-child { border-bottom: none; }
+
+.subject-header {
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 20px;
+  margin-bottom: 32px;
+}
+
+.subject-number {
+  font-family: "Syne", sans-serif;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(192,132,252,.5); margin-bottom: 8px;
+}
+
+.subject-title-group h2 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(22px, 2.5vw, 30px);
+  font-weight: 700; color: white;
+  letter-spacing: -0.02em; line-height: 1.15;
+}
+
+.subject-icon-wrap {
+  width: 52px; height: 52px; border-radius: 12px;
+  background: rgba(192,132,252,.08);
+  border: 1px solid rgba(192,132,252,.18);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; flex-shrink: 0;
+}
+
+.subject-body {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 32px; margin-bottom: 28px;
+}
+
+.subject-body p {
+  font-size: 14.5px; color: var(--text-soft);
+  line-height: 1.8; font-weight: 300;
+}
+
+.subject-body p + p { margin-top: 16px; }
+
+.subject-topics {
+  background: var(--bg-light); border: 1px solid var(--border);
+  border-radius: 12px; padding: 22px 24px;
+}
+
+.subject-topics-label {
+  font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(170,179,214,.4); font-weight: 500; margin-bottom: 14px;
+}
+
+.topic-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+.topic-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px; color: var(--text-soft); font-weight: 300;
+}
+
+.topic-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--dept); flex-shrink: 0; opacity: .7;
+}
+
+.subject-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+}
+
+.subject-stat {
+  background: rgba(192,132,252,.04);
+  border: 1px solid rgba(192,132,252,.12);
+  border-radius: 10px; padding: 16px 18px;
+}
+
+.subject-stat-val {
+  font-family: "Syne", sans-serif; font-size: 22px;
+  font-weight: 800; color: var(--dept); letter-spacing: -0.03em;
+}
+
+.subject-stat-lbl {
+  font-size: 11px; color: var(--text-soft);
+  font-weight: 300; line-height: 1.4; margin-top: 4px;
+}
+
+.subject-pubs { display: flex; flex-direction: column; gap: 10px; margin-top: 28px; }
+
+.pubs-label {
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(170,179,214,.4); margin-top: 8px; margin-bottom: 4px;
+}
+
+.subject-pub-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,.02);
+  border: 1px solid rgba(255,255,255,.05);
+  border-radius: 8px; text-decoration: none; color: inherit;
+  transition: background .2s, border-color .2s; font-size: 13px;
+}
+
+.subject-pub-item:hover {
+  background: rgba(79,107,237,.06); border-color: rgba(79,107,237,.2);
+}
+
+.pub-date-chip {
+  font-size: 10px; padding: 2px 8px; border-radius: 4px;
+  background: rgba(79,107,237,.1); border: 1px solid rgba(79,107,237,.2);
+  color: #818cf8; font-weight: 500; white-space: nowrap; flex-shrink: 0;
+}
+
+.pub-title-text { color: var(--text-soft); font-weight: 300; flex: 1; }
+.pub-arrow { color: rgba(170,179,214,.3); font-size: 12px; }
+
+/* ===== FOOTER ===== */
+
+footer {
+  background: var(--bg-dark); border-top: 1px solid var(--border);
+  padding: 40px 30px; text-align: center;
+  font-size: 12px; color: #6b7280;
+}
+
+/* ===== ANIMATIONS ===== */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.subject-section { animation: fadeUp .6s ease both; }
+.subject-section:nth-child(1) { animation-delay: .05s; }
+.subject-section:nth-child(2) { animation-delay: .10s; }
+.subject-section:nth-child(3) { animation-delay: .15s; }
+.subject-section:nth-child(4) { animation-delay: .20s; }
+
+</style>
+</head>
+
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="header-inner">
+    <div class="header-left">
+      <a href="index.html" class="logo-link"><img src="logo.png" alt="Logo IFRAS"></a>
+      <ul class="main-nav">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="recherche.html">Recherche</a></li>
+        <li><a href="programmes.html">Programmes</a></li>
+        <li><a href="publications.html">Publications</a></li>
+      </ul>
+    </div>
+    <div class="header-right">
+      <a href="connexion.html">Connexion</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== SOUS BANDEAU ===== -->
+<nav class="subnav">
+  <div class="subnav-inner">
+
+    <div class="subnav-item">
+      <a href="DSVT.html">DSVT</a>
+      <div class="megamenu">
+        <h4><a href="DSVT.html">Département Sciences du Vivant et de la Terre</a></h4>
+        <ul>
+          <li><a href="DSVT.html#biologie">Biologie</a></li>
+          <li><a href="DSVT.html#zoologie">Zoologie</a></li>
+          <li><a href="DSVT.html#neurosciences">Neurosciences</a></li>
+          <li><a href="DSVT.html#genetique">Génétique</a></li>
+          <li><a href="DSVT.html#geologie">Géologie</a></li>
+          <li><a href="DSVT.html#paleontologie">Paléontologie</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subnav-item">
+      <a href="DPET.html">DPET</a>
+      <div class="megamenu">
+        <h4><a href="DPET.html">Département Physique Énergétique et Thermique</a></h4>
+        <ul>
+          <li><a href="DPET.html#thermodynamique">Thermodynamique</a></li>
+          <li><a href="DPET.html#combustion">Combustion</a></li>
+          <li><a href="DPET.html#transferts-thermiques">Transferts thermiques</a></li>
+          <li><a href="DPET.html#plasma">Plasma</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subnav-item">
+      <a href="DSTI.html">DSTI</a>
+      <div class="megamenu">
+        <h4><a href="DSTI.html">Département Simulation & Traitement de l'Information</a></h4>
+        <ul>
+          <li><a href="DSTI.html#intelligence-artificielle">Intelligence artificielle</a></li>
+          <li><a href="DSTI.html#systemes-autonomes">Systèmes autonomes</a></li>
+          <li><a href="DSTI.html#traitement-du-signal">Traitement du signal</a></li>
+          <li><a href="DSTI.html#calcul-haute-performance">Calcul haute performance</a></li>
+          <li><a href="DSTI.html#modelisation-numerique">Modélisation numérique</a></li>
+          <li><a href="DSTI.html#simulation-multi-physique">Simulation multi-physique</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subnav-item">
+      <a href="DSMR.html">DSMR</a>
+      <div class="megamenu">
+        <h4><a href="DSMR.html">Département Structures, Matériaux & Résistance</a></h4>
+        <ul>
+          <li><a href="DSMR.html#materiaux-composites">Matériaux composites</a></li>
+          <li><a href="DSMR.html#structures-avancees">Structures avancées</a></li>
+          <li><a href="DSMR.html#fatigue-rupture">Fatigue & rupture</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subnav-item">
+      <a href="DOL.html">DOL</a>
+      <div class="megamenu">
+        <h4><a href="DOL.html">Département Optique et Lumière</a></h4>
+        <ul>
+          <li><a href="DOL.html#instrumentation-optique">Instrumentation optique</a></li>
+          <li><a href="DOL.html#optique-ondulatoire">Optique ondulatoire</a></li>
+          <li><a href="DOL.html#optique-particulaire">Optique particulaire</a></li>
+          <li><a href="DOL.html#systemes-laser">Systèmes laser</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subnav-item">
+      <a href="DMA.html">DMA</a>
+      <div class="megamenu">
+        <h4><a href="DMA.html">Département Mathématiques Appliquées</a></h4>
+        <ul>
+          <li><a href="DMA.html#algebre">Algèbre</a></li>
+          <li><a href="DMA.html#analyse">Analyse</a></li>
+          <li><a href="DMA.html#topologie">Topologie</a></li>
+          <li><a href="DMA.html#probabilites">Probabilités</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subnav-item active">
+      <a href="DPM.html">DPM</a>
+      <div class="megamenu">
+        <h4><a href="DPM.html">Département Physique & Mécanique</a></h4>
+        <ul>
+          <li><a href="DPM.html#mecanique-solide">Mécanique du solide</a></li>
+          <li><a href="DPM.html#dynamique-fluides">Dynamique des fluides</a></li>
+          <li><a href="DPM.html#mecanique-quantique">Mécanique quantique</a></li>
+          <li><a href="DPM.html#instabilite-turbulence">Instabilité et turbulence</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subnav-item">
+      <a href="#">DAI</a>
+      <div class="megamenu">
+        <h4><a href="#">Département Astrophysique et Instrumentation</a></h4>
+        <ul>
+          <li><a href="#">Physique des galaxies</a></li>
+          <li><a href="#">Cosmologie observationnelle</a></li>
+          <li><a href="#">Dynamique orbitale</a></li>
+          <li><a href="#">Spectroscopie & Interférométrie</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+<!-- ===== LAYOUT ===== -->
+<div class="page-layout">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+
+    <div class="sidebar-dept">
+      <span class="sidebar-dept-badge">DPM</span>
+    </div>
+
+    <div class="sidebar-label">Sommaire</div>
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <div class="sidebar-progress"></div>
+      <li><a href="#presentation" class="active"><span class="nav-icon">◎</span> Présentation</a></li>
+      <li><a href="#mecanique-solide"><span class="nav-icon">🌊</span> Mécanique du solide</a></li>
+      <li><a href="#dynamique-fluides"><span class="nav-icon">💧</span> Dynamique des fluides</a></li>
+      <li><a href="#mecanique-quantique"><span class="nav-icon">⚛</span> Mécanique quantique</a></li>
+      <li><a href="#instabilite-turbulence"><span class="nav-icon">🌀</span> Instabilité & turbulence</a></li>
+    </ul>
+
+    <div class="sidebar-divider"></div>
+    <a href="recherche.html" class="sidebar-back">← Retour à la Recherche</a>
+
+  </aside>
+
+  <!-- ===== CONTENU ===== -->
+  <main class="main-content">
+
+    <!-- PRÉSENTATION -->
+    <section class="dept-header" id="presentation">
+
+      <div class="dept-eyebrow">Département scientifique</div>
+      <h1>Physique<br><span>& Mécanique</span></h1>
+      <p class="dept-tagline">Le DPM explore les lois fondamentales qui gouvernent la matière et le mouvement à toutes les échelles — du solide déformable aux fluides turbulents, de la mécanique classique aux effets quantiques dans les systèmes miniaturisés. Il constitue le pont entre la physique théorique et les problèmes concrets de l'ingénierie aérospatiale.</p>
+
+      <div class="dept-info-grid">
+        <div class="dept-info-cell">
+          <span class="dept-info-val">44</span>
+          <span class="dept-info-lbl">Chercheurs</span>
+        </div>
+        <div class="dept-info-cell">
+          <span class="dept-info-val">4</span>
+          <span class="dept-info-lbl">Disciplines</span>
+        </div>
+        <div class="dept-info-cell">
+          <span class="dept-info-val">307</span>
+          <span class="dept-info-lbl">Publications</span>
+        </div>
+        <div class="dept-info-cell">
+          <span class="dept-info-val">1970</span>
+          <span class="dept-info-lbl">Fondé en</span>
+        </div>
+      </div>
+
+      <div class="dept-intro">
+        <div>
+          <p>Fondé en 1970, le Département Physique & Mécanique est l'un des plus anciens et des plus larges de l'IFRAS. Il couvre un spectre disciplinaire exceptionnel — de la mécanique du solide déformable à la physique quantique des systèmes mésoscopiques — ce qui lui confère une capacité de dialogue avec tous les autres départements de l'institut.</p>
+          <p style="margin-top:16px">Les quatre pôles du DPM partagent une conviction commune : la compréhension profonde des mécanismes physiques est irremplaçable pour concevoir des systèmes fiables. Que ce soit pour prédire le flambement d'une structure sous charge dynamique, modéliser la transition laminaire-turbulent dans une tuyère, ou concevoir un capteur quantique embarqué, la rigueur physique du DPM est la garantie de la robustesse des solutions.</p>
+          <div class="dept-axes" style="margin-top:20px">
+            <span class="dept-axe-tag">Mécanique non linéaire</span>
+            <span class="dept-axe-tag">Aérodynamique</span>
+            <span class="dept-axe-tag">Physique quantique appliquée</span>
+            <span class="dept-axe-tag">Transition & turbulence</span>
+            <span class="dept-axe-tag">Dynamique des structures</span>
+          </div>
+        </div>
+        <div class="dept-director-card">
+          <span class="label">Direction du département</span>
+          <div class="director-row">
+            <div class="director-avatar">CT</div>
+            <div>
+              <div class="director-name">Claire Thiébaut</div>
+              <div class="director-title">Directrice du DPM</div>
+            </div>
+          </div>
+          <div style="height:1px;background:var(--border);"></div>
+          <div>
+            <div class="label" style="margin-bottom:8px">Installations expérimentales</div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:12px;color:var(--text-soft);font-weight:300">· Soufflerie subsonique S2T (Re jusqu'à 10⁷)</span>
+              <span style="font-size:12px;color:var(--text-soft);font-weight:300">· Tunnel hydraulique à visualisation laser</span>
+              <span style="font-size:12px;color:var(--text-soft);font-weight:300">· Banc vibratoire 6 axes VIBRA-3 (10 kN)</span>
+              <span style="font-size:12px;color:var(--text-soft);font-weight:300">· Lab. capteurs quantiques (dilution 10 mK)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ── MÉCANIQUE DU SOLIDE ── -->
+    <section class="subject-section" id="mecanique-solide">
+      <div class="subject-header">
+        <div class="subject-title-group">
+          <div class="subject-number">01 · Discipline</div>
+          <h2>Mécanique du solide</h2>
+        </div>
+        <div class="subject-icon-wrap">🌊</div>
+      </div>
+
+      <div class="subject-body">
+        <div>
+          <p>Le pôle mécanique du solide du DPM étudie le comportement mécanique des matériaux et des structures sous des sollicitations complexes — grandes déformations, chargements dynamiques, couplages thermomécaniques — dans le but de prédire et de maîtriser leur réponse dans les conditions d'utilisation les plus sévères. Les travaux se situent en amont des études structurales du DSMR, au niveau de la physique des mécanismes de déformation.</p>
+          <p>Les recherches portent en particulier sur la mécanique des milieux continus en grands déplacements, la rhéologie des matériaux à comportement complexe — viscoplasticité, endommagement couplé, effets de mémoire de forme — et la dynamique rapide des structures soumises à des chocs ou des explosions. Ces travaux sont directement mobilisés pour la conception des boucliers de protection contre les débris orbitaux et les systèmes de déploiement pyrotechnique.</p>
+          <p style="margin-top:16px">Un axe émergent porte sur la mécanique des métamatériaux — structures périodiques artificielles à propriétés mécaniques non conventionnelles — notamment les métamatériaux à masse effective négative ou à module d'élasticité négatif, capables d'atténuer des ondes mécaniques dans des gammes de fréquences ciblées. Ces matériaux ouvrent des perspectives nouvelles pour l'isolation vibratoire des instruments sensibles embarqués.</p>
+        </div>
+        <div class="subject-topics">
+          <div class="subject-topics-label">Thèmes de recherche</div>
+          <ul class="topic-list">
+            <li class="topic-item"><span class="topic-dot"></span>Mécanique des milieux continus en grandes déformations</li>
+            <li class="topic-item"><span class="topic-dot"></span>Viscoplasticité et couplage endommagement-plasticité</li>
+            <li class="topic-item"><span class="topic-dot"></span>Dynamique rapide et réponse aux chocs</li>
+            <li class="topic-item"><span class="topic-dot"></span>Alliages à mémoire de forme — modélisation</li>
+            <li class="topic-item"><span class="topic-dot"></span>Métamatériaux mécaniques à bande interdite</li>
+            <li class="topic-item"><span class="topic-dot"></span>Homogénéisation des milieux périodiques</li>
+            <li class="topic-item"><span class="topic-dot"></span>Contact et tribologie en conditions spatiales</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subject-stats">
+        <div class="subject-stat">
+          <div class="subject-stat-val">13</div>
+          <div class="subject-stat-lbl">Chercheurs dédiés</div>
+        </div>
+        <div class="subject-stat">
+          <div class="subject-stat-val">91</div>
+          <div class="subject-stat-lbl">Publications depuis 2010</div>
+        </div>
+        <div class="subject-stat">
+          <div class="subject-stat-val">5</div>
+          <div class="subject-stat-lbl">Brevets déposés</div>
+        </div>
+      </div>
+
+      <div class="subject-pubs">
+        <div class="pubs-label">Publications récentes</div>
+        <a href="publications-scientifiques.html" class="subject-pub-item">
+          <span class="pub-date-chip">Fév. 2026</span>
+          <span class="pub-title-text">Métamatériaux à gradient de raideur pour l'isolation vibratoire large bande des gyroscopes embarqués</span>
+          <span class="pub-arrow">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ── DYNAMIQUE DES FLUIDES ── -->
+    <section class="subject-section" id="dynamique-fluides">
+      <div class="subject-header">
+        <div class="subject-title-group">
+          <div class="subject-number">02 · Discipline</div>
+          <h2>Dynamique des fluides</h2>
+        </div>
+        <div class="subject-icon-wrap">💧</div>
+      </div>
+
+      <div class="subject-body">
+        <div>
+          <p>Le pôle dynamique des fluides du DPM constitue l'un des groupes d'aérodynamique expérimentale et théorique les plus importants d'Europe dans le domaine spatial. Ses travaux couvrent toute la gamme des vitesses d'écoulement — du subsonique au supersonique, jusqu'au régime hypersonique en collaboration avec le DPET — et adressent les problèmes physiques fondamentaux gouvernant la portance, la traînée, le transfert thermique pariétal et la stabilité des écoulements.</p>
+          <p>La soufflerie subsonique S2T, opérée par le pôle, est une infrastructure nationale de référence pour les essais aérodynamiques à Reynolds modéré. Elle accueille régulièrement des campagnes d'essais pour des partenaires industriels (Airbus, Safran) et des équipes académiques extérieures. Les mesures PIV (Particle Image Velocimetry) et LDV (Laser Doppler Velocimetry) produites sur ce banc alimentent directement la validation des codes LES du DSTI.</p>
+          <p style="margin-top:16px">Un axe de recherche fondamentale porte sur la dynamique des écoulements diphasiques — interaction gaz-liquide dans les réservoirs de propergol en microgravité, formation de bulles dans les systèmes de refroidissement, atomisation des jets de carburant — phénomènes qui conditionnent directement la fiabilité des propulseurs dans les premières secondes après allumage.</p>
+        </div>
+        <div class="subject-topics">
+          <div class="subject-topics-label">Thèmes de recherche</div>
+          <ul class="topic-list">
+            <li class="topic-item"><span class="topic-dot"></span>Aérodynamique expérimentale (PIV, LDV, schlieren)</li>
+            <li class="topic-item"><span class="topic-dot"></span>Écoulements compressibles et chocs obliques</li>
+            <li class="topic-item"><span class="topic-dot"></span>Couche limite laminaire et transition naturelle</li>
+            <li class="topic-item"><span class="topic-dot"></span>Écoulements diphasiques en microgravité</li>
+            <li class="topic-item"><span class="topic-dot"></span>Aéroacoustique et sources de bruit aérodynamiques</li>
+            <li class="topic-item"><span class="topic-dot"></span>Réduction de traînée par contrôle actif</li>
+            <li class="topic-item"><span class="topic-dot"></span>Interaction choc–couche limite</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subject-stats">
+        <div class="subject-stat">
+          <div class="subject-stat-val">15</div>
+          <div class="subject-stat-lbl">Chercheurs dédiés</div>
+        </div>
+        <div class="subject-stat">
+          <div class="subject-stat-val">118</div>
+          <div class="subject-stat-lbl">Publications depuis 2010</div>
+        </div>
+        <div class="subject-stat">
+          <div class="subject-stat-val">10⁷</div>
+          <div class="subject-stat-lbl">Re max soufflerie S2T</div>
+        </div>
+      </div>
+
+      <div class="subject-pubs">
+        <div class="pubs-label">Publications récentes</div>
+        <a href="publications-scientifiques.html" class="subject-pub-item">
+          <span class="pub-date-chip">Jan. 2026</span>
+          <span class="pub-title-text">Dynamique de séiches en réservoir de propergol sous excitation orbitale — modélisation et validation expérimentale</span>
+          <span class="pub-arrow">→</span>
+        </a>
+        <a href="publications-scientifiques.html" class="subject-pub-item">
+          <span class="pub-date-chip">Sep. 2025</span>
+          <span class="pub-title-text">Contrôle actif de la transition laminaire-turbulent par plasma DBD sur profil portant supersonique</span>
+          <span class="pub-arrow">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ── MÉCANIQUE QUANTIQUE ── -->
+    <section class="subject-section" id="mecanique-quantique">
+      <div class="subject-header">
+        <div class="subject-title-group">
+          <div class="subject-number">03 · Discipline</div>
+          <h2>Mécanique quantique</h2>
+        </div>
+        <div class="subject-icon-wrap">⚛</div>
+      </div>
+
+      <div class="subject-body">
+        <div>
+          <p>Le pôle mécanique quantique du DPM est la discipline la plus récente et la plus prospective du département, créée en 2008 pour anticiper l'émergence des technologies quantiques dans les applications spatiales. Il développe les fondements théoriques et les premiers démonstrateurs expérimentaux de capteurs, d'horloges et de systèmes de communication exploitant les propriétés quantiques de la matière.</p>
+          <p>Les travaux les plus avancés portent sur les horloges atomiques ultra-stables à fontaine de césium et à réseau optique, dont la précision temporelle dépasse 10⁻¹⁸ s/s et qui constituent la prochaine génération de références de temps pour les systèmes de navigation par satellite. Le pôle développe également des accéléromètres à atomes froids pour la navigation inertielle autonome des engins spatiaux sans GPS.</p>
+          <p style="margin-top:16px">Un programme prospectif explore l'interférométrie atomique pour la mesure de très faibles gradients de champ gravitationnel depuis l'orbite — une technique susceptible d'améliorer d'un ordre de grandeur la résolution des missions de géodésie spatiale et d'ouvrir la voie à la détection d'ondes gravitationnelles depuis l'espace par une nouvelle voie instrumentale.</p>
+        </div>
+        <div class="subject-topics">
+          <div class="subject-topics-label">Thèmes de recherche</div>
+          <ul class="topic-list">
+            <li class="topic-item"><span class="topic-dot"></span>Horloges atomiques à réseau optique embarquées</li>
+            <li class="topic-item"><span class="topic-dot"></span>Accéléromètres à atomes froids (BEC)</li>
+            <li class="topic-item"><span class="topic-dot"></span>Interférométrie atomique gravitationnelle</li>
+            <li class="topic-item"><span class="topic-dot"></span>Capteurs quantiques pour navigation inertielle</li>
+            <li class="topic-item"><span class="topic-dot"></span>Condensats de Bose-Einstein en microgravité</li>
+            <li class="topic-item"><span class="topic-dot"></span>Communication quantique par satellite</li>
+            <li class="topic-item"><span class="topic-dot"></span>Métrologie quantique sub-Heisenberg</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subject-stats">
+        <div class="subject-stat">
+          <div class="subject-stat-val">9</div>
+          <div class="subject-stat-lbl">Chercheurs dédiés</div>
+        </div>
+        <div class="subject-stat">
+          <div class="subject-stat-val">10⁻¹⁸</div>
+          <div class="subject-stat-lbl">Précision horloge (s/s)</div>
+        </div>
+        <div class="subject-stat">
+          <div class="subject-stat-val">10 mK</div>
+          <div class="subject-stat-lbl">Temp. lab. dilution</div>
+        </div>
+      </div>
+
+      <div class="subject-pubs">
+        <div class="pubs-label">Publications récentes</div>
+        <a href="publications-scientifiques.html" class="subject-pub-item">
+          <span class="pub-date-chip">Jan. 2026</span>
+          <span class="pub-title-text">Couplage multi-physique quantique-classique pour la simulation de propulseurs à plasma de nouvelle génération</span>
+          <span class="pub-arrow">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ── INSTABILITÉ ET TURBULENCE ── -->
+    <section class="subject-section" id="instabilite-turbulence">
+      <div class="subject-header">
+        <div class="subject-title-group">
+          <div class="subject-number">04 · Discipline</div>
+          <h2>Instabilité & turbulence</h2>
+        </div>
+        <div class="subject-icon-wrap">🌀</div>
+      </div>
+
+      <div class="subject-body">
+        <div>
+          <p>Le pôle instabilité et turbulence est le laboratoire de physique des écoulements désordonnés du DPM. Il étudie les mécanismes par lesquels un écoulement laminaire perd sa stabilité et bascule vers le régime turbulent, ainsi que les propriétés statistiques et structurelles de la turbulence développée. Ces questions, fondamentales pour la physique, ont des implications pratiques directes sur le frottement pariétal, le transfert thermique et le bruit aérodynamique des aéronefs et des lanceurs.</p>
+          <p>Les travaux portent sur l'analyse de stabilité linéaire et non linéaire — méthodes de valeurs propres globales, PSE (Parabolized Stability Equations), analyse de résolvante — permettant de prédire les modes d'instabilité dominants dans les couches limites supersoniques, les jets turbulents et les sillages. Ces prédictions guident ensuite la conception de stratégies de contrôle actif de la transition.</p>
+          <p style="margin-top:16px">Le pôle développe également une approche expérimentale originale de la turbulence en microgravité, réalisée lors de campagnes en vol parabolique et dans les tours de chute libre du CNES. Ces expériences permettent d'isoler les effets de la gravité sur la dynamique des grandes structures cohérentes de la turbulence, avec des applications directes à la modélisation des écoulements dans les réservoirs de propergol en orbite.</p>
+        </div>
+        <div class="subject-topics">
+          <div class="subject-topics-label">Thèmes de recherche</div>
+          <ul class="topic-list">
+            <li class="topic-item"><span class="topic-dot"></span>Stabilité linéaire et globale des écoulements</li>
+            <li class="topic-item"><span class="topic-dot"></span>Transition laminaire-turbulent en régime supersonique</li>
+            <li class="topic-item"><span class="topic-dot"></span>Structures cohérentes et dynamique de sous-espace</li>
+            <li class="topic-item"><span class="topic-dot"></span>Turbulence en microgravité (vols paraboliques)</li>
+            <li class="topic-item"><span class="topic-dot"></span>Contrôle actif de la transition (plasma, aspiration)</li>
+            <li class="topic-item"><span class="topic-dot"></span>Modélisation de sous-maille pour les LES</li>
+            <li class="topic-item"><span class="topic-dot"></span>Turbulence thermique dans les panaches spatiaux</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subject-stats">
+        <div class="subject-stat">
+          <div class="subject-stat-val">7</div>
+          <div class="subject-stat-lbl">Chercheurs dédiés</div>
+        </div>
+        <div class="subject-stat">
+          <div class="subject-stat-val">62</div>
+          <div class="subject-stat-lbl">Publications depuis 2010</div>
+        </div>
+        <div class="subject-stat">
+          <div class="subject-stat-val">12</div>
+          <div class="subject-stat-lbl">Campagnes vols paraboliques</div>
+        </div>
+      </div>
+
+      <div class="subject-pubs">
+        <div class="pubs-label">Publications récentes</div>
+        <a href="publications-scientifiques.html" class="subject-pub-item">
+          <span class="pub-date-chip">Nov. 2025</span>
+          <span class="pub-title-text">Analyse de résolvante des modes convectifs en couche limite compressible — comparaison DNS/expérience</span>
+          <span class="pub-arrow">→</span>
+        </a>
+        <a href="publications-scientifiques.html" class="subject-pub-item">
+          <span class="pub-date-chip">Juil. 2025</span>
+          <span class="pub-title-text">Turbulence en microgravité : mesures PIV stéréoscopiques en vol parabolique et comparaison aux modèles LES</span>
+          <span class="pub-arrow">→</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale ·
+  Département Physique & Mécanique
+</footer>
+
+<script>
+const sections = document.querySelectorAll('.dept-header, .subject-section');
+const navLinks  = document.querySelectorAll('#sidebar-nav a');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, {
+  rootMargin: '-160px 0px -60% 0px',
+  threshold: 0
+});
+
+sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
