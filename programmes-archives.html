@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Programmes archivés — IFRAS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+<style>
+
+:root {
+  --bg-main:  #050b1e;
+  --bg-dark:  #020617;
+  --bg-light: #070f2b;
+  --bg-menu:  #081235;
+  --border:   #1b2555;
+  --accent:   #4f6bed;
+  --archived: #9ca3af;
+  --text-main: #e6e6e6;
+  --text-soft: #aab3d6;
+  --sidebar-w: 270px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: "DM Sans", sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+}
+
+/* ===== HEADER ===== */
+
+header {
+  position: fixed; top: 0; width: 100%;
+  z-index: 2000;
+  background: rgba(5,11,30,.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  max-width: 1300px; margin: auto;
+  padding: 12px 30px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.header-left { display: flex; align-items: center; gap: 40px; }
+.logo-link img { height: 60px; }
+.main-nav { list-style: none; display: flex; gap: 32px; }
+
+.main-nav a {
+  text-decoration: none; color: var(--text-soft);
+  font-size: 14px; letter-spacing: .05em;
+}
+
+.main-nav a:hover,
+.main-nav a.active-nav { color: white; }
+
+.header-right a {
+  padding: 8px 18px; border-radius: 6px;
+  border: 1px solid var(--accent);
+  color: white; text-decoration: none; font-size: 13px;
+}
+
+.header-right a:hover { background: var(--accent); }
+
+/* ===== BANDEAU PROGRAMMES ===== */
+
+.program-filter {
+  margin-top: 84px;
+  background: var(--bg-light);
+  border-bottom: 1px solid var(--border);
+}
+
+.program-filter ul {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  padding: 0 30px;
+}
+
+.program-filter li {
+  position: relative;
+  padding: 14px 18px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-soft);
+  letter-spacing: .06em;
+  transition: color .2s;
+}
+
+.program-filter li.active-filter {
+  color: white;
+  border-bottom: 2px solid var(--archived);
+}
+
+.program-filter li:hover { color: white; background: rgba(79,107,237,.1); border-radius: 6px; }
+
+.dropdown {
+  position: absolute;
+  top: 48px; left: 0;
+  background: #050b1e;
+  border: 1px solid var(--border);
+  min-width: 220px;
+  display: none;
+  z-index: 200;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(0,0,0,.4);
+}
+
+.dropdown a {
+  display: block; padding: 10px 16px;
+  font-size: 13px; color: var(--text-soft);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(27,37,85,.5);
+  transition: background .15s, color .15s;
+}
+
+.dropdown a:hover { background: rgba(79,107,237,.12); color: white; }
+.program-filter li:hover .dropdown { display: block; }
+
+/* ===== LAYOUT ===== */
+
+.page-wrap {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 30px;
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  gap: 0;
+  align-items: start;
+}
+
+/* ===== SIDEBAR ===== */
+
+.sidebar {
+  position: sticky;
+  top: 148px;
+  padding: 48px 32px 48px 0;
+}
+
+.sidebar-label {
+  font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(170,179,214,.35); font-weight: 500;
+  margin-bottom: 24px; padding-left: 16px;
+}
+
+.sidebar-nav { list-style: none; position: relative; }
+
+.sidebar-progress {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 2px; background: rgba(156,163,175,.07);
+}
+
+.sidebar-nav a {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 16px; font-size: 13px;
+  color: var(--text-soft); text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: color .2s, border-color .2s, background .2s;
+  border-radius: 0 6px 6px 0; font-weight: 300;
+  line-height: 1.4;
+}
+
+.sidebar-nav a:hover {
+  color: white; background: rgba(255,255,255,.03);
+  border-left-color: rgba(156,163,175,.25);
+}
+
+.sidebar-nav a.active {
+  color: white; font-weight: 500;
+  background: rgba(156,163,175,.06);
+  border-left-color: var(--archived);
+}
+
+.sidebar-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  flex-shrink: 0; opacity: .7;
+}
+
+.sidebar-divider { height: 1px; background: var(--border); margin: 20px 16px; }
+
+.sidebar-back {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 16px; font-size: 12px;
+  color: rgba(170,179,214,.4); text-decoration: none;
+  transition: color .2s; font-weight: 300;
+}
+
+.sidebar-back:hover { color: white; }
+
+/* ===== CONTENU PRINCIPAL ===== */
+
+.main-content {
+  padding: 48px 0 100px 52px;
+  border-left: 1px solid var(--border);
+  min-width: 0;
+}
+
+/* ===== SECTION PRÉSENTATION ===== */
+
+.intro-section {
+  padding-bottom: 60px;
+  border-bottom: 1px solid var(--border);
+  scroll-margin-top: 160px;
+}
+
+.section-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--archived); font-weight: 500; margin-bottom: 20px;
+}
+
+.section-eyebrow::before {
+  content: ''; display: block;
+  width: 24px; height: 1px; background: currentColor;
+}
+
+.intro-section h1 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(28px, 3.5vw, 46px);
+  font-weight: 800; letter-spacing: -0.03em;
+  line-height: 1.05; color: white; margin-bottom: 24px;
+}
+
+.intro-section h1 span {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(156,163,175,.4);
+}
+
+.intro-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 36px;
+  margin-top: 32px;
+}
+
+.intro-grid p {
+  font-size: 14.5px; color: var(--text-soft);
+  line-height: 1.85; font-weight: 300;
+}
+
+.intro-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  margin-top: 36px;
+}
+
+.intro-stat {
+  background: rgba(156,163,175,.04);
+  border: 1px solid rgba(156,163,175,.12);
+  border-radius: 10px; padding: 16px 20px;
+}
+
+.intro-stat-val {
+  font-family: "Syne", sans-serif; font-size: 24px;
+  font-weight: 800; color: white; letter-spacing: -0.03em;
+}
+
+.intro-stat-lbl {
+  font-size: 11px; color: var(--text-soft); font-weight: 300;
+  text-transform: uppercase; letter-spacing: .1em; margin-top: 3px;
+}
+
+/* ===== SECTIONS PROGRAMME ===== */
+
+.prog-section {
+  padding: 70px 0;
+  border-bottom: 1px solid var(--border);
+  scroll-margin-top: 160px;
+}
+
+.prog-section:last-child { border-bottom: none; }
+
+/* Filtre global — effet "passé" sur toute la section */
+.prog-section { opacity: 1; }
+
+/* En-tête programme */
+
+.prog-header {
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 24px;
+  margin-bottom: 36px;
+}
+
+.prog-code-badge {
+  font-family: "Syne", sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: .16em;
+  padding: 4px 12px; border-radius: 5px;
+  margin-bottom: 12px; display: inline-block;
+}
+
+.prog-header h2 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 700; color: rgba(255,255,255,.75);
+  letter-spacing: -0.02em; line-height: 1.15;
+}
+
+.prog-status-badge {
+  font-size: 11px; padding: 5px 12px; border-radius: 20px;
+  font-weight: 500; letter-spacing: .05em;
+  white-space: nowrap; flex-shrink: 0; margin-top: 4px;
+  background: rgba(156,163,175,.1); color: #9ca3af;
+  border: 1px solid rgba(156,163,175,.2);
+}
+
+/* Dates banner */
+.prog-dates-banner {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 32px;
+  padding: 14px 20px;
+  background: rgba(156,163,175,.04);
+  border: 1px solid rgba(156,163,175,.1);
+  border-radius: 10px;
+}
+
+.dates-range {
+  font-family: "Syne", sans-serif; font-size: 18px;
+  font-weight: 700; color: rgba(230,230,230,.5);
+  letter-spacing: -0.02em;
+}
+
+.dates-sep {
+  width: 28px; height: 1px; background: rgba(156,163,175,.25);
+}
+
+.dates-label {
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(156,163,175,.5); font-weight: 300;
+}
+
+.dates-pubs {
+  margin-left: auto;
+  font-size: 13px; color: rgba(156,163,175,.55); font-weight: 300;
+}
+
+.dates-pubs strong {
+  font-family: "Syne", sans-serif; font-size: 16px;
+  font-weight: 700; color: rgba(230,230,230,.5);
+}
+
+/* Corps du programme */
+
+.prog-intro {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+  margin-bottom: 32px;
+}
+
+.prog-intro p {
+  font-size: 14.5px; color: rgba(170,179,214,.75);
+  line-height: 1.85; font-weight: 300;
+}
+
+.prog-intro p + p { margin-top: 14px; }
+
+/* Bloc fiche technique */
+.prog-fiche {
+  background: rgba(7,15,43,.6);
+  border: 1px solid rgba(27,37,85,.7);
+  border-radius: 14px; padding: 26px 28px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+.fiche-label {
+  font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(170,179,214,.3); font-weight: 500;
+}
+
+.fiche-rows { display: flex; flex-direction: column; gap: 10px; }
+
+.fiche-row {
+  display: flex; align-items: baseline;
+  justify-content: space-between; gap: 12px;
+  font-size: 13px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(27,37,85,.5);
+}
+
+.fiche-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+.fiche-key { color: rgba(170,179,214,.4); font-weight: 300; flex-shrink: 0; }
+.fiche-val { color: rgba(230,230,230,.6); text-align: right; font-weight: 400; }
+
+/* KPIs programme */
+.prog-kpis {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  margin-bottom: 32px;
+}
+
+.prog-kpi {
+  border-radius: 10px; padding: 16px 18px;
+  border: 1px solid rgba(156,163,175,.1);
+  background: rgba(156,163,175,.04);
+  display: flex; flex-direction: column; gap: 4px;
+}
+
+.prog-kpi-val {
+  font-family: "Syne", sans-serif; font-size: 22px;
+  font-weight: 800; letter-spacing: -0.03em;
+  color: rgba(156,163,175,.7);
+}
+
+.prog-kpi-lbl {
+  font-size: 11px; color: rgba(170,179,214,.4);
+  font-weight: 300; line-height: 1.4;
+  text-transform: uppercase; letter-spacing: .08em;
+}
+
+/* Réalisations / livrables */
+.prog-achievements {
+  display: flex; flex-direction: column; gap: 10px;
+  margin-bottom: 28px;
+}
+
+.achievement-label {
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(170,179,214,.35); margin-bottom: 4px;
+}
+
+.achievement-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 14px 18px;
+  background: rgba(156,163,175,.03);
+  border: 1px solid rgba(156,163,175,.08);
+  border-radius: 10px;
+}
+
+.achievement-icon {
+  font-size: 18px; flex-shrink: 0; margin-top: 1px; opacity: .7;
+}
+
+.achievement-text {
+  font-size: 13.5px; color: rgba(170,179,214,.65);
+  font-weight: 300; line-height: 1.6;
+}
+
+.achievement-text strong {
+  color: rgba(230,230,230,.7); font-weight: 500;
+}
+
+/* Axes scientifiques */
+.prog-axes-wrap {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  margin-bottom: 32px;
+}
+
+.prog-axe {
+  background: rgba(255,255,255,.015);
+  border: 1px solid rgba(255,255,255,.04);
+  border-radius: 10px; padding: 18px 20px;
+  display: flex; gap: 14px; align-items: flex-start;
+}
+
+.axe-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; opacity: .6; }
+
+.axe-title {
+  font-size: 13px; font-weight: 500; color: rgba(255,255,255,.6);
+  margin-bottom: 4px;
+}
+
+.axe-desc {
+  font-size: 12.5px; color: rgba(170,179,214,.5);
+  font-weight: 300; line-height: 1.6;
+}
+
+/* Partenaires */
+.prog-partners {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px;
+}
+
+.partner-chip {
+  font-size: 12px; padding: 5px 14px; border-radius: 6px;
+  background: rgba(156,163,175,.04);
+  border: 1px solid rgba(156,163,175,.1);
+  color: rgba(170,179,214,.5); font-weight: 300;
+}
+
+/* Divider interne */
+.inner-divider { height: 1px; background: rgba(27,37,85,.7); margin: 28px 0; }
+
+/* Publications liées */
+.prog-pubs { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+
+.pubs-label {
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(170,179,214,.35); margin-bottom: 4px;
+}
+
+.pub-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 11px 16px;
+  background: rgba(255,255,255,.015);
+  border: 1px solid rgba(255,255,255,.04);
+  border-radius: 8px; text-decoration: none; color: inherit;
+  transition: background .2s, border-color .2s; font-size: 13px;
+}
+
+.pub-item:hover { background: rgba(79,107,237,.05); border-color: rgba(79,107,237,.15); }
+
+.pub-chip {
+  font-size: 10px; padding: 2px 8px; border-radius: 4px;
+  background: rgba(156,163,175,.08); border: 1px solid rgba(156,163,175,.15);
+  color: rgba(156,163,175,.7); font-weight: 500; white-space: nowrap; flex-shrink: 0;
+}
+
+.pub-text { color: rgba(170,179,214,.6); font-weight: 300; flex: 1; }
+.pub-arrow { color: rgba(170,179,214,.2); font-size: 12px; }
+
+/* Note d'accès archives */
+.archive-access-note {
+  display: flex; align-items: center; gap: 16px;
+  padding: 16px 20px; margin-top: 28px;
+  background: rgba(79,107,237,.04);
+  border: 1px solid rgba(79,107,237,.12);
+  border-radius: 10px;
+  font-size: 13px; color: rgba(170,179,214,.55); font-weight: 300;
+}
+
+.archive-access-note a {
+  color: rgba(79,107,237,.7); text-decoration: none;
+  transition: color .2s;
+}
+
+.archive-access-note a:hover { color: #818cf8; }
+
+/* ===== FOOTER ===== */
+
+footer {
+  background: var(--bg-dark); border-top: 1px solid var(--border);
+  padding: 40px 30px; text-align: center;
+  font-size: 12px; color: #6b7280;
+}
+
+/* ===== ANIMATIONS ===== */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.prog-section { animation: fadeUp .55s ease both; }
+.prog-section:nth-child(1) { animation-delay: .05s; }
+.prog-section:nth-child(2) { animation-delay: .10s; }
+.prog-section:nth-child(3) { animation-delay: .15s; }
+
+</style>
+</head>
+
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="header-inner">
+    <div class="header-left">
+      <a href="index.html" class="logo-link"><img src="logo.png" alt="Logo IFRAS"></a>
+      <ul class="main-nav">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="recherche.html">Recherche</a></li>
+        <li><a href="programmes.html" class="active-nav">Programmes</a></li>
+        <li><a href="publications.html">Publications</a></li>
+      </ul>
+    </div>
+    <div class="header-right">
+      <a href="connexion.html">Connexion</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== BANDEAU PROGRAMMES ===== -->
+<div class="program-filter">
+  <ul>
+    <li>Programmes actifs
+      <div class="dropdown">
+        <a href="programmes-actifs.html#artemis9">ARTEMIS-9</a>
+        <a href="programmes-actifs.html#orion3">ORION-3</a>
+        <a href="programmes-actifs.html#hermes">HERMES</a>
+        <a href="programmes-actifs.html#atlas">ATLAS</a>
+        <a href="programmes-actifs.html#lynx">LYNX</a>
+        <a href="programmes-actifs.html#prometheus">PROMETHEUS</a>
+      </div>
+    </li>
+    <li class="active-filter">Programmes archivés
+      <div class="dropdown">
+        <a href="programmes-archives.html#apollox">APOLLO-X</a>
+        <a href="programmes-archives.html#delphi">DELPHI</a>
+        <a href="programmes-archives.html#cassinir">CASSINI-R</a>
+      </div>
+    </li>
+    <li>Programmes futurs
+      <div class="dropdown">
+        <a href="#">HERA</a>
+        <a href="#">NOE</a>
+        <a href="#">TITAN-0</a>
+      </div>
+    </li>
+    <li>Programmes avortés
+      <div class="dropdown">
+        <a href="#">PHOENIX</a>
+        <a href="#">DAEDALUS</a>
+        <a href="#">ICARUS-2</a>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<!-- ===== LAYOUT ===== -->
+<div class="page-wrap">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <div class="sidebar-label">Programmes archivés</div>
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <div class="sidebar-progress"></div>
+      <li>
+        <a href="#presentation" class="active">
+          <span class="sidebar-dot" style="background:#9ca3af;"></span>
+          Vue d'ensemble
+        </a>
+      </li>
+      <li>
+        <a href="#apollox">
+          <span class="sidebar-dot" style="background:#60a5fa;"></span>
+          APOLLO-X
+        </a>
+      </li>
+      <li>
+        <a href="#delphi">
+          <span class="sidebar-dot" style="background:#34d399;"></span>
+          DELPHI
+        </a>
+      </li>
+      <li>
+        <a href="#cassinir">
+          <span class="sidebar-dot" style="background:#f97316;"></span>
+          CASSINI-R
+        </a>
+      </li>
+    </ul>
+    <div class="sidebar-divider"></div>
+    <a href="programmes.html" class="sidebar-back">← Retour aux Programmes</a>
+  </aside>
+
+  <!-- ===== CONTENU ===== -->
+  <main class="main-content">
+
+    <!-- ── PRÉSENTATION ── -->
+    <section class="intro-section" id="presentation">
+      <div class="section-eyebrow">Missions clôturées</div>
+      <h1>Programmes<br><span>archivés</span></h1>
+
+      <div class="intro-grid">
+        <div>
+          <p>Les programmes archivés de l'IFRAS sont des missions scientifiques menées à leur terme, dont les objectifs ont été atteints et les équipes dissoutes ou réaffectées. Leur clôture ne signifie pas l'oubli : les données, modèles, publications et savoir-faire accumulés continuent d'alimenter les programmes en cours et constituent un patrimoine scientifique considérable. Plusieurs résultats fondamentaux de l'IFRAS ont été produits par ces programmes aujourd'hui archivés.</p>
+          <p>L'accès complet aux données brutes, comptes-rendus d'essais, rapports de phase et archives documentaires de ces programmes est possible sur demande motivée auprès du Service Archives & Documentation. Certains contenus restent soumis à accréditation en raison de leur caractère sensible ou de leur pertinence pour des programmes en cours.</p>
+        </div>
+        <div>
+          <p>Ces trois programmes illustrent la diversité des approches scientifiques de l'IFRAS : l'exploration robotique in situ avec APOLLO-X, la surveillance planétaire depuis l'orbite avec DELPHI, et la valorisation intensive de données existantes par l'intelligence artificielle avec CASSINI-R. Ensemble, ils ont produit 279 publications scientifiques dans des revues à comité de lecture, et leurs résultats sont cités dans plus de 1 400 articles par des équipes du monde entier.</p>
+          <p>Des éléments matériels de ces programmes — rovers encore opérationnels sur la Lune, modèles prédictifs déployés à l'ONU, bases de données IA publiées en open access — continuent d'avoir une existence et une utilité bien après la clôture formelle de leurs programmes d'origine.</p>
+        </div>
+      </div>
+
+      <div class="intro-stats">
+        <div class="intro-stat">
+          <div class="intro-stat-val">3</div>
+          <div class="intro-stat-lbl">Programmes clôturés</div>
+        </div>
+        <div class="intro-stat">
+          <div class="intro-stat-val">279</div>
+          <div class="intro-stat-lbl">Publications produites</div>
+        </div>
+        <div class="intro-stat">
+          <div class="intro-stat-val">+1 400</div>
+          <div class="intro-stat-lbl">Citations mondiales</div>
+        </div>
+        <div class="intro-stat">
+          <div class="intro-stat-val">2014</div>
+          <div class="intro-stat-lbl">Premier lancement (APOLLO-X)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- APOLLO-X                                                      -->
+    <!-- ============================================================ -->
+    <section class="prog-section" id="apollox">
+
+      <div class="prog-header">
+        <div>
+          <span class="prog-code-badge" style="color:rgba(96,165,250,.6); background:rgba(96,165,250,.06); border:1px solid rgba(96,165,250,.15);">APOLLO-X</span>
+          <h2>Exploration robotique des cratères polaires lunaires</h2>
+        </div>
+        <span class="prog-status-badge">Archivé · 2022</span>
+      </div>
+
+      <div class="prog-dates-banner">
+        <span class="dates-range">2014</span>
+        <div class="dates-sep"></div>
+        <span class="dates-range">2022</span>
+        <span class="dates-label">8 années d'opérations</span>
+        <span class="dates-pubs"><strong>142</strong> publications</span>
+      </div>
+
+      <div class="prog-kpis">
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">6</span>
+          <span class="prog-kpi-lbl">Rovers déployés sur la Lune</span>
+        </div>
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">3</span>
+          <span class="prog-kpi-lbl">Rovers encore opérationnels</span>
+        </div>
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">1 240 km²</span>
+          <span class="prog-kpi-lbl">Surface cartographiée</span>
+        </div>
+      </div>
+
+      <div class="prog-intro">
+        <div>
+          <p>APOLLO-X a constitué le programme d'exploration robotique lunaire le plus ambitieux jamais conduit par une institution scientifique civile européenne. Son objectif central : cartographier avec une précision centimétrique les bassins permanemment ombragés (PSR) du pôle Sud lunaire pour y quantifier les réserves de glace d'eau sub-surfacique, ressource stratégique pour toute future présence humaine durable sur la Lune.</p>
+          <p>Six rovers miniaturisés de 35 kg — les APOLLO-X-A à APOLLO-X-F — ont été déposés par trois missions de lanceur léger entre 2014 et 2018. Équipés de forières thermiques capables de prélever des carottes jusqu'à 1,5 m de profondeur, de spectromètres neutrons et de caméras stéréoscopiques embarquées, ils ont opéré de manière largement autonome dans les zones d'ombre permanente, où les panneaux solaires sont inopérants et les températures descendent à −230 °C.</p>
+          <p style="margin-top:14px">La découverte majeure du programme — publiée en 2020 dans Nature Geoscience — est la mise en évidence de couches de glace quasi-pure à −40 cm de profondeur dans le bassin Haworth, contenant environ 0,3 % en masse d'eau, une concentration trois fois supérieure aux estimations préalables. Ce résultat a fondamentalement modifié la planification de l'architecture des futures bases lunaires de l'ESA et de la NASA.</p>
+        </div>
+        <div class="prog-fiche">
+          <span class="fiche-label">Fiche programme</span>
+          <div class="fiche-rows">
+            <div class="fiche-row">
+              <span class="fiche-key">Statut</span>
+              <span class="fiche-val">Archivé — clôturé déc. 2022</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Début programme</span>
+              <span class="fiche-val">Janvier 2010</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">1er déploiement rover</span>
+              <span class="fiche-val">Mars 2014</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Département pilote</span>
+              <span class="fiche-val">DAI / DSVT / DSTI</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Chercheurs impliqués</span>
+              <span class="fiche-val">+200 (pic 2018)</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Partenaires principaux</span>
+              <span class="fiche-val">ESA, CNES, JAXA, Airbus</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Publications produites</span>
+              <span class="fiche-val">142 (dont 3 Nature)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="inner-divider"></div>
+
+      <div class="achievement-label">Réalisations scientifiques majeures</div>
+      <div class="prog-achievements">
+        <div class="achievement-item">
+          <span class="achievement-icon">💧</span>
+          <div class="achievement-text">
+            <strong>Découverte de glace quasi-pure à −40 cm de profondeur dans le bassin Haworth</strong> — concentration de 0,3 % en masse, trois fois supérieure aux estimations antérieures. Publication dans Nature Geoscience (2020), citée 312 fois.
+          </div>
+        </div>
+        <div class="achievement-item">
+          <span class="achievement-icon">🗺</span>
+          <div class="achievement-text">
+            <strong>Première cartographie haute résolution (5 cm/px) de 1 240 km² de PSR lunaires</strong>, mise en open access et adoptée comme référence géodésique officielle par l'IAU pour la région polaire sud lunaire.
+          </div>
+        </div>
+        <div class="achievement-item">
+          <span class="achievement-icon">🤖</span>
+          <div class="achievement-text">
+            <strong>Démonstration de 8 années d'opérations autonomes continues en environnement cryogénique extrême</strong> — les rovers APOLLO-X-B et APOLLO-X-D sont encore actifs en 2026, bien au-delà de leur durée de vie nominale de 3 ans.
+          </div>
+        </div>
+        <div class="achievement-item">
+          <span class="achievement-icon">⚗️</span>
+          <div class="achievement-text">
+            <strong>Première extraction et analyse in situ de glace lunaire par électrolyse embarquée</strong>, démontrant la faisabilité de la production d'oxygène et d'hydrogène directement depuis le régolithe — fondement du concept ISRU lunaire.
+          </div>
+        </div>
+      </div>
+
+      <div class="inner-divider"></div>
+
+      <div style="margin-bottom:16px; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(170,179,214,.3);">Axes scientifiques traités</div>
+      <div class="prog-axes-wrap">
+        <div class="prog-axe">
+          <span class="axe-icon">🌕</span>
+          <div>
+            <div class="axe-title">Glaciologie lunaire</div>
+            <div class="axe-desc">Caractérisation physico-chimique des dépôts de glace dans les bassins permanemment ombragés. Modélisation des mécanismes de piégeage et de sublimation sur des échelles de temps géologiques.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">🪨</span>
+          <div>
+            <div class="axe-title">Géologie polaire lunaire</div>
+            <div class="axe-desc">Stratigraphie des couches superficielles du régolithe polaire. Cartographie des impacts récents et reconstruction de l'histoire géologique des PSR sur 3 milliards d'années.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">🔋</span>
+          <div>
+            <div class="axe-title">Ressources in situ (ISRU)</div>
+            <div class="axe-desc">Évaluation de la faisabilité et des rendements de l'extraction d'eau, d'oxygène et d'hydrogène directement depuis le régolithe polaire lunaire à des fins de soutien aux opérations habitées.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">❄️</span>
+          <div>
+            <div class="axe-title">Cryogénie et matériaux extrêmes</div>
+            <div class="axe-desc">Qualification de systèmes mécaniques, électroniques et de propulsion fonctionnant de manière fiable à −230 °C sans maintenance extérieure sur des durées supérieures à 5 ans.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prog-partners">
+        <span class="partner-chip">ESA — ESTEC</span>
+        <span class="partner-chip">CNES</span>
+        <span class="partner-chip">JAXA</span>
+        <span class="partner-chip">Airbus Defence & Space</span>
+        <span class="partner-chip">CNRS — LGLTPE</span>
+        <span class="partner-chip">Université Grenoble Alpes</span>
+        <span class="partner-chip">NASA — GSFC</span>
+      </div>
+
+      <div class="prog-pubs">
+        <div class="pubs-label">Publications sélectives</div>
+        <a href="publications-scientifiques.html" class="pub-item">
+          <span class="pub-chip">2020</span>
+          <span class="pub-text">Concentrations de glace d'eau sub-surfacique dans le bassin Haworth — mesures directes APOLLO-X et implications pour les architectures ISRU</span>
+          <span class="pub-arrow">→</span>
+        </a>
+        <a href="publications-scientifiques.html" class="pub-item">
+          <span class="pub-chip">2019</span>
+          <span class="pub-text">Navigation autonome dans les bassins permanemment ombragés : algorithmes et résultats sur les rovers APOLLO-X</span>
+          <span class="pub-arrow">→</span>
+        </a>
+        <a href="publications-scientifiques.html" class="pub-item">
+          <span class="pub-chip">2022</span>
+          <span class="pub-text">Bilan cartographique APOLLO-X : géodésie haute résolution du pôle Sud lunaire — jeu de données de référence IAU</span>
+          <span class="pub-arrow">→</span>
+        </a>
+      </div>
+
+      <div class="archive-access-note">
+        📁 Les 3,8 To de données brutes APOLLO-X (images, spectres, logs rover) sont accessibles en open access sur le portail archives IFRAS. Les données de forage profondes restent soumises à accréditation. <a href="mailto:archives@ifras.fr">Contacter les archives →</a>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- DELPHI                                                        -->
+    <!-- ============================================================ -->
+    <section class="prog-section" id="delphi">
+
+      <div class="prog-header">
+        <div>
+          <span class="prog-code-badge" style="color:rgba(52,211,153,.55); background:rgba(52,211,153,.05); border:1px solid rgba(52,211,153,.13);">DELPHI</span>
+          <h2>Prédiction sismique par réseau de capteurs orbitaux</h2>
+        </div>
+        <span class="prog-status-badge">Archivé · 2023</span>
+      </div>
+
+      <div class="prog-dates-banner">
+        <span class="dates-range">2016</span>
+        <div class="dates-sep"></div>
+        <span class="dates-range">2023</span>
+        <span class="dates-label">7 années d'opérations</span>
+        <span class="dates-pubs"><strong>89</strong> publications</span>
+      </div>
+
+      <div class="prog-kpis">
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">12</span>
+          <span class="prog-kpi-lbl">Satellites de la constellation</span>
+        </div>
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">72 h</span>
+          <span class="prog-kpi-lbl">Horizon de prédiction</span>
+        </div>
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">0,71</span>
+          <span class="prog-kpi-lbl">Score F1 (séismes ≥ M5.5)</span>
+        </div>
+      </div>
+
+      <div class="prog-intro">
+        <div>
+          <p>DELPHI est né d'une hypothèse longtemps controversée dans la communauté géophysique : les séismes importants seraient précédés, dans les 48 à 72 heures qui les précèdent, de perturbations détectables dans la couche ionosphérique — le résultat de signaux électromagnétiques générés par la compression mécanique des roches en profondeur. Des observations ponctuelles existaient depuis les années 1990, mais aucun programme n'avait tenté de les exploiter systématiquement pour la prédiction opérationnelle.</p>
+          <p>L'IFRAS a construit pour DELPHI une constellation de 12 microsatellites en orbite basse équipés de magnétomètres vectoriels haute résolution, de capteurs de densité électronique et d'analyseurs de plasma ionosphérique. En corrélant les anomalies détectées par cette constellation avec les catalogues sismiques historiques de 40 ans, les équipes du DAI et du DSTI ont entraîné un modèle d'apprentissage profond capable de produire des alertes à 72 heures pour des séismes de magnitude ≥ 5,5.</p>
+          <p style="margin-top:14px">Le programme a produit ses résultats les plus marquants entre 2020 et 2022, avec une série de prédictions validées après coup sur le Chili, la Turquie et l'Indonésie. Le modèle DELPHI-4 a été transmis à l'ONU-Space en 2023 et est aujourd'hui utilisé à titre expérimental par les agences de protection civile de 7 pays dans le cadre d'un accord de coopération technique. C'est cette valorisation opérationnelle qui a motivé la clôture formelle du programme : l'IFRAS a considéré sa mission accomplie en livrant le modèle à des opérateurs institutionnels.</p>
+        </div>
+        <div class="prog-fiche">
+          <span class="fiche-label">Fiche programme</span>
+          <div class="fiche-rows">
+            <div class="fiche-row">
+              <span class="fiche-key">Statut</span>
+              <span class="fiche-val">Archivé — clôturé juin 2023</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Début programme</span>
+              <span class="fiche-val">Avril 2013</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Lancement constellation</span>
+              <span class="fiche-val">Novembre 2016</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Département pilote</span>
+              <span class="fiche-val">DAI / DSTI / DPM</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Chercheurs impliqués</span>
+              <span class="fiche-val">+110 (pic 2021)</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Partenaires principaux</span>
+              <span class="fiche-val">ONU-Space, ESA, USGS, INGV</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Publications produites</span>
+              <span class="fiche-val">89 (dont 1 Science)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="inner-divider"></div>
+
+      <div class="achievement-label">Réalisations scientifiques majeures</div>
+      <div class="prog-achievements">
+        <div class="achievement-item">
+          <span class="achievement-icon">📡</span>
+          <div class="achievement-text">
+            <strong>Première validation statistique robuste de la corrélation ionosphère-sismicité à l'échelle planétaire</strong> — analyse de 40 ans de données sismiques et 7 ans de données orbitales. Publication dans Science (2021).
+          </div>
+        </div>
+        <div class="achievement-item">
+          <span class="achievement-icon">🧠</span>
+          <div class="achievement-text">
+            <strong>Développement du modèle DELPHI-4</strong>, architecture Transformer multi-sources atteigning un score F1 de 0,71 sur les séismes de magnitude ≥ 5,5 à 72 heures — meilleur résultat mondial sur ce problème à la date de publication.
+          </div>
+        </div>
+        <div class="achievement-item">
+          <span class="achievement-icon">🌍</span>
+          <div class="achievement-text">
+            <strong>Transfert opérationnel du modèle DELPHI-4 à l'ONU-Space</strong> en 2023, et déploiement expérimental dans les systèmes d'alerte de la Turquie, du Chili, du Japon, de l'Indonésie, de la Grèce, du Pérou et du Maroc.
+          </div>
+        </div>
+      </div>
+
+      <div class="inner-divider"></div>
+
+      <div style="margin-bottom:16px; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(170,179,214,.3);">Axes scientifiques traités</div>
+      <div class="prog-axes-wrap">
+        <div class="prog-axe">
+          <span class="axe-icon">🌐</span>
+          <div>
+            <div class="axe-title">Physique ionosphérique sismo-induite</div>
+            <div class="axe-desc">Caractérisation des mécanismes de couplage lithosphère-atmosphère-ionosphère (LAIC) et des signatures électromagnétiques précurseurs des grands séismes.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">🤖</span>
+          <div>
+            <div class="axe-title">IA pour la géophysique</div>
+            <div class="axe-desc">Application des architectures Transformer et des réseaux de neurones récurrents à la détection d'anomalies faibles dans des séries temporelles multi-capteurs à haute dimension.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">🛰</span>
+          <div>
+            <div class="axe-title">Constellation de microsatellites</div>
+            <div class="axe-desc">Conception, déploiement et opération d'une constellation de 12 microsatellites en orbite héliosynchrone avec coordination d'observation synchronisée et fusion de données temps réel.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">⚠️</span>
+          <div>
+            <div class="axe-title">Systèmes d'alerte précoce</div>
+            <div class="axe-desc">Intégration des modèles DELPHI dans les pipelines opérationnels des agences de protection civile. Définition des protocoles de décision et des seuils d'alerte en concertation avec les autorités nationales.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prog-partners">
+        <span class="partner-chip">ONU-Space</span>
+        <span class="partner-chip">ESA</span>
+        <span class="partner-chip">USGS — Earthquake Hazards</span>
+        <span class="partner-chip">INGV (Italie)</span>
+        <span class="partner-chip">NIED (Japon)</span>
+        <span class="partner-chip">CNRS — IPGP</span>
+        <span class="partner-chip">Université de Toulouse III</span>
+      </div>
+
+      <div class="prog-pubs">
+        <div class="pubs-label">Publications sélectives</div>
+        <a href="publications-scientifiques.html" class="pub-item">
+          <span class="pub-chip">2021</span>
+          <span class="pub-text">Corrélation statistique robuste entre anomalies ionosphériques orbitales et séismes de magnitude ≥ 5,5 — analyse globale 1980-2020</span>
+          <span class="pub-arrow">→</span>
+        </a>
+        <a href="publications-scientifiques.html" class="pub-item">
+          <span class="pub-chip">2022</span>
+          <span class="pub-text">DELPHI-4 : architecture Transformer pour la prédiction sismique multi-source à 72 heures — validation sur 6 régions sismiques majeures</span>
+          <span class="pub-arrow">→</span>
+        </a>
+        <a href="publications-scientifiques.html" class="pub-item">
+          <span class="pub-chip">2023</span>
+          <span class="pub-text">Bilan opérationnel du déploiement DELPHI-4 en Turquie : séquence sismique de février 2023 — analyse rétrospective et limites du modèle</span>
+          <span class="pub-arrow">→</span>
+        </a>
+      </div>
+
+      <div class="archive-access-note">
+        📁 Les données de la constellation DELPHI sont disponibles en open access via le portail archives IFRAS. Le code source du modèle DELPHI-4 est publié sous licence Apache 2.0 sur le dépôt GitHub IFRAS. <a href="mailto:archives@ifras.fr">Contacter les archives →</a>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- CASSINI-R                                                     -->
+    <!-- ============================================================ -->
+    <section class="prog-section" id="cassinir">
+
+      <div class="prog-header">
+        <div>
+          <span class="prog-code-badge" style="color:rgba(249,115,22,.55); background:rgba(249,115,22,.05); border:1px solid rgba(249,115,22,.13);">CASSINI-R</span>
+          <h2>Retraitement IA des archives de la sonde Cassini-Huygens</h2>
+        </div>
+        <span class="prog-status-badge">Archivé · 2021</span>
+      </div>
+
+      <div class="prog-dates-banner">
+        <span class="dates-range">2019</span>
+        <div class="dates-sep"></div>
+        <span class="dates-range">2021</span>
+        <span class="dates-label">2 années de traitement intensif</span>
+        <span class="dates-pubs"><strong>48</strong> publications</span>
+      </div>
+
+      <div class="prog-kpis">
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">635 Go</span>
+          <span class="prog-kpi-lbl">Données brutes retraitées</span>
+        </div>
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">18</span>
+          <span class="prog-kpi-lbl">Nouvelles structures découvertes</span>
+        </div>
+        <div class="prog-kpi">
+          <span class="prog-kpi-val">×40</span>
+          <span class="prog-kpi-lbl">Gain résolution sur images VIMS</span>
+        </div>
+      </div>
+
+      <div class="prog-intro">
+        <div>
+          <p>CASSINI-R — le suffixe R pour "Retraitement" — est le programme le plus court et peut-être le plus intellectuellement original de l'IFRAS. Son point de départ : la mission Cassini-Huygens de la NASA, qui a orbité autour de Saturne entre 2004 et 2017, a produit 635 gigaoctets de données brutes dont une fraction seulement avait été analysée en profondeur faute de temps et de puissance de calcul disponibles au moment de la mission. Ces données dormaient dans les archives NASA, accessibles mais sous-exploitées.</p>
+          <p>L'idée directrice de CASSINI-R était simple et ambitieuse : appliquer les méthodes de deep learning développées depuis 2015 — en particulier les réseaux convolutifs pour l'imagerie et les modèles de reconstruction spectrale — à ces archives brutes pour en extraire des informations inaccessibles aux traitements originaux. Le programme a regroupé une équipe de 60 chercheurs du DAI, DSTI et DOL pendant deux ans, avec un accès prioritaire aux ressources HPC du calculateur Mésocentre de l'IFRAS.</p>
+          <p style="margin-top:14px">Les résultats ont largement dépassé les attentes. En imagerie seule, les techniques de super-résolution appliquées aux images VIMS (Visual and Infrared Mapping Spectrometer) ont multiplié leur résolution effective par un facteur 40, révélant des structures sub-kilométriques dans les anneaux et à la surface de Titan qui n'avaient jamais été observées. Dix-huit structures nouvelles ont été cataloguées dans les anneaux de Saturne, dont deux — baptisées IFRAS-1 et IFRAS-2 — constituent un type morphologique inconnu de propeller géant lié à des objets de la taille d'un stade.</p>
+        </div>
+        <div class="prog-fiche">
+          <span class="fiche-label">Fiche programme</span>
+          <div class="fiche-rows">
+            <div class="fiche-row">
+              <span class="fiche-key">Statut</span>
+              <span class="fiche-val">Archivé — clôturé mars 2021</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Début programme</span>
+              <span class="fiche-val">Janvier 2019</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Département pilote</span>
+              <span class="fiche-val">DAI / DSTI / DOL</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Chercheurs impliqués</span>
+              <span class="fiche-val">60</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Partenaires principaux</span>
+              <span class="fiche-val">NASA JPL, ESA, Caltech</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Ressources HPC utilisées</span>
+              <span class="fiche-val">4,2 millions d'heures CPU</span>
+            </div>
+            <div class="fiche-row">
+              <span class="fiche-key">Publications produites</span>
+              <span class="fiche-val">48 (dont 2 Nature Astronomy)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="inner-divider"></div>
+
+      <div class="achievement-label">Réalisations scientifiques majeures</div>
+      <div class="prog-achievements">
+        <div class="achievement-item">
+          <span class="achievement-icon">💍</span>
+          <div class="achievement-text">
+            <strong>Découverte de 18 nouvelles structures dans les anneaux de Saturne</strong>, dont les objets IFRAS-1 et IFRAS-2 — propellers géants d'un type morphologique inédit, associés à des corps de 300-400 m de diamètre. Publication dans Nature Astronomy (2020).
+          </div>
+        </div>
+        <div class="achievement-item">
+          <span class="achievement-icon">🪐</span>
+          <div class="achievement-text">
+            <strong>Reconstruction à ×40 de résolution des images VIMS de Titan</strong>, révélant un réseau de dunes équatoriales à structure fractale et une série de lacs polaires à géométrie hexagonale non détectés précédemment.
+          </div>
+        </div>
+        <div class="achievement-item">
+          <span class="achievement-icon">🌊</span>
+          <div class="achievement-text">
+            <strong>Détection dans les données magnétométriques de Cassini d'une anomalie périodique non expliquée autour d'Encelade</strong>, compatible avec un jet de matière organique à haute altitude depuis l'océan sub-glaciaire — ouvrant une nouvelle piste pour la chimie prébiotique.
+          </div>
+        </div>
+        <div class="achievement-item">
+          <span class="achievement-icon">💾</span>
+          <div class="achievement-text">
+            <strong>Publication en open access de l'intégralité des données retraitées</strong> — 2,1 To d'images super-résolues, spectres reconstruits et cubes de données — devenus la base de référence pour la communauté Saturne mondiale.
+          </div>
+        </div>
+      </div>
+
+      <div class="inner-divider"></div>
+
+      <div style="margin-bottom:16px; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(170,179,214,.3);">Axes scientifiques traités</div>
+      <div class="prog-axes-wrap">
+        <div class="prog-axe">
+          <span class="axe-icon">🔭</span>
+          <div>
+            <div class="axe-title">Planétologie saturnienne</div>
+            <div class="axe-desc">Structure fine des anneaux de Saturne, dynamique des propellers, atmosphère de Titan et activité géologique d'Encelade — réinterprétés à la lumière des données retraitées.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">🖼</span>
+          <div>
+            <div class="axe-title">Super-résolution par deep learning</div>
+            <div class="axe-desc">Développement de réseaux convolutifs entraînés spécifiquement sur les artefacts des capteurs VIMS et ISS de Cassini pour une reconstruction fidèle des détails sub-pixel.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">📊</span>
+          <div>
+            <div class="axe-title">Traitement massif d'archives</div>
+            <div class="axe-desc">Pipeline de traitement automatisé des 635 Go bruts — calibration, nettoyage des artefacts, extraction de features et indexation sémantique pour la recherche documentaire.</div>
+          </div>
+        </div>
+        <div class="prog-axe">
+          <span class="axe-icon">🧪</span>
+          <div>
+            <div class="axe-title">Chimie prébiotique d'Encelade</div>
+            <div class="axe-desc">Réanalyse des données INMS (spectrométrie de masse neutre et ionique) des survols d'Encelade pour contraindre la composition de l'océan interne et son potentiel astrobiologique.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prog-partners">
+        <span class="partner-chip">NASA — JPL</span>
+        <span class="partner-chip">ESA</span>
+        <span class="partner-chip">Caltech</span>
+        <span class="partner-chip">SETI Institute</span>
+        <span class="partner-chip">Laboratoire d'Astrophysique de Marseille</span>
+        <span class="partner-chip">University of Arizona</span>
+      </div>
+
+      <div class="prog-pubs">
+        <div class="pubs-label">Publications sélectives</div>
+        <a href="publications-scientifiques.html" class="pub-item">
+          <span class="pub-chip">2020</span>
+          <span class="pub-text">Nouvelles structures de type propeller dans les anneaux B de Saturne révélées par super-résolution VIMS — découverte IFRAS-1 et IFRAS-2</span>
+          <span class="pub-arrow">→</span>
+        </a>
+        <a href="publications-scientifiques.html" class="pub-item">
+          <span class="pub-chip">2020</span>
+          <span class="pub-text">Reconstruction haute résolution de la surface de Titan depuis les archives VIMS par réseau convolutif multi-échelle</span>
+          <span class="pub-arrow">→</span>
+        </a>
+        <a href="publications-scientifiques.html" class="pub-item">
+          <span class="pub-chip">2021</span>
+          <span class="pub-text">Anomalie magnétique périodique autour d'Encelade dans les archives Cassini — réanalyse INMS et hypothèse d'un panache organique à haute altitude</span>
+          <span class="pub-arrow">→</span>
+        </a>
+      </div>
+
+      <div class="archive-access-note">
+        📁 L'ensemble des données retraitées CASSINI-R (2,1 To) est disponible en open access sur le portail NASA PDS et le dépôt IFRAS. Les modèles de super-résolution sont publiés en open source sur GitHub. <a href="mailto:archives@ifras.fr">Contacter les archives →</a>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale ·
+  Programmes archivés
+</footer>
+
+<script>
+const sections = document.querySelectorAll('.intro-section, .prog-section');
+const navLinks  = document.querySelectorAll('#sidebar-nav a');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, {
+  rootMargin: '-148px 0px -60% 0px',
+  threshold: 0
+});
+
+sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
