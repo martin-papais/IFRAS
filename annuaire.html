@@ -643,8 +643,9 @@ function renderGrid(agents){
         <div class="agent-profession">${p.profession||p.role||'—'}</div>
       </div>
       <div class="agent-tags">
-        ${p.department?`<span class="atag dept">${p.department}</span>`:''}
-        ${p.clearance?`<span class="atag ${clearanceClass(p.clearance)}">${p.clearance}</span>`:''}
+        ${p._ghost?`<span class="atag role" style="opacity:.6">Contact externe</span>`:''}
+        ${!p._ghost&&p.department?`<span class="atag dept">${p.department}</span>`:''}
+        ${!p._ghost&&p.clearance?`<span class="atag ${clearanceClass(p.clearance)}">${p.clearance}</span>`:''}
         ${sc==='suspended'?`<span class="atag suspended">Suspendu</span>`:''}
       </div>
       <div class="agent-email">${p.email||'—'}</div>`;
@@ -680,9 +681,11 @@ function renderList(agents){
         <div class="row-name">${fullName}${isMe?' <span style="font-size:10px;color:var(--accent)">(moi)</span>':''}</div>
         <div class="row-sub">${p.profession||p.role||'—'}</div>
       </div>
-      <div class="row-dept"><span class="row-dept-label">${p.department||'—'}</span></div>
+      <div class="row-dept">
+        ${p._ghost?`<span class="atag role" style="opacity:.6;font-size:9.5px">Externe</span>`:`<span class="row-dept-label">${p.department||'—'}</span>`}
+      </div>
       <div class="row-clearance">
-        ${p.clearance?`<span class="atag ${clearanceClass(p.clearance)}">${p.clearance}</span>`:`<span style="font-size:12px;color:var(--text-muted)">—</span>`}
+        ${!p._ghost&&p.clearance?`<span class="atag ${clearanceClass(p.clearance)}">${p.clearance}</span>`:`<span style="font-size:12px;color:var(--text-muted)">—</span>`}
         ${sc==='suspended'?`<span class="atag suspended" style="margin-left:4px">Suspendu</span>`:''}
       </div>
       <div class="row-email">${p.email||'—'}</div>`;
@@ -713,11 +716,12 @@ function openModal(p){
   // Tags
   const tags = document.getElementById('modalTags');
   tags.innerHTML = [
-    p.department    ? `<span class="atag dept">${p.department}</span>` : '',
-    p.role          ? `<span class="atag role">${p.role}</span>` : '',
-    p.clearance     ? `<span class="atag ${clearanceClass(p.clearance)}">${p.clearance}</span>` : '',
+    p._ghost        ? `<span class="atag role" style="opacity:.7">Contact externe</span>` : '',
+    !p._ghost&&p.department    ? `<span class="atag dept">${p.department}</span>` : '',
+    !p._ghost&&p.role          ? `<span class="atag role">${p.role}</span>` : '',
+    !p._ghost&&p.clearance     ? `<span class="atag ${clearanceClass(p.clearance)}">${p.clearance}</span>` : '',
     sc==='suspended'? `<span class="atag suspended">Compte suspendu</span>` : '',
-    sc==='active'   ? `<span class="atag" style="background:rgba(52,211,153,.1);color:#34d399;border:1px solid rgba(52,211,153,.2)">Actif</span>` : '',
+    !p._ghost&&sc==='active'   ? `<span class="atag" style="background:rgba(52,211,153,.1);color:#34d399;border:1px solid rgba(52,211,153,.2)">Actif</span>` : '',
   ].join('');
 
   // Champs
@@ -755,6 +759,21 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModalDirect();}
 /* ============================================================
    INIT
    ============================================================ */
+/* ---- Profil fantôme pour contacts sans compte ---- */
+function ghostProfile(email) {
+  const local = email.split('@')[0];
+  const parts = local.split('.');
+  const first = parts[0] ? parts[0].charAt(0).toUpperCase() + parts[0].slice(1) : '';
+  const last  = parts[1] ? parts[1].charAt(0).toUpperCase() + parts[1].slice(1) : '';
+  return {
+    id: 'ghost-' + email,
+    email, first_name: first||local, last_name: last||'',
+    profession:'—', role:'—', department:'—', clearance:null,
+    status:'—', nationality:'—', joined_at:null, birth_date:null,
+    agent_id:'—', avatar_url:null, suspension:false, _ghost:true,
+  };
+}
+
 async function init(){
   const {data:{session}} = await _sb.auth.getSession();
   if(!session){window.location.href='connexion.html';return;}
@@ -763,27 +782,58 @@ async function init(){
   document.getElementById('userAvatar').textContent = initials(currentUser.email);
   document.getElementById('userLabel').textContent  = currentUser.email.split('@')[0];
 
-  // Charger tous les profils
-  const {data, error} = await _sb.from('profiles').select('*').order('last_name');
-
-  if(error||!data){
-    document.getElementById('agentsGrid').innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">⚠</div><div class="empty-title">Erreur de chargement</div></div>`;
+  // 1. Charger tous les profils réels
+  const {data: profilesData, error} = await _sb.from('profiles').select('*');
+  if(error){
+    document.getElementById('agentsGrid').innerHTML=`<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">⚠</div><div class="empty-title">Erreur de chargement</div></div>`;
     return;
   }
 
-  allAgents = data;
+  // Emails déjà dans profiles
+  const knownEmails = new Set((profilesData||[]).map(p=>(p.email||'').toLowerCase()).filter(Boolean));
+  const userEmail   = currentUser.email.toLowerCase();
+
+  // 2. Tous les messages impliquant l'utilisateur (reçus + envoyés)
+  const [{data: received}, {data: sent}] = await Promise.all([
+    _sb.from('email').select('sender, receiver').eq('receiver', userEmail),
+    _sb.from('email').select('sender, receiver').eq('sender',   userEmail),
+  ]);
+
+  // Collecter tous les tiers
+  const contactEmails = new Set();
+  [...(received||[]), ...(sent||[])].forEach(row => {
+    [row.sender, row.receiver].forEach(addr => {
+      if(addr && addr.toLowerCase() !== userEmail) contactEmails.add(addr.toLowerCase());
+    });
+  });
+
+  // 3. Créer fantômes pour les contacts sans profil
+  const ghosts = [];
+  contactEmails.forEach(addr => {
+    if(!knownEmails.has(addr)) ghosts.push(ghostProfile(addr));
+  });
+
+  // 4. Fusionner et trier par nom
+  const merged = [...(profilesData||[]), ...ghosts].sort((a,b) => {
+    const na = ((a.last_name||'')+(a.first_name||'')).toLowerCase();
+    const nb = ((b.last_name||'')+(b.first_name||'')).toLowerCase();
+    return na.localeCompare(nb, 'fr');
+  });
+
+  allAgents = merged;
 
   // Compteur
-  document.getElementById('agentCount').textContent = data.length + ' agent' + (data.length>1?'s':'');
+  const rc = (profilesData||[]).length, gc = ghosts.length;
+  document.getElementById('agentCount').textContent =
+    rc + ' agent'+(rc>1?'s':'') + (gc>0?' + '+gc+' contact'+(gc>1?'s':''):'');
 
-  // Peupler le filtre départements
-  const depts = [...new Set(data.map(p=>p.department).filter(Boolean))].sort();
+  // Filtre départements (profils réels seulement)
+  const depts = [...new Set((profilesData||[]).map(p=>p.department).filter(Boolean))].sort();
   const sel = document.getElementById('filterDept');
   depts.forEach(d=>{const o=document.createElement('option');o.value=d;o.textContent=d;sel.appendChild(o);});
 
-  // Render
-  renderGrid(data);
-  renderList(data);
+  renderGrid(merged);
+  renderList(merged);
 }
 
 /* ============================================================
