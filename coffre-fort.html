@@ -624,6 +624,21 @@ async function searchPrivate(term, box) {
   data.forEach(f => box.appendChild(buildFileCard(f, 'private')));
 }
 
+/* ---- SIGNED URL ---- */
+async function getSignedUrl(path) {
+  // path = "vault/mon-fichier.pdf" → bucket="vault", filePath="mon-fichier.pdf"
+  const parts = path.replace(/^\//, '').split('/');
+  const bucket = parts[0];
+  const filePath = parts.slice(1).join('/');
+
+  const { data, error } = await _sb.storage
+    .from(bucket)
+    .createSignedUrl(filePath, 300); // 5 minutes — suffisant pour ouvrir/télécharger
+
+  if (error || !data) return null;
+  return data.signedUrl;
+}
+
 /* ---- BUILD FILE CARD ---- */
 function buildFileCard(f, type) {
   const card = document.createElement('div');
@@ -631,8 +646,8 @@ function buildFileCard(f, type) {
 
   const lvl = getClearanceLevel(f.clearance_required);
   const lvlClass = type === 'public' ? `lvl-${lvl}` : 'private';
-  const lvlLabel = type === 'public' ? (f.clearance_required || 'Libre') : 'Personnel';
 
+  // Boutons en état "chargement" au départ
   card.innerHTML = `
     <div class="file-type-badge">${fileTypeIcon(f.filename)}</div>
     <div class="file-meta">
@@ -645,11 +660,27 @@ function buildFileCard(f, type) {
       </div>
       ${f.description ? `<div class="file-desc">${f.description}</div>` : ''}
     </div>
-    <div class="file-actions">
-      <a class="file-dl-btn" href="${f.file_url}" target="_blank" rel="noopener">
-        ↓ Ouvrir
-      </a>
+    <div class="file-actions" id="actions-${f.id}">
+      <span style="font-size:12px;color:var(--text-muted)">…</span>
     </div>`;
+
+  // Générer l'URL signée de manière asynchrone
+  getSignedUrl(f.file_url).then(url => {
+    const actionsDiv = card.querySelector(`#actions-${f.id}`);
+    if (!url) {
+      actionsDiv.innerHTML = `<span style="font-size:11px;color:#f87171">URL indisponible</span>`;
+      return;
+    }
+    // Nom du fichier pour le téléchargement
+    const fname = f.filename || 'document';
+    actionsDiv.innerHTML = `
+      <a class="file-dl-btn" href="${url}" target="_blank" rel="noopener" title="Visualiser dans le navigateur">
+        👁 Ouvrir
+      </a>
+      <a class="file-dl-btn" href="${url}" download="${fname}" title="Télécharger le fichier">
+        ↓ Télécharger
+      </a>`;
+  });
 
   return card;
 }
