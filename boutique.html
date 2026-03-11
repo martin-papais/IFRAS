@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>IFRAS — Boutique</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --hue:228;--sat:65%;
+  --bg-dark:hsl(var(--hue),var(--sat),4%);
+  --bg-main:hsl(var(--hue),var(--sat),7%);
+  --bg-light:hsl(var(--hue),var(--sat),10%);
+  --bg-hover:hsl(var(--hue),var(--sat),13%);
+  --bg-card:hsl(var(--hue),var(--sat),8%);
+  --border:hsl(var(--hue),calc(var(--sat) - 10%),20%);
+  --border-sub:hsl(var(--hue),calc(var(--sat) - 10%),14%);
+  --accent:hsl(var(--hue),70%,60%);
+  --accent-dim:hsl(var(--hue),60%,45%);
+  --text-main:hsl(var(--hue),20%,88%);
+  --text-soft:hsl(var(--hue),20%,62%);
+  --text-muted:hsl(var(--hue),15%,40%);
+  --header-h:84px;--subnav-h:48px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"DM Sans",sans-serif;background:var(--bg-dark);color:var(--text-main);min-height:100vh;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+
+/* HEADER */
+header{position:fixed;top:0;width:100%;z-index:1000;height:var(--header-h);background:hsl(var(--hue),var(--sat),5%);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;}
+.header-inner{width:100%;padding:0 28px;display:flex;align-items:center;justify-content:space-between;}
+.header-left{display:flex;align-items:center;gap:40px;}
+.logo-link img{height:54px;}
+.main-nav{list-style:none;display:flex;gap:28px;}
+.main-nav a{text-decoration:none;color:var(--text-soft);font-size:13.5px;letter-spacing:.05em;transition:color .2s;}
+.main-nav a:hover{color:var(--text-main);}
+.header-right{display:flex;align-items:center;gap:10px;}
+.user-chip{display:flex;align-items:center;gap:9px;padding:5px 12px 5px 6px;background:var(--bg-light);border:1px solid var(--border);border-radius:20px;font-size:12.5px;color:var(--text-soft);}
+.user-avatar{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--accent-dim),var(--accent));display:flex;align-items:center;justify-content:center;font-family:"Syne",sans-serif;font-weight:700;font-size:10px;color:white;}
+.icon-btn{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--bg-light);color:var(--text-soft);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:background .15s,color .15s,border-color .15s;}
+.icon-btn:hover{background:var(--bg-hover);color:var(--text-main);border-color:var(--accent);}
+.settings-wrapper{position:relative;}
+.settings-panel{display:none;position:absolute;right:0;top:calc(100% + 8px);width:260px;background:var(--bg-light);border:1px solid var(--border);border-radius:12px;padding:16px;z-index:2000;box-shadow:0 20px 60px rgba(0,0,0,.5);}
+.settings-panel.active{display:block;}
+.panel-title{font-family:"Syne",sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border-sub);}
+.theme-label{font-size:11px;color:var(--text-soft);margin-bottom:8px;font-weight:400;letter-spacing:.04em;}
+.hue-wrap{position:relative;height:20px;border-radius:10px;overflow:hidden;cursor:pointer;background:linear-gradient(90deg,hsl(0,65%,55%),hsl(30,65%,55%),hsl(60,65%,55%),hsl(90,65%,55%),hsl(120,65%,55%),hsl(150,65%,55%),hsl(180,65%,55%),hsl(210,65%,55%),hsl(240,65%,55%),hsl(270,65%,55%),hsl(300,65%,55%),hsl(330,65%,55%),hsl(360,65%,55%));margin-bottom:10px;}
+.hue-thumb{position:absolute;top:50%;transform:translate(-50%,-50%);width:18px;height:18px;border-radius:50%;border:2px solid white;box-shadow:0 2px 6px rgba(0,0,0,.4);pointer-events:none;}
+.sat-wrap{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.sat-label{font-size:11px;color:var(--text-muted);width:24px;}
+input[type=range].sat-range{flex:1;height:4px;border-radius:4px;outline:none;border:none;cursor:pointer;-webkit-appearance:none;appearance:none;}
+input[type=range].sat-range::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--accent);border:2px solid white;box-shadow:0 1px 4px rgba(0,0,0,.3);cursor:pointer;}
+.swatches{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px;}
+.swatch{width:24px;height:24px;border-radius:6px;cursor:pointer;border:2px solid transparent;transition:transform .15s,border-color .15s;}
+.swatch:hover{transform:scale(1.15);}.swatch.active{border-color:white;}
+.panel-divider{height:1px;background:var(--border-sub);margin:14px 0;}
+.logout-btn{padding:7px 14px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--text-soft);cursor:pointer;font-size:12.5px;font-family:"DM Sans",sans-serif;transition:background .15s,color .15s,border-color .15s;display:flex;align-items:center;gap:6px;}
+.logout-btn:hover{background:rgba(251,113,133,.1);color:#fb7185;border-color:rgba(251,113,133,.3);}
+.hex-wrap{display:flex;align-items:center;gap:8px;margin-top:6px;margin-bottom:4px;}
+.hex-preview{width:24px;height:24px;border-radius:5px;flex-shrink:0;border:1px solid var(--border);}
+.hex-input{flex:1;background:var(--bg-dark);border:1px solid var(--border-sub);border-radius:6px;padding:5px 8px;color:var(--text-main);font-size:12px;font-family:"DM Sans",sans-serif;outline:none;transition:border-color .2s;letter-spacing:.06em;}
+.hex-input:focus{border-color:var(--accent);}.hex-input.invalid{border-color:rgba(251,113,133,.5);color:#fca5a5;}
+.hex-apply-btn{padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:var(--bg-hover);color:var(--text-soft);font-size:11px;cursor:pointer;font-family:"DM Sans",sans-serif;transition:background .15s,color .15s;white-space:nowrap;}
+.hex-apply-btn:hover{background:var(--accent);color:white;border-color:var(--accent);}
+
+/* SOUS-BANDEAU */
+.sub-nav{position:fixed;top:var(--header-h);width:100%;z-index:900;height:var(--subnav-h);background:hsl(var(--hue),var(--sat),6%);border-bottom:1px solid var(--border-sub);display:flex;align-items:center;}
+.sub-nav-inner{padding:0 28px;display:flex;gap:4px;}
+.sub-tab{padding:6px 16px;border-radius:7px;font-size:13px;color:var(--text-soft);text-decoration:none;letter-spacing:.04em;display:flex;align-items:center;gap:7px;transition:background .15s,color .15s;position:relative;}
+.sub-tab:hover{background:var(--bg-hover);color:var(--text-main);}
+.sub-tab.active{background:var(--bg-light);color:var(--text-main);font-weight:500;}
+.sub-tab.active::after{content:'';position:absolute;bottom:-1px;left:16px;right:16px;height:2px;background:var(--accent);border-radius:2px 2px 0 0;}
+.tab-icon{font-size:13px;opacity:.7;}
+
+/* PAGE */
+.page{padding-top:calc(var(--header-h) + var(--subnav-h) + 28px);padding-bottom:80px;max-width:1160px;margin:0 auto;padding-left:28px;padding-right:28px;}
+
+/* HERO BANNER */
+.shop-hero{
+  border-radius:18px;overflow:hidden;margin-bottom:28px;
+  background:var(--bg-card);border:1px solid var(--border);
+  animation:fadeUp .3s ease both;
+}
+.shop-banner{
+  height:100px;position:relative;overflow:hidden;
+  display:flex;align-items:center;padding:0 32px;gap:20px;
+  background:linear-gradient(135deg,hsl(var(--hue),var(--sat),9%),hsl(var(--hue),70%,15%),hsl(calc(var(--hue)+20),60%,12%));
+}
+.shop-banner::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(255,255,255,.015) 60px,rgba(255,255,255,.015) 61px),
+             repeating-linear-gradient(0deg,transparent,transparent 60px,rgba(255,255,255,.015) 60px,rgba(255,255,255,.015) 61px);
+}
+.shop-banner-icon{font-size:40px;position:relative;z-index:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,.4));}
+.shop-banner-text{position:relative;z-index:1;flex:1;}
+.shop-banner-title{font-family:"Syne",sans-serif;font-size:22px;font-weight:800;color:var(--text-main);}
+.shop-banner-sub{font-size:12.5px;color:var(--text-soft);font-weight:300;margin-top:3px;}
+.suspended-banner{
+  margin:0 32px 0; padding:10px 18px;
+  background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);
+  border-radius:10px;display:flex;align-items:center;gap:10px;
+  color:#f87171;font-size:13px;font-weight:500;
+  position:relative;z-index:1;
+}
+
+/* ONGLETS SECTIONS */
+.shop-tabs{display:flex;gap:6px;margin-bottom:24px;animation:fadeUp .3s .05s ease both;}
+.shop-tab{
+  padding:9px 20px;border-radius:10px;font-size:13px;font-weight:500;
+  border:1px solid var(--border);background:var(--bg-card);color:var(--text-soft);
+  cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:8px;
+  letter-spacing:.03em;
+}
+.shop-tab:hover{background:var(--bg-hover);color:var(--text-main);}
+.shop-tab.active{background:var(--bg-light);color:var(--text-main);border-color:var(--accent);}
+.shop-tab .tab-badge{
+  font-size:10px;padding:1px 7px;border-radius:10px;
+  background:hsl(var(--hue),70%,25%);color:var(--accent);font-weight:700;
+}
+
+/* SECTION CONTAINER */
+.shop-section{display:none;animation:fadeUp .25s ease both;}
+.shop-section.active{display:block;}
+
+/* SECTION HEADER */
+.section-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:18px;
+}
+.section-title{font-family:"Syne",sans-serif;font-size:15px;font-weight:700;color:var(--text-main);}
+.section-sub{font-size:12px;color:var(--text-muted);font-weight:300;margin-top:2px;}
+
+/* PRODUITS GRID */
+.products-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;
+  margin-bottom:40px;
+}
+
+/* PRODUIT CARD */
+.product-card{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:14px;
+  overflow:hidden;transition:border-color .2s,transform .2s,box-shadow .2s;
+  cursor:pointer;display:flex;flex-direction:column;
+  animation:fadeUp .3s ease both;
+}
+.product-card:hover{
+  border-color:var(--accent);transform:translateY(-3px);
+  box-shadow:0 12px 40px rgba(0,0,0,.3);
+}
+.product-img{
+  height:150px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,hsl(var(--hue),var(--sat),10%),hsl(var(--hue),50%,14%));
+  font-size:64px;position:relative;overflow:hidden;flex-shrink:0;
+}
+.product-img::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 120%,rgba(255,255,255,.04),transparent 70%);
+}
+.product-img img{width:100%;height:100%;object-fit:contain;padding:16px;filter:drop-shadow(0 4px 16px rgba(0,0,0,.4));}
+.product-emoji{font-size:64px;filter:drop-shadow(0 4px 12px rgba(0,0,0,.3));}
+
+.product-body{padding:14px 16px;flex:1;display:flex;flex-direction:column;gap:8px;}
+.product-name{font-size:13.5px;font-weight:600;color:var(--text-main);line-height:1.3;}
+.product-desc{font-size:11.5px;color:var(--text-soft);font-weight:300;line-height:1.5;flex:1;}
+.product-meta{display:flex;align-items:center;justify-content:space-between;margin-top:4px;}
+.product-price{font-family:"Syne",sans-serif;font-size:13px;font-weight:700;color:#4ade80;}
+.product-stock{font-size:10.5px;color:var(--text-muted);display:flex;align-items:center;gap:4px;}
+.product-stock::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:#4ade80;}
+.product-stock.low::before{background:#fbbf24;}
+.product-stock.out::before{background:#f87171;}
+
+.product-footer{padding:0 16px 14px;}
+.btn-order{
+  width:100%;padding:9px;border-radius:9px;border:1px solid var(--border);
+  background:transparent;color:var(--text-soft);font-size:12.5px;
+  font-family:"DM Sans",sans-serif;cursor:pointer;
+  transition:background .15s,color .15s,border-color .15s;
+  display:flex;align-items:center;justify-content:center;gap:7px;font-weight:500;
+}
+.btn-order:hover{background:var(--accent);color:white;border-color:var(--accent);}
+.btn-order.suspended{background:rgba(248,113,113,.08);color:#f87171;border-color:rgba(248,113,113,.2);cursor:not-allowed;}
+.btn-order.suspended:hover{background:rgba(248,113,113,.12);color:#f87171;border-color:rgba(248,113,113,.3);}
+
+/* HISTORIQUE */
+.history-title{
+  font-family:"Syne",sans-serif;font-size:14px;font-weight:700;
+  color:var(--text-main);margin-bottom:14px;
+  display:flex;align-items:center;gap:10px;
+}
+.history-empty{
+  text-align:center;padding:40px 20px;color:var(--text-muted);
+  font-size:13px;font-weight:300;
+  background:var(--bg-card);border:1px solid var(--border);border-radius:12px;
+}
+.history-empty-icon{font-size:32px;margin-bottom:10px;opacity:.3;}
+
+.history-list{display:flex;flex-direction:column;gap:8px;}
+.history-row{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:10px;
+  padding:12px 16px;display:flex;align-items:center;gap:14px;
+  animation:fadeUp .2s ease both;
+}
+.history-icon{
+  width:40px;height:40px;border-radius:10px;flex-shrink:0;
+  background:linear-gradient(135deg,hsl(var(--hue),var(--sat),12%),hsl(var(--hue),50%,18%));
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+}
+.history-main{flex:1;min-width:0;}
+.history-name{font-size:13px;font-weight:500;color:var(--text-main);}
+.history-date{font-size:11.5px;color:var(--text-muted);font-weight:300;margin-top:2px;}
+.history-qty{
+  font-size:11.5px;padding:3px 10px;border-radius:8px;
+  background:var(--bg-hover);color:var(--text-soft);font-weight:600;
+  border:1px solid var(--border-sub);white-space:nowrap;
+}
+.history-type{
+  font-size:10px;padding:2px 8px;border-radius:8px;font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;
+}
+.history-type.public{background:rgba(79,107,237,.12);color:var(--accent);border:1px solid rgba(79,107,237,.2);}
+.history-type.private{background:rgba(167,139,250,.12);color:#a78bfa;border:1px solid rgba(167,139,250,.2);}
+.history-status{
+  font-size:10px;padding:2px 8px;border-radius:8px;font-weight:700;
+  letter-spacing:.04em;
+}
+.history-status.pending{background:rgba(251,191,36,.1);color:#fbbf24;border:1px solid rgba(251,191,36,.2);}
+.history-status.approved{background:rgba(52,211,153,.1);color:#34d399;border:1px solid rgba(52,211,153,.2);}
+.history-status.rejected{background:rgba(248,113,113,.1);color:#f87171;border:1px solid rgba(248,113,113,.2);}
+
+/* MODAL DEROGATION */
+.modal-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);
+  z-index:5000;align-items:center;justify-content:center;
+  backdrop-filter:blur(6px);
+}
+.modal-overlay.open{display:flex;}
+
+.modal-box{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:18px;
+  width:480px;max-width:96vw;max-height:92vh;overflow-y:auto;
+  box-shadow:0 40px 120px rgba(0,0,0,.7);
+  animation:modalIn .2s ease both;
+}
+@keyframes modalIn{from{opacity:0;transform:scale(.95) translateY(10px);}to{opacity:1;transform:scale(1) translateY(0);}}
+
+.modal-header{
+  padding:24px 24px 0;display:flex;align-items:flex-start;justify-content:space-between;
+}
+.modal-product-preview{display:flex;align-items:center;gap:14px;flex:1;}
+.modal-product-icon{
+  width:52px;height:52px;border-radius:12px;
+  background:linear-gradient(135deg,hsl(var(--hue),var(--sat),12%),hsl(var(--hue),50%,18%));
+  display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;
+}
+.modal-product-info{}
+.modal-product-name{font-family:"Syne",sans-serif;font-size:15px;font-weight:700;color:var(--text-main);}
+.modal-product-type{font-size:11.5px;color:var(--text-muted);margin-top:3px;}
+.modal-close-btn{
+  width:30px;height:30px;border-radius:8px;border:1px solid var(--border);
+  background:var(--bg-hover);color:var(--text-soft);cursor:pointer;
+  font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:background .15s,color .15s;
+}
+.modal-close-btn:hover{background:rgba(251,113,133,.1);color:#fb7185;}
+
+.modal-divider{height:1px;background:var(--border-sub);margin:20px 24px 0;}
+
+.modal-body{padding:20px 24px 24px;}
+.modal-section-title{
+  font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-muted);margin-bottom:14px;
+}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.form-field{display:flex;flex-direction:column;gap:5px;}
+.form-field.full{grid-column:1/-1;}
+.form-label{font-size:11px;color:var(--text-soft);font-weight:500;letter-spacing:.04em;}
+.form-input{
+  padding:9px 12px;background:var(--bg-dark);border:1px solid var(--border-sub);
+  border-radius:8px;color:var(--text-main);font-size:13px;font-family:"DM Sans",sans-serif;
+  outline:none;transition:border-color .2s,box-shadow .2s;
+}
+.form-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px hsl(var(--hue),70%,60%,.1);}
+.form-input.error{border-color:rgba(248,113,113,.5);}
+.form-input::placeholder{color:var(--text-muted);}
+
+.qty-field{display:flex;flex-direction:column;gap:5px;}
+.qty-row{display:flex;align-items:center;gap:10px;}
+.qty-btn{
+  width:32px;height:32px;border-radius:8px;border:1px solid var(--border);
+  background:var(--bg-hover);color:var(--text-main);font-size:16px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:background .15s;flex-shrink:0;
+}
+.qty-btn:hover{background:var(--accent);color:white;border-color:var(--accent);}
+.qty-btn:disabled{opacity:.3;cursor:not-allowed;}
+.qty-input{
+  width:60px;text-align:center;padding:7px;background:var(--bg-dark);
+  border:1px solid var(--border-sub);border-radius:8px;color:var(--text-main);
+  font-size:14px;font-weight:600;font-family:"Syne",sans-serif;outline:none;
+}
+.qty-max{font-size:11px;color:var(--text-muted);}
+
+.modal-info-box{
+  padding:10px 14px;background:hsl(var(--hue),var(--sat),6%);
+  border:1px solid var(--border-sub);border-radius:9px;
+  font-size:12px;color:var(--text-soft);line-height:1.6;margin-bottom:16px;
+}
+.modal-info-box strong{color:var(--text-main);}
+
+.btn-submit{
+  width:100%;padding:12px;border-radius:10px;border:none;
+  background:linear-gradient(135deg,var(--accent-dim),var(--accent));
+  color:white;font-size:14px;font-weight:600;font-family:"Syne",sans-serif;
+  cursor:pointer;transition:opacity .2s,transform .15s;letter-spacing:.04em;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn-submit:hover{opacity:.9;transform:translateY(-1px);}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+
+/* SUCCESS STATE */
+.modal-success{
+  padding:40px 24px;text-align:center;display:none;
+  flex-direction:column;align-items:center;gap:12px;
+}
+.modal-success.visible{display:flex;}
+.success-icon{font-size:52px;animation:popIn .4s cubic-bezier(.34,1.56,.64,1) both;}
+@keyframes popIn{from{opacity:0;transform:scale(.4);}to{opacity:1;transform:scale(1);}}
+.success-title{font-family:"Syne",sans-serif;font-size:17px;font-weight:800;color:var(--text-main);}
+.success-sub{font-size:13px;color:var(--text-soft);font-weight:300;line-height:1.6;max-width:320px;}
+
+/* TOAST */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:hsl(var(--hue),30%,12%);border:1px solid var(--border);color:var(--text-soft);font-size:13px;padding:10px 20px;border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,.5);z-index:9999;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;max-width:90vw;text-align:center;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast.success{border-color:rgba(52,211,153,.3);color:#34d399;background:hsl(var(--hue),25%,10%);}
+.toast.error{border-color:rgba(248,113,113,.3);color:#f87171;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+/* LOADER */
+.loader-wrap{display:flex;align-items:center;justify-content:center;padding:60px;gap:12px;color:var(--text-muted);font-size:13px;}
+.loader{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:60px 20px;color:var(--text-muted);font-size:13px;font-weight:300;}
+.empty-icon{font-size:40px;margin-bottom:12px;opacity:.3;}
+.empty-title{font-size:14px;color:var(--text-soft);font-weight:500;margin-bottom:4px;}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="header-left">
+      <a href="index.html" class="logo-link"><img src="logo.png" alt="IFRAS"></a>
+      <nav><ul class="main-nav">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="recherche.html">Recherche</a></li>
+        <li><a href="programmes.html">Programmes</a></li>
+        <li><a href="publications.html">Publications</a></li>
+      </ul></nav>
+    </div>
+    <div class="header-right">
+      <div class="user-chip">
+        <div class="user-avatar" id="userAvatar">?</div>
+        <span id="userLabel" style="font-size:12px">—</span>
+      </div>
+      <div class="settings-wrapper">
+        <button class="icon-btn" onclick="toggleSettings()">⚙</button>
+        <div class="settings-panel" id="settingsPanel">
+          <div class="panel-title">Apparence</div>
+          <div class="theme-section">
+            <div class="theme-label">Couleur principale</div>
+            <div class="swatches" id="swatches"></div>
+            <div class="theme-label" style="margin-top:6px;">Personnalisée</div>
+            <div class="hue-wrap" id="hueWrap"><div class="hue-thumb" id="hueThumb"></div></div>
+            <div class="sat-wrap">
+              <span class="sat-label">Sat.</span>
+              <input type="range" class="sat-range" id="satRange" min="20" max="90" value="65">
+            </div>
+            <div class="theme-label" style="margin-top:4px;">Code HEX</div>
+            <div class="hex-wrap">
+              <div class="hex-preview" id="hexPreview"></div>
+              <input type="text" class="hex-input" id="hexInput" placeholder="#4f6bed" maxlength="7">
+              <button class="hex-apply-btn" onclick="applyHex()">Appliquer</button>
+            </div>
+          </div>
+          <div class="panel-divider"></div>
+          <button class="logout-btn" onclick="logout()" style="width:100%;justify-content:center;"><span>↩</span> Déconnexion</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SOUS-BANDEAU -->
+<nav class="sub-nav">
+  <div class="sub-nav-inner">
+    <a href="messagerie.html"      class="sub-tab"><span class="tab-icon">✉</span> Messagerie</a>
+    <a href="coffre-fort.html"     class="sub-tab"><span class="tab-icon">🔐</span> Coffre-fort</a>
+    <a href="profil.html"          class="sub-tab"><span class="tab-icon">👤</span> Profil</a>
+    <a href="tableau-de-bord.html" class="sub-tab"><span class="tab-icon">📊</span> Tableau de bord</a>
+    <a href="annuaire.html"        class="sub-tab"><span class="tab-icon">📋</span> Annuaire</a>
+    <a href="boutique.html"        class="sub-tab active"><span class="tab-icon">🛍</span> Boutique</a>
+  </div>
+</nav>
+
+<!-- PAGE -->
+<div class="page">
+
+  <!-- Hero -->
+  <div class="shop-hero">
+    <div class="shop-banner">
+      <div class="shop-banner-icon">🛍</div>
+      <div class="shop-banner-text">
+        <div class="shop-banner-title">Boutique IFRAS</div>
+        <div class="shop-banner-sub">Approvisionnement interne — tous les articles sont fournis gratuitement par l'institut</div>
+      </div>
+      <div id="suspendedBanner" class="suspended-banner" style="display:none;">
+        ⚠ Compte suspendu — les commandes sont désactivées
+      </div>
+    </div>
+  </div>
+
+  <!-- Onglets -->
+  <div class="shop-tabs">
+    <button class="shop-tab active" onclick="switchTab('public')" id="tab-public">
+      <span>🏪</span> Boutique commune
+      <span class="tab-badge" id="badge-public">—</span>
+    </button>
+    <button class="shop-tab" onclick="switchTab('private')" id="tab-private">
+      <span>⭐</span> Boutique personnelle
+      <span class="tab-badge" id="badge-private">—</span>
+    </button>
+    <button class="shop-tab" onclick="switchTab('history')" id="tab-history">
+      <span>📦</span> Historique des commandes
+      <span class="tab-badge" id="badge-history">—</span>
+    </button>
+  </div>
+
+  <!-- SECTION : Boutique publique -->
+  <div class="shop-section active" id="section-public">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Articles communs IFRAS</div>
+        <div class="section-sub">Fournitures disponibles pour tous les agents de l'institut</div>
+      </div>
+    </div>
+    <div id="publicLoader" class="loader-wrap"><div class="loader"></div>Chargement…</div>
+    <div class="products-grid" id="publicGrid"></div>
+  </div>
+
+  <!-- SECTION : Boutique personnelle -->
+  <div class="shop-section" id="section-private">
+    <div class="section-header">
+      <div>
+        <div class="section-title" id="privateTitle">Articles personnalisés</div>
+        <div class="section-sub" id="privateSub">Équipements spécialisés adaptés à votre domaine</div>
+      </div>
+    </div>
+    <div id="privateLoader" class="loader-wrap"><div class="loader"></div>Chargement…</div>
+    <div class="products-grid" id="privateGrid"></div>
+  </div>
+
+  <!-- SECTION : Historique -->
+  <div class="shop-section" id="section-history">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Historique des commandes</div>
+        <div class="section-sub">Toutes vos demandes de dérogation passées</div>
+      </div>
+    </div>
+    <div id="historyLoader" class="loader-wrap"><div class="loader"></div>Chargement…</div>
+    <div id="historyContent"></div>
+  </div>
+
+</div>
+
+<!-- MODAL DÉROGATION -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal-box" id="modalBox">
+
+    <!-- En-tête produit -->
+    <div class="modal-header">
+      <div class="modal-product-preview">
+        <div class="modal-product-icon" id="modalProductIcon">📦</div>
+        <div class="modal-product-info">
+          <div class="modal-product-name" id="modalProductName">—</div>
+          <div class="modal-product-type" id="modalProductType">—</div>
+        </div>
+      </div>
+      <button class="modal-close-btn" onclick="closeModal()">✕</button>
+    </div>
+
+    <div class="modal-divider"></div>
+
+    <!-- Formulaire -->
+    <div class="modal-body" id="modalForm">
+      <div class="modal-section-title">Informations de la demande</div>
+
+      <div class="modal-info-box" id="modalInfoBox">
+        Article gratuit · Fourni par l'IFRAS · Quantité max : <strong id="modalMaxQty">—</strong>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-field">
+          <label class="form-label">Prénom *</label>
+          <input type="text" class="form-input" id="fPrenom" placeholder="Votre prénom">
+        </div>
+        <div class="form-field">
+          <label class="form-label">Nom *</label>
+          <input type="text" class="form-input" id="fNom" placeholder="Votre nom">
+        </div>
+        <div class="form-field full">
+          <label class="form-label">Adresse postale *</label>
+          <input type="text" class="form-input" id="fAdresse" placeholder="Numéro, rue, ville, code postal">
+        </div>
+        <div class="form-field">
+          <label class="form-label">Adresse email *</label>
+          <input type="email" class="form-input" id="fEmail" placeholder="votre@email.fr">
+        </div>
+        <div class="form-field">
+          <label class="form-label">Téléphone *</label>
+          <input type="tel" class="form-input" id="fTel" placeholder="+33 6 00 00 00 00">
+        </div>
+      </div>
+
+      <div class="qty-field" style="margin-bottom:16px;">
+        <label class="form-label">Quantité souhaitée *</label>
+        <div class="qty-row">
+          <button class="qty-btn" id="qtyMinus" onclick="changeQty(-1)">−</button>
+          <input type="number" class="qty-input" id="qtyInput" value="1" min="1" max="1" readonly>
+          <button class="qty-btn" id="qtyPlus" onclick="changeQty(1)">+</button>
+          <span class="qty-max" id="qtyMaxLabel">max. — unité(s)</span>
+        </div>
+      </div>
+
+      <button class="btn-submit" id="btnSubmit" onclick="submitOrder()">
+        <span>📨</span> Envoyer la demande de dérogation
+      </button>
+    </div>
+
+    <!-- Succès -->
+    <div class="modal-success" id="modalSuccess">
+      <div class="success-icon">✅</div>
+      <div class="success-title">Demande envoyée !</div>
+      <div class="success-sub" id="successText">Votre demande a bien été transmise. Un email de confirmation a été envoyé à l'équipe logistique IFRAS.</div>
+      <button class="btn-submit" onclick="closeModal()" style="width:auto;padding:10px 24px;margin-top:8px;">Fermer</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================ SUPABASE */
+const _sb = supabase.createClient(
+  "https://fqijbltymdeudnlitcrs.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZxaWpibHR5bWRldWRubGl0Y3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzOTQ2NDQsImV4cCI6MjA4NTk3MDY0NH0.HZA0VxkaRTGLRTBA0Vz51mJjw8Xuj8f__yzaQKpGfbE"
+);
+
+/* ============================================================ THEME */
+const PRESETS=[
+  {label:'Bleu IFRAS',h:228,s:65},{label:'Indigo',h:248,s:60},{label:'Violet',h:270,s:55},
+  {label:'Cyan',h:195,s:65},{label:'Vert',h:152,s:55},{label:'Emeraude',h:168,s:60},
+  {label:'Ambre',h:38,s:75},{label:'Rouge',h:355,s:60},{label:'Rose',h:330,s:60},
+  {label:'Noir',h:228,s:10,special:'dark'},{label:'Blanc',h:228,s:10,special:'light'},
+];
+let currentH=228,currentS=65,currentSpecial=null;
+function applyTheme(h,s,special){
+  currentH=h;currentS=s;currentSpecial=special||null;
+  const root=document.documentElement;
+  if(special==='dark'){
+    root.style.setProperty('--hue',228);root.style.setProperty('--sat','8%');
+    root.style.setProperty('--bg-dark','hsl(0,0%,3%)');root.style.setProperty('--bg-main','hsl(0,0%,6%)');
+    root.style.setProperty('--bg-light','hsl(0,0%,9%)');root.style.setProperty('--bg-hover','hsl(0,0%,13%)');
+    root.style.setProperty('--border','hsl(0,0%,18%)');root.style.setProperty('--border-sub','hsl(0,0%,12%)');
+    root.style.setProperty('--accent','hsl(228,65%,60%)');root.style.setProperty('--accent-dim','hsl(228,55%,45%)');
+    root.style.setProperty('--text-main','hsl(0,0%,90%)');root.style.setProperty('--text-soft','hsl(0,0%,60%)');
+    root.style.setProperty('--text-muted','hsl(0,0%,38%)');
+    document.querySelector('header').style.background='hsl(0,0%,4%)';
+    document.querySelector('.sub-nav').style.background='hsl(0,0%,5%)';
+  }else if(special==='light'){
+    root.style.setProperty('--hue',228);root.style.setProperty('--sat','8%');
+    root.style.setProperty('--bg-dark','hsl(220,20%,96%)');root.style.setProperty('--bg-main','hsl(220,20%,98%)');
+    root.style.setProperty('--bg-light','hsl(220,15%,93%)');root.style.setProperty('--bg-hover','hsl(220,15%,89%)');
+    root.style.setProperty('--border','hsl(220,15%,82%)');root.style.setProperty('--border-sub','hsl(220,15%,88%)');
+    root.style.setProperty('--accent','hsl(228,65%,55%)');root.style.setProperty('--accent-dim','hsl(228,55%,40%)');
+    root.style.setProperty('--text-main','hsl(220,25%,15%)');root.style.setProperty('--text-soft','hsl(220,15%,40%)');
+    root.style.setProperty('--text-muted','hsl(220,10%,60%)');
+    document.querySelector('header').style.background='hsl(220,20%,95%)';
+    document.querySelector('.sub-nav').style.background='hsl(220,20%,94%)';
+  }else{
+    document.querySelector('header').style.background='';
+    document.querySelector('.sub-nav').style.background='';
+    ['--bg-dark','--bg-main','--bg-light','--bg-hover','--border','--border-sub','--accent','--accent-dim','--text-main','--text-soft','--text-muted'].forEach(p=>root.style.removeProperty(p));
+    root.style.setProperty('--hue',h);root.style.setProperty('--sat',s+'%');
+  }
+  document.getElementById('satRange').style.background=`linear-gradient(90deg,hsl(${h},0%,55%),hsl(${h},100%,55%))`;
+  document.getElementById('satRange').value=s;
+  updateHueThumb(h);updateSwatches(h,s,special);updateHexPreview();
+  const hi=document.getElementById('hexInput');if(hi){hi.value='';hi.classList.remove('invalid');}
+  sessionStorage.setItem('ifras_theme',JSON.stringify({h,s,special:special||null}));
+}
+function updateHueThumb(h){document.getElementById('hueThumb').style.left=(h/360*100)+'%';}
+function updateSwatches(h,s,special){document.querySelectorAll('.swatch').forEach(sw=>{const m=special?sw.dataset.special===special:parseInt(sw.dataset.h)===h&&parseInt(sw.dataset.s)===s&&!sw.dataset.special;sw.classList.toggle('active',m);});}
+function updateHexPreview(){const p=document.getElementById('hexPreview');if(p)p.style.background=`hsl(${currentH},${currentS}%,55%)`;}
+function normalizeHex(hex){if(!hex||typeof hex!=='string')return null;hex=hex.trim().toLowerCase();if(/^#[0-9a-f]{3}$/.test(hex))return'#'+hex[1]+hex[1]+hex[2]+hex[2]+hex[3]+hex[3];if(/^#[0-9a-f]{6}$/.test(hex))return hex;return null;}
+function applyHex(){
+  const val=document.getElementById('hexInput').value.trim(),inp=document.getElementById('hexInput');
+  if(!val.startsWith('#')||(val.length!==4&&val.length!==7)){inp.classList.add('invalid');return;}
+  inp.classList.remove('invalid');const norm=normalizeHex(val);if(!norm)return;
+  let hex=norm.slice(1);const r=parseInt(hex.slice(0,2),16)/255,g=parseInt(hex.slice(2,4),16)/255,b=parseInt(hex.slice(4,6),16)/255;
+  const max=Math.max(r,g,b),min=Math.min(r,g,b);let hh=0,ss=0,ll=(max+min)/2;
+  if(max!==min){const d=max-min;ss=ll>.5?d/(2-max-min):d/(max+min);switch(max){case r:hh=((g-b)/d+(g<b?6:0))/6;break;case g:hh=((b-r)/d+2)/6;break;case b:hh=((r-g)/d+4)/6;break;}}
+  applyTheme(Math.round(hh*360),Math.round(ss*100));
+}
+(function buildSwatches(){
+  const wrap=document.getElementById('swatches');
+  PRESETS.forEach(p=>{
+    const sw=document.createElement('div');sw.className='swatch';sw.dataset.h=p.h;sw.dataset.s=p.s;
+    if(p.special)sw.dataset.special=p.special;sw.title=p.label;
+    if(p.special==='dark')sw.style.background='#111';
+    else if(p.special==='light'){sw.style.background='#eee';sw.style.border='2px solid #ccc';}
+    else sw.style.background=`hsl(${p.h},${p.s}%,55%)`;
+    if(p.h===228&&!p.special)sw.classList.add('active');
+    sw.addEventListener('click',()=>applyTheme(p.h,p.s,p.special));wrap.appendChild(sw);
+  });updateHexPreview();
+})();
+(function initHueBar(){
+  const wrap=document.getElementById('hueWrap');let dragging=false;
+  function sfe(e){const rect=wrap.getBoundingClientRect();const x=Math.max(0,Math.min(e.clientX-rect.left,rect.width));applyTheme(Math.round(x/rect.width*360),currentS,null);}
+  wrap.addEventListener('mousedown',e=>{dragging=true;sfe(e);});
+  document.addEventListener('mousemove',e=>{if(dragging)sfe(e);});
+  document.addEventListener('mouseup',()=>{dragging=false;});
+  updateHueThumb(currentH);
+})();
+document.getElementById('satRange').addEventListener('input',function(){applyTheme(currentH,parseInt(this.value),null);});
+function toggleSettings(){document.getElementById('settingsPanel').classList.toggle('active');}
+document.addEventListener('click',e=>{const w=document.querySelector('.settings-wrapper');if(w&&!w.contains(e.target))document.getElementById('settingsPanel').classList.remove('active');});
+
+/* ============================================================ AUTH */
+async function logout(){sessionStorage.removeItem('ifras_theme');await _sb.auth.signOut();window.location.href='connexion.html';}
+_sb.auth.onAuthStateChange(ev=>{if(ev==='SIGNED_OUT')window.location.href='connexion.html';});
+let inactivityTimer=null;
+function resetInactivityTimer(){clearTimeout(inactivityTimer);inactivityTimer=setTimeout(logout,10*60*1000);}
+['mousemove','mousedown','keydown','touchstart','scroll','click'].forEach(e=>document.addEventListener(e,resetInactivityTimer,{passive:true}));
+resetInactivityTimer();
+
+/* ============================================================ TOAST */
+let toastTimer=null;
+function showToast(msg,type=''){
+  const t=document.getElementById('toast');t.textContent=msg;
+  t.className='toast show'+(type?' '+type:'');
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+/* ============================================================ HELPERS */
+function initials(email){const p=email.split('@')[0].split('.');return(p[0][0]+(p[1]?p[1][0]:'')).toUpperCase();}
+function formatDate(iso){if(!iso)return'—';return new Date(iso).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'});}
+
+/* ============================================================ STATE */
+let currentUser=null;
+let currentProfile=null;
+let isSuspended=false;
+let currentProduct=null; // produit en cours de commande
+
+/* ============================================================ ONGLETS */
+function switchTab(name){
+  ['public','private','history'].forEach(t=>{
+    document.getElementById('tab-'+t).classList.toggle('active',t===name);
+    document.getElementById('section-'+t).classList.toggle('active',t===name);
+  });
+  if(name==='history') loadHistory();
+}
+
+/* ============================================================ MODAL */
+function openOrderModal(product){
+  if(isSuspended){
+    showToast('⛔ Impossible — votre compte est suspendu','error');
+    return;
+  }
+  currentProduct=product;
+
+  document.getElementById('modalProductIcon').textContent=product.emoji||'📦';
+  document.getElementById('modalProductName').textContent=product.name;
+  document.getElementById('modalProductType').textContent=
+    (product.shop_type==='public'?'Boutique commune':'Boutique personnelle')+' · Gratuit';
+  document.getElementById('modalMaxQty').textContent=product.max_qty;
+  document.getElementById('qtyMaxLabel').textContent='max. '+product.max_qty+' unité'+(product.max_qty>1?'s':'');
+
+  const qi=document.getElementById('qtyInput');
+  qi.value=1;qi.max=product.max_qty;
+  document.getElementById('qtyMinus').disabled=true;
+  document.getElementById('qtyPlus').disabled=(product.max_qty<=1);
+
+  // Pré-remplir avec les infos du profil
+  if(currentProfile){
+    document.getElementById('fPrenom').value=currentProfile.first_name||'';
+    document.getElementById('fNom').value=currentProfile.last_name||'';
+    document.getElementById('fEmail').value=currentUser.email||'';
+  }
+
+  document.getElementById('modalForm').style.display='';
+  document.getElementById('modalSuccess').classList.remove('visible');
+  document.getElementById('btnSubmit').disabled=false;
+  document.getElementById('btnSubmit').textContent='';
+  document.getElementById('btnSubmit').innerHTML='<span>📨</span> Envoyer la demande de dérogation';
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeModal(){
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow='';
+  currentProduct=null;
+}
+
+function handleOverlayClick(e){
+  if(e.target===document.getElementById('modalOverlay')) closeModal();
+}
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+/* ============================================================ QUANTITÉ */
+function changeQty(delta){
+  const qi=document.getElementById('qtyInput');
+  let v=parseInt(qi.value)+delta;
+  const max=parseInt(qi.max)||1;
+  v=Math.max(1,Math.min(max,v));
+  qi.value=v;
+  document.getElementById('qtyMinus').disabled=(v<=1);
+  document.getElementById('qtyPlus').disabled=(v>=max);
+}
+
+/* ============================================================ VALIDATION */
+function validateForm(){
+  let ok=true;
+  const fields=['fPrenom','fNom','fAdresse','fEmail','fTel'];
+  fields.forEach(id=>{
+    const el=document.getElementById(id);
+    const empty=!el.value.trim();
+    el.classList.toggle('error',empty);
+    if(empty)ok=false;
+  });
+  return ok;
+}
+
+/* ============================================================ ENVOI MAIL (EmailJS) */
+async function sendEmailJS(params){
+  // Utilise EmailJS public API (service gratuit, pas de backend requis)
+  const payload={
+    service_id:'service_ifras',
+    template_id:'template_derogation',
+    user_id:'YOUR_EMAILJS_PUBLIC_KEY', // À remplacer
+    template_params:{
+      to_email:'martin15.papais@gmail.com',
+      to_name:'Équipe logistique IFRAS',
+      from_prenom:params.prenom,
+      from_nom:params.nom,
+      from_email:params.email,
+      from_tel:params.tel,
+      from_adresse:params.adresse,
+      article_nom:params.article,
+      article_type:params.type,
+      quantite:params.qty,
+      date_demande:new Date().toLocaleString('fr-FR'),
+    }
+  };
+
+  // Fallback : si EmailJS non configuré, on utilise mailto comme déclencheur
+  // et on sauvegarde en base de toute façon
+  try{
+    const resp=await fetch('https://api.emailjs.com/api/v1.0/email/send',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload)
+    });
+    return resp.status===200;
+  }catch(e){
+    return false;
+  }
+}
+
+/* ============================================================ SOUMISSION */
+async function submitOrder(){
+  if(!validateForm()){
+    showToast('Veuillez remplir tous les champs obligatoires','error');
+    return;
+  }
+
+  const btn=document.getElementById('btnSubmit');
+  btn.disabled=true;
+  btn.innerHTML='<div class="loader" style="width:16px;height:16px;margin:0 auto;border-color:rgba(255,255,255,.3);border-top-color:white;"></div>';
+
+  const prenom=document.getElementById('fPrenom').value.trim();
+  const nom=document.getElementById('fNom').value.trim();
+  const adresse=document.getElementById('fAdresse').value.trim();
+  const email=document.getElementById('fEmail').value.trim();
+  const tel=document.getElementById('fTel').value.trim();
+  const qty=parseInt(document.getElementById('qtyInput').value);
+
+  // 1. Sauvegarder en base
+  const {error:dbErr}=await _sb.from('shop_orders').insert({
+    user_id:currentUser.id,
+    product_id:currentProduct.id,
+    shop_type:currentProduct.shop_type,
+    product_name:currentProduct.name,
+    quantity:qty,
+    requester_prenom:prenom,
+    requester_nom:nom,
+    requester_email:email,
+    requester_tel:tel,
+    requester_adresse:adresse,
+    status:'pending',
+  });
+
+  if(dbErr){
+    showToast('Erreur lors de l\'enregistrement : '+dbErr.message,'error');
+    btn.disabled=false;
+    btn.innerHTML='<span>📨</span> Envoyer la demande de dérogation';
+    return;
+  }
+
+  // 2. Envoyer l'email via EmailJS
+  const mailSent=await sendEmailJS({
+    prenom,nom,email,tel,adresse,
+    article:currentProduct.name,
+    type:currentProduct.shop_type==='public'?'Boutique commune':'Boutique personnelle',
+    qty,
+  });
+
+  // 3. Fallback mailto si EmailJS non configuré
+  if(!mailSent){
+    const subject=encodeURIComponent(`[IFRAS Boutique] Demande de dérogation — ${currentProduct.name}`);
+    const body=encodeURIComponent(
+`Demande de dérogation IFRAS
+
+Article : ${currentProduct.name}
+Type : ${currentProduct.shop_type==='public'?'Boutique commune':'Boutique personnelle'}
+Quantité : ${qty}
+
+Demandeur :
+  Prénom : ${prenom}
+  Nom : ${nom}
+  Email : ${email}
+  Téléphone : ${tel}
+  Adresse : ${adresse}
+
+Date : ${new Date().toLocaleString('fr-FR')}
+`);
+    window.open(`mailto:martin15.papais@gmail.com?subject=${subject}&body=${body}`);
+  }
+
+  // 4. Afficher succès
+  document.getElementById('modalForm').style.display='none';
+  document.getElementById('successText').textContent=
+    `Votre demande pour "${currentProduct.name}" (×${qty}) a été enregistrée et transmise à l'équipe logistique. Vous recevrez une confirmation à l'adresse ${email}.`;
+  document.getElementById('modalSuccess').classList.add('visible');
+
+  // Rafraîchir le badge historique
+  loadHistoryCount();
+}
+
+/* ============================================================ RENDU PRODUIT */
+function renderProductCard(p, suspended, delay=0){
+  const card=document.createElement('div');
+  card.className='product-card';
+  card.style.animationDelay=delay+'s';
+
+  card.innerHTML=`
+    <div class="product-img">
+      ${p.image_url
+        ? `<img src="${p.image_url}" alt="${p.name}" onerror="this.parentElement.innerHTML='<span class=product-emoji>${p.emoji||'📦'}</span>'">`
+        : `<span class="product-emoji">${p.emoji||'📦'}</span>`}
+    </div>
+    <div class="product-body">
+      <div class="product-name">${p.name}</div>
+      <div class="product-desc">${p.description||''}</div>
+      <div class="product-meta">
+        <span class="product-price">Gratuit</span>
+        <span class="product-stock">Disponible · max ${p.max_qty}</span>
+      </div>
+    </div>
+    <div class="product-footer">
+      <button class="btn-order${suspended?' suspended':''}" onclick="openOrderModal(${JSON.stringify(p).replace(/"/g,'&quot;')})">
+        ${suspended?'⛔ Compte suspendu':'📋 Demande de dérogation'}
+      </button>
+    </div>`;
+
+  return card;
+}
+
+/* ============================================================ CHARGEMENT BOUTIQUE PUBLIQUE */
+async function loadPublicShop(){
+  const {data,error}=await _sb.from('shop_products').select('*').eq('shop_type','public').order('name');
+  document.getElementById('publicLoader').style.display='none';
+  const grid=document.getElementById('publicGrid');
+
+  if(error||!data||!data.length){
+    grid.innerHTML=`<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">🏪</div><div class="empty-title">Aucun article disponible</div><div>La boutique commune est vide pour l'instant</div></div>`;
+    document.getElementById('badge-public').textContent='0';
+    return;
+  }
+
+  document.getElementById('badge-public').textContent=data.length;
+  grid.innerHTML='';
+  data.forEach((p,i)=>{
+    p.shop_type='public';
+    grid.appendChild(renderProductCard(p,isSuspended,i*0.04));
+  });
+}
+
+/* ============================================================ CHARGEMENT BOUTIQUE PERSONNELLE */
+async function loadPrivateShop(){
+  if(!currentProfile){
+    document.getElementById('privateLoader').style.display='none';
+    document.getElementById('privateGrid').innerHTML=`<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">⭐</div><div class="empty-title">Profil introuvable</div></div>`;
+    return;
+  }
+
+  // Récupérer les articles liés au rôle/profession de l'utilisateur
+  const profession=(currentProfile.profession||'').toLowerCase();
+  const role=(currentProfile.role||'').toLowerCase();
+
+  // Chercher les articles privés filtrés par profession/role dans la table shop_products
+  const {data,error}=await _sb.from('shop_products')
+    .select('*')
+    .eq('shop_type','private')
+    .or(`target_role.ilike.%${profession}%,target_role.ilike.%${role}%,target_role.eq.all`)
+    .order('name');
+
+  document.getElementById('privateLoader').style.display='none';
+  const grid=document.getElementById('privateGrid');
+
+  // Mettre à jour le titre
+  document.getElementById('privateTitle').textContent=
+    `Articles personnalisés — ${currentProfile.profession||currentProfile.role||'Agent IFRAS'}`;
+  document.getElementById('privateSub').textContent=
+    `Équipements spécialisés pour votre domaine : ${currentProfile.profession||currentProfile.role||'—'}`;
+
+  if(error||!data||!data.length){
+    grid.innerHTML=`<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">⭐</div><div class="empty-title">Aucun article personnalisé</div><div>Aucun équipement spécifique à votre profil n'est disponible</div></div>`;
+    document.getElementById('badge-private').textContent='0';
+    return;
+  }
+
+  document.getElementById('badge-private').textContent=data.length;
+  grid.innerHTML='';
+  data.forEach((p,i)=>{
+    p.shop_type='private';
+    grid.appendChild(renderProductCard(p,isSuspended,i*0.04));
+  });
+}
+
+/* ============================================================ HISTORIQUE */
+async function loadHistoryCount(){
+  const {count}=await _sb.from('shop_orders').select('*',{count:'exact',head:true}).eq('user_id',currentUser.id);
+  document.getElementById('badge-history').textContent=count||0;
+}
+
+async function loadHistory(){
+  const loader=document.getElementById('historyLoader');
+  const content=document.getElementById('historyContent');
+  loader.style.display='flex';
+  content.innerHTML='';
+
+  const {data,error}=await _sb.from('shop_orders')
+    .select('*').eq('user_id',currentUser.id).order('created_at',{ascending:false});
+
+  loader.style.display='none';
+
+  if(error||!data||!data.length){
+    content.innerHTML=`<div class="history-empty"><div class="history-empty-icon">📦</div><div>Aucune commande passée</div></div>`;
+    return;
+  }
+
+  document.getElementById('badge-history').textContent=data.length;
+  const statusLabel={pending:'En attente',approved:'Approuvé',rejected:'Refusé'};
+
+  const list=document.createElement('div');
+  list.className='history-list';
+  data.forEach((o,i)=>{
+    const row=document.createElement('div');
+    row.className='history-row';
+    row.style.animationDelay=(i*0.03)+'s';
+    row.innerHTML=`
+      <div class="history-icon">${o.product_emoji||'📦'}</div>
+      <div class="history-main">
+        <div class="history-name">${o.product_name||'—'}</div>
+        <div class="history-date">Demande du ${formatDate(o.created_at)} · ${o.requester_prenom||''} ${o.requester_nom||''}</div>
+      </div>
+      <span class="history-qty">×${o.quantity||1}</span>
+      <span class="history-type ${o.shop_type==='public'?'public':'private'}">${o.shop_type==='public'?'Commune':'Perso'}</span>
+      <span class="history-status ${o.status||'pending'}">${statusLabel[o.status]||'En attente'}</span>`;
+    list.appendChild(row);
+  });
+  content.appendChild(list);
+}
+
+/* ============================================================ INIT */
+async function init(){
+  const{data:{session}}=await _sb.auth.getSession();
+  if(!session){window.location.href='connexion.html';return;}
+  currentUser=session.user;
+
+  document.getElementById('userAvatar').textContent=initials(currentUser.email);
+  document.getElementById('userLabel').textContent=currentUser.email.split('@')[0];
+
+  // Charger le profil
+  const{data:prof}=await _sb.from('profiles').select('*').eq('email',currentUser.email).single();
+  currentProfile=prof;
+  isSuspended=prof&&(prof.suspension===true||prof.suspension==='true'||prof.suspension==='TRUE');
+
+  if(isSuspended){
+    document.getElementById('suspendedBanner').style.display='flex';
+  }
+
+  // Charger tout
+  await Promise.all([loadPublicShop(),loadPrivateShop()]);
+  await loadHistoryCount();
+}
+
+/* ============================================================ BOOT */
+(function restoreTheme(){
+  try{const s=sessionStorage.getItem('ifras_theme');if(s){const{h,s:sat,special}=JSON.parse(s);applyTheme(h,sat,special);}}catch(e){}
+})();
+
+init();
+</script>
+</body>
+</html>
