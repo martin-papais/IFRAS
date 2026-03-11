@@ -545,18 +545,40 @@ async function doSearch() {
   }
 }
 
+/* ---- MATCHING PAR MOT ENTIER ---- */
+function matchesTerm(f, term) {
+  const t = term.trim().toLowerCase();
+
+  // 1. Nom de fichier exact (avec ou sans extension)
+  const nameWithoutExt = (f.filename || '').replace(/\.[^.]+$/, '').toLowerCase();
+  const nameFull       = (f.filename || '').toLowerCase();
+  if (nameWithoutExt === t || nameFull === t) return true;
+
+  // 2. Mot-clé exact (séparés par virgule ou espace)
+  const keywords = (f.keywords || '').toLowerCase().split(/[,\s]+/).map(k => k.trim()).filter(Boolean);
+  if (keywords.some(k => k === t)) return true;
+
+  // 3. Programme exact
+  if ((f.program || '').toLowerCase() === t) return true;
+
+  return false;
+}
+
 /* ---- COFFRE PUBLIC ---- */
 async function searchPublic(term, box) {
   // Chercher tous les fichiers correspondant au terme (sans filtre clearance côté serveur)
   const { data, error } = await _sb
     .from('vault_public')
     .select('*')
-    .or(`filename.ilike.%${term}%,program.ilike.%${term}%,keywords.ilike.%${term}%,description.ilike.%${term}%`)
+    .or(`filename.ilike.%${term}%,keywords.ilike.%${term}%,program.ilike.%${term}%`)
     .order('created_at', { ascending: false });
 
   if (error) { box.innerHTML = `<div class="vault-state"><div class="vault-state-icon">⚠</div><div class="vault-state-title">Erreur serveur</div></div>`; return; }
 
-  if (!data || data.length === 0) {
+  // Filtrer côté client : matching par mot entier uniquement
+  const matched = (data || []).filter(f => matchesTerm(f, term));
+
+  if (matched.length === 0) {
     box.innerHTML = `
       <div class="vault-state">
         <div class="vault-state-icon">🔍</div>
@@ -566,9 +588,15 @@ async function searchPublic(term, box) {
     return;
   }
 
+  // Séparer accessibles et interdits (sur les résultats filtrés)
+  const data_filtered = matched;
+  // Remplacer data par data_filtered pour la suite
+  Object.defineProperty(window, '_vaultFiltered', { value: data_filtered, writable: true, configurable: true });
+
   // Séparer accessibles et interdits
-  const accessible = data.filter(f => getClearanceLevel(f.clearance_required) <= userClearanceLevel);
-  const forbidden  = data.filter(f => getClearanceLevel(f.clearance_required) > userClearanceLevel);
+  const results = window._vaultFiltered || [];
+  const accessible = results.filter(f => getClearanceLevel(f.clearance_required) <= userClearanceLevel);
+  const forbidden  = results.filter(f => getClearanceLevel(f.clearance_required) > userClearanceLevel);
 
   box.innerHTML = '';
 
@@ -605,12 +633,14 @@ async function searchPrivate(term, box) {
     .from('vault_private')
     .select('*')
     .eq('owner_id', currentUserId)
-    .or(`filename.ilike.%${term}%,description.ilike.%${term}%,keywords.ilike.%${term}%`)
+    .or(`filename.ilike.%${term}%,keywords.ilike.%${term}%`)
     .order('created_at', { ascending: false });
 
   if (error) { box.innerHTML = `<div class="vault-state"><div class="vault-state-icon">⚠</div><div class="vault-state-title">Erreur serveur</div></div>`; return; }
 
-  if (!data || data.length === 0) {
+  const matched = (data || []).filter(f => matchesTerm(f, term));
+
+  if (matched.length === 0) {
     box.innerHTML = `
       <div class="vault-state">
         <div class="vault-state-icon">🔍</div>
@@ -621,7 +651,7 @@ async function searchPrivate(term, box) {
   }
 
   box.innerHTML = '';
-  data.forEach(f => box.appendChild(buildFileCard(f, 'private')));
+  matched.forEach(f => box.appendChild(buildFileCard(f, 'private')));
 }
 
 /* ---- SIGNED URL ---- */
