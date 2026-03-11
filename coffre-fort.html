@@ -625,18 +625,37 @@ async function searchPrivate(term, box) {
 }
 
 /* ---- SIGNED URL ---- */
-async function getSignedUrl(path) {
-  // path = "vault/mon-fichier.pdf" → bucket="vault", filePath="mon-fichier.pdf"
-  const parts = path.replace(/^\//, '').split('/');
+async function getSignedUrl(fileUrl) {
+  if (!fileUrl) return null;
+  if (fileUrl.startsWith('http')) return fileUrl;
+  const parts = fileUrl.replace(/^\//, '').split('/');
   const bucket = parts[0];
   const filePath = parts.slice(1).join('/');
-
-  const { data, error } = await _sb.storage
-    .from(bucket)
-    .createSignedUrl(filePath, 300); // 5 minutes — suffisant pour ouvrir/télécharger
-
+  const { data, error } = await _sb.storage.from(bucket).createSignedUrl(filePath, 600);
   if (error || !data) return null;
   return data.signedUrl;
+}
+
+/* ---- FORCE DOWNLOAD via blob ---- */
+async function forceDownload(url, filename) {
+  const btn = event.currentTarget;
+  const orig = btn.innerHTML;
+  btn.innerHTML = '⏳ …'; btn.disabled = true;
+  try {
+    const resp = await fetch(url);
+    if (!resp.ok) throw new Error();
+    const blob = await resp.blob();
+    const blobUrl = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = blobUrl; a.download = filename;
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
+  } catch(e) {
+    showToast('⚠ Échec du téléchargement');
+  } finally {
+    btn.innerHTML = orig; btn.disabled = false;
+  }
 }
 
 /* ---- BUILD FILE CARD ---- */
@@ -673,13 +692,14 @@ function buildFileCard(f, type) {
     }
     // Nom du fichier pour le téléchargement
     const fname = f.filename || 'document';
+    const safeFname = fname.replace(/'/g, "\\'");
     actionsDiv.innerHTML = `
-      <a class="file-dl-btn" href="${url}" target="_blank" rel="noopener" title="Visualiser dans le navigateur">
+      <a class="file-dl-btn" href="${url}" target="_blank" rel="noopener" title="Ouvrir dans le navigateur">
         👁 Ouvrir
       </a>
-      <a class="file-dl-btn" href="${url}" download="${fname}" title="Télécharger le fichier">
+      <button class="file-dl-btn" onclick="forceDownload('${url}', '${safeFname}')" title="Télécharger">
         ↓ Télécharger
-      </a>`;
+      </button>`;
   });
 
   return card;
