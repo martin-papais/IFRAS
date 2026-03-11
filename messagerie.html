@@ -906,6 +906,9 @@ function applyTheme(h, s, special) {
   if (hexInp) { hexInp.value = ''; hexInp.classList.remove('invalid'); }
   if (currentMail) openMessage(currentMail);
 
+  // Persister le thème pour les autres onglets
+  sessionStorage.setItem('ifras_theme', JSON.stringify({ h, s, special: special || null }));
+
 
 }
 
@@ -1084,12 +1087,27 @@ let userEmail = '';
 let currentFolder = 'inbox';
 let allMessages   = [];
 let currentMail   = null;
-let currentContentBg = '#050b1e'; // valeur par défaut — jamais null pour éviter crash normalizeHex
 
 async function logout() {
+  sessionStorage.removeItem('ifras_theme');
   await _sb.auth.signOut();
   window.location.href = 'connexion.html';
 }
+
+/* ============================================================
+   AUTO-LOGOUT après 10 min d'inactivité
+   ============================================================ */
+let inactivityTimer = null;
+function resetInactivityTimer() {
+  clearTimeout(inactivityTimer);
+  inactivityTimer = setTimeout(async () => {
+    await logout();
+  }, 10 * 60 * 1000); // 10 minutes
+}
+['mousemove','mousedown','keydown','touchstart','scroll','click'].forEach(evt =>
+  document.addEventListener(evt, resetInactivityTimer, { passive: true })
+);
+resetInactivityTimer();
 
 // Prevent spurious disconnections — only redirect on real sign-out events
 _sb.auth.onAuthStateChange((event, session) => {
@@ -1248,11 +1266,16 @@ function renderList(messages) {
     list.appendChild(item);
   });
 
-  // Activate + open first item after DOM is ready
-  const firstItem = list.querySelector('.msg-item');
-  if (firstItem) {
-    firstItem.classList.add('active');
-    setTimeout(() => openMessage(firstItem._mail), 0);
+  // Restaurer la sélection du mail courant, ou sélectionner le premier sans l'ouvrir
+  if (currentMail) {
+    const match = [...list.querySelectorAll('.msg-item')].find(i => i._mail.id === currentMail.id);
+    if (match) match.classList.add('active');
+  } else {
+    const firstItem = list.querySelector('.msg-item');
+    if (firstItem) {
+      firstItem.classList.add('active');
+      setTimeout(() => openMessage(firstItem._mail), 0);
+    }
   }
 }
 
@@ -1362,6 +1385,17 @@ document.getElementById('toggleRefresh').addEventListener('change', function() {
 /* ============================================================
    BOOT
    ============================================================ */
+// Restaurer le thème sauvegardé (persistance inter-onglets)
+(function restoreTheme() {
+  try {
+    const saved = sessionStorage.getItem('ifras_theme');
+    if (saved) {
+      const { h, s, special } = JSON.parse(saved);
+      applyTheme(h, s, special);
+    }
+  } catch(e) {}
+})();
+
 loadMessages();
 refreshInterval = setInterval(loadMessages, 30000);
 </script>
