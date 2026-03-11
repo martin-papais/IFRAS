@@ -5,6 +5,8 @@
 <title>IFRAS — Boutique</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -181,6 +183,10 @@ input[type=range].sat-range::-webkit-slider-thumb{-webkit-appearance:none;width:
 .btn-order:hover{background:var(--accent);color:white;border-color:var(--accent);}
 .btn-order.suspended{background:rgba(248,113,113,.08);color:#f87171;border-color:rgba(248,113,113,.2);cursor:not-allowed;}
 .btn-order.suspended:hover{background:rgba(248,113,113,.12);color:#f87171;border-color:rgba(248,113,113,.3);}
+.btn-order.rupture{background:rgba(251,191,36,.06);color:#fbbf24;border-color:rgba(251,191,36,.2);cursor:not-allowed;}
+.btn-order.rupture:hover{background:rgba(251,191,36,.1);color:#fbbf24;border-color:rgba(251,191,36,.3);}
+.product-stock.out::before{background:#f87171;}
+.product-stock.out{color:#f87171;}
 
 /* HISTORIQUE */
 .history-title{
@@ -750,38 +756,46 @@ function validateForm(){
   return ok;
 }
 
-/* ============================================================ ENVOI MAIL (EmailJS) */
-async function sendEmailJS(params){
-  // Utilise EmailJS public API (service gratuit, pas de backend requis)
-  const payload={
-    service_id:'service_85c4pd7',
-    template_id:'template_lknus6y',
-    user_id:'xsGzxZbuUlgumWYAv', // À remplacer
-    template_params:{
-      to_email:'martin15.papais@gmail.com',
-      to_name:'Équipe logistique IFRAS',
-      from_prenom:params.prenom,
-      from_nom:params.nom,
-      from_email:params.email,
-      from_tel:params.tel,
-      from_adresse:params.adresse,
-      article_nom:params.article,
-      article_type:params.type,
-      quantite:params.qty,
-      date_demande:new Date().toLocaleString('fr-FR'),
-    }
-  };
+/* ============================================================ EMAILJS CONFIG
+   Remplace les 3 valeurs ci-dessous après avoir configuré EmailJS
+   (voir instructions détaillées dans le message) */
+const EMAILJS_PUBLIC_KEY  = 'REMPLACER_PAR_CLE_PUBLIQUE';   // ex: 'aBcDeFgHiJkLmNoP'
+const EMAILJS_SERVICE_ID  = 'REMPLACER_PAR_SERVICE_ID';     // ex: 'service_abc123'
+const EMAILJS_TEMPLATE_ID = 'REMPLACER_PAR_TEMPLATE_ID';    // ex: 'template_xyz456'
 
-  // Fallback : si EmailJS non configuré, on utilise mailto comme déclencheur
-  // et on sauvegarde en base de toute façon
+// Initialisation EmailJS (une seule fois au chargement)
+(function initEmailJS(){
+  if(typeof emailjs !== 'undefined'){
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+  }
+})();
+
+async function sendEmailJS(params){
+  if(typeof emailjs === 'undefined'){
+    console.warn('EmailJS non chargé');
+    return false;
+  }
   try{
-    const resp=await fetch('https://api.emailjs.com/api/v1.0/email/send',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(payload)
-    });
-    return resp.status===200;
+    const result = await emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
+      {
+        to_email      : 'martin15.papais@gmail.com',
+        to_name       : 'Équipe logistique IFRAS',
+        from_prenom   : params.prenom,
+        from_nom      : params.nom,
+        from_email    : params.email,
+        from_tel      : params.tel,
+        from_adresse  : params.adresse,
+        article_nom   : params.article,
+        article_type  : params.type,
+        quantite      : params.qty,
+        date_demande  : new Date().toLocaleString('fr-FR'),
+      }
+    );
+    return result.status === 200;
   }catch(e){
+    console.error('EmailJS error:', e);
     return false;
   }
 }
@@ -834,26 +848,9 @@ async function submitOrder(){
     qty,
   });
 
-  // 3. Fallback mailto si EmailJS non configuré
+  // 3. Log si l'email n'a pas pu être envoyé (la commande est quand même sauvegardée)
   if(!mailSent){
-    const subject=encodeURIComponent(`[IFRAS Boutique] Demande de dérogation — ${currentProduct.name}`);
-    const body=encodeURIComponent(
-`Demande de dérogation IFRAS
-
-Article : ${currentProduct.name}
-Type : ${currentProduct.shop_type==='public'?'Boutique commune':'Boutique personnelle'}
-Quantité : ${qty}
-
-Demandeur :
-  Prénom : ${prenom}
-  Nom : ${nom}
-  Email : ${email}
-  Téléphone : ${tel}
-  Adresse : ${adresse}
-
-Date : ${new Date().toLocaleString('fr-FR')}
-`);
-    window.open(`mailto:martin15.papais@gmail.com?subject=${subject}&body=${body}`);
+    console.warn('Email non envoyé — vérifier la config EmailJS. La commande est enregistrée en base.');
   }
 
   // 4. Afficher succès
@@ -872,23 +869,35 @@ function renderProductCard(p, suspended, delay=0){
   card.className='product-card';
   card.style.animationDelay=delay+'s';
 
+  const isRupture = (p.stock === 'rupture');
+  const safeP = JSON.stringify(p).replace(/"/g,'&quot;');
+
+  // Image prioritaire, emoji en fallback uniquement si pas d'image
+  const imgHtml = p.image_url
+    ? `<img src="${p.image_url}" alt="${p.name}" style="width:100%;height:100%;object-fit:contain;padding:16px;filter:drop-shadow(0 4px 16px rgba(0,0,0,.4));" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="product-emoji" style="display:none">${p.emoji||'📦'}</span>`
+    : `<span class="product-emoji">${p.emoji||'📦'}</span>`;
+
+  const stockClass = isRupture ? ' out' : '';
+  const stockLabel = isRupture ? 'Rupture de stock' : `Disponible · max ${p.max_qty}`;
+  const btnDisabled = suspended || isRupture;
+  const btnClass = suspended ? ' suspended' : (isRupture ? ' rupture' : '');
+  const btnLabel = suspended ? '⛔ Compte suspendu' : (isRupture ? '⚠ Rupture de stock' : '📋 Demande de dérogation');
+
   card.innerHTML=`
-    <div class="product-img">
-      ${p.image_url
-        ? `<img src="${p.image_url}" alt="${p.name}" onerror="this.parentElement.innerHTML='<span class=product-emoji>${p.emoji||'📦'}</span>'">`
-        : `<span class="product-emoji">${p.emoji||'📦'}</span>`}
-    </div>
+    <div class="product-img">${imgHtml}</div>
     <div class="product-body">
       <div class="product-name">${p.name}</div>
       <div class="product-desc">${p.description||''}</div>
       <div class="product-meta">
         <span class="product-price">Gratuit</span>
-        <span class="product-stock">Disponible · max ${p.max_qty}</span>
+        <span class="product-stock${stockClass}">${stockLabel}</span>
       </div>
     </div>
     <div class="product-footer">
-      <button class="btn-order${suspended?' suspended':''}" onclick="openOrderModal(${JSON.stringify(p).replace(/"/g,'&quot;')})">
-        ${suspended?'⛔ Compte suspendu':'📋 Demande de dérogation'}
+      <button class="btn-order${btnClass}"
+        ${btnDisabled?'disabled':''}
+        ${!btnDisabled?`onclick="openOrderModal(${safeP})"`:''}>
+        ${btnLabel}
       </button>
     </div>`;
 
@@ -955,6 +964,32 @@ async function loadPrivateShop(){
     p.shop_type='private';
     grid.appendChild(renderProductCard(p,isSuspended,i*0.04));
   });
+}
+
+/* ============================================================ SUPPRESSION COMMANDE */
+async function deleteOrder(orderId, btn){
+  if(!confirm('Supprimer cette ligne de l'historique ?')) return;
+  btn.disabled=true;btn.textContent='…';
+  const {error}=await _sb.from('shop_orders').delete().eq('id',orderId).eq('user_id',currentUser.id);
+  if(error){
+    showToast('Erreur lors de la suppression','error');
+    btn.disabled=false;btn.textContent='🗑';
+    return;
+  }
+  // Retirer la ligne du DOM avec animation
+  const row=btn.closest('.history-row');
+  row.style.transition='opacity .25s,transform .25s';
+  row.style.opacity='0';row.style.transform='translateX(20px)';
+  setTimeout(()=>{
+    row.remove();
+    loadHistoryCount();
+    // Mettre à jour le compteur affiché
+    const remaining=document.querySelectorAll('.history-row').length;
+    document.getElementById('badge-history').textContent=remaining;
+    if(remaining===0){
+      document.getElementById('historyContent').innerHTML=`<div class="history-empty"><div class="history-empty-icon">📦</div><div>Aucune commande passée</div></div>`;
+    }
+  },280);
 }
 
 /* ============================================================ HISTORIQUE */
