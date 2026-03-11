@@ -6,307 +6,686 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --bg-main: #050b1e;
-  --bg-dark: #020617;
-  --bg-light: #070f2b;
-  --accent: #4f6bed;
-  --text-main: #e6e6e6;
-  --text-soft: #aab3d6;
+  --hue: 228; --sat: 65%;
+  --bg-dark:    hsl(var(--hue), var(--sat), 4%);
+  --bg-main:    hsl(var(--hue), var(--sat), 7%);
+  --bg-light:   hsl(var(--hue), var(--sat), 10%);
+  --bg-hover:   hsl(var(--hue), var(--sat), 13%);
+  --bg-card:    hsl(var(--hue), var(--sat), 8%);
+  --border:     hsl(var(--hue), calc(var(--sat) - 10%), 20%);
+  --border-sub: hsl(var(--hue), calc(var(--sat) - 10%), 14%);
+  --accent:     hsl(var(--hue), 70%, 60%);
+  --accent-dim: hsl(var(--hue), 60%, 45%);
+  --text-main:  hsl(var(--hue), 20%, 88%);
+  --text-soft:  hsl(var(--hue), 20%, 62%);
+  --text-muted: hsl(var(--hue), 15%, 40%);
+  --unread-dot: hsl(var(--hue), 80%, 65%);
+  --header-h: 84px; --subnav-h: 48px;
 }
-
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  font-family: "Segoe UI", Roboto, Arial, sans-serif;
-  background: var(--bg-main);
-  color: var(--text-main);
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "DM Sans", sans-serif; background: var(--bg-dark); color: var(--text-main); min-height: 100vh; }
+::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
 /* ===== HEADER ===== */
-header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-  background: rgba(5,11,30,.75);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid #1b2555;
-}
+header { position: fixed; top: 0; width: 100%; z-index: 1000; height: var(--header-h); background: hsl(var(--hue), var(--sat), 5%); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); display: flex; align-items: center; }
+.header-inner { width: 100%; padding: 0 28px; display: flex; align-items: center; justify-content: space-between; }
+.header-left { display: flex; align-items: center; gap: 40px; }
+.logo-link img { height: 54px; }
+.main-nav { list-style: none; display: flex; gap: 28px; }
+.main-nav a { text-decoration: none; color: var(--text-soft); font-size: 13.5px; letter-spacing: .05em; transition: color .2s; }
+.main-nav a:hover { color: var(--text-main); }
+.header-right { display: flex; align-items: center; gap: 10px; }
+.user-chip { display: flex; align-items: center; gap: 9px; padding: 5px 12px 5px 6px; background: var(--bg-light); border: 1px solid var(--border); border-radius: 20px; font-size: 12.5px; color: var(--text-soft); }
+.user-avatar { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-dim), var(--accent)); display: flex; align-items: center; justify-content: center; font-family: "Syne", sans-serif; font-weight: 700; font-size: 10px; color: white; }
+.icon-btn { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-light); color: var(--text-soft); cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center; transition: background .15s, color .15s, border-color .15s; }
+.icon-btn:hover { background: var(--bg-hover); color: var(--text-main); border-color: var(--accent); }
 
-.header-inner {
-  max-width: 1300px;
-  margin: auto;
-  padding: 12px 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+/* Settings */
+.settings-wrapper { position: relative; }
+.settings-panel { display: none; position: absolute; right: 0; top: calc(100% + 8px); width: 260px; background: var(--bg-light); border: 1px solid var(--border); border-radius: 12px; padding: 16px; z-index: 2000; box-shadow: 0 20px 60px rgba(0,0,0,.5); animation: panelIn .15s ease; }
+@keyframes panelIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+.settings-panel.active { display: block; }
+.panel-title { font-family: "Syne", sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border-sub); }
+.theme-section { margin-bottom: 16px; }
+.theme-label { font-size: 11px; color: var(--text-soft); margin-bottom: 8px; font-weight: 400; letter-spacing: .04em; }
+.hue-wrap { position: relative; height: 20px; border-radius: 10px; overflow: hidden; cursor: pointer; background: linear-gradient(90deg, hsl(0,65%,55%), hsl(30,65%,55%), hsl(60,65%,55%), hsl(90,65%,55%), hsl(120,65%,55%), hsl(150,65%,55%), hsl(180,65%,55%), hsl(210,65%,55%), hsl(240,65%,55%), hsl(270,65%,55%), hsl(300,65%,55%), hsl(330,65%,55%), hsl(360,65%,55%)); margin-bottom: 10px; }
+.hue-thumb { position: absolute; top: 50%; transform: translate(-50%,-50%); width: 18px; height: 18px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 6px rgba(0,0,0,.4); pointer-events: none; transition: left .1s; }
+.sat-wrap { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.sat-label { font-size: 11px; color: var(--text-muted); width: 24px; }
+input[type=range].sat-range { flex: 1; height: 4px; border-radius: 4px; outline: none; border: none; cursor: pointer; -webkit-appearance: none; appearance: none; background: linear-gradient(90deg, hsl(var(--hue),0%,55%), hsl(var(--hue),100%,55%)); }
+input[type=range].sat-range::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); border: 2px solid white; box-shadow: 0 1px 4px rgba(0,0,0,.3); cursor: pointer; }
+.swatches { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 14px; }
+.swatch { width: 24px; height: 24px; border-radius: 6px; cursor: pointer; border: 2px solid transparent; transition: transform .15s, border-color .15s; }
+.swatch:hover { transform: scale(1.15); } .swatch.active { border-color: white; }
+.panel-divider { height: 1px; background: var(--border-sub); margin: 14px 0; }
+.logout-btn { padding: 7px 14px; border-radius: 7px; border: 1px solid var(--border); background: transparent; color: var(--text-soft); cursor: pointer; font-size: 12.5px; font-family: "DM Sans", sans-serif; transition: background .15s, color .15s, border-color .15s; display: flex; align-items: center; gap: 6px; }
+.logout-btn:hover { background: rgba(251,113,133,.1); color: #fb7185; border-color: rgba(251,113,133,.3); }
+.hex-wrap { display: flex; align-items: center; gap: 8px; margin-top: 6px; margin-bottom: 4px; }
+.hex-preview { width: 24px; height: 24px; border-radius: 5px; flex-shrink: 0; border: 1px solid var(--border); transition: background .15s; }
+.hex-input { flex: 1; background: var(--bg-dark); border: 1px solid var(--border-sub); border-radius: 6px; padding: 5px 8px; color: var(--text-main); font-size: 12px; font-family: "DM Sans", sans-serif; outline: none; transition: border-color .2s; letter-spacing: .06em; }
+.hex-input:focus { border-color: var(--accent); } .hex-input.invalid { border-color: rgba(251,113,133,.5); color: #fca5a5; }
+.hex-apply-btn { padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-hover); color: var(--text-soft); font-size: 11px; cursor: pointer; font-family: "DM Sans", sans-serif; transition: background .15s, color .15s; white-space: nowrap; }
+.hex-apply-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
 
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-}
+/* ===== SOUS-BANDEAU ===== */
+.sub-nav { position: fixed; top: var(--header-h); width: 100%; z-index: 900; height: var(--subnav-h); background: hsl(var(--hue), var(--sat), 6%); border-bottom: 1px solid var(--border-sub); display: flex; align-items: center; }
+.sub-nav-inner { padding: 0 28px; display: flex; gap: 4px; }
+.sub-tab { padding: 6px 16px; border-radius: 7px; font-size: 13px; color: var(--text-soft); text-decoration: none; letter-spacing: .04em; display: flex; align-items: center; gap: 7px; transition: background .15s, color .15s; position: relative; }
+.sub-tab:hover { background: var(--bg-hover); color: var(--text-main); }
+.sub-tab.active { background: var(--bg-light); color: var(--text-main); font-weight: 500; }
+.sub-tab.active::after { content: ''; position: absolute; bottom: -1px; left: 16px; right: 16px; height: 2px; background: var(--accent); border-radius: 2px 2px 0 0; }
+.tab-icon { font-size: 13px; opacity: .7; }
 
-.logo-link img {
-  height: 60px;
-}
+/* ===== PAGE ===== */
+.page-content { padding-top: calc(var(--header-h) + var(--subnav-h) + 32px); padding-bottom: 60px; max-width: 1000px; margin: 0 auto; padding-left: 28px; padding-right: 28px; }
 
-.main-nav {
-  list-style: none;
-  display: flex;
-  gap: 32px;
-  margin: 0;
-  padding: 0;
+/* ===== VAULT HERO ===== */
+.vault-hero {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  position: relative;
+  animation: fadeUp .3s ease both;
 }
-
-.main-nav a {
-  text-decoration: none;
-  color: var(--text-soft);
-  font-size: 14px;
+.vault-banner {
+  height: 90px;
+  background: linear-gradient(135deg, hsl(var(--hue),var(--sat),10%), hsl(var(--hue),70%,16%), hsl(calc(var(--hue) - 20),60%,12%));
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; padding: 0 28px; gap: 16px;
 }
-
-.main-nav a:hover { color: white; }
-
-.header-right .logout-btn {
-  padding: 8px 18px;
-  border-radius: 6px;
-  border: 1px solid var(--accent);
-  color: white;
-  text-decoration: none;
-  font-size: 13px;
-  cursor: pointer;
+.vault-banner::before {
+  content: ''; position: absolute; inset: 0;
+  background: repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255,255,255,.02) 40px, rgba(255,255,255,.02) 41px),
+              repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(255,255,255,.02) 40px, rgba(255,255,255,.02) 41px);
 }
-
-.header-right .logout-btn:hover {
-  background: var(--accent);
+.vault-banner-icon { font-size: 32px; position: relative; z-index: 1; }
+.vault-banner-text { position: relative; z-index: 1; }
+.vault-banner-title { font-family: "Syne", sans-serif; font-size: 18px; font-weight: 800; color: var(--text-main); letter-spacing: .02em; }
+.vault-banner-sub { font-size: 12px; color: var(--text-soft); font-weight: 300; margin-top: 2px; }
+.vault-clearance-chip {
+  margin-left: auto; position: relative; z-index: 1;
+  padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
 }
+.vault-clearance-chip.niveau-1 { background: rgba(74,222,128,.15); color: #4ade80; border: 1px solid rgba(74,222,128,.3); }
+.vault-clearance-chip.niveau-2 { background: rgba(251,191,36,.15); color: #fbbf24; border: 1px solid rgba(251,191,36,.3); }
+.vault-clearance-chip.niveau-3 { background: rgba(248,113,113,.15); color: #f87171; border: 1px solid rgba(248,113,113,.3); }
+.vault-clearance-chip.niveau-4 { background: rgba(167,139,250,.15); color: #a78bfa; border: 1px solid rgba(167,139,250,.3); }
 
-/* ===== SOUS NAV ===== */
-.sub-nav {
-  margin-top: 84px;
-  background: var(--bg-light);
-  border-bottom: 1px solid #1b2555;
+/* ===== VAULT TABS ===== */
+.vault-tabs {
+  display: flex; border-bottom: 1px solid var(--border-sub);
+  background: var(--bg-card);
 }
-
-.sub-nav ul {
-  max-width: 1300px;
-  margin: auto;
-  padding: 0 30px;
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  gap: 60px;
+.vault-tab {
+  flex: 1; padding: 14px 20px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  font-size: 13px; color: var(--text-soft); font-weight: 400;
+  border-bottom: 2px solid transparent; transition: color .15s, border-color .15s, background .15s;
+  margin-bottom: -1px;
 }
-
-.sub-nav li {
-  padding: 14px 0;
-}
-
-.sub-nav a {
-  color: var(--text-soft);
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.sub-nav a:hover,
-.sub-nav .active {
-  color: white;
-  border-bottom: 2px solid var(--accent);
-  padding-bottom: 6px;
-}
-
-/* ===== MAIN ===== */
-main {
-  margin-top: 140px;
-  padding: 60px 30px;
-}
-
-.container {
-  max-width: 900px;
-  margin: auto;
-}
+.vault-tab:hover { background: var(--bg-hover); color: var(--text-main); }
+.vault-tab.active { color: var(--text-main); font-weight: 500; border-bottom-color: var(--accent); }
+.vault-tab-icon { font-size: 14px; }
 
 /* ===== SEARCH ===== */
-.search-box {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 40px;
+.vault-search-wrap {
+  padding: 20px 0 0;
+  animation: fadeUp .3s .05s ease both;
 }
-
-.search-box input {
-  flex: 1;
-  padding: 14px;
-  border-radius: 8px;
-  border: 1px solid #1b2555;
-  background: var(--bg-light);
-  color: white;
-  font-size: 15px;
+.vault-search-inner {
+  display: flex; gap: 10px; align-items: center;
 }
-
-.search-box button {
-  padding: 14px 22px;
-  border-radius: 8px;
-  border: none;
-  background: var(--accent);
-  color: white;
-  font-size: 14px;
-  cursor: pointer;
+.vault-search-field {
+  flex: 1; position: relative;
 }
+.vault-search-icon {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  font-size: 14px; color: var(--text-muted); pointer-events: none;
+}
+.vault-search-input {
+  width: 100%; padding: 11px 14px 11px 40px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; color: var(--text-main);
+  font-size: 13.5px; font-family: "DM Sans", sans-serif; outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.vault-search-input::placeholder { color: var(--text-muted); }
+.vault-search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px hsl(var(--hue),70%,60%,.1); }
+.vault-search-btn {
+  padding: 11px 22px; background: var(--accent); border: none; border-radius: 10px;
+  color: white; font-size: 13px; font-weight: 500; font-family: "DM Sans", sans-serif;
+  cursor: pointer; display: flex; align-items: center; gap: 7px;
+  transition: opacity .15s, transform .15s; white-space: nowrap;
+}
+.vault-search-btn:hover { opacity: .88; transform: translateY(-1px); }
 
 /* ===== RESULTS ===== */
-.results {
-  display: grid;
-  gap: 16px;
+.vault-results {
+  margin-top: 20px;
+  display: flex; flex-direction: column; gap: 10px;
+  min-height: 80px;
+  animation: fadeUp .3s .1s ease both;
 }
 
-.file {
-  background: var(--bg-light);
-  border: 1px solid #1b2555;
-  border-radius: 8px;
-  padding: 18px 22px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+/* Empty / error states */
+.vault-state {
+  padding: 40px 20px; text-align: center;
+  color: var(--text-muted); font-size: 13px; font-weight: 300;
+}
+.vault-state-icon { font-size: 36px; margin-bottom: 10px; opacity: .4; }
+.vault-state-title { font-size: 14px; color: var(--text-soft); margin-bottom: 4px; font-weight: 500; }
+
+.vault-state.forbidden .vault-state-icon { opacity: .6; }
+.vault-state.forbidden .vault-state-title { color: #f87171; }
+
+/* File card */
+.file-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 18px;
+  display: flex; align-items: center; gap: 14px;
+  transition: border-color .15s, background .15s;
+  animation: fadeUp .2s ease both;
+}
+.file-card:hover { border-color: var(--accent); background: var(--bg-light); }
+
+.file-type-badge {
+  width: 42px; height: 42px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+  background: var(--bg-hover); border: 1px solid var(--border-sub);
 }
 
-.file-left {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+.file-meta { flex: 1; min-width: 0; }
+.file-name { font-size: 14px; font-weight: 500; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 3px; }
+.file-info-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.file-tag {
+  font-size: 10.5px; padding: 2px 8px; border-radius: 10px;
+  font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
 }
+.file-tag.public { background: rgba(79,107,237,.15); color: var(--accent); border: 1px solid rgba(79,107,237,.25); }
+.file-tag.private { background: rgba(52,211,153,.1); color: #34d399; border: 1px solid rgba(52,211,153,.2); }
+.file-tag.lvl-1 { background: rgba(74,222,128,.1); color: #4ade80; border: 1px solid rgba(74,222,128,.2); }
+.file-tag.lvl-2 { background: rgba(251,191,36,.1); color: #fbbf24; border: 1px solid rgba(251,191,36,.2); }
+.file-tag.lvl-3 { background: rgba(248,113,113,.1); color: #f87171; border: 1px solid rgba(248,113,113,.2); }
+.file-tag.lvl-4 { background: rgba(167,139,250,.1); color: #a78bfa; border: 1px solid rgba(167,139,250,.2); }
+.file-date { font-size: 11.5px; color: var(--text-muted); }
+.file-desc { font-size: 12px; color: var(--text-soft); font-weight: 300; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-.file-icon {
-  font-size: 22px;
+.file-actions { display: flex; gap: 8px; flex-shrink: 0; }
+.file-dl-btn {
+  padding: 7px 14px; border-radius: 7px;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text-soft); font-size: 12px; font-family: "DM Sans", sans-serif;
+  cursor: pointer; display: flex; align-items: center; gap: 5px;
+  text-decoration: none; transition: background .15s, color .15s, border-color .15s;
 }
+.file-dl-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
 
-.file-info h3 {
-  margin: 0;
-  font-size: 15px;
-}
+/* ===== TOAST ===== */
+.toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(20px); background: hsl(var(--hue), 30%, 14%); border: 1px solid rgba(251,113,133,.3); color: #fca5a5; font-size: 13px; padding: 10px 20px; border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,.5); z-index: 9999; opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; white-space: nowrap; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-.file-info p {
-  margin: 0;
-  font-size: 12px;
-  color: var(--text-soft);
-}
-
-.file a {
-  text-decoration: none;
-  color: white;
-  font-size: 13px;
-  border: 1px solid var(--accent);
-  padding: 6px 14px;
-  border-radius: 6px;
-}
-
-.file a:hover {
-  background: var(--accent);
-}
+@keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
 </style>
 </head>
-
 <body>
 
+<!-- ===== HEADER ===== -->
 <header>
   <div class="header-inner">
     <div class="header-left">
-      <a href="index.html" class="logo-link">
-        <img src="logo.png" alt="Logo IFRAS">
-      </a>
-      <nav>
-        <ul class="main-nav">
-          <li><a href="index.html">Accueil</a></li>
-          <li><a href="recherche.html">Recherche</a></li>
-          <li><a href="programmes.html">Programmes</a></li>
-          <li><a href="publications.html">Publications</a></li>
-        </ul>
-      </nav>
+      <a href="index.html" class="logo-link"><img src="logo.png" alt="IFRAS"></a>
+      <nav><ul class="main-nav">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="recherche.html">Recherche</a></li>
+        <li><a href="programmes.html">Programmes</a></li>
+        <li><a href="publications.html">Publications</a></li>
+      </ul></nav>
     </div>
     <div class="header-right">
-      <a class="logout-btn" onclick="logout()">Déconnexion</a>
+      <div class="user-chip" id="userChip">
+        <div class="user-avatar" id="userAvatar">?</div>
+        <span id="userLabel" style="font-size:12px">—</span>
+      </div>
+      <div class="settings-wrapper">
+        <button class="icon-btn" onclick="toggleSettings()" title="Paramètres">⚙</button>
+        <div class="settings-panel" id="settingsPanel">
+          <div class="panel-title">Apparence</div>
+          <div class="theme-section">
+            <div class="theme-label">Couleur principale</div>
+            <div class="swatches" id="swatches"></div>
+            <div class="theme-label" style="margin-top:6px;">Personnalisée</div>
+            <div class="hue-wrap" id="hueWrap"><div class="hue-thumb" id="hueThumb"></div></div>
+            <div class="sat-wrap">
+              <span class="sat-label">Sat.</span>
+              <input type="range" class="sat-range" id="satRange" min="20" max="90" value="65">
+            </div>
+            <div class="theme-label" style="margin-top:4px;">Code HEX</div>
+            <div class="hex-wrap">
+              <div class="hex-preview" id="hexPreview"></div>
+              <input type="text" class="hex-input" id="hexInput" placeholder="#4f6bed" maxlength="7">
+              <button class="hex-apply-btn" onclick="applyHex()">Appliquer</button>
+            </div>
+          </div>
+          <div class="panel-divider"></div>
+          <button class="logout-btn" onclick="logout()" style="width:100%;justify-content:center;">
+            <span>↩</span> Déconnexion
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </header>
 
+<!-- ===== SOUS-BANDEAU ===== -->
 <nav class="sub-nav">
-  <ul>
-    <li><a href="messagerie.html">Messagerie</a></li>
-    <li><a href="coffre-fort.html" class="active">Coffre-fort</a></li>
-    <li><a href="profil.html">Profil</a></li>
-  </ul>
+  <div class="sub-nav-inner">
+    <a href="messagerie.html" class="sub-tab"><span class="tab-icon">✉</span> Messagerie</a>
+    <a href="coffre-fort.html" class="sub-tab active"><span class="tab-icon">🔐</span> Coffre-fort</a>
+    <a href="profil.html" class="sub-tab"><span class="tab-icon">👤</span> Profil</a>
+    <a href="tableau-de-bord.html" class="sub-tab"><span class="tab-icon">📊</span> Tableau de bord</a>
+    <a href="annuaire.html" class="sub-tab"><span class="tab-icon">📋</span> Annuaire</a>
+  </div>
 </nav>
 
-<main>
-  <div class="container">
-    <h1>🔐 Coffre-fort sécurisé IFRAS</h1>
-    <p>Recherche de documents classifiés par programme, mission ou mot-clé.</p>
+<!-- ===== CONTENU ===== -->
+<div class="page-content">
 
-    <div class="search-box">
-      <input id="search" placeholder="Ex: ARTEMIS-9, ORION-3, rapport, simulation...">
-      <button onclick="searchFiles()">Rechercher</button>
+  <!-- Hero -->
+  <div class="vault-hero">
+    <div class="vault-banner">
+      <div class="vault-banner-icon">🔐</div>
+      <div class="vault-banner-text">
+        <div class="vault-banner-title">Coffre-fort IFRAS</div>
+        <div class="vault-banner-sub">Archive sécurisée — accès contrôlé par habilitation</div>
+      </div>
+      <div class="vault-clearance-chip" id="userClearanceChip">—</div>
     </div>
 
-    <div class="results" id="results"></div>
+    <!-- Onglets Public / Privé -->
+    <div class="vault-tabs">
+      <div class="vault-tab active" id="tabPublic" onclick="switchVault('public')">
+        <span class="vault-tab-icon">🌐</span> Archive publique
+      </div>
+      <div class="vault-tab" id="tabPrivate" onclick="switchVault('private')">
+        <span class="vault-tab-icon">🔒</span> Coffre personnel
+      </div>
+    </div>
   </div>
-</main>
+
+  <!-- Recherche -->
+  <div class="vault-search-wrap">
+    <div class="vault-search-inner">
+      <div class="vault-search-field">
+        <span class="vault-search-icon">🔍</span>
+        <input type="text" class="vault-search-input" id="searchInput"
+          placeholder="Rechercher par nom, programme, mot-clé…"
+          onkeydown="if(event.key==='Enter') doSearch()">
+      </div>
+      <button class="vault-search-btn" onclick="doSearch()">
+        <span>↗</span> Rechercher
+      </button>
+    </div>
+  </div>
+
+  <!-- Résultats -->
+  <div class="vault-results" id="vaultResults">
+    <div class="vault-state">
+      <div class="vault-state-icon">📂</div>
+      <div class="vault-state-title">Entrez un terme de recherche</div>
+      <div>Les résultats s'afficheront ici selon votre habilitation</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
 
 <script>
-const supabaseClient = supabase.createClient(
+/* ============================================================
+   SUPABASE
+   ============================================================ */
+const _sb = supabase.createClient(
   "https://fqijbltymdeudnlitcrs.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZxaWpibHR5bWRldWRubGl0Y3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzOTQ2NDQsImV4cCI6MjA4NTk3MDY0NH0.HZA0VxkaRTGLRTBA0Vz51mJjw8Xuj8f__yzaQKpGfbE"
 );
 
-async function logout() {
-  await supabaseClient.auth.signOut();
-  window.location.href = "connexion.html";
+/* ============================================================
+   THEME SYSTEM
+   ============================================================ */
+const PRESETS = [
+  { label:'Bleu IFRAS', h:228, s:65 }, { label:'Indigo', h:248, s:60 },
+  { label:'Violet', h:270, s:55 },     { label:'Cyan', h:195, s:65 },
+  { label:'Vert', h:152, s:55 },       { label:'Emeraude', h:168, s:60 },
+  { label:'Ambre', h:38, s:75 },       { label:'Rouge', h:355, s:60 },
+  { label:'Rose', h:330, s:60 },
+  { label:'Noir', h:228, s:10, special:'dark' },
+  { label:'Blanc', h:228, s:10, special:'light' },
+];
+let currentH=228, currentS=65, currentSpecial=null;
+
+function applyTheme(h,s,special) {
+  currentH=h; currentS=s; currentSpecial=special||null;
+  const root=document.documentElement;
+  if (special==='dark') {
+    root.style.setProperty('--hue',228); root.style.setProperty('--sat','8%');
+    root.style.setProperty('--bg-dark','hsl(0,0%,3%)'); root.style.setProperty('--bg-main','hsl(0,0%,6%)');
+    root.style.setProperty('--bg-light','hsl(0,0%,9%)'); root.style.setProperty('--bg-hover','hsl(0,0%,13%)');
+    root.style.setProperty('--border','hsl(0,0%,18%)'); root.style.setProperty('--border-sub','hsl(0,0%,12%)');
+    root.style.setProperty('--accent','hsl(228,65%,60%)'); root.style.setProperty('--accent-dim','hsl(228,55%,45%)');
+    root.style.setProperty('--text-main','hsl(0,0%,90%)'); root.style.setProperty('--text-soft','hsl(0,0%,60%)');
+    root.style.setProperty('--text-muted','hsl(0,0%,38%)');
+    document.querySelector('header').style.background='hsl(0,0%,4%)';
+    document.querySelector('.sub-nav').style.background='hsl(0,0%,5%)';
+  } else if (special==='light') {
+    root.style.setProperty('--hue',228); root.style.setProperty('--sat','8%');
+    root.style.setProperty('--bg-dark','hsl(220,20%,96%)'); root.style.setProperty('--bg-main','hsl(220,20%,98%)');
+    root.style.setProperty('--bg-light','hsl(220,15%,93%)'); root.style.setProperty('--bg-hover','hsl(220,15%,89%)');
+    root.style.setProperty('--border','hsl(220,15%,82%)'); root.style.setProperty('--border-sub','hsl(220,15%,88%)');
+    root.style.setProperty('--accent','hsl(228,65%,55%)'); root.style.setProperty('--accent-dim','hsl(228,55%,40%)');
+    root.style.setProperty('--text-main','hsl(220,25%,15%)'); root.style.setProperty('--text-soft','hsl(220,15%,40%)');
+    root.style.setProperty('--text-muted','hsl(220,10%,60%)');
+    document.querySelector('header').style.background='hsl(220,20%,95%)';
+    document.querySelector('.sub-nav').style.background='hsl(220,20%,94%)';
+  } else {
+    document.querySelector('header').style.background='';
+    document.querySelector('.sub-nav').style.background='';
+    ['--bg-dark','--bg-main','--bg-light','--bg-hover','--border','--border-sub','--accent','--accent-dim','--text-main','--text-soft','--text-muted','--unread-dot'].forEach(p=>root.style.removeProperty(p));
+    root.style.setProperty('--hue',h); root.style.setProperty('--sat',s+'%');
+  }
+  document.getElementById('satRange').style.background=`linear-gradient(90deg,hsl(${h},0%,55%),hsl(${h},100%,55%))`;
+  document.getElementById('satRange').value=s;
+  updateHueThumb(h); updateSwatches(h,s,special); updateHexPreview();
+  const hi=document.getElementById('hexInput');
+  if (hi) { hi.value=''; hi.classList.remove('invalid'); }
+  sessionStorage.setItem('ifras_theme',JSON.stringify({h,s,special:special||null}));
+}
+function updateHueThumb(h){document.getElementById('hueThumb').style.left=(h/360*100)+'%';}
+function updateSwatches(h,s,special){
+  document.querySelectorAll('.swatch').forEach(sw=>{
+    const m=special?sw.dataset.special===special:parseInt(sw.dataset.h)===h&&parseInt(sw.dataset.s)===s&&!sw.dataset.special;
+    sw.classList.toggle('active',m);
+  });
+}
+function updateHexPreview(){const p=document.getElementById('hexPreview');if(p)p.style.background=`hsl(${currentH},${currentS}%,55%)`;}
+function normalizeHex(hex){if(!hex||typeof hex!=='string')return null;hex=hex.trim().toLowerCase();if(/^#[0-9a-f]{3}$/.test(hex))return'#'+hex[1]+hex[1]+hex[2]+hex[2]+hex[3]+hex[3];if(/^#[0-9a-f]{6}$/.test(hex))return hex;return null;}
+function applyHex(){
+  const val=document.getElementById('hexInput').value.trim(),inp=document.getElementById('hexInput');
+  if(!val.startsWith('#')||(val.length!==4&&val.length!==7)){inp.classList.add('invalid');return;}
+  inp.classList.remove('invalid');
+  const norm=normalizeHex(val);if(!norm)return;
+  let hex=norm.slice(1);
+  const r=parseInt(hex.slice(0,2),16)/255,g=parseInt(hex.slice(2,4),16)/255,b=parseInt(hex.slice(4,6),16)/255;
+  const max=Math.max(r,g,b),min=Math.min(r,g,b);let hh=0,ss=0,ll=(max+min)/2;
+  if(max!==min){const d=max-min;ss=ll>.5?d/(2-max-min):d/(max+min);switch(max){case r:hh=((g-b)/d+(g<b?6:0))/6;break;case g:hh=((b-r)/d+2)/6;break;case b:hh=((r-g)/d+4)/6;break;}}
+  applyTheme(Math.round(hh*360),Math.round(ss*100));
+}
+(function buildSwatches(){
+  const wrap=document.getElementById('swatches');
+  PRESETS.forEach(p=>{
+    const sw=document.createElement('div');sw.className='swatch';sw.dataset.h=p.h;sw.dataset.s=p.s;
+    if(p.special)sw.dataset.special=p.special;sw.title=p.label;
+    if(p.special==='dark')sw.style.background='#111';
+    else if(p.special==='light'){sw.style.background='#eee';sw.style.border='2px solid #ccc';}
+    else sw.style.background=`hsl(${p.h},${p.s}%,55%)`;
+    if(p.h===228&&!p.special)sw.classList.add('active');
+    sw.addEventListener('click',()=>applyTheme(p.h,p.s,p.special));
+    wrap.appendChild(sw);
+  });
+  updateHexPreview();
+})();
+(function initHueBar(){
+  const wrap=document.getElementById('hueWrap');let dragging=false;
+  function sfe(e){const rect=wrap.getBoundingClientRect();const x=Math.max(0,Math.min(e.clientX-rect.left,rect.width));applyTheme(Math.round(x/rect.width*360),currentS,null);}
+  wrap.addEventListener('mousedown',e=>{dragging=true;sfe(e);});
+  document.addEventListener('mousemove',e=>{if(dragging)sfe(e);});
+  document.addEventListener('mouseup',()=>{dragging=false;});
+  updateHueThumb(currentH);
+})();
+document.getElementById('satRange').addEventListener('input',function(){applyTheme(currentH,parseInt(this.value),null);});
+function toggleSettings(){document.getElementById('settingsPanel').classList.toggle('active');}
+document.addEventListener('click',e=>{const w=document.querySelector('.settings-wrapper');if(!w.contains(e.target))document.getElementById('settingsPanel').classList.remove('active');});
+
+/* ============================================================
+   AUTH
+   ============================================================ */
+async function logout(){sessionStorage.removeItem('ifras_theme');await _sb.auth.signOut();window.location.href='connexion.html';}
+_sb.auth.onAuthStateChange(ev=>{if(ev==='SIGNED_OUT')window.location.href='connexion.html';});
+let inactivityTimer=null;
+function resetInactivityTimer(){clearTimeout(inactivityTimer);inactivityTimer=setTimeout(logout,10*60*1000);}
+['mousemove','mousedown','keydown','touchstart','scroll','click'].forEach(e=>document.addEventListener(e,resetInactivityTimer,{passive:true}));
+resetInactivityTimer();
+
+let toastTimer=null;
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),3500);}
+function initials(email){const p=email.split('@')[0].split('.');return(p[0][0]+(p[1]?p[1][0]:'')).toUpperCase();}
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let currentVault = 'public';
+let userClearanceLevel = 0; // 1-4
+let userClearanceRaw = '';
+let currentUserId = '';
+let currentUserEmail = '';
+
+function getClearanceLevel(raw) {
+  if (!raw) return 0;
+  if (raw.includes('4')) return 4;
+  if (raw.includes('3')) return 3;
+  if (raw.includes('2')) return 2;
+  if (raw.includes('1')) return 1;
+  return 0;
 }
 
-async function searchFiles() {
-  const term = document.getElementById("search").value.trim();
+function clearanceClass(level) {
+  return ['','niveau-1','niveau-2','niveau-3','niveau-4'][level] || '';
+}
 
+function fileTypeIcon(filename) {
+  if (!filename) return '📄';
+  const ext = filename.split('.').pop().toLowerCase();
+  const icons = { pdf:'📕', png:'🖼', jpg:'🖼', jpeg:'🖼', gif:'🖼', webp:'🖼', svg:'🖼',
+    doc:'📝', docx:'📝', xls:'📊', xlsx:'📊', ppt:'📋', pptx:'📋',
+    zip:'🗜', rar:'🗜', mp4:'🎬', mp3:'🎵', txt:'📃', csv:'📊', json:'⚙' };
+  return icons[ext] || '📄';
+}
+
+function formatDate(iso) {
+  if (!iso) return '—';
+  return new Date(iso).toLocaleDateString('fr-FR', { day:'2-digit', month:'short', year:'numeric' });
+}
+
+/* ============================================================
+   VAULT SWITCH
+   ============================================================ */
+function switchVault(vault) {
+  currentVault = vault;
+  document.getElementById('tabPublic').classList.toggle('active', vault === 'public');
+  document.getElementById('tabPrivate').classList.toggle('active', vault === 'private');
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchInput').placeholder = vault === 'public'
+    ? 'Rechercher par nom, programme, mot-clé…'
+    : 'Rechercher dans votre coffre personnel…';
+  showIdle();
+}
+
+function showIdle() {
+  document.getElementById('vaultResults').innerHTML = `
+    <div class="vault-state">
+      <div class="vault-state-icon">📂</div>
+      <div class="vault-state-title">Entrez un terme de recherche</div>
+      <div>Les résultats s'afficheront ici selon votre habilitation</div>
+    </div>`;
+}
+
+/* ============================================================
+   SEARCH
+   ============================================================ */
+async function doSearch() {
+  const term = document.getElementById('searchInput').value.trim();
   if (!term) return;
 
-  const { data, error } = await supabaseClient
-    .from("vault_files")
-    .select("*")
-    .ilike("program", `%${term}%`);
+  const box = document.getElementById('vaultResults');
+  box.innerHTML = `<div class="vault-state"><div class="vault-state-icon" style="animation:spin 1s linear infinite">⟳</div><div>Recherche en cours…</div></div>`;
 
-  if (error) return console.error(error);
-
-  renderResults(data);
+  if (currentVault === 'public') {
+    await searchPublic(term, box);
+  } else {
+    await searchPrivate(term, box);
+  }
 }
 
-function renderResults(files) {
-  const box = document.getElementById("results");
-  box.innerHTML = "";
+/* ---- COFFRE PUBLIC ---- */
+async function searchPublic(term, box) {
+  // Chercher tous les fichiers correspondant au terme (sans filtre clearance côté serveur)
+  const { data, error } = await _sb
+    .from('vault_public')
+    .select('*')
+    .or(`filename.ilike.%${term}%,program.ilike.%${term}%,keywords.ilike.%${term}%,description.ilike.%${term}%`)
+    .order('created_at', { ascending: false });
 
-  if (!files.length) {
-    box.innerHTML = "<p style='color:#777'>Aucun fichier trouvé.</p>";
+  if (error) { box.innerHTML = `<div class="vault-state"><div class="vault-state-icon">⚠</div><div class="vault-state-title">Erreur serveur</div></div>`; return; }
+
+  if (!data || data.length === 0) {
+    box.innerHTML = `
+      <div class="vault-state">
+        <div class="vault-state-icon">🔍</div>
+        <div class="vault-state-title">Aucun document trouvé</div>
+        <div>Le fichier « ${term} » n'existe pas dans l'archive publique</div>
+      </div>`;
     return;
   }
 
-  files.forEach(file => {
-    const div = document.createElement("div");
-    div.className = "file";
-    div.innerHTML = `
-      <div class="file-left">
-        <div class="file-icon">📁</div>
-        <div class="file-info">
-          <h3>${file.filename}</h3>
-          <p>${file.program} — ${file.classification}</p>
-        </div>
-      </div>
-      <a href="${file.file_url}" target="_blank">Télécharger</a>
-    `;
-    box.appendChild(div);
-  });
-}
-</script>
+  // Séparer accessibles et interdits
+  const accessible = data.filter(f => getClearanceLevel(f.clearance_required) <= userClearanceLevel);
+  const forbidden  = data.filter(f => getClearanceLevel(f.clearance_required) > userClearanceLevel);
 
+  box.innerHTML = '';
+
+  if (accessible.length > 0) {
+    accessible.forEach(f => box.appendChild(buildFileCard(f, 'public')));
+  }
+
+  if (forbidden.length > 0) {
+    const fbDiv = document.createElement('div');
+    fbDiv.className = 'vault-state forbidden';
+    fbDiv.innerHTML = `
+      <div class="vault-state-icon">🚫</div>
+      <div class="vault-state-title">${forbidden.length} document(s) hors habilitation</div>
+      <div>Votre niveau d'accès (${userClearanceRaw || '—'}) ne permet pas de consulter ${forbidden.length === 1 ? 'ce document' : 'ces documents'}.</div>`;
+    box.appendChild(fbDiv);
+  }
+
+  if (accessible.length === 0 && forbidden.length > 0) {
+    // Rien d'accessible — remplacer le contenu par juste le message forbidden
+    box.innerHTML = '';
+    const fbDiv = document.createElement('div');
+    fbDiv.className = 'vault-state forbidden';
+    fbDiv.innerHTML = `
+      <div class="vault-state-icon">🚫</div>
+      <div class="vault-state-title">Habilitation insuffisante</div>
+      <div>Ce document existe mais votre niveau d'accès (${userClearanceRaw || '—'}) ne vous autorise pas à le consulter.</div>`;
+    box.appendChild(fbDiv);
+  }
+}
+
+/* ---- COFFRE PRIVÉ ---- */
+async function searchPrivate(term, box) {
+  const { data, error } = await _sb
+    .from('vault_private')
+    .select('*')
+    .eq('owner_id', currentUserId)
+    .or(`filename.ilike.%${term}%,description.ilike.%${term}%,keywords.ilike.%${term}%`)
+    .order('created_at', { ascending: false });
+
+  if (error) { box.innerHTML = `<div class="vault-state"><div class="vault-state-icon">⚠</div><div class="vault-state-title">Erreur serveur</div></div>`; return; }
+
+  if (!data || data.length === 0) {
+    box.innerHTML = `
+      <div class="vault-state">
+        <div class="vault-state-icon">🔍</div>
+        <div class="vault-state-title">Aucun document trouvé</div>
+        <div>Aucun fichier ne correspond à « ${term} » dans votre coffre personnel</div>
+      </div>`;
+    return;
+  }
+
+  box.innerHTML = '';
+  data.forEach(f => box.appendChild(buildFileCard(f, 'private')));
+}
+
+/* ---- BUILD FILE CARD ---- */
+function buildFileCard(f, type) {
+  const card = document.createElement('div');
+  card.className = 'file-card';
+
+  const lvl = getClearanceLevel(f.clearance_required);
+  const lvlClass = type === 'public' ? `lvl-${lvl}` : 'private';
+  const lvlLabel = type === 'public' ? (f.clearance_required || 'Libre') : 'Personnel';
+
+  card.innerHTML = `
+    <div class="file-type-badge">${fileTypeIcon(f.filename)}</div>
+    <div class="file-meta">
+      <div class="file-name">${f.filename || '—'}</div>
+      <div class="file-info-row">
+        <span class="file-tag ${type === 'public' ? 'public' : 'private'}">${type === 'public' ? 'Archive' : 'Privé'}</span>
+        ${type === 'public' && f.clearance_required ? `<span class="file-tag ${lvlClass}">${f.clearance_required}</span>` : ''}
+        ${f.program ? `<span style="font-size:11.5px;color:var(--text-muted)">${f.program}</span>` : ''}
+        <span class="file-date">${formatDate(f.created_at)}</span>
+      </div>
+      ${f.description ? `<div class="file-desc">${f.description}</div>` : ''}
+    </div>
+    <div class="file-actions">
+      <a class="file-dl-btn" href="${f.file_url}" target="_blank" rel="noopener">
+        ↓ Ouvrir
+      </a>
+    </div>`;
+
+  return card;
+}
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+(function restoreTheme(){
+  try{const s=sessionStorage.getItem('ifras_theme');if(s){const{h,s:sat,special}=JSON.parse(s);applyTheme(h,sat,special);}}catch(e){}
+})();
+
+async function init() {
+  const { data: { session } } = await _sb.auth.getSession();
+  if (!session) { window.location.href = 'connexion.html'; return; }
+
+  const user = session.user;
+  currentUserId = user.id;
+  currentUserEmail = user.email;
+
+  document.getElementById('userAvatar').textContent = initials(user.email);
+  document.getElementById('userLabel').textContent  = user.email.split('@')[0];
+
+  // Charger le clearance depuis profiles
+  const { data: profile } = await _sb.from('profiles').select('clearance').eq('id', user.id).single();
+  if (profile) {
+    userClearanceRaw   = profile.clearance || '';
+    userClearanceLevel = getClearanceLevel(userClearanceRaw);
+  }
+
+  // Afficher le chip clearance
+  const chip = document.getElementById('userClearanceChip');
+  chip.textContent = userClearanceRaw || 'Non habilité';
+  chip.className   = 'vault-clearance-chip ' + clearanceClass(userClearanceLevel);
+}
+
+init();
+</script>
 </body>
 </html>
