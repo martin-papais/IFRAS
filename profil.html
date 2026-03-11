@@ -296,7 +296,7 @@ input[type=range].sat-range::-webkit-slider-thumb {
 .clearance-badge.niveau-1 { background: rgba(74,222,128,.1); color: #4ade80; border: 1px solid rgba(74,222,128,.25); }
 .clearance-badge.niveau-2 { background: rgba(251,191,36,.1); color: #fbbf24; border: 1px solid rgba(251,191,36,.25); }
 .clearance-badge.niveau-3 { background: rgba(248,113,113,.1); color: #f87171; border: 1px solid rgba(248,113,113,.25); }
-.clearance-badge.top-secret { background: rgba(167,139,250,.1); color: #a78bfa; border: 1px solid rgba(167,139,250,.25); }
+.clearance-badge.niveau-4 { background: rgba(167,139,250,.1); color: #a78bfa; border: 1px solid rgba(167,139,250,.25); }
 
 /* ===== INFO GRID ===== */
 .info-grid {
@@ -612,16 +612,7 @@ input[type=range].sat-range::-webkit-slider-thumb {
             </div>
             <span class="security-status ok">Vérifié</span>
           </div>
-          <div class="security-item">
-            <div class="security-item-left">
-              <span class="security-item-icon">🛡</span>
-              <div>
-                <div class="security-item-label">Double authentification</div>
-                <div class="security-item-sub">2FA institutionnel</div>
-              </div>
-            </div>
-            <span class="security-status warn">Non activé</span>
-          </div>
+
           <div class="security-item">
             <div class="security-item-left">
               <span class="security-item-icon">⏱</span>
@@ -818,12 +809,42 @@ function initials(email) {
 
 /* ===== CLEARANCE STYLE ===== */
 function clearanceClass(val) {
-  if (!val) return '';
-  const v = val.toLowerCase();
-  if (v.includes('top') || v.includes('ts')) return 'top-secret';
-  if (v.includes('3') || v.includes('trois')) return 'niveau-3';
-  if (v.includes('2') || v.includes('deux')) return 'niveau-2';
+  if (!val) return 'niveau-1';
+  if (val.includes('4')) return 'niveau-4';
+  if (val.includes('3')) return 'niveau-3';
+  if (val.includes('2')) return 'niveau-2';
   return 'niveau-1';
+}
+
+/* ===== ACTIVITÉ ===== */
+function formatActivityDate(iso) {
+  if (!iso) return '—';
+  return new Date(iso).toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' });
+}
+
+function renderActivity(p) {
+  const items = [
+    { text: p.activity_1 || 'Connexion au système IFRAS', date: p.activity_date_1, primary: true },
+    { text: p.activity_2 || 'Consultation de la messagerie interne', date: p.activity_date_2, primary: false },
+    { text: p.activity_3 || 'Accès au dossier personnel', date: p.activity_date_3, primary: false },
+  ];
+
+  // Si suspension = TRUE, ajouter en tête
+  const suspended = p.suspension === true || p.suspension === 'TRUE' || p.suspension === 'true';
+  if (suspended) {
+    items.unshift({ text: '⚠ Compte suspendu — accès restreint', date: null, suspension: true });
+  }
+
+  const list = document.getElementById('activityList');
+  list.innerHTML = items.map(item => `
+    <div class="activity-item">
+      <div class="activity-dot" style="background:${item.suspension ? '#f87171' : item.primary ? 'var(--accent)' : 'var(--text-muted)'}"></div>
+      <div>
+        <div class="activity-text" style="${item.suspension ? 'color:#f87171;font-weight:500' : ''}">${item.text}</div>
+        ${item.date ? `<div class="activity-time">${formatActivityDate(item.date)}</div>` : (item.suspension ? '<div class="activity-time" style="color:#f87171;opacity:.7">Compte restreint</div>' : '')}
+      </div>
+    </div>
+  `).join('');
 }
 
 /* ===== LOAD PROFILE ===== */
@@ -861,6 +882,9 @@ async function loadProfile() {
   cb.className = 'clearance-badge ' + clearanceClass(p.clearance);
   document.getElementById('roleBadge').textContent = p.role || '—';
   document.getElementById('deptBadge').textContent = p.department || p.profession || '—';
+
+  // Activité
+  renderActivity(p);
 
   // Info grid
   document.getElementById('infoFullname').textContent   = fullName.trim() || '—';
