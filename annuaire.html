@@ -724,15 +724,13 @@ function openModal(p){
     !p._ghost&&sc==='active'   ? `<span class="atag" style="background:rgba(52,211,153,.1);color:#34d399;border:1px solid rgba(52,211,153,.2)">Actif</span>` : '',
   ].join('');
 
-  // Champs
+  // Champs (4 uniquement)
   const grid = document.getElementById('modalGrid');
   const fields = [
-    ['N° agent',      p.agent_id || ('IFRAS-'+p.id.substring(0,8).toUpperCase())],
-    ['Statut',        p.status || '—'],
-    ['Nationalité',   p.nationality || '—'],
-    ['Date d\'entrée',p.joined_at ? formatDate(p.joined_at) : '—'],
-    ['Naissance',     p.birth_date ? formatDate(p.birth_date) : '—'],
-    ['Email',         p.email || '—', 'email'],
+    ['N° agent',   p._ghost ? '—' : (p.agent_id || '—')],
+    ['Département',p.department || '—'],
+    ['Profession', p.profession || '—'],
+    ['Email',      p.email || '—', 'email'],
   ];
   grid.innerHTML = fields.map(([k,v,cls]) =>
     `<div class="modal-field"><div class="modal-key">${k}</div><div class="modal-val ${cls||''}">${v}</div></div>`
@@ -789,9 +787,7 @@ async function init(){
     return;
   }
 
-  // Emails déjà dans profiles
-  const knownEmails = new Set((profilesData||[]).map(p=>(p.email||'').toLowerCase()).filter(Boolean));
-  const userEmail   = currentUser.email.toLowerCase();
+  const userEmail = currentUser.email.toLowerCase();
 
   // 2. Tous les messages impliquant l'utilisateur (reçus + envoyés)
   const [{data: received}, {data: sent}] = await Promise.all([
@@ -799,7 +795,7 @@ async function init(){
     _sb.from('email').select('sender, receiver').eq('sender',   userEmail),
   ]);
 
-  // Collecter tous les tiers
+  // 3. Collecter tous les emails de contact uniques (hors soi-même)
   const contactEmails = new Set();
   [...(received||[]), ...(sent||[])].forEach(row => {
     [row.sender, row.receiver].forEach(addr => {
@@ -807,14 +803,64 @@ async function init(){
     });
   });
 
-  // 3. Créer fantômes pour les contacts sans profil
-  const ghosts = [];
-  contactEmails.forEach(addr => {
-    if(!knownEmails.has(addr)) ghosts.push(ghostProfile(addr));
+  // 4. Pour chaque email de contact, chercher dans profiles via la colonne email
+  //    OU via auth.users si la colonne email n'est pas renseignée.
+  //    Stratégie : on charge TOUS les profiles, puis on tente de matcher par email.
+  //    Les profils non matchés depuis la messagerie restent quand même dans la liste.
+
+  // Map email → profil (insensible à la casse)
+  const profileByEmail = new Map();
+  (profilesData||[]).forEach(p => {
+    if(p.email) profileByEmail.set(p.email.toLowerCase(), p);
   });
 
-  // 4. Fusionner et trier par nom
-  const merged = [...(profilesData||[]), ...ghosts].sort((a,b) => {
+  // Pour les contacts dont l'email n'est pas dans la colonne `email` de profiles,
+  // on tente un fallback : chercher par user_id via rpc ou accepter le fantôme.
+  // Ici on va d'abord tenter de récupérer les profils manquants via un select ciblé
+  // sur les emails de contact qu'on n'a pas encore trouvés.
+  const unmatchedEmails = [...contactEmails].filter(addr => !profileByEmail.has(addr));
+
+  // Si des contacts ne sont pas trouvés via la colonne email de profiles,
+  // essayons de les retrouver en interrogeant auth.users (accessible côté client via getUser
+  // n'est pas possible pour d'autres users). On crée donc des fantômes pour ceux-là.
+  // MAIS : on recharge aussi profiles sans filtre email pour s'assurer qu'on a tout.
+  // La vraie solution : la colonne `email` doit être renseignée dans profiles.
+  // Pour les comptes existants sans email renseigné, on fait un match par user_id :
+  // on récupère les sessions/users via une table intermédiaire si disponible.
+  // Solution robuste : on expose l'email via une vue ou on le met dans profiles.
+  // En attendant, on affiche quand même tous les profils existants.
+
+  // Construire la liste finale :
+  // - Tous les profils réels (qu'ils soient ou non dans les contacts messagerie)
+  //   SAUF : ne garder que les profils qui sont soit l'utilisateur lui-même,
+  //          soit présents dans les contacts messagerie.
+  // - Fantômes pour les contacts sans profil trouvé
+
+  // Set des profils déjà inclus (par id)
+  const includedIds = new Set();
+  const finalList = [];
+
+  // D'abord : inclure le profil de l'utilisateur courant
+  const myProfile = (profilesData||[]).find(p =>
+    (p.email && p.email.toLowerCase() === userEmail) || p.id === currentUser.id
+  );
+  if(myProfile){ finalList.push(myProfile); includedIds.add(myProfile.id); }
+
+  // Ensuite : pour chaque email de contact, chercher le profil correspondant
+  contactEmails.forEach(addr => {
+    // Match par colonne email
+    let found = profileByEmail.get(addr);
+    if(found && !includedIds.has(found.id)){
+      finalList.push(found);
+      includedIds.add(found.id);
+      return;
+    }
+    // Pas trouvé → fantôme
+    if(!found) finalList.push(ghostProfile(addr));
+  });
+
+  // Trier par nom
+  const merged = finalList.sort((a,b) => {
     const na = ((a.last_name||'')+(a.first_name||'')).toLowerCase();
     const nb = ((b.last_name||'')+(b.first_name||'')).toLowerCase();
     return na.localeCompare(nb, 'fr');
@@ -822,13 +868,14 @@ async function init(){
 
   allAgents = merged;
 
-  // Compteur
-  const rc = (profilesData||[]).length, gc = ghosts.length;
+  const realCount  = merged.filter(p=>!p._ghost).length;
+  const ghostCount = merged.filter(p=> p._ghost).length;
   document.getElementById('agentCount').textContent =
-    rc + ' agent'+(rc>1?'s':'') + (gc>0?' + '+gc+' contact'+(gc>1?'s':''):'');
+    realCount + ' agent'+(realCount>1?'s':'') +
+    (ghostCount>0?' + '+ghostCount+' contact'+(ghostCount>1?'s':''):'');
 
   // Filtre départements (profils réels seulement)
-  const depts = [...new Set((profilesData||[]).map(p=>p.department).filter(Boolean))].sort();
+  const depts = [...new Set(merged.filter(p=>!p._ghost).map(p=>p.department).filter(Boolean))].sort();
   const sel = document.getElementById('filterDept');
   depts.forEach(d=>{const o=document.createElement('option');o.value=d;o.textContent=d;sel.appendChild(o);});
 
