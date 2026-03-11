@@ -604,7 +604,8 @@ function filterAgents(){
       fullName.includes(term) || email.includes(term) ||
       prof.includes(term) || pdept.includes(term) || prole.includes(term);
     const matchDept = !dept || pdept.includes(dept);
-    const matchRole = !role || prole.toLowerCase()===role || prof.toLowerCase()===role;
+    const matchRole = !role || prole === role || prof === role ||
+      prole.includes(role) || prof.includes(role);
 
     return matchTerm && matchDept && matchRole;
   });
@@ -782,6 +783,8 @@ async function init(){
 
   // 1. Charger tous les profils réels
   const {data: profilesData, error} = await _sb.from('profiles').select('*');
+  console.log('[ANNUAIRE] profiles chargés:', profilesData?.length, profilesData?.map(p=>p.email));
+  console.log('[ANNUAIRE] roles:', profilesData?.map(p=>({email:p.email, role:p.role, profession:p.profession})));
   if(error){
     document.getElementById('agentsGrid').innerHTML=`<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">⚠</div><div class="empty-title">Erreur de chargement</div></div>`;
     return;
