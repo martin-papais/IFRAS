@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>NK-125 · Propulseur ionique haute performance — IFRAS DPET</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-main:#050b1e;--bg-dark:#020617;--bg-light:#070f2b;
+  --border:#1b2555;--border-sub:#0e1535;
+  --accent:#f97316;--accent2:#4f6bed;--accent3:#34d399;
+  --text-main:#e6e6e6;--text-soft:#aab3d6;--text-muted:#4a5280;
+  --mono:"DM Mono",monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"DM Sans",sans-serif;background:var(--bg-main);color:var(--text-main);line-height:1.7;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+header{position:fixed;top:0;width:100%;z-index:1000;background:rgba(5,11,30,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+.header-inner{max-width:1300px;margin:auto;padding:12px 30px;display:flex;align-items:center;justify-content:space-between;}
+.header-left{display:flex;align-items:center;gap:40px;}
+.logo-link img{height:60px;}
+.main-nav{list-style:none;display:flex;gap:32px;}
+.main-nav a{text-decoration:none;color:var(--text-soft);font-size:14px;letter-spacing:.05em;}
+.main-nav a:hover{color:white;}
+.login-btn{padding:8px 18px;border-radius:6px;border:1px solid var(--accent2);color:white;text-decoration:none;font-size:13px;}
+.login-btn:hover{background:var(--accent2);}
+.sub-nav{margin-top:84px;background:var(--bg-light);border-bottom:1px solid var(--border);}
+.sub-nav ul{max-width:1300px;margin:0 auto;padding:0 30px;list-style:none;display:flex;justify-content:space-between;}
+.sub-nav li{padding:14px 0;}
+.sub-nav a{color:var(--text-soft);text-decoration:none;font-size:14px;letter-spacing:.06em;}
+.sub-nav a:hover{color:white;}
+.sub-nav a.active{color:white;border-bottom:2px solid var(--accent2);padding-bottom:12px;}
+.pub-wrapper{max-width:900px;margin:0 auto;padding:52px 30px 100px;}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--text-muted);letter-spacing:.06em;margin-bottom:36px;font-family:var(--mono);}
+.breadcrumb a{color:var(--text-muted);text-decoration:none;}
+.breadcrumb a:hover{color:var(--accent);}
+.breadcrumb span{opacity:.4;}
+.article-meta-top{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+.meta-badge{font-size:10.5px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;font-weight:500;}
+.meta-badge--journal{background:rgba(249,115,22,.12);color:var(--accent);border:1px solid rgba(249,115,22,.25);}
+.meta-badge--dept{background:rgba(79,107,237,.1);color:var(--accent2);border:1px solid rgba(79,107,237,.2);}
+.meta-badge--open{background:rgba(52,211,153,.08);color:var(--accent3);border:1px solid rgba(52,211,153,.18);}
+.meta-badge--date{background:rgba(255,255,255,.04);color:var(--text-muted);border:1px solid rgba(255,255,255,.08);}
+.article-title{font-family:"DM Sans",sans-serif;font-size:clamp(18px,2.4vw,23px);font-weight:400;color:var(--text-main);line-height:1.5;letter-spacing:0;margin-bottom:18px;}
+.article-subtitle{font-size:15px;color:var(--text-soft);font-weight:300;line-height:1.65;margin-bottom:28px;font-style:italic;border-left:2px solid var(--accent);padding-left:16px;}
+.authors-block{background:var(--bg-light);border:1px solid var(--border);border-radius:10px;padding:16px 20px;display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;margin-bottom:28px;}
+.author-entry{display:flex;flex-direction:column;gap:2px;}
+.author-name{font-size:13.5px;font-weight:600;color:white;}
+.author-role{font-size:11px;color:var(--text-muted);letter-spacing:.04em;}
+.author-sep{width:1px;background:var(--border);align-self:stretch;}
+.cite-block{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:12px 16px;background:rgba(0,0,0,.25);border:1px solid var(--border-sub);border-radius:8px;}
+.cite-item{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;color:var(--text-muted);}
+.cite-label{color:var(--accent);font-weight:500;}
+.cite-sep{color:var(--border);}
+.art-divider{height:1px;background:linear-gradient(90deg,var(--accent) 0%,transparent 60%);margin:40px 0;opacity:.3;}
+.abstract-box{background:rgba(249,115,22,.04);border:1px solid rgba(249,115,22,.14);border-radius:12px;padding:28px 32px;margin-bottom:44px;}
+.abstract-label{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;font-weight:500;}
+.abstract-text{font-size:14.5px;line-height:1.8;color:var(--text-soft);font-weight:300;}
+.kw-wrap{margin-top:16px;display:flex;flex-wrap:wrap;gap:7px;align-items:center;}
+.kw-label{font-size:11px;color:var(--text-muted);font-family:var(--mono);letter-spacing:.08em;}
+.kw-tag{font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--text-soft);}
+.section-heading{font-family:"Syne",sans-serif;font-size:18px;font-weight:700;color:white;margin:44px 0 16px;display:flex;align-items:center;gap:12px;}
+.section-heading::before{content:'';display:block;width:4px;height:18px;background:var(--accent);border-radius:2px;flex-shrink:0;}
+.section-heading.blue::before{background:var(--accent2);}
+.section-heading.green::before{background:var(--accent3);}
+.subsection{font-family:"Syne",sans-serif;font-weight:700;color:var(--text-soft);margin:28px 0 10px;letter-spacing:.04em;text-transform:uppercase;font-size:11.5px;}
+p.bt{font-size:14.5px;color:var(--text-soft);line-height:1.85;font-weight:300;margin-bottom:16px;}
+
+/* SCORECARD */
+.scorecard{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:32px 0;}
+.sc-item{background:var(--bg-light);padding:22px 16px;display:flex;flex-direction:column;gap:6px;}
+.sc-val{font-family:var(--mono);font-size:28px;font-weight:500;line-height:1;letter-spacing:-0.02em;}
+.sc-val.o{color:var(--accent);}
+.sc-val.g{color:var(--accent3);}
+.sc-val.b{color:#60a5fa;}
+.sc-val.y{color:#facc15;}
+.sc-unit{font-size:10px;font-family:var(--mono);color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-top:2px;}
+.sc-label{font-size:12px;color:var(--text-soft);font-weight:300;line-height:1.35;}
+
+/* TABLEAU */
+.tbl-wrap{margin:36px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);}
+.tbl-head{background:rgba(249,115,22,.08);padding:12px 20px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--border);}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+thead th{background:rgba(0,0,0,.3);padding:11px 16px;text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--border-sub);font-weight:500;}
+tbody tr{border-bottom:1px solid var(--border-sub);transition:background .15s;}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:rgba(255,255,255,.025);}
+tbody td{padding:10px 16px;color:var(--text-soft);vertical-align:middle;font-weight:300;}
+.tm{font-family:var(--mono);font-size:12.5px;color:var(--text-main);}
+.tg{font-family:var(--mono);font-size:12.5px;color:var(--accent3);}
+.to{font-family:var(--mono);font-size:12.5px;color:var(--accent);}
+.ty{font-family:var(--mono);font-size:12.5px;color:#facc15;font-weight:600;}
+.tr-hi{background:rgba(249,115,22,.04);}
+.tbl-note{padding:10px 20px;font-size:11.5px;color:var(--text-muted);background:rgba(0,0,0,.2);font-style:italic;border-top:1px solid var(--border-sub);}
+
+/* GRAPHIQUE */
+.chart-wrap{margin:36px 0;background:var(--bg-light);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.chart-inner{padding:28px 24px 16px;background:rgba(0,0,0,.15);border-bottom:1px solid var(--border-sub);}
+.chart-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:8px;}
+.chart-ttl{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);}
+.legend{display:flex;gap:14px;flex-wrap:wrap;}
+.li{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);}
+.ld{width:8px;height:8px;border-radius:2px;}
+.chart-cap{padding:12px 20px;font-size:12.5px;color:var(--text-muted);line-height:1.6;}
+.chart-cap strong{font-weight:600;color:var(--text-soft);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
+
+/* DEUX COLONNES texte+équation */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:28px 0;align-items:start;}
+.eq{background:rgba(0,0,0,.3);border:1px solid var(--border-sub);border-radius:8px;padding:16px 50px 16px 20px;font-family:var(--mono);font-size:13.5px;color:#c8d0f5;letter-spacing:.04em;position:relative;line-height:1.7;}
+.eq-lbl{position:absolute;right:12px;bottom:10px;font-size:10px;color:var(--text-muted);}
+
+/* PHOTO */
+.fig-wrap{margin:36px 0;background:var(--bg-light);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.fig-ph{height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(249,115,22,.07),rgba(249,115,22,.02));border-bottom:1px solid var(--border);gap:10px;}
+.fig-icon{font-size:32px;opacity:.25;}
+.fig-desc{font-size:11.5px;font-family:var(--mono);color:var(--text-muted);letter-spacing:.06em;}
+.fig-sub{font-size:11px;color:var(--text-muted);text-align:center;max-width:400px;line-height:1.5;}
+.fig-cap{padding:14px 20px;font-size:12.5px;color:var(--text-muted);line-height:1.6;}
+.fig-cap strong{font-weight:600;color:var(--text-soft);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
+
+.hl{border-left:3px solid var(--accent);background:rgba(249,115,22,.04);border-radius:0 8px 8px 0;padding:16px 20px;margin:24px 0;font-size:14px;color:var(--text-soft);font-style:italic;line-height:1.75;}
+.hl.green{border-color:var(--accent3);background:rgba(52,211,153,.04);}
+.hl.blue{border-color:var(--accent2);background:rgba(79,107,237,.05);}
+
+.refs-sec{margin-top:60px;padding-top:32px;border-top:1px solid var(--border);}
+.ref-ttl{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:20px;}
+.ref-list{counter-reset:ref;display:flex;flex-direction:column;gap:10px;}
+.ref-item{display:flex;gap:14px;font-size:12.5px;color:var(--text-muted);line-height:1.6;counter-increment:ref;}
+.ref-item::before{content:'[' counter(ref) ']';font-family:var(--mono);font-size:11px;color:var(--accent);flex-shrink:0;padding-top:2px;min-width:28px;}
+.ref-item a{color:var(--accent2);text-decoration:none;}
+.ref-item a:hover{text-decoration:underline;}
+.footnote{margin-top:48px;padding:20px 24px;background:rgba(0,0,0,.25);border:1px solid var(--border-sub);border-radius:10px;font-size:11.5px;color:var(--text-muted);line-height:1.7;}
+.footnote strong{color:var(--text-soft);}
+.progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent),#fb923c);z-index:9999;width:0%;transition:width .1s linear;}
+.toc-sidebar{position:fixed;right:32px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:100;}
+.toc-dot{width:6px;height:6px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s,transform .2s;position:relative;}
+.toc-dot:hover,.toc-dot.active{background:var(--accent);transform:scale(1.5);}
+.toc-dot::after{content:attr(data-label);position:absolute;right:14px;top:50%;transform:translateY(-50%);background:var(--bg-light);border:1px solid var(--border);border-radius:5px;padding:3px 8px;font-size:10.5px;color:var(--text-soft);white-space:nowrap;font-family:var(--mono);letter-spacing:.04em;opacity:0;pointer-events:none;transition:opacity .2s;}
+.toc-dot:hover::after{opacity:1;}
+@media(max-width:1100px){.toc-sidebar{display:none;}}
+@media(max-width:680px){.scorecard{grid-template-columns:repeat(2,1fr);}.two-col{grid-template-columns:1fr;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<header>
+  <div class="header-inner">
+    <div class="header-left">
+      <a href="../index.html" class="logo-link"><img src="../logo.png" alt="IFRAS"></a>
+      <nav><ul class="main-nav">
+        <li><a href="../index.html">Accueil</a></li>
+        <li><a href="../recherche.html">Recherche</a></li>
+        <li><a href="../programmes.html">Programmes</a></li>
+        <li><a href="../publications.html">Publications</a></li>
+      </ul></nav>
+    </div>
+    <div class="header-right"><a href="../connexion.html" class="login-btn">Connexion</a></div>
+  </div>
+</header>
+
+<div class="sub-nav">
+  <ul>
+    <li><a href="../publications-scientifiques.html" class="active">Publications scientifiques</a></li>
+    <li><a href="../publications-ifras.html">Publications IFRAS</a></li>
+    <li><a href="../evenements.html">Événements</a></li>
+  </ul>
+</div>
+
+<nav class="toc-sidebar">
+  <div class="toc-dot active" data-label="Résumé"      data-target="s0"></div>
+  <div class="toc-dot"        data-label="Résultats"   data-target="s1"></div>
+  <div class="toc-dot"        data-label="Contexte"    data-target="s2"></div>
+  <div class="toc-dot"        data-label="Architecture" data-target="s3"></div>
+  <div class="toc-dot"        data-label="Durée vie"   data-target="s4"></div>
+  <div class="toc-dot"        data-label="Mission"     data-target="s5"></div>
+  <div class="toc-dot"        data-label="Références"  data-target="s6"></div>
+</nav>
+
+<div class="pub-wrapper">
+
+  <nav class="breadcrumb">
+    <a href="../publications.html">Publications</a>
+    <span>/</span>
+    <a href="../publications-scientifiques.html">Publications scientifiques</a>
+    <span>/</span>
+    DPET · 2026 · Propulsion électrique
+  </nav>
+
+  <!-- EN-TÊTE -->
+  <div id="s0">
+    <div class="article-meta-top">
+      <span class="meta-badge meta-badge--journal">Acta Astronautica · Vol. 224</span>
+      <span class="meta-badge meta-badge--dept">DPET — Dir. de la Propulsion et de l'Énergie Thermique</span>
+      <span class="meta-badge meta-badge--open">Accès ouvert</span>
+      <span class="meta-badge meta-badge--date">Soumis 08 nov. 2025 · Accepté 21 jan. 2026</span>
+    </div>
+
+    <h1 class="article-title">
+      NK-125 : conception et validation expérimentale d'un propulseur ionique à grilles SiC-f tri-étages opérant à 125 kW — impulsion spécifique de 9 620 s et rendement anodique de 78,4 %
+    </h1>
+
+    <p class="article-subtitle">
+      Campagne d'essais TORCH-IV (oct. 2024 – jan. 2026), chambre à vide HELIOS-6, IFRAS Toulouse.
+      Première démonstration publique complète des performances du NK-125 dans des conditions représentatives d'une mission de transfert Terre–Mars.
+    </p>
+
+    <div class="authors-block">
+      <div class="author-entry"><span class="author-name">Dr. François Roux</span><span class="author-role">DPET · Chef de programme NK</span></div>
+      <div class="author-sep"></div>
+      <div class="author-entry"><span class="author-name">Dr. Anika Schreiber</span><span class="author-role">DPET · Physique des plasmas</span></div>
+      <div class="author-sep"></div>
+      <div class="author-entry"><span class="author-name">Prof. Ricardo Almeida</span><span class="author-role">DPET · Thermique & Rendements</span></div>
+      <div class="author-sep"></div>
+      <div class="author-entry"><span class="author-name">Camille Leroux</span><span class="author-role">DPET · Doctorante, simulations PIC</span></div>
+    </div>
+
+    <div class="cite-block">
+      <div class="cite-item"><span class="cite-label">DOI</span><span>10.1016/j.actaastro.2026.01.0082</span></div>
+      <span class="cite-sep">|</span>
+      <div class="cite-item"><span class="cite-label">Réf. interne</span><span>IFRAS-DPET-2026-007</span></div>
+      <span class="cite-sep">|</span>
+      <div class="cite-item"><span class="cite-label">Pages</span><span>22 pp. · 7 fig. · 3 tabl.</span></div>
+    </div>
+  </div>
+
+  <div class="art-divider"></div>
+
+  <!-- ABSTRACT -->
+  <div class="abstract-box">
+    <div class="abstract-label">Résumé — Abstract</div>
+    <p class="abstract-text">
+      Nous présentons les résultats de la campagne TORCH-IV sur le NK-125, propulseur ionique à grilles de
+      125 kW développé par la DPET de l'IFRAS. Le propulseur atteint une impulsion spécifique de 9 620 ± 85 s —
+      valeur sans précédent pour la classe 100+ kW — grâce à un système de trois grilles en carbure de silicium
+      fritté (SiC-f) et une tension d'accélération de 8 400 V. Rendement anodique : 78,4 ± 1,2 %. Durée de vie
+      qualifiée : 12 000 heures en test accéléré. Ces résultats positionnent le NK-125 comme candidat principal
+      pour la propulsion du module de transfert PROMETHEUS-2 (Terre–Jupiter, lancement 2031).
+    </p>
+    <div class="kw-wrap">
+      <span class="kw-label">Mots-clés :</span>
+      <span class="kw-tag">Propulsion ionique</span>
+      <span class="kw-tag">NK-125</span>
+      <span class="kw-tag">I<sub>sp</sub> 9 620 s</span>
+      <span class="kw-tag">Grilles SiC-f</span>
+      <span class="kw-tag">Rendement anodique</span>
+      <span class="kw-tag">PROMETHEUS-2</span>
+    </div>
+  </div>
+
+  <!-- ===== 1. LES RÉSULTATS D'ABORD ===== -->
+  <h2 class="section-heading" id="s1">1. Résultats — vue synthétique</h2>
+
+  <p class="bt">
+    Contrairement à la pratique habituelle, nous présentons les chiffres clés en ouverture
+    afin de donner au lecteur le cadre interprétatif avant l'analyse. Les valeurs ci-dessous
+    sont toutes issues d'essais à pleine puissance nominale (125 kW, xénon, 4 × 10⁻⁶ mbar).
+  </p>
+
+  <!-- SCORECARD — structure centrale, rien avant -->
+  <div class="scorecard">
+    <div class="sc-item">
+      <div class="sc-val o">9 620</div>
+      <div class="sc-unit">secondes</div>
+      <div class="sc-label">Impulsion spécifique I<sub>sp</sub> — record classe 100+ kW</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-val g">78,4 %</div>
+      <div class="sc-unit">rendement</div>
+      <div class="sc-label">Rendement anodique η<sub>a</sub> à 110 kW (optimum)</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-val b">542</div>
+      <div class="sc-unit">millinewtons</div>
+      <div class="sc-label">Poussée nominale à 125 kW</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-val y">12 000</div>
+      <div class="sc-unit">heures</div>
+      <div class="sc-label">Durée de vie qualifiée en test accéléré ×3,2</div>
+    </div>
+  </div>
+
+  <!-- TABLEAU COMPARATIF — dès la section 1, avant tout graphique -->
+  <div class="tbl-wrap">
+    <div class="tbl-head">Tableau 1 — Positionnement du NK-125 dans l'état de l'art des propulseurs ioniques</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Propulseur</th><th>Organisme</th><th>Année</th>
+          <th>Puissance (kW)</th><th>I<sub>sp</sub> (s)</th>
+          <th>η<sub>a</sub> (%)</th><th>Statut</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>NSTAR</td><td>NASA / JPL</td><td class="tm">1998</td><td class="tm">2,3</td><td class="tm">3 100</td><td class="tm">61</td><td>Vol (Dawn, 2007)</td></tr>
+        <tr><td>NEXT-C</td><td>NASA / GRC</td><td class="tm">2007</td><td class="tm">7</td><td class="tm">4 190</td><td class="tm">71</td><td>Vol (Lucy, 2021)</td></tr>
+        <tr><td>RIT-22</td><td>ESA / Astrium</td><td class="tm">2005</td><td class="tm">5</td><td class="tm">4 350</td><td class="tm">65</td><td>Vol (Alphasat)</td></tr>
+        <tr><td>µ10</td><td>JAXA / ISAS</td><td class="tm">2003</td><td class="tm">0,35</td><td class="tm">10 000</td><td class="tm">58</td><td>Vol (Hayabusa)</td></tr>
+        <tr><td>HiPEP</td><td>NASA / GRC</td><td class="tm">2003</td><td class="tm">25</td><td class="tm">9 620</td><td class="tm">80</td><td>Démonstrateur — non qualifié</td></tr>
+        <tr><td>NK-40</td><td>IFRAS DPET</td><td class="tm">2021</td><td class="tm">40</td><td class="tm">6 800</td><td class="tm">72</td><td>Qualifié IFRAS</td></tr>
+        <tr><td>NK-85</td><td>IFRAS DPET</td><td class="tm">2023</td><td class="tm">85</td><td class="tm">8 100</td><td class="tm">76</td><td>Qualifié IFRAS</td></tr>
+        <tr class="tr-hi">
+          <td><strong>NK-125 ★</strong></td><td><strong>IFRAS DPET</strong></td><td class="ty">2026</td>
+          <td class="ty">125</td><td class="ty">9 620</td><td class="to">78,4</td>
+          <td><strong>Campagne TORCH-IV</strong></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="tbl-note">
+      ★ Premier propulseur à réunir simultanément I<sub>sp</sub> ≥ 9 600 s, P ≥ 100 kW et qualification durée de vie ≥ 12 000 h.
+      HiPEP (2003) atteignait la même I<sub>sp</sub> à 25 kW mais n'a jamais été qualifié pour le vol. Sources : [1–5].
+    </div>
+  </div>
+
+  <!-- Graphique BARRES HORIZONTALES — sputtering comparatif -->
+  <p class="bt">
+    La performance en durée de vie est directement corrélée au taux de pulvérisation cathodique
+    du matériau de grille. La figure ci-dessous situe le SiC-f face aux quatre matériaux candidats
+    identifiés lors des études préliminaires (2020–2022).
+  </p>
+
+  <div class="chart-wrap">
+    <div class="chart-inner">
+      <div class="chart-top">
+        <span class="chart-ttl">Taux de pulvérisation cathodique (atomes/ion Xe⁺ à 8 keV) — matériaux de grilles</span>
+        <div class="legend">
+          <div class="li"><div class="ld" style="background:#f97316"></div>SiC-f (NK-125)</div>
+          <div class="li"><div class="ld" style="background:#60a5fa"></div>Graphite PyC</div>
+          <div class="li"><div class="ld" style="background:#c084fc"></div>Carbone-Carbone</div>
+          <div class="li"><div class="ld" style="background:#9ca3af"></div>Molybdène</div>
+        </div>
+      </div>
+      <svg viewBox="0 0 800 190" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+        <!-- Axe vertical + grille -->
+        <line x1="200" y1="10" x2="200" y2="168" stroke="#1b2555" stroke-width="1"/>
+        <line x1="200" y1="168" x2="785" y2="168" stroke="#1b2555" stroke-width="1"/>
+        <line x1="310" y1="10" x2="310" y2="162" stroke="#0e1535" stroke-dasharray="3,3" stroke-width="1"/>
+        <line x1="450" y1="10" x2="450" y2="162" stroke="#0e1535" stroke-dasharray="3,3" stroke-width="1"/>
+        <line x1="590" y1="10" x2="590" y2="162" stroke="#0e1535" stroke-dasharray="3,3" stroke-width="1"/>
+        <line x1="730" y1="10" x2="730" y2="162" stroke="#0e1535" stroke-dasharray="3,3" stroke-width="1"/>
+        <text x="310" y="182" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">0.04</text>
+        <text x="450" y="182" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">0.08</text>
+        <text x="590" y="182" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">0.12</text>
+        <text x="730" y="182" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">0.16</text>
+        <text x="197" y="7"   fill="#4a5280" font-size="9"  text-anchor="end"    font-family="DM Mono,monospace">atomes/ion →</text>
+        <!-- Molybdène 0.157 → 557px max=0.17 échelle 3500px par unité -->
+        <text x="192" y="36"  fill="#9ca3af" font-size="12" text-anchor="end" font-family="DM Sans,sans-serif">Molybdène</text>
+        <rect x="201" y="20" width="531" height="22" rx="3" fill="#9ca3af" opacity=".7"/>
+        <text x="740" y="36" fill="#9ca3af" font-size="11" font-family="DM Mono,monospace">0.157</text>
+        <!-- C/C 0.072 → 243px -->
+        <text x="192" y="76"  fill="#c084fc" font-size="12" text-anchor="end" font-family="DM Sans,sans-serif">Carbone-Carbone</text>
+        <rect x="201" y="60" width="243" height="22" rx="3" fill="#c084fc" opacity=".6"/>
+        <text x="453" y="76" fill="#c084fc" font-size="11" font-family="DM Mono,monospace">0.072</text>
+        <!-- PyC 0.055 → 186px -->
+        <text x="192" y="116" fill="#60a5fa" font-size="12" text-anchor="end" font-family="DM Sans,sans-serif">Graphite PyC</text>
+        <rect x="201" y="100" width="186" height="22" rx="3" fill="#60a5fa" opacity=".6"/>
+        <text x="395" y="116" fill="#60a5fa" font-size="11" font-family="DM Mono,monospace">0.055</text>
+        <!-- SiC-f 0.041 → 139px -->
+        <text x="192" y="156" fill="#f97316" font-size="12" text-anchor="end" font-family="DM Sans,sans-serif" font-weight="500">SiC-f NK-125</text>
+        <rect x="201" y="140" width="139" height="22" rx="3" fill="#f97316"/>
+        <text x="348" y="156" fill="#f97316" font-size="11" font-family="DM Mono,monospace" font-weight="500">0.041 ★</text>
+      </svg>
+    </div>
+    <div class="chart-cap">
+      <strong>Figure 1</strong>
+      Taux de pulvérisation cathodique mesuré à 8 keV Xe⁺ pour les quatre matériaux candidats aux grilles.
+      Le SiC-f présente la valeur la plus faible — 3,8 fois inférieure au molybdène —
+      ce qui se traduit directement par la durée de vie qualifiée de 12 000 h.
+      Données Mo, C/C, PyC compilées depuis [4, 5] ; valeur SiC-f : essai IFRAS-DSMR SPUTTER-2024-12.
+    </div>
+  </div>
+
+  <!-- ===== 2. CONTEXTE ===== -->
+  <h2 class="section-heading blue" id="s2">2. Contexte — programme NK et verrous technologiques</h2>
+
+  <p class="bt">
+    Les propulseurs ioniques à grilles offrent les impulsions spécifiques les plus élevées parmi tous
+    les systèmes de propulsion spatiale opérationnels [1]. La mission Dawn (NASA, 2007) et la sonde
+    Hayabusa (JAXA, 2003) ont ancré cette technologie dans l'exploration du système solaire [2, 3].
+    Mais la montée en puissance vers la classe 100 kW — nécessaire aux missions habitées ou de remorquage
+    orbital de grande masse — ouvre trois verrous : dissipation thermique des grilles, homogénéité plasma
+    sur grande surface, et érosion accélérée [4].
+  </p>
+
+  <p class="bt">
+    Le programme NK répond à ces verrous depuis 2019 par itérations : NK-40 (2021, 40 kW, 6 800 s),
+    NK-85 (2023, 85 kW, 8 100 s), puis le NK-125. L'architecture à trois grilles SiC-f est protégée
+    par le brevet FR-2024-DPET-019.
+  </p>
+
+  <div class="hl blue">
+    Le HiPEP de la NASA (2003) atteignait déjà 9 620 s mais à seulement 25 kW, sans qualification de
+    durée de vie [4]. Le NK-125 est le premier propulseur à réunir cette impulsion spécifique,
+    une puissance de 125 kW et une qualification de 12 000 heures.
+  </div>
+
+  <!-- ===== 3. ARCHITECTURE ===== -->
+  <h2 class="section-heading" id="s3">3. Architecture et base physique</h2>
+
+  <p class="bt">
+    La chambre de décharge cylindrique (∅ 320 mm × 480 mm, molybdène/PyC CVD) est ionisée par
+    cathode creuse centrale à xénon (0,4–2,2 mg·s⁻¹), confinée par anneau magnétique cusped-field NdFeB.
+    L'I<sub>sp</sub> théorique se déduit directement de la tension d'accélération nette :
+  </p>
+
+  <!-- Deux colonnes : physique + équation — ici les équations arrivent naturellement dans le texte -->
+  <div class="two-col">
+    <p class="bt" style="margin:0">
+      Avec V<sub>screen</sub> = 8 640 V et |V<sub>accel</sub>| = 240 V, la tension nette est
+      V<sub>net</sub> = 8 400 V. Pour le xénon (m<sub>i</sub> = 131,3 u), l'équation (1) prédit
+      une I<sub>sp</sub> théorique de 9 870 s. L'écart mesuré (−2,5 %) est attribué à la
+      dispersion en énergie du faisceau (FWHM = 48 eV), à la divergence angulaire (14,2°) et
+      aux ions Xe²⁺ (fraction molaire 3,8 %).
+    </p>
+    <div class="eq">
+      I<sub>sp</sub> = (1 / g₀) · √(2eV<sub>net</sub> / m<sub>i</sub>)
+      <div class="eq-lbl">(Éq. 1)</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <p class="bt" style="margin:0">
+      La troisième grille de décélération réduit le courant d'interception sur la grille
+      d'accélération de 0,82 % à 0,18 %, prolongeant sa durée de vie d'un facteur ~4.
+      L'ajustement empirique de la campagne TORCH-IV donne α = 0,024, β = 3,14
+      (régression sur 12 points de mesure). Ce résultat confirme les prédictions
+      PIC du code ISAT-Plasma v4.1 [6].
+    </p>
+    <div class="eq">
+      J<sub>int</sub> / J<sub>beam</sub> = α · exp(−β · V<sub>dec</sub> / V<sub>acc</sub>)
+      <div class="eq-lbl">(Éq. 2)</div>
+    </div>
+  </div>
+
+  <!-- ===== 4. DURÉE DE VIE ===== -->
+  <h2 class="section-heading green" id="s4">4. Qualification durée de vie</h2>
+
+  <p class="bt">
+    Les 12 000 heures de qualification sont conduites en régime accéléré (facteur ×3,2 sur le flux
+    de bombardement ionique) dans la chambre HELIOS-6. La perte d'épaisseur sur la grille
+    d'accélération est suivie par profilométrie laser (résolution axiale 0,1 µm) et pesée
+    en salle blanche toutes les 500 heures équivalentes.
+  </p>
+
+  <div class="hl green">
+    Bilan à 12 000 h équivalentes : perte d'épaisseur maximale de 120 µm (8 % de l'épaisseur
+    initiale de 1,5 mm). Aucune perforation, aucun délaminage fibre/matrice. Le critère de
+    fin de vie (perte de 30 %) n'est pas atteint. Une grille en molybdène dans les mêmes
+    conditions aurait perdu ~460 µm.
+  </div>
+
+  <!-- UNIQUE PHOTO — placée ici, pas ailleurs -->
+  <div class="fig-wrap">
+    <div class="fig-ph">
+      <span class="fig-icon">🔩</span>
+      <span class="fig-desc">Fig. 2 — Grille d'accélération SiC-f après 12 000 h (attendue)</span>
+      <span class="fig-sub">
+        Photographie en lumière rasante de la grille d'accélération (80 × 80 cm) après test accéléré.<br>
+        Érosion maximale mesurée : 120 ± 8 µm. Surface active uniforme, pas de délaminage visible.
+      </span>
+    </div>
+    <div class="fig-cap">
+      <strong>Figure 2</strong>
+      Grille d'accélération SiC-f en lumière rasante après 12 000 heures de test accéléré (TORCH-IV, jan. 2026).
+      La profilométrie laser (résolution 0,1 µm) confirme une érosion uniforme et l'absence de point chaud.
+      L'intégrité de la structure fibre/matrice est vérifiée par microscopie électronique à balayage
+      sur 6 zones prélèvées en périphérie et au centre de la grille.
+    </div>
+  </div>
+
+  <!-- ===== 5. IMPLICATIONS MISSION ===== -->
+  <h2 class="section-heading blue" id="s5">5. Application — mission PROMETHEUS-2</h2>
+
+  <p class="bt">
+    Avec quatre NK-125 embarqués (500 kW total) et une fraction de propergol de 62 %,
+    l'équation de Tsiolkovsky (Éq. 3) donne un ΔV disponible de 24 600 m·s⁻¹ pour
+    le module de transfert orbital de PROMETHEUS-2 (Terre–Jupiter, lancement 2031).
+  </p>
+
+  <div class="eq" style="margin:24px 0;text-align:center;padding:18px 20px;">
+    ΔV = I<sub>sp</sub> · g₀ · ln(m₀ / m<sub>f</sub>) = 9 620 × 9,81 × ln(1 / 0,38) ≈ 24 600 m·s⁻¹
+    <div class="eq-lbl">(Éq. 3)</div>
+  </div>
+
+  <p class="bt">
+    Ce ΔV réduit la durée de transit Terre–Jupiter de 24 mois (NK-85) à 14 mois,
+    soit −42 %. Cette compression de la durée d'exposition aux rayonnements galactiques et aux
+    ceintures de Van Allen réduit la dose cumulée reçue par l'équipage d'un facteur estimé à 1,7
+    par les modèles NOAA-SEP [7].
+  </p>
+
+  <!-- Tableau mission — le seul autre tableau, en fin de publication -->
+  <div class="tbl-wrap">
+    <div class="tbl-head">Tableau 2 — Impact des performances NK-125 sur le profil de mission PROMETHEUS-2</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Paramètre</th>
+          <th>Avec NK-85 (2023)</th>
+          <th>Avec NK-125 (2026)</th>
+          <th>Gain</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Puissance totale embarquée</td><td class="tm">340 kW (4×85)</td><td class="tg">500 kW (4×125)</td><td class="to">+47 %</td></tr>
+        <tr><td>ΔV disponible</td><td class="tm">16 800 m·s⁻¹</td><td class="tg">24 600 m·s⁻¹</td><td class="to">+46 %</td></tr>
+        <tr><td>Durée de transit Terre–Jupiter</td><td class="tm">24 mois</td><td class="tg">14 mois</td><td class="to">−42 %</td></tr>
+        <tr><td>Dose rayonnements équipage</td><td class="tm">Référence</td><td class="tg">÷ 1,7</td><td class="to">−41 %</td></tr>
+        <tr><td>Fraction de propergol</td><td class="tm">70 %</td><td class="tg">62 %</td><td class="to">−8 pts</td></tr>
+        <tr><td>Masse utile restante (300 t initial)</td><td class="tm">90 t</td><td class="ty">114 t</td><td class="to">+27 %</td></tr>
+      </tbody>
+    </table>
+    <div class="tbl-note">
+      Simulation de trajectoire : code GMAT v2025.1 (NASA GSFC), profil de poussée variable optimisé par contrôle impulsionnel.
+      Hypothèse propergol : xénon pur 99,9 %. Dose rayonnements : modèle NOAA-SEP, orbite de transfert 0,97–5,2 UA [7].
+    </div>
+  </div>
+
+  <div class="hl">
+    La DPET et le CNES ont signé en février 2026 un accord de co-développement pour l'intégration
+    d'une unité de vol NK-125 dans le démonstrateur orbital IONOS-1 (lancement T2 2028).
+    La qualification vol sera conduite à HELIOS-6 en 2027.
+  </div>
+
+  <div class="art-divider"></div>
+
+  <!-- RÉFÉRENCES -->
+  <div class="refs-sec" id="s6">
+    <div class="ref-ttl">Références bibliographiques</div>
+    <div class="ref-list">
+      <div class="ref-item">Kaufman, H.R. (1961). An ion rocket with an electron-bombardment ion source. <em>NASA Technical Note</em> D-585. Lewis Research Center, Cleveland, OH.</div>
+      <div class="ref-item">Rayman, M.D. et al. (2006). Dawn: A mission in development for exploration of main belt asteroids Vesta and Ceres. <em>Acta Astronautica</em>, 58(11), 605–616. <a href="#">doi:10.1016/j.actaastro.2005.01.021</a></div>
+      <div class="ref-item">Kuninaka, H. et al. (2007). Asteroid rendez-vous of Hayabusa explorer using microwave discharge ion engines. <em>New Journal of Physics</em>, 9, 312. <a href="#">doi:10.1088/1367-2630/9/9/312</a></div>
+      <div class="ref-item">Goebel, D.M. & Katz, I. (2008). <em>Fundamentals of Electric Propulsion: Ion and Hall Thrusters</em>. Wiley-JPL Space Science & Technology Series. ISBN 978-0-470-42927-3.</div>
+      <div class="ref-item">Polk, J.E. et al. (2006). An overview of the results from an 11,000 hour wear test of the NSTAR ion thruster. <em>AIAA 2006-2446</em>, 42nd Joint Propulsion Conference, Sacramento.</div>
+      <div class="ref-item">Roux, F., Leroux, C. & Almeida, R. (2024). Simulation PIC multi-espèces du système de grilles tri-étages SiC-f du NK-125. <em>Journal of Electric Propulsion</em>, 3(1), 14. <a href="#">doi:10.1007/s44205-024-00054-7</a></div>
+      <div class="ref-item">Cucinotta, F.A. & Durante, M. (2006). Cancer risk from exposure to galactic cosmic rays. <em>The Lancet Oncology</em>, 7(5), 431–435. <a href="#">doi:10.1016/S1470-2045(06)70695-7</a></div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <strong>Conflits d'intérêts :</strong> Aucun. —
+    <strong>Financement :</strong> Programme NK (IFRAS DPET-2019-PROP) et ANR-21-ASTR-0054 « IONHIGH ». —
+    <strong>Brevet :</strong> FR-2024-DPET-019 (déposé 14 mars 2024, instruction PCT en cours). —
+    <strong>Contributions :</strong> F.R. : direction, campagne essais ; A.S. : diagnostics plasma, RPA ; R.A. : bilan thermique ; C.L. : simulations PIC.
+  </div>
+
+</div>
+
+<footer style="background:#020617;border-top:1px solid #1b2555;padding:32px 30px;text-align:center;font-size:12px;color:#6b7280;">
+  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale · Publications soumises à validation institutionnelle
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{
+  const d=document.documentElement;
+  document.getElementById('progressBar').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%';
+});
+const secs=['s0','s1','s2','s3','s4','s5','s6'];
+const dots=document.querySelectorAll('.toc-dot');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){const i=secs.indexOf(e.target.id);if(i>=0){dots.forEach(d=>d.classList.remove('active'));dots[i]&&dots[i].classList.add('active');}}});
+},{rootMargin:'-20% 0px -70% 0px'});
+secs.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
+dots.forEach((d,i)=>{d.addEventListener('click',()=>{const el=document.getElementById(secs[i]);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});});});
+</script>
+</body>
+</html>
