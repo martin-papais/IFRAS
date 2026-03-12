@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>MARS-BIO · Survie et croissance microbienne en analogues martiens — IFRAS DSVT</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-main:#050b1e; --bg-dark:#020617; --bg-light:#070f2b;
+  --border:#1b2555; --border-sub:#0e1535;
+  --accent:#34d399; --accent2:#4f6bed; --accent3:#f97316;
+  --text-main:#e6e6e6; --text-soft:#aab3d6; --text-muted:#4a5280;
+  --mono:"DM Mono",monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"DM Sans",sans-serif;background:var(--bg-main);color:var(--text-main);line-height:1.7;}
+::-webkit-scrollbar{width:4px;} ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+header{position:fixed;top:0;width:100%;z-index:1000;background:rgba(5,11,30,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+.header-inner{max-width:1300px;margin:auto;padding:12px 30px;display:flex;align-items:center;justify-content:space-between;}
+.header-left{display:flex;align-items:center;gap:40px;}
+.logo-link img{height:60px;}
+.main-nav{list-style:none;display:flex;gap:32px;}
+.main-nav a{text-decoration:none;color:var(--text-soft);font-size:14px;letter-spacing:.05em;}
+.main-nav a:hover{color:white;}
+.login-btn{padding:8px 18px;border-radius:6px;border:1px solid var(--accent2);color:white;text-decoration:none;font-size:13px;}
+.login-btn:hover{background:var(--accent2);}
+.sub-nav{margin-top:84px;background:var(--bg-light);border-bottom:1px solid var(--border);}
+.sub-nav ul{max-width:1300px;margin:0 auto;padding:0 30px;list-style:none;display:flex;justify-content:space-between;}
+.sub-nav li{padding:14px 0;}
+.sub-nav a{color:var(--text-soft);text-decoration:none;font-size:14px;letter-spacing:.06em;}
+.sub-nav a:hover{color:white;}
+.sub-nav a.active{color:white;border-bottom:2px solid var(--accent2);padding-bottom:12px;}
+.pub-wrapper{max-width:900px;margin:0 auto;padding:52px 30px 100px;}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--text-muted);letter-spacing:.06em;margin-bottom:36px;font-family:var(--mono);}
+.breadcrumb a{color:var(--text-muted);text-decoration:none;}
+.breadcrumb a:hover{color:var(--accent);}
+.breadcrumb span{opacity:.4;}
+/* META BADGES */
+.meta-top{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+.badge{font-size:10.5px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;font-weight:500;}
+.badge-j{background:rgba(52,211,153,.1);color:var(--accent);border:1px solid rgba(52,211,153,.25);}
+.badge-d{background:rgba(79,107,237,.1);color:var(--accent2);border:1px solid rgba(79,107,237,.2);}
+.badge-o{background:rgba(52,211,153,.07);color:var(--accent);border:1px solid rgba(52,211,153,.15);}
+.badge-dt{background:rgba(255,255,255,.04);color:var(--text-muted);border:1px solid rgba(255,255,255,.08);}
+/* TITRE */
+.article-title{font-family:"DM Sans",sans-serif;font-size:clamp(18px,2.4vw,23px);font-weight:400;color:var(--text-main);line-height:1.5;letter-spacing:0;margin-bottom:18px;}
+.article-subtitle{font-size:15px;color:var(--text-soft);font-weight:300;line-height:1.65;margin-bottom:28px;font-style:italic;border-left:2px solid var(--accent);padding-left:16px;}
+.authors-block{background:var(--bg-light);border:1px solid var(--border);border-radius:10px;padding:16px 20px;display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;margin-bottom:28px;}
+.author-entry{display:flex;flex-direction:column;gap:2px;}
+.author-name{font-size:13.5px;font-weight:600;color:white;}
+.author-role{font-size:11px;color:var(--text-muted);letter-spacing:.04em;}
+.author-sep{width:1px;background:var(--border);align-self:stretch;}
+.cite-block{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:12px 16px;background:rgba(0,0,0,.25);border:1px solid var(--border-sub);border-radius:8px;}
+.cite-item{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;color:var(--text-muted);}
+.cite-label{color:var(--accent);font-weight:500;}
+.cite-sep{color:var(--border);}
+.art-divider{height:1px;background:linear-gradient(90deg,var(--accent) 0%,transparent 60%);margin:40px 0;opacity:.3;}
+/* ABSTRACT */
+.abstract-box{background:rgba(52,211,153,.04);border:1px solid rgba(52,211,153,.14);border-radius:12px;padding:28px 32px;margin-bottom:44px;}
+.abstract-label{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;font-weight:500;}
+.abstract-text{font-size:14.5px;line-height:1.85;color:var(--text-soft);font-weight:300;}
+.kw-wrap{margin-top:16px;display:flex;flex-wrap:wrap;gap:7px;align-items:center;}
+.kw-lbl{font-size:11px;color:var(--text-muted);font-family:var(--mono);letter-spacing:.08em;}
+.kw-tag{font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--text-soft);}
+/* SECTIONS */
+.section-heading{font-family:"Syne",sans-serif;font-size:18px;font-weight:700;color:white;margin:44px 0 16px;display:flex;align-items:center;gap:12px;}
+.section-heading::before{content:'';display:block;width:4px;height:18px;background:var(--accent);border-radius:2px;flex-shrink:0;}
+.section-heading.blue::before{background:var(--accent2);}
+.section-heading.orange::before{background:var(--accent3);}
+.sub{font-family:"Syne",sans-serif;font-weight:700;color:var(--text-soft);margin:28px 0 10px;letter-spacing:.04em;text-transform:uppercase;font-size:11.5px;}
+p.bt{font-size:14.5px;color:var(--text-soft);line-height:1.85;font-weight:300;margin-bottom:16px;}
+
+/* ===== ENCADRÉ "CONDITIONS MARTIENNES" — grille environnementale ===== */
+.env-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:32px 0;}
+.env-item{background:var(--bg-light);padding:18px 16px 14px;display:flex;flex-direction:column;gap:5px;}
+.env-param{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);}
+.env-mars{font-size:17px;font-family:var(--mono);font-weight:500;color:#fb923c;line-height:1.1;}
+.env-earth{font-size:12px;font-family:var(--mono);color:var(--text-muted);}
+.env-sim{font-size:11px;color:var(--accent);margin-top:3px;}
+.env-arrow{color:var(--text-muted);font-size:10px;margin:0 3px;}
+
+/* ===== CARTES ORGANISMES ===== */
+.orga-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0;}
+.orga-card{background:var(--bg-light);border:1px solid var(--border);border-radius:12px;padding:20px 22px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;}
+.orga-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.orga-card.green::before{background:var(--accent);}
+.orga-card.orange::before{background:var(--accent3);}
+.orga-card.blue::before{background:var(--accent2);}
+.orga-card.yellow::before{background:#facc15;}
+.orga-name{font-family:"Syne",sans-serif;font-weight:700;font-size:14px;color:white;line-height:1.2;}
+.orga-class{font-size:11px;font-family:var(--mono);color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase;}
+.orga-desc{font-size:13px;color:var(--text-soft);font-weight:300;line-height:1.6;}
+.orga-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.orga-tag{font-size:10.5px;padding:2px 8px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:var(--text-muted);font-family:var(--mono);}
+.orga-result{display:flex;align-items:center;gap:8px;margin-top:4px;}
+.orga-result-val{font-family:var(--mono);font-size:13px;font-weight:500;}
+.orga-result-val.survived{color:var(--accent);}
+.orga-result-val.partial{color:#facc15;}
+.orga-result-val.adapted{color:#60a5fa;}
+.orga-result-lbl{font-size:11.5px;color:var(--text-muted);}
+
+/* ===== GRAPHIQUE CROISSANCE ===== */
+.chart-wrap{margin:36px 0;background:var(--bg-light);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.chart-inner{padding:28px 24px 16px;background:rgba(0,0,0,.15);border-bottom:1px solid var(--border-sub);}
+.chart-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:8px;}
+.chart-ttl{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);max-width:500px;line-height:1.5;}
+.legend{display:flex;gap:14px;flex-wrap:wrap;}
+.li{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);}
+.ld{width:8px;height:8px;border-radius:2px;}
+.chart-cap{padding:12px 20px;font-size:12.5px;color:var(--text-muted);line-height:1.6;}
+.chart-cap strong{font-weight:600;color:var(--text-soft);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
+
+/* ===== TABLEAU RÉSULTATS ===== */
+.tbl-wrap{margin:36px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);}
+.tbl-head{background:rgba(52,211,153,.08);padding:12px 20px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--border);}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+thead th{background:rgba(0,0,0,.3);padding:11px 16px;text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--border-sub);font-weight:500;}
+tbody tr{border-bottom:1px solid var(--border-sub);transition:background .15s;}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:rgba(255,255,255,.025);}
+tbody td{padding:10px 16px;color:var(--text-soft);vertical-align:middle;font-weight:300;}
+.tm{font-family:var(--mono);font-size:12.5px;color:var(--text-main);}
+.tg{font-family:var(--mono);font-size:12.5px;color:var(--accent);}
+.ty{font-family:var(--mono);font-size:12.5px;color:#facc15;}
+.to{font-family:var(--mono);font-size:12.5px;color:var(--accent3);}
+.tr{font-family:var(--mono);font-size:12.5px;color:#f87171;}
+.tbl-note{padding:10px 20px;font-size:11.5px;color:var(--text-muted);background:rgba(0,0,0,.2);font-style:italic;border-top:1px solid var(--border-sub);}
+
+/* ===== HIGHLIGHT ===== */
+.hl{border-left:3px solid var(--accent);background:rgba(52,211,153,.04);border-radius:0 8px 8px 0;padding:16px 20px;margin:24px 0;font-size:14px;color:var(--text-soft);font-style:italic;line-height:1.75;}
+.hl.blue{border-color:var(--accent2);background:rgba(79,107,237,.05);}
+.hl.orange{border-color:var(--accent3);background:rgba(249,115,22,.04);}
+
+/* ===== FIGURE ===== */
+.fig-wrap{margin:36px 0;background:var(--bg-light);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.fig-ph{height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(52,211,153,.06),rgba(52,211,153,.01));border-bottom:1px solid var(--border);gap:10px;}
+.fig-icon{font-size:36px;opacity:.22;}
+.fig-desc{font-size:11.5px;font-family:var(--mono);color:var(--text-muted);letter-spacing:.06em;}
+.fig-sub{font-size:11px;color:var(--text-muted);text-align:center;max-width:420px;line-height:1.55;}
+.fig-cap{padding:14px 20px;font-size:12.5px;color:var(--text-muted);line-height:1.6;}
+.fig-cap strong{font-weight:600;color:var(--text-soft);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
+
+/* ===== TIMELINE (résultats jour par jour) ===== */
+.timeline{margin:32px 0;display:flex;flex-direction:column;gap:0;}
+.tl-item{display:flex;gap:0;position:relative;}
+.tl-item:not(:last-child)::after{content:'';position:absolute;left:47px;top:36px;bottom:-2px;width:1px;background:var(--border-sub);}
+.tl-day{width:96px;flex-shrink:0;padding:12px 16px 12px 0;text-align:right;}
+.tl-day-num{font-family:var(--mono);font-size:13px;color:var(--accent);font-weight:500;}
+.tl-day-lbl{font-size:10px;color:var(--text-muted);font-family:var(--mono);letter-spacing:.08em;}
+.tl-dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--border);background:var(--bg-main);margin-top:16px;flex-shrink:0;position:relative;z-index:1;}
+.tl-dot.active{background:var(--accent);border-color:var(--accent);}
+.tl-dot.partial{background:#facc15;border-color:#facc15;}
+.tl-dot.fail{background:#f87171;border-color:#f87171;}
+.tl-content{padding:10px 0 18px 18px;flex:1;}
+.tl-event{font-size:13.5px;color:var(--text-main);font-weight:500;margin-bottom:4px;}
+.tl-detail{font-size:13px;color:var(--text-muted);font-weight:300;line-height:1.6;}
+
+/* REFS */
+.refs-sec{margin-top:60px;padding-top:32px;border-top:1px solid var(--border);}
+.ref-ttl{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:20px;}
+.ref-list{counter-reset:ref;display:flex;flex-direction:column;gap:6px;}
+.ref-item{
+  counter-increment:ref;
+  display:flex;
+  align-items:baseline;
+  gap:12px;
+  font-size:13px;
+  line-height:1.55;
+  color:var(--text-muted);
+  padding:9px 14px;
+  border-radius:6px;
+  background:rgba(0,0,0,.15);
+  border:1px solid var(--border-sub);
+}
+.ref-item::before{
+  content:'[' counter(ref) ']';
+  font-family:var(--mono);font-size:11px;
+  color:var(--accent);
+  flex-shrink:0;
+  min-width:26px;
+}
+.ref-item b{color:var(--text-soft);font-weight:500;}
+.ref-item em{color:var(--text-muted);}
+.footnote{margin-top:48px;padding:20px 24px;background:rgba(0,0,0,.25);border:1px solid var(--border-sub);border-radius:10px;font-size:11.5px;color:var(--text-muted);line-height:1.7;}
+.footnote strong{color:var(--text-soft);}
+
+/* PROGRESS / TOC */
+.progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent),#6ee7b7);z-index:9999;width:0%;transition:width .1s linear;}
+.toc-sidebar{position:fixed;right:32px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:100;}
+.toc-dot{width:6px;height:6px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s,transform .2s;position:relative;}
+.toc-dot:hover,.toc-dot.active{background:var(--accent);transform:scale(1.5);}
+.toc-dot::after{content:attr(data-label);position:absolute;right:14px;top:50%;transform:translateY(-50%);background:var(--bg-light);border:1px solid var(--border);border-radius:5px;padding:3px 8px;font-size:10.5px;color:var(--text-soft);white-space:nowrap;font-family:var(--mono);letter-spacing:.04em;opacity:0;pointer-events:none;transition:opacity .2s;}
+.toc-dot:hover::after{opacity:1;}
+@media(max-width:1100px){.toc-sidebar{display:none;}}
+@media(max-width:640px){.orga-grid{grid-template-columns:1fr;}.env-grid{grid-template-columns:repeat(2,1fr);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<header>
+  <div class="header-inner">
+    <div class="header-left">
+      <a href="../index.html" class="logo-link"><img src="../logo.png" alt="IFRAS"></a>
+      <nav><ul class="main-nav">
+        <li><a href="../index.html">Accueil</a></li>
+        <li><a href="../recherche.html">Recherche</a></li>
+        <li><a href="../programmes.html">Programmes</a></li>
+        <li><a href="../publications.html">Publications</a></li>
+      </ul></nav>
+    </div>
+    <div class="header-right"><a href="../connexion.html" class="login-btn">Connexion</a></div>
+  </div>
+</header>
+
+<div class="sub-nav">
+  <ul>
+    <li><a href="../publications-scientifiques.html" class="active">Publications scientifiques</a></li>
+    <li><a href="../publications-ifras.html">Publications IFRAS</a></li>
+    <li><a href="../evenements.html">Événements</a></li>
+  </ul>
+</div>
+
+<nav class="toc-sidebar">
+  <div class="toc-dot active" data-label="Résumé"       data-target="s0"></div>
+  <div class="toc-dot"        data-label="Conditions"   data-target="s1"></div>
+  <div class="toc-dot"        data-label="Organismes"   data-target="s2"></div>
+  <div class="toc-dot"        data-label="Protocole"    data-target="s3"></div>
+  <div class="toc-dot"        data-label="Résultats"    data-target="s4"></div>
+  <div class="toc-dot"        data-label="Discussion"   data-target="s5"></div>
+  <div class="toc-dot"        data-label="Références"   data-target="s6"></div>
+</nav>
+
+<div class="pub-wrapper">
+
+  <nav class="breadcrumb">
+    <a href="../publications.html">Publications</a>
+    <span>/</span>
+    <a href="../publications-scientifiques.html">Publications scientifiques</a>
+    <span>/</span>
+    DSVT · 2026 · Astrobiologie
+  </nav>
+
+  <!-- EN-TÊTE -->
+  <div id="s0">
+    <div class="meta-top">
+      <span class="badge badge-j">Astrobiology · Vol. 26 (2)</span>
+      <span class="badge badge-d">DSVT — Dir. des Sciences du Vivant et des Technologies</span>
+      <span class="badge badge-o">Accès ouvert</span>
+      <span class="badge badge-dt">Soumis 14 oct. 2025 · Accepté 03 fév. 2026</span>
+    </div>
+
+    <h1 class="article-title">
+      Croissance et adaptation métabolique de microorganismes extrêmophiles en conditions martiennes simulées : résultats de la campagne MARSLAB-IV (560 jours, enceinte HADES-2)
+    </h1>
+
+    <p class="article-subtitle">
+      Trois espèces — <em>Deinococcus radiodurans</em>, <em>Chroococcidiopsis thermalis</em> et une souche
+      haloacidophile inédite (<em>Ferroacidus ifrasensis</em> nov. sp.) — ont maintenu une activité 
+      métabolique mesurable pendant 560 jours continus sous pression de CO₂ de 600 Pa, 
+      UV martiens, cycles thermiques −63 °C / +20 °C et régolithe perchlorate simulé.
+    </p>
+
+    <div class="authors-block">
+      <div class="author-entry">
+        <span class="author-name">Dr. Solène Garnier</span>
+        <span class="author-role">DSVT · Astrobiologie & Extrêmophiles</span>
+      </div>
+      <div class="author-sep"></div>
+      <div class="author-entry">
+        <span class="author-name">Dr. Matthieu Prost</span>
+        <span class="author-role">DSVT · Physiologie microbienne</span>
+      </div>
+      <div class="author-sep"></div>
+      <div class="author-entry">
+        <span class="author-name">Prof. Yuki Tanaka</span>
+        <span class="author-role">DSVT / JAXA — Géochimie planétaire</span>
+      </div>
+      <div class="author-sep"></div>
+      <div class="author-entry">
+        <span class="author-name">Ibrahim Al-Rashid</span>
+        <span class="author-role">DSVT · Doctorant, métabolomique</span>
+      </div>
+      <div class="author-sep"></div>
+      <div class="author-entry">
+        <span class="author-name">Dr. Claire Novak</span>
+        <span class="author-role">ESA / ESTEC — Planétologie</span>
+      </div>
+    </div>
+
+    <div class="cite-block">
+      <div class="cite-item"><span class="cite-label">DOI</span><span>10.1089/ast.2025.0218</span></div>
+      <span class="cite-sep">|</span>
+      <div class="cite-item"><span class="cite-label">Réf. interne</span><span>IFRAS-DSVT-2026-003</span></div>
+      <span class="cite-sep">|</span>
+      <div class="cite-item"><span class="cite-label">Données</span><span>Zenodo : 10.5281/zenodo.14882041</span></div>
+    </div>
+  </div>
+
+  <div class="art-divider"></div>
+
+  <!-- ABSTRACT -->
+  <div class="abstract-box">
+    <div class="abstract-label">Résumé — Abstract</div>
+    <p class="abstract-text">
+      Nous rapportons la première démonstration expérimentale de croissance microbienne active 
+      — et non de simple survie — dans un environnement reproduisant simultanément 
+      six paramètres de la surface martienne : pression de CO₂ (600 Pa), flux UV-C/UV-B 
+      équivalents à la surface de Mars, cycles thermiques quotidiens (−63 °C / +20 °C), 
+      teneur en perchlorates du régolithe (0,6 % w/w MgClO₄), teneur en sel (NaCl 8 % w/v) 
+      et taux d'humidité relative de 2 %. Sur les sept espèces testées, trois ont 
+      maintenu une croissance nette mesurée par spectrométrie de masse isotopique (¹³C-acétate) 
+      et fluorescence DAPI pendant 560 jours dans l'enceinte HADES-2. La souche
+      <em>Ferroacidus ifrasensis</em> nov. sp., isolée de sources hydrothermales acides des Açores, 
+      présente la résistance la plus large avec un doublement cellulaire toutes les 72 heures 
+      dans les conditions les plus sévères. Ces résultats élargissent significativement les 
+      limites connues de l'habitabilité microbienne et ont des implications directes pour 
+      la politique de protection planétaire des missions martiennes.
+    </p>
+    <div class="kw-wrap">
+      <span class="kw-lbl">Mots-clés :</span>
+      <span class="kw-tag">Astrobiologie</span>
+      <span class="kw-tag">Mars analogue</span>
+      <span class="kw-tag">Extrêmophiles</span>
+      <span class="kw-tag"><em>Deinococcus radiodurans</em></span>
+      <span class="kw-tag"><em>Chroococcidiopsis</em></span>
+      <span class="kw-tag">Perchlorates</span>
+      <span class="kw-tag">Protection planétaire</span>
+      <span class="kw-tag">HADES-2</span>
+    </div>
+  </div>
+
+  <!-- ===== 1. CONDITIONS MARTIENNES ===== -->
+  <h2 class="section-heading" id="s1">1. Pourquoi Mars est (presque) inhabitable — et pourquoi « presque »</h2>
+
+  <p class="bt">
+    La surface de Mars cumule des conditions hostiles à la vie telle que nous la connaissons :
+    une pression atmosphérique 160 fois inférieure à celle de la Terre, une composition
+    essentiellement carbonique, des températures extrêmes, un flux ultraviolet non filtré
+    et la présence de perchlorates fortement oxydants dans le régolithe [1, 2]. Pourtant,
+    aucun de ces facteurs pris isolément ne dépasse les limites connues pour les microorganismes
+    extrêmophiles terrestres. C'est leur combinaison simultanée et prolongée qui n'avait jamais
+    été testée à ce jour dans une enceinte de laboratoire reproduisant l'intégralité du profil
+    martien.
+  </p>
+
+  <!-- Grille conditions martiennes / simulées — pièce centrale de la section 1 -->
+  <div class="env-grid">
+    <div class="env-item">
+      <div class="env-param">Pression totale</div>
+      <div class="env-mars">600 Pa</div>
+      <div class="env-earth">↑ Terre : 101 325 Pa</div>
+      <div class="env-sim">✓ Simulé dans HADES-2</div>
+    </div>
+    <div class="env-item">
+      <div class="env-param">Composition atmosphère</div>
+      <div class="env-mars">95 % CO₂</div>
+      <div class="env-earth">↑ Terre : 78 % N₂ / 21 % O₂</div>
+      <div class="env-sim">✓ Mélange injecté continu</div>
+    </div>
+    <div class="env-item">
+      <div class="env-param">Température (cycle/jour)</div>
+      <div class="env-mars">−63 °C → +20 °C</div>
+      <div class="env-earth">↑ Terre : +15 °C moy.</div>
+      <div class="env-sim">✓ Rampe 2 °C·min⁻¹ programmée</div>
+    </div>
+    <div class="env-item">
+      <div class="env-param">Flux UV (200–400 nm)</div>
+      <div class="env-mars">50 W·m⁻²</div>
+      <div class="env-earth">↑ Terre : ~3 W·m⁻² (UV-A/B)</div>
+      <div class="env-sim">✓ Lampe Xe + filtres calibrés</div>
+    </div>
+    <div class="env-item">
+      <div class="env-param">Perchlorates régolithe</div>
+      <div class="env-mars">0,6 % w/w MgClO₄</div>
+      <div class="env-earth">↑ Terre : traces (< 0,001 %)</div>
+      <div class="env-sim">✓ JSC Mars-1A + MgClO₄ pur</div>
+    </div>
+    <div class="env-item">
+      <div class="env-param">Humidité relative</div>
+      <div class="env-mars">< 2 %</div>
+      <div class="env-earth">↑ Terre : ~50–80 %</div>
+      <div class="env-sim">✓ Contrôle hygromètre ±0,3 %</div>
+    </div>
+  </div>
+
+  <p class="bt">
+    L'enceinte HADES-2 (Hostile Atmosphere & Desiccation Experimental Simulator, génération 2),
+    développée par la DSVT entre 2021 et 2023, est la première installation capable de maintenir
+    simultanément ces six paramètres de façon stable sur plus d'un an. Son volume utile de 
+    180 litres accueille jusqu'à 48 coupoles de culture indépendantes, chacune instrumentée
+    pour mesure en continu la pression partielle de CO₂ produit (capteur NDIR, seuil 0,1 ppm),
+    la fluorescence cellulaire et la température locale.
+  </p>
+
+  <!-- ===== 2. LES ORGANISMES TESTÉS ===== -->
+  <h2 class="section-heading blue" id="s2">2. Les sept espèces candidates</h2>
+
+  <p class="bt">
+    La sélection des espèces candidates repose sur la base de données MASE (Mars Analogues
+    for Space Exploration) et sur les résultats de la campagne MARSLAB-III (2022, 180 jours) [3].
+    Sept espèces ont été retenues selon trois critères : tolérance documentée à au moins
+    deux des six paramètres martiens, appartenance à des phylums différents (diversité
+    phylogénétique), et disponibilité de souches de collection bien caractérisées ou
+    d'isolats de terrain récents.
+  </p>
+
+  <!-- Cartes organismes — structure unique à cette publication -->
+  <div class="orga-grid">
+    <div class="orga-card green">
+      <div class="orga-class">Firmicutes · Bactérie</div>
+      <div class="orga-name">Deinococcus radiodurans<br><span style="font-weight:300;font-size:12px">R1 (ATCC 13939)</span></div>
+      <div class="orga-desc">
+        Référence mondiale de la résistance aux radiations ionisantes (jusqu'à 1,5 MGy)
+        et aux UV. Capable de réparer son ADN fragmenté en quelques heures grâce à
+        un système de recombinaison homologue exceptionnel [4].
+        Testée ici pour la première fois sous régolithe perchlorate martien.
+      </div>
+      <div class="orga-tags">
+        <span class="orga-tag">Radio-résistante</span>
+        <span class="orga-tag">Dessiccation</span>
+        <span class="orga-tag">−15 °C min</span>
+      </div>
+      <div class="orga-result">
+        <span class="orga-result-val survived">● Croissance active</span>
+        <span class="orga-result-lbl">jusqu'à J+560</span>
+      </div>
+    </div>
+
+    <div class="orga-card blue">
+      <div class="orga-class">Cyanobactérie</div>
+      <div class="orga-name">Chroococcidiopsis thermalis<br><span style="font-weight:300;font-size:12px">CCMEE 029</span></div>
+      <div class="orga-desc">
+        Cyanobactérie unicellulaire considérée comme l'organisme photosynthétique le
+        plus résistant au monde. Isolée de roches cryptoendolithiques dans le désert
+        de Negev. Capable de photosynthèse sous flux lumineux 1 000× inférieur au
+        plein soleil terrestre [5].
+      </div>
+      <div class="orga-tags">
+        <span class="orga-tag">Photosynthèse extrême</span>
+        <span class="orga-tag">Endolithique</span>
+        <span class="orga-tag">UV-tolérant</span>
+      </div>
+      <div class="orga-result">
+        <span class="orga-result-val survived">● Croissance active</span>
+        <span class="orga-result-lbl">jusqu'à J+560 (ralentie à partir J+420)</span>
+      </div>
+    </div>
+
+    <div class="orga-card yellow">
+      <div class="orga-class">Archée haloacidophile · Nouvelle espèce</div>
+      <div class="orga-name">Ferroacidus ifrasensis<br><span style="font-weight:300;font-size:12px">nov. sp. — Isolat AZO-2023-F7</span></div>
+      <div class="orga-desc">
+        Souche inédite isolée de sources hydrothermales acides de l'île de Faial (Açores)
+        en 2023 par l'équipe DSVT. Croît à pH 0,8–2,2, 55–72 °C, en présence de
+        Fe³⁺ comme accepteur d'électrons terminal. Sa tolérance aux perchlorates
+        était inconnue avant cette étude.
+      </div>
+      <div class="orga-tags">
+        <span class="orga-tag">pH 0,8–2,2</span>
+        <span class="orga-tag">Thermophile</span>
+        <span class="orga-tag">Chimioautotrophe</span>
+        <span class="orga-tag">Nouvelle espèce ★</span>
+      </div>
+      <div class="orga-result">
+        <span class="orga-result-val survived">● Croissance active</span>
+        <span class="orga-result-lbl">doublement toutes 72 h — meilleure performance</span>
+      </div>
+    </div>
+
+    <div class="orga-card orange">
+      <div class="orga-class">Bactérie halophile</div>
+      <div class="orga-name">Halobacterium salinarum<br><span style="font-weight:300;font-size:12px">NRC-1 (ATCC 700922)</span></div>
+      <div class="orga-desc">
+        Archée halophile extrême (NaCl optimal 4,3 M), bien documentée pour sa
+        résistance aux UV et aux radiations. Ses photorécepteurs (bactériorhodopsine)
+        lui permettent une production d'énergie indépendante de l'oxygène [6].
+        Sensible aux températures < −20 °C.
+      </div>
+      <div class="orga-tags">
+        <span class="orga-tag">NaCl 4,3 M opt.</span>
+        <span class="orga-tag">Bactériorhodopsine</span>
+        <span class="orga-tag">UV-résistant</span>
+      </div>
+      <div class="orga-result">
+        <span class="orga-result-val partial">◐ Survie partielle</span>
+        <span class="orga-result-lbl">arrêt croissance J+148, sporulation</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="bt" style="font-size:13px;color:var(--text-muted)">
+    Les trois autres espèces testées — <em>Sulfolobus acidocaldarius</em>, <em>Psychrobacter arcticus</em>
+    et <em>Bacillus subtilis</em> 168 — n'ont pas maintenu de croissance active au-delà de J+30 dans
+    les conditions de pleine simulation. Leurs données (survie résiduelle, déclin métabolique)
+    sont publiées en données supplémentaires (Zenodo 10.5281/zenodo.14882041).
+  </p>
+
+  <!-- ===== 3. PROTOCOLE ===== -->
+  <h2 class="section-heading" id="s3">3. Protocole expérimental</h2>
+
+  <p class="bt">
+    Chaque espèce est cultivée en triplicat dans des coupoles de 500 mL contenant le régolithe
+    simulé JSC Mars-1A enrichi en MgClO₄ (0,6 % w/w) et en NaCl (8 % w/v), humidifié
+    à 2 % HR. Les coupoles sont exposées au flux UV calibré par photodiode de référence
+    (incertitude ±3 %) 12 heures sur 24, en synchronie avec le cycle thermique.
+    La croissance est mesurée par trois méthodes indépendantes et complémentaires.
+  </p>
+
+  <div class="tbl-wrap">
+    <div class="tbl-head">Tableau 1 — Méthodes de mesure de la croissance et fréquence d'acquisition</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Méthode</th>
+          <th>Paramètre mesuré</th>
+          <th>Fréquence</th>
+          <th>Seuil de détection</th>
+          <th>Indépendance UV</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Spectrométrie de masse isotopique (¹³C-acétate)</td>
+          <td class="tm">Fixation carbone active</td>
+          <td class="tm">Hebdomadaire</td>
+          <td class="tg">0,01 fmol·cell⁻¹·h⁻¹</td>
+          <td class="tg">Oui</td>
+        </tr>
+        <tr>
+          <td>Fluorescence DAPI / SYBR Green I</td>
+          <td class="tm">Comptage cellulaire direct</td>
+          <td class="tm">Bi-hebdomadaire</td>
+          <td class="tg">10² cells·mL⁻¹</td>
+          <td class="tg">Oui (filtres)</td>
+        </tr>
+        <tr>
+          <td>Capteur NDIR CO₂ produit</td>
+          <td class="tm">Respiration / photosynthèse</td>
+          <td class="tm">Continu (1 min)</td>
+          <td class="tg">0,1 ppm CO₂</td>
+          <td class="tg">Oui</td>
+        </tr>
+        <tr>
+          <td>ATP-luciférase (bioluminescence)</td>
+          <td class="tm">Activité métabolique globale</td>
+          <td class="tm">Mensuelle</td>
+          <td class="ty">10 amol ATP</td>
+          <td class="ty">Partielle</td>
+        </tr>
+        <tr>
+          <td>Séquençage ARNr 16S / 18S</td>
+          <td class="tm">Diversité et intégrité génomique</td>
+          <td class="tm">J0, J90, J280, J560</td>
+          <td class="tg">1 cellule (PCR)</td>
+          <td class="tg">Oui</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="tbl-note">
+      La redondance des méthodes est intentionnelle : elle permet d'exclure les artefacts liés au flux UV 
+      intense (photolyse de certains fluorophores) et aux interférences chimiques des perchlorates sur l'ATP-luciférase.
+      Toutes les mesures sont réalisées en chambre stérile sous atmosphère N₂ pour éviter la recontamination.
+    </div>
+  </div>
+
+  <!-- ===== 4. RÉSULTATS ===== -->
+  <h2 class="section-heading orange" id="s4">4. Résultats</h2>
+
+  <p class="bt">
+    La figure 1 présente les courbes de croissance cellulaire (densité normalisée à J0 = 1,0)
+    sur 560 jours pour les trois espèces positives et <em>H. salinarum</em> (contrôle partiel).
+    Les données sont la moyenne des triplicats ; les barres d'erreur (±1 ET) sont visibles
+    uniquement aux points de mesure bihebdomadaires pour la lisibilité.
+  </p>
+
+  <!-- Graphique croissance — pièce centrale des résultats -->
+  <div class="chart-wrap">
+    <div class="chart-inner">
+      <div class="chart-top">
+        <span class="chart-ttl">Densité cellulaire normalisée (N/N₀) sur 560 jours — conditions martiennes complètes (HADES-2)</span>
+        <div class="legend">
+          <div class="li"><div class="ld" style="background:#facc15"></div><em>F. ifrasensis</em></div>
+          <div class="li"><div class="ld" style="background:#34d399"></div><em>D. radiodurans</em></div>
+          <div class="li"><div class="ld" style="background:#60a5fa"></div><em>C. thermalis</em></div>
+          <div class="li"><div class="ld" style="background:#f87171;opacity:.6"></div><em>H. salinarum</em> (déclin)</div>
+        </div>
+      </div>
+      <svg viewBox="0 0 820 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+        <defs>
+          <linearGradient id="gf" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#facc15" stop-opacity=".15"/>
+            <stop offset="1" stop-color="#facc15" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="gd" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#34d399" stop-opacity=".12"/>
+            <stop offset="1" stop-color="#34d399" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <!-- Axes -->
+        <line x1="65" y1="15" x2="65"  y2="250" stroke="#1b2555" stroke-width="1"/>
+        <line x1="65" y1="250" x2="800" y2="250" stroke="#1b2555" stroke-width="1"/>
+        <!-- Grilles H -->
+        <line x1="65" y1="50"  x2="800" y2="50"  stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
+        <line x1="65" y1="100" x2="800" y2="100" stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
+        <line x1="65" y1="150" x2="800" y2="150" stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
+        <line x1="65" y1="200" x2="800" y2="200" stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
+        <!-- Labels Y -->
+        <text x="55" y="54"  fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">8×</text>
+        <text x="55" y="104" fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">5×</text>
+        <text x="55" y="154" fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">3×</text>
+        <text x="55" y="204" fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">1×</text>
+        <!-- Labels X -->
+        <text x="65"  y="268" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">J0</text>
+        <text x="179" y="268" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">J90</text>
+        <text x="293" y="268" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">J180</text>
+        <text x="407" y="268" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">J280</text>
+        <text x="545" y="268" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">J400</text>
+        <text x="800" y="268" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">J560</text>
+        <!-- Ligne N/N0=1 de référence -->
+        <line x1="65" y1="200" x2="800" y2="200" stroke="#ffffff" stroke-width="1" stroke-dasharray="2,6" opacity=".12"/>
+        <!-- F. ifrasensis — meilleure croissance -->
+        <polyline points="65,200 179,182 293,162 407,120 545,80 800,52" fill="none" stroke="#facc15" stroke-width="2.5"/>
+        <polygon  points="65,200 179,182 293,162 407,120 545,80 800,52 800,250 65,250" fill="url(#gf)"/>
+        <circle cx="65"  cy="200" r="4" fill="#facc15"/>
+        <circle cx="179" cy="182" r="4" fill="#facc15"/>
+        <circle cx="293" cy="162" r="4" fill="#facc15"/>
+        <circle cx="407" cy="120" r="4" fill="#facc15"/>
+        <circle cx="545" cy="80"  r="4" fill="#facc15"/>
+        <circle cx="800" cy="52"  r="5" fill="#facc15" stroke="rgba(250,204,21,.35)" stroke-width="8"/>
+        <text x="806" y="54" fill="#facc15" font-size="10" font-family="DM Mono,monospace">×7,2</text>
+        <!-- D. radiodurans -->
+        <polyline points="65,200 179,188 293,174 407,152 545,132 800,110" fill="none" stroke="#34d399" stroke-width="2.2"/>
+        <polygon  points="65,200 179,188 293,174 407,152 545,132 800,110 800,250 65,250" fill="url(#gd)"/>
+        <circle cx="179" cy="188" r="3.5" fill="#34d399"/>
+        <circle cx="293" cy="174" r="3.5" fill="#34d399"/>
+        <circle cx="407" cy="152" r="3.5" fill="#34d399"/>
+        <circle cx="545" cy="132" r="3.5" fill="#34d399"/>
+        <circle cx="800" cy="110" r="3.5" fill="#34d399"/>
+        <text x="806" y="113" fill="#34d399" font-size="10" font-family="DM Mono,monospace">×3,8</text>
+        <!-- C. thermalis — ralentit après J420 -->
+        <polyline points="65,200 179,190 293,178 407,162 545,148 680,138 800,145" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="5,3"/>
+        <circle cx="179" cy="190" r="3.5" fill="#60a5fa"/>
+        <circle cx="293" cy="178" r="3.5" fill="#60a5fa"/>
+        <circle cx="407" cy="162" r="3.5" fill="#60a5fa"/>
+        <circle cx="545" cy="148" r="3.5" fill="#60a5fa"/>
+        <circle cx="800" cy="145" r="3.5" fill="#60a5fa"/>
+        <text x="806" y="148" fill="#60a5fa" font-size="10" font-family="DM Mono,monospace">×3,2</text>
+        <!-- H. salinarum — déclin -->
+        <polyline points="65,200 179,205 293,215 407,235 450,248" fill="none" stroke="#f87171" stroke-width="1.8" stroke-dasharray="3,4" opacity=".6"/>
+        <circle cx="179" cy="205" r="3" fill="#f87171" opacity=".6"/>
+        <circle cx="293" cy="215" r="3" fill="#f87171" opacity=".6"/>
+        <circle cx="407" cy="235" r="3" fill="#f87171" opacity=".6"/>
+        <!-- Annotation J148 déclin -->
+        <line x1="407" y1="130" x2="407" y2="248" stroke="#f87171" stroke-width="1" stroke-dasharray="3,3" opacity=".4"/>
+        <text x="410" y="128" fill="#f87171" font-size="9" font-family="DM Mono,monospace" opacity=".6">J148 : arrêt H.sal.</text>
+        <!-- Annotation J420 ralentissement C.th -->
+        <line x1="680" y1="60" x2="680" y2="250" stroke="#60a5fa" stroke-width="1" stroke-dasharray="2,4" opacity=".3"/>
+        <text x="684" y="58" fill="#60a5fa" font-size="9" font-family="DM Mono,monospace" opacity=".5">J420</text>
+      </svg>
+    </div>
+    <div class="chart-cap">
+      <strong>Figure 1</strong>
+      Densité cellulaire normalisée (N/N₀, J0 = 1,0) sur 560 jours en conditions martiennes complètes (HADES-2).
+      <em>F. ifrasensis</em> (jaune) atteint un facteur ×7,2 à J560.
+      <em>D. radiodurans</em> (vert) et <em>C. thermalis</em> (bleu, pointillé) maintiennent une croissance positive.
+      <em>H. salinarum</em> (rouge, translucide) montre un déclin progressif et cesse toute activité à J148.
+      Barres d'erreur ±1 ET (triplicats) ; visibles aux points de mesure bi-hebdomadaires.
+      Axe Y : échelle linéaire, N/N₀ = 1 correspond à la densité cellulaire initiale.
+    </div>
+  </div>
+
+  <!-- Timeline des événements clés — structure originale à cette pub -->
+  <h3 class="sub">Chronologie des observations majeures</h3>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-day"><div class="tl-day-num">J0</div><div class="tl-day-lbl">Démarrage</div></div>
+      <div class="tl-dot active"></div>
+      <div class="tl-content">
+        <div class="tl-event">Inoculation des 7 espèces — enceinte HADES-2 mise en conditions</div>
+        <div class="tl-detail">Toutes les espèces présentent une activité ¹³C-acétate mesurable à J0. 
+        Densité cellulaire initiale normalisée à 1,0 × 10⁶ cells·mL⁻¹ pour toutes les souches.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-day"><div class="tl-day-num">J14</div><div class="tl-day-lbl">Semaine 2</div></div>
+      <div class="tl-dot active"></div>
+      <div class="tl-content">
+        <div class="tl-event">Perte des 3 espèces sensibles — signal résiduel uniquement</div>
+        <div class="tl-detail"><em>S. acidocaldarius</em>, <em>P. arcticus</em> et <em>B. subtilis</em> 168 
+        chutent sous le seuil de détection DAPI (< 10² cells·mL⁻¹). Pas de signal ¹³C-acétate. 
+        Confirmation par PCR 16S à J30.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-day"><div class="tl-day-num">J90</div><div class="tl-day-lbl">3 mois</div></div>
+      <div class="tl-dot active"></div>
+      <div class="tl-content">
+        <div class="tl-event">Première divergence entre les espèces positives — <em>F. ifrasensis</em> en tête</div>
+        <div class="tl-detail"><em>F. ifrasensis</em> montre déjà un facteur ×1,4 à J90.
+        Séquençage ARNr 16S confirme l'intégrité génomique des trois souches actives. 
+        Aucune contamination croisée détectée.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-day"><div class="tl-day-num">J148</div><div class="tl-day-lbl">5 mois</div></div>
+      <div class="tl-dot partial"></div>
+      <div class="tl-content">
+        <div class="tl-event"><em>H. salinarum</em> — arrêt de croissance et entrée en sporulation</div>
+        <div class="tl-detail">Le signal ATP-luciférase chute de 94 % en 72 heures. 
+        Observation microscopique de vésicules de gaz caractéristiques de la dormance chez les Halobactériaceae.
+        La souche est maintenue dans l'enceinte pour suivi de la survie résiduelle.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-day"><div class="tl-day-num">J280</div><div class="tl-day-lbl">9 mois</div></div>
+      <div class="tl-dot active"></div>
+      <div class="tl-content">
+        <div class="tl-event">Deuxième séquençage — première détection d'adaptations génomiques chez <em>F. ifrasensis</em></div>
+        <div class="tl-detail">Comparaison J0 vs J280 par séquençage Illumina Nova Seq 6000 : 
+        14 SNP identifiés, dont 4 dans des gènes impliqués dans la réparation des dommages 
+        à l'ADN par UV (uvrABC operon). Interprétation : pression de sélection active 
+        par le flux UV martien.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-day"><div class="tl-day-num">J420</div><div class="tl-day-lbl">14 mois</div></div>
+      <div class="tl-dot partial"></div>
+      <div class="tl-content">
+        <div class="tl-event"><em>C. thermalis</em> — ralentissement photosynthétique détecté</div>
+        <div class="tl-detail">Le signal CO₂ net (photosynthèse − respiration) passe en dessous de 
+        0 deux jours sur sept à partir de J420, suggérant que la productivité photosynthétique 
+        n'excède plus les pertes respiratoires sous flux UV intense. La population reste 
+        viable (DAPI positif) mais ne croît plus nettement.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-day"><div class="tl-day-num">J560</div><div class="tl-day-lbl">Fin essai</div></div>
+      <div class="tl-dot active"></div>
+      <div class="tl-content">
+        <div class="tl-event">Fin de la campagne MARSLAB-IV — bilan positif pour 3 espèces</div>
+        <div class="tl-detail"><em>F. ifrasensis</em> ×7,2, <em>D. radiodurans</em> ×3,8, <em>C. thermalis</em> ×3,2 (en décélération).
+        Les cultures sont maintenues vivantes pour la campagne MARSLAB-V (2027, 840 jours prévus).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Figure microscopie -->
+  <div class="fig-wrap">
+    <div class="fig-ph">
+      <span class="fig-icon">🔬</span>
+      <span class="fig-desc">Fig. 2 — Microscopie à fluorescence DAPI de F. ifrasensis à J560 (attendue)</span>
+      <span class="fig-sub">
+        Comparaison J0 (gauche) et J560 (droite) — coloration DAPI (noyaux bleus) + SYBR Green I (membranes vertes).<br>
+        Grossissement × 1 000. Densité cellulaire mesurée : 7,2 × 10⁶ cells·mL⁻¹ à J560.<br>
+        IFRAS DSVT — Plateforme imagerie cellulaire, jan. 2026.
+      </span>
+    </div>
+    <div class="fig-cap">
+      <strong>Figure 2</strong>
+      Microscopie à fluorescence de <em>F. ifrasensis</em> nov. sp. à J0 (gauche) et J560 (droite), 
+      double marquage DAPI / SYBR Green I, grossissement × 1 000 (objectif à immersion).
+      À J560, la densité cellulaire est 7,2 fois supérieure à J0.
+      La morphologie cellulaire (bacilles courts, 0,8–1,2 µm × 1,5–2,2 µm) est conservée, 
+      sans formation de biofilm ni aggrégats, ce qui indique une croissance planctonique 
+      active plutôt qu'une réponse de stress communautaire.
+    </div>
+  </div>
+
+  <!-- ===== 5. DISCUSSION ===== -->
+  <h2 class="section-heading blue" id="s5">5. Discussion et implications</h2>
+
+  <h3 class="sub">5.1 Ce que signifie « croissance » dans ce contexte</h3>
+
+  <p class="bt">
+    Il est important de distinguer survie passive et croissance active. De nombreuses études
+    antérieures ont démontré que des spores bactériennes peuvent survivre à des paramètres
+    martiens isolés sur de longues durées [7, 8]. La nouveauté de nos résultats tient à la
+    démonstration, par trois méthodes indépendantes, d'une fixation de carbone active (signal
+    ¹³C-acétate positif), d'une division cellulaire (augmentation DAPI) et d'une 
+    productivité métabolique nette (ATP-luciférase), et ce simultanément sous les six
+    paramètres martiens combinés.
+  </p>
+
+  <div class="hl">
+    La croissance de <em>F. ifrasensis</em> (doublement toutes 72 h) dans ces conditions 
+    est particulièrement remarquable : son taux de croissance en conditions martiennes 
+    représente environ 18 % de son taux optimal en laboratoire (doublement toutes 13 h à 
+    pH 1,5, 62 °C, Fe³⁺ 10 mM). Ce rapport est comparable au ratio observé chez 
+    <em>D. radiodurans</em> sous irradiation maximale [4].
+  </div>
+
+  <h3 class="sub">5.2 Adaptations observées et évolution en temps réel</h3>
+
+  <p class="bt">
+    Les 14 SNP identifiés chez <em>F. ifrasensis</em> entre J0 et J280 constituent, 
+    à notre connaissance, la première observation directe d'adaptation génomique 
+    sous conditions martiennes simulées complètes. Quatre SNP localisés dans 
+    l'opéron <em>uvrABC</em> — impliqué dans la réparation par excision de nucléotides (NER) 
+    des lésions UV — suggèrent une pression de sélection directe exercée par le flux 
+    UV-C martien. Des études de mutagenèse dirigée sont en cours pour confirmer 
+    l'avantage sélectif conféré par ces variants.
+  </p>
+
+  <p class="bt">
+    Le ralentissement observé chez <em>C. thermalis</em> après J420 soulève une question 
+    d'ordre pratique pour les modèles d'habitabilité : même les organismes les plus 
+    résistants aux UV peuvent atteindre un seuil de saturation des mécanismes de réparation 
+    sous flux UV-C intense et continu. Ce seuil n'est pas une limite absolue mais une 
+    limite contextuelle dépendant de la disponibilité des substrats carbonés et azotés.
+  </p>
+
+  <h3 class="sub">5.3 Implications pour la protection planétaire</h3>
+
+  <div class="hl orange">
+    Ces résultats ont des conséquences directes pour la politique de protection planétaire
+    des missions martiennes (COSPAR catégories IV et V). La démonstration que des 
+    microorganismes terrestres peuvent non seulement survivre mais croître sous des 
+    conditions martiennes réalistes renforce l'exigence de stérilisation des équipements
+    de surface au niveau DHMR (Dry Heat Microbial Reduction, 125 °C / 5 h) ou supérieur,
+    en particulier pour les engins équipés de systèmes de forage ou d'analyse de sub-surface [9].
+  </div>
+
+  <p class="bt">
+    Nous recommandons que la prochaine révision des politiques COSPAR (prévue 2027) 
+    intègre explicitement les espèces chimioautotrophes haloacidophiles — largement 
+    absentes des travaux antérieurs qui se concentraient sur les espores de 
+    <em>Bacillus</em> — dans les protocoles d'évaluation de risque de contamination avant vol.
+  </p>
+
+  <div class="art-divider"></div>
+
+  <!-- RÉFÉRENCES -->
+  <div class="refs-sec" id="s6">
+    <div class="ref-ttl">Références bibliographiques</div>
+    <div class="ref-list">
+      <div class="ref-item"><b>Grotzinger J.P. et al.</b> — <em>A habitable fluvio-lacustrine environment at Yellowknife Bay, Gale Crater, Mars</em> — 2014</div>
+      <div class="ref-item"><b>Hecht M.H. et al.</b> — <em>Detection of perchlorate and the soluble chemistry of martian soil at the Phoenix lander site</em> — 2009</div>
+      <div class="ref-item"><b>Selbmann L. et al.</b> — <em>Resistance of Antarctic black fungi and cryptoendolithic communities to simulated space and Martian conditions</em> — 2015</div>
+      <div class="ref-item"><b>Mattimore V. & Battista J.R.</b> — <em>Radioresistance of Deinococcus radiodurans : functions necessary to survive ionizing radiation are also necessary to survive prolonged desiccation</em> — 1996</div>
+      <div class="ref-item"><b>Billi D. et al.</b> — <em>Dried biofilms of desert strains of Chroococcidiopsis survived 2 years of exposure to low Earth orbit in the EXPOSE-R2 experiment</em> — 2019</div>
+      <div class="ref-item"><b>Rothschild L.J. & Mancinelli R.L.</b> — <em>Life in extreme environments</em> — 2001</div>
+      <div class="ref-item"><b>Nicholson W.L. et al.</b> — <em>Resistance of Bacillus endospores to extreme terrestrial and extraterrestrial environments</em> — 2000</div>
+      <div class="ref-item"><b>Verseux C. et al.</b> — <em>Sustainable life support on Mars — the potential roles of microorganisms</em> — 2016</div>
+      <div class="ref-item"><b>COSPAR</b> — <em>COSPAR Policy on Planetary Protection</em> — 2020</div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <strong>Conflits d'intérêts :</strong> Aucun. Dr. C. Novak contribue à titre personnel et n'engage pas la position de l'ESA. —
+    <strong>Financement :</strong> ANR-22-ASTR-0031 « EXTREMARS » ; soutien CNES programme astrobiologie 2024. —
+    <strong>Dépôt souche :</strong> <em>Ferroacidus ifrasensis</em> nov. sp. déposée à la Deutsche Sammlung von Mikroorganismen (DSM 118504) et à la Collection de l'Institut Pasteur (CIP 111.23). —
+    <strong>Données brutes :</strong> Zenodo 10.5281/zenodo.14882041 (licences CC-BY 4.0). —
+    <strong>Contributions :</strong> S.G. : direction, conception MARSLAB-IV, analyses métabolomiques ; M.P. : physiologie, DAPI, ATP ; Y.T. : géochimie régolithe simulé ; I.A.-R. : séquençage, bioinformatique ; C.N. : interprétation protection planétaire.
+  </div>
+
+</div>
+
+<footer style="background:#020617;border-top:1px solid #1b2555;padding:32px 30px;text-align:center;font-size:12px;color:#6b7280;">
+  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale · Publications soumises à validation institutionnelle
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{
+  const d=document.documentElement;
+  document.getElementById('progressBar').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%';
+});
+const secs=['s0','s1','s2','s3','s4','s5','s6'];
+const dots=document.querySelectorAll('.toc-dot');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const i=secs.indexOf(e.target.id);
+      if(i>=0){dots.forEach(d=>d.classList.remove('active'));dots[i]&&dots[i].classList.add('active');}
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+secs.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
+dots.forEach((d,i)=>{d.addEventListener('click',()=>{const el=document.getElementById(secs[i]);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});});});
+</script>
+</body>
+</html>
