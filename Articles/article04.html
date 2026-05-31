@@ -1,739 +1,647 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>IFRAS — Sécurité des systèmes d’authentification</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <style>
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Roboto, Arial, sans-serif;
-      background-color: #050b1e;
-      color: #e6e6e6;
-      line-height: 1.75;
-    }
-
-    header {
-      background: linear-gradient(180deg, #0a1a3a, #050b1e);
-      padding: 30px 20px;
-      border-bottom: 1px solid #1b2555;
-    }
-
-    .header-container {
-      max-width: 1100px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      gap: 25px;
-    }
-
-    .logo {
-      width: 90px;
-    }
-
-    nav {
-      background-color: #070f2b;
-      border-bottom: 1px solid #1b2555;
-    }
-
-    nav ul {
-      max-width: 1100px;
-      margin: auto;
-      padding: 0;
-      list-style: none;
-      display: flex;
-      gap: 30px;
-    }
-
-    nav li {
-      padding: 14px 0;
-    }
-
-    nav a {
-      color: #d1d5db;
-      text-decoration: none;
-      font-size: 14px;
-    }
-
-    nav a:hover {
-      color: white;
-    }
-
-    main {
-      max-width: 950px;
-      margin: auto;
-      padding: 80px 20px;
-    }
-
-    h1 {
-      font-size: 36px;
-      margin-bottom: 15px;
-    }
-
-    .article-meta {
-      font-size: 14px;
-      color: #9ca3af;
-      margin-bottom: 50px;
-    }
-
-    .abstract {
-      background: #070f2b;
-      border: 1px solid #1b2555;
-      border-radius: 14px;
-      padding: 30px;
-      margin-bottom: 70px;
-    }
-
-    .abstract h2 {
-      margin-top: 0;
-      font-size: 20px;
-      color: #c7d2fe;
-    }
-
-    section {
-      margin-bottom: 20px;
-    }
-
-    section h2 {
-      font-size: 24px;
-      margin-bottom: 4px;
-      color: #c7d2fe;
-    }
-
-    p {
-      font-size: 15px;
-      color: #d1d5db;
-    }
-
-    .split {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-      margin: 10px 0;
-    }
-
-    .split.reverse {
-      flex-direction: row-reverse;
-    }
-
-    .split img {
-      width: 45%;
-      border-radius: 12px;
-      border: 1px solid #1b2555;
-    }
-
-    .split .text {
-      width: 55%;
-    }
-
-    .figure {
-      margin: 60px 0;
-      text-align: center;
-    }
-
-    .figure img {
-      max-width: 100%;
-      border-radius: 12px;
-      border: 1px solid #1b2555;
-    }
-
-    .caption {
-      font-size: 13px;
-      color: #9ca3af;
-      margin-top: 10px;
-    }
-
-    .equation {
-      background: #020617;
-      border: 1px solid #1b2555;
-      padding: 25px;
-      border-radius: 12px;
-      font-family: "Courier New", monospace;
-      text-align: center;
-      margin: 40px 0;
-      color: #c7d2fe;
-      font-size: 15px;
-    }
-
-    .note {
-      background: #050b1e;
-      border-left: 4px solid #4f6bed;
-      padding: 20px 25px;
-      margin: 40px 0;
-      color: #aab3d6;
-      font-size: 14px;
-    }
-
-    footer {
-      background-color: #020617;
-      border-top: 1px solid #1b2555;
-      padding: 30px 20px;
-      font-size: 12px;
-      color: #6b7280;
-    }
-
-    footer .footer-container {
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    @media (max-width: 900px) {
-      .split, .split.reverse {
-        flex-direction: column;
-      }
-      .split img, .split .text {
-        width: 100%;
-      }
-    }
-    .entropy-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 50px 0;
-  background-color: #070f2b;
-  border: 1px solid #1b2555;
-  border-radius: 12px;
-  overflow: hidden;
-  font-size: 14px;
-}
-
-.entropy-table th,
-.entropy-table td {
-  padding: 16px 14px;
-  text-align: center;
-  border-bottom: 1px solid #1b2555;
-}
-
-.entropy-table thead {
-  background: linear-gradient(180deg, #0a1a3a, #070f2b);
-}
-
-.entropy-table th {
-  color: #c7d2fe;
-  font-weight: 600;
-}
-
-.entropy-table td {
-  color: #d1d5db;
-}
-
-.entropy-table td span {
-  font-size: 12px;
-  color: #9ca3af;
-}
-
-.entropy-table tbody tr:hover {
-  background-color: rgba(79, 107, 237, 0.08);
-}
-
-  </style>
-  
+<meta charset="UTF-8">
+<title>Sécurité des systèmes d'authentification · IFRAS DSIN</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script id="MathJax-script" async
-        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-</script>
-  
-</head>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+:root {
+  --bg-main:#050b1e; --bg-dark:#020617; --bg-light:#070f2b;
+  --border:#1b2555; --border-sub:#0e1535;
+  --accent:#34d399; --accent2:#4f6bed; --accent3:#f97316;
+  --text-main:#e6e6e6; --text-soft:#aab3d6; --text-muted:#4a5280;
+  --mono:"DM Mono",monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"DM Sans",sans-serif;background:var(--bg-main);color:var(--text-main);line-height:1.7;}
+::-webkit-scrollbar{width:4px;} ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+header{position:fixed;top:0;width:100%;z-index:1000;background:rgba(5,11,30,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+.header-inner{max-width:1300px;margin:auto;padding:12px 30px;display:flex;align-items:center;justify-content:space-between;}
+.header-left{display:flex;align-items:center;gap:40px;}
+.logo-link img{height:60px;}
+.main-nav{list-style:none;display:flex;gap:32px;}
+.main-nav a{text-decoration:none;color:var(--text-soft);font-size:14px;letter-spacing:.05em;}
+.main-nav a:hover{color:white;}
+.login-btn{padding:8px 18px;border-radius:6px;border:1px solid var(--accent2);color:white;text-decoration:none;font-size:13px;}
+.login-btn:hover{background:var(--accent2);}
+.sub-nav{margin-top:84px;background:var(--bg-light);border-bottom:1px solid var(--border);}
+.sub-nav ul{max-width:1300px;margin:0 auto;padding:0 30px;list-style:none;display:flex;justify-content:space-between;}
+.sub-nav li{padding:14px 0;}
+.sub-nav a{color:var(--text-soft);text-decoration:none;font-size:14px;letter-spacing:.06em;}
+.sub-nav a:hover{color:white;}
+.sub-nav a.active{color:white;border-bottom:2px solid var(--accent2);padding-bottom:12px;}
+.pub-wrapper{max-width:900px;margin:0 auto;padding:52px 30px 100px;}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--text-muted);letter-spacing:.06em;margin-bottom:36px;font-family:var(--mono);}
+.breadcrumb a{color:var(--text-muted);text-decoration:none;}
+.breadcrumb a:hover{color:var(--accent);}
+.breadcrumb span{opacity:.4;}
+/* META BADGES */
+.meta-top{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+.badge{font-size:10.5px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;font-weight:500;}
+.badge-j{background:rgba(52,211,153,.1);color:var(--accent);border:1px solid rgba(52,211,153,.25);}
+.badge-d{background:rgba(79,107,237,.1);color:var(--accent2);border:1px solid rgba(79,107,237,.2);}
+.badge-o{background:rgba(52,211,153,.07);color:var(--accent);border:1px solid rgba(52,211,153,.15);}
+.badge-dt{background:rgba(255,255,255,.04);color:var(--text-muted);border:1px solid rgba(255,255,255,.08);}
+/* TITRE */
+.article-title{font-family:"DM Sans",sans-serif;font-size:clamp(18px,2.4vw,23px);font-weight:400;color:var(--text-main);line-height:1.5;letter-spacing:0;margin-bottom:18px;}
+.article-subtitle{font-size:15px;color:var(--text-soft);font-weight:300;line-height:1.65;margin-bottom:28px;font-style:italic;border-left:2px solid var(--accent);padding-left:16px;}
+.authors-block{background:var(--bg-light);border:1px solid var(--border);border-radius:10px;padding:16px 20px;display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;margin-bottom:28px;}
+.author-entry{display:flex;flex-direction:column;gap:2px;}
+.author-name{font-size:13.5px;font-weight:600;color:white;}
+.author-role{font-size:11px;color:var(--text-muted);letter-spacing:.04em;}
+.author-sep{width:1px;background:var(--border);align-self:stretch;}
+.cite-block{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:12px 16px;background:rgba(0,0,0,.25);border:1px solid var(--border-sub);border-radius:8px;}
+.cite-item{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;color:var(--text-muted);}
+.cite-label{color:var(--accent);font-weight:500;}
+.cite-sep{color:var(--border);}
+.art-divider{height:1px;background:linear-gradient(90deg,var(--accent) 0%,transparent 60%);margin:40px 0;opacity:.3;}
+/* ABSTRACT */
+.abstract-box{background:rgba(52,211,153,.04);border:1px solid rgba(52,211,153,.14);border-radius:12px;padding:28px 32px;margin-bottom:44px;}
+.abstract-label{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;font-weight:500;}
+.abstract-text{font-size:14.5px;line-height:1.85;color:var(--text-soft);font-weight:300;}
+.kw-wrap{margin-top:16px;display:flex;flex-wrap:wrap;gap:7px;align-items:center;}
+.kw-lbl{font-size:11px;color:var(--text-muted);font-family:var(--mono);letter-spacing:.08em;}
+.kw-tag{font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--text-soft);}
+/* SECTIONS */
+.section-heading{font-family:"Syne",sans-serif;font-size:18px;font-weight:700;color:white;margin:44px 0 16px;display:flex;align-items:center;gap:12px;}
+.section-heading::before{content:'';display:block;width:4px;height:18px;background:var(--accent);border-radius:2px;flex-shrink:0;}
+.section-heading.blue::before{background:var(--accent2);}
+.section-heading.orange::before{background:var(--accent3);}
+.sub{font-family:"Syne",sans-serif;font-weight:700;color:var(--text-soft);margin:28px 0 10px;letter-spacing:.04em;text-transform:uppercase;font-size:11.5px;}
+p.bt{font-size:14.5px;color:var(--text-soft);line-height:1.85;font-weight:300;margin-bottom:16px;}
+ul.bt-list{font-size:14.5px;color:var(--text-soft);line-height:1.85;font-weight:300;margin-bottom:16px;padding-left:20px;display:flex;flex-direction:column;gap:8px;}
+ul.bt-list li{padding-left:8px;}
+ul.bt-list li strong{color:var(--text-main);font-weight:500;}
+/* TABLEAU */
+.tbl-wrap{margin:36px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);}
+.tbl-head{background:rgba(52,211,153,.08);padding:12px 20px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--border);}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+thead th{background:rgba(0,0,0,.3);padding:11px 16px;text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--border-sub);font-weight:500;}
+thead th:not(:first-child){text-align:center;}
+tbody tr{border-bottom:1px solid var(--border-sub);transition:background .15s;}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:rgba(255,255,255,.025);}
+tbody td{padding:10px 16px;color:var(--text-soft);vertical-align:middle;font-weight:300;}
+tbody td:not(:first-child){text-align:center;font-family:var(--mono);font-size:12.5px;color:var(--text-main);}
+tbody td:first-child{font-weight:500;color:var(--text-main);}
+tbody td span{font-size:11px;color:var(--text-muted);display:block;font-family:var(--mono);}
+.tbl-note{padding:10px 20px;font-size:11.5px;color:var(--text-muted);background:rgba(0,0,0,.2);font-style:italic;border-top:1px solid var(--border-sub);}
+/* ÉQUATION */
+.equation-box{background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:10px;padding:24px 32px;margin:28px 0;text-align:center;font-family:var(--mono);color:#c7d2fe;font-size:15px;}
+/* HIGHLIGHT */
+.hl{border-left:3px solid var(--accent);background:rgba(52,211,153,.04);border-radius:0 8px 8px 0;padding:16px 20px;margin:24px 0;font-size:14px;color:var(--text-soft);font-style:italic;line-height:1.75;}
+.hl.blue{border-color:var(--accent2);background:rgba(79,107,237,.05);}
+.hl.orange{border-color:var(--accent3);background:rgba(249,115,22,.04);}
+/* FIGURE IMAGE */
+.fig-wrap{margin:36px 0;background:var(--bg-light);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.fig-img{width:100%;display:block;border-bottom:1px solid var(--border);}
+.fig-cap{padding:14px 20px;font-size:12.5px;color:var(--text-muted);line-height:1.6;}
+.fig-cap strong{font-weight:600;color:var(--text-soft);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
+/* SPLIT LAYOUT */
+.split-wrap{display:flex;gap:24px;align-items:flex-start;margin:28px 0;}
+.split-wrap.reverse{flex-direction:row-reverse;}
+.split-wrap img{width:42%;border-radius:10px;border:1px solid var(--border);}
+.split-wrap .split-text{flex:1;}
+/* REFS */
+.refs-sec{margin-top:60px;padding-top:32px;border-top:1px solid var(--border);}
+.ref-ttl{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:20px;}
+.ref-list{counter-reset:ref;display:flex;flex-direction:column;gap:6px;}
+.ref-item{counter-increment:ref;display:flex;align-items:baseline;gap:12px;font-size:13px;line-height:1.55;color:var(--text-muted);padding:9px 14px;border-radius:6px;background:rgba(0,0,0,.15);border:1px solid var(--border-sub);}
+.ref-item::before{content:'[' counter(ref) ']';font-family:var(--mono);font-size:11px;color:var(--accent);flex-shrink:0;min-width:26px;}
+.ref-item b{color:var(--text-soft);font-weight:500;}
+.ref-item em{color:var(--text-muted);}
+.footnote{margin-top:48px;padding:20px 24px;background:rgba(0,0,0,.25);border:1px solid var(--border-sub);border-radius:10px;font-size:11.5px;color:var(--text-muted);line-height:1.7;}
+.footnote strong{color:var(--text-soft);}
+/* PROGRESS / TOC */
+.progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent2),#818cf8);z-index:9999;width:0%;transition:width .1s linear;}
+.toc-sidebar{position:fixed;right:32px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:100;}
+.toc-dot{width:6px;height:6px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s,transform .2s;position:relative;}
+.toc-dot:hover,.toc-dot.active{background:var(--accent2);transform:scale(1.5);}
+.toc-dot::after{content:attr(data-label);position:absolute;right:14px;top:50%;transform:translateY(-50%);background:var(--bg-light);border:1px solid var(--border);border-radius:5px;padding:3px 8px;font-size:10.5px;color:var(--text-soft);white-space:nowrap;font-family:var(--mono);letter-spacing:.04em;opacity:0;pointer-events:none;transition:opacity .2s;}
+.toc-dot:hover::after{opacity:1;}
+@media(max-width:1100px){.toc-sidebar{display:none;}}
+@media(max-width:640px){.split-wrap,.split-wrap.reverse{flex-direction:column;}.split-wrap img{width:100%;}}
 
+/* MathJax override pour le thème sombre */
+.MathJax{color:#c7d2fe !important;}
+</style>
+</head>
 <body>
 
+<div class="progress-bar" id="progressBar"></div>
+
 <header>
-  <div class="header-container">
-    <img src="../logo.png" alt="Logo IFRAS" class="logo">
-    <h1>Publications scientifiques</h1>
+  <div class="header-inner">
+    <div class="header-left">
+      <a href="../index.html" class="logo-link"><img src="../logo.png" alt="IFRAS"></a>
+      <nav><ul class="main-nav">
+        <li><a href="../index.html">Accueil</a></li>
+        <li><a href="../recherche.html">Recherche</a></li>
+        <li><a href="../programmes.html">Programmes</a></li>
+        <li><a href="../publications.html">Publications</a></li>
+      </ul></nav>
+    </div>
+    <div class="header-right"><a href="../connexion.html" class="login-btn">Connexion</a></div>
   </div>
 </header>
 
-<nav>
+<div class="sub-nav">
   <ul>
-    <li><a href="../index.html">Accueil</a></li>
-    <li><a href="../recherche.html">Recherche</a></li>
-    <li><a href="../programmes.html">Programmes</a></li>
-    <li><a href="../publications.html">Publications</a></li>
-    <li><a href="#">Recrutement</a></li>
-    <li><a href="#">Contact</a></li>
+    <li><a href="../publications-scientifiques.html" class="active">Publications scientifiques</a></li>
+    <li><a href="../publications-ifras.html">Publications IFRAS</a></li>
+    <li><a href="../evenements.html">Événements</a></li>
   </ul>
+</div>
+
+<nav class="toc-sidebar">
+  <div class="toc-dot active" data-label="Résumé"        data-target="s0"></div>
+  <div class="toc-dot"        data-label="Historique"    data-target="s1"></div>
+  <div class="toc-dot"        data-label="Attaques"      data-target="s2"></div>
+  <div class="toc-dot"        data-label="Entropie"      data-target="s3"></div>
+  <div class="toc-dot"        data-label="Temps"         data-target="s4"></div>
+  <div class="toc-dot"        data-label="Conclusion"    data-target="s5"></div>
+  <div class="toc-dot"        data-label="Références"    data-target="s6"></div>
 </nav>
 
-<main>
+<div class="pub-wrapper">
 
-<h1>Sécurité des systèmes d’authentification face à l’augmentation des capacités de calcul assistées par IA</h1>
+  <nav class="breadcrumb">
+    <a href="../publications.html">Publications</a>
+    <span>/</span>
+    <a href="../publications-scientifiques.html">Publications scientifiques</a>
+    <span>/</span>
+    DSIN · 2024 · Cybersécurité
+  </nav>
 
-<div class="article-meta">
-Département Systèmes & Infrastructures Numériques — IFRAS<br>
-Publication institutionnelle — Septembre 2024
-</div>
-
-<div class="abstract">
-<h2>Résumé</h2>
-<p>
-L’authentification par mot de passe demeure l’un des mécanismes de contrôle d’accès
-les plus largement déployés dans les infrastructures critiques civiles et scientifiques.
-Cependant, l’augmentation rapide des capacités de calcul, combinée aux progrès
-des modèles d’intelligence artificielle appliqués à l’optimisation des attaques,
-réduit significativement la durée de vie opérationnelle de schémas historiquement jugés sûrs.
-Cette étude présente une analyse quantitative de ces évolutions et examine les ajustements
-progressifs mis en œuvre dans les politiques internes de l’IFRAS.
-</p>
-</div>
-
-<section>
-<h2>1. Évolution historique des schémas d’authentification</h2>
-
-<p>
-Les premiers systèmes d’authentification informatisés, déployés à grande échelle à partir des années 1980 et 1990, 
-ont été conçus dans un contexte technologique et opérationnel très différent de celui d’aujourd’hui. Les modèles de 
-menace alors retenus reposaient principalement sur l’idée que l’attaquant devait disposer soit d’un accès physique 
-prolongé aux machines, soit de ressources matérielles lourdes, coûteuses et rares. Les attaques à distance étaient 
-limitées par la faible interconnexion des systèmes, l’absence d’Internet grand public et des débits réseau très réduits.
-</p>
-
-<div class="split">
-  <div class="text">
-    <p>
-   Dans les environnements institutionnels de l’époque (universités, administrations, grandes entreprises), les systèmes étaient majoritairement fermés, 
-   centralisés et administrés localement. Les comptes utilisateurs étaient hébergés sur des mainframes ou des serveurs Unix partagés, accessibles depuis des terminaux internes. 
-   Dans ce cadre, le risque principal était l’usurpation par un utilisateur légitime ou la compromission locale, bien plus que l’attaque automatisée à grande échelle.
-   C’est dans ce contexte que les politiques de mots de passe ont été définies. Des schémas courts, combinant lettres et chiffres sur une longueur limitée (souvent 6 à 8 caractères),
-   étaient considérés comme suffisants. Cette perception était renforcée par les contraintes d’ergonomie (claviers de terminaux, mémorisation humaine) et par le coût des attaques par force brute.
-    </p>
-  </div>
-  <img src="/Assets/articles/article04 image01.jpg" alt="Sécurité image">
-  </div>
-
-<p>
-Au début des années 2000, un tel espace de recherche dépassait largement les capacités de calcul accessibles dans un cadre réaliste. Les processeurs grand public fonctionnaient à 
-quelques centaines de MHz, et les architectures parallèles restaient réservées à des centres de calcul spécialisés. Une attaque exhaustive sur un tel espace pouvait théoriquement 
-nécessiter des années, voire des décennies, même en supposant une vérification rapide des tentatives. De plus, les mécanismes de stockage des mots de passe reposaient souvent sur des 
-fonctions de hachage cryptographique conçues pour être relativement coûteuses en calcul (comme DES-based crypt, puis MD5 ou SHA-1 dans certains contextes), ce qui ralentissait encore les 
-tentatives hors ligne. La combinaison d’un espace de recherche large, d’une puissance de calcul limitée et d’un faible niveau d’exposition réseau rendait donc ces schémas acceptables 
-au regard des risques perçus.
-</p>
-
-<p>
-Cependant, ces hypothèses se sont progressivement effondrées avec la généralisation d’Internet, l’explosion de la puissance de calcul (CPU multicœurs, GPU, ASIC), la démocratisation du calcul 
-distribué et l’industrialisation des attaques automatisées. Ce qui constituait autrefois une barrière économique ou technique est devenu aujourd’hui trivialement accessible, rendant obsolètes 
-les modèles de sécurité hérités de cette période. Mais alors, comment bien se portéger et être certains de la robustesse de son mot de passe ? 
-</p>
-</section>
-
-<section>
-<h2>2. Différents types d'attaque</h2>
-<p>
-Il existe plusieurs catégories d’attaques visant à compromettre les mécanismes d’authentification par mot de passe,
-chacune exploitant des leviers techniques, statistiques ou humains distincts.
-</p>
-
-<ul>
-  <li>
-    <strong>Attaque par force brute :</strong>
-    cette méthode consiste à tester systématiquement l’ensemble des combinaisons possibles jusqu’à l’obtention
-    du mot de passe correct. L’efficacité de cette approche dépend directement de la longueur du mot de passe
-    et de la taille du jeu de caractères utilisé. Plus ces paramètres sont élevés, plus l’espace de recherche
-    croît exponentiellement, rendant l’attaque coûteuse en temps et en ressources.
-  </li>
-
-  <li>
-    <strong>Attaque par dictionnaire :</strong>
-    elle repose sur l’exploitation de listes de mots de passe couramment utilisés, issues de bases de données
-    compromises ou de modèles statistiques du comportement humain. Un mot de passe réellement aléatoire
-    présente une probabilité extrêmement faible de figurer dans ces dictionnaires, ce qui réduit fortement
-    l’efficacité de cette technique.
-  </li>
-
-  <li>
-    <strong>Attaque par tables arc-en-ciel :</strong>
-    cette approche utilise des bases pré-calculées reliant des mots de passe à leurs empreintes cryptographiques.
-    Elle n’est applicable que si l’attaquant a accès aux mots de passe tels qu’ils sont stockés après hachage,
-    généralement à la suite d’une compromission de base de données. L’ajout d’un sel cryptographique
-    rend ce type d’attaque largement inefficace.
-  </li>
-
-  <li>
-    <strong>Attaque par ingénierie sociale :</strong>
-    elle exploite le facteur humain, soit en déduisant le mot de passe à partir d’informations personnelles,
-    soit en incitant la victime à le divulguer volontairement, notamment par des campagnes de phishing
-    ou de manipulation psychologique.
-  </li>
-
-  <li>
-    <strong>Attaques logicielles et système :</strong>
-    ces attaques tirent parti de vulnérabilités applicatives ou système. En cas de compromission,
-    il devient parfois possible d’extraire des mots de passe depuis la mémoire vive, des fichiers temporaires
-    ou des journaux insuffisamment protégés.
-  </li>
-</ul>
-
-<p>
-Dans une analyse strictement cryptographique, excluant les faiblesses humaines et les compromissions système,
-le vecteur d’attaque le plus dominants reste la force brute. Ce sont donc ces approches qui constituent les 
-principales références pour l’évaluation quantitative de la robustesse des mots de passe. Voyons maintenant comme
-
-</p>
-
-</section>
-  
-<section>
-<h2>2. Calcul de l'entropie</h2>
-
-<p>
-Premèrement, nous devons définir la notion de « force » d’un mot de passe : On désigne communément par la « force » d’un mot de passe sa capacité à résister à une attaque par énumération exhaustive, 
-plus connue sous le nom d’attaque par force brute. Ce type d’attaque consiste à tester systématiquement toutes les combinaisons possibles jusqu’à trouver la bonne. D’un point de vue conceptuel, la force d’un mot 
-de passe peut être rapprochée de celle d’un mécanisme cryptographique : elle est comparable à la taille d’une clé de chiffrement. Plus cette « clé » est grande, plus l’effort nécessaire pour la casser augmente.
-</p>
-
-<p>
-La robustesse d’un mot de passe est généralement exprimée à l’aide de l’entropie de Shannon, mesurée en bits. Cette mesure permet de quantifier l’imprévisibilité d’un mot de passe de manière compacte, 
-sans avoir à manipuler directement des nombres de combinaisons souvent astronomiques. L’entropie représente la quantité d’information nécessaire pour deviner un mot de passe choisi aléatoirement dans 
-un ensemble donné. Plus l’entropie est élevée, plus le mot de passe est théoriquement difficile à deviner. Cependant, il est crucial de souligner que l’entropie n’est qu’une mesure théorique. 
-Un mot de passe peut afficher une entropie élevée sur le papier tout en étant extrêmement faible en pratique. Par exemple, "Password123*" respecte de nombreuses règles de complexité (majuscules, minuscules, 
-chiffres, caractères spéciaux), mais reste trivial à casser car il repose sur des motifs humains largement intégrés aux dictionnaires d’attaque modernes.
-C’est pourquoi la génération réellement aléatoire des mots de passe est un facteur déterminant de leur sécurité effective.  
-</p>
-
-<p>
-Cette entropie se calcule à partir de la longueur du mot de passe (L), aisni que la taille du jeu de caractères utilisé (B), aussi appelée pool.
-La formule est la suivante :
-
-<div class="equation">
-\[ E = L \times \log_2(B) \]
-</div>
-</p>
-  
-<p>
-  <ul>
-  <li>E est l’entropie en bits</li>
-  <li>L est le nombre de caractères du mot de passe</li>
-  <li>B est le nombre de caractères distincts possibles à chaque position</li>
-  </ul>
-</p>
-<p>
-Voici un tableau représantant l'entropie de différents mots de passes en fonction du nombre de caractères utilisés et du nombre de pools possibles :
-</p>​
-
-  <table class="entropy-table">
-  <thead>
-    <tr>
-      <th>Base / Longueur</th>
-      <th>8 caractères</th>
-      <th>12 caractères</th>
-      <th>15 caractères</th>
-      <th>18 caractères</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Base 10</strong><br><span>(chiffres)</span></td>
-      <td>26 bits</td>
-      <td>39 bits</td>
-      <td>49 bits</td>
-      <td>59 bits</td>
-    </tr>
-    <tr>
-      <td><strong>Base 26</strong><br><span>(minuscules)</span></td>
-      <td>37 bits</td>
-      <td>56 bits</td>
-      <td>70 bits</td>
-      <td>84 bits</td>
-    </tr>
-    <tr>
-      <td><strong>Base 36</strong><br><span>(minuscules + chiffres)</span></td>
-      <td>41 bits</td>
-      <td>62 bits</td>
-      <td>77 bits</td>
-      <td>93 bits</td>
-    </tr>
-    <tr>
-      <td><strong>Base 52</strong><br><span>(minuscules + majuscules)</span></td>
-      <td>45 bits</td>
-      <td>68 bits</td>
-      <td>85 bits</td>
-      <td>102 bits</td>
-    </tr>
-    <tr>
-      <td><strong>Base 62</strong><br><span>(minuscules + majuscules + chiffres)</span></td>
-      <td>47 bits</td>
-      <td>71 bits</td>
-      <td>89 bits</td>
-      <td>107 bits</td>
-    </tr>
-    <tr>
-      <td><strong>Base 85</strong><br><span>(alphabet étendu + caractères spéciaux)</span></td>
-      <td>51 bits</td>
-      <td>77 bits</td>
-      <td>96 bits</td>
-      <td>115 bits</td>
-    </tr>
-  </tbody>
-</table>
-
-
-<p>
-  Nous avons donc une première mesure possible d'estimation de robustesse d'un mot de passe. Ceci étant dis, il est possible de développer légèrement ces équations. En effet il faut savoir 
-  que l'on peut déterminer le nombre total de combinaisons possibles par la formule :
-
-    <div class="equation">
-    \[ C = B^L \]
+  <!-- EN-TÊTE -->
+  <div id="s0">
+    <div class="meta-top">
+      <span class="badge badge-j">Publication institutionnelle · Sept. 2024</span>
+      <span class="badge badge-d">DSIN — Dép. Systèmes &amp; Infrastructures Numériques</span>
+      <span class="badge badge-o">Accès ouvert</span>
+      <span class="badge badge-dt">Publié septembre 2024</span>
     </div>
- </p> 
-  
-<p>
-  <ul>
-  <li>C est le nombre total de combinaisons possibles</li>
-  <li>L est le nombre de caractères du mot de passe</li>
-  <li>B est le nombre de caractères distincts possibles à chaque position</li>
+
+    <h1 class="article-title">
+      Sécurité des systèmes d'authentification face à l'augmentation des capacités de calcul assistées par IA
+    </h1>
+
+    <p class="article-subtitle">
+      L'authentification par mot de passe demeure l'un des mécanismes de contrôle d'accès les plus largement déployés
+      dans les infrastructures critiques civiles et scientifiques. L'augmentation rapide des capacités de calcul,
+      combinée aux progrès des modèles d'intelligence artificielle, réduit significativement la durée de vie opérationnelle
+      de schémas historiquement jugés sûrs.
+    </p>
+
+    <div class="authors-block">
+      <div class="author-entry">
+        <span class="author-name">Département DSIN</span>
+        <span class="author-role">Systèmes &amp; Infrastructures Numériques — IFRAS</span>
+      </div>
+    </div>
+
+    <div class="cite-block">
+      <div class="cite-item"><span class="cite-label">Réf. interne</span><span>IFRAS-DSIN-2024-004</span></div>
+      <span class="cite-sep">|</span>
+      <div class="cite-item"><span class="cite-label">Diffusion</span><span>Contrôlée — Document institutionnel</span></div>
+      <span class="cite-sep">|</span>
+      <div class="cite-item"><span class="cite-label">Domaine</span><span>Cybersécurité · Cryptographie</span></div>
+    </div>
+  </div>
+
+  <div class="art-divider"></div>
+
+  <!-- ABSTRACT -->
+  <div class="abstract-box">
+    <div class="abstract-label">Résumé</div>
+    <p class="abstract-text">
+      L'authentification par mot de passe demeure l'un des mécanismes de contrôle d'accès
+      les plus largement déployés dans les infrastructures critiques civiles et scientifiques.
+      Cependant, l'augmentation rapide des capacités de calcul, combinée aux progrès
+      des modèles d'intelligence artificielle appliqués à l'optimisation des attaques,
+      réduit significativement la durée de vie opérationnelle de schémas historiquement jugés sûrs.
+      Cette étude présente une analyse quantitative de ces évolutions et examine les ajustements
+      progressifs mis en œuvre dans les politiques internes de l'IFRAS.
+    </p>
+    <div class="kw-wrap">
+      <span class="kw-lbl">Mots-clés :</span>
+      <span class="kw-tag">Authentification</span>
+      <span class="kw-tag">Mot de passe</span>
+      <span class="kw-tag">Entropie de Shannon</span>
+      <span class="kw-tag">Force brute</span>
+      <span class="kw-tag">Cryptographie</span>
+      <span class="kw-tag">IA &amp; calcul</span>
+      <span class="kw-tag">Protection planétaire</span>
+    </div>
+  </div>
+
+  <!-- ===== 1. HISTORIQUE ===== -->
+  <h2 class="section-heading" id="s1">1. Évolution historique des schémas d'authentification</h2>
+
+  <p class="bt">
+    Les premiers systèmes d'authentification informatisés, déployés à grande échelle à partir des années 1980 et 1990,
+    ont été conçus dans un contexte technologique et opérationnel très différent de celui d'aujourd'hui. Les modèles de
+    menace alors retenus reposaient principalement sur l'idée que l'attaquant devait disposer soit d'un accès physique
+    prolongé aux machines, soit de ressources matérielles lourdes, coûteuses et rares. Les attaques à distance étaient
+    limitées par la faible interconnexion des systèmes, l'absence d'Internet grand public et des débits réseau très réduits.
+  </p>
+
+  <div class="split-wrap">
+    <div class="split-text">
+      <p class="bt">
+        Dans les environnements institutionnels de l'époque (universités, administrations, grandes entreprises), les systèmes étaient majoritairement fermés,
+        centralisés et administrés localement. Les comptes utilisateurs étaient hébergés sur des mainframes ou des serveurs Unix partagés, accessibles depuis des terminaux internes.
+        Dans ce cadre, le risque principal était l'usurpation par un utilisateur légitime ou la compromission locale, bien plus que l'attaque automatisée à grande échelle.
+        C'est dans ce contexte que les politiques de mots de passe ont été définies. Des schémas courts, combinant lettres et chiffres sur une longueur limitée (souvent 6 à 8 caractères),
+        étaient considérés comme suffisants. Cette perception était renforcée par les contraintes d'ergonomie (claviers de terminaux, mémorisation humaine) et par le coût des attaques par force brute.
+      </p>
+    </div>
+    <img src="/Assets/articles/article04 image01.jpg" alt="Sécurité des systèmes d'authentification">
+  </div>
+
+  <p class="bt">
+    Au début des années 2000, un tel espace de recherche dépassait largement les capacités de calcul accessibles dans un cadre réaliste. Les processeurs grand public fonctionnaient à
+    quelques centaines de MHz, et les architectures parallèles restaient réservées à des centres de calcul spécialisés. Une attaque exhaustive sur un tel espace pouvait théoriquement
+    nécessiter des années, voire des décennies, même en supposant une vérification rapide des tentatives. De plus, les mécanismes de stockage des mots de passe reposaient souvent sur des
+    fonctions de hachage cryptographique conçues pour être relativement coûteuses en calcul (comme DES-based crypt, puis MD5 ou SHA-1 dans certains contextes), ce qui ralentissait encore les
+    tentatives hors ligne. La combinaison d'un espace de recherche large, d'une puissance de calcul limitée et d'un faible niveau d'exposition réseau rendait donc ces schémas acceptables
+    au regard des risques perçus.
+  </p>
+
+  <p class="bt">
+    Cependant, ces hypothèses se sont progressivement effondrées avec la généralisation d'Internet, l'explosion de la puissance de calcul (CPU multicœurs, GPU, ASIC), la démocratisation du calcul
+    distribué et l'industrialisation des attaques automatisées. Ce qui constituait autrefois une barrière économique ou technique est devenu aujourd'hui trivialement accessible, rendant obsolètes
+    les modèles de sécurité hérités de cette période. Mais alors, comment bien se protéger et être certains de la robustesse de son mot de passe ?
+  </p>
+
+  <!-- ===== 2. TYPES D'ATTAQUE ===== -->
+  <h2 class="section-heading blue" id="s2">2. Différents types d'attaque</h2>
+
+  <p class="bt">
+    Il existe plusieurs catégories d'attaques visant à compromettre les mécanismes d'authentification par mot de passe,
+    chacune exploitant des leviers techniques, statistiques ou humains distincts.
+  </p>
+
+  <ul class="bt-list">
+    <li>
+      <strong>Attaque par force brute :</strong>
+      cette méthode consiste à tester systématiquement l'ensemble des combinaisons possibles jusqu'à l'obtention
+      du mot de passe correct. L'efficacité de cette approche dépend directement de la longueur du mot de passe
+      et de la taille du jeu de caractères utilisé. Plus ces paramètres sont élevés, plus l'espace de recherche
+      croît exponentiellement, rendant l'attaque coûteuse en temps et en ressources.
+    </li>
+    <li>
+      <strong>Attaque par dictionnaire :</strong>
+      elle repose sur l'exploitation de listes de mots de passe couramment utilisés, issues de bases de données
+      compromises ou de modèles statistiques du comportement humain. Un mot de passe réellement aléatoire
+      présente une probabilité extrêmement faible de figurer dans ces dictionnaires, ce qui réduit fortement
+      l'efficacité de cette technique.
+    </li>
+    <li>
+      <strong>Attaque par tables arc-en-ciel :</strong>
+      cette approche utilise des bases pré-calculées reliant des mots de passe à leurs empreintes cryptographiques.
+      Elle n'est applicable que si l'attaquant a accès aux mots de passe tels qu'ils sont stockés après hachage,
+      généralement à la suite d'une compromission de base de données. L'ajout d'un sel cryptographique
+      rend ce type d'attaque largement inefficace.
+    </li>
+    <li>
+      <strong>Attaque par ingénierie sociale :</strong>
+      elle exploite le facteur humain, soit en déduisant le mot de passe à partir d'informations personnelles,
+      soit en incitant la victime à le divulguer volontairement, notamment par des campagnes de phishing
+      ou de manipulation psychologique.
+    </li>
+    <li>
+      <strong>Attaques logicielles et système :</strong>
+      ces attaques tirent parti de vulnérabilités applicatives ou système. En cas de compromission,
+      il devient parfois possible d'extraire des mots de passe depuis la mémoire vive, des fichiers temporaires
+      ou des journaux insuffisamment protégés.
+    </li>
   </ul>
-</p>
-    
-<p>
-  Voici le même tableau, mais représentant cette fois le nombre total de combinaisons possibles en fonction du nombre de caractères utilisés et du nombre de pools possibles :​
-</p>
 
-    
-  <table class="entropy-table">
-  <thead>
-    <tr>
-      <th>Base / Longueur</th>
-      <th>8 caractères</th>
-      <th>12 caractères</th>
-      <th>15 caractères</th>
-      <th>18 caractères</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Base 10</strong><br><span>(chiffres)</span></td>
-      <td>100,000,000</td>
-      <td>1,000,000,000,000</td>
-      <td>1.00e+15</td>
-      <td>1.00e+18</td>
-    </tr>
-    <tr>
-      <td><strong>Base 26</strong><br><span>(minuscules)</span></td>
-      <td>208,827,064,576</td>
-      <td>9.54e+16</td>
-      <td>1.67e+21</td>
-      <td>2.94e+25</td>
-    </tr>
-    <tr>
-      <td><strong>Base 36</strong><br><span>(minuscules + chiffres)</span></td>
-      <td>2,821,109,907,456</td>
-      <td>4.73e+18</td>
-      <td>2.21e+23</td>
-      <td>1.03e+28</td>
-    </tr>
-    <tr>
-      <td><strong>Base 52</strong><br><span>(minuscules + majuscules)</span></td>
-      <td>53,459,728,531,456</td>
-      <td>3.90e+20</td>
-      <td>5.49e+25</td>
-      <td>7.72e+30</td>
-    </tr>
-    <tr>
-      <td><strong>Base 62</strong><br><span>(minuscules + majuscules + chiffres)</span></td>
-      <td>2.18e+14</td>
-      <td>3.22e+21</td>
-      <td>7.68e+26</td>
-      <td>1.83e+32</td>
-    </tr>
-    <tr>
-      <td><strong>Base 85</strong><br><span>(alphabet étendu + caractères spéciaux)</span></td>
-      <td>2.04e+15</td>
-      <td>9.24e+22</td>
-      <td>5.09e+28</td>
-      <td>2.80e+34</td>
-    </tr>
-  </tbody>
-</table>
+  <p class="bt">
+    Dans une analyse strictement cryptographique, excluant les faiblesses humaines et les compromissions système,
+    le vecteur d'attaque le plus dominant reste la force brute. Ce sont donc ces approches qui constituent les
+    principales références pour l'évaluation quantitative de la robustesse des mots de passe.
+  </p>
 
-  
-<p>
-Par conséquant nous pouvons relier ce nombre avec l’entropie dans une seule et même équations :
-  <div class="equation">
-  \[ E = \log_2(C) \]
+  <!-- ===== 3. CALCUL DE L'ENTROPIE ===== -->
+  <h2 class="section-heading" id="s3">3. Calcul de l'entropie</h2>
+
+  <p class="bt">
+    Premièrement, nous devons définir la notion de « force » d'un mot de passe : on désigne communément par la « force » d'un mot de passe sa capacité à résister à une attaque par énumération exhaustive,
+    plus connue sous le nom d'attaque par force brute. Ce type d'attaque consiste à tester systématiquement toutes les combinaisons possibles jusqu'à trouver la bonne. D'un point de vue conceptuel, la force d'un mot
+    de passe peut être rapprochée de celle d'un mécanisme cryptographique : elle est comparable à la taille d'une clé de chiffrement. Plus cette « clé » est grande, plus l'effort nécessaire pour la casser augmente.
+  </p>
+
+  <p class="bt">
+    La robustesse d'un mot de passe est généralement exprimée à l'aide de l'entropie de Shannon, mesurée en bits. Cette mesure permet de quantifier l'imprévisibilité d'un mot de passe de manière compacte,
+    sans avoir à manipuler directement des nombres de combinaisons souvent astronomiques. L'entropie représente la quantité d'information nécessaire pour deviner un mot de passe choisi aléatoirement dans
+    un ensemble donné. Plus l'entropie est élevée, plus le mot de passe est théoriquement difficile à deviner. Cependant, il est crucial de souligner que l'entropie n'est qu'une mesure théorique.
+    Un mot de passe peut afficher une entropie élevée sur le papier tout en étant extrêmement faible en pratique. Par exemple, "Password123*" respecte de nombreuses règles de complexité (majuscules, minuscules,
+    chiffres, caractères spéciaux), mais reste trivial à casser car il repose sur des motifs humains largement intégrés aux dictionnaires d'attaque modernes.
+    C'est pourquoi la génération réellement aléatoire des mots de passe est un facteur déterminant de leur sécurité effective.
+  </p>
+
+  <p class="bt">
+    Cette entropie se calcule à partir de la longueur du mot de passe (L), ainsi que la taille du jeu de caractères utilisé (B), aussi appelée pool. La formule est la suivante :
+  </p>
+
+  <div class="equation-box">
+    \[ E = L \times \log_2(B) \]
   </div>
-</p>
 
-</section>
-
-<section>
-<h2>4. Temps estimé de cassage</h2>
-<p>
-Nous pouvons grâce à cette entropie, en déuire le temps estimé de cassage. La complexité d’un mot de passe prend tout son sens lorsqu’on la relie à un temps de cassage estimé. 
-Celui-ci dépend non seulement de l’entropie, mais aussi de la puissance de calcul disponible pour l’attaquant. Une estimation simplifiée du temps nécessaire pour casser un mot de passe est donnée par 
-la formule :
-
-  <div class="equation">
-  \[ T = \frac{2^E}{R} \]
-  </div>
-</p>
-<p>
-  <ul>
-  <li>T est le temps moyen nécessaire (en secondes)</li>
-  <li>E est l’entropie en bits</li>
-  <li>R est le nombre de tentatives par seconde</li>
-   </ul>
-</p>	​
-<p>
-  Les systèmes modernes de craquage, notamment basés sur GPU, peuvent atteindre des milliards, voire des trillions de tentatives par seconde pour certains algorithmes mal protégés. 
-  Cela rend les mots de passe courts extrêmement vulnérables, même s’ils paraissent complexes. En réutilisant les deux même tableaux utilisés précédémment, voici l'estimation du temps 
-  qu'il faudrait pour déchiffrer un mot de passe, avec un valeur arbitraire d'un milliard de tentative par seconde (ce qui est déjà énorme) :
-</p>
-
-      <table class="entropy-table">
-  <thead>
-    <tr>
-      <th>Base / Longueur</th>
-      <th>8 caractères</th>
-      <th>12 caractères</th>
-      <th>15 caractères</th>
-      <th>18 caractères</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Base 10</strong><br><span>(chiffres)</span></td>
-      <td>Instantanément</td>
-      <td>17 minutes</td>
-      <td>12 jours</td>
-      <td>3.17e+1 années</td>
-    </tr>
-    <tr>
-      <td><strong>Base 26</strong><br><span>(minuscules)</span></td>
-      <td>3 minutes</td>
-      <td>3.03e+0 années</td>
-      <td>5.32e+4 années</td>
-      <td>Éternité</td>
-    </tr>
-    <tr>
-      <td><strong>Base 36</strong><br><span>(minuscules + chiffres)</span></td>
-      <td>47 minutes</td>
-      <td>1.50e+2 années</td>
-      <td>7.01e+6 années</td>
-      <td>Éternité</td>
-    </tr>
-    <tr>
-      <td><strong>Base 52</strong><br><span>(minuscules + majuscules)</span></td>
-      <td>15 heures</td>
-      <td>1.24e+4 années</td>
-      <td>Éternité</td>
-      <td>Éternité</td>
-    </tr>
-    <tr>
-      <td><strong>Base 62</strong><br><span>(minuscules + majuscules + chiffres)</span></td>
-      <td>3 jours</td>
-      <td>1.02e+5 années</td>
-      <td>Éternité</td>
-      <td>Éternité</td>
-    </tr>
-    <tr>
-      <td><strong>Base 85</strong><br><span>(alphabet étendu + caractères spéciaux)</span></td>
-      <td>24 jours</td>
-      <td>2.93e+6 années</td>
-      <td>Éternité</td>
-      <td>Éternité</td>
-    </tr>
-  </tbody>
-</table>
-
-</section>
-
-<section>
-<h2>4. Analyse et conclusion</h2>
-
-    
-<p>
-Pour mieux comprendre les tableaux précédents et différencier l'importance des deux paramètres B (nombre de pool) et L (nombre de caractères),
-nous avons séparé l'évolution de l'entropie en deux graphiques respectifs. Le premier affichera l'évolution de l'entropie en fonction de la taille du pool utilisé
-pour un longueur fixe données. De la même manière, le second graphique montre l’évolution de l’entropie en fonction de la longueur du mot de passe utilisé pour un pool fixé. 
-</p>
-  
-<div class="split reverse">
-  <div class="text">
-
-<p>
-Sur ce premier graphique, on observe que, quelle que soit la longueur du mot de passe, l’entropie augmente toujours lorsque le nombre de caractères possibles dans le pool augmente. 
-</p>
-<p>   
-De plus, on constate que les courbes associées aux longueurs plus élevées sont systématiquement au-dessus des autres. 
-</p>  
-<p>    
-L’écart entre les courbes s’accentue lorsque le pool devient plus grand, montrant un effet cumulatif entre longueur et diversité des caractères.
-</p>
-
-</div>
-<img src="/Assets/articles/article04 image02.png" alt="Entopie en fonction du nombre de pool">
-</div>
-
-<div class="split">
-  <div class="text">
-
-</p>
-    
-<p>
-Sur ce second graphique, on constate que,de la même manière, pour tous des pools fixés, l’entropie augmente de manière quasi linéaire avec la longueur du mot de passe.
-Chaque caractère supplémentaire rajouté à un mot de passe apporte un gain significatif en sécurité, surtout lorsque le pool est important.
-</p>  
-<p>
-De plus, on observe aussi que les courbes associées aux pools plus élevés sont toujours au-dessus des autres, démontrant encore l'importance de ce paramètre
-</p>
-
-</div>
-<img src="/Assets/articles/article04 image03.png" alt="Entopie en fonction du nombre de pool">
-</div>
-
-
-<p>
-<strong>
-Conclusion 
-</strong>
-</p>
-
-<p>
-Ces deux graphiques montrent clairement que la sécurité d’un mot de passe repose principalement sur deux facteurs : sa longueur et la diversité des caractères utilisés. 
-L’augmentation de l’un ou de l’autre améliore l’entropie, mais c’est leur combinaison qui produit le gain le plus important.
-Ainsi, pour créer des mots de passe réellement robustes, il est recommandé d’utiliser des mots de passe longs, composés d’un large éventail de caractères 
-(lettres minuscules et majuscules, chiffres et symboles). Cette approche permet de rendre les attaques par force brute et par dictionnaire beaucoup plus difficiles, voire irréalistes en pratique.
-</p>
-
-
-
-<p>
-De ces éléments, on peut tirer trois propriétés fondamentales d’un mot de passe robuste :
-</p>
-<p>
-  <ul>
-  <li>Longueur : chaque caractère supplémentaire augmente exponentiellement l’espace de recherche.</li>
-  <li>Diversité du jeu de caractères : une base plus large accroît le nombre de combinaisons possibles.</li>
-  <li>Aléa réel : un mot de passe ne doit pas suivre de motifs humains prévisibles ni figurer dans des dictionnaires.</li>
+  <ul class="bt-list">
+    <li><strong>E</strong> est l'entropie en bits</li>
+    <li><strong>L</strong> est le nombre de caractères du mot de passe</li>
+    <li><strong>B</strong> est le nombre de caractères distincts possibles à chaque position</li>
   </ul>
-</p>
-    
-<div class="note">
-Les identifiants existants ne sont pas rétroactivement modifiés.
-Cette décision vise à éviter toute perturbation des systèmes historiques
-dont la stabilité repose sur des configurations validées antérieurement.
-</div>
-</section>
 
+  <p class="bt">Voici un tableau représentant l'entropie de différents mots de passe en fonction du nombre de caractères utilisés et du nombre de pools possibles :</p>
 
-<section>
-<h2>Références</h2>
-<ul>
-  <li>NIST SP 800-63B — Digital Identity Guidelines (2023)</li>
-  <li>Veras et al., <em>On the Semantic Patterns of Passwords</em>, IEEE S&P</li>
-  <li>IFRAS — Rapport interne sur la résilience des systèmes d’accès (2024)</li>
-</ul>
-</section>
-
-</main>
-
-<footer>
-  <div class="footer-container">
-    © IFRAS — Institut Français de Recherche Aéronautique et Spatiale<br>
-    Document institutionnel — diffusion contrôlée
+  <div class="tbl-wrap">
+    <div class="tbl-head">Tableau 1 — Entropie (en bits) selon la base et la longueur du mot de passe</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Base / Longueur</th>
+          <th>8 caractères</th>
+          <th>12 caractères</th>
+          <th>15 caractères</th>
+          <th>18 caractères</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Base 10</strong><span>(chiffres)</span></td>
+          <td>26 bits</td><td>39 bits</td><td>49 bits</td><td>59 bits</td>
+        </tr>
+        <tr>
+          <td><strong>Base 26</strong><span>(minuscules)</span></td>
+          <td>37 bits</td><td>56 bits</td><td>70 bits</td><td>84 bits</td>
+        </tr>
+        <tr>
+          <td><strong>Base 36</strong><span>(minuscules + chiffres)</span></td>
+          <td>41 bits</td><td>62 bits</td><td>77 bits</td><td>93 bits</td>
+        </tr>
+        <tr>
+          <td><strong>Base 52</strong><span>(min. + maj.)</span></td>
+          <td>45 bits</td><td>68 bits</td><td>85 bits</td><td>102 bits</td>
+        </tr>
+        <tr>
+          <td><strong>Base 62</strong><span>(min. + maj. + chiffres)</span></td>
+          <td>47 bits</td><td>71 bits</td><td>89 bits</td><td>107 bits</td>
+        </tr>
+        <tr>
+          <td><strong>Base 85</strong><span>(alphabet étendu + spéciaux)</span></td>
+          <td>51 bits</td><td>77 bits</td><td>96 bits</td><td>115 bits</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+
+  <p class="bt">
+    Nous avons donc une première mesure possible d'estimation de robustesse d'un mot de passe. Ceci étant dit, il est possible de développer légèrement ces équations. En effet, on peut
+    déterminer le nombre total de combinaisons possibles par la formule :
+  </p>
+
+  <div class="equation-box">
+    \[ C = B^L \]
+  </div>
+
+  <ul class="bt-list">
+    <li><strong>C</strong> est le nombre total de combinaisons possibles</li>
+    <li><strong>L</strong> est le nombre de caractères du mot de passe</li>
+    <li><strong>B</strong> est le nombre de caractères distincts possibles à chaque position</li>
+  </ul>
+
+  <p class="bt">Voici le même tableau, mais représentant cette fois le nombre total de combinaisons possibles :</p>
+
+  <div class="tbl-wrap">
+    <div class="tbl-head">Tableau 2 — Nombre total de combinaisons possibles (C = B^L)</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Base / Longueur</th>
+          <th>8 caractères</th>
+          <th>12 caractères</th>
+          <th>15 caractères</th>
+          <th>18 caractères</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Base 10</strong><span>(chiffres)</span></td>
+          <td>100 000 000</td><td>1,00e+12</td><td>1,00e+15</td><td>1,00e+18</td>
+        </tr>
+        <tr>
+          <td><strong>Base 26</strong><span>(minuscules)</span></td>
+          <td>2,09e+11</td><td>9,54e+16</td><td>1,67e+21</td><td>2,94e+25</td>
+        </tr>
+        <tr>
+          <td><strong>Base 36</strong><span>(minuscules + chiffres)</span></td>
+          <td>2,82e+12</td><td>4,73e+18</td><td>2,21e+23</td><td>1,03e+28</td>
+        </tr>
+        <tr>
+          <td><strong>Base 52</strong><span>(min. + maj.)</span></td>
+          <td>5,35e+13</td><td>3,90e+20</td><td>5,49e+25</td><td>7,72e+30</td>
+        </tr>
+        <tr>
+          <td><strong>Base 62</strong><span>(min. + maj. + chiffres)</span></td>
+          <td>2,18e+14</td><td>3,22e+21</td><td>7,68e+26</td><td>1,83e+32</td>
+        </tr>
+        <tr>
+          <td><strong>Base 85</strong><span>(alphabet étendu + spéciaux)</span></td>
+          <td>2,04e+15</td><td>9,24e+22</td><td>5,09e+28</td><td>2,80e+34</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="bt">Par conséquent, nous pouvons relier ce nombre avec l'entropie dans une seule et même équation :</p>
+
+  <div class="equation-box">
+    \[ E = \log_2(C) \]
+  </div>
+
+  <!-- ===== 4. TEMPS DE CASSAGE ===== -->
+  <h2 class="section-heading orange" id="s4">4. Temps estimé de cassage</h2>
+
+  <p class="bt">
+    Nous pouvons, grâce à cette entropie, en déduire le temps estimé de cassage.
+    La complexité d'un mot de passe prend tout son sens lorsqu'on la relie à un temps de cassage estimé.
+    Celui-ci dépend non seulement de l'entropie, mais aussi de la puissance de calcul disponible pour l'attaquant. Une estimation simplifiée du temps nécessaire pour casser un mot de passe est donnée par
+    la formule :
+  </p>
+
+  <div class="equation-box">
+    \[ T = \frac{2^E}{R} \]
+  </div>
+
+  <ul class="bt-list">
+    <li><strong>T</strong> est le temps moyen nécessaire (en secondes)</li>
+    <li><strong>E</strong> est l'entropie en bits</li>
+    <li><strong>R</strong> est le nombre de tentatives par seconde</li>
+  </ul>
+
+  <div class="hl blue">
+    Les systèmes modernes de craquage, notamment basés sur GPU, peuvent atteindre des milliards, voire des trillions de tentatives par seconde pour certains algorithmes mal protégés.
+    Cela rend les mots de passe courts extrêmement vulnérables, même s'ils paraissent complexes.
+  </div>
+
+  <p class="bt">
+    En réutilisant les deux mêmes tableaux utilisés précédemment, voici l'estimation du temps
+    qu'il faudrait pour déchiffrer un mot de passe, avec une valeur arbitraire d'un milliard de tentatives par seconde (ce qui est déjà énorme) :
+  </p>
+
+  <div class="tbl-wrap">
+    <div class="tbl-head">Tableau 3 — Temps estimé de cassage à 10⁹ tentatives/seconde</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Base / Longueur</th>
+          <th>8 caractères</th>
+          <th>12 caractères</th>
+          <th>15 caractères</th>
+          <th>18 caractères</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Base 10</strong><span>(chiffres)</span></td>
+          <td>Instantanément</td><td>17 minutes</td><td>12 jours</td><td>3,17e+1 années</td>
+        </tr>
+        <tr>
+          <td><strong>Base 26</strong><span>(minuscules)</span></td>
+          <td>3 minutes</td><td>3,03 années</td><td>5,32e+4 années</td><td>Éternité</td>
+        </tr>
+        <tr>
+          <td><strong>Base 36</strong><span>(min. + chiffres)</span></td>
+          <td>47 minutes</td><td>1,50e+2 années</td><td>7,01e+6 années</td><td>Éternité</td>
+        </tr>
+        <tr>
+          <td><strong>Base 52</strong><span>(min. + maj.)</span></td>
+          <td>15 heures</td><td>1,24e+4 années</td><td>Éternité</td><td>Éternité</td>
+        </tr>
+        <tr>
+          <td><strong>Base 62</strong><span>(min. + maj. + chiffres)</span></td>
+          <td>3 jours</td><td>1,02e+5 années</td><td>Éternité</td><td>Éternité</td>
+        </tr>
+        <tr>
+          <td><strong>Base 85</strong><span>(alphabet étendu + spéciaux)</span></td>
+          <td>24 jours</td><td>2,93e+6 années</td><td>Éternité</td><td>Éternité</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="tbl-note">
+      Ces estimations supposent un attaquant disposant de matériel GPU grand public (≈ 10⁹ hash/s). Des infrastructures spécialisées (clusters ASIC) peuvent dépasser 10¹² tentatives/s pour certains algorithmes non salés.
+    </div>
+  </div>
+
+  <!-- ===== 5. ANALYSE ET CONCLUSION ===== -->
+  <h2 class="section-heading blue" id="s5">5. Analyse et conclusion</h2>
+
+  <p class="bt">
+    Pour mieux comprendre les tableaux précédents et différencier l'importance des deux paramètres B (nombre de pool) et L (nombre de caractères),
+    nous avons séparé l'évolution de l'entropie en deux graphiques respectifs. Le premier affiche l'évolution de l'entropie en fonction de la taille du pool utilisé
+    pour une longueur fixe donnée. Le second montre l'évolution de l'entropie en fonction de la longueur du mot de passe pour un pool fixé.
+  </p>
+
+  <div class="split-wrap reverse">
+    <div class="split-text">
+      <p class="bt">
+        Sur ce premier graphique, on observe que, quelle que soit la longueur du mot de passe, l'entropie augmente toujours lorsque le nombre de caractères possibles dans le pool augmente.
+      </p>
+      <p class="bt">
+        De plus, on constate que les courbes associées aux longueurs plus élevées sont systématiquement au-dessus des autres.
+      </p>
+      <p class="bt">
+        L'écart entre les courbes s'accentue lorsque le pool devient plus grand, montrant un effet cumulatif entre longueur et diversité des caractères.
+      </p>
+    </div>
+    <img src="/Assets/articles/article04 image02.png" alt="Entropie en fonction du nombre de pool">
+  </div>
+
+  <div class="split-wrap">
+    <div class="split-text">
+      <p class="bt">
+        Sur ce second graphique, on constate que, de la même manière, pour tous les pools fixés, l'entropie augmente de manière quasi linéaire avec la longueur du mot de passe.
+        Chaque caractère supplémentaire rajouté à un mot de passe apporte un gain significatif en sécurité, surtout lorsque le pool est important.
+      </p>
+      <p class="bt">
+        De plus, on observe aussi que les courbes associées aux pools plus élevés sont toujours au-dessus des autres, démontrant encore l'importance de ce paramètre.
+      </p>
+    </div>
+    <img src="/Assets/articles/article04 image03.png" alt="Entropie en fonction de la longueur">
+  </div>
+
+  <h3 class="sub">Propriétés fondamentales d'un mot de passe robuste</h3>
+
+  <p class="bt">
+    Ces deux graphiques montrent clairement que la sécurité d'un mot de passe repose principalement sur deux facteurs : sa longueur et la diversité des caractères utilisés.
+    L'augmentation de l'un ou de l'autre améliore l'entropie, mais c'est leur combinaison qui produit le gain le plus important.
+    Ainsi, pour créer des mots de passe réellement robustes, il est recommandé d'utiliser des mots de passe longs, composés d'un large éventail de caractères
+    (lettres minuscules et majuscules, chiffres et symboles). Cette approche permet de rendre les attaques par force brute et par dictionnaire beaucoup plus difficiles, voire irréalistes en pratique.
+  </p>
+
+  <p class="bt">De ces éléments, on peut tirer trois propriétés fondamentales d'un mot de passe robuste :</p>
+
+  <ul class="bt-list">
+    <li><strong>Longueur :</strong> chaque caractère supplémentaire augmente exponentiellement l'espace de recherche.</li>
+    <li><strong>Diversité du jeu de caractères :</strong> une base plus large accroît le nombre de combinaisons possibles.</li>
+    <li><strong>Aléa réel :</strong> un mot de passe ne doit pas suivre de motifs humains prévisibles ni figurer dans des dictionnaires.</li>
+  </ul>
+
+  <div class="hl orange">
+    Les identifiants existants ne sont pas rétroactivement modifiés.
+    Cette décision vise à éviter toute perturbation des systèmes historiques
+    dont la stabilité repose sur des configurations validées antérieurement.
+  </div>
+
+  <div class="art-divider"></div>
+
+  <!-- RÉFÉRENCES -->
+  <div class="refs-sec" id="s6">
+    <div class="ref-ttl">Références bibliographiques</div>
+    <div class="ref-list">
+      <div class="ref-item"><b>NIST SP 800-63B</b> — <em>Digital Identity Guidelines</em> — 2023</div>
+      <div class="ref-item"><b>Veras et al.</b> — <em>On the Semantic Patterns of Passwords</em> — IEEE S&amp;P</div>
+      <div class="ref-item"><b>IFRAS</b> — <em>Rapport interne sur la résilience des systèmes d'accès</em> — 2024</div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <strong>Diffusion :</strong> Document institutionnel à diffusion contrôlée — IFRAS. —
+    <strong>Département :</strong> Systèmes &amp; Infrastructures Numériques (DSIN). —
+    <strong>Date de publication :</strong> Septembre 2024. —
+    <strong>Conflits d'intérêts :</strong> Aucun.
+  </div>
+
+</div>
+
+<footer style="background:#020617;border-top:1px solid #1b2555;padding:32px 30px;text-align:center;font-size:12px;color:#6b7280;">
+  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale · Publications soumises à validation institutionnelle
 </footer>
 
+<script>
+window.addEventListener('scroll',()=>{
+  const d=document.documentElement;
+  document.getElementById('progressBar').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%';
+});
+const secs=['s0','s1','s2','s3','s4','s5','s6'];
+const dots=document.querySelectorAll('.toc-dot');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const i=secs.indexOf(e.target.id);
+      if(i>=0){dots.forEach(d=>d.classList.remove('active'));dots[i]&&dots[i].classList.add('active');}
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+secs.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
+dots.forEach((d,i)=>{d.addEventListener('click',()=>{const el=document.getElementById(secs[i]);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});});});
+</script>
 </body>
 </html>
