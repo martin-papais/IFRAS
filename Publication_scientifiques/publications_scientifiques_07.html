@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>AQUA-CYCLE · Recyclage de l'eau en mission spatiale longue durée — IFRAS DSEV</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-main:#050b1e; --bg-dark:#020617; --bg-light:#070f2b;
+  --border:#1b2555; --border-sub:#0e1535;
+  --accent:#34d399; --accent2:#4f6bed; --accent3:#f97316;
+  --text-main:#e6e6e6; --text-soft:#aab3d6; --text-muted:#4a5280;
+  --mono:"DM Mono",monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"DM Sans",sans-serif;background:var(--bg-main);color:var(--text-main);line-height:1.7;}
+::-webkit-scrollbar{width:4px;} ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+
+header{position:fixed;top:0;width:100%;z-index:1000;background:rgba(5,11,30,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+.header-inner{max-width:1300px;margin:auto;padding:12px 30px;display:flex;align-items:center;justify-content:space-between;}
+.header-left{display:flex;align-items:center;gap:40px;}
+.logo-link img{height:60px;}
+.main-nav{list-style:none;display:flex;gap:32px;}
+.main-nav a{text-decoration:none;color:var(--text-soft);font-size:14px;letter-spacing:.05em;}
+.main-nav a:hover{color:white;}
+.login-btn{padding:8px 18px;border-radius:6px;border:1px solid var(--accent2);color:white;text-decoration:none;font-size:13px;}
+.login-btn:hover{background:var(--accent2);}
+.sub-nav{margin-top:84px;background:var(--bg-light);border-bottom:1px solid var(--border);}
+.sub-nav ul{max-width:1300px;margin:0 auto;padding:0 30px;list-style:none;display:flex;justify-content:space-between;}
+.sub-nav li{padding:14px 0;}
+.sub-nav a{color:var(--text-soft);text-decoration:none;font-size:14px;letter-spacing:.06em;}
+.sub-nav a:hover{color:white;}
+.sub-nav a.active{color:white;border-bottom:2px solid var(--accent2);padding-bottom:12px;}
+
+.pub-wrapper{max-width:900px;margin:0 auto;padding:52px 30px 100px;}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--text-muted);letter-spacing:.06em;margin-bottom:36px;font-family:var(--mono);}
+.breadcrumb a{color:var(--text-muted);text-decoration:none;}
+.breadcrumb a:hover{color:var(--accent);}
+.breadcrumb span{opacity:.4;}
+
+.meta-top{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+.badge{font-size:10.5px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;font-weight:500;}
+.badge-j{background:rgba(52,211,153,.1);color:var(--accent);border:1px solid rgba(52,211,153,.25);}
+.badge-d{background:rgba(79,107,237,.1);color:var(--accent2);border:1px solid rgba(79,107,237,.2);}
+.badge-o{background:rgba(52,211,153,.07);color:var(--accent);border:1px solid rgba(52,211,153,.15);}
+.badge-dt{background:rgba(255,255,255,.04);color:var(--text-muted);border:1px solid rgba(255,255,255,.08);}
+
+.article-title{font-family:"DM Sans",sans-serif;font-size:clamp(18px,2.4vw,23px);font-weight:400;color:var(--text-main);line-height:1.5;letter-spacing:0;margin-bottom:18px;}
+.article-subtitle{font-size:15px;color:var(--text-soft);font-weight:300;line-height:1.65;margin-bottom:28px;font-style:italic;border-left:2px solid var(--accent);padding-left:16px;}
+.authors-block{background:var(--bg-light);border:1px solid var(--border);border-radius:10px;padding:16px 20px;display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;margin-bottom:28px;}
+.author-entry{display:flex;flex-direction:column;gap:2px;}
+.author-name{font-size:13.5px;font-weight:600;color:white;}
+.author-role{font-size:11px;color:var(--text-muted);letter-spacing:.04em;}
+.author-sep{width:1px;background:var(--border);align-self:stretch;}
+.cite-block{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:12px 16px;background:rgba(0,0,0,.25);border:1px solid var(--border-sub);border-radius:8px;}
+.cite-item{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;color:var(--text-muted);}
+.cite-label{color:var(--accent);font-weight:500;}
+.cite-sep{color:var(--border);}
+.art-divider{height:1px;background:linear-gradient(90deg,var(--accent) 0%,transparent 60%);margin:40px 0;opacity:.3;}
+
+.abstract-box{background:rgba(52,211,153,.04);border:1px solid rgba(52,211,153,.14);border-radius:12px;padding:28px 32px;margin-bottom:44px;}
+.abstract-label{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;font-weight:500;}
+.abstract-text{font-size:14.5px;line-height:1.85;color:var(--text-soft);font-weight:300;}
+.kw-wrap{margin-top:16px;display:flex;flex-wrap:wrap;gap:7px;align-items:center;}
+.kw-lbl{font-size:11px;color:var(--text-muted);font-family:var(--mono);letter-spacing:.08em;}
+.kw-tag{font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--text-soft);}
+
+.section-heading{font-family:"Syne",sans-serif;font-size:18px;font-weight:700;color:white;margin:44px 0 16px;display:flex;align-items:center;gap:12px;}
+.section-heading::before{content:'';display:block;width:4px;height:18px;background:var(--accent);border-radius:2px;flex-shrink:0;}
+.section-heading.blue::before{background:var(--accent2);}
+.section-heading.orange::before{background:var(--accent3);}
+.sub{font-family:"Syne",sans-serif;font-weight:700;color:var(--text-soft);margin:28px 0 10px;letter-spacing:.04em;text-transform:uppercase;font-size:11.5px;}
+p.bt{font-size:14.5px;color:var(--text-soft);line-height:1.85;font-weight:300;margin-bottom:16px;}
+ul.bt-list{font-size:14.5px;color:var(--text-soft);line-height:1.85;font-weight:300;margin-bottom:16px;padding-left:20px;display:flex;flex-direction:column;gap:8px;}
+ul.bt-list li{padding-left:8px;}
+ul.bt-list li strong{color:var(--text-main);font-weight:500;}
+
+/* ===== SCHÉMA CYCLE EAU ===== */
+.cycle-schema{margin:36px 0;background:var(--bg-light);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.cycle-inner{padding:28px 24px 20px;}
+.cycle-ttl{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:20px;}
+.cycle-cap{padding:12px 20px;font-size:12.5px;color:var(--text-muted);line-height:1.6;border-top:1px solid var(--border-sub);}
+.cycle-cap strong{font-weight:600;color:var(--text-soft);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
+
+/* ===== GRILLE TECHNOS ===== */
+.tech-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0;}
+.tech-card{background:var(--bg-light);border:1px solid var(--border);border-radius:12px;padding:20px 22px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;}
+.tech-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.tech-card.green::before{background:var(--accent);}
+.tech-card.blue::before{background:var(--accent2);}
+.tech-card.orange::before{background:var(--accent3);}
+.tech-card.yellow::before{background:#facc15;}
+.tech-name{font-family:"Syne",sans-serif;font-weight:700;font-size:14px;color:white;line-height:1.2;}
+.tech-acro{font-size:11px;font-family:var(--mono);color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase;}
+.tech-desc{font-size:13px;color:var(--text-soft);font-weight:300;line-height:1.6;}
+.tech-stat{display:flex;align-items:center;gap:8px;margin-top:2px;}
+.tech-stat-val{font-family:var(--mono);font-size:13px;font-weight:500;}
+.tech-stat-val.g{color:var(--accent);}
+.tech-stat-val.b{color:var(--accent2);}
+.tech-stat-val.o{color:var(--accent3);}
+.tech-stat-val.y{color:#facc15;}
+.tech-stat-lbl{font-size:11.5px;color:var(--text-muted);}
+
+/* ===== TABLEAU ===== */
+.tbl-wrap{margin:36px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);}
+.tbl-head{background:rgba(52,211,153,.08);padding:12px 20px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--border);}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+thead th{background:rgba(0,0,0,.3);padding:11px 16px;text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--border-sub);font-weight:500;}
+tbody tr{border-bottom:1px solid var(--border-sub);transition:background .15s;}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:rgba(255,255,255,.025);}
+tbody td{padding:10px 16px;color:var(--text-soft);vertical-align:middle;font-weight:300;}
+.tm{font-family:var(--mono);font-size:12.5px;color:var(--text-main);}
+.tg{font-family:var(--mono);font-size:12.5px;color:var(--accent);}
+.ty{font-family:var(--mono);font-size:12.5px;color:#facc15;}
+.to{font-family:var(--mono);font-size:12.5px;color:var(--accent3);}
+.tr{font-family:var(--mono);font-size:12.5px;color:#f87171;}
+.tb{font-family:var(--mono);font-size:12.5px;color:var(--accent2);}
+.tbl-note{padding:10px 20px;font-size:11.5px;color:var(--text-muted);background:rgba(0,0,0,.2);font-style:italic;border-top:1px solid var(--border-sub);}
+
+/* ===== HIGHLIGHT ===== */
+.hl{border-left:3px solid var(--accent);background:rgba(52,211,153,.04);border-radius:0 8px 8px 0;padding:16px 20px;margin:24px 0;font-size:14px;color:var(--text-soft);font-style:italic;line-height:1.75;}
+.hl.blue{border-color:var(--accent2);background:rgba(79,107,237,.05);}
+.hl.orange{border-color:var(--accent3);background:rgba(249,115,22,.04);}
+
+/* ===== FIGURE PHOTO ===== */
+.fig-wrap{margin:36px 0;background:var(--bg-light);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.fig-wrap img{width:100%;display:block;border-bottom:1px solid var(--border);}
+.fig-ph{height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(79,107,237,.07),rgba(52,211,153,.03));border-bottom:1px solid var(--border);gap:10px;}
+.fig-icon{font-size:40px;opacity:.2;}
+.fig-ph-label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);}
+.fig-cap{padding:14px 20px;font-size:12.5px;color:var(--text-muted);line-height:1.6;}
+.fig-cap strong{font-weight:600;color:var(--text-soft);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
+
+/* ===== CHART ===== */
+.chart-wrap{margin:36px 0;background:var(--bg-light);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.chart-inner{padding:28px 24px 16px;background:rgba(0,0,0,.15);border-bottom:1px solid var(--border-sub);}
+.chart-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:8px;}
+.chart-ttl{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);max-width:500px;line-height:1.5;}
+.legend{display:flex;gap:14px;flex-wrap:wrap;}
+.li{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);}
+.ld{width:8px;height:8px;border-radius:2px;}
+.chart-cap{padding:12px 20px;font-size:12.5px;color:var(--text-muted);line-height:1.6;}
+.chart-cap strong{font-weight:600;color:var(--text-soft);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
+
+/* ===== PIPELINE ===== */
+.pipeline{display:flex;align-items:stretch;gap:0;margin:32px 0;overflow-x:auto;}
+.pipe-step{flex:1;min-width:120px;background:var(--bg-light);border:1px solid var(--border);padding:16px 14px;display:flex;flex-direction:column;gap:8px;position:relative;}
+.pipe-step:not(:first-child){border-left:none;}
+.pipe-step:first-child{border-radius:10px 0 0 10px;}
+.pipe-step:last-child{border-radius:0 10px 10px 0;}
+.pipe-step::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px;z-index:2;}
+.pipe-step:last-child::after{display:none;}
+.pipe-num{font-family:var(--mono);font-size:10px;color:var(--text-muted);letter-spacing:.1em;}
+.pipe-title{font-family:"Syne",sans-serif;font-size:12px;font-weight:700;color:white;line-height:1.3;}
+.pipe-desc{font-size:11px;color:var(--text-muted);line-height:1.5;}
+.pipe-step.active{background:rgba(52,211,153,.06);border-color:rgba(52,211,153,.25);}
+.pipe-step.active .pipe-title{color:var(--accent);}
+.pipe-step.new{background:rgba(249,115,22,.06);border-color:rgba(249,115,22,.3);}
+.pipe-step.new .pipe-title{color:var(--accent3);}
+.pipe-step.new .pipe-num::after{content:' ★ NOUVEAU';color:var(--accent3);}
+
+/* ===== COMPARATIF AVANT/APRÈS ===== */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0;}
+.compare-card{border-radius:12px;padding:20px 22px;display:flex;flex-direction:column;gap:12px;}
+.compare-card.before{background:rgba(248,113,113,.05);border:1px solid rgba(248,113,113,.2);}
+.compare-card.after{background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.2);}
+.compare-label{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;}
+.compare-card.before .compare-label{color:#f87171;}
+.compare-card.after .compare-label{color:var(--accent);}
+.compare-title{font-family:"Syne",sans-serif;font-weight:700;font-size:14px;color:white;}
+.compare-items{display:flex;flex-direction:column;gap:8px;}
+.compare-item{font-size:13px;color:var(--text-soft);font-weight:300;display:flex;gap:8px;align-items:baseline;}
+.compare-item::before{flex-shrink:0;font-size:10px;}
+.compare-card.before .compare-item::before{content:'✗';color:#f87171;}
+.compare-card.after .compare-item::before{content:'✓';color:var(--accent);}
+
+/* ===== REFS ===== */
+.refs-sec{margin-top:60px;padding-top:32px;border-top:1px solid var(--border);}
+.ref-ttl{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:20px;}
+.ref-list{counter-reset:ref;display:flex;flex-direction:column;gap:6px;}
+.ref-item{counter-increment:ref;display:flex;align-items:baseline;gap:12px;font-size:13px;line-height:1.55;color:var(--text-muted);padding:9px 14px;border-radius:6px;background:rgba(0,0,0,.15);border:1px solid var(--border-sub);}
+.ref-item::before{content:'[' counter(ref) ']';font-family:var(--mono);font-size:11px;color:var(--accent);flex-shrink:0;min-width:26px;}
+.ref-item b{color:var(--text-soft);font-weight:500;}
+.footnote{margin-top:48px;padding:20px 24px;background:rgba(0,0,0,.25);border:1px solid var(--border-sub);border-radius:10px;font-size:11.5px;color:var(--text-muted);line-height:1.7;}
+.footnote strong{color:var(--text-soft);}
+
+/* ===== PROGRESS / TOC ===== */
+.progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent2),#60a5fa);z-index:9999;width:0%;transition:width .1s linear;}
+.toc-sidebar{position:fixed;right:32px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:100;}
+.toc-dot{width:6px;height:6px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s,transform .2s;position:relative;}
+.toc-dot:hover,.toc-dot.active{background:var(--accent2);transform:scale(1.5);}
+.toc-dot::after{content:attr(data-label);position:absolute;right:14px;top:50%;transform:translateY(-50%);background:var(--bg-light);border:1px solid var(--border);border-radius:5px;padding:3px 8px;font-size:10.5px;color:var(--text-soft);white-space:nowrap;font-family:var(--mono);letter-spacing:.04em;opacity:0;pointer-events:none;transition:opacity .2s;}
+.toc-dot:hover::after{opacity:1;}
+@media(max-width:1100px){.toc-sidebar{display:none;}}
+@media(max-width:640px){.tech-grid,.compare-grid{grid-template-columns:1fr;}.pipeline{flex-direction:column;}.pipe-step{border-radius:0;border-left:1px solid var(--border)!important;}.pipe-step::after{display:none;}}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<header>
+  <div class="header-inner">
+    <div class="header-left">
+      <a href="../index.html" class="logo-link"><img src="../logo.png" alt="IFRAS"></a>
+      <nav><ul class="main-nav">
+        <li><a href="../index.html">Accueil</a></li>
+        <li><a href="../recherche.html">Recherche</a></li>
+        <li><a href="../programmes.html">Programmes</a></li>
+        <li><a href="../publications.html">Publications</a></li>
+      </ul></nav>
+    </div>
+    <div class="header-right"><a href="../connexion.html" class="login-btn">Connexion</a></div>
+  </div>
+</header>
+
+<div class="sub-nav">
+  <ul>
+    <li><a href="../publications-scientifiques.html" class="active">Publications scientifiques</a></li>
+    <li><a href="../publications-ifras.html">Publications IFRAS</a></li>
+    <li><a href="../evenements.html">Événements</a></li>
+  </ul>
+</div>
+
+<nav class="toc-sidebar">
+  <div class="toc-dot active" data-label="Résumé"       data-target="s0"></div>
+  <div class="toc-dot"        data-label="Contexte"     data-target="s1"></div>
+  <div class="toc-dot"        data-label="Systèmes"     data-target="s2"></div>
+  <div class="toc-dot"        data-label="Cycle complet" data-target="s3"></div>
+  <div class="toc-dot"        data-label="Avancée"      data-target="s4"></div>
+  <div class="toc-dot"        data-label="Résultats"    data-target="s5"></div>
+  <div class="toc-dot"        data-label="Discussion"   data-target="s6"></div>
+  <div class="toc-dot"        data-label="Références"   data-target="s7"></div>
+</nav>
+
+<div class="pub-wrapper">
+
+  <nav class="breadcrumb">
+    <a href="../publications.html">Publications</a>
+    <span>/</span>
+    <a href="../publications-scientifiques.html">Publications scientifiques</a>
+    <span>/</span>
+    DSEV · 2026 · Systèmes de survie
+  </nav>
+
+  <!-- ===== EN-TÊTE ===== -->
+  <div id="s0">
+    <div class="meta-top">
+      <span class="badge badge-j">Life Sciences in Space Research · Vol. 41</span>
+      <span class="badge badge-d">DSEV — Département Systèmes d'Exploration et de Vie</span>
+      <span class="badge badge-o">Accès ouvert</span>
+      <span class="badge badge-dt">Soumis 11 nov. 2025 · Accepté 17 mars 2026</span>
+    </div>
+
+    <h1 class="article-title">
+      Recyclage intégral de l'eau en mission spatiale longue durée : fonctionnement des systèmes actuels
+      et démonstration d'un procédé membranaire bio-hybride atteignant 99,6 % de récupération
+    </h1>
+
+    <p class="article-subtitle">
+      Les missions actuelles vers la Station spatiale internationale atteignent un taux de récupération
+      d'eau de 93–95 %. Une mission vers Mars — durée minimale 900 jours, ravitaillement impossible —
+      exige de dépasser 98 %. Nous présentons ici le système HERA-W (Hybrid Electrochemical
+      &amp; Reverse-osmosis Aqua-cycle), premier procédé bio-hybride à atteindre 99,6 % de récupération
+      en conditions de microgravité simulée sur 360 jours continus.
+    </p>
+
+    <div class="authors-block">
+      <div class="author-entry">
+        <span class="author-name">Dr. Camille Rousseau</span>
+        <span class="author-role">DSEV · Systèmes de recyclage &amp; vie à bord</span>
+      </div>
+      <div class="author-sep"></div>
+      <div class="author-entry">
+        <span class="author-name">Dr. Thomas Berger</span>
+        <span class="author-role">DSEV · Électrochimie des membranes</span>
+      </div>
+      <div class="author-sep"></div>
+      <div class="author-entry">
+        <span class="author-name">Prof. Aiko Taniguchi</span>
+        <span class="author-role">DSEV / JAXA · Systèmes vie longue durée</span>
+      </div>
+      <div class="author-sep"></div>
+      <div class="author-entry">
+        <span class="author-name">Dr. Marc Lefèvre</span>
+        <span class="author-role">DSEV · Microbiologie des bioréacteurs</span>
+      </div>
+      <div class="author-sep"></div>
+      <div class="author-entry">
+        <span class="author-name">Sara El-Amin</span>
+        <span class="author-role">DSEV · Doctorante, ingénierie membranaire</span>
+      </div>
+    </div>
+
+    <div class="cite-block">
+      <div class="cite-item"><span class="cite-label">DOI</span><span>10.1016/j.lssr.2026.03.004</span></div>
+      <span class="cite-sep">|</span>
+      <div class="cite-item"><span class="cite-label">Réf. interne</span><span>IFRAS-DSEV-2026-008</span></div>
+      <span class="cite-sep">|</span>
+      <div class="cite-item"><span class="cite-label">Données</span><span>Zenodo : 10.5281/zenodo.15204817</span></div>
+    </div>
+  </div>
+
+  <div class="art-divider"></div>
+
+  <!-- ===== ABSTRACT ===== -->
+  <div class="abstract-box">
+    <div class="abstract-label">Résumé — Abstract</div>
+    <p class="abstract-text">
+      La gestion de l'eau est l'une des contraintes les plus critiques des missions spatiales longue durée.
+      Une mission Mars aller-retour de 900 jours avec un équipage de quatre personnes nécessite, en l'absence
+      de ravitaillement, un taux de récupération de l'eau supérieur à 98 % — seuil jamais atteint de manière
+      stable en conditions de microgravité. Après une revue exhaustive des technologies actuellement déployées
+      sur l'ISS (WRS, ECLSS) et de leurs limitations fondamentales, nous présentons le système HERA-W,
+      un procédé bio-hybride couplant osmose inverse à membranes céramiques nanoporeuses, électrolyse
+      à potentiel modulé et bioréacteur à nitrification partielle. Testé pendant 360 jours consécutifs
+      dans l'enceinte de simulation microgravité GRAV-360 (centrifuge inverse, 0,1–0,38 g),
+      HERA-W atteint un taux de récupération moyen de 99,6 % (± 0,08 %), avec une consommation
+      énergétique de 3,2 Wh·L⁻¹ d'eau traitée — 31 % inférieure aux systèmes ISS actuels.
+      Ces résultats franchissent pour la première fois le seuil de viabilité des missions interplanétaires.
+    </p>
+    <div class="kw-wrap">
+      <span class="kw-lbl">Mots-clés :</span>
+      <span class="kw-tag">Recyclage eau</span>
+      <span class="kw-tag">Microgravité</span>
+      <span class="kw-tag">ECLSS</span>
+      <span class="kw-tag">Osmose inverse</span>
+      <span class="kw-tag">Bioréacteur</span>
+      <span class="kw-tag">Mission Mars</span>
+      <span class="kw-tag">HERA-W</span>
+      <span class="kw-tag">Membranes céramiques</span>
+    </div>
+  </div>
+
+  <!-- ===== 1. CONTEXTE ===== -->
+  <h2 class="section-heading" id="s1">1. Pourquoi l'eau est la contrainte la plus critique des missions interplanétaires</h2>
+
+  <p class="bt">
+    Un être humain en activité physique modérée en environnement spatial consomme en moyenne 2,0 L d'eau
+    potable par jour, auxquels s'ajoutent 0,7 L pour l'hygiène corporelle, 0,5 L pour la préparation
+    alimentaire et 0,2 L pour les besoins médicaux et expérimentaux — soit un total de 3,4 L·j⁻¹·personne⁻¹ [1].
+    Pour un équipage de quatre personnes sur une mission Mars de 900 jours, cela représente
+    12 240 litres. Transporter cette masse depuis la Terre (coût estimé : 12 000 à 54 000 €·kg⁻¹ selon
+    le lanceur [2]) est économiquement et logistiquement impossible. Le recyclage en boucle fermée
+    n'est pas une option : c'est une nécessité absolue.
+  </p>
+
+  <div class="hl blue">
+    À titre de comparaison, la navette spatiale ne recyclait aucune eau — elle en emportait l'intégralité.
+    L'ISS recycle aujourd'hui 93–95 % de l'eau à bord via son système ECLSS, ce qui représente
+    déjà une avancée considérable. Mais pour Mars, ce chiffre condamne l'équipage à une perte
+    irréversible de 5 à 7 % par cycle, soit environ 860 litres perdus sur la durée totale de la mission
+    — une quantité que nul ravitaillement ne peut compenser.
+  </div>
+
+  <p class="bt">
+    La figure 1 illustre l'architecture générale de la gestion de l'eau à bord d'un vaisseau interplanétaire
+    type. Toutes les sources d'eau — urine, condensation atmosphérique, transpiration, eau métabolique
+    des aliments — sont collectées, traitées et réinjectées dans le circuit de consommation.
+    La qualité finale de l'eau produite doit satisfaire les normes NASA potable water standards
+    (NHB 8060.1C) qui fixent notamment une limite de contamination organique totale inférieure
+    à 0,5 mg·L⁻¹ de carbone organique total (COT).
+  </p>
+
+  <!-- Figure 1 : schéma cycle eau (SVG) -->
+  <div class="cycle-schema">
+    <div class="cycle-inner">
+      <div class="cycle-ttl">Figure 1 — Cycle fermé de l'eau à bord d'un vaisseau interplanétaire</div>
+      <svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+        <defs>
+          <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#4a5280"/>
+          </marker>
+          <marker id="arr-g" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#34d399"/>
+          </marker>
+          <marker id="arr-b" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#4f6bed"/>
+          </marker>
+          <marker id="arr-o" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#f97316"/>
+          </marker>
+        </defs>
+
+        <!-- SOURCES (gauche) -->
+        <rect x="20"  y="60"  width="130" height="44" rx="8" fill="rgba(79,107,237,.12)" stroke="#4f6bed" stroke-width="1"/>
+        <text x="85"  y="78"  fill="#60a5fa" font-size="11" text-anchor="middle" font-family="DM Mono,monospace" font-weight="500">ÉQUIPAGE</text>
+        <text x="85"  y="93"  fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">4 personnes</text>
+
+        <!-- Sources secondaires -->
+        <rect x="20" y="130" width="130" height="36" rx="6" fill="rgba(79,107,237,.07)" stroke="#1b2555" stroke-width="1"/>
+        <text x="85" y="148" fill="#aab3d6" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Urine (1,5 L/j/p)</text>
+        <text x="85" y="161" fill="#4a5280" font-size="9"  text-anchor="middle" font-family="DM Mono,monospace">UPA → WPA</text>
+
+        <rect x="20" y="178" width="130" height="36" rx="6" fill="rgba(79,107,237,.07)" stroke="#1b2555" stroke-width="1"/>
+        <text x="85" y="196" fill="#aab3d6" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Condensat atm.</text>
+        <text x="85" y="209" fill="#4a5280" font-size="9"  text-anchor="middle" font-family="DM Mono,monospace">WPA direct</text>
+
+        <rect x="20" y="226" width="130" height="36" rx="6" fill="rgba(79,107,237,.07)" stroke="#1b2555" stroke-width="1"/>
+        <text x="85" y="244" fill="#aab3d6" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Transpiration</text>
+        <text x="85" y="257" fill="#4a5280" font-size="9"  text-anchor="middle" font-family="DM Mono,monospace">condensé</text>
+
+        <rect x="20" y="274" width="130" height="36" rx="6" fill="rgba(79,107,237,.07)" stroke="#1b2555" stroke-width="1"/>
+        <text x="85" y="292" fill="#aab3d6" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Eau métabolique</text>
+        <text x="85" y="305" fill="#4a5280" font-size="9"  text-anchor="middle" font-family="DM Mono,monospace">CO₂ + H₂ → H₂O</text>
+
+        <!-- Flèches sources → collecteur -->
+        <line x1="150" y1="148" x2="195" y2="200" stroke="#4a5280" stroke-width="1.2" marker-end="url(#arr)"/>
+        <line x1="150" y1="196" x2="195" y2="206" stroke="#4a5280" stroke-width="1.2" marker-end="url(#arr)"/>
+        <line x1="150" y1="244" x2="195" y2="212" stroke="#4a5280" stroke-width="1.2" marker-end="url(#arr)"/>
+        <line x1="150" y1="292" x2="195" y2="218" stroke="#4a5280" stroke-width="1.2" marker-end="url(#arr)"/>
+
+        <!-- COLLECTEUR -->
+        <rect x="195" y="168" width="110" height="72" rx="8" fill="rgba(249,115,22,.1)" stroke="#f97316" stroke-width="1.5"/>
+        <text x="250" y="196" fill="#f97316" font-size="11" text-anchor="middle" font-family="DM Mono,monospace" font-weight="500">COLLECTEUR</text>
+        <text x="250" y="212" fill="#aab3d6" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">& pré-traitement</text>
+        <text x="250" y="228" fill="#4a5280" font-size="9"  text-anchor="middle" font-family="DM Mono,monospace">filtration mécanique</text>
+
+        <!-- Flèche collecteur → traitement -->
+        <line x1="305" y1="204" x2="345" y2="204" stroke="#f97316" stroke-width="1.5" marker-end="url(#arr-o)"/>
+
+        <!-- TRAITEMENT CENTRAL -->
+        <rect x="345" y="100" width="150" height="210" rx="10" fill="rgba(52,211,153,.06)" stroke="#34d399" stroke-width="1.5"/>
+        <text x="420" y="128" fill="#34d399" font-size="11" text-anchor="middle" font-family="DM Mono,monospace" font-weight="500">TRAITEMENT</text>
+
+        <!-- Sous-étapes traitement -->
+        <rect x="360" y="138" width="120" height="30" rx="5" fill="rgba(52,211,153,.08)" stroke="rgba(52,211,153,.2)" stroke-width="1"/>
+        <text x="420" y="153" fill="#6ee7b7" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">① Osmose inverse</text>
+        <text x="420" y="165" fill="#4a5280" font-size="8.5" text-anchor="middle" font-family="DM Mono,monospace">membranes 0,1–1 nm</text>
+
+        <rect x="360" y="178" width="120" height="30" rx="5" fill="rgba(52,211,153,.08)" stroke="rgba(52,211,153,.2)" stroke-width="1"/>
+        <text x="420" y="193" fill="#6ee7b7" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">② Bioréacteur</text>
+        <text x="420" y="205" fill="#4a5280" font-size="8.5" text-anchor="middle" font-family="DM Mono,monospace">nitrification partielle</text>
+
+        <rect x="360" y="218" width="120" height="30" rx="5" fill="rgba(52,211,153,.08)" stroke="rgba(52,211,153,.2)" stroke-width="1"/>
+        <text x="420" y="233" fill="#6ee7b7" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">③ Électrolyse</text>
+        <text x="420" y="245" fill="#4a5280" font-size="8.5" text-anchor="middle" font-family="DM Mono,monospace">oxydation avancée</text>
+
+        <rect x="360" y="258" width="120" height="30" rx="5" fill="rgba(52,211,153,.08)" stroke="rgba(52,211,153,.2)" stroke-width="1"/>
+        <text x="420" y="273" fill="#6ee7b7" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">④ Polissage UV</text>
+        <text x="420" y="285" fill="#4a5280" font-size="8.5" text-anchor="middle" font-family="DM Mono,monospace">désinfection finale</text>
+
+        <!-- Flèche traitement → stockage -->
+        <line x1="495" y1="204" x2="535" y2="204" stroke="#34d399" stroke-width="1.5" marker-end="url(#arr-g)"/>
+
+        <!-- STOCKAGE -->
+        <rect x="535" y="168" width="110" height="72" rx="8" fill="rgba(52,211,153,.1)" stroke="#34d399" stroke-width="1.5"/>
+        <text x="590" y="196" fill="#34d399" font-size="11" text-anchor="middle" font-family="DM Mono,monospace" font-weight="500">STOCKAGE</text>
+        <text x="590" y="212" fill="#aab3d6" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">eau potable certifiée</text>
+        <text x="590" y="228" fill="#4a5280" font-size="9"  text-anchor="middle" font-family="DM Mono,monospace">COT &lt; 0,5 mg·L⁻¹</text>
+
+        <!-- Flèche stockage → équipage -->
+        <line x1="645" y1="188" x2="720" y2="150" stroke="#34d399" stroke-width="1.5" marker-end="url(#arr-g)"/>
+        <line x1="645" y1="220" x2="720" y2="260" stroke="#34d399" stroke-width="1.5" marker-end="url(#arr-g)"/>
+
+        <!-- ÉQUIPAGE sortie -->
+        <rect x="720" y="120" width="80" height="36" rx="6" fill="rgba(52,211,153,.08)" stroke="rgba(52,211,153,.2)" stroke-width="1"/>
+        <text x="760" y="138" fill="#6ee7b7" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Boisson</text>
+        <text x="760" y="150" fill="#4a5280" font-size="9" text-anchor="middle" font-family="DM Mono,monospace">2,0 L/j/p</text>
+
+        <rect x="720" y="170" width="80" height="36" rx="6" fill="rgba(52,211,153,.08)" stroke="rgba(52,211,153,.2)" stroke-width="1"/>
+        <text x="760" y="188" fill="#6ee7b7" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Hygiène</text>
+        <text x="760" y="200" fill="#4a5280" font-size="9" text-anchor="middle" font-family="DM Mono,monospace">0,7 L/j/p</text>
+
+        <rect x="720" y="220" width="80" height="36" rx="6" fill="rgba(52,211,153,.08)" stroke="rgba(52,211,153,.2)" stroke-width="1"/>
+        <text x="760" y="238" fill="#6ee7b7" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Cuisine</text>
+        <text x="760" y="250" fill="#4a5280" font-size="9" text-anchor="middle" font-family="DM Mono,monospace">0,5 L/j/p</text>
+
+        <!-- Boucle retour (grand arc bas) -->
+        <path d="M760,256 Q760,345 420,345 Q180,345 85,320 Q30,305 30,274" fill="none" stroke="#4a5280" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arr)"/>
+        <text x="420" y="360" fill="#4a5280" font-size="9" text-anchor="middle" font-family="DM Mono,monospace">boucle de récupération</text>
+
+        <!-- Perte résiduelle -->
+        <line x1="590" y1="168" x2="590" y2="90" stroke="#f87171" stroke-width="1" stroke-dasharray="3,3"/>
+        <rect x="540" y="60" width="100" height="26" rx="4" fill="rgba(248,113,113,.08)" stroke="rgba(248,113,113,.2)" stroke-width="1"/>
+        <text x="590" y="75" fill="#f87171" font-size="9.5" text-anchor="middle" font-family="DM Mono,monospace">Perte : 0,4 %</text>
+        <text x="590" y="84" fill="#4a5280" font-size="8.5" text-anchor="middle" font-family="DM Mono,monospace">(HERA-W)</text>
+      </svg>
+    </div>
+    <div class="cycle-cap">
+      <strong>Figure 1 — Architecture du cycle fermé de l'eau (système HERA-W)</strong>
+      Toutes les sources d'eau humaine (urine, condensat atmosphérique, transpiration, eau métabolique)
+      sont collectées, traitées en quatre étapes séquentielles et restituées à l'équipage.
+      Le système HERA-W limite les pertes à 0,4 % par cycle, contre 5–7 % pour les systèmes ISS actuels.
+      La boucle de récupération (pointillés) représente le retour des condensats des usages vers le collecteur.
+    </div>
+  </div>
+
+  <!-- ===== 2. SYSTÈMES ACTUELS ===== -->
+  <h2 class="section-heading blue" id="s2">2. État de l'art — les systèmes actuellement déployés sur l'ISS</h2>
+
+  <p class="bt">
+    Le système ECLSS (Environmental Control and Life Support System) de l'ISS est constitué de deux
+    sous-systèmes complémentaires : le WPA (Water Processor Assembly), qui traite le condensat atmosphérique
+    et l'eau de lavage, et l'UPA (Urine Processor Assembly), qui distille l'urine par évaporation sous vide.
+    Ces deux flux convergent vers le WPA pour un traitement final commun [3].
+  </p>
+
+  <div class="tech-grid">
+    <div class="tech-card blue">
+      <div class="tech-acro">WPA — Water Processor Assembly</div>
+      <div class="tech-name">Traitement du condensat atmosphérique</div>
+      <div class="tech-desc">
+        Filtre le condensat de l'air ambiant (humidité respiratoire, transpiration)
+        via une série de lits adsorbants (charbon actif, résines échangeuses d'ions),
+        une chambre de catalyse à haute température (130 °C) et un lit iodé bactériostatique final.
+        Produit une eau conforme aux standards NASA potable en environ 90 minutes par lot.
+      </div>
+      <div class="tech-stat">
+        <span class="tech-stat-val b">93–95 %</span>
+        <span class="tech-stat-lbl">taux de récupération global ISS</span>
+      </div>
+    </div>
+
+    <div class="tech-card green">
+      <div class="tech-acro">UPA — Urine Processor Assembly</div>
+      <div class="tech-name">Distillation de l'urine sous vide</div>
+      <div class="tech-desc">
+        Distille l'urine par évaporation centrifuge sous vide partiel (~ 50 mbar).
+        Récupère environ 85 % de l'eau contenue dans l'urine. Le distillat est ensuite
+        envoyé vers le WPA pour traitement final. Le concentrat résiduel (brine) est
+        évacué — c'est la principale source de perte irréversible du système ISS actuel.
+      </div>
+      <div class="tech-stat">
+        <span class="tech-stat-val g">85 %</span>
+        <span class="tech-stat-lbl">récupération eau de l'urine</span>
+      </div>
+    </div>
+
+    <div class="tech-card orange">
+      <div class="tech-acro">BPA — Brine Processor Assembly</div>
+      <div class="tech-name">Traitement du concentrat urinaire (depuis 2023)</div>
+      <div class="tech-desc">
+        Module ajouté à l'ISS en 2023 pour traiter le concentrat (brine) résiduel de l'UPA.
+        Utilise une membrane à osmose inverse assistée par vapeur pour extraire
+        jusqu'à 80 % de l'eau résiduelle du concentrat. A permis de porter le taux global
+        ISS de 93 % à 98 % — mais uniquement en conditions 1g, instable en microgravité prolongée.
+      </div>
+      <div class="tech-stat">
+        <span class="tech-stat-val o">98 %</span>
+        <span class="tech-stat-lbl">taux post-BPA (1g uniquement)</span>
+      </div>
+    </div>
+
+    <div class="tech-card yellow">
+      <div class="tech-acro">Limitation fondamentale</div>
+      <div class="tech-name">Instabilité en microgravité prolongée</div>
+      <div class="tech-desc">
+        Le BPA et le WPA utilisent des processus dépendant de la gravité pour la séparation
+        liquide/gaz (dégazage) et la décantation. En microgravité durable (0,0 g),
+        la formation de bulles dans les circuits perturbe les pressions transmembranaires
+        et dégrade les performances de 4 à 12 % dès 90 jours d'opération continue [4].
+        Ce phénomène constitue la barrière principale que HERA-W cherche à franchir.
+      </div>
+      <div class="tech-stat">
+        <span class="tech-stat-val" style="color:#f87171;">−4 à −12 %</span>
+        <span class="tech-stat-lbl">dégradation performance en µg prolongée</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 3. CYCLE COMPLET ===== -->
+  <h2 class="section-heading" id="s3">3. Fonctionnement détaillé du cycle de recyclage</h2>
+
+  <h3 class="sub">3.1 Collecte et pré-traitement</h3>
+
+  <p class="bt">
+    La première étape consiste à centraliser toutes les sources d'eau du vaisseau. L'urine (source
+    la plus volumineuse : ~1,5 L·j⁻¹·personne⁻¹) est collectée via des toilettes à aspiration
+    différentielle qui séparent les liquides des solides par effet Venturi. La vapeur d'eau contenue
+    dans l'air expiré (~0,4 L·j⁻¹·personne⁻¹) et la transpiration cutanée (~0,9 L·j⁻¹·personne⁻¹)
+    sont condensées sur des échangeurs thermiques refroidis, puis collectées. L'eau de lavage des mains
+    et des ustensiles est filtrée mécaniquement (5 µm) avant collecte.
+  </p>
+
+  <h3 class="sub">3.2 Les quatre étapes de traitement</h3>
+
+  <p class="bt">
+    Le traitement proprement dit s'organise en quatre étapes séquentielles qui s'attaquent successivement
+    aux différentes classes de contaminants.
+  </p>
+
+  <div class="pipeline">
+    <div class="pipe-step">
+      <div class="pipe-num">ÉTAPE 01</div>
+      <div class="pipe-title">Osmose inverse primaire</div>
+      <div class="pipe-desc">Élimination des sels, urée, créatinine. Membranes PA-TFC, rejet 98,5 % des solutés. Pression 12–18 bar.</div>
+    </div>
+    <div class="pipe-step active">
+      <div class="pipe-num">ÉTAPE 02</div>
+      <div class="pipe-title">Bioréacteur à membrane</div>
+      <div class="pipe-desc">Dégradation biologique des composés organiques résiduels (COT). Biofilm de nitrifiants immobilisés sur support céramique.</div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-num">ÉTAPE 03</div>
+      <div class="pipe-title">Oxydation électrochimique</div>
+      <div class="pipe-desc">Électrodes de diamant dopé bore (BDD). Minéralisation des micropolluants organiques persistants en CO₂ + H₂O.</div>
+    </div>
+    <div class="pipe-step new">
+      <div class="pipe-num">ÉTAPE 04</div>
+      <div class="pipe-title">Polissage membranaire céramique</div>
+      <div class="pipe-desc">★ Innovation HERA-W. Membranes Al₂O₃/TiO₂ nanoporeuses (2 nm). Fonctionnement stable en µg, sans dégazage.</div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-num">ÉTAPE 05</div>
+      <div class="pipe-title">Désinfection UV-C + iode</div>
+      <div class="pipe-desc">Lampe UV-C 254 nm (dose ≥ 40 mJ·cm⁻²) + iodation résiduelle 0,2–0,5 mg·L⁻¹ pour protection stockage.</div>
+    </div>
+  </div>
+
+  <h3 class="sub">3.3 Bilan massique et sources de perte résiduelle</h3>
+
+  <p class="bt">
+    Même dans les meilleurs systèmes, une fraction irréductible de l'eau est perdue à chaque cycle.
+    Ces pertes proviennent de trois sources principales : (a) l'eau liée chimiquement aux boues
+    du bioréacteur évacuées périodiquement, (b) l'eau adsorbée dans les résines de polissage
+    lors de leur régénération, et (c) l'humidité résiduelle des concentrats solides évacués.
+    Comprendre et minimiser ces pertes constitue l'objectif central de l'ingénierie du système HERA-W.
+  </p>
+
+  <div class="tbl-wrap">
+    <div class="tbl-head">Tableau 1 — Bilan des sources de perte d'eau dans les systèmes de recyclage spatiaux</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Source de perte</th>
+          <th>Système ISS (WPA+UPA)</th>
+          <th>Système ISS+BPA (2023)</th>
+          <th>HERA-W (cette étude)</th>
+          <th>Irréductible ?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Brine urinaire résiduelle</td>
+          <td class="tr">3,2 %</td>
+          <td class="ty">0,8 %</td>
+          <td class="tg">0,15 %</td>
+          <td class="tm">Non</td>
+        </tr>
+        <tr>
+          <td>Boues bioréacteur</td>
+          <td class="tm">n/a</td>
+          <td class="tm">n/a</td>
+          <td class="tg">0,08 %</td>
+          <td class="ty">Partiel</td>
+        </tr>
+        <tr>
+          <td>Régénération résines</td>
+          <td class="tr">1,1 %</td>
+          <td class="ty">0,6 %</td>
+          <td class="tg">0,10 %</td>
+          <td class="tm">Non</td>
+        </tr>
+        <tr>
+          <td>Pertes gazeuses (dégazage)</td>
+          <td class="ty">0,4 %</td>
+          <td class="ty">0,4 %</td>
+          <td class="tg">0,07 %</td>
+          <td class="tm">Non</td>
+        </tr>
+        <tr>
+          <td>Évaporation circuits</td>
+          <td class="ty">0,3 %</td>
+          <td class="ty">0,2 %</td>
+          <td class="tg">0,01 %</td>
+          <td class="tm">Non</td>
+        </tr>
+        <tr>
+          <td><strong>Perte totale</strong></td>
+          <td class="tr"><strong>5–7 %</strong></td>
+          <td class="ty"><strong>2,0 %</strong></td>
+          <td class="tg"><strong>0,4 %</strong></td>
+          <td class="tm">—</td>
+        </tr>
+        <tr>
+          <td><strong>Taux de récupération</strong></td>
+          <td class="tr"><strong>93–95 %</strong></td>
+          <td class="ty"><strong>98,0 %</strong></td>
+          <td class="tg"><strong>99,6 %</strong></td>
+          <td class="tm">—</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="tbl-note">
+      Valeurs moyennes sur 360 jours de fonctionnement continu pour HERA-W, sur 180 jours pour ISS+BPA.
+      Le système ISS+BPA a montré une dégradation progressive à partir de J+90 en conditions de microgravité simulée, non reflétée dans ce tableau (voir figure 2).
+    </div>
+  </div>
+
+  <!-- ===== 4. AVANCÉE HERA-W ===== -->
+  <h2 class="section-heading orange" id="s4">4. L'avancée HERA-W — le procédé bio-hybride à membranes céramiques</h2>
+
+  <p class="bt">
+    Le verrou technologique que HERA-W cherche à franchir n'est pas d'ordre chimique — les procédés
+    de purification de l'eau sont bien maîtrisés sur Terre — mais d'ordre mécanique et physique :
+    comment maintenir des pressions transmembranaires stables et des séparations liquide/gaz efficaces
+    en l'absence de gravité, pendant plusieurs centaines de jours, sans intervention humaine ?
+  </p>
+
+  <div class="hl">
+    L'innovation centrale de HERA-W réside dans le remplacement des membranes polymères conventionnelles
+    (polyamide TFC, cellulose d'acétate) par des membranes céramiques nanoporeuses à base d'alumine
+    et dioxyde de titane (Al₂O₃/TiO₂), dont la structure rigide est insensible aux variations de
+    pression différentielle générées par les bulles en microgravité. La surface de ces membranes est
+    fonctionnalisée par un dépôt de nanoparticules de TiO₂ actives en UV, permettant une auto-nettoyage
+    photocatalytique continu qui supprime le colmatage — première cause de dégradation des performances
+    dans les systèmes de recyclage longue durée.
+  </div>
+
+  <h3 class="sub">4.1 Le couplage bio-hybride : bioréacteur + électrochimie</h3>
+
+  <p class="bt">
+    La seconde innovation de HERA-W est le couplage inédit d'un bioréacteur à membrane (MBR) et
+    d'une cellule d'électrolyse à potentiel modulé (EPM). Dans les systèmes classiques, ces deux
+    approches sont incompatibles : les potentiels électriques nécessaires à l'oxydation des polluants
+    organiques (1,8–2,4 V vs ESH) sont létaux pour les micro-organismes du bioréacteur. HERA-W
+    résout ce conflit par une séparation physique des deux modules combinée à un système de gestion
+    de flux adaptatif contrôlé par algorithme : le bioréacteur traite en priorité les flux de faible
+    concentration en contaminants (condensat atmosphérique pur), tandis que l'électrochimie prend
+    en charge les flux concentrés (brine post-UPA). Les deux flux se rejoignent en aval pour le
+    polissage membranaire céramique commun.
+  </p>
+
+  <!-- Figure 2 : comparaison avant/après -->
+  <div class="fig-wrap">
+  <img src="../Assets/publication/filtre01.png" alt="Jezero Crater" style="width:100%;display:block;border-bottom:1px solid var(--border);">
+    <div class="fig-cap">
+      <strong>Figure 2 — Prototype du module membranaire céramique Al₂O₃/TiO₂ (HERA-W)</strong>
+      Vue en coupe du module tubulaire (longueur 420 mm, diamètre externe 28 mm) constitué de 19 canaux
+      parallèles de 3,5 mm de diamètre. La couche active TiO₂ photocatalytique (épaisseur 200 nm, déposée
+      par ALD) est visible sous irradiation UV-A. Ce module a fonctionné 360 jours sans colmatage mesurable
+      (perte de perméabilité &lt; 2 %) dans l'enceinte GRAV-360. Fabrication : IFRAS — Plateforme Céramiques
+      Fonctionnelles, Toulouse, 2024.
+    </div>
+  </div>
+
+  <h3 class="sub">4.2 Comparaison avec les systèmes antérieurs</h3>
+
+  <div class="compare-grid">
+    <div class="compare-card before">
+      <div class="compare-label">Avant — Systèmes ISS (WPA + UPA + BPA)</div>
+      <div class="compare-title">Limites des technologies polymères</div>
+      <div class="compare-items">
+        <div class="compare-item">Membranes polymères sensibles au colmatage en µg (perte −4 à −12 % dès J+90)</div>
+        <div class="compare-item">Dégazage liquide/gaz dépendant de la gravité — instable en microgravité durable</div>
+        <div class="compare-item">Bioréacteur et électrochimie incompatibles — utilisés séparément uniquement</div>
+        <div class="compare-item">Taux de récupération plafonné à 98 % en 1g, &lt; 95 % en µg prolongée</div>
+        <div class="compare-item">Consommation énergétique : 4,6 Wh·L⁻¹</div>
+        <div class="compare-item">Régénération des résines requise tous les 30–45 jours (intervention équipage)</div>
+      </div>
+    </div>
+    <div class="compare-card after">
+      <div class="compare-label">Après — HERA-W (cette étude)</div>
+      <div class="compare-title">Procédé bio-hybride céramique</div>
+      <div class="compare-items">
+        <div class="compare-item">Membranes Al₂O₃/TiO₂ rigides + auto-nettoyage photocatalytique — zéro colmatage sur 360 j</div>
+        <div class="compare-item">Séparation liquide/gaz par effet capillaire dans nanocanaux — indépendante de la gravité</div>
+        <div class="compare-item">Couplage bio-hybride MBR + EPM via gestion de flux adaptatif (algorithme IFRAS-FlowCtrl)</div>
+        <div class="compare-item">Taux de récupération 99,6 % stable sur 360 jours en µg (0,1–0,38 g)</div>
+        <div class="compare-item">Consommation énergétique : 3,2 Wh·L⁻¹ (−31 %)</div>
+        <div class="compare-item">Maintenance autonome — aucune intervention manuelle sur 360 jours de test</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 5. RÉSULTATS ===== -->
+  <h2 class="section-heading" id="s5">5. Résultats expérimentaux — 360 jours dans l'enceinte GRAV-360</h2>
+
+  <p class="bt">
+    Le prototype HERA-W a été soumis à un test continu de 360 jours dans l'enceinte GRAV-360 du centre
+    IFRAS de Toulouse. Cette enceinte est une plateforme de centrifugation inverse capable de simuler
+    des niveaux de gravité entre 0,05 g et 0,38 g (gravité martienne) avec une précision de ±0,005 g.
+    Le cycle de simulation a alterné 180 jours en microgravité quasi-nulle (0,05 g) et 180 jours en
+    gravité martienne (0,38 g), afin de reproduire les conditions d'une mission de transfert Terre-Mars.
+  </p>
+
+  <!-- Graphique performances sur 360 jours -->
+  <div class="chart-wrap">
+    <div class="chart-inner">
+      <div class="chart-top">
+        <span class="chart-ttl">Taux de récupération d'eau (%) sur 360 jours — HERA-W vs systèmes ISS en conditions microgravité simulée (GRAV-360)</span>
+        <div class="legend">
+          <div class="li"><div class="ld" style="background:#34d399"></div>HERA-W (cette étude)</div>
+          <div class="li"><div class="ld" style="background:#f97316"></div>ISS WPA+UPA+BPA</div>
+          <div class="li"><div class="ld" style="background:#f87171;opacity:.6"></div>ISS WPA+UPA (2021)</div>
+          <div class="li"><div class="ld" style="background:rgba(255,255,255,.15)"></div>Seuil mission Mars</div>
+        </div>
+      </div>
+      <svg viewBox="0 0 820 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+        <!-- Axes -->
+        <line x1="65" y1="15" x2="65"  y2="250" stroke="#1b2555" stroke-width="1"/>
+        <line x1="65" y1="250" x2="800" y2="250" stroke="#1b2555" stroke-width="1"/>
+        <!-- Grilles H -->
+        <line x1="65" y1="50"  x2="800" y2="50"  stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
+        <line x1="65" y1="100" x2="800" y2="100" stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
+        <line x1="65" y1="150" x2="800" y2="150" stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
+        <line x1="65" y1="200" x2="800" y2="200" stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
+        <!-- Labels Y -->
+        <text x="55" y="54"  fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">100 %</text>
+        <text x="55" y="104" fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">99 %</text>
+        <text x="55" y="154" fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">98 %</text>
+        <text x="55" y="204" fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">97 %</text>
+        <text x="55" y="250" fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">96 %</text>
+        <!-- Labels X -->
+        <text x="65"  y="268" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">J0</text>
+        <text x="195" y="268" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">J60</text>
+        <text x="325" y="268" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">J120</text>
+        <text x="455" y="268" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">J180</text>
+        <text x="585" y="268" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">J280</text>
+        <text x="800" y="268" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">J360</text>
+        <!-- Seuil mission Mars 98 % -->
+        <line x1="65" y1="150" x2="800" y2="150" stroke="rgba(255,255,255,.15)" stroke-width="1.5" stroke-dasharray="6,4"/>
+        <text x="806" y="153" fill="rgba(255,255,255,.3)" font-size="9" font-family="DM Mono,monospace">Seuil</text>
+
+        <!-- Phase µg label -->
+        <rect x="65" y="22" width="195" height="16" rx="3" fill="rgba(79,107,237,.08)" stroke="none"/>
+        <text x="162" y="33" fill="#4a5280" font-size="8.5" text-anchor="middle" font-family="DM Mono,monospace">µg (0,05 g)</text>
+        <!-- Phase Mars label -->
+        <rect x="455" y="22" width="195" height="16" rx="3" fill="rgba(249,115,22,.06)" stroke="none"/>
+        <text x="552" y="33" fill="#4a5280" font-size="8.5" text-anchor="middle" font-family="DM Mono,monospace">gravité martienne (0,38 g)</text>
+
+        <!-- HERA-W — stable à 99,6 % avec légère montée initiale -->
+        <polyline points="65,70 195,68 325,66 455,68 585,67 800,66" fill="none" stroke="#34d399" stroke-width="2.5"/>
+        <circle cx="65"  cy="70" r="4" fill="#34d399"/>
+        <circle cx="195" cy="68" r="4" fill="#34d399"/>
+        <circle cx="325" cy="66" r="4" fill="#34d399"/>
+        <circle cx="455" cy="68" r="4" fill="#34d399"/>
+        <circle cx="585" cy="67" r="4" fill="#34d399"/>
+        <circle cx="800" cy="66" r="5" fill="#34d399" stroke="rgba(52,211,153,.3)" stroke-width="8"/>
+        <text x="806" y="68" fill="#34d399" font-size="10" font-family="DM Mono,monospace">99,6 %</text>
+
+        <!-- ISS BPA — dégradation progressive en µg -->
+        <polyline points="65,150 195,162 325,178 455,195 585,208 800,218" fill="none" stroke="#f97316" stroke-width="2" stroke-dasharray="5,3"/>
+        <circle cx="195" cy="162" r="3.5" fill="#f97316"/>
+        <circle cx="325" cy="178" r="3.5" fill="#f97316"/>
+        <circle cx="455" cy="195" r="3.5" fill="#f97316"/>
+        <circle cx="585" cy="208" r="3.5" fill="#f97316"/>
+        <circle cx="800" cy="218" r="3.5" fill="#f97316"/>
+        <text x="806" y="221" fill="#f97316" font-size="10" font-family="DM Mono,monospace">95,6 %</text>
+
+        <!-- ISS WPA+UPA 2021 — dégradation plus rapide -->
+        <polyline points="65,200 195,218 325,232 455,244 585,248 800,248" fill="none" stroke="#f87171" stroke-width="1.8" stroke-dasharray="3,4" opacity=".5"/>
+        <circle cx="325" cy="232" r="3" fill="#f87171" opacity=".5"/>
+        <circle cx="455" cy="244" r="3" fill="#f87171" opacity=".5"/>
+        <circle cx="800" cy="248" r="3" fill="#f87171" opacity=".5"/>
+        <text x="806" y="251" fill="#f87171" font-size="10" font-family="DM Mono,monospace" opacity=".6">93,2 %</text>
+
+        <!-- Annotation transition µg → Mars -->
+        <line x1="455" y1="15" x2="455" y2="250" stroke="rgba(249,115,22,.3)" stroke-width="1" stroke-dasharray="3,3"/>
+        <text x="458" y="48" fill="#f97316" font-size="8.5" font-family="DM Mono,monospace" opacity=".6">J180</text>
+      </svg>
+    </div>
+    <div class="chart-cap">
+      <strong>Figure 3 — Performances comparées sur 360 jours en gravité simulée</strong>
+      HERA-W (vert) maintient un taux de récupération de 99,6 % stable sur les 360 jours, indépendamment
+      du niveau de gravité simulé (transition 0,05 g → 0,38 g à J180). Le système ISS+BPA (orange, pointillés)
+      montre une dégradation progressive en µg de −2,4 points sur 360 jours. Le système ISS original 2021
+      (rouge, translucide) descend sous le seuil de viabilité martienne (98 %) dès J60.
+      Les mesures sont hebdomadaires ; barres d'erreur ±1 ET (n=3 modules en parallèle).
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+    <div class="tbl-head">Tableau 2 — Qualité de l'eau produite par HERA-W vs standards NASA (NHB 8060.1C)</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Paramètre</th>
+          <th>Standard NASA potable</th>
+          <th>HERA-W eau produite</th>
+          <th>Conformité</th>
+          <th>Méthode d'analyse</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Carbone organique total (COT)</td>
+          <td class="tm">&lt; 0,50 mg·L⁻¹</td>
+          <td class="tg">0,08 ± 0,02 mg·L⁻¹</td>
+          <td class="tg">✓ Conforme</td>
+          <td class="tm">TOC-L Shimadzu</td>
+        </tr>
+        <tr>
+          <td>Nitrates (NO₃⁻)</td>
+          <td class="tm">&lt; 44 mg·L⁻¹</td>
+          <td class="tg">2,1 ± 0,4 mg·L⁻¹</td>
+          <td class="tg">✓ Conforme</td>
+          <td class="tm">Chromatographie ionique</td>
+        </tr>
+        <tr>
+          <td>Conductivité</td>
+          <td class="tm">&lt; 500 µS·cm⁻¹</td>
+          <td class="tg">18 ± 3 µS·cm⁻¹</td>
+          <td class="tg">✓ Conforme</td>
+          <td class="tm">Conductimétrie en ligne</td>
+        </tr>
+        <tr>
+          <td>Microorganismes viables</td>
+          <td class="tm">&lt; 50 UFC·100 mL⁻¹</td>
+          <td class="tg">&lt; 1 UFC·100 mL⁻¹</td>
+          <td class="tg">✓ Conforme</td>
+          <td class="tm">R2A gélose 28°C, 7j</td>
+        </tr>
+        <tr>
+          <td>pH</td>
+          <td class="tm">6,0 – 8,5</td>
+          <td class="tg">7,2 ± 0,1</td>
+          <td class="tg">✓ Conforme</td>
+          <td class="tm">pH-mètre en ligne</td>
+        </tr>
+        <tr>
+          <td>Urée résiduelle</td>
+          <td class="tm">&lt; 0,001 mg·L⁻¹</td>
+          <td class="tg">&lt; 0,0002 mg·L⁻¹</td>
+          <td class="tg">✓ Conforme</td>
+          <td class="tm">LC-MS/MS</td>
+        </tr>
+        <tr>
+          <td>Iode résiduel</td>
+          <td class="tm">0,2 – 0,5 mg·L⁻¹</td>
+          <td class="tg">0,31 ± 0,04 mg·L⁻¹</td>
+          <td class="tg">✓ Conforme</td>
+          <td class="tm">Titrimétrie DPD</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="tbl-note">
+      Moyennes sur 52 analyses hebdomadaires (J0 à J360). Toutes les valeurs sont en dessous des seuils NASA sur l'intégralité de la durée du test, sans dégradation temporelle mesurable.
+    </div>
+  </div>
+
+  <!-- ===== 6. DISCUSSION ===== -->
+  <h2 class="section-heading blue" id="s6">6. Discussion et implications pour les missions interplanétaires</h2>
+
+  <h3 class="sub">6.1 Signification du seuil 99,6 %</h3>
+
+  <p class="bt">
+    Le franchissement du seuil de 99 % n'est pas symbolique. Il correspond à un changement qualitatif
+    dans la faisabilité des missions interplanétaires. Avec un taux de 95 % (ISS actuel), une mission
+    Mars de 900 jours avec 4 astronautes perd environ 860 litres d'eau — soit l'équivalent de 85 jours
+    d'eau potable. Avec 99,6 %, la perte est réduite à 49 litres sur toute la mission, une quantité
+    compensable par l'eau métabolique produite lors de l'oxydation des substrats alimentaires (environ
+    0,3 L·j⁻¹·personne⁻¹). En d'autres termes, HERA-W permet théoriquement une mission Mars en
+    boucle fermée totale, sans apport d'eau extérieur depuis la Terre.
+  </p>
+
+  <div class="hl orange">
+    Ce résultat place HERA-W au-dessus du seuil de viabilité des missions interplanétaires pour la première fois
+    dans l'histoire des systèmes de survie spatiaux. La NASA et l'ESA ont toutes deux identifié le franchissement
+    du seuil de 99 % en microgravité prolongée comme l'un des quatre « technology readiness gates »
+    indispensables à une mission Mars habitée [5]. HERA-W est le premier système à franchir ce gate
+    en conditions expérimentales contrôlées.
+  </div>
+
+  <h3 class="sub">6.2 Limitations et travaux en cours</h3>
+
+  <p class="bt">
+    Trois limitations méritent d'être soulignées. Premièrement, le prototype testé traite un débit de
+    10 L·j⁻¹ — adapté à un équipage de 3 astronautes en usage modéré. Le passage à l'échelle pour
+    4–6 astronautes en activité normale (13,6 L·j⁻¹) nécessite une multiplication des modules par 1,4,
+    ce qui a été validé en banc d'essai statique mais pas encore en microgravité simulée. Deuxièmement,
+    le bioréacteur contient des micro-organismes vivants (consortium de Nitrosomonas ureae et Nitrobacter
+    winogradskyi) dont le comportement sur des durées supérieures à 360 jours en microgravité reste
+    mal documenté. Troisièmement, la durée de vie des membranes céramiques au-delà de 360 jours
+    doit être validée — des essais de vieillissement accéléré à 70 °C sont en cours.
+  </p>
+
+  <h3 class="sub">6.3 Perspectives — vers HERA-W v2 et la mission IFRAS LDS-1</h3>
+
+  <p class="bt">
+    Une version améliorée, HERA-W v2, intègre un module de récupération de l'eau contenue dans les
+    matières fécales déshydratées (traitement thermique sous vide, 180 °C), dont le potentiel de
+    récupération est estimé à 0,3 L·j⁻¹·personne⁻¹. Couplé à HERA-W, ce module porterait théoriquement
+    le taux de récupération global (eau potable + eau alimentaire) au-delà de 99,9 %. Le déploiement
+    du prototype HERA-W v2 est prévu sur la mission analogique IFRAS LDS-1 (Long Duration Simulation,
+    120 jours en isolement, 4 personnes, Pyrénées, 2027).
+  </p>
+
+  <div class="art-divider"></div>
+
+  <!-- RÉFÉRENCES -->
+  <div class="refs-sec" id="s7">
+    <div class="ref-ttl">Références bibliographiques</div>
+    <div class="ref-list">
+      <div class="ref-item"><b>Carter D.L. et al.</b> — <em>Status of ISS water recovery and management</em> — AIAA ICES Conference, 2019</div>
+      <div class="ref-item"><b>Jones H.W.</b> — <em>The recent large reduction in space launch cost</em> — AIAA SPACE and Astronautics Forum, 2018</div>
+      <div class="ref-item"><b>Tobias B. et al.</b> — <em>International Space Station water balance operations</em> — AIAA ICES Conference, 2011</div>
+      <div class="ref-item"><b>Muirhead B. et al.</b> — <em>Microgravity effects on membrane separation processes: a review</em> — npj Microgravity, 2021</div>
+      <div class="ref-item"><b>NASA</b> — <em>Human Research Program — Technology Readiness Requirements for Crewed Mars Transit</em> — HRP-47065, 2024</div>
+      <div class="ref-item"><b>Wolfram E. et al.</b> — <em>Ceramic nanofiltration membranes for water reuse in closed-loop life support</em> — Journal of Membrane Science, 2023</div>
+      <div class="ref-item"><b>Christenson H.K.</b> — <em>Confinement effects on freezing and melting</em> — Journal of Physics: Condensed Matter, 2001</div>
+      <div class="ref-item"><b>Verseux C. et al.</b> — <em>Sustainable life support on Mars: the potential roles of microorganisms</em> — International Journal of Astrobiology, 2016</div>
+      <div class="ref-item"><b>Lefèvre M. &amp; Rousseau C.</b> — <em>Nitrifying biofilm stability under variable gravity conditions — preliminary results</em> — IFRAS Technical Report DSEV-2025-TR-011, 2025</div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <strong>Conflits d'intérêts :</strong> Aucun. Prof. A. Taniguchi contribue à titre personnel et n'engage pas la position de la JAXA. —
+    <strong>Financement :</strong> ANR-23-SURV-0019 « AQUA-CLOSE » ; ESA OSIP étude CDF Life Support 2024 ; soutien CNES programme exploration humaine. —
+    <strong>Brevet :</strong> Procédé HERA-W, dépôt de brevet INPI n° FR2500412, janvier 2026 (en cours d'examen). —
+    <strong>Données brutes :</strong> Zenodo 10.5281/zenodo.15204817 — séries temporelles 360 jours, protocoles analytiques, scripts Python (CC-BY 4.0). —
+    <strong>Contributions :</strong> C.R. : direction, conception HERA-W, interprétation ; T.B. : électrochimie, membranes céramiques ; A.T. : systèmes de survie, mise en perspective missions ; M.L. : bioréacteur, microbiologie ; S.E. : analyses membranaires, montage expérimental GRAV-360.
+  </div>
+
+</div>
+
+<footer style="background:#020617;border-top:1px solid #1b2555;padding:32px 30px;text-align:center;font-size:12px;color:#6b7280;">
+  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale · Publications soumises à validation institutionnelle
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{
+  const d=document.documentElement;
+  document.getElementById('progressBar').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%';
+});
+const secs=['s0','s1','s2','s3','s4','s5','s6','s7'];
+const dots=document.querySelectorAll('.toc-dot');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const i=secs.indexOf(e.target.id);
+      if(i>=0){dots.forEach(d=>d.classList.remove('active'));dots[i]&&dots[i].classList.add('active');}
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+secs.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
+dots.forEach((d,i)=>{d.addEventListener('click',()=>{const el=document.getElementById(secs[i]);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});});});
+</script>
+</body>
+</html>
