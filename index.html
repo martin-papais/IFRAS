@@ -714,7 +714,6 @@ footer {
   background: var(--bg-dark);
   border-top: 1px solid var(--border);
   padding: 40px 30px;
-  text-align: center;
   font-size: 12px;
   color: #6b7280;
 }
@@ -1023,8 +1022,9 @@ footer {
 
 </main>
 
-<footer>
-© IFRAS — Institut Français de Recherche Aéronautique et Spatiale
+<footer style="display:flex; justify-content:space-between; align-items:center; max-width:1300px; margin:auto;">
+  <span>© IFRAS — Institut Français de Recherche Aéronautique et Spatiale</span>
+  <a href="mention-legale.html" style="color:#6b7280; text-decoration:none;">Mentions légales</a>
 </footer>
 
 <script>
