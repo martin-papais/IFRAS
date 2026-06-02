@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="360x360" href="logo.png">
+<title>Mentions légales — IFRAS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg-main: #050b1e;
+  --bg-dark: #020617;
+  --bg-light: #070f2b;
+  --accent: #4f6bed;
+  --text-main: #e6e6e6;
+  --text-soft: #aab3d6;
+  --border: #1b2555;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "DM Sans", "Segoe UI", sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+}
+
+/* ===== HEADER ===== */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(5,11,30,.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  max-width: 1300px;
+  margin: auto;
+  padding: 12px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.logo-link img { height: 60px; cursor: pointer; }
+
+.main-nav {
+  list-style: none;
+  display: flex;
+  gap: 32px;
+  margin: 0; padding: 0;
+}
+
+.main-nav a {
+  text-decoration: none;
+  color: var(--text-soft);
+  font-size: 14px;
+  letter-spacing: .05em;
+}
+
+.main-nav a:hover { color: white; }
+
+.header-right .login-btn {
+  padding: 8px 18px;
+  border-radius: 6px;
+  border: 1px solid var(--accent);
+  color: white;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.header-right .login-btn:hover { background: var(--accent); }
+
+/* ===== PAGE HERO ===== */
+.page-hero {
+  padding: 160px 30px 80px;
+  background:
+    radial-gradient(ellipse 70% 60% at 20% 50%, rgba(79,107,237,0.07) 0%, transparent 65%),
+    var(--bg-dark);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.page-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(79,107,237,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79,107,237,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+.page-hero-inner {
+  max-width: 1300px;
+  margin: auto;
+  position: relative;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-soft);
+  margin-bottom: 20px;
+}
+
+.breadcrumb a {
+  color: var(--text-soft);
+  text-decoration: none;
+  transition: color .2s;
+}
+
+.breadcrumb a:hover { color: white; }
+
+.breadcrumb-sep { color: var(--border); }
+
+.breadcrumb span { color: var(--accent); }
+
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+
+.section-eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px; height: 1px;
+  background: currentColor;
+}
+
+.page-hero h1 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 800;
+  color: white;
+  margin: 0 0 16px;
+  letter-spacing: -0.03em;
+}
+
+.page-hero .subtitle {
+  font-size: 15px;
+  color: var(--text-soft);
+  font-weight: 300;
+  margin: 0;
+  max-width: 600px;
+}
+
+/* ===== FICTION BANNER ===== */
+.fiction-banner {
+  background: rgba(79,107,237,0.08);
+  border: 1px solid rgba(79,107,237,0.3);
+  border-radius: 12px;
+  padding: 20px 26px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin: 50px 0 10px;
+}
+
+.fiction-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.fiction-banner p {
+  margin: 0;
+  font-size: 14px;
+  color: #c7d2fe;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.fiction-banner p strong {
+  color: white;
+  font-weight: 500;
+}
+
+/* ===== CONTENT ===== */
+.content-wrapper {
+  max-width: 1300px;
+  margin: auto;
+  padding: 70px 30px 100px;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+/* SIDEBAR NAV */
+.sidebar-nav {
+  position: sticky;
+  top: 110px;
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sidebar-nav a {
+  display: block;
+  padding: 9px 14px;
+  border-radius: 7px;
+  font-size: 13px;
+  color: var(--text-soft);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: .2s;
+}
+
+.sidebar-nav a:hover {
+  color: white;
+  background: rgba(79,107,237,0.08);
+  border-left-color: var(--accent);
+}
+
+/* SECTIONS */
+.legal-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.legal-block {
+  padding-bottom: 50px;
+  border-bottom: 1px solid var(--border);
+}
+
+.legal-block:last-child {
+  border-bottom: none;
+}
+
+.legal-block h2 {
+  font-family: "Syne", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  margin: 0 0 18px;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legal-block h2 .num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px; height: 26px;
+  background: rgba(79,107,237,.15);
+  border: 1px solid rgba(79,107,237,.3);
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  flex-shrink: 0;
+  font-family: "DM Sans", sans-serif;
+}
+
+.legal-block p {
+  font-size: 14px;
+  color: var(--text-soft);
+  line-height: 1.85;
+  font-weight: 300;
+  margin: 0 0 14px;
+}
+
+.legal-block p:last-child { margin-bottom: 0; }
+
+.legal-block p strong {
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.info-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 6px;
+}
+
+.info-card {
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+
+.info-card .label {
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.info-card .val {
+  font-size: 13.5px;
+  color: var(--text-main);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border);
+  padding: 40px 30px;
+  font-size: 12px;
+  color: #6b7280;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100%;
+}
+
+.footer-inner {
+  max-width: 1300px;
+  margin: auto;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+footer a {
+  color: #6b7280;
+  text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="header-inner">
+    <div class="header-left">
+      <a href="index.html" class="logo-link">
+        <img src="logo.png" alt="Logo IFRAS">
+      </a>
+      <nav>
+        <ul class="main-nav">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="recherche.html">Recherche</a></li>
+          <li><a href="programmes.html">Programmes</a></li>
+          <li><a href="publications.html">Publications</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="header-right">
+      <a href="connexion.html" class="login-btn">Connexion</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== PAGE HERO ===== -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="breadcrumb">
+      <a href="index.html">Accueil</a>
+      <span class="breadcrumb-sep">›</span>
+      <span>Mentions légales</span>
+    </div>
+    <div class="section-eyebrow">Informations légales</div>
+    <h1>Mentions légales</h1>
+    <p class="subtitle">Informations relatives à l'éditeur, à l'hébergement et aux conditions d'utilisation du présent site.</p>
+
+    <div class="fiction-banner">
+      <div class="fiction-icon">⚠️</div>
+      <p><strong>Avertissement — Œuvre de fiction interactive.</strong> L'IFRAS est une organisation fictive créée dans le cadre d'une œuvre interactive de fiction (ARG — Alternate Reality Game). L'ensemble du contenu de ce site, y compris les noms, données, programmes, résultats scientifiques et personnages, est entièrement inventé à des fins artistiques et de divertissement. Toute ressemblance avec des organisations, personnes ou événements réels, hors références narratives explicites, est purement fortuite et relève d'un usage artistique.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CONTENT ===== -->
+<div class="content-wrapper">
+
+  <!-- Sidebar -->
+  <nav class="sidebar-nav">
+    <ul>
+      <li><a href="#editeur">Éditeur</a></li>
+      <li><a href="#hebergement">Hébergement</a></li>
+      <li><a href="#fiction">Nature fictive</a></li>
+      <li><a href="#propriete">Propriété intellectuelle</a></li>
+      <li><a href="#donnees">Données personnelles</a></li>
+      <li><a href="#responsabilite">Responsabilité</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Legal sections -->
+  <div class="legal-sections">
+
+    <div class="legal-block" id="editeur">
+      <h2><span class="num">01</span> Éditeur du site</h2>
+      <p>Ce site est édité dans le cadre d'un projet artistique et narratif à but non commercial. L'entité présentée — l'Institut Français de Recherche Aéronautique et Spatiale (IFRAS) — est une organisation entièrement fictive qui n'existe pas en tant que personne morale.</p>
+      <div class="info-row">
+        <div class="info-card">
+          <div class="label">Entité fictive présentée</div>
+          <div class="val">IFRAS<br>Institut Français de Recherche<br>Aéronautique et Spatiale</div>
+        </div>
+        <div class="info-card">
+          <div class="label">Nature du projet</div>
+          <div class="val">ARG — Alternate Reality Game<br>Œuvre de fiction interactive<br>à but non commercial</div>
+        </div>
+        <div class="info-card">
+          <div class="label">Fondation fictive</div>
+          <div class="val">1962 (dans l'univers narratif)</div>
+        </div>
+        <div class="info-card">
+          <div class="label">Sites fictifs mentionnés</div>
+          <div class="val">Paris · Toulouse · Bordeaux<br>Saclay · Houston · Kourou</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="legal-block" id="hebergement">
+      <h2><span class="num">02</span> Hébergement</h2>
+      <p>Le site est hébergé par un prestataire tiers. Les coordonnées de l'hébergeur réel peuvent être communiquées sur demande légitime adressée au créateur du projet.</p>
+    </div>
+
+    <div class="legal-block" id="fiction">
+      <h2><span class="num">03</span> Nature fictive du contenu</h2>
+      <p><strong>L'intégralité du contenu de ce site est fictif.</strong> Cela inclut, sans s'y limiter :</p>
+      <p>— Les programmes de recherche (ARTEMIS, ORION, ATLAS, PROMETHEUS…) et leurs résultats présentés ;<br>
+         — Les données chiffrées, publications scientifiques et statistiques affichées ;<br>
+         — Les noms et profils de chercheurs, collaborateurs ou partenaires mentionnés ;<br>
+         — Les accords, colloques, événements et partenariats décrits ;<br>
+         — Les agences, institutions et organisations présentées comme partenaires de l'IFRAS.</p>
+      <p>Toute référence à des agences spatiales réelles (ESA, NASA, JAXA, CNES…) ou à des institutions existantes s'inscrit exclusivement dans un contexte narratif et artistique, sans intention de tromper le public sur la réalité de ces organisations.</p>
+      <p>Ce projet ne prétend en aucun cas représenter, imiter ou supplanter une entité réelle. Il s'agit d'une fiction assumée et revendiquée.</p>
+    </div>
+
+    <div class="legal-block" id="propriete">
+      <h2><span class="num">04</span> Propriété intellectuelle</h2>
+      <p>L'ensemble des éléments constituant ce site — textes, visuels, identité graphique, logo, architecture narrative — sont des créations originales protégées par le droit d'auteur.</p>
+      <p>Toute reproduction, représentation, modification ou exploitation, totale ou partielle, sans autorisation préalable et écrite du créateur du projet, est strictement interdite.</p>
+    </div>
+
+    <div class="legal-block" id="donnees">
+      <h2><span class="num">05</span> Données personnelles</h2>
+      <p>Ce site ne collecte aucune donnée personnelle identifiable sans consentement explicite. Aucun formulaire de collecte de données réelles n'est opérationnel dans le cadre de ce projet fictif.</p>
+      <p>Si des cookies ou traceurs techniques sont utilisés à des fins de fonctionnement ou d'analyse d'audience, ils le sont dans le respect du Règlement Général sur la Protection des Données (RGPD) en vigueur au sein de l'Union européenne.</p>
+    </div>
+
+    <div class="legal-block" id="responsabilite">
+      <h2><span class="num">06</span> Limitation de responsabilité</h2>
+      <p>Le créateur de ce projet décline toute responsabilité quant à une interprétation erronée du contenu du site comme étant réel. Des avertissements explicites sur la nature fictive de l'IFRAS sont présents sur l'ensemble des pages légales du site.</p>
+      <p>Les liens hypertextes présents sur ce site peuvent renvoyer vers des ressources externes. Le créateur ne saurait être tenu responsable du contenu des sites tiers ainsi référencés.</p>
+    </div>
+
+    <div class="legal-block" id="contact">
+      <h2><span class="num">07</span> Contact</h2>
+      <p>Pour toute question relative aux présentes mentions légales, à la nature du projet ou à l'exercice de vos droits, vous pouvez contacter le créateur du projet via les canaux de communication officiels associés à cet ARG.</p>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span>© IFRAS — Institut Français de Recherche Aéronautique et Spatiale</span>
+    <a href="mention-legale.html">Mentions légales</a>
+  </div>
+</footer>
+
+</body>
+</html>
