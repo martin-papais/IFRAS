@@ -2,1191 +2,1702 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
-<title>Programmes avortés — IFRAS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<title>Programmes avortés | IFRAS</title>
+<meta name="description" content="Les programmes avortés de l'IFRAS : DAEDALUS, PHOENIX et ICARUS-2, des projets interrompus et ce qu'ils nous ont appris.">
+<meta name="theme-color" content="#050b1e">
+<link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
 
 <style>
-
+/* =========================================================
+   TOKENS (identiques à programmes.html)
+   ========================================================= */
 :root {
-  --bg-main:  #050b1e;
-  --bg-dark:  #020617;
+  --bg-main: #050b1e;
+  --bg-dark: #020617;
   --bg-light: #070f2b;
-  --bg-menu:  #081235;
-  --border:   #1b2555;
-  --accent:   #4f6bed;
-  --aborted:  #fb7185;
+  --bg-raise: #0a1436;
+  --accent: #4f6bed;
+  --accent-hover: #3d5adb;
+  --accent-soft: rgba(79,107,237,.14);
+  --accent-line: rgba(79,107,237,.38);
   --text-main: #e6e6e6;
+  --text-strong: #f5f7ff;
   --text-soft: #aab3d6;
-  --sidebar-w: 270px;
+  --text-mute: #8891b8;
+  --border: #1b2555;
+
+  /* Couleurs de statut : une seule légende pour toute la page */
+  --st-active: #34d399;
+  --st-phase: #60a5fa;
+  --st-restricted: #facc15;
+  --st-future: #a78bfa;
+  --st-archived: #9ca3af;
+  --st-aborted: #fb7185;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --header-h: 68px;
+  --subnav-h: 48px;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 20px); }
 
 body {
-  font-family: "DM Sans", sans-serif;
+  margin: 0;
+  font-family: "DM Sans", "Segoe UI", system-ui, sans-serif;
   background: var(--bg-main);
   color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* ===== HEADER ===== */
+img { display: block; max-width: 100%; }
+a { color: inherit; }
 
-header {
-  position: fixed; top: 0; width: 100%;
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.skip-link {
+  position: absolute; left: 16px; top: -48px;
+  padding: 10px 16px;
+  background: var(--accent); color: #fff;
+  border-radius: var(--radius-sm);
+  z-index: 3000; text-decoration: none;
+  transition: top 160ms var(--ease-out);
+}
+.skip-link:focus { top: 12px; }
+
+.container { max-width: 1300px; margin: 0 auto; padding: 0 30px; }
+
+/* =========================================================
+   BOUTONS
+   ========================================================= */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 22px;
+  border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 500;
+  text-decoration: none; white-space: nowrap;
+  border: 1px solid transparent;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.btn:active { transform: scale(0.97); }
+.btn i { font-size: 16px; transition: transform 200ms var(--ease-out); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-ghost { border-color: var(--accent-line); color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-ghost:hover { background: var(--accent-soft); border-color: var(--accent); }
+  .btn:hover i { transform: translateX(3px); }
+}
+
+/* =========================================================
+   HEADER (opaque)
+   ========================================================= */
+.site-header {
+  position: fixed; inset: 0 0 auto 0;
   z-index: 2000;
+  height: var(--header-h);
   background: rgba(5,11,30,.88);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
   border-bottom: 1px solid var(--border);
 }
+.header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.header-left { display: flex; align-items: center; gap: 44px; }
+.logo-link { display: flex; align-items: center; }
+.logo-link img { height: 44px; width: auto; }
 
-.header-inner {
-  max-width: 1300px; margin: auto;
-  padding: 12px 30px;
-  display: flex; align-items: center; justify-content: space-between;
-}
-
-.header-left { display: flex; align-items: center; gap: 40px; }
-.logo-link img { height: 60px; }
-.main-nav { list-style: none; display: flex; gap: 32px; }
-
+.main-nav { list-style: none; display: flex; gap: 6px; margin: 0; padding: 0; }
 .main-nav a {
-  text-decoration: none; color: var(--text-soft);
-  font-size: 14px; letter-spacing: .05em;
+  position: relative; display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--text-soft);
+  font-size: 14px; letter-spacing: .02em;
+  border-radius: 6px;
+  transition: color 160ms ease;
+}
+.main-nav a::after {
+  content: ""; position: absolute;
+  left: 12px; right: 12px; bottom: 2px; height: 1px;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 200ms var(--ease-out);
+}
+.main-nav a[aria-current="page"] { color: #fff; }
+.main-nav a[aria-current="page"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .main-nav a:hover { color: #fff; }
+  .main-nav a:hover::after { transform: scaleX(1); }
 }
 
-.main-nav a:hover,
-.main-nav a.active-nav { color: white; }
+.header-right { display: flex; align-items: center; gap: 10px; }
+.header-right .btn { padding: 9px 18px; font-size: 13px; }
 
-.header-right a {
-  padding: 8px 18px; border-radius: 6px;
-  border: 1px solid var(--accent);
-  color: white; text-decoration: none; font-size: 13px;
+.menu-toggle {
+  display: none;
+  width: 42px; height: 42px;
+  align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: #fff; font-size: 20px; cursor: pointer;
+  transition: transform 160ms var(--ease-out);
 }
+.menu-toggle:active { transform: scale(0.95); }
 
-.header-right a:hover { background: var(--accent); }
+.mobile-panel {
+  position: fixed; top: var(--header-h); left: 12px; right: 12px;
+  z-index: 1999;
+  padding: 10px;
+  background: rgba(7,15,43,.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(2,6,23,.6);
+  transform-origin: top right;
+  opacity: 0; transform: scale(0.96) translateY(-6px);
+  pointer-events: none; visibility: hidden;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s linear 220ms;
+}
+.mobile-panel.is-open {
+  opacity: 1; transform: none; pointer-events: auto; visibility: visible;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s;
+}
+.mobile-panel ul { list-style: none; margin: 0; padding: 0; }
+.mobile-panel a {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px; color: var(--text-main);
+  text-decoration: none; font-size: 16px; border-radius: 10px;
+}
+.mobile-panel a[aria-current="page"] { background: var(--accent-soft); color: #fff; }
+.mobile-panel .btn { width: 100%; justify-content: center; margin-top: 8px; }
 
-/* ===== BANDEAU PROGRAMMES ===== */
-
-.program-filter {
-  margin-top: 84px;
-  background: var(--bg-light);
+/* =========================================================
+   SOUS-NAVIGATION PAR STATUT + MENUS DÉROULANTS
+   ========================================================= */
+.subnav {
+  position: sticky;
+  top: var(--header-h);
+  margin-top: var(--header-h);
+  z-index: 1500;
+  height: var(--subnav-h);
+  background: rgba(8,18,53,.94);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
 }
 
-.program-filter ul {
-  max-width: 1300px; margin: 0 auto;
-  display: flex; justify-content: space-between;
-  list-style: none; padding: 0 30px;
+.subnav-list {
+  height: 100%;
+  list-style: none; margin: 0 auto; padding: 0 30px;
+  max-width: 1300px;
+  display: flex; align-items: stretch; justify-content: space-between;
 }
 
-.program-filter li {
-  position: relative; padding: 14px 18px;
-  cursor: pointer; font-size: 14px;
-  color: var(--text-soft); letter-spacing: .06em;
-  transition: color .2s;
-}
+.subnav-item { position: relative; display: flex; }
 
-.program-filter li.active-filter {
-  color: white;
-  border-bottom: 2px solid var(--aborted);
+.subnav-trigger {
+  position: relative;
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 14px;
+  color: var(--text-soft);
+  text-decoration: none;
+  font-size: 14px; font-weight: 500;
+  letter-spacing: .02em;
+  white-space: nowrap;
+  transition: color 160ms ease;
 }
+.subnav-count {
+  min-width: 22px; height: 20px; padding: 0 6px;
+  display: inline-grid; place-items: center;
+  border-radius: 999px;
+  font-size: 11.5px; font-weight: 500;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c) 26%, transparent);
+  font-variant-numeric: tabular-nums;
+}
+.subnav-trigger > i { font-size: 11px; opacity: .6; transition: transform 200ms var(--ease-out); }
 
-.program-filter li:hover { color: white; background: rgba(79,107,237,.1); border-radius: 6px; }
+.subnav-trigger::after {
+  content: ""; position: absolute;
+  left: 14px; right: 14px; bottom: -1px; height: 2px;
+  background: var(--c, var(--accent));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+/* section visible à l'écran (scrollspy) */
+.subnav-trigger[aria-current="true"] { color: #fff; }
+.subnav-trigger[aria-current="true"]::after { transform: scaleX(1); }
+
+.subnav-item.is-open .subnav-trigger,
+.subnav-item:has(:focus-visible) .subnav-trigger { color: #fff; }
+.subnav-item.is-open .subnav-trigger::after,
+.subnav-item:has(:focus-visible) .subnav-trigger::after { transform: scaleX(1); }
+.subnav-item.is-open .subnav-trigger > i { transform: rotate(180deg); }
 
 .dropdown {
-  position: absolute; top: 48px; left: 0;
-  background: #050b1e; border: 1px solid var(--border);
-  min-width: 220px; display: none;
-  z-index: 200; border-radius: 8px; overflow: hidden;
-  box-shadow: 0 16px 40px rgba(0,0,0,.4);
+  position: absolute;
+  top: calc(100% + 1px); left: 0;
+  width: 360px;
+  padding: 10px;
+  background: rgba(6,13,40,.98);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--c, var(--accent));
+  border-radius: 0 0 var(--radius) var(--radius);
+  box-shadow: 0 24px 60px rgba(2,6,23,.6);
+  transform-origin: top left;
+  opacity: 0; transform: scale(0.97) translateY(-4px);
+  visibility: hidden; pointer-events: none;
+  transition: opacity 160ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s linear 200ms;
 }
+.subnav-item--end .dropdown { left: auto; right: 0; transform-origin: top right; }
 
+.subnav-item.is-open .dropdown,
+.subnav-item:has(:focus-visible) .dropdown {
+  opacity: 1; transform: none; visibility: visible; pointer-events: auto;
+  transition: opacity 160ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s;
+}
+.subnav.is-instant .dropdown { transition-duration: 0ms !important; }
+
+.dropdown ul { list-style: none; margin: 0; padding: 0; }
 .dropdown a {
-  display: block; padding: 10px 16px;
-  font-size: 13px; color: var(--text-soft);
+  display: flex; align-items: baseline; gap: 12px;
+  padding: 9px 10px;
+  border-radius: 8px;
   text-decoration: none;
-  border-bottom: 1px solid rgba(27,37,85,.5);
-  transition: background .15s, color .15s;
+  transition: background-color 120ms ease;
 }
-
-.dropdown a:hover { background: rgba(79,107,237,.12); color: white; }
-.program-filter li:hover .dropdown { display: block; }
-
-/* ===== LAYOUT ===== */
-
-.page-wrap {
-  max-width: 1300px; margin: 0 auto;
-  padding: 0 30px;
-  display: grid;
-  grid-template-columns: var(--sidebar-w) 1fr;
-  gap: 0; align-items: start;
-}
-
-/* ===== SIDEBAR ===== */
-
-.sidebar {
-  position: sticky; top: 148px;
-  padding: 48px 32px 48px 0;
-}
-
-.sidebar-label {
-  font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
-  color: rgba(170,179,214,.35); font-weight: 500;
-  margin-bottom: 24px; padding-left: 16px;
-}
-
-.sidebar-nav { list-style: none; position: relative; }
-
-.sidebar-progress {
-  position: absolute; left: 0; top: 0; bottom: 0;
-  width: 2px; background: rgba(251,113,133,.07);
-}
-
-.sidebar-nav a {
-  display: flex; align-items: center; gap: 12px;
-  padding: 10px 16px; font-size: 13px;
-  color: var(--text-soft); text-decoration: none;
-  border-left: 2px solid transparent;
-  transition: color .2s, border-color .2s, background .2s;
-  border-radius: 0 6px 6px 0; font-weight: 300; line-height: 1.4;
-}
-
-.sidebar-nav a:hover {
-  color: white; background: rgba(255,255,255,.03);
-  border-left-color: rgba(251,113,133,.3);
-}
-
-.sidebar-nav a.active {
-  color: white; font-weight: 500;
-  background: rgba(251,113,133,.06);
-  border-left-color: var(--aborted);
-}
-
-.sidebar-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  flex-shrink: 0; opacity: .7;
-}
-
-.sidebar-divider { height: 1px; background: var(--border); margin: 20px 16px; }
-
-.sidebar-back {
-  display: flex; align-items: center; gap: 8px;
-  padding: 8px 16px; font-size: 12px;
-  color: rgba(170,179,214,.4); text-decoration: none;
-  transition: color .2s; font-weight: 300;
-}
-
-.sidebar-back:hover { color: white; }
-
-/* ===== CONTENU ===== */
-
-.main-content {
-  padding: 48px 0 100px 52px;
-  border-left: 1px solid var(--border);
-  min-width: 0;
-}
-
-/* ===== INTRO ===== */
-
-.intro-section {
-  padding-bottom: 60px;
-  border-bottom: 1px solid var(--border);
-  scroll-margin-top: 160px;
-}
-
-.section-eyebrow {
-  display: inline-flex; align-items: center; gap: 10px;
-  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
-  color: var(--aborted); font-weight: 500; margin-bottom: 20px;
-}
-
-.section-eyebrow::before {
-  content: ''; display: block;
-  width: 24px; height: 1px; background: currentColor;
-}
-
-.intro-section h1 {
+.dropdown a strong {
   font-family: "Syne", sans-serif;
-  font-size: clamp(28px, 3.5vw, 46px);
-  font-weight: 800; letter-spacing: -0.03em;
-  line-height: 1.05; color: white; margin-bottom: 24px;
+  font-size: 12.5px; font-weight: 700; letter-spacing: .06em;
+  color: #fff;
+  min-width: 96px;
+}
+.dropdown a span { font-size: 13px; color: var(--text-soft); line-height: 1.35; }
+@media (hover: hover) and (pointer: fine) {
+  .subnav-trigger:hover { color: #fff; }
+  .dropdown a:hover { background: rgba(255,255,255,.04); }
+  .dropdown a:hover span { color: #fff; }
 }
 
-.intro-section h1 span {
-  color: transparent;
-  -webkit-text-stroke: 1.5px rgba(251,113,133,.45);
-}
-
-.intro-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 36px;
-  margin-top: 32px;
-}
-
-.intro-grid p {
-  font-size: 14.5px; color: var(--text-soft);
-  line-height: 1.85; font-weight: 300;
-}
-
-.intro-stats {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
-  margin-top: 36px;
-}
-
-.intro-stat {
-  background: rgba(251,113,133,.04);
-  border: 1px solid rgba(251,113,133,.1);
-  border-radius: 10px; padding: 16px 20px;
-}
-
-.intro-stat-val {
-  font-family: "Syne", sans-serif; font-size: 24px;
-  font-weight: 800; color: white; letter-spacing: -0.03em;
-}
-
-.intro-stat-lbl {
-  font-size: 11px; color: var(--text-soft); font-weight: 300;
-  text-transform: uppercase; letter-spacing: .1em; margin-top: 3px;
-}
-
-/* ===== SECTION PROGRAMME ===== */
-
-.prog-section {
-  padding: 70px 0;
-  border-bottom: 1px solid var(--border);
-  scroll-margin-top: 160px;
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero {
   position: relative;
+  padding: 64px 0 0;
   overflow: hidden;
+  isolation: isolate;
 }
-
-.prog-section:last-child { border-bottom: none; }
-
-/* Diagonale décorative */
-.prog-section::before {
-  content: '';
-  position: absolute;
-  top: 0; right: 0;
-  width: 180px; height: 100%;
-  background: linear-gradient(135deg, transparent 40%, rgba(251,113,133,.025) 100%);
+.starfield {
+  position: absolute; inset: 0; z-index: -2;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1200ms ease;
+}
+.starfield.is-ready { opacity: 1; }
+.hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(ellipse 55% 60% at 74% 42%, rgba(52,211,153,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 55% at 70% 35%, rgba(79,107,237,0.12) 0%, transparent 70%),
+    linear-gradient(180deg, transparent 70%, var(--bg-main) 100%);
   pointer-events: none;
 }
 
-/* Code en filigrane */
-.prog-code-bg {
-  position: absolute;
-  top: 40px; right: -8px;
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  margin: 0 0 26px; padding: 0; list-style: none;
+  font-size: 13px; color: var(--text-mute);
+}
+.breadcrumb a { color: var(--text-soft); text-decoration: none; transition: color 160ms ease; }
+.breadcrumb i { font-size: 11px; }
+@media (hover: hover) and (pointer: fine) { .breadcrumb a:hover { color: #fff; } }
+
+.live-badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 6px 13px 6px 11px;
+  border-radius: 999px;
+  font-size: 13px; font-weight: 500;
+  color: var(--st-active);
+  background: color-mix(in srgb, var(--st-active) 9%, transparent);
+  border: 1px solid color-mix(in srgb, var(--st-active) 26%, transparent);
+  margin-bottom: 22px;
+}
+.live-dot { position: relative; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.live-dot::after {
+  content: ""; position: absolute; inset: -4px; border-radius: 50%;
+  border: 1px solid currentColor;
+  animation: pulse 2400ms var(--ease-out) infinite;
+}
+@keyframes pulse {
+  0%   { transform: scale(.6); opacity: .9; }
+  70%  { transform: scale(1.9); opacity: 0; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
+.hero h1 {
   font-family: "Syne", sans-serif;
-  font-size: clamp(52px, 7vw, 88px);
-  font-weight: 800;
-  color: rgba(251,113,133,.04);
-  letter-spacing: -0.04em;
+  font-size: clamp(44px, 6.2vw, 84px);
+  font-weight: 700;
   line-height: 1;
-  pointer-events: none;
-  user-select: none;
-  text-decoration: line-through;
-  text-decoration-color: rgba(251,113,133,.06);
+  letter-spacing: -0.035em;
+  color: var(--text-strong);
+  margin: 0 0 28px;
+}
+.hero h1 .line { display: block; overflow: hidden; padding-bottom: .14em; margin-bottom: -.14em; }
+.hero h1 .line > span {
+  display: block;
+  transform: translateY(105%);
+  animation: lineUp 900ms var(--ease-out) forwards;
+  animation-delay: calc(120ms + var(--i, 0) * 110ms);
+}
+.hero h1 .line--soft { color: #6ee7b7; font-weight: 600; }
+@keyframes lineUp { to { transform: none; } }
+
+.hero-desc {
+  max-width: 44ch;
+  color: var(--text-soft);
+  font-size: 17px; line-height: 1.7;
+  margin: 0 0 34px;
+  font-weight: 300;
+}
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.hero-in {
+  opacity: 0;
+  animation: heroIn 700ms var(--ease-out) forwards;
+  animation-delay: calc(100ms + var(--i, 0) * 80ms);
+}
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(14px); filter: blur(4px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
 }
 
-/* En-tête */
-
-.prog-header {
-  display: flex; align-items: flex-start;
-  justify-content: space-between; gap: 24px;
-  margin-bottom: 28px;
+/* ----- Système orbital : un programme = une orbite ----- */
+.orbit-wrap {
+  position: relative;
+  height: 480px;
+  opacity: 0;
+  animation: fadeOnly 1400ms ease 300ms forwards;
+  -webkit-mask-image: radial-gradient(ellipse 70% 72% at 50% 50%, #000 62%, transparent 100%);
+          mask-image: radial-gradient(ellipse 70% 72% at 50% 50%, #000 62%, transparent 100%);
 }
+.orbit-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 
-.prog-code-badge {
+.orbit-node {
+  position: absolute; left: 0; top: 0;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 4px 9px 4px 5px;
+  border-radius: 999px;
+  text-decoration: none;
   font-family: "Syne", sans-serif;
-  font-size: 11px; font-weight: 700; letter-spacing: .16em;
-  padding: 4px 12px; border-radius: 5px;
-  margin-bottom: 12px; display: inline-block;
+  font-size: 11.5px; font-weight: 700; letter-spacing: .08em;
+  color: #fff;
+  background: rgba(5,11,30,.72);
+  border: 1px solid color-mix(in srgb, var(--c) 34%, transparent);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  white-space: nowrap;
+  will-change: transform, opacity;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+.orbit-node::before {
+  content: ""; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--c);
+  box-shadow: 0 0 10px var(--c);
+  flex-shrink: 0;
+}
+.orbit-node:active { scale: .96; }
+@media (hover: hover) and (pointer: fine) {
+  .orbit-node:hover { border-color: var(--c); background: color-mix(in srgb, var(--c) 18%, rgba(5,11,30,.9)); }
 }
 
-.prog-header h2 {
+/* ----- Chiffres (3 seulement) ----- */
+.hero-stats {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.hero-stat { padding: 26px 24px; display: flex; flex-direction: column; gap: 6px; }
+.hero-stat + .hero-stat { border-left: 1px solid var(--border); }
+.hero-stat-value {
   font-family: "Syne", sans-serif;
-  font-size: clamp(20px, 2.5vw, 28px);
-  font-weight: 700; color: rgba(255,255,255,.65);
-  letter-spacing: -0.02em; line-height: 1.15;
-  text-decoration: line-through;
-  text-decoration-color: rgba(251,113,133,.3);
-  text-decoration-thickness: 1px;
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 800; color: #fff;
+  letter-spacing: -0.03em; line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.hero-stat-label { font-size: 13px; color: var(--text-soft); }
+
+/* =========================================================
+   MISE EN PAGE : SOMMAIRE + PROGRAMMES
+   ========================================================= */
+.layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 56px;
+  align-items: start;
 }
 
-.prog-status-badge {
-  font-size: 11px; padding: 5px 12px; border-radius: 20px;
-  font-weight: 500; letter-spacing: .05em;
-  white-space: nowrap; flex-shrink: 0; margin-top: 4px;
-  background: rgba(251,113,133,.1); color: var(--aborted);
-  border: 1px solid rgba(251,113,133,.25);
+.toc {
+  position: sticky;
+  top: calc(var(--header-h) + var(--subnav-h) + 32px);
+  padding: 64px 0;
+}
+.toc-label { font-size: 13px; color: var(--text-mute); margin: 0 0 14px 16px; }
+.toc-track { position: relative; }
+.toc-track::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 1px;
+  background: var(--border);
+}
+.toc-indicator {
+  position: absolute; left: 0; top: 0;
+  width: 2px; height: var(--h, 0px);
+  background: var(--c, var(--accent));
+  border-radius: 2px;
+  transform: translateY(var(--y, 0px));
+  transition: transform 320ms var(--ease-out), height 320ms var(--ease-out), background-color 320ms ease;
+}
+.toc-list { list-style: none; margin: 0; padding: 0; }
+.toc-list a {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 16px;
+  font-family: "Syne", sans-serif;
+  font-size: 13.5px; font-weight: 600; letter-spacing: .05em;
+  color: var(--text-soft);
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+.toc-list a::before {
+  content: ""; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--c);
+  opacity: .45;
+  transition: opacity 160ms ease, box-shadow 200ms ease;
+}
+.toc-list a[aria-current="true"] { color: #fff; }
+.toc-list a[aria-current="true"]::before { opacity: 1; box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 20%, transparent); }
+@media (hover: hover) and (pointer: fine) {
+  .toc-list a:hover { color: #fff; }
+  .toc-list a:hover::before { opacity: 1; }
+}
+.toc-back {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 26px 0 0 16px;
+  font-size: 13.5px; color: var(--text-soft);
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+.toc-back i { transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .toc-back:hover { color: #fff; }
+  .toc-back:hover i { transform: translateX(-3px); }
 }
 
-/* Bannière arrêt */
-.prog-stop-banner {
-  display: flex; align-items: flex-start; gap: 18px;
-  margin-bottom: 36px;
+.toc-mobile {
+  display: none;
+  position: sticky;
+  top: calc(var(--header-h) + var(--subnav-h));
+  z-index: 10;
+  margin: 0 -20px;
+  padding: 10px 20px;
+  background: rgba(5,11,30,.94);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto; scrollbar-width: none;
+  white-space: nowrap;
+}
+.toc-mobile::-webkit-scrollbar { display: none; }
+.toc-mobile a {
+  display: inline-flex; align-items: center; gap: 7px;
+  margin-right: 6px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  font-family: "Syne", sans-serif;
+  font-size: 12px; font-weight: 700; letter-spacing: .06em;
+  color: var(--text-soft);
+  text-decoration: none;
+  transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease;
+}
+.toc-mobile a::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--c); }
+.toc-mobile a[aria-current="true"] {
+  color: #fff;
+  border-color: color-mix(in srgb, var(--c) 45%, transparent);
+  background: color-mix(in srgb, var(--c) 12%, transparent);
+}
+
+.content { min-width: 0; padding-bottom: 20px; }
+
+/* =========================================================
+   PROGRAMME
+   ========================================================= */
+.prog {
+  position: relative;
+  padding: 72px 0;
+  border-top: 1px solid var(--border);
+}
+.prog:first-child { border-top: 0; }
+/* halo coloré discret, propre à chaque programme */
+.prog::before {
+  content: ""; position: absolute; top: 0; right: -10%;
+  width: 520px; height: 420px;
+  background: radial-gradient(ellipse at center, color-mix(in srgb, var(--c) 9%, transparent) 0%, transparent 65%);
+  pointer-events: none; z-index: -1;
+}
+.prog::after {
+  content: ""; position: absolute; top: -1px; left: 0; width: 72px; height: 2px;
+  background: var(--c);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 700ms var(--ease-out) 150ms;
+}
+.prog.is-visible::after { transform: scaleX(1); }
+.prog:first-child::after { display: none; }
+
+.prog-top { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+
+.card-code {
+  font-family: "Syne", sans-serif;
+  font-size: 12.5px; font-weight: 700; letter-spacing: .1em;
+  padding: 5px 11px; border-radius: 6px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 9%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c) 26%, transparent);
+}
+.status {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 12px; font-weight: 500;
+  padding: 4px 10px 4px 9px;
+  border-radius: 999px;
+  color: var(--s);
+  background: color-mix(in srgb, var(--s) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--s) 26%, transparent);
+  white-space: nowrap;
+}
+.status i { font-size: 13px; }
+.status .live-dot { width: 6px; height: 6px; }
+
+.prog-title {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(28px, 3.2vw, 42px);
+  font-weight: 700; color: #fff;
+  margin: 0 0 16px; letter-spacing: -0.02em; line-height: 1.1;
+  max-width: 22ch;
+  text-wrap: balance;
+}
+.lead {
+  margin: 0;
+  max-width: 60ch;
+  color: var(--text-soft);
+  font-size: 16.5px; line-height: 1.7; font-weight: 300;
+}
+
+.launch {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin: 24px 0 0;
+  padding: 8px 14px 8px 10px;
+  border-radius: 999px;
+  background: rgba(5,11,30,.55);
+  border: 1px solid var(--border);
+  font-size: 13.5px; color: var(--text-main);
+}
+.launch i { font-size: 18px; color: var(--c); }
+.launch strong { color: #fff; font-weight: 500; }
+
+.kpis {
+  display: flex; flex-wrap: wrap; gap: 14px 44px;
+  margin-top: 28px;
+}
+.kpi { display: flex; flex-direction: column; gap: 4px; }
+.kpi-val {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(24px, 2.4vw, 32px); font-weight: 800;
+  color: #fff; letter-spacing: -0.03em; line-height: 1.05;
+}
+.kpi-val small { font-size: .55em; font-weight: 700; color: var(--c); margin-left: 4px; letter-spacing: 0; }
+.kpi-label { font-size: 13px; color: var(--text-soft); }
+
+.prog-body {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 28px;
+  margin-top: 40px;
+  align-items: start;
+}
+
+/* Axes de recherche : icône + libellé, pas de paragraphe */
+.axes-label, .fiche-label {
+  font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text-mute); font-weight: 500;
+  margin: 0 0 14px;
+}
+.axes {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+}
+.axes li {
+  display: flex; align-items: center; gap: 14px;
+  padding: 15px 16px;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-size: 14.5px; color: var(--text-main);
+  transition: border-color 200ms ease, transform 200ms var(--ease-out);
+}
+.axes i {
+  flex-shrink: 0;
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  font-size: 19px;
+  border-radius: 10px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 10%, transparent);
+  transition: transform 260ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .axes li:hover { border-color: color-mix(in srgb, var(--c) 38%, transparent); transform: translateY(-2px); }
+  .axes li:hover i { transform: rotate(-8deg) scale(1.06); }
+}
+
+/* Fiche compacte */
+.fiche {
+  padding: 22px;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.fiche-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: 14px; }
+.fiche-row + .fiche-row { margin-top: 10px; }
+.fiche-row dt { color: var(--text-mute); }
+.fiche-row dd { margin: 0; color: #fff; font-weight: 500; }
+.fiche dl { margin: 0 0 20px; }
+
+.depts { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 20px; padding: 0; list-style: none; }
+.depts a {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 5px 11px 5px 9px;
+  border-radius: 999px;
+  font-family: "Syne", sans-serif;
+  font-size: 11.5px; font-weight: 700; letter-spacing: .08em;
+  color: #fff; text-decoration: none;
+  background: color-mix(in srgb, var(--d) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--d) 28%, transparent);
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.depts a::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--d); }
+.depts a:active { transform: scale(.97); }
+@media (hover: hover) and (pointer: fine) {
+  .depts a:hover { background: color-mix(in srgb, var(--d) 20%, transparent); border-color: var(--d); }
+}
+
+.pubs { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+.pubs a {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  font-size: 13.5px; line-height: 1.45; color: var(--text-soft);
+  transition: color 160ms ease;
+}
+.pubs li:last-child a { border-bottom: 0; padding-bottom: 0; }
+.pubs i { font-size: 15px; color: var(--c); flex-shrink: 0; margin-top: 2px; transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .pubs a:hover { color: #fff; }
+  .pubs a:hover i { transform: translate(2px, -2px); }
+}
+
+/* =========================================================
+   BANDEAU FINAL (identique à programmes.html)
+   ========================================================= */
+.cta-band {
+  margin: 30px 0 100px;
+  padding: 52px 56px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background:
+    radial-gradient(ellipse 50% 90% at 100% 0%, rgba(167,139,250,.16), transparent 60%),
+    var(--bg-light);
+  display: grid;
+  grid-template-columns: 1.3fr auto;
+  gap: 32px;
+  align-items: center;
+}
+.cta-band h2 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(24px, 2.6vw, 34px);
+  font-weight: 700; color: #fff; margin: 0 0 10px; letter-spacing: -0.02em;
+}
+.cta-band p { margin: 0; color: var(--text-soft); font-size: 15.5px; line-height: 1.6; font-weight: 300; max-width: 52ch; }
+.cta-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.site-footer {
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border);
+  padding: 36px 0;
+  font-size: 13px; color: var(--text-mute);
+}
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.footer-inner span:last-child { display: inline-flex; align-items: center; gap: 6px; }
+
+/* =========================================================
+   APPARITION AU DÉFILEMENT
+   ========================================================= */
+.js .reveal {
+  opacity: 0; transform: translateY(16px);
+  transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 60ms);
+}
+.js .reveal.is-visible { opacity: 1; transform: none; }
+.js .axes li.reveal.is-visible {
+  transition: border-color 200ms ease, transform 200ms var(--ease-out), opacity 700ms var(--ease-out);
+  transition-delay: 0ms;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1100px) {
+  .layout { grid-template-columns: 180px 1fr; gap: 36px; }
+  .prog-body { grid-template-columns: 1fr; }
+  .fiche { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; }
+  .fiche > .pubs-wrap { grid-column: 2; grid-row: 1 / span 3; }
+}
+@media (max-width: 960px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 0; }
+  .orbit-wrap { height: 340px; order: -1; margin: -20px 0 10px; }
+  .hero-stats { grid-template-columns: repeat(3, 1fr); }
+  .layout { grid-template-columns: 1fr; gap: 0; }
+  .toc { display: none; }
+  .toc-mobile { display: block; }
+  html { scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 72px); }
+  .cta-band { grid-template-columns: 1fr; padding: 36px; }
+}
+@media (max-width: 960px), (hover: none) {
+  .subnav-list {
+    justify-content: flex-start; gap: 4px;
+    overflow-x: auto; scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+  }
+  .subnav-list::-webkit-scrollbar { display: none; }
+  .subnav-trigger > i, .dropdown { display: none; }
+}
+@media (max-width: 860px) {
+  .main-nav, .header-right .btn-desktop { display: none; }
+  .menu-toggle { display: inline-flex; }
+}
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .subnav-list { padding: 0 20px; }
+  .hero { padding-top: 36px; }
+  .hero-desc, .lead { font-size: 15.5px; }
+  .orbit-wrap { height: 240px; margin: -30px 0 0; -webkit-mask-image: none; mask-image: none; }
+  .orbit-node { font-size: 10px; padding: 3px 7px 3px 4px; gap: 6px; }
+  .orbit-node::before { width: 7px; height: 7px; }
+  .hero-stat { padding: 20px 12px; }
+  .hero-stat-label { font-size: 12px; }
+  .prog { padding: 52px 0; }
+  .axes { grid-template-columns: 1fr; }
+  .fiche { display: block; }
+  .kpis { gap: 14px 28px; }
+  .hero-actions .btn { flex: 1 1 100%; justify-content: center; }
+  .cta-band { padding: 28px 22px; border-radius: var(--radius); margin-bottom: 72px; }
+  .cta-actions .btn { flex: 1 1 100%; justify-content: center; }
+}
+
+/* =========================================================
+   MOUVEMENT RÉDUIT
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-in, .orbit-wrap { animation: fadeOnly 300ms ease forwards; }
+  .hero h1 .line > span { animation: none; transform: none; }
+  .live-dot::after { animation: none; opacity: 0; }
+  .js .reveal { transform: none; transition: opacity 300ms ease; transition-delay: 0ms; }
+  .prog::after, .toc-indicator { transition: none; }
+  .dropdown { transition-duration: 0ms; }
+}
+@keyframes fadeOnly { to { opacity: 1; } }
+
+/* =========================================================
+   SPÉCIFIQUE : PROGRAMMES AVORTÉS
+   ========================================================= */
+.hero::before {
+  background:
+    radial-gradient(ellipse 55% 60% at 72% 45%, rgba(251,113,133,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 55% at 70% 35%, rgba(79,107,237,0.10) 0%, transparent 70%),
+    linear-gradient(180deg, transparent 70%, var(--bg-main) 100%);
+}
+.hero h1 .line--soft { color: #fda4af; }
+.live-badge { color: var(--st-aborted); background: color-mix(in srgb, var(--st-aborted) 9%, transparent); border-color: color-mix(in srgb, var(--st-aborted) 26%, transparent); }
+.live-badge i { font-size: 15px; }
+
+/* Trajectoires : bords fondus */
+.orbit-wrap {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 94%, transparent 100%), linear-gradient(180deg, transparent 0, #000 22%, #000 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 94%, transparent 100%), linear-gradient(180deg, transparent 0, #000 22%, #000 100%);
+  -webkit-mask-composite: source-in;
+          mask-composite: intersect;
+}
+.orbit-node small { font-family: "DM Sans", sans-serif; font-size: 11px; font-weight: 400; letter-spacing: 0; color: var(--text-soft); }
+
+/* En-tête de programme : titre + période */
+.prog-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px;
+  align-items: start;
+}
+.period { padding-top: 44px; width: 220px; }
+.period strong {
+  display: block;
+  font-family: "Syne", sans-serif;
+  font-size: clamp(30px, 3vw, 40px);
+  font-weight: 800; line-height: 1;
+  letter-spacing: -0.04em;
+  text-align: right;
+  color: transparent;
+  background: linear-gradient(180deg, #e5e7eb 0%, rgba(251,113,133,.35) 100%);
+  -webkit-background-clip: text; background-clip: text;
+}
+.period strong span { color: var(--c); -webkit-text-fill-color: var(--c); opacity: .8; font-weight: 600; margin: 0 .08em; }
+.span-track { position: relative; display: block; height: 5px; margin-top: 16px; border-radius: 999px; background: rgba(255,255,255,.05); }
+.span-bar {
+  position: absolute; top: 0; bottom: 0;
+  left: var(--from); width: var(--len);
+  border-radius: inherit;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--c) 35%, transparent), var(--c));
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 1100ms var(--ease-out) 250ms;
+}
+.span-bar::after {
+  content: ""; position: absolute; right: -5px; top: 50%;
+  width: 10px; height: 10px; margin-top: -5px; border-radius: 50%;
+  background: var(--st-aborted);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--st-aborted) 22%, var(--bg-main));
+}
+.period.is-visible .span-bar, html:not(.js) .span-bar { transform: scaleX(1); }
+.span-meta { display: flex; justify-content: space-between; margin-top: 8px; font-size: 11.5px; color: var(--text-mute); font-variant-numeric: tabular-nums; }
+
+/* Cause de l'arrêt */
+.stop {
+  display: flex; align-items: flex-start; gap: 16px;
+  margin-top: 32px;
   padding: 18px 22px;
-  background: rgba(251,113,133,.05);
-  border: 1px solid rgba(251,113,133,.18);
-  border-left: 3px solid rgba(251,113,133,.5);
+  background: color-mix(in srgb, var(--st-aborted) 5%, transparent);
+  border: 1px solid color-mix(in srgb, var(--st-aborted) 18%, transparent);
+  border-left: 3px solid var(--st-aborted);
   border-radius: 0 12px 12px 0;
 }
-
-.stop-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
-
-.stop-content { display: flex; flex-direction: column; gap: 4px; }
-
-.stop-label {
-  font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
-  color: rgba(251,113,133,.6); font-weight: 500;
+.stop > i { font-size: 22px; color: var(--st-aborted); flex-shrink: 0; margin-top: 1px; }
+.stop-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.stop-label { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: #fda4af; font-weight: 500; }
+.stop-tag {
+  font-size: 11.5px; padding: 2px 9px; border-radius: 999px;
+  color: #fecdd3; background: rgba(251,113,133,.12); border: 1px solid rgba(251,113,133,.25);
 }
+.stop p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--text-main); max-width: 62ch; }
 
-.stop-reason {
-  font-size: 14px; color: rgba(230,230,230,.7); font-weight: 400;
-  line-height: 1.5;
+/* Ce qu'il en reste */
+.wins { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.wins li {
+  display: flex; align-items: center; gap: 16px;
+  padding: 16px 18px;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-size: 15px; line-height: 1.5; color: var(--text-main);
+  transition: border-color 200ms ease, transform 200ms var(--ease-out);
 }
-
-.stop-date {
-  font-size: 12px; color: rgba(251,113,133,.5); font-weight: 300;
-  margin-top: 2px;
-}
-
-/* KPIs */
-.prog-kpis {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
-  margin-bottom: 32px;
-}
-
-.prog-kpi {
-  border-radius: 10px; padding: 16px 18px;
-  background: rgba(251,113,133,.03);
-  border: 1px solid rgba(251,113,133,.1);
-  display: flex; flex-direction: column; gap: 4px;
-}
-
-.prog-kpi-val {
-  font-family: "Syne", sans-serif; font-size: 22px;
-  font-weight: 800; letter-spacing: -0.03em;
-  color: rgba(251,113,133,.65);
-}
-
-.prog-kpi-lbl {
-  font-size: 11px; color: rgba(170,179,214,.5);
-  font-weight: 300; line-height: 1.4;
-  text-transform: uppercase; letter-spacing: .08em;
-}
-
-/* Corps */
-
-.prog-intro {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
-  margin-bottom: 32px;
-}
-
-.prog-intro p {
-  font-size: 14.5px; color: rgba(170,179,214,.7);
-  line-height: 1.85; font-weight: 300;
-}
-
-.prog-intro p + p { margin-top: 14px; }
-
-/* Fiche */
-.prog-fiche {
-  background: rgba(7,15,43,.7);
-  border: 1px solid rgba(27,37,85,.8);
-  border-radius: 14px; padding: 26px 28px;
-  display: flex; flex-direction: column; gap: 16px;
-}
-
-.fiche-label {
-  font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
-  color: rgba(170,179,214,.3); font-weight: 500;
-}
-
-.fiche-rows { display: flex; flex-direction: column; gap: 0; }
-
-.fiche-row {
-  display: flex; align-items: baseline;
-  justify-content: space-between; gap: 12px;
-  font-size: 13px; padding: 10px 0;
-  border-bottom: 1px solid rgba(27,37,85,.5);
-}
-
-.fiche-row:last-child { border-bottom: none; }
-
-.fiche-key { color: rgba(170,179,214,.4); font-weight: 300; flex-shrink: 0; }
-.fiche-val { color: rgba(230,230,230,.6); text-align: right; font-weight: 400; }
-.fiche-val--aborted { color: rgba(251,113,133,.65); font-style: italic; }
-
-/* Timeline arrêt */
-.prog-timeline {
-  display: flex; flex-direction: column; gap: 0;
-  border-left: 1px solid rgba(251,113,133,.15);
-  padding-left: 28px; margin-left: 8px;
-  margin-bottom: 32px;
-}
-
-.timeline-label {
-  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
-  color: rgba(170,179,214,.3); margin-bottom: 20px;
-  margin-left: -28px; padding-left: 28px;
-}
-
-.tl-item {
-  position: relative; padding-bottom: 24px;
-}
-
-.tl-item:last-child { padding-bottom: 0; }
-
-.tl-item::before {
-  content: '';
-  position: absolute;
-  left: -34px; top: 5px;
-  width: 10px; height: 10px; border-radius: 50%;
-  background: var(--dot-color, rgba(251,113,133,.35));
-  border: 2px solid var(--bg-main);
-}
-
-.tl-item.tl-ok::before   { background: rgba(52,211,153,.5); }
-.tl-item.tl-warn::before { background: rgba(250,204,21,.5); }
-.tl-item.tl-stop::before {
-  background: rgba(251,113,133,.7);
-  box-shadow: 0 0 10px rgba(251,113,133,.3);
-}
-
-.tl-date {
-  font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
-  font-weight: 500; margin-bottom: 4px;
-}
-
-.tl-item.tl-ok   .tl-date { color: rgba(52,211,153,.55); }
-.tl-item.tl-warn .tl-date { color: rgba(250,204,21,.55); }
-.tl-item.tl-stop .tl-date { color: rgba(251,113,133,.65); }
-.tl-item         .tl-date { color: rgba(170,179,214,.4); }
-
-.tl-title {
-  font-size: 13.5px; font-weight: 500;
-  color: rgba(255,255,255,.65); margin-bottom: 3px;
-}
-
-.tl-item.tl-stop .tl-title { color: rgba(251,113,133,.8); }
-
-.tl-desc {
-  font-size: 12.5px; color: rgba(170,179,214,.5);
-  font-weight: 300; line-height: 1.55;
-}
-
-/* Enseignements */
-.prog-lessons {
-  display: flex; flex-direction: column; gap: 10px;
-  margin-bottom: 28px;
-}
-
-.lessons-label {
-  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
-  color: rgba(170,179,214,.3); margin-bottom: 4px;
-}
-
-.lesson-item {
-  display: flex; align-items: flex-start; gap: 14px;
-  padding: 14px 18px;
-  background: rgba(255,255,255,.02);
-  border: 1px solid rgba(255,255,255,.04);
+.wins i {
+  flex-shrink: 0;
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  font-size: 19px;
   border-radius: 10px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 10%, transparent);
+  transition: transform 260ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .wins li:hover { border-color: color-mix(in srgb, var(--c) 38%, transparent); transform: translateX(4px); }
+  .wins li:hover i { transform: scale(1.08); }
+}
+.js .wins li.reveal.is-visible {
+  transition: border-color 200ms ease, transform 200ms var(--ease-out), opacity 700ms var(--ease-out);
+  transition-delay: 0ms;
 }
 
-.lesson-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; opacity: .65; }
+.legacy { display: inline-flex; align-items: center; gap: 6px; }
+.legacy i { font-size: 15px; color: var(--c); }
 
-.lesson-text {
-  font-size: 13.5px; color: rgba(170,179,214,.65);
-  font-weight: 300; line-height: 1.6;
+@media (max-width: 960px) {
+  .prog-head { grid-template-columns: 1fr; gap: 0; }
+  .period { order: -1; padding-top: 0; width: 100%; max-width: 320px; margin-bottom: 20px; }
+  .period strong { text-align: left; }
 }
-
-.lesson-text strong { color: rgba(230,230,230,.7); font-weight: 500; }
-
-/* Partenaires */
-.prog-partners {
-  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px;
+@media (max-width: 640px) {
+  .orbit-wrap { -webkit-mask-image: none; mask-image: none; }
+  .wins li { font-size: 14px; padding: 14px; }
 }
-
-.partner-chip {
-  font-size: 12px; padding: 5px 14px; border-radius: 6px;
-  background: rgba(251,113,133,.03);
-  border: 1px solid rgba(251,113,133,.1);
-  color: rgba(170,179,214,.45); font-weight: 300;
+@media (prefers-reduced-motion: reduce) {
+  .span-bar { transition: none; transform: none; }
 }
-
-.inner-divider { height: 1px; background: rgba(27,37,85,.7); margin: 28px 0; }
-
-/* Note archives */
-.archive-note {
-  display: flex; align-items: flex-start; gap: 14px;
-  padding: 16px 20px; margin-top: 28px;
-  background: rgba(79,107,237,.04);
-  border: 1px solid rgba(79,107,237,.1);
-  border-radius: 10px;
-  font-size: 13px; color: rgba(170,179,214,.55); font-weight: 300;
-  line-height: 1.65;
-}
-
-.archive-note a {
-  color: rgba(79,107,237,.6); text-decoration: none; transition: color .2s;
-}
-
-.archive-note a:hover { color: #818cf8; }
-
-/* ===== FOOTER ===== */
-
-footer {
-  background: var(--bg-dark); border-top: 1px solid var(--border);
-  padding: 40px 30px; text-align: center;
-  font-size: 12px; color: #6b7280;
-}
-
-/* ===== ANIMATIONS ===== */
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.prog-section { animation: fadeUp .55s ease both; }
-.prog-section:nth-child(1) { animation-delay: .05s; }
-.prog-section:nth-child(2) { animation-delay: .10s; }
-.prog-section:nth-child(3) { animation-delay: .15s; }
-
 </style>
+
+<script>document.documentElement.classList.add('js');</script>
 </head>
+
 
 <body>
 
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+
 <!-- ===== HEADER ===== -->
-<header>
-  <div class="header-inner">
+<header class="site-header" id="header">
+  <div class="container header-inner">
     <div class="header-left">
-      <a href="index.html" class="logo-link"><img src="logo.png" alt="Logo IFRAS"></a>
-      <ul class="main-nav">
-        <li><a href="index.html">Accueil</a></li>
-        <li><a href="recherche.html">Recherche</a></li>
-        <li><a href="programmes.html" class="active-nav">Programmes</a></li>
-        <li><a href="publications.html">Publications</a></li>
-      </ul>
+      <a href="index.html" class="logo-link" aria-label="IFRAS, accueil">
+        <img src="logo.png" alt="Logo IFRAS" width="44" height="44">
+      </a>
+      <nav aria-label="Navigation principale">
+        <ul class="main-nav">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="recherche.html">Recherche</a></li>
+          <li><a href="programmes.html" aria-current="page">Programmes</a></li>
+          <li><a href="publications.html">Publications</a></li>
+        </ul>
+      </nav>
     </div>
     <div class="header-right">
-      <a href="connexion.html">Connexion</a>
+      <a href="connexion.html" class="btn btn-ghost btn-desktop">Connexion</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-panel" aria-label="Ouvrir le menu">
+        <i class="ph-light ph-list" aria-hidden="true"></i>
+      </button>
     </div>
   </div>
 </header>
 
-<!-- ===== BANDEAU PROGRAMMES ===== -->
-<div class="program-filter">
+<div class="mobile-panel" id="mobile-panel">
   <ul>
-    <li>Programmes actifs
-      <div class="dropdown">
-        <a href="programmes-actifs.html#artemis9">ARTEMIS-9</a>
-        <a href="programmes-actifs.html#orion3">ORION-3</a>
-        <a href="programmes-actifs.html#hermes">HERMES</a>
-        <a href="programmes-actifs.html#atlas">ATLAS</a>
-        <a href="programmes-actifs.html#lynx">LYNX</a>
-        <a href="programmes-actifs.html#prometheus">PROMETHEUS</a>
-      </div>
-    </li>
-    <li>Programmes archivés
-      <div class="dropdown">
-        <a href="programmes-archives.html#apollox">APOLLO-X</a>
-        <a href="programmes-archives.html#delphi">DELPHI</a>
-        <a href="programmes-archives.html#cassinir">CASSINI-R</a>
-      </div>
-    </li>
-    <li>Programmes futurs
-      <div class="dropdown">
-        <a href="programmes-futurs.html#hera">HERA</a>
-        <a href="programmes-futurs.html#noe">NOE</a>
-        <a href="programmes-futurs.html#titan0">TITAN-0</a>
-      </div>
-    </li>
-    <li class="active-filter">Programmes avortés
-      <div class="dropdown">
-        <a href="programmes-avortes.html#phoenix">PHOENIX</a>
-        <a href="programmes-avortes.html#daedalus">DAEDALUS</a>
-        <a href="programmes-avortes.html#icarus2">ICARUS-2</a>
-      </div>
-    </li>
+    <li><a href="index.html">Accueil <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="recherche.html">Recherche <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="programmes.html" aria-current="page">Programmes <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="publications.html">Publications <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
   </ul>
+  <a href="connexion.html" class="btn btn-primary">Connexion</a>
 </div>
 
-<!-- ===== LAYOUT ===== -->
-<div class="page-wrap">
 
-  <!-- ===== SIDEBAR ===== -->
-  <aside class="sidebar">
-    <div class="sidebar-label">Programmes avortés</div>
-    <ul class="sidebar-nav" id="sidebar-nav">
-      <div class="sidebar-progress"></div>
-      <li>
-        <a href="#presentation" class="active">
-          <span class="sidebar-dot" style="background:#fb7185;"></span>
-          Vue d'ensemble
-        </a>
-      </li>
-      <li>
-        <a href="#phoenix">
-          <span class="sidebar-dot" style="background:#f97316;"></span>
-          PHOENIX
-        </a>
-      </li>
-      <li>
-        <a href="#daedalus">
-          <span class="sidebar-dot" style="background:#a78bfa;"></span>
-          DAEDALUS
-        </a>
-      </li>
-      <li>
-        <a href="#icarus2">
-          <span class="sidebar-dot" style="background:#facc15;"></span>
-          ICARUS-2
-        </a>
-      </li>
-    </ul>
-    <div class="sidebar-divider"></div>
-    <a href="programmes.html" class="sidebar-back">← Retour aux Programmes</a>
-  </aside>
+<!-- ===== SOUS-NAVIGATION PAR STATUT (identique à programmes.html) ===== -->
+<nav class="subnav" id="subnav" aria-label="Programmes par statut">
+  <ul class="subnav-list">
 
-  <!-- ===== CONTENU ===== -->
-  <main class="main-content">
+    <li class="subnav-item" style="--c:var(--st-active)">
+      <a class="subnav-trigger" href="programmes-actifs.html" aria-haspopup="true" aria-expanded="false">Actifs <span class="subnav-count">6</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
+      <div class="dropdown">
+        <ul>
+          <li><a href="programmes-actifs.html#artemis9"><strong>ARTEMIS-9</strong><span>Mission habitée sur Mars</span></a></li>
+          <li><a href="programmes-actifs.html#orion3"><strong>ORION-3</strong><span>Biosignatures d'exoplanètes</span></a></li>
+          <li><a href="programmes-actifs.html#prometheus"><strong>PROMETHEUS</strong><span>Propulsion ionique</span></a></li>
+          <li><a href="programmes-actifs.html#hermes"><strong>HERMES</strong><span>Communication quantique</span></a></li>
+          <li><a href="programmes-actifs.html#atlas"><strong>ATLAS</strong><span>Environnements extraterrestres</span></a></li>
+          <li><a href="programmes-actifs.html#lynx"><strong>LYNX</strong><span>Robotique autonome</span></a></li>
+        </ul>
+      </div>
+    </li>
 
-    <!-- ── PRÉSENTATION ── -->
-    <section class="intro-section" id="presentation">
-      <div class="section-eyebrow">Projets interrompus</div>
-      <h1>Programmes<br><span>avortés</span></h1>
+    <li class="subnav-item" style="--c:var(--st-future)">
+      <a class="subnav-trigger" href="programmes-futurs.html" aria-haspopup="true" aria-expanded="false">Futurs <span class="subnav-count">3</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
+      <div class="dropdown">
+        <ul>
+          <li><a href="programmes-futurs.html#noe"><strong>NOE</strong><span>Observation exosphérique, 2027</span></a></li>
+          <li><a href="programmes-futurs.html#hera"><strong>HERA</strong><span>Habitabilité des exolunes, 2028</span></a></li>
+          <li><a href="programmes-futurs.html#titan0"><strong>TITAN-0</strong><span>Sonde atmosphérique, 2029</span></a></li>
+        </ul>
+      </div>
+    </li>
 
-      <div class="intro-grid">
+
+    <li class="subnav-item subnav-item--end" style="--c:var(--st-archived)">
+      <a class="subnav-trigger" href="programmes-archives.html" aria-haspopup="true" aria-expanded="false">Archivés <span class="subnav-count">3</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
+      <div class="dropdown">
+        <ul>
+          <li><a href="programmes-archives.html#apollox"><strong>APOLLO-X</strong><span>Cratères polaires lunaires</span></a></li>
+          <li><a href="programmes-archives.html#delphi"><strong>DELPHI</strong><span>Prédiction sismique</span></a></li>
+          <li><a href="programmes-archives.html#cassinir"><strong>CASSINI-R</strong><span>Archives saturniennes par IA</span></a></li>
+        </ul>
+      </div>
+    </li>
+
+
+    <li class="subnav-item subnav-item--end" style="--c:var(--st-aborted)">
+      <a class="subnav-trigger" href="#daedalus" aria-current="true" aria-haspopup="true" aria-expanded="false">Avortés <span class="subnav-count">3</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
+      <div class="dropdown">
+        <ul>
+          <li><a href="#daedalus"><strong>DAEDALUS</strong><span>Voilier solaire</span></a></li>
+          <li><a href="#phoenix"><strong>PHOENIX</strong><span>Hypothermie profonde</span></a></li>
+          <li><a href="#icarus2"><strong>ICARUS-2</strong><span>Plongeur vénusien</span></a></li>
+        </ul>
+      </div>
+    </li>
+
+  </ul>
+</nav>
+<main id="contenu">
+
+<!-- ===== HERO ===== -->
+<section class="hero" aria-labelledby="hero-title">
+  <canvas class="starfield" id="starfield" aria-hidden="true"></canvas>
+  <div class="container">
+    <div class="hero-grid">
+
+      <div class="hero-left">
+        <ol class="breadcrumb hero-in" style="--i:0" aria-label="Fil d'Ariane">
+          <li><a href="programmes.html">Programmes</a></li>
+          <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+          <li aria-current="page">Avortés</li>
+        </ol>
+        <div class="live-badge hero-in" style="--i:1"><i class="ph-light ph-prohibit" aria-hidden="true"></i> Projets interrompus</div>
+        <h1 id="hero-title"><span class="line"><span style="--i:0">Programmes</span></span><span class="line line--soft"><span style="--i:1">avortés</span></span></h1>
+        <p class="hero-desc hero-in" style="--i:3">Trois ambitions arrêtées en chemin, par la physique, la stratégie ou un accident. L'IFRAS les documente sans détour : un échec bien compris évite de reprendre une impasse.</p>
+        <div class="hero-actions hero-in" style="--i:4">
+          <a href="#daedalus" class="btn btn-primary">Comprendre les arrêts <i class="ph-light ph-arrow-down" aria-hidden="true"></i></a>
+          <a href="programmes.html" class="btn btn-ghost">Tous les programmes</a>
+        </div>
+      </div>
+
+      <div class="orbit-wrap" id="orbit-wrap">
+        <canvas class="orbit-canvas" id="orbit" aria-hidden="true"></canvas>
+        <nav aria-label="Accès rapide aux programmes">
+      <a class="orbit-node" href="#daedalus" style="--c:#a78bfa" data-i="0">DAEDALUS <small>arrêté en 2019</small></a>
+      <a class="orbit-node" href="#phoenix" style="--c:#f97316" data-i="1">PHOENIX <small>arrêté en 2020</small></a>
+      <a class="orbit-node" href="#icarus2" style="--c:#facc15" data-i="2">ICARUS-2 <small>arrêté en 2022</small></a>
+        </nav>
+      </div>
+
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat reveal" style="--i:0">
+        <span class="hero-stat-value" data-count="3">3</span>
+        <span class="hero-stat-label">Programmes interrompus</span>
+      </div>
+      <div class="hero-stat reveal" style="--i:1">
+        <span class="hero-stat-value" data-count="47">47</span>
+        <span class="hero-stat-label">Publications partielles</span>
+      </div>
+      <div class="hero-stat reveal" style="--i:2">
+        <span class="hero-stat-value" data-count="3">3</span>
+        <span class="hero-stat-label">Programmes actifs qui en héritent</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROGRAMMES ===== -->
+<div class="container">
+  <div class="layout">
+
+    <aside class="toc" aria-label="Sommaire">
+      <p class="toc-label">Programmes avortés</p>
+      <div class="toc-track">
+        <span class="toc-indicator" aria-hidden="true"></span>
+        <ul class="toc-list" id="toc">
+          <li><a href="#daedalus" data-target="daedalus" style="--c:#a78bfa">DAEDALUS</a></li>
+          <li><a href="#phoenix" data-target="phoenix" style="--c:#f97316">PHOENIX</a></li>
+          <li><a href="#icarus2" data-target="icarus2" style="--c:#facc15">ICARUS-2</a></li>
+        </ul>
+      </div>
+      <a href="programmes.html" class="toc-back"><i class="ph-light ph-arrow-left" aria-hidden="true"></i> Tous les programmes</a>
+    </aside>
+
+    <div class="content">
+      <nav class="toc-mobile" id="toc-mobile" aria-label="Programmes avortés">
+        <a href="#daedalus" data-target="daedalus" style="--c:#a78bfa">DAEDALUS</a>
+        <a href="#phoenix" data-target="phoenix" style="--c:#f97316">PHOENIX</a>
+        <a href="#icarus2" data-target="icarus2" style="--c:#facc15">ICARUS-2</a>
+      </nav>
+
+      <!-- ===== DAEDALUS ===== -->
+      <section class="prog spy" id="daedalus" style="--c:#a78bfa" aria-labelledby="daedalus-title">
+        <div class="prog-head">
+          <div>
+            <div class="prog-top reveal">
+              <span class="card-code">DAEDALUS</span>
+              <span class="status" style="--s:var(--st-aborted)"><i class="ph-light ph-prohibit" aria-hidden="true"></i> Arrêté en 2019</span>
+            </div>
+            <h2 class="prog-title reveal" id="daedalus-title" style="--i:1">Voilier solaire interstellaire ultra-léger</h2>
+            <p class="lead reveal" style="--i:2">Une sonde de quelques grammes, poussée par la lumière d'un réseau de lasers, pour rejoindre l'étoile la plus proche en une vingtaine d'années.</p>
+          </div>
+          <div class="period reveal" style="--i:2">
+            <strong>2016<span>→</span>2019</strong>
+            <span class="span-track" aria-hidden="true"><span class="span-bar" style="--from:27.3%;--len:36.4%"></span></span>
+            <span class="span-meta"><span>3 ans de recherche</span></span>
+          </div>
+        </div>
+
+        <div class="stop reveal" style="--i:3">
+          <i class="ph-light ph-compass" aria-hidden="true"></i>
+          <div>
+            <div class="stop-head"><span class="stop-label">Cause de l'arrêt</span><span class="stop-tag">Stratégique</span></div>
+            <p>Un horizon de plus de vingt ans, jugé incompatible avec les cycles de financement lors de la révision des priorités de l'institut. Les résultats techniques, eux, étaient prometteurs.</p>
+          </div>
+        </div>
+
+        <div class="prog-body">
+          <div>
+            <p class="axes-label">Ce qu'il en reste</p>
+            <ul class="wins">
+            <li class="reveal" style="--i:0"><i class="ph-light ph-hexagon" aria-hidden="true"></i> Un procédé de graphène grande surface, repris par PROMETHEUS</li>
+            <li class="reveal" style="--i:1"><i class="ph-light ph-flashlight" aria-hidden="true"></i> La mise en phase de lasers, réutilisée par HERMES</li>
+            <li class="reveal" style="--i:2"><i class="ph-light ph-hourglass" aria-hidden="true"></i> Une réflexion sur le financement des programmes à très long terme</li>
+            </ul>
+          </div>
+          <aside class="fiche reveal" style="--i:2" aria-label="Fiche DAEDALUS">
+            <div>
+              <p class="fiche-label">Fiche</p>
+              <dl>
+                <div class="fiche-row"><dt>Phase atteinte</dt><dd>Démonstrateurs</dd></div>
+                <div class="fiche-row"><dt>Archives</dt><dd>Sur demande</dd></div>
+              </dl>
+              <div class="kpi" style="margin:0 0 20px"><span class="kpi-val">10 g</span><span class="kpi-label">Masse visée de la sonde</span></div>
+            </div>
+            <div class="pubs-wrap">
+              <p class="fiche-label">Départements pilotes</p>
+              <ul class="depts" style="margin:0">
+              <li><a href="DSMR.html" style="--d:#fb7185" title="Structures, Matériaux et Résistance">DSMR</a></li>
+              <li><a href="DOL.html" style="--d:#38bdf8" title="Optique et Lumière">DOL</a></li>
+              <li><a href="DSTI.html" style="--d:#818cf8" title="Simulation et Traitement de l'Information">DSTI</a></li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ===== PHOENIX ===== -->
+      <section class="prog spy" id="phoenix" style="--c:#f97316" aria-labelledby="phoenix-title">
+        <div class="prog-head">
+          <div>
+            <div class="prog-top reveal">
+              <span class="card-code">PHOENIX</span>
+              <span class="status" style="--s:var(--st-aborted)"><i class="ph-light ph-prohibit" aria-hidden="true"></i> Arrêté en 2020</span>
+            </div>
+            <h2 class="prog-title reveal" id="phoenix-title" style="--i:1">Réanimation cellulaire en hypothermie profonde</h2>
+            <p class="lead reveal" style="--i:2">Plonger les équipages dans un sommeil profond pendant les longs voyages, pour économiser les ressources vitales et les protéger des rayonnements.</p>
+          </div>
+          <div class="period reveal" style="--i:2">
+            <strong>2015<span>→</span>2020</strong>
+            <span class="span-track" aria-hidden="true"><span class="span-bar" style="--from:18.2%;--len:54.5%"></span></span>
+            <span class="span-meta"><span>5 ans de recherche</span></span>
+          </div>
+        </div>
+
+        <div class="stop reveal" style="--i:3">
+          <i class="ph-light ph-flask" aria-hidden="true"></i>
+          <div>
+            <div class="stop-head"><span class="stop-label">Cause de l'arrêt</span><span class="stop-tag">Scientifique</span></div>
+            <p>Les résultats encourageants sur cellules isolées ne se sont jamais transposés aux tissus : les dommages causés par la glace restaient irréparables.</p>
+          </div>
+        </div>
+
+        <div class="prog-body">
+          <div>
+            <p class="axes-label">Ce qu'il en reste</p>
+            <ul class="wins">
+            <li class="reveal" style="--i:0"><i class="ph-light ph-first-aid" aria-hidden="true"></i> Des formulations cryoprotectrices reprises pour la conservation médicale</li>
+            <li class="reveal" style="--i:1"><i class="ph-light ph-book-open" aria-hidden="true"></i> Des résultats négatifs publiés en entier, pour épargner la même impasse à d'autres</li>
+            <li class="reveal" style="--i:2"><i class="ph-light ph-list-checks" aria-hidden="true"></i> Une revue critique à mi-parcours, désormais appliquée à tous les programmes</li>
+            </ul>
+          </div>
+          <aside class="fiche reveal" style="--i:2" aria-label="Fiche PHOENIX">
+            <div>
+              <p class="fiche-label">Fiche</p>
+              <dl>
+                <div class="fiche-row"><dt>Phase atteinte</dt><dd>Phase II · tissus</dd></div>
+                <div class="fiche-row"><dt>Archives</dt><dd>Sur demande</dd></div>
+              </dl>
+              <div class="kpi" style="margin:0 0 20px"><span class="kpi-val">12 %</span><span class="kpi-label">Récupération obtenue, pour 60 % visés</span></div>
+            </div>
+            <div class="pubs-wrap">
+              <p class="fiche-label">Départements pilotes</p>
+              <ul class="depts" style="margin:0">
+              <li><a href="DSVT.html" style="--d:#34d399" title="Sciences du Vivant et de la Terre">DSVT</a></li>
+              <li><a href="DPET.html" style="--d:#f97316" title="Physique Énergétique et Thermique">DPET</a></li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ===== ICARUS-2 ===== -->
+      <section class="prog spy" id="icarus2" style="--c:#facc15" aria-labelledby="icarus2-title">
+        <div class="prog-head">
+          <div>
+            <div class="prog-top reveal">
+              <span class="card-code">ICARUS-2</span>
+              <span class="status" style="--s:var(--st-aborted)"><i class="ph-light ph-prohibit" aria-hidden="true"></i> Arrêté en 2022</span>
+            </div>
+            <h2 class="prog-title reveal" id="icarus2-title" style="--i:1">Plongeur atmosphérique vénusien autonome</h2>
+            <p class="lead reveal" style="--i:2">Un drone hybride, mi-ballon mi-avion, conçu pour voler une journée entière dans les nuages de Vénus, là où les conditions redeviennent presque clémentes.</p>
+          </div>
+          <div class="period reveal" style="--i:2">
+            <strong>2018<span>→</span>2022</strong>
+            <span class="span-track" aria-hidden="true"><span class="span-bar" style="--from:45.5%;--len:45.5%"></span></span>
+            <span class="span-meta"><span>4 ans de développement</span></span>
+          </div>
+        </div>
+
+        <div class="stop reveal" style="--i:3">
+          <i class="ph-light ph-fire" aria-hidden="true"></i>
+          <div>
+            <div class="stop-head"><span class="stop-label">Cause de l'arrêt</span><span class="stop-tag">Incident</span></div>
+            <p>Le prototype de vol a été détruit en chambre thermique : un joint d'étanchéité n'avait jamais été testé sous la véritable atmosphère vénusienne.</p>
+          </div>
+        </div>
+
+        <div class="prog-body">
+          <div>
+            <p class="axes-label">Ce qu'il en reste</p>
+            <ul class="wins">
+            <li class="reveal" style="--i:0"><i class="ph-light ph-thermometer-hot" aria-hidden="true"></i> Des essais désormais toujours menés sous l'atmosphère réelle de la cible</li>
+            <li class="reveal" style="--i:1"><i class="ph-light ph-airplane-tilt" aria-hidden="true"></i> Une voilure adaptative reprise par LYNX pour un futur drone martien</li>
+            <li class="reveal" style="--i:2"><i class="ph-light ph-file-text" aria-hidden="true"></i> Un rapport d'incident publié en intégralité</li>
+            </ul>
+          </div>
+          <aside class="fiche reveal" style="--i:2" aria-label="Fiche ICARUS-2">
+            <div>
+              <p class="fiche-label">Fiche</p>
+              <dl>
+                <div class="fiche-row"><dt>Phase atteinte</dt><dd>Prototype final</dd></div>
+                <div class="fiche-row"><dt>Archives</dt><dd>Sur demande</dd></div>
+              </dl>
+              <div class="kpi" style="margin:0 0 20px"><span class="kpi-val">465 °C</span><span class="kpi-label">Température de l'essai fatal</span></div>
+            </div>
+            <div class="pubs-wrap">
+              <p class="fiche-label">Départements pilotes</p>
+              <ul class="depts" style="margin:0">
+              <li><a href="DPET.html" style="--d:#f97316" title="Physique Énergétique et Thermique">DPET</a></li>
+              <li><a href="DSMR.html" style="--d:#fb7185" title="Structures, Matériaux et Résistance">DSMR</a></li>
+              <li><a href="DSTI.html" style="--d:#818cf8" title="Simulation et Traitement de l'Information">DSTI</a></li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <div class="cta-band reveal" style="background:radial-gradient(ellipse 50% 90% at 100% 0%, rgba(251,113,133,.14), transparent 60%), var(--bg-light)">
         <div>
-          <p>Les programmes avortés sont une part inséparable de l'histoire de l'IFRAS. Ils témoignent des prises de risque scientifiques et technologiques inhérentes à toute institution d'exploration de frontière. Un programme avorté n'est pas un échec — c'est la trace d'une ambition qui s'est heurtée à la réalité physique, technique, budgétaire ou stratégique d'une époque. À ce titre, chacun de ces programmes mérite une documentation rigoureuse et une analyse honnête de ses causes d'arrêt.</p>
-          <p>Les trois programmes présentés ici — PHOENIX, DAEDALUS et ICARUS-2 — ont tous été arrêtés définitivement avant d'avoir atteint leurs objectifs opérationnels. Leurs dossiers complets, incluant les résultats partiels de phases terminées, les rapports d'incident et les analyses de défaillance, sont consultables sur demande dans les archives de l'IFRAS. Leurs enseignements ont directement influencé la conception de plusieurs programmes actifs.</p>
+          <h2>Rien n’est perdu</h2>
+          <p>Résultats partiels, rapports d'incident et analyses sont consultables auprès du service Archives. Plusieurs programmes actifs en sont directement issus.</p>
         </div>
-        <div>
-          <p>L'IFRAS a fait le choix de documenter publiquement ses programmes avortés, y compris les incidents techniques et les erreurs de jugement stratégique qui ont conduit à leur arrêt. Cette transparence est un engagement éthique envers la communauté scientifique internationale et un outil de progrès collectif : les échecs bien documentés sont souvent plus précieux que les succès, car ils balisent explicitement les voies sans issue et permettent d'éviter de les réemprunter.</p>
-          <p>Les données, modèles et publications partiels issus de ces programmes restent accessibles. Certains résultats de phases précoces ont trouvé des applications dans d'autres contextes — un rappel que la recherche fondamentale ne produit jamais de travail entièrement vain, même lorsque son programme d'origine est interrompu.</p>
-        </div>
-      </div>
-
-      <div class="intro-stats">
-        <div class="intro-stat">
-          <div class="intro-stat-val">3</div>
-          <div class="intro-stat-lbl">Programmes interrompus</div>
-        </div>
-        <div class="intro-stat">
-          <div class="intro-stat-val">~340 M€</div>
-          <div class="intro-stat-lbl">Investissement total engagé</div>
-        </div>
-        <div class="intro-stat">
-          <div class="intro-stat-val">47</div>
-          <div class="intro-stat-lbl">Publications partielles produites</div>
-        </div>
-        <div class="intro-stat">
-          <div class="intro-stat-val">2019</div>
-          <div class="intro-stat-lbl">Premier arrêt (DAEDALUS)</div>
+        <div class="cta-actions">
+          <a href="programmes-actifs.html" class="btn btn-primary">Programmes actifs <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
+          <a href="mailto:archives@ifras.fr" class="btn btn-ghost">Contacter les archives</a>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- ============================================================ -->
-    <!-- PHOENIX                                                       -->
-    <!-- ============================================================ -->
-    <section class="prog-section" id="phoenix">
-      <div class="prog-code-bg">PHOENIX</div>
-
-      <div class="prog-header">
-        <div>
-          <span class="prog-code-badge" style="color:rgba(249,115,22,.55); background:rgba(249,115,22,.06); border:1px solid rgba(249,115,22,.15);">PHOENIX</span>
-          <h2>Réanimation cellulaire en hypothermie profonde</h2>
-        </div>
-        <span class="prog-status-badge">Arrêté · 2020</span>
-      </div>
-
-      <div class="prog-stop-banner">
-        <span class="stop-icon">🛑</span>
-        <div class="stop-content">
-          <span class="stop-label">Cause d'arrêt</span>
-          <span class="stop-reason">Résultats de Phase II non concluants — viabilité cellulaire post-réanimation insuffisante à −80 °C. Taux de récupération fonctionnelle inférieur à 12 % sur toutes les lignées testées, seuil minimal défini à 60 %.</span>
-          <span class="stop-date">Décision d'arrêt : Comité de Direction Scientifique · 14 novembre 2020</span>
-        </div>
-      </div>
-
-      <div class="prog-kpis">
-        <div class="prog-kpi">
-          <span class="prog-kpi-val">2015 – 2020</span>
-          <span class="prog-kpi-lbl">Période d'activité</span>
-        </div>
-        <div class="prog-kpi">
-          <span class="prog-kpi-val">~95 M€</span>
-          <span class="prog-kpi-lbl">Budget engagé à l'arrêt</span>
-        </div>
-        <div class="prog-kpi">
-          <span class="prog-kpi-val">18</span>
-          <span class="prog-kpi-lbl">Publications partielles produites</span>
-        </div>
-      </div>
-
-      <div class="prog-intro">
-        <div>
-          <p>PHOENIX visait à développer des protocoles de cryoconservation réversible applicables aux équipages de missions spatiales longue durée — typiquement un trajet de 9 mois vers Mars — permettant de réduire la consommation de ressources vitales et de limiter les effets délétères de l'exposition prolongée aux rayonnements cosmiques. Le programme s'inscrivait dans la continuité des recherches sur l'hibernation induite chez les mammifères et de la cryogénie médicale d'urgence.</p>
-          <p>Les travaux portaient sur deux axes parallèles : la cryoprotection cellulaire par agents exogènes (glycérol, DMSO, tréhalose) et la suppression métabolique par modulation pharmacologique de l'activité mitochondriale. En Phase I, les résultats sur cellules isolées avaient semblé encourageants, avec des taux de viabilité post-dégel de 45 à 70 % selon les lignées et les protocoles testés.</p>
-          <p style="margin-top:14px">La Phase II, portant sur des tissus multicellulaires puis sur des organes complets, s'est révélée radicalement différente. Les dommages aux jonctions intercellulaires et aux structures vasculaires lors de la formation des cristaux de glace extracellulaires se sont avérés irréparables dans tous les systèmes testés à −80 °C, malgré une quinzaine de formulations cryoprotectrices différentes. Le programme a été arrêté lorsqu'il est devenu évident que le verrou scientifique fondamental — la prévention des dommages cristallins à l'échelle tissulaire — ne pouvait pas être levé dans l'état des connaissances et des technologies disponibles.</p>
-        </div>
-        <div class="prog-fiche">
-          <span class="fiche-label">Fiche programme</span>
-          <div class="fiche-rows">
-            <div class="fiche-row">
-              <span class="fiche-key">Statut</span>
-              <span class="fiche-val fiche-val--aborted">Arrêté définitivement</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Début programme</span>
-              <span class="fiche-val">Janvier 2015</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Phase atteinte à l'arrêt</span>
-              <span class="fiche-val">Phase II — Tissus multicellulaires</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Département pilote</span>
-              <span class="fiche-val">DSVT / DPET</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Chercheurs impliqués</span>
-              <span class="fiche-val">+65 (pic 2019)</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Partenaires principaux</span>
-              <span class="fiche-val">INSERM, NASA, Université de Tokyo</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Résultats archivés</span>
-              <span class="fiche-val">Oui — accès sur demande</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="inner-divider"></div>
-
-      <div class="prog-timeline">
-        <div class="timeline-label">Chronologie du programme</div>
-
-        <div class="tl-item tl-ok">
-          <div class="tl-date">2015 – 2017</div>
-          <div class="tl-title">Phase I — Cellules isolées</div>
-          <div class="tl-desc">Résultats encourageants sur 14 lignées cellulaires humaines. Taux de viabilité post-dégel entre 45 et 71 % selon les protocoles. Trois formulations cryoprotectrices sélectionnées pour la Phase II.</div>
-        </div>
-
-        <div class="tl-item tl-ok">
-          <div class="tl-date">2017</div>
-          <div class="tl-title">Publication Phase I et approbation Phase II</div>
-          <div class="tl-desc">Publication des résultats Phase I dans Cryobiology (2017). Approbation du passage en Phase II par le Comité Scientifique avec budget de 48 M€ supplémentaires. Optimisme général dans l'équipe.</div>
-        </div>
-
-        <div class="tl-item tl-warn">
-          <div class="tl-date">2018</div>
-          <div class="tl-title">Premiers signaux d'alerte — Tissus multicellulaires</div>
-          <div class="tl-desc">Les protocoles Phase I ne se transposent pas aux tissus organisés. Apparition de dommages vasculaires irréversibles à la décongélation. L'équipe développe 11 nouvelles formulations mais les résultats restent décevants.</div>
-        </div>
-
-        <div class="tl-item tl-warn">
-          <div class="tl-date">2019</div>
-          <div class="tl-title">Revue critique intermédiaire</div>
-          <div class="tl-desc">Revue externe commandée par la Direction. Les experts concluent que le verrou est fondamental et non contournable à court terme. Recommandation de poursuite conditionnelle sur 18 mois avec objectif minimal de 30 % de récupération.</div>
-        </div>
-
-        <div class="tl-item tl-stop">
-          <div class="tl-date">14 novembre 2020</div>
-          <div class="tl-title">Arrêt définitif du programme</div>
-          <div class="tl-desc">Après 18 mois supplémentaires, le meilleur résultat obtenu reste à 12 % de récupération fonctionnelle, loin du seuil minimal de 30 % et très loin de l'objectif initial de 60 %. Le Comité de Direction Scientifique vote l'arrêt à l'unanimité.</div>
-        </div>
-      </div>
-
-      <div class="inner-divider"></div>
-
-      <div class="lessons-label">Enseignements et réutilisations</div>
-      <div class="prog-lessons">
-        <div class="lesson-item">
-          <span class="lesson-icon">🔬</span>
-          <div class="lesson-text">
-            <strong>Verrou scientifique identifié et documenté :</strong> les résultats négatifs de PHOENIX ont été publiés intégralement dans Cryobiology et Nature Protocols (2021), établissant une référence méthodologique qui a permis à trois autres équipes mondiales d'éviter de reproduire les mêmes impasses.
-          </div>
-        </div>
-        <div class="lesson-item">
-          <span class="lesson-icon">💊</span>
-          <div class="lesson-text">
-            <strong>Applications médicales dérivées :</strong> les 3 formulations cryoprotectrices Phase I ont été licenciées à l'INSERM pour des applications de biobanque de cellules souches. Un dérivé commercial est en cours d'évaluation clinique pour la conservation de greffons cardiaques.
-          </div>
-        </div>
-        <div class="lesson-item">
-          <span class="lesson-icon">📋</span>
-          <div class="lesson-text">
-            <strong>Méthodologie de décision :</strong> la procédure de revue critique intermédiaire avec objectifs minaux chiffrés et délai fixe, développée ad hoc pour PHOENIX, a été formalisée et intégrée au manuel de gestion des programmes de l'IFRAS. Elle est aujourd'hui appliquée à tous les programmes en Phase II et au-delà.
-          </div>
-        </div>
-      </div>
-
-      <div class="prog-partners">
-        <span class="partner-chip">INSERM</span>
-        <span class="partner-chip">NASA — Johnson Space Center</span>
-        <span class="partner-chip">Université de Tokyo — Médecine</span>
-        <span class="partner-chip">CEA Saclay</span>
-        <span class="partner-chip">Institut Pasteur</span>
-      </div>
-
-      <div class="archive-note">
-        📁 Les données complètes de Phase I et Phase II sont archivées et disponibles sur demande motivée. Les 11 formulations cryoprotectrices testées sont documentées dans un rapport technique interne (RT-PHOENIX-2020-04). <a href="mailto:archives@ifras.fr">Contacter les archives →</a>
-      </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- DAEDALUS                                                      -->
-    <!-- ============================================================ -->
-    <section class="prog-section" id="daedalus">
-      <div class="prog-code-bg">DAEDALUS</div>
-
-      <div class="prog-header">
-        <div>
-          <span class="prog-code-badge" style="color:rgba(167,139,250,.55); background:rgba(167,139,250,.06); border:1px solid rgba(167,139,250,.15);">DAEDALUS</span>
-          <h2>Voilier solaire interstellaire ultra-léger</h2>
-        </div>
-        <span class="prog-status-badge">Arrêté · 2019</span>
-      </div>
-
-      <div class="prog-stop-banner">
-        <span class="stop-icon">🛑</span>
-        <div class="stop-content">
-          <span class="stop-label">Cause d'arrêt</span>
-          <span class="stop-reason">Abandon stratégique décidé par le Conseil Scientifique National — réévaluation des priorités de l'IFRAS pour la période 2020-2030. Le programme a été jugé trop éloigné des axes stratégiques validés et son horizon de résultats (20+ ans) incompatible avec les cycles de financement institutionnels.</span>
-          <span class="stop-date">Décision d'arrêt : Conseil Scientifique National · 3 juin 2019</span>
-        </div>
-      </div>
-
-      <div class="prog-kpis">
-        <div class="prog-kpi">
-          <span class="prog-kpi-val">2016 – 2019</span>
-          <span class="prog-kpi-lbl">Période d'activité</span>
-        </div>
-        <div class="prog-kpi">
-          <span class="prog-kpi-val">~38 M€</span>
-          <span class="prog-kpi-lbl">Budget engagé à l'arrêt</span>
-        </div>
-        <div class="prog-kpi">
-          <span class="prog-kpi-val">21</span>
-          <span class="prog-kpi-lbl">Publications partielles produites</span>
-        </div>
-      </div>
-
-      <div class="prog-intro">
-        <div>
-          <p>DAEDALUS était un programme de propulsion radicalement différent de tout ce que l'IFRAS avait conduit jusqu'alors. Son ambition : concevoir une sonde de 10 grammes — une "puce spatiale" — propulsée par un laser terrestre de haute puissance via un voilier solaire en graphène de quelques mètres carrés, capable d'atteindre 20 % de la vitesse de la lumière et d'arriver à Proxima Centauri — l'étoile la plus proche du Soleil à 4,2 années-lumière — en une vingtaine d'années.</p>
-          <p>Le programme s'inscrivait dans le sillage de l'initiative Breakthrough Starshot annoncée en 2016. L'IFRAS y apportait ses expertises uniques en physique des matériaux extrêmes (DSMR), en optique de haute puissance (DOL) et en miniaturisation des systèmes embarqués (DSTI). Les travaux portaient sur trois défis majeurs : la synthèse de films de graphène monofeuillets de grande surface (> 4 m²), la résistance des matériaux à l'ablation laser à 10^11 W/m², et la conception d'instruments scientifiques fonctionnels à l'échelle du gramme.</p>
-          <p style="margin-top:14px">Les résultats techniques obtenus en trois ans étaient en réalité prometteurs : l'équipe du DSMR avait réussi à produire des films de graphène de 0,8 m² en salle blanche, un record mondial à l'époque, et le DOL avait démontré la faisabilité de miroirs de renvoi adaptatifs pour la mise en phase d'un réseau de lasers kilowatts. Mais le programme a été stoppé pour des raisons purement stratégiques et budgétaires lors de la révision quinquennale du portefeuille de l'IFRAS en 2019.</p>
-        </div>
-        <div class="prog-fiche">
-          <span class="fiche-label">Fiche programme</span>
-          <div class="fiche-rows">
-            <div class="fiche-row">
-              <span class="fiche-key">Statut</span>
-              <span class="fiche-val fiche-val--aborted">Arrêté définitivement</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Début programme</span>
-              <span class="fiche-val">Octobre 2016</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Phase atteinte à l'arrêt</span>
-              <span class="fiche-val">Phase A+ — Démonstrateurs partiels</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Département pilote</span>
-              <span class="fiche-val">DSMR / DOL / DSTI</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Chercheurs impliqués</span>
-              <span class="fiche-val">+48</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Partenaires principaux</span>
-              <span class="fiche-val">Breakthrough Starshot, Caltech, CNRS</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Résultats archivés</span>
-              <span class="fiche-val">Oui — partiellement open access</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="inner-divider"></div>
-
-      <div class="prog-timeline">
-        <div class="timeline-label">Chronologie du programme</div>
-
-        <div class="tl-item tl-ok">
-          <div class="tl-date">Octobre 2016</div>
-          <div class="tl-title">Lancement du programme</div>
-          <div class="tl-desc">Création d'une équipe dédiée de 48 chercheurs en réponse à l'initiative Breakthrough Starshot. Financement initial de 12 M€ sur 3 ans pour une phase exploratoire.</div>
-        </div>
-
-        <div class="tl-item tl-ok">
-          <div class="tl-date">2017</div>
-          <div class="tl-title">Record mondial de surface graphène</div>
-          <div class="tl-desc">Le DSMR produit un film de graphène monofeuillets de 0,8 m² en conditions salle blanche, record mondial à la date. Publication dans Nature Materials. Ce résultat seul justifie rétrospectivement une partie de l'investissement.</div>
-        </div>
-
-        <div class="tl-item tl-ok">
-          <div class="tl-date">2018</div>
-          <div class="tl-title">Démonstrateur optique validé</div>
-          <div class="tl-desc">Le DOL démontre la mise en phase cohérente d'un réseau de 16 lasers de 1 kW chacun avec une précision de λ/20 — un prérequis pour le système de propulsion laser à grande échelle.</div>
-        </div>
-
-        <div class="tl-item tl-warn">
-          <div class="tl-date">Mars 2019</div>
-          <div class="tl-title">Révision quinquennale du portefeuille IFRAS</div>
-          <div class="tl-desc">Le Conseil Scientifique National engage une révision des priorités pour la décennie 2020-2030. DAEDALUS est identifié comme "programme à horizon temporel incompatible" avec les cycles de financement publics à 5 ans.</div>
-        </div>
-
-        <div class="tl-item tl-stop">
-          <div class="tl-date">3 juin 2019</div>
-          <div class="tl-title">Arrêt stratégique</div>
-          <div class="tl-desc">Le CSN vote l'arrêt de DAEDALUS à 7 voix contre 4. Contrairement aux autres programmes avortés, l'arrêt n'est pas motivé par un échec technique mais par un choix de politique scientifique institutionnelle.</div>
-        </div>
-      </div>
-
-      <div class="inner-divider"></div>
-
-      <div class="lessons-label">Enseignements et réutilisations</div>
-      <div class="prog-lessons">
-        <div class="lesson-item">
-          <span class="lesson-icon">🔷</span>
-          <div class="lesson-text">
-            <strong>Technologie graphène grande surface :</strong> le procédé de dépôt CVD développé par le DSMR pour DAEDALUS est aujourd'hui utilisé dans la fabrication des boucliers thermiques de prochaine génération du programme PROMETHEUS. Le record de 0,8 m² a depuis été porté à 2,3 m² par la même équipe.
-          </div>
-        </div>
-        <div class="lesson-item">
-          <span class="lesson-icon">🔦</span>
-          <div class="lesson-text">
-            <strong>Réseaux laser cohérents :</strong> la technologie de mise en phase développée par le DOL pour DAEDALUS a été directement réutilisée dans le programme HERMES pour la conception des liaisons optiques inter-satellites FSO à 100 Gbps.
-          </div>
-        </div>
-        <div class="lesson-item">
-          <span class="lesson-icon">📌</span>
-          <div class="lesson-text">
-            <strong>Leçon institutionnelle :</strong> l'arrêt de DAEDALUS a mis en évidence le besoin d'un cadre spécifique pour les programmes à très long horizon (20+ ans) dans les institutions de recherche publique. Un groupe de travail a été créé en 2020 pour proposer des mécanismes de financement pluridécennaux adaptés à ce type de recherche.
-          </div>
-        </div>
-      </div>
-
-      <div class="prog-partners">
-        <span class="partner-chip">Breakthrough Starshot Initiative</span>
-        <span class="partner-chip">Caltech — Optical Physics Group</span>
-        <span class="partner-chip">CNRS — Institut Néel</span>
-        <span class="partner-chip">UC Berkeley</span>
-        <span class="partner-chip">Airbus Defence — R&T</span>
-      </div>
-
-      <div class="archive-note">
-        📁 Les résultats sur la synthèse de graphène grande surface et la mise en phase laser sont publiés en open access. Les rapports techniques internes sont disponibles sur demande. Le code de simulation de la trajectoire interstellaire est publié sur GitHub IFRAS. <a href="mailto:archives@ifras.fr">Contacter les archives →</a>
-      </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- ICARUS-2                                                      -->
-    <!-- ============================================================ -->
-    <section class="prog-section" id="icarus2">
-      <div class="prog-code-bg">ICARUS-2</div>
-
-      <div class="prog-header">
-        <div>
-          <span class="prog-code-badge" style="color:rgba(250,204,21,.55); background:rgba(250,204,21,.05); border:1px solid rgba(250,204,21,.15);">ICARUS-2</span>
-          <h2>Drone atmosphérique vénusien longue durée</h2>
-        </div>
-        <span class="prog-status-badge">Arrêté · 2022</span>
-      </div>
-
-      <div class="prog-stop-banner">
-        <span class="stop-icon">🛑</span>
-        <div class="stop-content">
-          <span class="stop-label">Cause d'arrêt</span>
-          <span class="stop-reason">Perte du prototype de vol P3 lors des essais en chambre thermique haute température — destruction complète à T+4h22 d'exposition à 465 °C sous pression de 92 bar de CO₂. Rapport d'incident : défaillance catastrophique du joint de pression de l'actuateur d'aile tribale, causant une dépressurisation interne et l'inflammation des circuits électroniques.</span>
-          <span class="stop-date">Incident : 17 mars 2022 · Décision d'arrêt : Comité de Direction · 9 mai 2022</span>
-        </div>
-      </div>
-
-      <div class="prog-kpis">
-        <div class="prog-kpi">
-          <span class="prog-kpi-val">2018 – 2022</span>
-          <span class="prog-kpi-lbl">Période d'activité</span>
-        </div>
-        <div class="prog-kpi">
-          <span class="prog-kpi-val">~207 M€</span>
-          <span class="prog-kpi-lbl">Budget engagé à l'arrêt</span>
-        </div>
-        <div class="prog-kpi">
-          <span class="prog-kpi-val">8</span>
-          <span class="prog-kpi-lbl">Publications partielles produites</span>
-        </div>
-      </div>
-
-      <div class="prog-intro">
-        <div>
-          <p>ICARUS-2 était le programme le plus techniquement audacieux — et financièrement lourd — de la liste des avortés. Son objectif était de développer un drone capable de voler de manière autonome pendant 24 heures dans l'atmosphère de Vénus à 50 km d'altitude, là où la pression est de 1 bar et la température de 75 °C — des conditions relativement clémentes comparées à la surface à 465 °C et 92 bar. Ce niveau d'altitude est identifié comme la "zone habitable" de Vénus, où des micro-organismes hypothétiques pourraient survivre dans les gouttelettes de nuages.</p>
-          <p>L'architecture retenue était celle d'un drone à voilure variable — un aéronef hybride entre un ballon dirigeable et un avion — exploitant la dynamique atmosphérique vénusienne pour maintenir son altitude sans dépenser de carburant, et déployant ses panneaux solaires pendant les périodes de lumière pour recharger ses batteries. La durée de mission de 24 heures était un objectif délibérément ambitieux : aucun engin n'a jamais survécu plus de 2 heures dans l'atmosphère de Vénus.</p>
-          <p style="margin-top:14px">Après quatre ans de développement et trois générations de prototypes, le prototype de vol P3 — le premier à intégrer l'ensemble du système de gestion thermique en version quasi-nominale — a été détruit lors des essais finaux en chambre thermique. L'analyse post-incident a révélé que la cause racine était une erreur de spécification du joint d'étanchéité de l'actuateur d'aile : le matériau PTFE sélectionné présente une fluence accélérée au-delà de 420 °C, un phénomène non identifié lors des tests de qualification composant réalisés sous azote plutôt que sous CO₂ — le gaz atmosphérique réel de Vénus.</p>
-        </div>
-        <div class="prog-fiche">
-          <span class="fiche-label">Fiche programme</span>
-          <div class="fiche-rows">
-            <div class="fiche-row">
-              <span class="fiche-key">Statut</span>
-              <span class="fiche-val fiche-val--aborted">Arrêté définitivement</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Début programme</span>
-              <span class="fiche-val">Juin 2018</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Phase atteinte à l'arrêt</span>
-              <span class="fiche-val">Tests qualification prototype P3</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Département pilote</span>
-              <span class="fiche-val">DPET / DSMR / DSTI</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Chercheurs impliqués</span>
-              <span class="fiche-val">+120 (pic 2021)</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Partenaires principaux</span>
-              <span class="fiche-val">ESA, CNES, Safran, Airbus</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Rapport d'incident</span>
-              <span class="fiche-val">Publié · RI-ICARUS2-2022-01</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="inner-divider"></div>
-
-      <div class="prog-timeline">
-        <div class="timeline-label">Chronologie du programme</div>
-
-        <div class="tl-item tl-ok">
-          <div class="tl-date">2018 – 2019</div>
-          <div class="tl-title">Phase A/B — Conception et prototype P1</div>
-          <div class="tl-desc">Définition de l'architecture aéronef hybride. Construction et tests du prototype P1 à température ambiante. Validation aérodynamique et du système de contrôle de voilure en soufflerie atmosphérique.</div>
-        </div>
-
-        <div class="tl-item tl-ok">
-          <div class="tl-date">2020</div>
-          <div class="tl-title">Prototype P2 — Tests à 350 °C</div>
-          <div class="tl-desc">Le P2, intégrant le système de gestion thermique à caloduc, survit 18h22 à 350 °C sous 1 bar de CO₂ — un résultat encourageant, bien au-delà des 24h visées. Décision de monter en température pour le P3.</div>
-        </div>
-
-        <div class="tl-item tl-ok">
-          <div class="tl-date">2021</div>
-          <div class="tl-title">Prototype P3 — Intégration complète</div>
-          <div class="tl-desc">Construction du P3 avec la suite instrumentale complète et le système de propulsion intégral. Premier prototype à intégrer tous les sous-systèmes en configuration quasi-nominale. Budget engagé total : 185 M€.</div>
-        </div>
-
-        <div class="tl-item tl-warn">
-          <div class="tl-date">Janv. – Févr. 2022</div>
-          <div class="tl-title">Anomalies lors des pré-tests</div>
-          <div class="tl-desc">Trois anomalies mineures détectées sur les joints d'étanchéité lors des pré-tests à 400 °C. Chaque anomalie a été traitée par remplacement composant sans analyse de la cause racine systémique. Erreur d'appréciation du risque.</div>
-        </div>
-
-        <div class="tl-item tl-stop">
-          <div class="tl-date">17 mars 2022 · T+4h22</div>
-          <div class="tl-title">Destruction du prototype P3</div>
-          <div class="tl-desc">Défaillance catastrophique du joint PTFE de l'actuateur d'aile à 465 °C sous 92 bar CO₂. Dépressurisation interne suivie d'une inflammation de l'électronique. Le prototype est entièrement détruit. Coût de la perte : ~22 M€.</div>
-        </div>
-
-        <div class="tl-item tl-stop">
-          <div class="tl-date">9 mai 2022</div>
-          <div class="tl-title">Décision d'arrêt</div>
-          <div class="tl-desc">Après analyse du rapport d'incident, le Comité de Direction conclut que la correction du défaut aurait nécessité de reprendre le programme depuis la Phase B, avec un investissement supplémentaire de 80 à 120 M€. Le programme est arrêté.</div>
-        </div>
-      </div>
-
-      <div class="inner-divider"></div>
-
-      <div class="lessons-label">Enseignements et réutilisations</div>
-      <div class="prog-lessons">
-        <div class="lesson-item">
-          <span class="lesson-icon">⚠️</span>
-          <div class="lesson-text">
-            <strong>Procédure de qualification sous atmosphère réelle :</strong> suite à l'incident, l'IFRAS a révisé l'ensemble de ses procédures de qualification des matériaux et composants pour les missions atmosphériques. Toute qualification est désormais obligatoirement conduite sous l'atmosphère réelle de la cible (composition et pression), et non sous atmosphère de substitution.
-          </div>
-        </div>
-        <div class="lesson-item">
-          <span class="lesson-icon">🌡</span>
-          <div class="lesson-text">
-            <strong>Matériaux haute température sous CO₂ :</strong> la caractérisation complète du comportement des matériaux polymères sous CO₂ haute pression et haute température, réalisée lors de l'analyse post-incident, a été publiée et est aujourd'hui utilisée comme référence par l'ESA pour les missions atmosphériques vénusiennes de future génération.
-          </div>
-        </div>
-        <div class="lesson-item">
-          <span class="lesson-icon">🏗</span>
-          <div class="lesson-text">
-            <strong>Architecture aéronef hybride :</strong> les travaux de conception aérodynamique d'ICARUS-2 — en particulier le système de voilure variable à géométrie adaptative — ont été repris par le programme LYNX pour le développement d'un drone d'exploration atmosphérique martien prévu dans la version LYNX-4.
-          </div>
-        </div>
-        <div class="lesson-item">
-          <span class="lesson-icon">📄</span>
-          <div class="lesson-text">
-            <strong>Rapport d'incident public :</strong> le rapport complet RI-ICARUS2-2022-01, incluant l'analyse de la cause racine et les déficiences identifiées dans le processus de gestion des anomalies, a été publié intégralement — une démarche rare dans le secteur aérospatial qui a été saluée par la communauté internationale.
-          </div>
-        </div>
-      </div>
-
-      <div class="prog-partners">
-        <span class="partner-chip">ESA — Venus exploration</span>
-        <span class="partner-chip">CNES</span>
-        <span class="partner-chip">Safran Aircraft Engines</span>
-        <span class="partner-chip">Airbus Defence & Space</span>
-        <span class="partner-chip">ONERA</span>
-        <span class="partner-chip">NASA — GISS</span>
-      </div>
-
-      <div class="archive-note">
-        📁 Le rapport d'incident RI-ICARUS2-2022-01 est publié en open access. Les données de conception des prototypes P1 et P2 sont disponibles sur demande. Les résultats de caractérisation des matériaux haute température sous CO₂ sont publiés dans Materials & Design (2023). <a href="mailto:archives@ifras.fr">Contacter les archives →</a>
-      </div>
-    </section>
-
-  </main>
+  </div>
 </div>
 
-<footer>
-  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale ·
-  Programmes avortés
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© IFRAS, Institut Français de Recherche Aéronautique et Spatiale</span>
+    <span><i class="ph-light ph-lock-simple" aria-hidden="true"></i> Accès contrôlé, données sensibles</span>
+  </div>
 </footer>
 
 <script>
-const sections = document.querySelectorAll('.intro-section, .prog-section');
-const navLinks  = document.querySelectorAll('#sidebar-nav a');
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)');
 
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const id = entry.target.id;
-      navLinks.forEach(link => {
-        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
-      });
-    }
+  /* ---------- Menu mobile ---------- */
+  const toggle = document.querySelector('.menu-toggle');
+  const panel = document.getElementById('mobile-panel');
+  const icon = toggle.querySelector('i');
+  const setMenu = (open) => {
+    panel.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    icon.className = open ? 'ph-light ph-x' : 'ph-light ph-list';
+  };
+  toggle.addEventListener('click', () => setMenu(!panel.classList.contains('is-open')));
+  document.addEventListener('click', (e) => {
+    if (panel.classList.contains('is-open') && !panel.contains(e.target) && !toggle.contains(e.target)) setMenu(false);
   });
-}, {
-  rootMargin: '-148px 0px -60% 0px',
-  threshold: 0
-});
 
-sections.forEach(s => observer.observe(s));
+  /* ---------- Menus déroulants : intention de survol + passage instantané ---------- */
+  const subnav = document.getElementById('subnav');
+  const items = [...subnav.querySelectorAll('.subnav-item')];
+  let openItem = null, openTimer = 0, closeTimer = 0;
+
+  const openMenu = (item) => {
+    items.forEach((i) => {
+      const on = i === item;
+      i.classList.toggle('is-open', on);
+      i.querySelector('.subnav-trigger').setAttribute('aria-expanded', String(on));
+    });
+    openItem = item;
+  };
+  const closeMenus = () => {
+    subnav.classList.remove('is-instant');
+    items.forEach((i) => {
+      i.classList.remove('is-open');
+      i.querySelector('.subnav-trigger').setAttribute('aria-expanded', 'false');
+    });
+    openItem = null;
+  };
+  const resetMenus = () => {
+    clearTimeout(openTimer);
+    clearTimeout(closeTimer);
+    closeMenus();
+    if (subnav.contains(document.activeElement)) document.activeElement.blur();
+  };
+
+  items.forEach((item) => {
+    item.addEventListener('pointerenter', (e) => {
+      if (e.pointerType !== 'mouse' || !canHover.matches) return;
+      clearTimeout(closeTimer);
+      clearTimeout(openTimer);
+      if (openItem && openItem !== item) {
+        subnav.classList.add('is-instant');
+        openMenu(item);
+      } else if (!openItem) {
+        openTimer = setTimeout(() => openMenu(item), 90);
+      }
+    });
+    item.addEventListener('pointerleave', (e) => {
+      if (e.pointerType !== 'mouse') return;
+      clearTimeout(openTimer);
+      closeTimer = setTimeout(closeMenus, 180);
+    });
+  });
+
+  /* Retour arrière : on referme tout (la page est restaurée telle qu'on l'a quittée) */
+  window.addEventListener('pageshow', resetMenus);
+  window.addEventListener('pagehide', resetMenus);
+  subnav.addEventListener('click', (e) => { if (e.target.closest('a')) resetMenus(); });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    setMenu(false);
+    resetMenus();
+  });
+
+  /* ---------- Apparition au défilement ---------- */
+  const revealIO = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      revealIO.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach((el) => revealIO.observe(el));
+
+  /* ---------- Compteurs ---------- */
+  if (!reduceMotion) {
+    const fmt = new Intl.NumberFormat('fr-FR');
+    const countIO = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = Number(el.dataset.count);
+        const prefix = el.dataset.prefix || '';
+        const start = performance.now();
+        const tick = (now) => {
+          const t = Math.min((now - start) / 1000, 1);
+          el.textContent = prefix + fmt.format(Math.round(target * (1 - Math.pow(1 - t, 4))));
+          if (t < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+        countIO.unobserve(el);
+      });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('[data-count]').forEach((el) => countIO.observe(el));
+  }
+
+  document.querySelectorAll('.prog').forEach((el) => revealIO.observe(el));
+
+  /* ---------- Sommaire : programme en cours + repère glissant (couleur du programme) ---------- */
+  const tocLinks = [...document.querySelectorAll('#toc a')];
+  const tocMobileLinks = [...document.querySelectorAll('#toc-mobile a')];
+  const tocMobile = document.getElementById('toc-mobile');
+  const indicator = document.querySelector('.toc-indicator');
+  const setActive = (id) => {
+    tocLinks.forEach((a) => {
+      const on = a.dataset.target === id;
+      a.setAttribute('aria-current', String(on));
+      if (on) {
+        indicator.style.setProperty('--y', `${a.offsetTop}px`);
+        indicator.style.setProperty('--h', `${a.offsetHeight}px`);
+        indicator.style.setProperty('--c', a.style.getPropertyValue('--c'));
+      }
+    });
+    tocMobileLinks.forEach((a) => {
+      const on = a.dataset.target === id;
+      a.setAttribute('aria-current', String(on));
+      if (on && tocMobile.offsetParent !== null) {
+        tocMobile.scrollTo({ left: a.offsetLeft - 20, behavior: reduceMotion ? 'auto' : 'smooth' });
+      }
+    });
+  };
+  const tocSpy = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => { if (entry.isIntersecting) setActive(entry.target.id); });
+  }, { rootMargin: '-35% 0px -60% 0px' });
+  document.querySelectorAll('.spy').forEach((s) => tocSpy.observe(s));
+  setActive('daedalus');
+  window.addEventListener('resize', () => setActive(document.querySelector('#toc a[aria-current="true"]')?.dataset.target || 'daedalus'));
+
+  /* ---------- Trajectoires interrompues : chaque sonde s'arrête avant sa destination ---------- */
+  {
+    const wrap = document.getElementById('orbit-wrap');
+    const canvas = document.getElementById('orbit');
+    const ctx = canvas.getContext('2d');
+    const nodes = [...wrap.querySelectorAll('.orbit-node')];
+    /* cible (x, y relatifs), point de contrôle de la courbe, fraction atteinte, durée du trajet */
+    const DEF = [
+      { tx: .93, ty: .14, cx: .38, cy: .06, stop: .46, dur: 3.6, body: 'star' },
+      { tx: .86, ty: .46, cx: .50, cy: .30, stop: .60, dur: 3.2, body: 'mars' },
+      { tx: .74, ty: .80, cx: .46, cy: .62, stop: .76, dur: 2.8, body: 'venus' }
+    ];
+    const paths = nodes.map((node, i) => ({
+      node, ...DEF[i],
+      color: getComputedStyle(node).getPropertyValue('--c').trim(),
+      offset: i * 1.3,
+      debris: Array.from({ length: 12 }, () => ({ a: Math.random() * Math.PI * 2, v: 14 + Math.random() * 26, r: .6 + Math.random() * 1.2 }))
+    }));
+    const PAUSE = 2.6;
+    let w = 0, h = 0, ox = 0, oy = 0, dpr = 1, running = false, raf = 0, last = 0, time = 0, hovered = -1;
+
+    const size = () => {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = wrap.clientWidth; h = wrap.clientHeight;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ox = w * .1; oy = h * .9;
+    };
+    /* courbe de Bézier quadratique : départ commun, virage propre à chaque mission */
+    const at = (p, t) => {
+      const cx = p.cx * w, cy = p.cy * h, tx = p.tx * w, ty = p.ty * h, u = 1 - t;
+      return [u * u * ox + 2 * u * t * cx + t * t * tx, u * u * oy + 2 * u * t * cy + t * t * ty];
+    };
+    const ease = (t) => 1 - Math.pow(1 - t, 2.2);
+
+    const drawBody = (p, dim) => {
+      const x = p.tx * w, y = p.ty * h;
+      ctx.globalAlpha = dim ? .25 : .6;
+      if (p.body === 'star') {
+        const g = ctx.createRadialGradient(x, y, 0, x, y, 22);
+        g.addColorStop(0, 'rgba(255,255,255,.9)'); g.addColorStop(.2, 'rgba(199,210,254,.35)'); g.addColorStop(1, 'rgba(199,210,254,0)');
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, 22, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = 'rgba(255,255,255,.5)'; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(x - 12, y); ctx.lineTo(x + 12, y); ctx.moveTo(x, y - 12); ctx.lineTo(x, y + 12); ctx.stroke();
+      } else {
+        const [c0, c1, r] = p.body === 'mars' ? ['#fecaca', '#b91c1c', 9] : ['#fef9c3', '#ca8a04', 10];
+        const g = ctx.createRadialGradient(x - r * .35, y - r * .4, r * .1, x, y, r);
+        g.addColorStop(0, c0); g.addColorStop(1, c1);
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    };
+
+    const draw = () => {
+      ctx.clearRect(0, 0, w, h);
+
+      /* point de départ */
+      const g0 = ctx.createRadialGradient(ox, oy, 0, ox, oy, 40);
+      g0.addColorStop(0, 'rgba(143,162,255,.35)'); g0.addColorStop(1, 'rgba(143,162,255,0)');
+      ctx.fillStyle = g0; ctx.beginPath(); ctx.arc(ox, oy, 40, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#c7d2fe'; ctx.beginPath(); ctx.arc(ox, oy, 3.5, 0, Math.PI * 2); ctx.fill();
+
+      paths.forEach((p, i) => {
+        const dim = hovered !== -1 && hovered !== i;
+        drawBody(p, dim);
+
+        /* ce qui n'a jamais été parcouru : pointillés fantômes */
+        ctx.setLineDash([2, 6]); ctx.lineWidth = 1;
+        ctx.strokeStyle = 'rgba(170,179,214,.22)';
+        ctx.globalAlpha = dim ? .4 : 1;
+        ctx.beginPath();
+        for (let s = 0; s <= 40; s++) { const [x, y] = at(p, p.stop + (1 - p.stop) * s / 40); s ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }
+        ctx.stroke(); ctx.setLineDash([]);
+
+        const cycle = reduceMotion ? p.dur + 1 : (time + p.offset) % (p.dur + PAUSE);
+        const k = Math.min(cycle / p.dur, 1);
+        const reach = p.stop * ease(k);
+        const after = Math.max(0, cycle - p.dur);               /* temps écoulé depuis la rupture */
+        const fade = reduceMotion ? 1 : after > PAUSE - .6 ? (PAUSE - after) / .6 : 1;
+
+        /* portion parcourue */
+        const [sx, sy] = at(p, 0), [ex, ey] = at(p, reach);
+        const grad = ctx.createLinearGradient(sx, sy, ex, ey);
+        grad.addColorStop(0, 'rgba(143,162,255,.15)'); grad.addColorStop(1, p.color);
+        ctx.strokeStyle = grad; ctx.lineWidth = hovered === i ? 2.2 : 1.6; ctx.lineCap = 'round';
+        ctx.globalAlpha = (dim ? .3 : 1) * fade;
+        ctx.beginPath();
+        for (let s = 0; s <= 50; s++) { const [x, y] = at(p, reach * s / 50); s ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }
+        ctx.stroke();
+
+        if (k < 1) {
+          /* la sonde en route */
+          const gl = ctx.createRadialGradient(ex, ey, 0, ex, ey, 9);
+          gl.addColorStop(0, p.color); gl.addColorStop(1, 'transparent');
+          ctx.fillStyle = gl; ctx.beginPath(); ctx.arc(ex, ey, 9, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(ex, ey, 1.6, 0, Math.PI * 2); ctx.fill();
+        } else {
+          /* rupture : onde rose + débris qui se dispersent */
+          const e = Math.min(after / 1.4, 1);
+          if (!reduceMotion) {
+            ctx.strokeStyle = '#fb7185'; ctx.lineWidth = 1.2;
+            ctx.globalAlpha = (1 - e) * .8 * (dim ? .3 : 1);
+            ctx.beginPath(); ctx.arc(ex, ey, 4 + e * 26, 0, Math.PI * 2); ctx.stroke();
+          }
+          ctx.fillStyle = p.color;
+          p.debris.forEach((d) => {
+            const dd = reduceMotion ? 10 : d.v * Math.sqrt(after);
+            ctx.globalAlpha = Math.max(0, .8 - after / PAUSE) * (dim ? .3 : 1) * fade;
+            ctx.beginPath(); ctx.arc(ex + Math.cos(d.a) * dd, ey + Math.sin(d.a) * dd + after * 4, d.r, 0, Math.PI * 2); ctx.fill();
+          });
+          /* croix d'arrêt */
+          ctx.globalAlpha = (dim ? .35 : 1) * fade;
+          ctx.strokeStyle = '#fb7185'; ctx.lineWidth = 1.6;
+          ctx.beginPath(); ctx.moveTo(ex - 4, ey - 4); ctx.lineTo(ex + 4, ey + 4); ctx.moveTo(ex + 4, ey - 4); ctx.lineTo(ex - 4, ey + 4); ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+
+        /* étiquette fixe, posée au point de rupture */
+        const [bx, by] = at(p, p.stop);
+        const nw = p.node.offsetWidth, nh = p.node.offsetHeight;
+        const lx = Math.min(bx + 14, w - nw - 6);
+        p.node.style.transform = `translate(${lx.toFixed(1)}px, ${(by - nh - 10).toFixed(1)}px)`;
+        p.node.style.opacity = dim ? '.5' : '1';
+      });
+    };
+
+    const loop = (t) => {
+      const dt = Math.min(64, t - (last || t)); last = t;
+      time += dt / 1000;
+      draw();
+      if (running) raf = requestAnimationFrame(loop);
+    };
+    const start = () => { if (running || reduceMotion) return; running = true; last = 0; raf = requestAnimationFrame(loop); };
+    const stop = () => { running = false; cancelAnimationFrame(raf); };
+
+    nodes.forEach((n, i) => {
+      const on = () => { hovered = i; if (!running) draw(); };
+      const off = () => { hovered = -1; if (!running) draw(); };
+      n.addEventListener('pointerenter', on); n.addEventListener('pointerleave', off);
+      n.addEventListener('focus', on); n.addEventListener('blur', off);
+    });
+
+    size(); draw();
+    let visible = true;
+    new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      visible && !document.hidden ? start() : stop();
+    }).observe(wrap);
+    document.addEventListener('visibilitychange', () => { document.hidden ? stop() : visible && start(); });
+    let rt = 0;
+    window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { size(); draw(); }, 150); });
+  }
+
+  {
+  /* ---------- Champ d'étoiles (fond du hero) ---------- */
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  const hero = document.querySelector('.hero');
+  let stars = [], w = 0, h = 0, dpr = 1, running = false, raf = 0, last = 0;
+
+  const build = () => {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = hero.clientWidth; h = hero.clientHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const count = Math.round((w * h) / 9000);
+    stars = Array.from({ length: count }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: Math.random() * 1.1 + 0.2,
+      depth: Math.random() * 0.8 + 0.2,
+      phase: Math.random() * Math.PI * 2,
+      speed: Math.random() * 0.6 + 0.4
+    }));
+  };
+
+  const draw = (t) => {
+    ctx.clearRect(0, 0, w, h);
+    for (const s of stars) {
+      const tw = reduceMotion ? 0.8 : 0.55 + 0.45 * Math.sin(t / 1000 * s.speed + s.phase);
+      ctx.globalAlpha = tw * (0.35 + s.depth * 0.6);
+      ctx.fillStyle = s.depth > 0.85 ? '#c7d2fe' : '#ffffff';
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r * (0.6 + s.depth * 0.6), 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  };
+
+  const loop = (t) => {
+    const dt = Math.min(64, t - (last || t)); last = t;
+    for (const s of stars) {
+      s.x -= s.depth * 0.012 * dt;           /* dérive lente : les étoiles proches vont plus vite */
+      if (s.x < -2) { s.x = w + 2; s.y = Math.random() * h; }
+    }
+    draw(t);
+    if (running) raf = requestAnimationFrame(loop);
+  };
+
+  const start = () => { if (running || reduceMotion) return; running = true; last = 0; raf = requestAnimationFrame(loop); };
+  const stop = () => { running = false; cancelAnimationFrame(raf); };
+
+  build();
+  draw(0);
+  canvas.classList.add('is-ready');
+
+  /* on n'anime que si le hero est visible et l'onglet actif */
+  let heroVisible = true;
+  new IntersectionObserver(([entry]) => {
+    heroVisible = entry.isIntersecting;
+    heroVisible && !document.hidden ? start() : stop();
+  }).observe(hero);
+  document.addEventListener('visibilitychange', () => {
+    document.hidden ? stop() : heroVisible && start();
+  });
+  let resizeTimer = 0;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => { build(); draw(performance.now()); }, 150);
+  });
+  }
+})();
 </script>
 
 </body>
