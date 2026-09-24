@@ -2,651 +2,869 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
-<title>Recherche — IFRAS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<title>Recherche | IFRAS</title>
+<meta name="description" content="Les huit départements scientifiques de l'IFRAS : de la biologie spatiale à l'astrophysique, 35 disciplines au service de l'aéronautique et du spatial.">
+<meta name="theme-color" content="#050b1e">
+<link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
 
 <style>
-
+/* =========================================================
+   TOKENS (identiques à index.html)
+   ========================================================= */
 :root {
   --bg-main: #050b1e;
   --bg-dark: #020617;
   --bg-light: #070f2b;
   --bg-menu: #081235;
+  --bg-raise: #0a1436;
   --accent: #4f6bed;
+  --accent-hover: #3d5adb;
+  --accent-soft: rgba(79,107,237,.14);
+  --accent-line: rgba(79,107,237,.38);
   --text-main: #e6e6e6;
+  --text-strong: #f5f7ff;
   --text-soft: #aab3d6;
+  --text-mute: #8891b8;
+  --border: #1b2555;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --header-h: 68px;
+  --subnav-h: 48px;
 }
 
-* { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 16px); }
 
 body {
   margin: 0;
-  font-family: "DM Sans", "Segoe UI", Roboto, Arial, sans-serif;
+  font-family: "DM Sans", "Segoe UI", system-ui, sans-serif;
   background: var(--bg-main);
   color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* ===== HEADER PRINCIPAL ===== */
+img { display: block; max-width: 100%; }
+a { color: inherit; }
 
-header {
-  position: fixed;
-  top: 0;
-  width: 100%;
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.skip-link {
+  position: absolute; left: 16px; top: -48px;
+  padding: 10px 16px;
+  background: var(--accent); color: #fff;
+  border-radius: var(--radius-sm);
+  z-index: 3000; text-decoration: none;
+  transition: top 160ms var(--ease-out);
+}
+.skip-link:focus { top: 12px; }
+
+.container { max-width: 1300px; margin: 0 auto; padding: 0 30px; }
+
+/* =========================================================
+   BOUTONS
+   ========================================================= */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 22px;
+  border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 500;
+  text-decoration: none; white-space: nowrap;
+  border: 1px solid transparent;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.btn:active { transform: scale(0.97); }
+.btn i { font-size: 16px; transition: transform 200ms var(--ease-out); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-ghost { border-color: var(--accent-line); color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-ghost:hover { background: var(--accent-soft); border-color: var(--accent); }
+  .btn:hover i { transform: translateX(3px); }
+}
+
+/* =========================================================
+   HEADER (opaque)
+   ========================================================= */
+.site-header {
+  position: fixed; inset: 0 0 auto 0;
   z-index: 2000;
-  background: rgba(5,11,30,.85);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid #1b2555;
+  height: var(--header-h);
+  background: rgba(5,11,30,.88);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border-bottom: 1px solid var(--border);
 }
+.header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.header-left { display: flex; align-items: center; gap: 44px; }
+.logo-link { display: flex; align-items: center; }
+.logo-link img { height: 44px; width: auto; }
 
-.header-inner {
-  max-width: 1300px;
-  margin: auto;
-  padding: 12px 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-}
-
-.logo-link img {
-  height: 60px;
-}
-
-.main-nav {
-  list-style: none;
-  display: flex;
-  gap: 32px;
-  margin: 0;
-  padding: 0;
-}
-
+.main-nav { list-style: none; display: flex; gap: 6px; margin: 0; padding: 0; }
 .main-nav a {
+  position: relative; display: block;
+  padding: 8px 12px;
   text-decoration: none;
   color: var(--text-soft);
-  font-size: 14px;
-  letter-spacing: .05em;
-}
-
-.main-nav a:hover { color: white; }
-
-.header-right a {
-  padding: 8px 18px;
+  font-size: 14px; letter-spacing: .02em;
   border-radius: 6px;
-  border: 1px solid var(--accent);
-  color: white;
-  text-decoration: none;
-  font-size: 13px;
+  transition: color 160ms ease;
 }
-
-.header-right a:hover {
+.main-nav a::after {
+  content: ""; position: absolute;
+  left: 12px; right: 12px; bottom: 2px; height: 1px;
   background: var(--accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 200ms var(--ease-out);
+}
+.main-nav a[aria-current="page"] { color: #fff; }
+.main-nav a[aria-current="page"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .main-nav a:hover { color: #fff; }
+  .main-nav a:hover::after { transform: scaleX(1); }
 }
 
-/* ===== SOUS-BANDEAU DEPARTEMENTS ===== */
+.header-right { display: flex; align-items: center; gap: 10px; }
+.header-right .btn { padding: 9px 18px; font-size: 13px; }
 
+.menu-toggle {
+  display: none;
+  width: 42px; height: 42px;
+  align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: #fff; font-size: 20px; cursor: pointer;
+  transition: transform 160ms var(--ease-out);
+}
+.menu-toggle:active { transform: scale(0.95); }
+
+.mobile-panel {
+  position: fixed; top: var(--header-h); left: 12px; right: 12px;
+  z-index: 1999;
+  padding: 10px;
+  background: rgba(7,15,43,.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(2,6,23,.6);
+  transform-origin: top right;
+  opacity: 0; transform: scale(0.96) translateY(-6px);
+  pointer-events: none; visibility: hidden;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s linear 220ms;
+}
+.mobile-panel.is-open {
+  opacity: 1; transform: none; pointer-events: auto; visibility: visible;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s;
+}
+.mobile-panel ul { list-style: none; margin: 0; padding: 0; }
+.mobile-panel a {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px; color: var(--text-main);
+  text-decoration: none; font-size: 16px; border-radius: 10px;
+}
+.mobile-panel a[aria-current="page"] { background: var(--accent-soft); color: #fff; }
+.mobile-panel .btn { width: 100%; justify-content: center; margin-top: 8px; }
+
+/* =========================================================
+   SOUS-NAVIGATION DÉPARTEMENTS + MEGA MENU
+   ========================================================= */
 .subnav {
-  margin-top: 84px;
-  background: var(--bg-menu);
-  border-bottom: 1px solid #1b2555;
+  position: sticky;
+  top: var(--header-h);
+  margin-top: var(--header-h);
+  z-index: 1500;
+  height: var(--subnav-h);
+  background: rgba(8,18,53,.94);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
 }
 
-.subnav-inner {
+.subnav-list {
+  height: 100%;
+  list-style: none; margin: 0 auto; padding: 0 30px;
   max-width: 1300px;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 30px;
+  display: flex; align-items: stretch; justify-content: space-between;
 }
 
-.subnav-item {
+.subnav-item { position: relative; display: flex; }
+
+.subnav-trigger {
   position: relative;
-}
-
-.subnav-item > a {
-  display: block;
-  padding: 14px 10px;
+  display: flex; align-items: center; gap: 6px;
+  padding: 0 12px;
   color: var(--text-soft);
   text-decoration: none;
-  font-size: 13px;
+  font-size: 13px; font-weight: 500;
   letter-spacing: .08em;
+  transition: color 160ms ease;
 }
+.subnav-trigger i { font-size: 11px; opacity: .6; transition: transform 200ms var(--ease-out); }
 
-.subnav-item:hover > a {
-  color: white;
+/* soulignement à la couleur du département */
+.subnav-trigger::after {
+  content: ""; position: absolute;
+  left: 12px; right: 12px; bottom: -1px; height: 2px;
+  background: var(--c, var(--accent));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 200ms var(--ease-out);
 }
-
-/* ===== MEGA MENU ===== */
+.subnav-item.is-open .subnav-trigger,
+.subnav-item:focus-within .subnav-trigger { color: #fff; }
+.subnav-item.is-open .subnav-trigger::after,
+.subnav-item:focus-within .subnav-trigger::after { transform: scaleX(1); }
+.subnav-item.is-open .subnav-trigger i { transform: rotate(180deg); }
 
 .megamenu {
   position: absolute;
-  left: 0;
-  top: 100%;
-  background: #060d28;
-  min-width: 320px;
-  border: 1px solid #1b2555;
-  border-top: none;
-  padding: 20px;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(10px);
-  transition: .25s ease;
-  z-index: 1500;
+  top: calc(100% + 1px); left: 0;
+  width: 380px;
+  padding: 22px 22px 18px;
+  background: rgba(6,13,40,.98);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--c, var(--accent));
+  border-radius: 0 0 var(--radius) var(--radius);
+  box-shadow: 0 24px 60px rgba(2,6,23,.6);
+  transform-origin: top left;
+  opacity: 0; transform: scale(0.97) translateY(-4px);
+  visibility: hidden; pointer-events: none;
+  transition: opacity 160ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s linear 200ms;
 }
+.subnav-item--end .megamenu { left: auto; right: 0; transform-origin: top right; }
 
-.subnav-item:hover .megamenu {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
+.subnav-item.is-open .megamenu,
+.subnav-item:focus-within .megamenu {
+  opacity: 1; transform: none; visibility: visible; pointer-events: auto;
+  transition: opacity 160ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s;
 }
+/* passage d'un département à l'autre : instantané (comme les tooltips) */
+.subnav.is-instant .megamenu { transition-duration: 0ms !important; }
 
-.megamenu h4 {
-  margin: 0 0 10px 0;
-  font-size: 14px;
-  color: white;
+.megamenu-head {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 14px;
+  text-decoration: none;
+}
+.megamenu-head i {
+  width: 36px; height: 36px; flex-shrink: 0;
+  display: grid; place-items: center;
+  border-radius: 10px;
+  font-size: 19px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c) 28%, transparent);
+}
+.megamenu-head strong {
+  font-family: "Syne", sans-serif;
+  font-size: 15px; font-weight: 700; color: #fff; line-height: 1.25;
 }
 
 .megamenu ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2px 12px;
 }
-
 .megamenu li a {
   display: block;
-  padding: 6px 0;
-  font-size: 13px;
+  padding: 7px 8px; margin: 0 -8px;
+  font-size: 13.5px;
   color: var(--text-soft);
   text-decoration: none;
+  border-radius: 6px;
+  transition: color 120ms ease, background-color 120ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .subnav-trigger:hover { color: #fff; }
+  .megamenu li a:hover { color: #fff; background: rgba(255,255,255,.04); }
 }
 
-.megamenu li a:hover {
-  color: white;
+.megamenu-foot {
+  display: flex; align-items: center; gap: 6px;
+  margin-top: 14px; padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-size: 13px; color: var(--c);
+  text-decoration: none;
+}
+.megamenu-foot i { transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .megamenu-foot:hover i { transform: translateX(3px); }
 }
 
-/* ===== HERO ===== */
-
+/* =========================================================
+   HERO
+   ========================================================= */
 .hero {
   position: relative;
-  padding: 100px 30px 80px;
+  padding: 90px 0 0;
   overflow: hidden;
+  isolation: isolate;
 }
-
 .hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
+  content: ""; position: absolute; inset: 0; z-index: -1;
   background:
-    radial-gradient(ellipse 80% 60% at 60% 40%, rgba(79,107,237,0.13) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(99,57,237,0.10) 0%, transparent 60%);
+    radial-gradient(ellipse 60% 55% at 75% 40%, rgba(79,107,237,0.16) 0%, transparent 70%),
+    radial-gradient(ellipse 35% 40% at 10% 90%, rgba(79,107,237,0.08) 0%, transparent 60%);
   pointer-events: none;
 }
 
-/* Grid lines decoration */
-.hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(79,107,237,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(79,107,237,0.04) 1px, transparent 1px);
-  background-size: 60px 60px;
-  pointer-events: none;
-}
-
-.hero-inner {
-  max-width: 1300px;
-  margin: auto;
-  position: relative;
-  z-index: 1;
+.hero-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto;
-  gap: 0 80px;
-  align-items: start;
-}
-
-.hero-left {
-  grid-column: 1;
-  grid-row: 1 / 3;
-}
-
-.hero-right {
-  grid-column: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  height: 100%;
-  padding-top: 20px;
-  gap: 32px;
-}
-
-.hero-eyebrow {
-  display: inline-flex;
+  gap: 60px;
   align-items: center;
-  gap: 10px;
-  font-size: 11px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 28px;
-  font-family: "DM Sans", sans-serif;
-  font-weight: 500;
 }
 
-.hero-eyebrow::before {
-  content: '';
-  display: block;
-  width: 28px;
-  height: 1px;
-  background: var(--accent);
+.kicker {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--accent); font-weight: 500;
+  margin-bottom: 22px;
 }
+.kicker::before { content: ""; width: 24px; height: 1px; background: currentColor; }
 
 .hero h1 {
   font-family: "Syne", sans-serif;
-  font-size: clamp(52px, 7.5vw, 96px);
+  font-size: clamp(48px, 7vw, 92px);
   font-weight: 800;
-  line-height: 0.95;
-  margin: 0 0 28px;
+  line-height: 0.98;
   letter-spacing: -0.04em;
   color: #fff;
+  margin: 0 0 26px;
 }
-
 .hero h1 span {
+  display: block;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(79,107,237,0.7);
+  -webkit-text-stroke: 1.25px rgba(125,145,245,.85);
+  padding-bottom: .06em;
 }
 
 .hero-desc {
-  max-width: 100%;
+  max-width: 48ch;
   color: var(--text-soft);
-  font-size: 16px;
-  line-height: 1.75;
-  margin: 0 0 36px;
+  font-size: 17px; line-height: 1.7;
+  margin: 0 0 34px;
   font-weight: 300;
-}
-
-.hero-meta {
-  display: grid;
-  grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr;
-  align-items: center;
-  gap: 0;
-  padding: 24px 0;
-  background: rgba(79,107,237,0.07);
-  border: 1px solid rgba(79,107,237,0.18);
-  border-radius: 12px;
-  width: 100%;
-}
-
-.hero-meta-item {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 0 24px;
-  align-items: center;
-  text-align: center;
-}
-
-.hero-meta-value {
-  font-family: "Syne", sans-serif;
-  font-size: 26px;
-  font-weight: 700;
-  color: white;
-}
-
-.hero-meta-label {
-  font-size: 11px;
-  color: var(--text-soft);
-  letter-spacing: .1em;
-  text-transform: uppercase;
-}
-
-.hero-meta-sep {
-  width: 1px;
-  height: 40px;
-  background: rgba(79,107,237,0.25);
 }
 
 .director-badge {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+  display: inline-flex; align-items: center; gap: 14px;
+  padding: 10px 18px 10px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(7,15,43,.6);
 }
-
-.hero-deco-ring {
-  width: 100%;
-  max-width: 320px;
-  margin: 0 auto;
-  animation: spinSlow 40s linear infinite;
-  filter: drop-shadow(0 0 30px rgba(79,107,237,0.15));
-}
-
-.hero-deco-ring svg {
-  width: 100%;
-  height: auto;
-}
-
-@keyframes spinSlow {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
-/* Prevent text inside SVG from spinning */
-.hero-deco-ring svg text {
-  animation: spinSlowReverse 40s linear infinite;
-  transform-origin: 160px 160px;
-}
-
-@keyframes spinSlowReverse {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(-360deg); }
-}
-
 .director-avatar {
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #4f6bed, #7c3aed);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Syne", sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  color: white;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--accent);
+  display: grid; place-items: center;
+  font-family: "Syne", sans-serif; font-weight: 700; font-size: 14px; color: #fff;
   flex-shrink: 0;
 }
+.director-info { display: flex; flex-direction: column; gap: 2px; }
+.director-name { font-size: 14px; font-weight: 500; color: #fff; }
+.director-title { font-size: 12.5px; color: var(--text-soft); }
 
-.director-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+.hero-in {
+  opacity: 0;
+  animation: heroIn 700ms var(--ease-out) forwards;
+  animation-delay: calc(100ms + var(--i, 0) * 80ms);
+}
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(14px); filter: blur(4px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
 }
 
-.director-name {
-  font-size: 14px;
-  font-weight: 500;
-  color: white;
+/* ----- Carte orbitale des 8 départements ----- */
+.orbit {
+  position: relative;
+  width: min(100%, 540px);
+  aspect-ratio: 1;
+  margin-left: auto;
+  opacity: 0;
+  animation: orbitIn 1200ms var(--ease-out) 200ms forwards;
+}
+@keyframes orbitIn {
+  from { opacity: 0; transform: scale(.94) rotate(-8deg); }
+  to   { opacity: 1; transform: none; }
 }
 
-.director-title {
-  font-size: 12px;
-  color: var(--text-soft);
-  letter-spacing: .05em;
+.orbit-ring {
+  position: absolute;
+  inset: var(--inset);
+  border-radius: 50%;
+  border: 1px solid rgba(79,107,237,.16);
 }
+.orbit-ring--dashed { border-style: dashed; border-color: rgba(79,107,237,.13); }
 
-/* ===== SECTION DEPARTMENTS ===== */
-
-.section-depts {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 60px 30px 120px;
+.orbit-core {
+  position: absolute; inset: 39%;
+  border-radius: 50%;
+  display: grid; place-items: center; text-align: center;
+  background: radial-gradient(circle at 35% 30%, #1a2a6b, #070f2b 70%);
+  border: 1px solid var(--accent-line);
+  box-shadow: 0 0 60px rgba(79,107,237,.25), inset 0 1px 0 rgba(255,255,255,.08);
 }
-
-.section-header {
-  margin-bottom: 56px;
-}
-
-.section-eyebrow {
-  font-size: 11px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 500;
-  margin-bottom: 14px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.section-eyebrow::before {
-  content: '';
+.orbit-core strong {
   display: block;
-  width: 28px;
-  height: 1px;
-  background: var(--accent);
+  font-family: "Syne", sans-serif; font-weight: 800;
+  font-size: clamp(22px, 2.6vw, 34px); color: #fff; line-height: 1;
 }
+.orbit-core span { display: block; font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-soft); margin-top: 4px; }
 
-.section-header h2 {
+.orbit-layer {
+  position: absolute; inset: 0;
+  animation: spin var(--dur) linear infinite;
+  animation-direction: var(--dir, normal);
+}
+.planet {
+  position: absolute;
+  left: var(--x); top: var(--y);
+  transform: translate(-50%, -50%);
+  text-decoration: none;
+}
+.planet-inner {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  animation: spin var(--dur) linear infinite;
+  animation-direction: var(--dir-rev, reverse);
+}
+.planet-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--c);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 18%, transparent), 0 0 18px color-mix(in srgb, var(--c) 60%, transparent);
+  transition: transform 200ms var(--ease-out), box-shadow 200ms ease;
+}
+.planet-label {
   font-family: "Syne", sans-serif;
-  font-size: clamp(26px, 3vw, 38px);
-  font-weight: 700;
-  margin: 0;
-  color: white;
+  font-size: 12px; font-weight: 700; letter-spacing: .08em;
+  color: var(--text-soft);
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: rgba(5,11,30,.7);
+  transition: color 160ms ease;
+}
+.planet.is-lit .planet-dot { transform: scale(1.45); box-shadow: 0 0 0 6px color-mix(in srgb, var(--c) 24%, transparent), 0 0 28px var(--c); }
+.planet.is-lit .planet-label { color: #fff; }
+
+/* On met en pause au survol pour pouvoir cliquer une planète */
+.orbit:hover .orbit-layer,
+.orbit:hover .planet-inner,
+.orbit:focus-within .orbit-layer,
+.orbit:focus-within .planet-inner { animation-play-state: paused; }
+
+@media (hover: hover) and (pointer: fine) {
+  .planet:hover .planet-dot { transform: scale(1.45); }
+  .planet:hover .planet-label { color: #fff; }
 }
 
-/* ===== GRILLE DEPARTEMENTS ===== */
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ----- Chiffres ----- */
+.hero-stats {
+  margin-top: 70px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.hero-stat {
+  padding: 28px 24px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.hero-stat + .hero-stat { border-left: 1px solid var(--border); }
+.hero-stat-value {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 800; color: #fff;
+  letter-spacing: -0.03em; line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.hero-stat-label { font-size: 13px; color: var(--text-soft); }
+
+/* =========================================================
+   DÉPARTEMENTS
+   ========================================================= */
+.section { padding: 100px 0; position: relative; }
+
+.depts-head {
+  display: flex; align-items: end; justify-content: space-between;
+  gap: 30px; margin-bottom: 40px; flex-wrap: wrap;
+}
+.section-title {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(28px, 3.2vw, 42px);
+  font-weight: 700; color: #fff;
+  margin: 0; letter-spacing: -0.02em; line-height: 1.1;
+}
+.section-sub { margin: 12px 0 0; color: var(--text-soft); font-size: 15px; font-weight: 300; }
+
+/* Recherche de discipline */
+.finder { position: relative; width: min(100%, 380px); }
+.finder label {
+  display: block; font-size: 13px; color: var(--text-soft); margin-bottom: 8px;
+}
+.finder-field { position: relative; }
+.finder-field i {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  font-size: 18px; color: var(--text-mute); pointer-events: none;
+}
+.finder input {
+  width: 100%;
+  height: 46px;
+  padding: 0 42px 0 42px;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: #fff;
+  font: inherit; font-size: 14.5px;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+.finder input::placeholder { color: var(--text-mute); }
+.finder input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(79,107,237,.2); }
+.finder input::-webkit-search-cancel-button { display: none; }
+.finder-clear {
+  position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+  width: 30px; height: 30px;
+  display: grid; place-items: center;
+  border: 0; border-radius: 6px;
+  background: transparent; color: var(--text-soft);
+  font-size: 16px; cursor: pointer;
+  opacity: 0; pointer-events: none;
+  transition: opacity 120ms ease, background-color 120ms ease;
+}
+.finder.has-value .finder-clear { opacity: 1; pointer-events: auto; }
+.finder-status { min-height: 20px; margin-top: 8px; font-size: 13px; color: var(--text-mute); }
 
 .dept-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-  gap: 22px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
 }
 
 .dept-card {
+  position: relative;
+  display: flex; flex-direction: column;
+  padding: 24px 22px 22px;
   background: var(--bg-light);
   border: 1px solid #12204a;
-  border-radius: 14px;
-  padding: 28px 30px;
-  position: relative;
+  border-radius: var(--radius);
   overflow: hidden;
-  cursor: pointer;
-  transition: border-color .3s ease, transform .3s ease, box-shadow .3s ease;
-  animation: fadeUp .5s ease both;
-  text-decoration: none;
-  display: block;
-  color: inherit;
+  transition:
+    border-color 200ms ease,
+    transform 200ms var(--ease-out),
+    box-shadow 200ms ease,
+    opacity 240ms ease,
+    filter 240ms ease;
 }
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.dept-card:nth-child(1) { animation-delay: .05s; }
-.dept-card:nth-child(2) { animation-delay: .10s; }
-.dept-card:nth-child(3) { animation-delay: .15s; }
-.dept-card:nth-child(4) { animation-delay: .20s; }
-.dept-card:nth-child(5) { animation-delay: .25s; }
-.dept-card:nth-child(6) { animation-delay: .30s; }
-.dept-card:nth-child(7) { animation-delay: .35s; }
-.dept-card:nth-child(8) { animation-delay: .40s; }
+.dept-card:active { transform: scale(0.99); }
 
 .dept-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: var(--card-color, var(--accent));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform .35s ease;
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--c);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 260ms var(--ease-out);
+}
+.dept-card::after {
+  content: ""; position: absolute;
+  top: -70px; right: -70px; width: 200px; height: 200px; border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--c) 16%, transparent) 0%, transparent 70%);
+  opacity: 0; transition: opacity 300ms ease; pointer-events: none;
 }
 
-.dept-card:hover {
-  border-color: rgba(79,107,237,0.35);
-  transform: translateY(-4px);
-  box-shadow: 0 20px 50px rgba(0,0,10,0.5);
+.dept-card.is-dimmed { opacity: .28; filter: saturate(.3); }
+.dept-card.is-match { border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+.dept-card.is-match::before { transform: scaleX(1); }
+
+@media (hover: hover) and (pointer: fine) {
+  .dept-card:not(.is-dimmed):hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--c) 40%, transparent);
+    box-shadow: 0 18px 44px rgba(2,6,23,.55);
+  }
+  .dept-card:not(.is-dimmed):hover::before { transform: scaleX(1); }
+  .dept-card:not(.is-dimmed):hover::after { opacity: 1; }
+  .dept-card:hover .dept-arrow { opacity: 1; transform: none; }
 }
 
-.dept-card:hover::before {
-  transform: scaleX(1);
-}
-
-.dept-card-glow {
-  position: absolute;
-  top: -60px;
-  right: -60px;
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--card-color, rgba(79,107,237,.15)) 0%, transparent 70%);
-  opacity: 0;
-  transition: opacity .4s ease;
-  pointer-events: none;
-}
-
-.dept-card:hover .dept-card-glow {
-  opacity: 1;
-}
-
-.dept-card-top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 18px;
-}
+.dept-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
 
 .dept-badge {
   font-family: "Syne", sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: .1em;
-  padding: 5px 12px;
-  border-radius: 6px;
-  background: rgba(79,107,237,0.12);
-  border: 1px solid rgba(79,107,237,0.22);
-  color: var(--card-color, var(--accent));
+  font-size: 12.5px; font-weight: 700; letter-spacing: .1em;
+  padding: 5px 11px; border-radius: 6px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 9%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c) 26%, transparent);
 }
-
-.dept-icon {
-  font-size: 24px;
-  opacity: 0.6;
-}
+.dept-icon { font-size: 24px; color: var(--c); opacity: .85; }
 
 .dept-card h3 {
   font-family: "Syne", sans-serif;
-  font-size: 17px;
-  font-weight: 700;
-  margin: 0 0 10px;
-  color: white;
-  line-height: 1.3;
+  font-size: 17px; font-weight: 700; line-height: 1.3;
+  color: #fff; margin: 0 0 10px;
+  text-wrap: balance;
 }
+.dept-link { text-decoration: none; }
+/* toute la carte est cliquable, sauf les disciplines qui ont leur propre lien */
+.dept-link::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
 
 .dept-card p {
-  font-size: 13.5px;
-  color: var(--text-soft);
-  line-height: 1.7;
-  margin: 0 0 22px;
-  font-weight: 300;
+  font-size: 14px; color: var(--text-soft);
+  line-height: 1.65; font-weight: 300;
+  margin: 0 0 20px; flex: 1;
 }
 
-.dept-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-}
-
-.dept-tag {
-  font-size: 11px;
-  padding: 3px 10px;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.09);
+.dept-tags { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; position: relative; z-index: 2; }
+.dept-tags a {
+  display: block;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.09);
   color: var(--text-soft);
-  letter-spacing: .03em;
+  text-decoration: none;
+  transition: color 120ms ease, border-color 120ms ease, background-color 120ms ease;
+}
+.dept-tags a.is-hit {
+  color: #fff;
+  border-color: var(--c);
+  background: color-mix(in srgb, var(--c) 16%, transparent);
+}
+@media (hover: hover) and (pointer: fine) {
+  .dept-tags a:hover { color: #fff; border-color: color-mix(in srgb, var(--c) 60%, transparent); }
 }
 
 .dept-arrow {
-  position: absolute;
-  bottom: 24px;
-  right: 24px;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 1px solid rgba(79,107,237,0.25);
-  display: flex;
+  position: absolute; top: 22px; right: 58px;
+  font-size: 16px; color: var(--c);
+  opacity: 0; transform: translate(-4px, 4px);
+  transition: opacity 200ms ease, transform 200ms var(--ease-out);
+}
+
+.finder-empty {
+  display: none;
+  margin-top: 18px;
+  padding: 26px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  color: var(--text-soft); font-size: 14.5px; text-align: center;
+}
+.finder-empty.is-shown { display: block; }
+.finder-empty button {
+  margin-left: 6px; padding: 0; border: 0; background: none;
+  color: #9fb0ff; font: inherit; text-decoration: underline; cursor: pointer;
+}
+
+/* =========================================================
+   BANDEAU FINAL
+   ========================================================= */
+.cta-band {
+  position: relative;
+  padding: 56px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background:
+    radial-gradient(ellipse 50% 90% at 100% 0%, rgba(79,107,237,.18), transparent 60%),
+    var(--bg-light);
+  display: grid;
+  grid-template-columns: 1.3fr auto;
+  gap: 32px;
   align-items: center;
-  justify-content: center;
-  color: var(--accent);
-  font-size: 15px;
-  opacity: 0;
-  transform: translateX(-6px);
-  transition: opacity .3s, transform .3s;
+  overflow: hidden;
 }
-
-.dept-card:hover .dept-arrow {
-  opacity: 1;
-  transform: translateX(0);
+.cta-band h2 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(24px, 2.6vw, 34px);
+  font-weight: 700; color: #fff; margin: 0 0 10px; letter-spacing: -0.02em;
 }
+.cta-band p { margin: 0; color: var(--text-soft); font-size: 15.5px; line-height: 1.6; font-weight: 300; max-width: 52ch; }
+.cta-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
-/* ===== FOOTER ===== */
-
-footer {
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.site-footer {
   background: var(--bg-dark);
-  border-top: 1px solid #1b2555;
-  padding: 40px 30px;
-  text-align: center;
-  font-size: 12px;
-  color: #6b7280;
+  border-top: 1px solid var(--border);
+  padding: 36px 0;
+  font-size: 13px; color: var(--text-mute);
+}
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.site-footer a { color: var(--text-mute); text-decoration: none; transition: color 160ms ease; }
+@media (hover: hover) and (pointer: fine) { .site-footer a:hover { color: #fff; } }
+
+/* =========================================================
+   APPARITION AU DÉFILEMENT
+   ========================================================= */
+.js .reveal {
+  opacity: 0; transform: translateY(16px);
+  transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 60ms);
+}
+.js .reveal.is-visible { opacity: 1; transform: none; }
+/* une fois apparue, la carte retrouve des transitions rapides */
+.js .dept-card.reveal.is-visible {
+  transition:
+    border-color 200ms ease, transform 200ms var(--ease-out), box-shadow 200ms ease,
+    opacity 240ms ease, filter 240ms ease;
+  transition-delay: 0ms;
+}
+.js .dept-card.reveal.is-visible.is-dimmed { opacity: .28; }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1180px) {
+  .dept-grid { grid-template-columns: repeat(2, 1fr); }
+  .subnav-trigger { padding: 0 8px; }
+  .subnav-trigger::after { left: 8px; right: 8px; }
 }
 
+@media (max-width: 960px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 20px; }
+  .orbit { margin: 0 auto; width: min(100%, 460px); }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); }
+  .hero-stat:nth-child(3) { border-left: 0; }
+  .hero-stat:nth-child(n+3) { border-top: 1px solid var(--border); }
+  .cta-band { grid-template-columns: 1fr; padding: 36px; }
+}
+
+/* Sous-navigation en puces défilantes : pas de méga-menu au tactile */
+@media (max-width: 960px), (hover: none) {
+  .subnav-list {
+    justify-content: flex-start; gap: 6px;
+    overflow-x: auto; scrollbar-width: none;
+    scroll-snap-type: x proximity;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+  }
+  .subnav-list::-webkit-scrollbar { display: none; }
+  .subnav-item { scroll-snap-align: start; }
+  .subnav-trigger i, .megamenu { display: none; }
+}
+
+@media (max-width: 860px) {
+  .main-nav, .header-right .btn-desktop { display: none; }
+  .menu-toggle { display: inline-flex; }
+}
+
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .subnav-list { padding: 0 20px; }
+  .hero { padding-top: 56px; }
+  .hero-desc { font-size: 16px; }
+  .section { padding: 72px 0; }
+  .dept-grid { grid-template-columns: 1fr; }
+  .finder { width: 100%; }
+  .cta-band { padding: 28px 22px; border-radius: var(--radius); }
+  .cta-actions .btn { flex: 1 1 100%; justify-content: center; }
+  .planet-label { font-size: 10.5px; }
+  .planet-dot { width: 11px; height: 11px; }
+}
+
+/* =========================================================
+   MOUVEMENT RÉDUIT
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .orbit-layer, .planet-inner { animation: none; }
+  .orbit { animation: fadeOnly 300ms ease forwards; }
+  .hero-in { animation: fadeOnly 300ms ease forwards; }
+  .js .reveal { transform: none; transition: opacity 300ms ease; transition-delay: 0ms; }
+  .megamenu { transition-duration: 0ms; }
+}
+@keyframes fadeOnly { to { opacity: 1; } }
 </style>
+
+<script>document.documentElement.classList.add('js');</script>
 </head>
 
 <body>
 
-<header>
-  <div class="header-inner">
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header" id="header">
+  <div class="container header-inner">
     <div class="header-left">
-      <a href="index.html" class="logo-link">
-        <img src="logo.png">
+      <a href="index.html" class="logo-link" aria-label="IFRAS, accueil">
+        <img src="logo.png" alt="Logo IFRAS" width="44" height="44">
       </a>
-      <ul class="main-nav">
-        <li><a href="index.html">Accueil</a></li>
-        <li><a href="recherche.html">Recherche</a></li>
-        <li><a href="programmes.html">Programmes</a></li>
-        <li><a href="publications.html">Publications</a></li>
-      </ul>
+      <nav aria-label="Navigation principale">
+        <ul class="main-nav">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="recherche.html" aria-current="page">Recherche</a></li>
+          <li><a href="programmes.html">Programmes</a></li>
+          <li><a href="publications.html">Publications</a></li>
+        </ul>
+      </nav>
     </div>
     <div class="header-right">
-      <a href="connexion.html">Connexion</a>
+      <a href="connexion.html" class="btn btn-ghost btn-desktop">Connexion</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-panel" aria-label="Ouvrir le menu">
+        <i class="ph-light ph-list" aria-hidden="true"></i>
+      </button>
     </div>
   </div>
 </header>
 
-<!-- SOUS MENU DEPARTEMENTS -->
-<nav class="subnav">
-  <div class="subnav-inner">
-
-<div class="subnav-item">
-  <a href="DSVT.html">DSVT</a>
-  <div class="megamenu">
-    <h4><a href="DSVT.html">Département Science du Vivant et de la Terre</a></h4>
-    <ul>
-      <li><a href="DSVT.html#biologie">Biologie</a></li>
-      <li><a href="DSVT.html#zoologie">Zoologie</a></li>
-      <li><a href="DSVT.html#neurosciences">Neuroscience</a></li>
-      <li><a href="DSVT.html#genetique">Génétique</a></li>
-      <li><a href="DSVT.html#geologie">Géologie</a></li>
-      <li><a href="DSVT.html#paleontologie">Paléontologie</a></li>
-    </ul>
-  </div>
+<div class="mobile-panel" id="mobile-panel">
+  <ul>
+    <li><a href="index.html">Accueil <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="recherche.html" aria-current="page">Recherche <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="programmes.html">Programmes <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="publications.html">Publications <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+  </ul>
+  <a href="connexion.html" class="btn btn-primary">Connexion</a>
 </div>
 
-    <div class="subnav-item">
-      <a href="DPET.html">DPET</a>
+<!-- ===== SOUS-NAVIGATION DÉPARTEMENTS ===== -->
+<nav class="subnav" id="subnav" aria-label="Départements scientifiques">
+  <ul class="subnav-list">
+
+    <li class="subnav-item" style="--c:#34d399">
+      <a class="subnav-trigger" href="DSVT.html" aria-haspopup="true" aria-expanded="false">DSVT <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
       <div class="megamenu">
-        <h4><a href="DPET.html">Département Physique Énergétique et Thermique</a></h4>
+        <a class="megamenu-head" href="DSVT.html"><i class="ph-light ph-dna" aria-hidden="true"></i><strong>Sciences du Vivant et de la Terre</strong></a>
+        <ul>
+          <li><a href="DSVT.html#biologie">Biologie</a></li>
+          <li><a href="DSVT.html#zoologie">Zoologie</a></li>
+          <li><a href="DSVT.html#neurosciences">Neurosciences</a></li>
+          <li><a href="DSVT.html#genetique">Génétique</a></li>
+          <li><a href="DSVT.html#geologie">Géologie</a></li>
+          <li><a href="DSVT.html#paleontologie">Paléontologie</a></li>
+        </ul>
+        <a class="megamenu-foot" href="DSVT.html">Voir le département <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
+      </div>
+    </li>
+
+    <li class="subnav-item" style="--c:#f97316">
+      <a class="subnav-trigger" href="DPET.html" aria-haspopup="true" aria-expanded="false">DPET <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
+      <div class="megamenu">
+        <a class="megamenu-head" href="DPET.html"><i class="ph-light ph-flame" aria-hidden="true"></i><strong>Physique Énergétique et Thermique</strong></a>
         <ul>
           <li><a href="DPET.html#thermodynamique">Thermodynamique</a></li>
           <li><a href="DPET.html#combustion">Combustion</a></li>
           <li><a href="DPET.html#transferts-thermiques">Transferts thermiques</a></li>
           <li><a href="DPET.html#plasma">Plasma</a></li>
         </ul>
+        <a class="megamenu-foot" href="DPET.html">Voir le département <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
       </div>
-    </div>
+    </li>
 
-    <div class="subnav-item active">
-      <a href="DSTI.html">DSTI</a>
+    <li class="subnav-item" style="--c:#818cf8">
+      <a class="subnav-trigger" href="DSTI.html" aria-haspopup="true" aria-expanded="false">DSTI <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
       <div class="megamenu">
-        <h4><a href="DSTI.html">Département Simulation & Traitement de l'Information</a></h4>
+        <a class="megamenu-head" href="DSTI.html"><i class="ph-light ph-cpu" aria-hidden="true"></i><strong>Simulation et Traitement de l'Information</strong></a>
         <ul>
           <li><a href="DSTI.html#intelligence-artificielle">Intelligence artificielle</a></li>
           <li><a href="DSTI.html#systemes-autonomes">Systèmes autonomes</a></li>
@@ -655,310 +873,507 @@ footer {
           <li><a href="DSTI.html#modelisation-numerique">Modélisation numérique</a></li>
           <li><a href="DSTI.html#simulation-multi-physique">Simulation multi-physique</a></li>
         </ul>
+        <a class="megamenu-foot" href="DSTI.html">Voir le département <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
       </div>
-    </div>
+    </li>
 
-    <div class="subnav-item">
-      <a href="DSMR.html">DSMR</a>
+    <li class="subnav-item" style="--c:#fb7185">
+      <a class="subnav-trigger" href="DSMR.html" aria-haspopup="true" aria-expanded="false">DSMR <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
       <div class="megamenu">
-        <h4><a href="DSMR.html">Département Structure, Matériaux & Résistance</a></h4>
+        <a class="megamenu-head" href="DSMR.html"><i class="ph-light ph-cube" aria-hidden="true"></i><strong>Structures, Matériaux et Résistance</strong></a>
         <ul>
           <li><a href="DSMR.html#materiaux-composites">Matériaux composites</a></li>
           <li><a href="DSMR.html#structures-avancees">Structures avancées</a></li>
           <li><a href="DSMR.html#fatigue-ruptures">Fatigue et rupture</a></li>
         </ul>
+        <a class="megamenu-foot" href="DSMR.html">Voir le département <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
       </div>
-    </div>
+    </li>
 
-    <div class="subnav-item">
-      <a href="DOL.html">DOL</a>
+    <li class="subnav-item subnav-item--end" style="--c:#38bdf8">
+      <a class="subnav-trigger" href="DOL.html" aria-haspopup="true" aria-expanded="false">DOL <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
       <div class="megamenu">
-        <h4><a href="DOL.html">Département Optique et Lumière</a></h4>
+        <a class="megamenu-head" href="DOL.html"><i class="ph-light ph-aperture" aria-hidden="true"></i><strong>Optique et Lumière</strong></a>
         <ul>
           <li><a href="DOL.html#instrumentation-optique">Instrumentation optique</a></li>
           <li><a href="DOL.html#optique-ondulatoire">Optique ondulatoire</a></li>
           <li><a href="DOL.html#optique-particulaire">Optique particulaire</a></li>
-          <li><a href="DOL.html#systemes-laser">Système laser</a></li>
+          <li><a href="DOL.html#systemes-laser">Systèmes laser</a></li>
         </ul>
+        <a class="megamenu-foot" href="DOL.html">Voir le département <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
       </div>
-    </div>
+    </li>
 
-    <div class="subnav-item">
-      <a href="DMA.html">DMA</a>
+    <li class="subnav-item subnav-item--end" style="--c:#facc15">
+      <a class="subnav-trigger" href="DMA.html" aria-haspopup="true" aria-expanded="false">DMA <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
       <div class="megamenu">
-        <h4><a href="DMA.html">Département Mathématiques Appliquées</a></h4>
+        <a class="megamenu-head" href="DMA.html"><i class="ph-light ph-sigma" aria-hidden="true"></i><strong>Mathématiques Appliquées</strong></a>
         <ul>
-          <li><a href="DMA.html#mathematiques-algebrique">Mathématiques algébrique</a></li>
-          <li><a href="DMA.html#mathematiques-analytique">Mathématiques analytique</a></li>
-          <li><a href="DMA.html#mathematiques-topologique">Mathématiques topologique</a></li>
-          <li><a href="DMA.html#mathematiques-probabiliste">Mathématiques probabiliste</a></li>
+          <li><a href="DMA.html#mathematiques-algebrique">Algèbre</a></li>
+          <li><a href="DMA.html#mathematiques-analytique">Analyse</a></li>
+          <li><a href="DMA.html#mathematiques-topologique">Topologie</a></li>
+          <li><a href="DMA.html#mathematiques-probabiliste">Probabilités</a></li>
         </ul>
+        <a class="megamenu-foot" href="DMA.html">Voir le département <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
       </div>
-    </div>
+    </li>
 
-    <div class="subnav-item">
-      <a href="DPM.html">DPM</a>
+    <li class="subnav-item subnav-item--end" style="--c:#c084fc">
+      <a class="subnav-trigger" href="DPM.html" aria-haspopup="true" aria-expanded="false">DPM <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
       <div class="megamenu">
-        <h4><a href="DPM.html">Département Physique & Mécanique</a></h4>
+        <a class="megamenu-head" href="DPM.html"><i class="ph-light ph-wave-sine" aria-hidden="true"></i><strong>Physique et Mécanique</strong></a>
         <ul>
           <li><a href="DPM.html#mecanique-solide">Mécanique du solide</a></li>
           <li><a href="DPM.html#dynamique-fluides">Dynamique des fluides</a></li>
           <li><a href="DPM.html#mecanique-quantique">Mécanique quantique</a></li>
-          <li><a href="DPM.html#instabilite-turbulence">Instabilité et Turbulence</a></li>
+          <li><a href="DPM.html#instabilite-turbulence">Instabilité et turbulence</a></li>
         </ul>
+        <a class="megamenu-foot" href="DPM.html">Voir le département <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
       </div>
-    </div>
+    </li>
 
-    <div class="subnav-item">
-      <a href="DAI.html">DAI</a>
+    <li class="subnav-item subnav-item--end" style="--c:#67e8f9">
+      <a class="subnav-trigger" href="DAI.html" aria-haspopup="true" aria-expanded="false">DAI <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
       <div class="megamenu">
-        <h4><a href="DAI.html">Département Astrophysique et Instrumentation</a></h4>
+        <a class="megamenu-head" href="DAI.html"><i class="ph-light ph-planet" aria-hidden="true"></i><strong>Astrophysique et Instrumentation</strong></a>
         <ul>
           <li><a href="DAI.html#physique-galaxies">Physique des galaxies</a></li>
           <li><a href="DAI.html#cosmologie">Cosmologie observationnelle</a></li>
           <li><a href="DAI.html#dynamique-orbitale">Dynamique orbitale</a></li>
-          <li><a href="DAI.html#spectroscopie">Spectroscopie et Interférométrie</a></li>
+          <li><a href="DAI.html#spectroscopie">Spectroscopie et interférométrie</a></li>
         </ul>
+        <a class="megamenu-foot" href="DAI.html">Voir le département <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
       </div>
-    </div>
+    </li>
 
-  </div>
+  </ul>
 </nav>
 
+<main id="contenu">
+
 <!-- ===== HERO ===== -->
-<section class="hero">
-  <div class="hero-inner">
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container">
+    <div class="hero-grid">
 
-    <!-- COLONNE GAUCHE : titre + description -->
-    <div class="hero-left">
-      <div class="hero-eyebrow">Direction Scientifique</div>
-      <h1>Recherche<br><span>scientifique</span></h1>
-      <p class="hero-desc">
-        L'IFRAS structure ses activités de recherche au sein de huit départements scientifiques de haut niveau,
-        couvrant les domaines fondamentaux et appliqués de l'aéronautique, du spatial et des systèmes complexes.
-        Chaque département développe une expertise reconnue, tout en cultivant la transversalité indispensable
-        à l'innovation de rupture.
-      </p>
-      <div class="director-badge">
-        <div class="director-avatar">JLR</div>
-        <div class="director-info">
-          <span class="director-name">Jean-Luc Rousseau</span>
-          <span class="director-title">Directeur de la Direction Scientifique</span>
+      <div class="hero-left">
+        <div class="kicker hero-in" style="--i:0">Direction scientifique</div>
+        <h1 id="hero-title" class="hero-in" style="--i:1">Recherche <span>scientifique</span></h1>
+        <p class="hero-desc hero-in" style="--i:2">Huit départements, du vivant à l'astrophysique, qui couvrent la recherche fondamentale et appliquée de l'aéronautique et du spatial. Chacun cultive son expertise, tous travaillent ensemble.</p>
+        <div class="director-badge hero-in" style="--i:3">
+          <div class="director-avatar" aria-hidden="true">JLR</div>
+          <div class="director-info">
+            <span class="director-name">Jean-Luc Rousseau</span>
+            <span class="director-title">Directeur de la Direction scientifique</span>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- COLONNE DROITE : stats + visuel décoratif -->
-    <div class="hero-right">
+      <!-- Carte orbitale : chaque point est un département cliquable -->
+      <div class="orbit" id="orbit" role="group" aria-label="Carte des huit départements">
+        <div class="orbit-ring" style="--inset:32%"></div>
+        <div class="orbit-ring orbit-ring--dashed" style="--inset:19%"></div>
+        <div class="orbit-ring" style="--inset:6%"></div>
 
-      <div class="hero-deco-ring">
-        <svg viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="160" cy="160" r="150" stroke="rgba(79,107,237,0.12)" stroke-width="1"/>
-          <circle cx="160" cy="160" r="110" stroke="rgba(79,107,237,0.09)" stroke-width="1" stroke-dasharray="4 8"/>
-          <circle cx="160" cy="160" r="68"  stroke="rgba(79,107,237,0.14)" stroke-width="1"/>
-          <circle cx="160" cy="10"  r="4" fill="rgba(79,107,237,0.6)"/>
-          <circle cx="310" cy="160" r="3" fill="rgba(79,107,237,0.4)"/>
-          <circle cx="160" cy="310" r="4" fill="rgba(79,107,237,0.6)"/>
-          <circle cx="10"  cy="160" r="3" fill="rgba(79,107,237,0.4)"/>
-          <line x1="160" y1="10"  x2="310" y2="160" stroke="rgba(79,107,237,0.07)" stroke-width="1"/>
-          <line x1="310" y1="160" x2="160" y2="310" stroke="rgba(79,107,237,0.07)" stroke-width="1"/>
-          <line x1="160" y1="310" x2="10"  y2="160" stroke="rgba(79,107,237,0.07)" stroke-width="1"/>
-          <line x1="10"  y1="160" x2="160" y2="10"  stroke="rgba(79,107,237,0.07)" stroke-width="1"/>
-          <text x="160" y="148" text-anchor="middle" font-family="Syne, sans-serif" font-size="38" font-weight="800" fill="white">IFRAS</text>
-          <text x="160" y="178" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="11" fill="rgba(170,179,214,0.8)" letter-spacing="4">RECHERCHE</text>
-        </svg>
-      </div>
+        <div class="orbit-core" aria-hidden="true">
+          <div><strong>8</strong><span>départements</span></div>
+        </div>
 
-      <div class="hero-meta">
-        <div class="hero-meta-item">
-          <span class="hero-meta-value">8</span>
-          <span class="hero-meta-label">Départements</span>
+        <div class="orbit-layer" style="--dur:70s">
+          <a class="planet" data-dept="DMA" href="DMA.html" style="--x:50%;--y:32%;--c:#facc15" aria-label="DMA, Mathématiques Appliquées">
+            <span class="planet-inner"><span class="planet-dot"></span><span class="planet-label">DMA</span></span>
+          </a>
+          <a class="planet" data-dept="DPM" href="DPM.html" style="--x:50%;--y:68%;--c:#c084fc" aria-label="DPM, Physique et Mécanique">
+            <span class="planet-inner"><span class="planet-dot"></span><span class="planet-label">DPM</span></span>
+          </a>
         </div>
-        <div class="hero-meta-sep"></div>
-        <div class="hero-meta-item">
-          <span class="hero-meta-value">34</span>
-          <span class="hero-meta-label">Disciplines</span>
+
+        <div class="orbit-layer" style="--dur:110s;--dir:reverse;--dir-rev:normal">
+          <a class="planet" data-dept="DPET" href="DPET.html" style="--x:76.8%;--y:65.5%;--c:#f97316" aria-label="DPET, Physique Énergétique et Thermique">
+            <span class="planet-inner"><span class="planet-dot"></span><span class="planet-label">DPET</span></span>
+          </a>
+          <a class="planet" data-dept="DSMR" href="DSMR.html" style="--x:23.2%;--y:65.5%;--c:#fb7185" aria-label="DSMR, Structures, Matériaux et Résistance">
+            <span class="planet-inner"><span class="planet-dot"></span><span class="planet-label">DSMR</span></span>
+          </a>
+          <a class="planet" data-dept="DOL" href="DOL.html" style="--x:50%;--y:19%;--c:#38bdf8" aria-label="DOL, Optique et Lumière">
+            <span class="planet-inner"><span class="planet-dot"></span><span class="planet-label">DOL</span></span>
+          </a>
         </div>
-        <div class="hero-meta-sep"></div>
-        <div class="hero-meta-item">
-          <span class="hero-meta-value">+200</span>
-          <span class="hero-meta-label">Chercheurs</span>
-        </div>
-        <div class="hero-meta-sep"></div>
-        <div class="hero-meta-item">
-          <span class="hero-meta-value">14</span>
-          <span class="hero-meta-label">Partenaires intl.</span>
+
+        <div class="orbit-layer" style="--dur:160s">
+          <a class="planet" data-dept="DAI" href="DAI.html" style="--x:88.1%;--y:28%;--c:#67e8f9" aria-label="DAI, Astrophysique et Instrumentation">
+            <span class="planet-inner"><span class="planet-dot"></span><span class="planet-label">DAI</span></span>
+          </a>
+          <a class="planet" data-dept="DSTI" href="DSTI.html" style="--x:50%;--y:94%;--c:#818cf8" aria-label="DSTI, Simulation et Traitement de l'Information">
+            <span class="planet-inner"><span class="planet-dot"></span><span class="planet-label">DSTI</span></span>
+          </a>
+          <a class="planet" data-dept="DSVT" href="DSVT.html" style="--x:11.9%;--y:28%;--c:#34d399" aria-label="DSVT, Sciences du Vivant et de la Terre">
+            <span class="planet-inner"><span class="planet-dot"></span><span class="planet-label">DSVT</span></span>
+          </a>
         </div>
       </div>
 
     </div>
 
+    <div class="hero-stats">
+      <div class="hero-stat reveal" style="--i:0">
+        <span class="hero-stat-value" data-count="8">8</span>
+        <span class="hero-stat-label">Départements scientifiques</span>
+      </div>
+      <div class="hero-stat reveal" style="--i:1">
+        <span class="hero-stat-value" data-count="35">35</span>
+        <span class="hero-stat-label">Disciplines de recherche</span>
+      </div>
+      <div class="hero-stat reveal" style="--i:2">
+        <span class="hero-stat-value" data-count="200" data-prefix="+">+200</span>
+        <span class="hero-stat-label">Chercheurs</span>
+      </div>
+      <div class="hero-stat reveal" style="--i:3">
+        <span class="hero-stat-value" data-count="14">14</span>
+        <span class="hero-stat-label">Partenaires internationaux</span>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ===== GRILLE DES DEPARTEMENTS ===== -->
-<section class="section-depts">
+<!-- ===== DÉPARTEMENTS ===== -->
+<section class="section" aria-labelledby="depts-title">
+  <div class="container">
 
-  <div class="section-header">
-    <div class="section-eyebrow">Nos expertises</div>
-    <h2>Les huit départements scientifiques</h2>
+    <div class="depts-head">
+      <div>
+        <h2 class="section-title reveal" id="depts-title">Les huit départements</h2>
+        <p class="section-sub reveal" style="--i:1">Cliquez sur une discipline pour y accéder directement.</p>
+      </div>
+      <div class="finder reveal" style="--i:2" id="finder">
+        <label for="finder-input">Trouver une discipline</label>
+        <div class="finder-field">
+          <i class="ph-light ph-magnifying-glass" aria-hidden="true"></i>
+          <input id="finder-input" type="search" placeholder="Ex. turbulence, laser, génétique" autocomplete="off" aria-describedby="finder-status">
+          <button class="finder-clear" type="button" aria-label="Effacer la recherche"><i class="ph-light ph-x" aria-hidden="true"></i></button>
+        </div>
+        <div class="finder-status" id="finder-status" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <div class="dept-grid" id="dept-grid">
+
+      <article class="dept-card reveal" style="--c:#34d399;--i:0" data-dept="DSVT">
+        <div class="dept-top">
+          <span class="dept-badge">DSVT</span>
+          <i class="ph-light ph-dna dept-icon" aria-hidden="true"></i>
+        </div>
+        <h3><a class="dept-link" href="DSVT.html">Sciences du Vivant et de la Terre</a></h3>
+        <p>Les mécanismes du vivant et des systèmes géophysiques, de la biologie moléculaire à la paléontologie.</p>
+        <ul class="dept-tags">
+          <li><a href="DSVT.html#biologie">Biologie</a></li>
+          <li><a href="DSVT.html#zoologie">Zoologie</a></li>
+          <li><a href="DSVT.html#neurosciences">Neurosciences</a></li>
+          <li><a href="DSVT.html#genetique">Génétique</a></li>
+          <li><a href="DSVT.html#geologie">Géologie</a></li>
+          <li><a href="DSVT.html#paleontologie">Paléontologie</a></li>
+        </ul>
+        <i class="ph-light ph-arrow-up-right dept-arrow" aria-hidden="true"></i>
+      </article>
+
+      <article class="dept-card reveal" style="--c:#f97316;--i:1" data-dept="DPET">
+        <div class="dept-top">
+          <span class="dept-badge">DPET</span>
+          <i class="ph-light ph-flame dept-icon" aria-hidden="true"></i>
+        </div>
+        <h3><a class="dept-link" href="DPET.html">Physique Énergétique et Thermique</a></h3>
+        <p>Les phénomènes énergétiques en conditions extrêmes, au service des propulsions avancées.</p>
+        <ul class="dept-tags">
+          <li><a href="DPET.html#thermodynamique">Thermodynamique</a></li>
+          <li><a href="DPET.html#combustion">Combustion</a></li>
+          <li><a href="DPET.html#transferts-thermiques">Transferts thermiques</a></li>
+          <li><a href="DPET.html#plasma">Plasma</a></li>
+        </ul>
+        <i class="ph-light ph-arrow-up-right dept-arrow" aria-hidden="true"></i>
+      </article>
+
+      <article class="dept-card reveal" style="--c:#818cf8;--i:2" data-dept="DSTI">
+        <div class="dept-top">
+          <span class="dept-badge">DSTI</span>
+          <i class="ph-light ph-cpu dept-icon" aria-hidden="true"></i>
+        </div>
+        <h3><a class="dept-link" href="DSTI.html">Simulation et Traitement de l'Information</a></h3>
+        <p>Méthodes numériques, IA embarquée et simulateurs multi-physiques pour des systèmes d'une complexité inédite.</p>
+        <ul class="dept-tags">
+          <li><a href="DSTI.html#intelligence-artificielle">Intelligence artificielle</a></li>
+          <li><a href="DSTI.html#systemes-autonomes">Systèmes autonomes</a></li>
+          <li><a href="DSTI.html#traitement-du-signal">Traitement du signal</a></li>
+          <li><a href="DSTI.html#calcul-haute-performance">Calcul HPC</a></li>
+          <li><a href="DSTI.html#modelisation-numerique">Modélisation numérique</a></li>
+          <li><a href="DSTI.html#simulation-multi-physique">Simulation multi-physique</a></li>
+        </ul>
+        <i class="ph-light ph-arrow-up-right dept-arrow" aria-hidden="true"></i>
+      </article>
+
+      <article class="dept-card reveal" style="--c:#fb7185;--i:3" data-dept="DSMR">
+        <div class="dept-top">
+          <span class="dept-badge">DSMR</span>
+          <i class="ph-light ph-cube dept-icon" aria-hidden="true"></i>
+        </div>
+        <h3><a class="dept-link" href="DSMR.html">Structures, Matériaux et Résistance</a></h3>
+        <p>Matériaux de nouvelle génération et tenue des structures sous contraintes critiques.</p>
+        <ul class="dept-tags">
+          <li><a href="DSMR.html#materiaux-composites">Matériaux composites</a></li>
+          <li><a href="DSMR.html#structures-avancees">Structures avancées</a></li>
+          <li><a href="DSMR.html#fatigue-ruptures">Fatigue et rupture</a></li>
+        </ul>
+        <i class="ph-light ph-arrow-up-right dept-arrow" aria-hidden="true"></i>
+      </article>
+
+      <article class="dept-card reveal" style="--c:#38bdf8;--i:4" data-dept="DOL">
+        <div class="dept-top">
+          <span class="dept-badge">DOL</span>
+          <i class="ph-light ph-aperture dept-icon" aria-hidden="true"></i>
+        </div>
+        <h3><a class="dept-link" href="DOL.html">Optique et Lumière</a></h3>
+        <p>Propagation, mesure et exploitation de la lumière : instrumentation de précision, imagerie et lasers embarqués.</p>
+        <ul class="dept-tags">
+          <li><a href="DOL.html#instrumentation-optique">Instrumentation optique</a></li>
+          <li><a href="DOL.html#optique-ondulatoire">Optique ondulatoire</a></li>
+          <li><a href="DOL.html#optique-particulaire">Optique particulaire</a></li>
+          <li><a href="DOL.html#systemes-laser">Systèmes laser</a></li>
+        </ul>
+        <i class="ph-light ph-arrow-up-right dept-arrow" aria-hidden="true"></i>
+      </article>
+
+      <article class="dept-card reveal" style="--c:#facc15;--i:5" data-dept="DMA">
+        <div class="dept-top">
+          <span class="dept-badge">DMA</span>
+          <i class="ph-light ph-sigma dept-icon" aria-hidden="true"></i>
+        </div>
+        <h3><a class="dept-link" href="DMA.html">Mathématiques Appliquées</a></h3>
+        <p>Le socle formel de l'institut, pour modéliser les systèmes et prouver leur fiabilité.</p>
+        <ul class="dept-tags">
+          <li><a href="DMA.html#mathematiques-algebrique">Algèbre</a></li>
+          <li><a href="DMA.html#mathematiques-analytique">Analyse</a></li>
+          <li><a href="DMA.html#mathematiques-topologique">Topologie</a></li>
+          <li><a href="DMA.html#mathematiques-probabiliste">Probabilités</a></li>
+        </ul>
+        <i class="ph-light ph-arrow-up-right dept-arrow" aria-hidden="true"></i>
+      </article>
+
+      <article class="dept-card reveal" style="--c:#c084fc;--i:6" data-dept="DPM">
+        <div class="dept-top">
+          <span class="dept-badge">DPM</span>
+          <i class="ph-light ph-wave-sine dept-icon" aria-hidden="true"></i>
+        </div>
+        <h3><a class="dept-link" href="DPM.html">Physique et Mécanique</a></h3>
+        <p>Les lois de la matière et du mouvement, du solide déformable aux effets quantiques.</p>
+        <ul class="dept-tags">
+          <li><a href="DPM.html#mecanique-solide">Mécanique du solide</a></li>
+          <li><a href="DPM.html#dynamique-fluides">Dynamique des fluides</a></li>
+          <li><a href="DPM.html#mecanique-quantique">Mécanique quantique</a></li>
+          <li><a href="DPM.html#instabilite-turbulence">Instabilité et turbulence</a></li>
+        </ul>
+        <i class="ph-light ph-arrow-up-right dept-arrow" aria-hidden="true"></i>
+      </article>
+
+      <article class="dept-card reveal" style="--c:#67e8f9;--i:7" data-dept="DAI">
+        <div class="dept-top">
+          <span class="dept-badge">DAI</span>
+          <i class="ph-light ph-planet dept-icon" aria-hidden="true"></i>
+        </div>
+        <h3><a class="dept-link" href="DAI.html">Astrophysique et Instrumentation</a></h3>
+        <p>Observer et modéliser l'univers à toutes les échelles, et construire les instruments pour le faire.</p>
+        <ul class="dept-tags">
+          <li><a href="DAI.html#physique-galaxies">Physique des galaxies</a></li>
+          <li><a href="DAI.html#cosmologie">Cosmologie</a></li>
+          <li><a href="DAI.html#dynamique-orbitale">Dynamique orbitale</a></li>
+          <li><a href="DAI.html#spectroscopie">Spectroscopie</a></li>
+        </ul>
+        <i class="ph-light ph-arrow-up-right dept-arrow" aria-hidden="true"></i>
+      </article>
+
+    </div>
+
+    <div class="finder-empty" id="finder-empty">
+      Aucune discipline ne correspond. <button type="button" id="finder-reset">Afficher tous les départements</button>
+    </div>
+
   </div>
-
-  <div class="dept-grid">
-
-    <!-- DSVT -->
-    <a class="dept-card" href="DVST.html" style="--card-color: #34d399;">
-      <div class="dept-card-glow" style="background: radial-gradient(circle, rgba(52,211,153,.12) 0%, transparent 70%);"></div>
-      <div class="dept-card-top">
-        <span class="dept-badge" style="color:#34d399; border-color:rgba(52,211,153,.25); background:rgba(52,211,153,.08);">DSVT</span>
-        <span class="dept-icon">🧬</span>
-      </div>
-      <h3>Sciences du Vivant et de la Terre</h3>
-      <p>Exploration des mécanismes du vivant et des systèmes géophysiques, de la biologie moléculaire à la paléontologie, en passant par les neurosciences et la génétique.</p>
-      <div class="dept-tags">
-        <span class="dept-tag">Biologie</span>
-        <span class="dept-tag">Neurosciences</span>
-        <span class="dept-tag">Génétique</span>
-        <span class="dept-tag">Géologie</span>
-        <span class="dept-tag">Paléontologie</span>
-      </div>
-      <div class="dept-arrow">→</div>
-    </a>
-
-    <!-- DPET -->
-    <a class="dept-card" href="DPET.html" style="--card-color: #f97316;">
-      <div class="dept-card-glow" style="background: radial-gradient(circle, rgba(249,115,22,.12) 0%, transparent 70%);"></div>
-      <div class="dept-card-top">
-        <span class="dept-badge" style="color:#f97316; border-color:rgba(249,115,22,.25); background:rgba(249,115,22,.08);">DPET</span>
-        <span class="dept-icon">🔥</span>
-      </div>
-      <h3>Physique Énergétique et Thermique</h3>
-      <p>Maîtrise des phénomènes énergétiques aux conditions extrêmes — combustion, transferts thermiques, plasmas — au service des propulsions avancées et de l'efficacité énergétique.</p>
-      <div class="dept-tags">
-        <span class="dept-tag">Thermodynamique</span>
-        <span class="dept-tag">Combustion</span>
-        <span class="dept-tag">Plasma</span>
-        <span class="dept-tag">Transferts thermiques</span>
-      </div>
-      <div class="dept-arrow">→</div>
-    </a>
-
-    <!-- DSTI -->
-    <a class="dept-card" href="DSTI.html" style="--card-color: #818cf8;">
-      <div class="dept-card-glow" style="background: radial-gradient(circle, rgba(129,140,248,.12) 0%, transparent 70%);"></div>
-      <div class="dept-card-top">
-        <span class="dept-badge" style="color:#818cf8; border-color:rgba(129,140,248,.25); background:rgba(129,140,248,.08);">DSTI</span>
-        <span class="dept-icon">🤖</span>
-      </div>
-      <h3>Simulation & Traitement de l'Information</h3>
-      <p>Développement de méthodes numériques avancées, d'intelligences artificielles embarquées et de simulateurs multi-physiques pour modéliser des systèmes d'une complexité inédite.</p>
-      <div class="dept-tags">
-        <span class="dept-tag">IA</span>
-        <span class="dept-tag">Calcul HPC</span>
-        <span class="dept-tag">Modélisation</span>
-        <span class="dept-tag">Simulation</span>
-        <span class="dept-tag">Signal</span>
-      </div>
-      <div class="dept-arrow">→</div>
-    </a>
-
-    <!-- DSMR -->
-    <a class="dept-card" href="DSMR.html" style="--card-color: #fb7185;">
-      <div class="dept-card-glow" style="background: radial-gradient(circle, rgba(251,113,133,.12) 0%, transparent 70%);"></div>
-      <div class="dept-card-top">
-        <span class="dept-badge" style="color:#fb7185; border-color:rgba(251,113,133,.25); background:rgba(251,113,133,.08);">DSMR</span>
-        <span class="dept-icon">⚙️</span>
-      </div>
-      <h3>Structures, Matériaux & Résistance</h3>
-      <p>Conception et caractérisation de matériaux de nouvelle génération, analyse de la tenue structurale sous contraintes critiques, fatigue et rupture dans les environnements spatiaux et aéronautiques.</p>
-      <div class="dept-tags">
-        <span class="dept-tag">Composites</span>
-        <span class="dept-tag">Structures avancées</span>
-        <span class="dept-tag">Fatigue</span>
-        <span class="dept-tag">Rupture</span>
-      </div>
-      <div class="dept-arrow">→</div>
-    </a>
-
-    <!-- DOL -->
-    <a class="dept-card" href="DOL.html" style="--card-color: #38bdf8;">
-      <div class="dept-card-glow" style="background: radial-gradient(circle, rgba(56,189,248,.12) 0%, transparent 70%);"></div>
-      <div class="dept-card-top">
-        <span class="dept-badge" style="color:#38bdf8; border-color:rgba(56,189,248,.25); background:rgba(56,189,248,.08);">DOL</span>
-        <span class="dept-icon">🔭</span>
-      </div>
-      <h3>Optique et Lumière</h3>
-      <p>Recherche fondamentale et appliquée sur la propagation, la mesure et l'exploitation de la lumière — instrumentation optique de précision, imagerie scientifique et systèmes laser embarqués.</p>
-      <div class="dept-tags">
-        <span class="dept-tag">Optique ondulatoire</span>
-        <span class="dept-tag">Instrumentation</span>
-        <span class="dept-tag">Laser</span>
-        <span class="dept-tag">Imagerie</span>
-      </div>
-      <div class="dept-arrow">→</div>
-    </a>
-
-    <!-- DMA -->
-    <a class="dept-card" href="DMA.html" style="--card-color: #facc15;">
-      <div class="dept-card-glow" style="background: radial-gradient(circle, rgba(250,204,21,.10) 0%, transparent 70%);"></div>
-      <div class="dept-card-top">
-        <span class="dept-badge" style="color:#facc15; border-color:rgba(250,204,21,.25); background:rgba(250,204,21,.07);">DMA</span>
-        <span class="dept-icon">∑</span>
-      </div>
-      <h3>Mathématiques Appliquées</h3>
-      <p>Socle formel de l'ensemble des activités scientifiques de l'IFRAS — algèbre, analyse fonctionnelle, topologie et probabilités au service de la modélisation et de la preuve formelle des systèmes.</p>
-      <div class="dept-tags">
-        <span class="dept-tag">Mathématiques algèbrique</span>
-        <span class="dept-tag">Mathématiques analytique</span>
-        <span class="dept-tag">Mathématiques topologique</span>
-        <span class="dept-tag">Mathématiques probabiliste</span>
-      </div>
-      <div class="dept-arrow">→</div>
-    </a>
-
-    <!-- DPM -->
-    <a class="dept-card" href="DPM.html" style="--card-color: #c084fc;">
-      <div class="dept-card-glow" style="background: radial-gradient(circle, rgba(192,132,252,.12) 0%, transparent 70%);"></div>
-      <div class="dept-card-top">
-        <span class="dept-badge" style="color:#c084fc; border-color:rgba(192,132,252,.25); background:rgba(192,132,252,.08);">DPM</span>
-        <span class="dept-icon">🌊</span>
-      </div>
-      <h3>Physique & Mécanique</h3>
-      <p>Étude des lois fondamentales gouvernant la matière et le mouvement — du solide déformable aux fluides turbulents, de la mécanique classique aux effets quantiques dans les systèmes miniaturisés.</p>
-      <div class="dept-tags">
-        <span class="dept-tag">Mécanique du solide</span>
-        <span class="dept-tag">Fluides</span>
-        <span class="dept-tag">Turbulence</span>
-        <span class="dept-tag">Quantique</span>
-      </div>
-      <div class="dept-arrow">→</div>
-    </a>
-
-    <!-- DAI -->
-    <a class="dept-card" href="DAI.html" style="--card-color: #67e8f9;">
-      <div class="dept-card-glow" style="background: radial-gradient(circle, rgba(103,232,249,.10) 0%, transparent 70%);"></div>
-      <div class="dept-card-top">
-        <span class="dept-badge" style="color:#67e8f9; border-color:rgba(103,232,249,.25); background:rgba(103,232,249,.07);">DAI</span>
-        <span class="dept-icon">🌌</span>
-      </div>
-      <h3>Astrophysique et Instrumentation</h3>
-      <p>Observation et modélisation de l'univers à toutes les échelles — physique des galaxies, cosmologie observationnelle, dynamique orbitale et développement d'instruments à la pointe de la spectroscopie.</p>
-      <div class="dept-tags">
-        <span class="dept-tag">Cosmologie</span>
-        <span class="dept-tag">Galaxies</span>
-        <span class="dept-tag">Dynamique orbitale</span>
-        <span class="dept-tag">Spectroscopie</span>
-      </div>
-      <div class="dept-arrow">→</div>
-    </a>
-
-  </div>
-
 </section>
 
-<footer>
-  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale
+<!-- ===== BANDEAU FINAL ===== -->
+<section class="section" style="padding-top:0" aria-labelledby="cta-title">
+  <div class="container">
+    <div class="cta-band reveal">
+      <div>
+        <h2 id="cta-title">De la recherche aux missions</h2>
+        <p>Nos départements travaillent ensemble sur les grands programmes de l'IFRAS. Découvrez les projets en cours et les résultats publiés.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="programmes.html" class="btn btn-primary">Nos programmes <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
+        <a href="publications.html" class="btn btn-ghost">Publications</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© IFRAS, Institut Français de Recherche Aéronautique et Spatiale</span>
+    <a href="mention-legale.html">Mentions légales</a>
+  </div>
 </footer>
+
+<script>
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)');
+
+  /* ---------- Menu mobile ---------- */
+  const toggle = document.querySelector('.menu-toggle');
+  const panel = document.getElementById('mobile-panel');
+  const icon = toggle.querySelector('i');
+  const setMenu = (open) => {
+    panel.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    icon.className = open ? 'ph-light ph-x' : 'ph-light ph-list';
+  };
+  toggle.addEventListener('click', () => setMenu(!panel.classList.contains('is-open')));
+  document.addEventListener('click', (e) => {
+    if (panel.classList.contains('is-open') && !panel.contains(e.target) && !toggle.contains(e.target)) setMenu(false);
+  });
+
+  /* ---------- Méga-menu : intention de survol + passage instantané ---------- */
+  const subnav = document.getElementById('subnav');
+  const items = [...subnav.querySelectorAll('.subnav-item')];
+  let openItem = null, openTimer = 0, closeTimer = 0;
+
+  const openMenu = (item) => {
+    items.forEach((i) => {
+      const on = i === item;
+      i.classList.toggle('is-open', on);
+      i.querySelector('.subnav-trigger').setAttribute('aria-expanded', String(on));
+    });
+    openItem = item;
+  };
+  const closeMenus = () => {
+    subnav.classList.remove('is-instant');
+    items.forEach((i) => {
+      i.classList.remove('is-open');
+      i.querySelector('.subnav-trigger').setAttribute('aria-expanded', 'false');
+    });
+    openItem = null;
+  };
+
+  items.forEach((item) => {
+    item.addEventListener('pointerenter', (e) => {
+      if (e.pointerType !== 'mouse' || !canHover.matches) return;
+      clearTimeout(closeTimer);
+      clearTimeout(openTimer);
+      if (openItem && openItem !== item) {
+        subnav.classList.add('is-instant');
+        openMenu(item);
+      } else if (!openItem) {
+        openTimer = setTimeout(() => openMenu(item), 90);
+      }
+    });
+    item.addEventListener('pointerleave', (e) => {
+      if (e.pointerType !== 'mouse') return;
+      clearTimeout(openTimer);
+      closeTimer = setTimeout(closeMenus, 180);
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    setMenu(false);
+    if (openItem || subnav.contains(document.activeElement)) {
+      const trigger = (openItem || document.activeElement.closest('.subnav-item'))?.querySelector('.subnav-trigger');
+      closeMenus();
+      trigger?.focus();
+      trigger?.blur();
+    }
+  });
+
+  /* ---------- Apparition au défilement ---------- */
+  const revealIO = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      revealIO.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach((el) => revealIO.observe(el));
+
+  /* ---------- Compteurs ---------- */
+  if (!reduceMotion) {
+    const fmt = new Intl.NumberFormat('fr-FR');
+    const countIO = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = Number(el.dataset.count);
+        const prefix = el.dataset.prefix || '';
+        const start = performance.now();
+        const tick = (now) => {
+          const t = Math.min((now - start) / 1000, 1);
+          el.textContent = prefix + fmt.format(Math.round(target * (1 - Math.pow(1 - t, 4))));
+          if (t < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+        countIO.unobserve(el);
+      });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('[data-count]').forEach((el) => countIO.observe(el));
+  }
+
+  /* ---------- Lien carte <-> planète ---------- */
+  const planets = new Map([...document.querySelectorAll('.planet')].map((p) => [p.dataset.dept, p]));
+  const cards = [...document.querySelectorAll('.dept-card')];
+  cards.forEach((card) => {
+    const planet = planets.get(card.dataset.dept);
+    card.addEventListener('pointerenter', () => planet?.classList.add('is-lit'));
+    card.addEventListener('pointerleave', () => planet?.classList.remove('is-lit'));
+  });
+
+  /* ---------- Recherche de discipline ---------- */
+  const finder = document.getElementById('finder');
+  const input = document.getElementById('finder-input');
+  const status = document.getElementById('finder-status');
+  const empty = document.getElementById('finder-empty');
+  const clearBtn = finder.querySelector('.finder-clear');
+
+  const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
+  const index = cards.map((card) => ({
+    card,
+    tags: [...card.querySelectorAll('.dept-tags a')].map((a) => ({ a, text: norm(a.textContent) })),
+    text: norm(card.textContent)
+  }));
+
+  const runSearch = () => {
+    const q = norm(input.value);
+    finder.classList.toggle('has-value', q.length > 0);
+    let count = 0;
+    index.forEach(({ card, tags, text }) => {
+      const hitTags = q ? tags.filter((t) => t.text.includes(q)) : [];
+      const match = !q || text.includes(q);
+      tags.forEach((t) => t.a.classList.toggle('is-hit', hitTags.includes(t)));
+      card.classList.toggle('is-dimmed', !match);
+      card.classList.toggle('is-match', Boolean(q) && match);
+      planets.get(card.dataset.dept)?.classList.toggle('is-lit', Boolean(q) && match);
+      if (match) count++;
+    });
+    empty.classList.toggle('is-shown', q && count === 0);
+    status.textContent = !q ? '' : count === 0 ? '' : count === 1 ? '1 département correspond' : `${count} départements correspondent`;
+  };
+
+  input.addEventListener('input', runSearch);
+  const reset = () => { input.value = ''; runSearch(); input.focus(); };
+  clearBtn.addEventListener('click', reset);
+  document.getElementById('finder-reset').addEventListener('click', reset);
+  input.addEventListener('keydown', (e) => { if (e.key === 'Escape' && input.value) { e.stopPropagation(); reset(); } });
+})();
+</script>
 
 </body>
 </html>
