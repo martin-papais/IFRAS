@@ -2,1232 +2,1661 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
-<title>Programmes archivés — IFRAS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<title>Programmes archivés | IFRAS</title>
+<meta name="description" content="Les programmes archivés de l'IFRAS : APOLLO-X, DELPHI et CASSINI-R, des missions clôturées dont les résultats continuent de vivre.">
+<meta name="theme-color" content="#050b1e">
+<link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
 
 <style>
-
+/* =========================================================
+   TOKENS (identiques à programmes.html)
+   ========================================================= */
 :root {
-  --bg-main:  #050b1e;
-  --bg-dark:  #020617;
+  --bg-main: #050b1e;
+  --bg-dark: #020617;
   --bg-light: #070f2b;
-  --bg-menu:  #081235;
-  --border:   #1b2555;
-  --accent:   #4f6bed;
-  --archived: #9ca3af;
+  --bg-raise: #0a1436;
+  --accent: #4f6bed;
+  --accent-hover: #3d5adb;
+  --accent-soft: rgba(79,107,237,.14);
+  --accent-line: rgba(79,107,237,.38);
   --text-main: #e6e6e6;
+  --text-strong: #f5f7ff;
   --text-soft: #aab3d6;
-  --sidebar-w: 270px;
+  --text-mute: #8891b8;
+  --border: #1b2555;
+
+  /* Couleurs de statut : une seule légende pour toute la page */
+  --st-active: #34d399;
+  --st-phase: #60a5fa;
+  --st-restricted: #facc15;
+  --st-future: #a78bfa;
+  --st-archived: #9ca3af;
+  --st-aborted: #fb7185;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --header-h: 68px;
+  --subnav-h: 48px;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 20px); }
 
 body {
-  font-family: "DM Sans", sans-serif;
+  margin: 0;
+  font-family: "DM Sans", "Segoe UI", system-ui, sans-serif;
   background: var(--bg-main);
   color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* ===== HEADER ===== */
+img { display: block; max-width: 100%; }
+a { color: inherit; }
 
-header {
-  position: fixed; top: 0; width: 100%;
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.skip-link {
+  position: absolute; left: 16px; top: -48px;
+  padding: 10px 16px;
+  background: var(--accent); color: #fff;
+  border-radius: var(--radius-sm);
+  z-index: 3000; text-decoration: none;
+  transition: top 160ms var(--ease-out);
+}
+.skip-link:focus { top: 12px; }
+
+.container { max-width: 1300px; margin: 0 auto; padding: 0 30px; }
+
+/* =========================================================
+   BOUTONS
+   ========================================================= */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 22px;
+  border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 500;
+  text-decoration: none; white-space: nowrap;
+  border: 1px solid transparent;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.btn:active { transform: scale(0.97); }
+.btn i { font-size: 16px; transition: transform 200ms var(--ease-out); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-ghost { border-color: var(--accent-line); color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-ghost:hover { background: var(--accent-soft); border-color: var(--accent); }
+  .btn:hover i { transform: translateX(3px); }
+}
+
+/* =========================================================
+   HEADER (opaque)
+   ========================================================= */
+.site-header {
+  position: fixed; inset: 0 0 auto 0;
   z-index: 2000;
+  height: var(--header-h);
   background: rgba(5,11,30,.88);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
   border-bottom: 1px solid var(--border);
 }
+.header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.header-left { display: flex; align-items: center; gap: 44px; }
+.logo-link { display: flex; align-items: center; }
+.logo-link img { height: 44px; width: auto; }
 
-.header-inner {
-  max-width: 1300px; margin: auto;
-  padding: 12px 30px;
-  display: flex; align-items: center; justify-content: space-between;
-}
-
-.header-left { display: flex; align-items: center; gap: 40px; }
-.logo-link img { height: 60px; }
-.main-nav { list-style: none; display: flex; gap: 32px; }
-
+.main-nav { list-style: none; display: flex; gap: 6px; margin: 0; padding: 0; }
 .main-nav a {
-  text-decoration: none; color: var(--text-soft);
-  font-size: 14px; letter-spacing: .05em;
+  position: relative; display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--text-soft);
+  font-size: 14px; letter-spacing: .02em;
+  border-radius: 6px;
+  transition: color 160ms ease;
+}
+.main-nav a::after {
+  content: ""; position: absolute;
+  left: 12px; right: 12px; bottom: 2px; height: 1px;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 200ms var(--ease-out);
+}
+.main-nav a[aria-current="page"] { color: #fff; }
+.main-nav a[aria-current="page"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .main-nav a:hover { color: #fff; }
+  .main-nav a:hover::after { transform: scaleX(1); }
 }
 
-.main-nav a:hover,
-.main-nav a.active-nav { color: white; }
+.header-right { display: flex; align-items: center; gap: 10px; }
+.header-right .btn { padding: 9px 18px; font-size: 13px; }
 
-.header-right a {
-  padding: 8px 18px; border-radius: 6px;
-  border: 1px solid var(--accent);
-  color: white; text-decoration: none; font-size: 13px;
+.menu-toggle {
+  display: none;
+  width: 42px; height: 42px;
+  align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: #fff; font-size: 20px; cursor: pointer;
+  transition: transform 160ms var(--ease-out);
 }
+.menu-toggle:active { transform: scale(0.95); }
 
-.header-right a:hover { background: var(--accent); }
+.mobile-panel {
+  position: fixed; top: var(--header-h); left: 12px; right: 12px;
+  z-index: 1999;
+  padding: 10px;
+  background: rgba(7,15,43,.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(2,6,23,.6);
+  transform-origin: top right;
+  opacity: 0; transform: scale(0.96) translateY(-6px);
+  pointer-events: none; visibility: hidden;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s linear 220ms;
+}
+.mobile-panel.is-open {
+  opacity: 1; transform: none; pointer-events: auto; visibility: visible;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s;
+}
+.mobile-panel ul { list-style: none; margin: 0; padding: 0; }
+.mobile-panel a {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px; color: var(--text-main);
+  text-decoration: none; font-size: 16px; border-radius: 10px;
+}
+.mobile-panel a[aria-current="page"] { background: var(--accent-soft); color: #fff; }
+.mobile-panel .btn { width: 100%; justify-content: center; margin-top: 8px; }
 
-/* ===== BANDEAU PROGRAMMES ===== */
-
-.program-filter {
-  margin-top: 84px;
-  background: var(--bg-light);
+/* =========================================================
+   SOUS-NAVIGATION PAR STATUT + MENUS DÉROULANTS
+   ========================================================= */
+.subnav {
+  position: sticky;
+  top: var(--header-h);
+  margin-top: var(--header-h);
+  z-index: 1500;
+  height: var(--subnav-h);
+  background: rgba(8,18,53,.94);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
 }
 
-.program-filter ul {
+.subnav-list {
+  height: 100%;
+  list-style: none; margin: 0 auto; padding: 0 30px;
   max-width: 1300px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  list-style: none;
-  padding: 0 30px;
+  display: flex; align-items: stretch; justify-content: space-between;
 }
 
-.program-filter li {
+.subnav-item { position: relative; display: flex; }
+
+.subnav-trigger {
   position: relative;
-  padding: 14px 18px;
-  cursor: pointer;
-  font-size: 14px;
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 14px;
   color: var(--text-soft);
-  letter-spacing: .06em;
-  transition: color .2s;
+  text-decoration: none;
+  font-size: 14px; font-weight: 500;
+  letter-spacing: .02em;
+  white-space: nowrap;
+  transition: color 160ms ease;
 }
-
-.program-filter li.active-filter {
-  color: white;
-  border-bottom: 2px solid var(--archived);
+.subnav-count {
+  min-width: 22px; height: 20px; padding: 0 6px;
+  display: inline-grid; place-items: center;
+  border-radius: 999px;
+  font-size: 11.5px; font-weight: 500;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c) 26%, transparent);
+  font-variant-numeric: tabular-nums;
 }
+.subnav-trigger > i { font-size: 11px; opacity: .6; transition: transform 200ms var(--ease-out); }
 
-.program-filter li:hover { color: white; background: rgba(79,107,237,.1); border-radius: 6px; }
+.subnav-trigger::after {
+  content: ""; position: absolute;
+  left: 14px; right: 14px; bottom: -1px; height: 2px;
+  background: var(--c, var(--accent));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+/* section visible à l'écran (scrollspy) */
+.subnav-trigger[aria-current="true"] { color: #fff; }
+.subnav-trigger[aria-current="true"]::after { transform: scaleX(1); }
+
+.subnav-item.is-open .subnav-trigger,
+.subnav-item:has(:focus-visible) .subnav-trigger { color: #fff; }
+.subnav-item.is-open .subnav-trigger::after,
+.subnav-item:has(:focus-visible) .subnav-trigger::after { transform: scaleX(1); }
+.subnav-item.is-open .subnav-trigger > i { transform: rotate(180deg); }
 
 .dropdown {
   position: absolute;
-  top: 48px; left: 0;
-  background: #050b1e;
+  top: calc(100% + 1px); left: 0;
+  width: 360px;
+  padding: 10px;
+  background: rgba(6,13,40,.98);
   border: 1px solid var(--border);
-  min-width: 220px;
-  display: none;
-  z-index: 200;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 16px 40px rgba(0,0,0,.4);
+  border-top: 2px solid var(--c, var(--accent));
+  border-radius: 0 0 var(--radius) var(--radius);
+  box-shadow: 0 24px 60px rgba(2,6,23,.6);
+  transform-origin: top left;
+  opacity: 0; transform: scale(0.97) translateY(-4px);
+  visibility: hidden; pointer-events: none;
+  transition: opacity 160ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s linear 200ms;
 }
+.subnav-item--end .dropdown { left: auto; right: 0; transform-origin: top right; }
 
+.subnav-item.is-open .dropdown,
+.subnav-item:has(:focus-visible) .dropdown {
+  opacity: 1; transform: none; visibility: visible; pointer-events: auto;
+  transition: opacity 160ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s;
+}
+.subnav.is-instant .dropdown { transition-duration: 0ms !important; }
+
+.dropdown ul { list-style: none; margin: 0; padding: 0; }
 .dropdown a {
-  display: block; padding: 10px 16px;
-  font-size: 13px; color: var(--text-soft);
+  display: flex; align-items: baseline; gap: 12px;
+  padding: 9px 10px;
+  border-radius: 8px;
   text-decoration: none;
-  border-bottom: 1px solid rgba(27,37,85,.5);
-  transition: background .15s, color .15s;
+  transition: background-color 120ms ease;
+}
+.dropdown a strong {
+  font-family: "Syne", sans-serif;
+  font-size: 12.5px; font-weight: 700; letter-spacing: .06em;
+  color: #fff;
+  min-width: 96px;
+}
+.dropdown a span { font-size: 13px; color: var(--text-soft); line-height: 1.35; }
+@media (hover: hover) and (pointer: fine) {
+  .subnav-trigger:hover { color: #fff; }
+  .dropdown a:hover { background: rgba(255,255,255,.04); }
+  .dropdown a:hover span { color: #fff; }
 }
 
-.dropdown a:hover { background: rgba(79,107,237,.12); color: white; }
-.program-filter li:hover .dropdown { display: block; }
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero {
+  position: relative;
+  padding: 64px 0 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+.starfield {
+  position: absolute; inset: 0; z-index: -2;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1200ms ease;
+}
+.starfield.is-ready { opacity: 1; }
+.hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(ellipse 55% 60% at 74% 42%, rgba(52,211,153,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 55% at 70% 35%, rgba(79,107,237,0.12) 0%, transparent 70%),
+    linear-gradient(180deg, transparent 70%, var(--bg-main) 100%);
+  pointer-events: none;
+}
 
-/* ===== LAYOUT ===== */
-
-.page-wrap {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 0 30px;
+.hero-grid {
   display: grid;
-  grid-template-columns: var(--sidebar-w) 1fr;
-  gap: 0;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  margin: 0 0 26px; padding: 0; list-style: none;
+  font-size: 13px; color: var(--text-mute);
+}
+.breadcrumb a { color: var(--text-soft); text-decoration: none; transition: color 160ms ease; }
+.breadcrumb i { font-size: 11px; }
+@media (hover: hover) and (pointer: fine) { .breadcrumb a:hover { color: #fff; } }
+
+.live-badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 6px 13px 6px 11px;
+  border-radius: 999px;
+  font-size: 13px; font-weight: 500;
+  color: var(--st-active);
+  background: color-mix(in srgb, var(--st-active) 9%, transparent);
+  border: 1px solid color-mix(in srgb, var(--st-active) 26%, transparent);
+  margin-bottom: 22px;
+}
+.live-dot { position: relative; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.live-dot::after {
+  content: ""; position: absolute; inset: -4px; border-radius: 50%;
+  border: 1px solid currentColor;
+  animation: pulse 2400ms var(--ease-out) infinite;
+}
+@keyframes pulse {
+  0%   { transform: scale(.6); opacity: .9; }
+  70%  { transform: scale(1.9); opacity: 0; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
+.hero h1 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(44px, 6.2vw, 84px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--text-strong);
+  margin: 0 0 28px;
+}
+.hero h1 .line { display: block; overflow: hidden; padding-bottom: .14em; margin-bottom: -.14em; }
+.hero h1 .line > span {
+  display: block;
+  transform: translateY(105%);
+  animation: lineUp 900ms var(--ease-out) forwards;
+  animation-delay: calc(120ms + var(--i, 0) * 110ms);
+}
+.hero h1 .line--soft { color: #6ee7b7; font-weight: 600; }
+@keyframes lineUp { to { transform: none; } }
+
+.hero-desc {
+  max-width: 44ch;
+  color: var(--text-soft);
+  font-size: 17px; line-height: 1.7;
+  margin: 0 0 34px;
+  font-weight: 300;
+}
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.hero-in {
+  opacity: 0;
+  animation: heroIn 700ms var(--ease-out) forwards;
+  animation-delay: calc(100ms + var(--i, 0) * 80ms);
+}
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(14px); filter: blur(4px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+
+/* ----- Système orbital : un programme = une orbite ----- */
+.orbit-wrap {
+  position: relative;
+  height: 480px;
+  opacity: 0;
+  animation: fadeOnly 1400ms ease 300ms forwards;
+  -webkit-mask-image: radial-gradient(ellipse 70% 72% at 50% 50%, #000 62%, transparent 100%);
+          mask-image: radial-gradient(ellipse 70% 72% at 50% 50%, #000 62%, transparent 100%);
+}
+.orbit-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+.orbit-node {
+  position: absolute; left: 0; top: 0;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 4px 9px 4px 5px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-family: "Syne", sans-serif;
+  font-size: 11.5px; font-weight: 700; letter-spacing: .08em;
+  color: #fff;
+  background: rgba(5,11,30,.72);
+  border: 1px solid color-mix(in srgb, var(--c) 34%, transparent);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  white-space: nowrap;
+  will-change: transform, opacity;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+.orbit-node::before {
+  content: ""; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--c);
+  box-shadow: 0 0 10px var(--c);
+  flex-shrink: 0;
+}
+.orbit-node:active { scale: .96; }
+@media (hover: hover) and (pointer: fine) {
+  .orbit-node:hover { border-color: var(--c); background: color-mix(in srgb, var(--c) 18%, rgba(5,11,30,.9)); }
+}
+
+/* ----- Chiffres (3 seulement) ----- */
+.hero-stats {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.hero-stat { padding: 26px 24px; display: flex; flex-direction: column; gap: 6px; }
+.hero-stat + .hero-stat { border-left: 1px solid var(--border); }
+.hero-stat-value {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 800; color: #fff;
+  letter-spacing: -0.03em; line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.hero-stat-label { font-size: 13px; color: var(--text-soft); }
+
+/* =========================================================
+   MISE EN PAGE : SOMMAIRE + PROGRAMMES
+   ========================================================= */
+.layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 56px;
   align-items: start;
 }
 
-/* ===== SIDEBAR ===== */
-
-.sidebar {
+.toc {
   position: sticky;
-  top: 148px;
-  padding: 48px 32px 48px 0;
+  top: calc(var(--header-h) + var(--subnav-h) + 32px);
+  padding: 64px 0;
 }
-
-.sidebar-label {
-  font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
-  color: rgba(170,179,214,.35); font-weight: 500;
-  margin-bottom: 24px; padding-left: 16px;
+.toc-label { font-size: 13px; color: var(--text-mute); margin: 0 0 14px 16px; }
+.toc-track { position: relative; }
+.toc-track::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 1px;
+  background: var(--border);
 }
-
-.sidebar-nav { list-style: none; position: relative; }
-
-.sidebar-progress {
-  position: absolute; left: 0; top: 0; bottom: 0;
-  width: 2px; background: rgba(156,163,175,.07);
+.toc-indicator {
+  position: absolute; left: 0; top: 0;
+  width: 2px; height: var(--h, 0px);
+  background: var(--c, var(--accent));
+  border-radius: 2px;
+  transform: translateY(var(--y, 0px));
+  transition: transform 320ms var(--ease-out), height 320ms var(--ease-out), background-color 320ms ease;
 }
-
-.sidebar-nav a {
+.toc-list { list-style: none; margin: 0; padding: 0; }
+.toc-list a {
   display: flex; align-items: center; gap: 12px;
-  padding: 10px 16px; font-size: 13px;
-  color: var(--text-soft); text-decoration: none;
-  border-left: 2px solid transparent;
-  transition: color .2s, border-color .2s, background .2s;
-  border-radius: 0 6px 6px 0; font-weight: 300;
-  line-height: 1.4;
+  padding: 10px 16px;
+  font-family: "Syne", sans-serif;
+  font-size: 13.5px; font-weight: 600; letter-spacing: .05em;
+  color: var(--text-soft);
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+.toc-list a::before {
+  content: ""; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--c);
+  opacity: .45;
+  transition: opacity 160ms ease, box-shadow 200ms ease;
+}
+.toc-list a[aria-current="true"] { color: #fff; }
+.toc-list a[aria-current="true"]::before { opacity: 1; box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 20%, transparent); }
+@media (hover: hover) and (pointer: fine) {
+  .toc-list a:hover { color: #fff; }
+  .toc-list a:hover::before { opacity: 1; }
+}
+.toc-back {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 26px 0 0 16px;
+  font-size: 13.5px; color: var(--text-soft);
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+.toc-back i { transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .toc-back:hover { color: #fff; }
+  .toc-back:hover i { transform: translateX(-3px); }
 }
 
-.sidebar-nav a:hover {
-  color: white; background: rgba(255,255,255,.03);
-  border-left-color: rgba(156,163,175,.25);
-}
-
-.sidebar-nav a.active {
-  color: white; font-weight: 500;
-  background: rgba(156,163,175,.06);
-  border-left-color: var(--archived);
-}
-
-.sidebar-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  flex-shrink: 0; opacity: .7;
-}
-
-.sidebar-divider { height: 1px; background: var(--border); margin: 20px 16px; }
-
-.sidebar-back {
-  display: flex; align-items: center; gap: 8px;
-  padding: 8px 16px; font-size: 12px;
-  color: rgba(170,179,214,.4); text-decoration: none;
-  transition: color .2s; font-weight: 300;
-}
-
-.sidebar-back:hover { color: white; }
-
-/* ===== CONTENU PRINCIPAL ===== */
-
-.main-content {
-  padding: 48px 0 100px 52px;
-  border-left: 1px solid var(--border);
-  min-width: 0;
-}
-
-/* ===== SECTION PRÉSENTATION ===== */
-
-.intro-section {
-  padding-bottom: 60px;
+.toc-mobile {
+  display: none;
+  position: sticky;
+  top: calc(var(--header-h) + var(--subnav-h));
+  z-index: 10;
+  margin: 0 -20px;
+  padding: 10px 20px;
+  background: rgba(5,11,30,.94);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
-  scroll-margin-top: 160px;
+  overflow-x: auto; scrollbar-width: none;
+  white-space: nowrap;
+}
+.toc-mobile::-webkit-scrollbar { display: none; }
+.toc-mobile a {
+  display: inline-flex; align-items: center; gap: 7px;
+  margin-right: 6px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  font-family: "Syne", sans-serif;
+  font-size: 12px; font-weight: 700; letter-spacing: .06em;
+  color: var(--text-soft);
+  text-decoration: none;
+  transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease;
+}
+.toc-mobile a::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--c); }
+.toc-mobile a[aria-current="true"] {
+  color: #fff;
+  border-color: color-mix(in srgb, var(--c) 45%, transparent);
+  background: color-mix(in srgb, var(--c) 12%, transparent);
 }
 
-.section-eyebrow {
+.content { min-width: 0; padding-bottom: 20px; }
+
+/* =========================================================
+   PROGRAMME
+   ========================================================= */
+.prog {
+  position: relative;
+  padding: 72px 0;
+  border-top: 1px solid var(--border);
+}
+.prog:first-child { border-top: 0; }
+/* halo coloré discret, propre à chaque programme */
+.prog::before {
+  content: ""; position: absolute; top: 0; right: -10%;
+  width: 520px; height: 420px;
+  background: radial-gradient(ellipse at center, color-mix(in srgb, var(--c) 9%, transparent) 0%, transparent 65%);
+  pointer-events: none; z-index: -1;
+}
+.prog::after {
+  content: ""; position: absolute; top: -1px; left: 0; width: 72px; height: 2px;
+  background: var(--c);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 700ms var(--ease-out) 150ms;
+}
+.prog.is-visible::after { transform: scaleX(1); }
+.prog:first-child::after { display: none; }
+
+.prog-top { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+
+.card-code {
+  font-family: "Syne", sans-serif;
+  font-size: 12.5px; font-weight: 700; letter-spacing: .1em;
+  padding: 5px 11px; border-radius: 6px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 9%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c) 26%, transparent);
+}
+.status {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 12px; font-weight: 500;
+  padding: 4px 10px 4px 9px;
+  border-radius: 999px;
+  color: var(--s);
+  background: color-mix(in srgb, var(--s) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--s) 26%, transparent);
+  white-space: nowrap;
+}
+.status i { font-size: 13px; }
+.status .live-dot { width: 6px; height: 6px; }
+
+.prog-title {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(28px, 3.2vw, 42px);
+  font-weight: 700; color: #fff;
+  margin: 0 0 16px; letter-spacing: -0.02em; line-height: 1.1;
+  max-width: 22ch;
+  text-wrap: balance;
+}
+.lead {
+  margin: 0;
+  max-width: 60ch;
+  color: var(--text-soft);
+  font-size: 16.5px; line-height: 1.7; font-weight: 300;
+}
+
+.launch {
   display: inline-flex; align-items: center; gap: 10px;
-  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
-  color: var(--archived); font-weight: 500; margin-bottom: 20px;
+  margin: 24px 0 0;
+  padding: 8px 14px 8px 10px;
+  border-radius: 999px;
+  background: rgba(5,11,30,.55);
+  border: 1px solid var(--border);
+  font-size: 13.5px; color: var(--text-main);
 }
+.launch i { font-size: 18px; color: var(--c); }
+.launch strong { color: #fff; font-weight: 500; }
 
-.section-eyebrow::before {
-  content: ''; display: block;
-  width: 24px; height: 1px; background: currentColor;
+.kpis {
+  display: flex; flex-wrap: wrap; gap: 14px 44px;
+  margin-top: 28px;
 }
-
-.intro-section h1 {
+.kpi { display: flex; flex-direction: column; gap: 4px; }
+.kpi-val {
   font-family: "Syne", sans-serif;
-  font-size: clamp(28px, 3.5vw, 46px);
-  font-weight: 800; letter-spacing: -0.03em;
-  line-height: 1.05; color: white; margin-bottom: 24px;
+  font-size: clamp(24px, 2.4vw, 32px); font-weight: 800;
+  color: #fff; letter-spacing: -0.03em; line-height: 1.05;
+}
+.kpi-val small { font-size: .55em; font-weight: 700; color: var(--c); margin-left: 4px; letter-spacing: 0; }
+.kpi-label { font-size: 13px; color: var(--text-soft); }
+
+.prog-body {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 28px;
+  margin-top: 40px;
+  align-items: start;
 }
 
-.intro-section h1 span {
-  color: transparent;
-  -webkit-text-stroke: 1.5px rgba(156,163,175,.4);
+/* Axes de recherche : icône + libellé, pas de paragraphe */
+.axes-label, .fiche-label {
+  font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text-mute); font-weight: 500;
+  margin: 0 0 14px;
 }
-
-.intro-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 36px;
-  margin-top: 32px;
+.axes {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
 }
-
-.intro-grid p {
-  font-size: 14.5px; color: var(--text-soft);
-  line-height: 1.85; font-weight: 300;
-}
-
-.intro-stats {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
-  margin-top: 36px;
-}
-
-.intro-stat {
-  background: rgba(156,163,175,.04);
-  border: 1px solid rgba(156,163,175,.12);
-  border-radius: 10px; padding: 16px 20px;
-}
-
-.intro-stat-val {
-  font-family: "Syne", sans-serif; font-size: 24px;
-  font-weight: 800; color: white; letter-spacing: -0.03em;
-}
-
-.intro-stat-lbl {
-  font-size: 11px; color: var(--text-soft); font-weight: 300;
-  text-transform: uppercase; letter-spacing: .1em; margin-top: 3px;
-}
-
-/* ===== SECTIONS PROGRAMME ===== */
-
-.prog-section {
-  padding: 70px 0;
-  border-bottom: 1px solid var(--border);
-  scroll-margin-top: 160px;
-}
-
-.prog-section:last-child { border-bottom: none; }
-
-/* Filtre global — effet "passé" sur toute la section */
-.prog-section { opacity: 1; }
-
-/* En-tête programme */
-
-.prog-header {
-  display: flex; align-items: flex-start;
-  justify-content: space-between; gap: 24px;
-  margin-bottom: 36px;
-}
-
-.prog-code-badge {
-  font-family: "Syne", sans-serif;
-  font-size: 11px; font-weight: 700; letter-spacing: .16em;
-  padding: 4px 12px; border-radius: 5px;
-  margin-bottom: 12px; display: inline-block;
-}
-
-.prog-header h2 {
-  font-family: "Syne", sans-serif;
-  font-size: clamp(20px, 2.5vw, 28px);
-  font-weight: 700; color: rgba(255,255,255,.75);
-  letter-spacing: -0.02em; line-height: 1.15;
-}
-
-.prog-status-badge {
-  font-size: 11px; padding: 5px 12px; border-radius: 20px;
-  font-weight: 500; letter-spacing: .05em;
-  white-space: nowrap; flex-shrink: 0; margin-top: 4px;
-  background: rgba(156,163,175,.1); color: #9ca3af;
-  border: 1px solid rgba(156,163,175,.2);
-}
-
-/* Dates banner */
-.prog-dates-banner {
-  display: flex; align-items: center; gap: 16px;
-  margin-bottom: 32px;
-  padding: 14px 20px;
-  background: rgba(156,163,175,.04);
-  border: 1px solid rgba(156,163,175,.1);
-  border-radius: 10px;
-}
-
-.dates-range {
-  font-family: "Syne", sans-serif; font-size: 18px;
-  font-weight: 700; color: rgba(230,230,230,.5);
-  letter-spacing: -0.02em;
-}
-
-.dates-sep {
-  width: 28px; height: 1px; background: rgba(156,163,175,.25);
-}
-
-.dates-label {
-  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
-  color: rgba(156,163,175,.5); font-weight: 300;
-}
-
-.dates-pubs {
-  margin-left: auto;
-  font-size: 13px; color: rgba(156,163,175,.55); font-weight: 300;
-}
-
-.dates-pubs strong {
-  font-family: "Syne", sans-serif; font-size: 16px;
-  font-weight: 700; color: rgba(230,230,230,.5);
-}
-
-/* Corps du programme */
-
-.prog-intro {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
-  margin-bottom: 32px;
-}
-
-.prog-intro p {
-  font-size: 14.5px; color: rgba(170,179,214,.75);
-  line-height: 1.85; font-weight: 300;
-}
-
-.prog-intro p + p { margin-top: 14px; }
-
-/* Bloc fiche technique */
-.prog-fiche {
-  background: rgba(7,15,43,.6);
-  border: 1px solid rgba(27,37,85,.7);
-  border-radius: 14px; padding: 26px 28px;
-  display: flex; flex-direction: column; gap: 16px;
-}
-
-.fiche-label {
-  font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
-  color: rgba(170,179,214,.3); font-weight: 500;
-}
-
-.fiche-rows { display: flex; flex-direction: column; gap: 10px; }
-
-.fiche-row {
-  display: flex; align-items: baseline;
-  justify-content: space-between; gap: 12px;
-  font-size: 13px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid rgba(27,37,85,.5);
-}
-
-.fiche-row:last-child { border-bottom: none; padding-bottom: 0; }
-
-.fiche-key { color: rgba(170,179,214,.4); font-weight: 300; flex-shrink: 0; }
-.fiche-val { color: rgba(230,230,230,.6); text-align: right; font-weight: 400; }
-
-/* KPIs programme */
-.prog-kpis {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
-  margin-bottom: 32px;
-}
-
-.prog-kpi {
-  border-radius: 10px; padding: 16px 18px;
-  border: 1px solid rgba(156,163,175,.1);
-  background: rgba(156,163,175,.04);
-  display: flex; flex-direction: column; gap: 4px;
-}
-
-.prog-kpi-val {
-  font-family: "Syne", sans-serif; font-size: 22px;
-  font-weight: 800; letter-spacing: -0.03em;
-  color: rgba(156,163,175,.7);
-}
-
-.prog-kpi-lbl {
-  font-size: 11px; color: rgba(170,179,214,.4);
-  font-weight: 300; line-height: 1.4;
-  text-transform: uppercase; letter-spacing: .08em;
-}
-
-/* Réalisations / livrables */
-.prog-achievements {
-  display: flex; flex-direction: column; gap: 10px;
-  margin-bottom: 28px;
-}
-
-.achievement-label {
-  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
-  color: rgba(170,179,214,.35); margin-bottom: 4px;
-}
-
-.achievement-item {
-  display: flex; align-items: flex-start; gap: 14px;
-  padding: 14px 18px;
-  background: rgba(156,163,175,.03);
-  border: 1px solid rgba(156,163,175,.08);
-  border-radius: 10px;
-}
-
-.achievement-icon {
-  font-size: 18px; flex-shrink: 0; margin-top: 1px; opacity: .7;
-}
-
-.achievement-text {
-  font-size: 13.5px; color: rgba(170,179,214,.65);
-  font-weight: 300; line-height: 1.6;
-}
-
-.achievement-text strong {
-  color: rgba(230,230,230,.7); font-weight: 500;
-}
-
-/* Axes scientifiques */
-.prog-axes-wrap {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
-  margin-bottom: 32px;
-}
-
-.prog-axe {
-  background: rgba(255,255,255,.015);
-  border: 1px solid rgba(255,255,255,.04);
-  border-radius: 10px; padding: 18px 20px;
-  display: flex; gap: 14px; align-items: flex-start;
-}
-
-.axe-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; opacity: .6; }
-
-.axe-title {
-  font-size: 13px; font-weight: 500; color: rgba(255,255,255,.6);
-  margin-bottom: 4px;
-}
-
-.axe-desc {
-  font-size: 12.5px; color: rgba(170,179,214,.5);
-  font-weight: 300; line-height: 1.6;
-}
-
-/* Partenaires */
-.prog-partners {
-  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px;
-}
-
-.partner-chip {
-  font-size: 12px; padding: 5px 14px; border-radius: 6px;
-  background: rgba(156,163,175,.04);
-  border: 1px solid rgba(156,163,175,.1);
-  color: rgba(170,179,214,.5); font-weight: 300;
-}
-
-/* Divider interne */
-.inner-divider { height: 1px; background: rgba(27,37,85,.7); margin: 28px 0; }
-
-/* Publications liées */
-.prog-pubs { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
-
-.pubs-label {
-  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
-  color: rgba(170,179,214,.35); margin-bottom: 4px;
-}
-
-.pub-item {
+.axes li {
   display: flex; align-items: center; gap: 14px;
-  padding: 11px 16px;
-  background: rgba(255,255,255,.015);
-  border: 1px solid rgba(255,255,255,.04);
-  border-radius: 8px; text-decoration: none; color: inherit;
-  transition: background .2s, border-color .2s; font-size: 13px;
+  padding: 15px 16px;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-size: 14.5px; color: var(--text-main);
+  transition: border-color 200ms ease, transform 200ms var(--ease-out);
 }
-
-.pub-item:hover { background: rgba(79,107,237,.05); border-color: rgba(79,107,237,.15); }
-
-.pub-chip {
-  font-size: 10px; padding: 2px 8px; border-radius: 4px;
-  background: rgba(156,163,175,.08); border: 1px solid rgba(156,163,175,.15);
-  color: rgba(156,163,175,.7); font-weight: 500; white-space: nowrap; flex-shrink: 0;
-}
-
-.pub-text { color: rgba(170,179,214,.6); font-weight: 300; flex: 1; }
-.pub-arrow { color: rgba(170,179,214,.2); font-size: 12px; }
-
-/* Note d'accès archives */
-.archive-access-note {
-  display: flex; align-items: center; gap: 16px;
-  padding: 16px 20px; margin-top: 28px;
-  background: rgba(79,107,237,.04);
-  border: 1px solid rgba(79,107,237,.12);
+.axes i {
+  flex-shrink: 0;
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  font-size: 19px;
   border-radius: 10px;
-  font-size: 13px; color: rgba(170,179,214,.55); font-weight: 300;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 10%, transparent);
+  transition: transform 260ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .axes li:hover { border-color: color-mix(in srgb, var(--c) 38%, transparent); transform: translateY(-2px); }
+  .axes li:hover i { transform: rotate(-8deg) scale(1.06); }
 }
 
-.archive-access-note a {
-  color: rgba(79,107,237,.7); text-decoration: none;
-  transition: color .2s;
+/* Fiche compacte */
+.fiche {
+  padding: 22px;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.fiche-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: 14px; }
+.fiche-row + .fiche-row { margin-top: 10px; }
+.fiche-row dt { color: var(--text-mute); }
+.fiche-row dd { margin: 0; color: #fff; font-weight: 500; }
+.fiche dl { margin: 0 0 20px; }
+
+.depts { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 20px; padding: 0; list-style: none; }
+.depts a {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 5px 11px 5px 9px;
+  border-radius: 999px;
+  font-family: "Syne", sans-serif;
+  font-size: 11.5px; font-weight: 700; letter-spacing: .08em;
+  color: #fff; text-decoration: none;
+  background: color-mix(in srgb, var(--d) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--d) 28%, transparent);
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.depts a::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--d); }
+.depts a:active { transform: scale(.97); }
+@media (hover: hover) and (pointer: fine) {
+  .depts a:hover { background: color-mix(in srgb, var(--d) 20%, transparent); border-color: var(--d); }
 }
 
-.archive-access-note a:hover { color: #818cf8; }
-
-/* ===== FOOTER ===== */
-
-footer {
-  background: var(--bg-dark); border-top: 1px solid var(--border);
-  padding: 40px 30px; text-align: center;
-  font-size: 12px; color: #6b7280;
+.pubs { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+.pubs a {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  font-size: 13.5px; line-height: 1.45; color: var(--text-soft);
+  transition: color 160ms ease;
+}
+.pubs li:last-child a { border-bottom: 0; padding-bottom: 0; }
+.pubs i { font-size: 15px; color: var(--c); flex-shrink: 0; margin-top: 2px; transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .pubs a:hover { color: #fff; }
+  .pubs a:hover i { transform: translate(2px, -2px); }
 }
 
-/* ===== ANIMATIONS ===== */
+/* =========================================================
+   BANDEAU FINAL (identique à programmes.html)
+   ========================================================= */
+.cta-band {
+  margin: 30px 0 100px;
+  padding: 52px 56px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background:
+    radial-gradient(ellipse 50% 90% at 100% 0%, rgba(167,139,250,.16), transparent 60%),
+    var(--bg-light);
+  display: grid;
+  grid-template-columns: 1.3fr auto;
+  gap: 32px;
+  align-items: center;
+}
+.cta-band h2 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(24px, 2.6vw, 34px);
+  font-weight: 700; color: #fff; margin: 0 0 10px; letter-spacing: -0.02em;
+}
+.cta-band p { margin: 0; color: var(--text-soft); font-size: 15.5px; line-height: 1.6; font-weight: 300; max-width: 52ch; }
+.cta-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.site-footer {
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border);
+  padding: 36px 0;
+  font-size: 13px; color: var(--text-mute);
+}
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.footer-inner span:last-child { display: inline-flex; align-items: center; gap: 6px; }
+
+/* =========================================================
+   APPARITION AU DÉFILEMENT
+   ========================================================= */
+.js .reveal {
+  opacity: 0; transform: translateY(16px);
+  transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 60ms);
+}
+.js .reveal.is-visible { opacity: 1; transform: none; }
+.js .axes li.reveal.is-visible {
+  transition: border-color 200ms ease, transform 200ms var(--ease-out), opacity 700ms var(--ease-out);
+  transition-delay: 0ms;
 }
 
-.prog-section { animation: fadeUp .55s ease both; }
-.prog-section:nth-child(1) { animation-delay: .05s; }
-.prog-section:nth-child(2) { animation-delay: .10s; }
-.prog-section:nth-child(3) { animation-delay: .15s; }
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1100px) {
+  .layout { grid-template-columns: 180px 1fr; gap: 36px; }
+  .prog-body { grid-template-columns: 1fr; }
+  .fiche { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; }
+  .fiche > .pubs-wrap { grid-column: 2; grid-row: 1 / span 3; }
+}
+@media (max-width: 960px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 0; }
+  .orbit-wrap { height: 340px; order: -1; margin: -20px 0 10px; }
+  .hero-stats { grid-template-columns: repeat(3, 1fr); }
+  .layout { grid-template-columns: 1fr; gap: 0; }
+  .toc { display: none; }
+  .toc-mobile { display: block; }
+  html { scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 72px); }
+  .cta-band { grid-template-columns: 1fr; padding: 36px; }
+}
+@media (max-width: 960px), (hover: none) {
+  .subnav-list {
+    justify-content: flex-start; gap: 4px;
+    overflow-x: auto; scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+  }
+  .subnav-list::-webkit-scrollbar { display: none; }
+  .subnav-trigger > i, .dropdown { display: none; }
+}
+@media (max-width: 860px) {
+  .main-nav, .header-right .btn-desktop { display: none; }
+  .menu-toggle { display: inline-flex; }
+}
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .subnav-list { padding: 0 20px; }
+  .hero { padding-top: 36px; }
+  .hero-desc, .lead { font-size: 15.5px; }
+  .orbit-wrap { height: 240px; margin: -30px 0 0; -webkit-mask-image: none; mask-image: none; }
+  .orbit-node { font-size: 10px; padding: 3px 7px 3px 4px; gap: 6px; }
+  .orbit-node::before { width: 7px; height: 7px; }
+  .hero-stat { padding: 20px 12px; }
+  .hero-stat-label { font-size: 12px; }
+  .prog { padding: 52px 0; }
+  .axes { grid-template-columns: 1fr; }
+  .fiche { display: block; }
+  .kpis { gap: 14px 28px; }
+  .hero-actions .btn { flex: 1 1 100%; justify-content: center; }
+  .cta-band { padding: 28px 22px; border-radius: var(--radius); margin-bottom: 72px; }
+  .cta-actions .btn { flex: 1 1 100%; justify-content: center; }
+}
 
+/* =========================================================
+   MOUVEMENT RÉDUIT
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-in, .orbit-wrap { animation: fadeOnly 300ms ease forwards; }
+  .hero h1 .line > span { animation: none; transform: none; }
+  .live-dot::after { animation: none; opacity: 0; }
+  .js .reveal { transform: none; transition: opacity 300ms ease; transition-delay: 0ms; }
+  .prog::after, .toc-indicator { transition: none; }
+  .dropdown { transition-duration: 0ms; }
+}
+@keyframes fadeOnly { to { opacity: 1; } }
+
+/* =========================================================
+   SPÉCIFIQUE : PROGRAMMES ARCHIVÉS
+   ========================================================= */
+.hero::before {
+  background:
+    radial-gradient(ellipse 55% 60% at 72% 45%, rgba(156,163,175,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 55% at 70% 35%, rgba(79,107,237,0.10) 0%, transparent 70%),
+    linear-gradient(180deg, transparent 70%, var(--bg-main) 100%);
+}
+.hero h1 .line--soft { color: #cbd5e1; }
+.live-badge { color: #d1d5db; background: rgba(156,163,175,.08); border-color: rgba(156,163,175,.26); }
+.live-badge i { font-size: 15px; }
+
+/* Frise balayée : bords fondus */
+.orbit-wrap {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 94%, transparent 100%), linear-gradient(180deg, transparent 0, #000 22%, #000 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 94%, transparent 100%), linear-gradient(180deg, transparent 0, #000 22%, #000 100%);
+  -webkit-mask-composite: source-in;
+          mask-composite: intersect;
+}
+.orbit-node small { font-family: "DM Sans", sans-serif; font-size: 11px; font-weight: 400; letter-spacing: 0; color: var(--text-soft); }
+
+/* En-tête de programme : titre + période */
+.prog-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px;
+  align-items: start;
+}
+.period { padding-top: 44px; width: 220px; }
+.period strong {
+  display: block;
+  font-family: "Syne", sans-serif;
+  font-size: clamp(30px, 3vw, 40px);
+  font-weight: 800; line-height: 1;
+  letter-spacing: -0.04em;
+  text-align: right;
+  color: transparent;
+  background: linear-gradient(180deg, #e5e7eb 0%, rgba(156,163,175,.35) 100%);
+  -webkit-background-clip: text; background-clip: text;
+}
+.period strong span { color: var(--c); -webkit-text-fill-color: var(--c); opacity: .8; font-weight: 600; margin: 0 .08em; }
+.span-track { position: relative; display: block; height: 5px; margin-top: 16px; border-radius: 999px; background: rgba(255,255,255,.05); }
+.span-bar {
+  position: absolute; top: 0; bottom: 0;
+  left: var(--from); width: var(--len);
+  border-radius: inherit;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--c) 35%, transparent), var(--c));
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 1100ms var(--ease-out) 250ms;
+}
+.period.is-visible .span-bar, html:not(.js) .span-bar { transform: scaleX(1); }
+.span-meta { display: flex; justify-content: space-between; margin-top: 8px; font-size: 11.5px; color: var(--text-mute); font-variant-numeric: tabular-nums; }
+
+/* Réalisations : ce que le programme a laissé */
+.wins { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.wins li {
+  display: flex; align-items: center; gap: 16px;
+  padding: 16px 18px;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-size: 15px; line-height: 1.5; color: var(--text-main);
+  transition: border-color 200ms ease, transform 200ms var(--ease-out);
+}
+.wins i {
+  flex-shrink: 0;
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  font-size: 19px;
+  border-radius: 10px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 10%, transparent);
+  transition: transform 260ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .wins li:hover { border-color: color-mix(in srgb, var(--c) 38%, transparent); transform: translateX(4px); }
+  .wins li:hover i { transform: scale(1.08); }
+}
+.js .wins li.reveal.is-visible {
+  transition: border-color 200ms ease, transform 200ms var(--ease-out), opacity 700ms var(--ease-out);
+  transition-delay: 0ms;
+}
+
+.legacy { display: inline-flex; align-items: center; gap: 6px; }
+.legacy i { font-size: 15px; color: var(--c); }
+
+@media (max-width: 960px) {
+  .prog-head { grid-template-columns: 1fr; gap: 0; }
+  .period { order: -1; padding-top: 0; width: 100%; max-width: 320px; margin-bottom: 20px; }
+  .period strong { text-align: left; }
+}
+@media (max-width: 640px) {
+  .orbit-wrap { -webkit-mask-image: none; mask-image: none; }
+  .wins li { font-size: 14px; padding: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .span-bar { transition: none; transform: none; }
+}
 </style>
+
+<script>document.documentElement.classList.add('js');</script>
 </head>
+
 
 <body>
 
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+
 <!-- ===== HEADER ===== -->
-<header>
-  <div class="header-inner">
+<header class="site-header" id="header">
+  <div class="container header-inner">
     <div class="header-left">
-      <a href="index.html" class="logo-link"><img src="logo.png" alt="Logo IFRAS"></a>
-      <ul class="main-nav">
-        <li><a href="index.html">Accueil</a></li>
-        <li><a href="recherche.html">Recherche</a></li>
-        <li><a href="programmes.html" class="active-nav">Programmes</a></li>
-        <li><a href="publications.html">Publications</a></li>
-      </ul>
+      <a href="index.html" class="logo-link" aria-label="IFRAS, accueil">
+        <img src="logo.png" alt="Logo IFRAS" width="44" height="44">
+      </a>
+      <nav aria-label="Navigation principale">
+        <ul class="main-nav">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="recherche.html">Recherche</a></li>
+          <li><a href="programmes.html" aria-current="page">Programmes</a></li>
+          <li><a href="publications.html">Publications</a></li>
+        </ul>
+      </nav>
     </div>
     <div class="header-right">
-      <a href="connexion.html">Connexion</a>
+      <a href="connexion.html" class="btn btn-ghost btn-desktop">Connexion</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-panel" aria-label="Ouvrir le menu">
+        <i class="ph-light ph-list" aria-hidden="true"></i>
+      </button>
     </div>
   </div>
 </header>
 
-<!-- ===== BANDEAU PROGRAMMES ===== -->
-<div class="program-filter">
+<div class="mobile-panel" id="mobile-panel">
   <ul>
-    <li>Programmes actifs
-      <div class="dropdown">
-        <a href="programmes-actifs.html#artemis9">ARTEMIS-9</a>
-        <a href="programmes-actifs.html#orion3">ORION-3</a>
-        <a href="programmes-actifs.html#hermes">HERMES</a>
-        <a href="programmes-actifs.html#atlas">ATLAS</a>
-        <a href="programmes-actifs.html#lynx">LYNX</a>
-        <a href="programmes-actifs.html#prometheus">PROMETHEUS</a>
-      </div>
-    </li>
-    <li class="active-filter">Programmes archivés
-      <div class="dropdown">
-        <a href="programmes-archives.html#apollox">APOLLO-X</a>
-        <a href="programmes-archives.html#delphi">DELPHI</a>
-        <a href="programmes-archives.html#cassinir">CASSINI-R</a>
-      </div>
-    </li>
-    <li>Programmes futurs
-      <div class="dropdown">
-        <a href="programmes-futurs.html#hera">HERA</a>
-        <a href="programmes-futurs.html#noe">NOE</a>
-        <a href="programmes-futurs.html#titan0">TITAN-0</a>
-      </div>
-    </li>
-    <li>Programmes avortés
-      <div class="dropdown">
-        <a href="programmes-avortes.html#phoenix">PHOENIX</a>
-        <a href="programmes-avortes.html#daedalus">DAEDALUS</a>
-        <a href="programmes-avortes.html#icarus2">ICARUS-2</a>
-      </div>
-    </li>
+    <li><a href="index.html">Accueil <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="recherche.html">Recherche <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="programmes.html" aria-current="page">Programmes <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="publications.html">Publications <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
   </ul>
+  <a href="connexion.html" class="btn btn-primary">Connexion</a>
 </div>
 
-<!-- ===== LAYOUT ===== -->
-<div class="page-wrap">
 
-  <!-- ===== SIDEBAR ===== -->
-  <aside class="sidebar">
-    <div class="sidebar-label">Programmes archivés</div>
-    <ul class="sidebar-nav" id="sidebar-nav">
-      <div class="sidebar-progress"></div>
-      <li>
-        <a href="#presentation" class="active">
-          <span class="sidebar-dot" style="background:#9ca3af;"></span>
-          Vue d'ensemble
-        </a>
-      </li>
-      <li>
-        <a href="#apollox">
-          <span class="sidebar-dot" style="background:#60a5fa;"></span>
-          APOLLO-X
-        </a>
-      </li>
-      <li>
-        <a href="#delphi">
-          <span class="sidebar-dot" style="background:#34d399;"></span>
-          DELPHI
-        </a>
-      </li>
-      <li>
-        <a href="#cassinir">
-          <span class="sidebar-dot" style="background:#f97316;"></span>
-          CASSINI-R
-        </a>
-      </li>
-    </ul>
-    <div class="sidebar-divider"></div>
-    <a href="programmes.html" class="sidebar-back">← Retour aux Programmes</a>
-  </aside>
+<!-- ===== SOUS-NAVIGATION PAR STATUT (identique à programmes.html) ===== -->
+<nav class="subnav" id="subnav" aria-label="Programmes par statut">
+  <ul class="subnav-list">
 
-  <!-- ===== CONTENU ===== -->
-  <main class="main-content">
+    <li class="subnav-item" style="--c:var(--st-active)">
+      <a class="subnav-trigger" href="programmes-actifs.html" aria-haspopup="true" aria-expanded="false">Actifs <span class="subnav-count">6</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
+      <div class="dropdown">
+        <ul>
+          <li><a href="programmes-actifs.html#artemis9"><strong>ARTEMIS-9</strong><span>Mission habitée sur Mars</span></a></li>
+          <li><a href="programmes-actifs.html#orion3"><strong>ORION-3</strong><span>Biosignatures d'exoplanètes</span></a></li>
+          <li><a href="programmes-actifs.html#prometheus"><strong>PROMETHEUS</strong><span>Propulsion ionique</span></a></li>
+          <li><a href="programmes-actifs.html#hermes"><strong>HERMES</strong><span>Communication quantique</span></a></li>
+          <li><a href="programmes-actifs.html#atlas"><strong>ATLAS</strong><span>Environnements extraterrestres</span></a></li>
+          <li><a href="programmes-actifs.html#lynx"><strong>LYNX</strong><span>Robotique autonome</span></a></li>
+        </ul>
+      </div>
+    </li>
 
-    <!-- ── PRÉSENTATION ── -->
-    <section class="intro-section" id="presentation">
-      <div class="section-eyebrow">Missions clôturées</div>
-      <h1>Programmes<br><span>archivés</span></h1>
+    <li class="subnav-item" style="--c:var(--st-future)">
+      <a class="subnav-trigger" href="programmes-futurs.html" aria-haspopup="true" aria-expanded="false">Futurs <span class="subnav-count">3</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
+      <div class="dropdown">
+        <ul>
+          <li><a href="programmes-futurs.html#noe"><strong>NOE</strong><span>Observation exosphérique, 2027</span></a></li>
+          <li><a href="programmes-futurs.html#hera"><strong>HERA</strong><span>Habitabilité des exolunes, 2028</span></a></li>
+          <li><a href="programmes-futurs.html#titan0"><strong>TITAN-0</strong><span>Sonde atmosphérique, 2029</span></a></li>
+        </ul>
+      </div>
+    </li>
 
-      <div class="intro-grid">
+
+    <li class="subnav-item subnav-item--end" style="--c:var(--st-archived)">
+      <a class="subnav-trigger" href="#apollox" aria-current="true" aria-haspopup="true" aria-expanded="false">Archivés <span class="subnav-count">3</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
+      <div class="dropdown">
+        <ul>
+          <li><a href="#apollox"><strong>APOLLO-X</strong><span>Cratères polaires lunaires</span></a></li>
+          <li><a href="#delphi"><strong>DELPHI</strong><span>Prédiction sismique</span></a></li>
+          <li><a href="#cassinir"><strong>CASSINI-R</strong><span>Archives saturniennes par IA</span></a></li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="subnav-item subnav-item--end" style="--c:var(--st-aborted)">
+      <a class="subnav-trigger" href="programmes.html#avortes" aria-haspopup="true" aria-expanded="false">Avortés <span class="subnav-count">3</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
+      <div class="dropdown">
+        <ul>
+          <li><a href="programmes-avortes.html#phoenix"><strong>PHOENIX</strong><span>Hypothermie profonde</span></a></li>
+          <li><a href="programmes-avortes.html#daedalus"><strong>DAEDALUS</strong><span>Voilier solaire</span></a></li>
+          <li><a href="programmes-avortes.html#icarus2"><strong>ICARUS-2</strong><span>Plongeur vénusien</span></a></li>
+        </ul>
+      </div>
+    </li>
+
+  </ul>
+</nav>
+
+<main id="contenu">
+
+<!-- ===== HERO ===== -->
+<section class="hero" aria-labelledby="hero-title">
+  <canvas class="starfield" id="starfield" aria-hidden="true"></canvas>
+  <div class="container">
+    <div class="hero-grid">
+
+      <div class="hero-left">
+        <ol class="breadcrumb hero-in" style="--i:0" aria-label="Fil d'Ariane">
+          <li><a href="programmes.html">Programmes</a></li>
+          <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+          <li aria-current="page">Archivés</li>
+        </ol>
+        <div class="live-badge hero-in" style="--i:1"><i class="ph-light ph-archive" aria-hidden="true"></i> Missions clôturées</div>
+        <h1 id="hero-title"><span class="line"><span style="--i:0">Programmes</span></span><span class="line line--soft"><span style="--i:1">archivés</span></span></h1>
+        <p class="hero-desc hero-in" style="--i:3">Leurs objectifs sont atteints, leurs équipes sont reparties vers d'autres missions. Mais leurs données, leurs modèles et leurs découvertes continuent de nourrir la recherche.</p>
+        <div class="hero-actions hero-in" style="--i:4">
+          <a href="#apollox" class="btn btn-primary">Parcourir les archives <i class="ph-light ph-arrow-down" aria-hidden="true"></i></a>
+          <a href="programmes.html" class="btn btn-ghost">Tous les programmes</a>
+        </div>
+      </div>
+
+      <div class="orbit-wrap" id="orbit-wrap">
+        <canvas class="orbit-canvas" id="orbit" aria-hidden="true"></canvas>
+        <nav aria-label="Accès rapide aux programmes">
+      <a class="orbit-node" href="#apollox" style="--c:#60a5fa" data-i="0">APOLLO-X <small>2014–2022</small></a>
+      <a class="orbit-node" href="#delphi" style="--c:#34d399" data-i="1">DELPHI <small>2016–2023</small></a>
+      <a class="orbit-node" href="#cassinir" style="--c:#f97316" data-i="2">CASSINI-R <small>2019–2021</small></a>
+        </nav>
+      </div>
+
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat reveal" style="--i:0">
+        <span class="hero-stat-value" data-count="3">3</span>
+        <span class="hero-stat-label">Programmes clôturés</span>
+      </div>
+      <div class="hero-stat reveal" style="--i:1">
+        <span class="hero-stat-value" data-count="279">279</span>
+        <span class="hero-stat-label">Publications produites</span>
+      </div>
+      <div class="hero-stat reveal" style="--i:2">
+        <span class="hero-stat-value">2014</span>
+        <span class="hero-stat-label">Premier déploiement</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROGRAMMES ===== -->
+<div class="container">
+  <div class="layout">
+
+    <aside class="toc" aria-label="Sommaire">
+      <p class="toc-label">Programmes archivés</p>
+      <div class="toc-track">
+        <span class="toc-indicator" aria-hidden="true"></span>
+        <ul class="toc-list" id="toc">
+          <li><a href="#apollox" data-target="apollox" style="--c:#60a5fa">APOLLO-X</a></li>
+          <li><a href="#delphi" data-target="delphi" style="--c:#34d399">DELPHI</a></li>
+          <li><a href="#cassinir" data-target="cassinir" style="--c:#f97316">CASSINI-R</a></li>
+        </ul>
+      </div>
+      <a href="programmes.html" class="toc-back"><i class="ph-light ph-arrow-left" aria-hidden="true"></i> Tous les programmes</a>
+    </aside>
+
+    <div class="content">
+      <nav class="toc-mobile" id="toc-mobile" aria-label="Programmes archivés">
+        <a href="#apollox" data-target="apollox" style="--c:#60a5fa">APOLLO-X</a>
+        <a href="#delphi" data-target="delphi" style="--c:#34d399">DELPHI</a>
+        <a href="#cassinir" data-target="cassinir" style="--c:#f97316">CASSINI-R</a>
+      </nav>
+
+      <!-- ===== APOLLO-X ===== -->
+      <section class="prog spy" id="apollox" style="--c:#60a5fa" aria-labelledby="apollox-title">
+        <div class="prog-head">
+          <div>
+            <div class="prog-top reveal">
+              <span class="card-code">APOLLO-X</span>
+              <span class="status" style="--s:var(--st-archived)"><i class="ph-light ph-archive" aria-hidden="true"></i> Archivé en 2022</span>
+            </div>
+            <h2 class="prog-title reveal" id="apollox-title" style="--i:1">Exploration robotique des cratères polaires lunaires</h2>
+            <p class="lead reveal" style="--i:2">Six petits rovers envoyés au fond des cratères d'ombre éternelle du pôle Sud lunaire, pour y chercher la glace d'eau : la ressource clé de toute future présence humaine sur la Lune.</p>
+          </div>
+          <div class="period reveal" style="--i:2">
+            <strong>2014<span>→</span>2022</strong>
+            <span class="span-track" aria-hidden="true"><span class="span-bar" style="--from:9.1%;--len:81.8%"></span></span>
+            <span class="span-meta"><span>8 ans d'opérations</span></span>
+          </div>
+        </div>
+
+        <div class="prog-body">
+          <div>
+            <p class="axes-label">Ce qu'il a laissé</p>
+            <ul class="wins">
+            <li class="reveal" style="--i:0"><i class="ph-light ph-drop" aria-hidden="true"></i> De la glace quasi pure sous la surface, bien plus abondante que prévu</li>
+            <li class="reveal" style="--i:1"><i class="ph-light ph-map-trifold" aria-hidden="true"></i> La première carte haute résolution des zones d'ombre permanente</li>
+            <li class="reveal" style="--i:2"><i class="ph-light ph-flask" aria-hidden="true"></i> De l'oxygène produit sur place à partir de glace lunaire</li>
+            <li class="reveal" style="--i:3"><i class="ph-light ph-robot" aria-hidden="true"></i> Des rovers toujours actifs, bien au-delà de leur durée de vie prévue</li>
+            </ul>
+          </div>
+          <aside class="fiche reveal" style="--i:2" aria-label="Fiche APOLLO-X">
+            <div>
+              <p class="fiche-label">Fiche</p>
+              <dl>
+                <div class="fiche-row"><dt>Héritage</dt><dd class="legacy"><i class="ph-light ph-broadcast" aria-hidden="true"></i> Rovers encore actifs</dd></div>
+              </dl>
+              <div class="kpi" style="margin:0 0 20px"><span class="kpi-val">6</span><span class="kpi-label">Rovers déployés sur la Lune</span></div>
+            </div>
+            <div>
+              <p class="fiche-label">Départements pilotes</p>
+              <ul class="depts">
+              <li><a href="DAI.html" style="--d:#67e8f9" title="Astrophysique et Instrumentation">DAI</a></li>
+              <li><a href="DSVT.html" style="--d:#34d399" title="Sciences du Vivant et de la Terre">DSVT</a></li>
+              <li><a href="DSTI.html" style="--d:#818cf8" title="Simulation et Traitement de l'Information">DSTI</a></li>
+              </ul>
+            </div>
+            <div class="pubs-wrap">
+              <p class="fiche-label">Publications phares</p>
+              <ul class="pubs">
+              <li><a href="publications.html"><span>Glace d'eau sous le régolithe polaire : mesures directes <span style="color:var(--text-mute)">· 2020</span></span><i class="ph-light ph-arrow-up-right" aria-hidden="true"></i></a></li>
+              <li><a href="publications.html"><span>Navigation autonome dans l'ombre permanente <span style="color:var(--text-mute)">· 2019</span></span><i class="ph-light ph-arrow-up-right" aria-hidden="true"></i></a></li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ===== DELPHI ===== -->
+      <section class="prog spy" id="delphi" style="--c:#34d399" aria-labelledby="delphi-title">
+        <div class="prog-head">
+          <div>
+            <div class="prog-top reveal">
+              <span class="card-code">DELPHI</span>
+              <span class="status" style="--s:var(--st-archived)"><i class="ph-light ph-archive" aria-hidden="true"></i> Archivé en 2023</span>
+            </div>
+            <h2 class="prog-title reveal" id="delphi-title" style="--i:1">Prédiction sismique depuis l’orbite</h2>
+            <p class="lead reveal" style="--i:2">Et si les grands séismes s'annonçaient dans le ciel ? Une constellation de microsatellites a traqué les perturbations de l'ionosphère qui précèdent les secousses, pour donner l'alerte à l'avance.</p>
+          </div>
+          <div class="period reveal" style="--i:2">
+            <strong>2016<span>→</span>2023</strong>
+            <span class="span-track" aria-hidden="true"><span class="span-bar" style="--from:27.3%;--len:72.7%"></span></span>
+            <span class="span-meta"><span>7 ans d'opérations</span></span>
+          </div>
+        </div>
+
+        <div class="prog-body">
+          <div>
+            <p class="axes-label">Ce qu'il a laissé</p>
+            <ul class="wins">
+            <li class="reveal" style="--i:0"><i class="ph-light ph-globe-hemisphere-east" aria-hidden="true"></i> Le lien entre ionosphère et séismes démontré à l'échelle du globe</li>
+            <li class="reveal" style="--i:1"><i class="ph-light ph-brain" aria-hidden="true"></i> Un modèle d'IA capable d'alerter plusieurs jours avant un séisme majeur</li>
+            <li class="reveal" style="--i:2"><i class="ph-light ph-shield-check" aria-hidden="true"></i> Un modèle confié aux services de protection civile : mission accomplie</li>
+            </ul>
+          </div>
+          <aside class="fiche reveal" style="--i:2" aria-label="Fiche DELPHI">
+            <div>
+              <p class="fiche-label">Fiche</p>
+              <dl>
+                <div class="fiche-row"><dt>Héritage</dt><dd class="legacy"><i class="ph-light ph-check-circle" aria-hidden="true"></i> Modèle en service</dd></div>
+              </dl>
+              <div class="kpi" style="margin:0 0 20px"><span class="kpi-val">72 h</span><span class="kpi-label">D'avance sur les séismes majeurs</span></div>
+            </div>
+            <div>
+              <p class="fiche-label">Départements pilotes</p>
+              <ul class="depts">
+              <li><a href="DAI.html" style="--d:#67e8f9" title="Astrophysique et Instrumentation">DAI</a></li>
+              <li><a href="DSTI.html" style="--d:#818cf8" title="Simulation et Traitement de l'Information">DSTI</a></li>
+              <li><a href="DPM.html" style="--d:#c084fc" title="Physique et Mécanique">DPM</a></li>
+              </ul>
+            </div>
+            <div class="pubs-wrap">
+              <p class="fiche-label">Publications phares</p>
+              <ul class="pubs">
+              <li><a href="publications.html"><span>Anomalies ionosphériques et grands séismes : une corrélation globale <span style="color:var(--text-mute)">· 2021</span></span><i class="ph-light ph-arrow-up-right" aria-hidden="true"></i></a></li>
+              <li><a href="publications.html"><span>Prédire à trois jours : un modèle multi-capteurs <span style="color:var(--text-mute)">· 2022</span></span><i class="ph-light ph-arrow-up-right" aria-hidden="true"></i></a></li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ===== CASSINI-R ===== -->
+      <section class="prog spy" id="cassinir" style="--c:#f97316" aria-labelledby="cassinir-title">
+        <div class="prog-head">
+          <div>
+            <div class="prog-top reveal">
+              <span class="card-code">CASSINI-R</span>
+              <span class="status" style="--s:var(--st-archived)"><i class="ph-light ph-archive" aria-hidden="true"></i> Archivé en 2021</span>
+            </div>
+            <h2 class="prog-title reveal" id="cassinir-title" style="--i:1">Relire Saturne avec l’intelligence artificielle</h2>
+            <p class="lead reveal" style="--i:2">Plutôt que de lancer une sonde, relire les archives d'une ancienne mission saturnienne. Passées au crible de l'IA, des images vieilles de plusieurs années ont révélé des détails jamais vus.</p>
+          </div>
+          <div class="period reveal" style="--i:2">
+            <strong>2019<span>→</span>2021</strong>
+            <span class="span-track" aria-hidden="true"><span class="span-bar" style="--from:54.5%;--len:27.3%"></span></span>
+            <span class="span-meta"><span>2 ans de retraitement</span></span>
+          </div>
+        </div>
+
+        <div class="prog-body">
+          <div>
+            <p class="axes-label">Ce qu'il a laissé</p>
+            <ul class="wins">
+            <li class="reveal" style="--i:0"><i class="ph-light ph-circle-notch" aria-hidden="true"></i> De nouvelles structures dans les anneaux, dont un type encore inconnu</li>
+            <li class="reveal" style="--i:1"><i class="ph-light ph-planet" aria-hidden="true"></i> Dunes et lacs de Titan révélés par super-résolution</li>
+            <li class="reveal" style="--i:2"><i class="ph-light ph-database" aria-hidden="true"></i> Toutes les données retraitées ouvertes à la communauté</li>
+            </ul>
+          </div>
+          <aside class="fiche reveal" style="--i:2" aria-label="Fiche CASSINI-R">
+            <div>
+              <p class="fiche-label">Fiche</p>
+              <dl>
+                <div class="fiche-row"><dt>Héritage</dt><dd class="legacy"><i class="ph-light ph-lock-simple-open" aria-hidden="true"></i> Données ouvertes</dd></div>
+              </dl>
+              <div class="kpi" style="margin:0 0 20px"><span class="kpi-val">18</span><span class="kpi-label">Structures découvertes dans les anneaux</span></div>
+            </div>
+            <div>
+              <p class="fiche-label">Départements pilotes</p>
+              <ul class="depts">
+              <li><a href="DAI.html" style="--d:#67e8f9" title="Astrophysique et Instrumentation">DAI</a></li>
+              <li><a href="DSTI.html" style="--d:#818cf8" title="Simulation et Traitement de l'Information">DSTI</a></li>
+              <li><a href="DOL.html" style="--d:#38bdf8" title="Optique et Lumière">DOL</a></li>
+              </ul>
+            </div>
+            <div class="pubs-wrap">
+              <p class="fiche-label">Publications phares</p>
+              <ul class="pubs">
+              <li><a href="publications.html"><span>Des structures inédites dans les anneaux de Saturne <span style="color:var(--text-mute)">· 2020</span></span><i class="ph-light ph-arrow-up-right" aria-hidden="true"></i></a></li>
+              <li><a href="publications.html"><span>Super-résolution des archives de Titan <span style="color:var(--text-mute)">· 2020</span></span><i class="ph-light ph-arrow-up-right" aria-hidden="true"></i></a></li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <div class="cta-band reveal" style="background:radial-gradient(ellipse 50% 90% at 100% 0%, rgba(79,107,237,.18), transparent 60%), var(--bg-light)">
         <div>
-          <p>Les programmes archivés de l'IFRAS sont des missions scientifiques menées à leur terme, dont les objectifs ont été atteints et les équipes dissoutes ou réaffectées. Leur clôture ne signifie pas l'oubli : les données, modèles, publications et savoir-faire accumulés continuent d'alimenter les programmes en cours et constituent un patrimoine scientifique considérable. Plusieurs résultats fondamentaux de l'IFRAS ont été produits par ces programmes aujourd'hui archivés.</p>
-          <p>L'accès complet aux données brutes, comptes-rendus d'essais, rapports de phase et archives documentaires de ces programmes est possible sur demande motivée auprès du Service Archives & Documentation. Certains contenus restent soumis à accréditation en raison de leur caractère sensible ou de leur pertinence pour des programmes en cours.</p>
+          <h2>Un patrimoine ouvert</h2>
+          <p>Données, rapports et publications de ces missions restent consultables auprès du service Archives de l'IFRAS.</p>
         </div>
-        <div>
-          <p>Ces trois programmes illustrent la diversité des approches scientifiques de l'IFRAS : l'exploration robotique in situ avec APOLLO-X, la surveillance planétaire depuis l'orbite avec DELPHI, et la valorisation intensive de données existantes par l'intelligence artificielle avec CASSINI-R. Ensemble, ils ont produit 279 publications scientifiques dans des revues à comité de lecture, et leurs résultats sont cités dans plus de 1 400 articles par des équipes du monde entier.</p>
-          <p>Des éléments matériels de ces programmes — rovers encore opérationnels sur la Lune, modèles prédictifs déployés à l'ONU, bases de données IA publiées en open access — continuent d'avoir une existence et une utilité bien après la clôture formelle de leurs programmes d'origine.</p>
-        </div>
-      </div>
-
-      <div class="intro-stats">
-        <div class="intro-stat">
-          <div class="intro-stat-val">3</div>
-          <div class="intro-stat-lbl">Programmes clôturés</div>
-        </div>
-        <div class="intro-stat">
-          <div class="intro-stat-val">279</div>
-          <div class="intro-stat-lbl">Publications produites</div>
-        </div>
-        <div class="intro-stat">
-          <div class="intro-stat-val">+1 400</div>
-          <div class="intro-stat-lbl">Citations mondiales</div>
-        </div>
-        <div class="intro-stat">
-          <div class="intro-stat-val">2014</div>
-          <div class="intro-stat-lbl">Premier lancement (APOLLO-X)</div>
+        <div class="cta-actions">
+          <a href="publications.html" class="btn btn-primary">Voir les publications <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
+          <a href="mailto:archives@ifras.fr" class="btn btn-ghost">Contacter les archives</a>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- ============================================================ -->
-    <!-- APOLLO-X                                                      -->
-    <!-- ============================================================ -->
-    <section class="prog-section" id="apollox">
-
-      <div class="prog-header">
-        <div>
-          <span class="prog-code-badge" style="color:rgba(96,165,250,.6); background:rgba(96,165,250,.06); border:1px solid rgba(96,165,250,.15);">APOLLO-X</span>
-          <h2>Exploration robotique des cratères polaires lunaires</h2>
-        </div>
-        <span class="prog-status-badge">Archivé · 2022</span>
-      </div>
-
-      <div class="prog-dates-banner">
-        <span class="dates-range">2014</span>
-        <div class="dates-sep"></div>
-        <span class="dates-range">2022</span>
-        <span class="dates-label">8 années d'opérations</span>
-        <span class="dates-pubs"><strong>142</strong> publications</span>
-      </div>
-
-      <div class="prog-kpis">
-        <div class="prog-kpi">
-          <span class="prog-kpi-val">6</span>
-          <span class="prog-kpi-lbl">Rovers déployés sur la Lune</span>
-        </div>
-        <div class="prog-kpi">
-          <span class="prog-kpi-val">3</span>
-          <span class="prog-kpi-lbl">Rovers encore opérationnels</span>
-        </div>
-        <div class="prog-kpi">
-          <span class="prog-kpi-val">1 240 km²</span>
-          <span class="prog-kpi-lbl">Surface cartographiée</span>
-        </div>
-      </div>
-
-      <div class="prog-intro">
-        <div>
-          <p>APOLLO-X a constitué le programme d'exploration robotique lunaire le plus ambitieux jamais conduit par une institution scientifique civile européenne. Son objectif central : cartographier avec une précision centimétrique les bassins permanemment ombragés (PSR) du pôle Sud lunaire pour y quantifier les réserves de glace d'eau sub-surfacique, ressource stratégique pour toute future présence humaine durable sur la Lune.</p>
-          <p>Six rovers miniaturisés de 35 kg — les APOLLO-X-A à APOLLO-X-F — ont été déposés par trois missions de lanceur léger entre 2014 et 2018. Équipés de forières thermiques capables de prélever des carottes jusqu'à 1,5 m de profondeur, de spectromètres neutrons et de caméras stéréoscopiques embarquées, ils ont opéré de manière largement autonome dans les zones d'ombre permanente, où les panneaux solaires sont inopérants et les températures descendent à −230 °C.</p>
-          <p style="margin-top:14px">La découverte majeure du programme — publiée en 2020 dans Nature Geoscience — est la mise en évidence de couches de glace quasi-pure à −40 cm de profondeur dans le bassin Haworth, contenant environ 0,3 % en masse d'eau, une concentration trois fois supérieure aux estimations préalables. Ce résultat a fondamentalement modifié la planification de l'architecture des futures bases lunaires de l'ESA et de la NASA.</p>
-        </div>
-        <div class="prog-fiche">
-          <span class="fiche-label">Fiche programme</span>
-          <div class="fiche-rows">
-            <div class="fiche-row">
-              <span class="fiche-key">Statut</span>
-              <span class="fiche-val">Archivé — clôturé déc. 2022</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Début programme</span>
-              <span class="fiche-val">Janvier 2010</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">1er déploiement rover</span>
-              <span class="fiche-val">Mars 2014</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Département pilote</span>
-              <span class="fiche-val">DAI / DSVT / DSTI</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Chercheurs impliqués</span>
-              <span class="fiche-val">+200 (pic 2018)</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Partenaires principaux</span>
-              <span class="fiche-val">ESA, CNES, JAXA, Airbus</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Publications produites</span>
-              <span class="fiche-val">142 (dont 3 Nature)</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="inner-divider"></div>
-
-      <div class="achievement-label">Réalisations scientifiques majeures</div>
-      <div class="prog-achievements">
-        <div class="achievement-item">
-          <span class="achievement-icon">💧</span>
-          <div class="achievement-text">
-            <strong>Découverte de glace quasi-pure à −40 cm de profondeur dans le bassin Haworth</strong> — concentration de 0,3 % en masse, trois fois supérieure aux estimations antérieures. Publication dans Nature Geoscience (2020), citée 312 fois.
-          </div>
-        </div>
-        <div class="achievement-item">
-          <span class="achievement-icon">🗺</span>
-          <div class="achievement-text">
-            <strong>Première cartographie haute résolution (5 cm/px) de 1 240 km² de PSR lunaires</strong>, mise en open access et adoptée comme référence géodésique officielle par l'IAU pour la région polaire sud lunaire.
-          </div>
-        </div>
-        <div class="achievement-item">
-          <span class="achievement-icon">🤖</span>
-          <div class="achievement-text">
-            <strong>Démonstration de 8 années d'opérations autonomes continues en environnement cryogénique extrême</strong> — les rovers APOLLO-X-B et APOLLO-X-D sont encore actifs en 2026, bien au-delà de leur durée de vie nominale de 3 ans.
-          </div>
-        </div>
-        <div class="achievement-item">
-          <span class="achievement-icon">⚗️</span>
-          <div class="achievement-text">
-            <strong>Première extraction et analyse in situ de glace lunaire par électrolyse embarquée</strong>, démontrant la faisabilité de la production d'oxygène et d'hydrogène directement depuis le régolithe — fondement du concept ISRU lunaire.
-          </div>
-        </div>
-      </div>
-
-      <div class="inner-divider"></div>
-
-      <div style="margin-bottom:16px; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(170,179,214,.3);">Axes scientifiques traités</div>
-      <div class="prog-axes-wrap">
-        <div class="prog-axe">
-          <span class="axe-icon">🌕</span>
-          <div>
-            <div class="axe-title">Glaciologie lunaire</div>
-            <div class="axe-desc">Caractérisation physico-chimique des dépôts de glace dans les bassins permanemment ombragés. Modélisation des mécanismes de piégeage et de sublimation sur des échelles de temps géologiques.</div>
-          </div>
-        </div>
-        <div class="prog-axe">
-          <span class="axe-icon">🪨</span>
-          <div>
-            <div class="axe-title">Géologie polaire lunaire</div>
-            <div class="axe-desc">Stratigraphie des couches superficielles du régolithe polaire. Cartographie des impacts récents et reconstruction de l'histoire géologique des PSR sur 3 milliards d'années.</div>
-          </div>
-        </div>
-        <div class="prog-axe">
-          <span class="axe-icon">🔋</span>
-          <div>
-            <div class="axe-title">Ressources in situ (ISRU)</div>
-            <div class="axe-desc">Évaluation de la faisabilité et des rendements de l'extraction d'eau, d'oxygène et d'hydrogène directement depuis le régolithe polaire lunaire à des fins de soutien aux opérations habitées.</div>
-          </div>
-        </div>
-        <div class="prog-axe">
-          <span class="axe-icon">❄️</span>
-          <div>
-            <div class="axe-title">Cryogénie et matériaux extrêmes</div>
-            <div class="axe-desc">Qualification de systèmes mécaniques, électroniques et de propulsion fonctionnant de manière fiable à −230 °C sans maintenance extérieure sur des durées supérieures à 5 ans.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="prog-partners">
-        <span class="partner-chip">ESA — ESTEC</span>
-        <span class="partner-chip">CNES</span>
-        <span class="partner-chip">JAXA</span>
-        <span class="partner-chip">Airbus Defence & Space</span>
-        <span class="partner-chip">CNRS — LGLTPE</span>
-        <span class="partner-chip">Université Grenoble Alpes</span>
-        <span class="partner-chip">NASA — GSFC</span>
-      </div>
-
-      <div class="prog-pubs">
-        <div class="pubs-label">Publications sélectives</div>
-        <a href="publications-scientifiques.html" class="pub-item">
-          <span class="pub-chip">2020</span>
-          <span class="pub-text">Concentrations de glace d'eau sub-surfacique dans le bassin Haworth — mesures directes APOLLO-X et implications pour les architectures ISRU</span>
-          <span class="pub-arrow">→</span>
-        </a>
-        <a href="publications-scientifiques.html" class="pub-item">
-          <span class="pub-chip">2019</span>
-          <span class="pub-text">Navigation autonome dans les bassins permanemment ombragés : algorithmes et résultats sur les rovers APOLLO-X</span>
-          <span class="pub-arrow">→</span>
-        </a>
-        <a href="publications-scientifiques.html" class="pub-item">
-          <span class="pub-chip">2022</span>
-          <span class="pub-text">Bilan cartographique APOLLO-X : géodésie haute résolution du pôle Sud lunaire — jeu de données de référence IAU</span>
-          <span class="pub-arrow">→</span>
-        </a>
-      </div>
-
-      <div class="archive-access-note">
-        📁 Les 3,8 To de données brutes APOLLO-X (images, spectres, logs rover) sont accessibles en open access sur le portail archives IFRAS. Les données de forage profondes restent soumises à accréditation. <a href="mailto:archives@ifras.fr">Contacter les archives →</a>
-      </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- DELPHI                                                        -->
-    <!-- ============================================================ -->
-    <section class="prog-section" id="delphi">
-
-      <div class="prog-header">
-        <div>
-          <span class="prog-code-badge" style="color:rgba(52,211,153,.55); background:rgba(52,211,153,.05); border:1px solid rgba(52,211,153,.13);">DELPHI</span>
-          <h2>Prédiction sismique par réseau de capteurs orbitaux</h2>
-        </div>
-        <span class="prog-status-badge">Archivé · 2023</span>
-      </div>
-
-      <div class="prog-dates-banner">
-        <span class="dates-range">2016</span>
-        <div class="dates-sep"></div>
-        <span class="dates-range">2023</span>
-        <span class="dates-label">7 années d'opérations</span>
-        <span class="dates-pubs"><strong>89</strong> publications</span>
-      </div>
-
-      <div class="prog-kpis">
-        <div class="prog-kpi">
-          <span class="prog-kpi-val">12</span>
-          <span class="prog-kpi-lbl">Satellites de la constellation</span>
-        </div>
-        <div class="prog-kpi">
-          <span class="prog-kpi-val">72 h</span>
-          <span class="prog-kpi-lbl">Horizon de prédiction</span>
-        </div>
-        <div class="prog-kpi">
-          <span class="prog-kpi-val">0,71</span>
-          <span class="prog-kpi-lbl">Score F1 (séismes ≥ M5.5)</span>
-        </div>
-      </div>
-
-      <div class="prog-intro">
-        <div>
-          <p>DELPHI est né d'une hypothèse longtemps controversée dans la communauté géophysique : les séismes importants seraient précédés, dans les 48 à 72 heures qui les précèdent, de perturbations détectables dans la couche ionosphérique — le résultat de signaux électromagnétiques générés par la compression mécanique des roches en profondeur. Des observations ponctuelles existaient depuis les années 1990, mais aucun programme n'avait tenté de les exploiter systématiquement pour la prédiction opérationnelle.</p>
-          <p>L'IFRAS a construit pour DELPHI une constellation de 12 microsatellites en orbite basse équipés de magnétomètres vectoriels haute résolution, de capteurs de densité électronique et d'analyseurs de plasma ionosphérique. En corrélant les anomalies détectées par cette constellation avec les catalogues sismiques historiques de 40 ans, les équipes du DAI et du DSTI ont entraîné un modèle d'apprentissage profond capable de produire des alertes à 72 heures pour des séismes de magnitude ≥ 5,5.</p>
-          <p style="margin-top:14px">Le programme a produit ses résultats les plus marquants entre 2020 et 2022, avec une série de prédictions validées après coup sur le Chili, la Turquie et l'Indonésie. Le modèle DELPHI-4 a été transmis à l'ONU-Space en 2023 et est aujourd'hui utilisé à titre expérimental par les agences de protection civile de 7 pays dans le cadre d'un accord de coopération technique. C'est cette valorisation opérationnelle qui a motivé la clôture formelle du programme : l'IFRAS a considéré sa mission accomplie en livrant le modèle à des opérateurs institutionnels.</p>
-        </div>
-        <div class="prog-fiche">
-          <span class="fiche-label">Fiche programme</span>
-          <div class="fiche-rows">
-            <div class="fiche-row">
-              <span class="fiche-key">Statut</span>
-              <span class="fiche-val">Archivé — clôturé juin 2023</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Début programme</span>
-              <span class="fiche-val">Avril 2013</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Lancement constellation</span>
-              <span class="fiche-val">Novembre 2016</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Département pilote</span>
-              <span class="fiche-val">DAI / DSTI / DPM</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Chercheurs impliqués</span>
-              <span class="fiche-val">+110 (pic 2021)</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Partenaires principaux</span>
-              <span class="fiche-val">ONU-Space, ESA, USGS, INGV</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Publications produites</span>
-              <span class="fiche-val">89 (dont 1 Science)</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="inner-divider"></div>
-
-      <div class="achievement-label">Réalisations scientifiques majeures</div>
-      <div class="prog-achievements">
-        <div class="achievement-item">
-          <span class="achievement-icon">📡</span>
-          <div class="achievement-text">
-            <strong>Première validation statistique robuste de la corrélation ionosphère-sismicité à l'échelle planétaire</strong> — analyse de 40 ans de données sismiques et 7 ans de données orbitales. Publication dans Science (2021).
-          </div>
-        </div>
-        <div class="achievement-item">
-          <span class="achievement-icon">🧠</span>
-          <div class="achievement-text">
-            <strong>Développement du modèle DELPHI-4</strong>, architecture Transformer multi-sources atteigning un score F1 de 0,71 sur les séismes de magnitude ≥ 5,5 à 72 heures — meilleur résultat mondial sur ce problème à la date de publication.
-          </div>
-        </div>
-        <div class="achievement-item">
-          <span class="achievement-icon">🌍</span>
-          <div class="achievement-text">
-            <strong>Transfert opérationnel du modèle DELPHI-4 à l'ONU-Space</strong> en 2023, et déploiement expérimental dans les systèmes d'alerte de la Turquie, du Chili, du Japon, de l'Indonésie, de la Grèce, du Pérou et du Maroc.
-          </div>
-        </div>
-      </div>
-
-      <div class="inner-divider"></div>
-
-      <div style="margin-bottom:16px; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(170,179,214,.3);">Axes scientifiques traités</div>
-      <div class="prog-axes-wrap">
-        <div class="prog-axe">
-          <span class="axe-icon">🌐</span>
-          <div>
-            <div class="axe-title">Physique ionosphérique sismo-induite</div>
-            <div class="axe-desc">Caractérisation des mécanismes de couplage lithosphère-atmosphère-ionosphère (LAIC) et des signatures électromagnétiques précurseurs des grands séismes.</div>
-          </div>
-        </div>
-        <div class="prog-axe">
-          <span class="axe-icon">🤖</span>
-          <div>
-            <div class="axe-title">IA pour la géophysique</div>
-            <div class="axe-desc">Application des architectures Transformer et des réseaux de neurones récurrents à la détection d'anomalies faibles dans des séries temporelles multi-capteurs à haute dimension.</div>
-          </div>
-        </div>
-        <div class="prog-axe">
-          <span class="axe-icon">🛰</span>
-          <div>
-            <div class="axe-title">Constellation de microsatellites</div>
-            <div class="axe-desc">Conception, déploiement et opération d'une constellation de 12 microsatellites en orbite héliosynchrone avec coordination d'observation synchronisée et fusion de données temps réel.</div>
-          </div>
-        </div>
-        <div class="prog-axe">
-          <span class="axe-icon">⚠️</span>
-          <div>
-            <div class="axe-title">Systèmes d'alerte précoce</div>
-            <div class="axe-desc">Intégration des modèles DELPHI dans les pipelines opérationnels des agences de protection civile. Définition des protocoles de décision et des seuils d'alerte en concertation avec les autorités nationales.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="prog-partners">
-        <span class="partner-chip">ONU-Space</span>
-        <span class="partner-chip">ESA</span>
-        <span class="partner-chip">USGS — Earthquake Hazards</span>
-        <span class="partner-chip">INGV (Italie)</span>
-        <span class="partner-chip">NIED (Japon)</span>
-        <span class="partner-chip">CNRS — IPGP</span>
-        <span class="partner-chip">Université de Toulouse III</span>
-      </div>
-
-      <div class="prog-pubs">
-        <div class="pubs-label">Publications sélectives</div>
-        <a href="publications-scientifiques.html" class="pub-item">
-          <span class="pub-chip">2021</span>
-          <span class="pub-text">Corrélation statistique robuste entre anomalies ionosphériques orbitales et séismes de magnitude ≥ 5,5 — analyse globale 1980-2020</span>
-          <span class="pub-arrow">→</span>
-        </a>
-        <a href="publications-scientifiques.html" class="pub-item">
-          <span class="pub-chip">2022</span>
-          <span class="pub-text">DELPHI-4 : architecture Transformer pour la prédiction sismique multi-source à 72 heures — validation sur 6 régions sismiques majeures</span>
-          <span class="pub-arrow">→</span>
-        </a>
-        <a href="publications-scientifiques.html" class="pub-item">
-          <span class="pub-chip">2023</span>
-          <span class="pub-text">Bilan opérationnel du déploiement DELPHI-4 en Turquie : séquence sismique de février 2023 — analyse rétrospective et limites du modèle</span>
-          <span class="pub-arrow">→</span>
-        </a>
-      </div>
-
-      <div class="archive-access-note">
-        📁 Les données de la constellation DELPHI sont disponibles en open access via le portail archives IFRAS. Le code source du modèle DELPHI-4 est publié sous licence Apache 2.0 sur le dépôt GitHub IFRAS. <a href="mailto:archives@ifras.fr">Contacter les archives →</a>
-      </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- CASSINI-R                                                     -->
-    <!-- ============================================================ -->
-    <section class="prog-section" id="cassinir">
-
-      <div class="prog-header">
-        <div>
-          <span class="prog-code-badge" style="color:rgba(249,115,22,.55); background:rgba(249,115,22,.05); border:1px solid rgba(249,115,22,.13);">CASSINI-R</span>
-          <h2>Retraitement IA des archives de la sonde Cassini-Huygens</h2>
-        </div>
-        <span class="prog-status-badge">Archivé · 2021</span>
-      </div>
-
-      <div class="prog-dates-banner">
-        <span class="dates-range">2019</span>
-        <div class="dates-sep"></div>
-        <span class="dates-range">2021</span>
-        <span class="dates-label">2 années de traitement intensif</span>
-        <span class="dates-pubs"><strong>48</strong> publications</span>
-      </div>
-
-      <div class="prog-kpis">
-        <div class="prog-kpi">
-          <span class="prog-kpi-val">635 Go</span>
-          <span class="prog-kpi-lbl">Données brutes retraitées</span>
-        </div>
-        <div class="prog-kpi">
-          <span class="prog-kpi-val">18</span>
-          <span class="prog-kpi-lbl">Nouvelles structures découvertes</span>
-        </div>
-        <div class="prog-kpi">
-          <span class="prog-kpi-val">×40</span>
-          <span class="prog-kpi-lbl">Gain résolution sur images VIMS</span>
-        </div>
-      </div>
-
-      <div class="prog-intro">
-        <div>
-          <p>CASSINI-R — le suffixe R pour "Retraitement" — est le programme le plus court et peut-être le plus intellectuellement original de l'IFRAS. Son point de départ : la mission Cassini-Huygens de la NASA, qui a orbité autour de Saturne entre 2004 et 2017, a produit 635 gigaoctets de données brutes dont une fraction seulement avait été analysée en profondeur faute de temps et de puissance de calcul disponibles au moment de la mission. Ces données dormaient dans les archives NASA, accessibles mais sous-exploitées.</p>
-          <p>L'idée directrice de CASSINI-R était simple et ambitieuse : appliquer les méthodes de deep learning développées depuis 2015 — en particulier les réseaux convolutifs pour l'imagerie et les modèles de reconstruction spectrale — à ces archives brutes pour en extraire des informations inaccessibles aux traitements originaux. Le programme a regroupé une équipe de 60 chercheurs du DAI, DSTI et DOL pendant deux ans, avec un accès prioritaire aux ressources HPC du calculateur Mésocentre de l'IFRAS.</p>
-          <p style="margin-top:14px">Les résultats ont largement dépassé les attentes. En imagerie seule, les techniques de super-résolution appliquées aux images VIMS (Visual and Infrared Mapping Spectrometer) ont multiplié leur résolution effective par un facteur 40, révélant des structures sub-kilométriques dans les anneaux et à la surface de Titan qui n'avaient jamais été observées. Dix-huit structures nouvelles ont été cataloguées dans les anneaux de Saturne, dont deux — baptisées IFRAS-1 et IFRAS-2 — constituent un type morphologique inconnu de propeller géant lié à des objets de la taille d'un stade.</p>
-        </div>
-        <div class="prog-fiche">
-          <span class="fiche-label">Fiche programme</span>
-          <div class="fiche-rows">
-            <div class="fiche-row">
-              <span class="fiche-key">Statut</span>
-              <span class="fiche-val">Archivé — clôturé mars 2021</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Début programme</span>
-              <span class="fiche-val">Janvier 2019</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Département pilote</span>
-              <span class="fiche-val">DAI / DSTI / DOL</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Chercheurs impliqués</span>
-              <span class="fiche-val">60</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Partenaires principaux</span>
-              <span class="fiche-val">NASA JPL, ESA, Caltech</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Ressources HPC utilisées</span>
-              <span class="fiche-val">4,2 millions d'heures CPU</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Publications produites</span>
-              <span class="fiche-val">48 (dont 2 Nature Astronomy)</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="inner-divider"></div>
-
-      <div class="achievement-label">Réalisations scientifiques majeures</div>
-      <div class="prog-achievements">
-        <div class="achievement-item">
-          <span class="achievement-icon">💍</span>
-          <div class="achievement-text">
-            <strong>Découverte de 18 nouvelles structures dans les anneaux de Saturne</strong>, dont les objets IFRAS-1 et IFRAS-2 — propellers géants d'un type morphologique inédit, associés à des corps de 300-400 m de diamètre. Publication dans Nature Astronomy (2020).
-          </div>
-        </div>
-        <div class="achievement-item">
-          <span class="achievement-icon">🪐</span>
-          <div class="achievement-text">
-            <strong>Reconstruction à ×40 de résolution des images VIMS de Titan</strong>, révélant un réseau de dunes équatoriales à structure fractale et une série de lacs polaires à géométrie hexagonale non détectés précédemment.
-          </div>
-        </div>
-        <div class="achievement-item">
-          <span class="achievement-icon">🌊</span>
-          <div class="achievement-text">
-            <strong>Détection dans les données magnétométriques de Cassini d'une anomalie périodique non expliquée autour d'Encelade</strong>, compatible avec un jet de matière organique à haute altitude depuis l'océan sub-glaciaire — ouvrant une nouvelle piste pour la chimie prébiotique.
-          </div>
-        </div>
-        <div class="achievement-item">
-          <span class="achievement-icon">💾</span>
-          <div class="achievement-text">
-            <strong>Publication en open access de l'intégralité des données retraitées</strong> — 2,1 To d'images super-résolues, spectres reconstruits et cubes de données — devenus la base de référence pour la communauté Saturne mondiale.
-          </div>
-        </div>
-      </div>
-
-      <div class="inner-divider"></div>
-
-      <div style="margin-bottom:16px; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(170,179,214,.3);">Axes scientifiques traités</div>
-      <div class="prog-axes-wrap">
-        <div class="prog-axe">
-          <span class="axe-icon">🔭</span>
-          <div>
-            <div class="axe-title">Planétologie saturnienne</div>
-            <div class="axe-desc">Structure fine des anneaux de Saturne, dynamique des propellers, atmosphère de Titan et activité géologique d'Encelade — réinterprétés à la lumière des données retraitées.</div>
-          </div>
-        </div>
-        <div class="prog-axe">
-          <span class="axe-icon">🖼</span>
-          <div>
-            <div class="axe-title">Super-résolution par deep learning</div>
-            <div class="axe-desc">Développement de réseaux convolutifs entraînés spécifiquement sur les artefacts des capteurs VIMS et ISS de Cassini pour une reconstruction fidèle des détails sub-pixel.</div>
-          </div>
-        </div>
-        <div class="prog-axe">
-          <span class="axe-icon">📊</span>
-          <div>
-            <div class="axe-title">Traitement massif d'archives</div>
-            <div class="axe-desc">Pipeline de traitement automatisé des 635 Go bruts — calibration, nettoyage des artefacts, extraction de features et indexation sémantique pour la recherche documentaire.</div>
-          </div>
-        </div>
-        <div class="prog-axe">
-          <span class="axe-icon">🧪</span>
-          <div>
-            <div class="axe-title">Chimie prébiotique d'Encelade</div>
-            <div class="axe-desc">Réanalyse des données INMS (spectrométrie de masse neutre et ionique) des survols d'Encelade pour contraindre la composition de l'océan interne et son potentiel astrobiologique.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="prog-partners">
-        <span class="partner-chip">NASA — JPL</span>
-        <span class="partner-chip">ESA</span>
-        <span class="partner-chip">Caltech</span>
-        <span class="partner-chip">SETI Institute</span>
-        <span class="partner-chip">Laboratoire d'Astrophysique de Marseille</span>
-        <span class="partner-chip">University of Arizona</span>
-      </div>
-
-      <div class="prog-pubs">
-        <div class="pubs-label">Publications sélectives</div>
-        <a href="publications-scientifiques.html" class="pub-item">
-          <span class="pub-chip">2020</span>
-          <span class="pub-text">Nouvelles structures de type propeller dans les anneaux B de Saturne révélées par super-résolution VIMS — découverte IFRAS-1 et IFRAS-2</span>
-          <span class="pub-arrow">→</span>
-        </a>
-        <a href="publications-scientifiques.html" class="pub-item">
-          <span class="pub-chip">2020</span>
-          <span class="pub-text">Reconstruction haute résolution de la surface de Titan depuis les archives VIMS par réseau convolutif multi-échelle</span>
-          <span class="pub-arrow">→</span>
-        </a>
-        <a href="publications-scientifiques.html" class="pub-item">
-          <span class="pub-chip">2021</span>
-          <span class="pub-text">Anomalie magnétique périodique autour d'Encelade dans les archives Cassini — réanalyse INMS et hypothèse d'un panache organique à haute altitude</span>
-          <span class="pub-arrow">→</span>
-        </a>
-      </div>
-
-      <div class="archive-access-note">
-        📁 L'ensemble des données retraitées CASSINI-R (2,1 To) est disponible en open access sur le portail NASA PDS et le dépôt IFRAS. Les modèles de super-résolution sont publiés en open source sur GitHub. <a href="mailto:archives@ifras.fr">Contacter les archives →</a>
-      </div>
-    </section>
-
-  </main>
+  </div>
 </div>
 
-<footer>
-  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale ·
-  Programmes archivés
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© IFRAS, Institut Français de Recherche Aéronautique et Spatiale</span>
+    <span><i class="ph-light ph-lock-simple" aria-hidden="true"></i> Accès contrôlé, données sensibles</span>
+  </div>
 </footer>
 
 <script>
-const sections = document.querySelectorAll('.intro-section, .prog-section');
-const navLinks  = document.querySelectorAll('#sidebar-nav a');
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)');
 
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const id = entry.target.id;
-      navLinks.forEach(link => {
-        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
-      });
-    }
+  /* ---------- Menu mobile ---------- */
+  const toggle = document.querySelector('.menu-toggle');
+  const panel = document.getElementById('mobile-panel');
+  const icon = toggle.querySelector('i');
+  const setMenu = (open) => {
+    panel.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    icon.className = open ? 'ph-light ph-x' : 'ph-light ph-list';
+  };
+  toggle.addEventListener('click', () => setMenu(!panel.classList.contains('is-open')));
+  document.addEventListener('click', (e) => {
+    if (panel.classList.contains('is-open') && !panel.contains(e.target) && !toggle.contains(e.target)) setMenu(false);
   });
-}, {
-  rootMargin: '-148px 0px -60% 0px',
-  threshold: 0
-});
 
-sections.forEach(s => observer.observe(s));
+  /* ---------- Menus déroulants : intention de survol + passage instantané ---------- */
+  const subnav = document.getElementById('subnav');
+  const items = [...subnav.querySelectorAll('.subnav-item')];
+  let openItem = null, openTimer = 0, closeTimer = 0;
+
+  const openMenu = (item) => {
+    items.forEach((i) => {
+      const on = i === item;
+      i.classList.toggle('is-open', on);
+      i.querySelector('.subnav-trigger').setAttribute('aria-expanded', String(on));
+    });
+    openItem = item;
+  };
+  const closeMenus = () => {
+    subnav.classList.remove('is-instant');
+    items.forEach((i) => {
+      i.classList.remove('is-open');
+      i.querySelector('.subnav-trigger').setAttribute('aria-expanded', 'false');
+    });
+    openItem = null;
+  };
+  const resetMenus = () => {
+    clearTimeout(openTimer);
+    clearTimeout(closeTimer);
+    closeMenus();
+    if (subnav.contains(document.activeElement)) document.activeElement.blur();
+  };
+
+  items.forEach((item) => {
+    item.addEventListener('pointerenter', (e) => {
+      if (e.pointerType !== 'mouse' || !canHover.matches) return;
+      clearTimeout(closeTimer);
+      clearTimeout(openTimer);
+      if (openItem && openItem !== item) {
+        subnav.classList.add('is-instant');
+        openMenu(item);
+      } else if (!openItem) {
+        openTimer = setTimeout(() => openMenu(item), 90);
+      }
+    });
+    item.addEventListener('pointerleave', (e) => {
+      if (e.pointerType !== 'mouse') return;
+      clearTimeout(openTimer);
+      closeTimer = setTimeout(closeMenus, 180);
+    });
+  });
+
+  /* Retour arrière : on referme tout (la page est restaurée telle qu'on l'a quittée) */
+  window.addEventListener('pageshow', resetMenus);
+  window.addEventListener('pagehide', resetMenus);
+  subnav.addEventListener('click', (e) => { if (e.target.closest('a')) resetMenus(); });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    setMenu(false);
+    resetMenus();
+  });
+
+  /* ---------- Apparition au défilement ---------- */
+  const revealIO = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      revealIO.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach((el) => revealIO.observe(el));
+
+  /* ---------- Compteurs ---------- */
+  if (!reduceMotion) {
+    const fmt = new Intl.NumberFormat('fr-FR');
+    const countIO = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = Number(el.dataset.count);
+        const prefix = el.dataset.prefix || '';
+        const start = performance.now();
+        const tick = (now) => {
+          const t = Math.min((now - start) / 1000, 1);
+          el.textContent = prefix + fmt.format(Math.round(target * (1 - Math.pow(1 - t, 4))));
+          if (t < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+        countIO.unobserve(el);
+      });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('[data-count]').forEach((el) => countIO.observe(el));
+  }
+
+  document.querySelectorAll('.prog').forEach((el) => revealIO.observe(el));
+
+  /* ---------- Sommaire : programme en cours + repère glissant (couleur du programme) ---------- */
+  const tocLinks = [...document.querySelectorAll('#toc a')];
+  const tocMobileLinks = [...document.querySelectorAll('#toc-mobile a')];
+  const tocMobile = document.getElementById('toc-mobile');
+  const indicator = document.querySelector('.toc-indicator');
+  const setActive = (id) => {
+    tocLinks.forEach((a) => {
+      const on = a.dataset.target === id;
+      a.setAttribute('aria-current', String(on));
+      if (on) {
+        indicator.style.setProperty('--y', `${a.offsetTop}px`);
+        indicator.style.setProperty('--h', `${a.offsetHeight}px`);
+        indicator.style.setProperty('--c', a.style.getPropertyValue('--c'));
+      }
+    });
+    tocMobileLinks.forEach((a) => {
+      const on = a.dataset.target === id;
+      a.setAttribute('aria-current', String(on));
+      if (on && tocMobile.offsetParent !== null) {
+        tocMobile.scrollTo({ left: a.offsetLeft - 20, behavior: reduceMotion ? 'auto' : 'smooth' });
+      }
+    });
+  };
+  const tocSpy = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => { if (entry.isIntersecting) setActive(entry.target.id); });
+  }, { rootMargin: '-35% 0px -60% 0px' });
+  document.querySelectorAll('.spy').forEach((s) => tocSpy.observe(s));
+  setActive('apollox');
+  window.addEventListener('resize', () => setActive(document.querySelector('#toc a[aria-current="true"]')?.dataset.target || 'apollox'));
+
+  /* ---------- Frise balayée : un faisceau relit les archives, les publications s'allument ---------- */
+  {
+    const wrap = document.getElementById('orbit-wrap');
+    const canvas = document.getElementById('orbit');
+    const ctx = canvas.getContext('2d');
+    const nodes = [...wrap.querySelectorAll('.orbit-node')];
+    const Y0 = 2013, Y1 = 2024;
+    const SPANS = [[2014, 2022, 0.30, 70], [2016, 2023, 0.52, 46], [2019, 2021, 0.74, 26]];   /* début, fin, couloir, nb de points */
+    const lanes = nodes.map((node, i) => {
+      const [a, b, ly, n] = SPANS[i];
+      return {
+        node, a, b, ly,
+        color: getComputedStyle(node).getPropertyValue('--c').trim(),
+        dots: Array.from({ length: n }, () => ({
+          t: Math.random(),
+          dy: (Math.random() + Math.random() + Math.random() - 1.5) * 16,
+          r: Math.random() * 1.4 + 0.8
+        }))
+      };
+    });
+
+    let w = 0, h = 0, x0 = 0, x1 = 0, dpr = 1, running = false, raf = 0, last = 0, time = 0, hovered = -1;
+    const SWEEP = 7, PAUSE = 1.6;
+
+    const size = () => {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = wrap.clientWidth; h = wrap.clientHeight;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      x0 = w * 0.07; x1 = w * 0.93;
+    };
+    const X = (year) => x0 + ((year - Y0) / (Y1 - Y0)) * (x1 - x0);
+
+    const draw = () => {
+      ctx.clearRect(0, 0, w, h);
+      const cycle = time % (SWEEP + PAUSE);
+      const scan = reduceMotion ? x1 : x0 + Math.min(cycle / SWEEP, 1) * (x1 - x0);
+      const fadeOut = cycle > SWEEP ? 1 - (cycle - SWEEP) / PAUSE : 1;
+
+      /* graduations annuelles */
+      const axisY = h * 0.9;
+      ctx.font = '500 11px "DM Sans", system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      for (let y = Y0; y <= Y1; y++) {
+        const x = X(y);
+        ctx.strokeStyle = 'rgba(170,179,214,.05)';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(x, h * 0.12); ctx.lineTo(x, axisY); ctx.stroke();
+        if ((y - 2014) % 3 === 0) {
+          ctx.fillStyle = x <= scan ? 'rgba(170,179,214,.7)' : 'rgba(136,145,184,.4)';
+          ctx.fillText(String(y), x, axisY + 18);
+        }
+      }
+      ctx.strokeStyle = 'rgba(170,179,214,.18)';
+      ctx.beginPath(); ctx.moveTo(x0, axisY); ctx.lineTo(x1, axisY); ctx.stroke();
+
+      lanes.forEach((l, i) => {
+        const ya = h * l.ly, xa = X(l.a), xb = X(l.b + 1);
+        const dim = hovered !== -1 && hovered !== i;
+        const reached = Math.max(0, Math.min(1, (scan - xa) / (xb - xa)));
+
+        /* couloir : fond discret puis portion déjà relue */
+        ctx.lineCap = 'round';
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'rgba(255,255,255,.09)';
+        ctx.beginPath(); ctx.moveTo(xa, ya); ctx.lineTo(xb, ya); ctx.stroke();
+        if (reached > 0) {
+          const g = ctx.createLinearGradient(xa, 0, xb, 0);
+          g.addColorStop(0, 'rgba(156,163,175,.25)');
+          g.addColorStop(1, l.color);
+          ctx.strokeStyle = g;
+          ctx.globalAlpha = (dim ? 0.25 : hovered === i ? 1 : 0.7) * fadeOut + 0.1;
+          ctx.beginPath(); ctx.moveTo(xa, ya); ctx.lineTo(xa + (xb - xa) * reached, ya); ctx.stroke();
+          ctx.globalAlpha = 1;
+        }
+
+        /* publications : chaque point s'allume au passage du faisceau puis reste en veille */
+        l.dots.forEach((d) => {
+          const x = xa + d.t * (xb - xa), y = ya + d.dy;
+          let a = 0.2;
+          if (x <= scan) a = 0.28 + 0.72 * Math.exp(-(scan - x) / 70) * fadeOut;
+          if (dim) a *= 0.35;
+          ctx.globalAlpha = a;
+          ctx.fillStyle = x <= scan ? l.color : '#aab3d6';
+          ctx.beginPath(); ctx.arc(x, y, d.r, 0, Math.PI * 2); ctx.fill();
+        });
+        ctx.globalAlpha = 1;
+
+        /* étiquette cliquable au début du couloir */
+        const nh = l.node.offsetHeight;
+        l.node.style.transform = `translate(${(xa - 6).toFixed(1)}px, ${(ya - nh - 22).toFixed(1)}px)`;
+        l.node.style.opacity = dim ? '.45' : '1';
+      });
+
+      /* faisceau */
+      if (!reduceMotion) {
+        ctx.globalAlpha = fadeOut;
+        const beam = ctx.createLinearGradient(scan - 80, 0, scan, 0);
+        beam.addColorStop(0, 'rgba(79,107,237,0)');
+        beam.addColorStop(1, 'rgba(143,162,255,.14)');
+        ctx.fillStyle = beam;
+        ctx.fillRect(scan - 80, 0, 80, axisY);
+        const line = ctx.createLinearGradient(0, h * 0.1, 0, axisY);
+        line.addColorStop(0, 'rgba(199,210,254,0)');
+        line.addColorStop(0.5, 'rgba(199,210,254,.8)');
+        line.addColorStop(1, 'rgba(199,210,254,.2)');
+        ctx.strokeStyle = line; ctx.lineWidth = 1.2;
+        ctx.beginPath(); ctx.moveTo(scan, h * 0.1); ctx.lineTo(scan, axisY); ctx.stroke();
+        ctx.fillStyle = '#c7d2fe';
+        ctx.beginPath(); ctx.arc(scan, axisY, 3, 0, Math.PI * 2); ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+    };
+
+    const loop = (t) => {
+      const dt = Math.min(64, t - (last || t)); last = t;
+      time += dt / 1000;
+      draw();
+      if (running) raf = requestAnimationFrame(loop);
+    };
+    const start = () => { if (running || reduceMotion) return; running = true; last = 0; raf = requestAnimationFrame(loop); };
+    const stop = () => { running = false; cancelAnimationFrame(raf); };
+
+    nodes.forEach((n, i) => {
+      const on = () => { hovered = i; if (!running) draw(); };
+      const off = () => { hovered = -1; if (!running) draw(); };
+      n.addEventListener('pointerenter', on); n.addEventListener('pointerleave', off);
+      n.addEventListener('focus', on); n.addEventListener('blur', off);
+    });
+
+    size(); draw();
+    let visible = true;
+    new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      visible && !document.hidden ? start() : stop();
+    }).observe(wrap);
+    document.addEventListener('visibilitychange', () => { document.hidden ? stop() : visible && start(); });
+    let rt = 0;
+    window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { size(); draw(); }, 150); });
+  }
+
+  {
+  /* ---------- Champ d'étoiles (fond du hero) ---------- */
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  const hero = document.querySelector('.hero');
+  let stars = [], w = 0, h = 0, dpr = 1, running = false, raf = 0, last = 0;
+
+  const build = () => {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = hero.clientWidth; h = hero.clientHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const count = Math.round((w * h) / 9000);
+    stars = Array.from({ length: count }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: Math.random() * 1.1 + 0.2,
+      depth: Math.random() * 0.8 + 0.2,
+      phase: Math.random() * Math.PI * 2,
+      speed: Math.random() * 0.6 + 0.4
+    }));
+  };
+
+  const draw = (t) => {
+    ctx.clearRect(0, 0, w, h);
+    for (const s of stars) {
+      const tw = reduceMotion ? 0.8 : 0.55 + 0.45 * Math.sin(t / 1000 * s.speed + s.phase);
+      ctx.globalAlpha = tw * (0.35 + s.depth * 0.6);
+      ctx.fillStyle = s.depth > 0.85 ? '#c7d2fe' : '#ffffff';
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r * (0.6 + s.depth * 0.6), 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  };
+
+  const loop = (t) => {
+    const dt = Math.min(64, t - (last || t)); last = t;
+    for (const s of stars) {
+      s.x -= s.depth * 0.012 * dt;           /* dérive lente : les étoiles proches vont plus vite */
+      if (s.x < -2) { s.x = w + 2; s.y = Math.random() * h; }
+    }
+    draw(t);
+    if (running) raf = requestAnimationFrame(loop);
+  };
+
+  const start = () => { if (running || reduceMotion) return; running = true; last = 0; raf = requestAnimationFrame(loop); };
+  const stop = () => { running = false; cancelAnimationFrame(raf); };
+
+  build();
+  draw(0);
+  canvas.classList.add('is-ready');
+
+  /* on n'anime que si le hero est visible et l'onglet actif */
+  let heroVisible = true;
+  new IntersectionObserver(([entry]) => {
+    heroVisible = entry.isIntersecting;
+    heroVisible && !document.hidden ? start() : stop();
+  }).observe(hero);
+  document.addEventListener('visibilitychange', () => {
+    document.hidden ? stop() : heroVisible && start();
+  });
+  let resizeTimer = 0;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => { build(); draw(performance.now()); }, 150);
+  });
+  }
+})();
 </script>
 
 </body>
