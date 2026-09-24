@@ -40,6 +40,8 @@
   --list-w:     320px;
   --header-h:   84px;
   --subnav-h:   48px;
+  --footer-h:   26px;   /* bandeau bas */
+  --right-gap:  14px;   /* marge droite */
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -264,9 +266,22 @@ input[type=range].sat-range::-webkit-slider-thumb {
 .app-layout {
   position: fixed;
   top: calc(var(--header-h) + var(--subnav-h));
-  left: 0; right: 0;
-  bottom: 0;
+  left: 0;
+  right: var(--right-gap);          /* marge droite */
+  bottom: var(--footer-h);          /* laisse la place au bandeau bas */
   display: flex;
+  border-right: 1px solid var(--border-sub);
+  border-bottom: 1px solid var(--border-sub);
+  border-bottom-right-radius: 10px;
+  overflow: hidden;
+}
+
+/* ===== BANDEAU BAS ===== */
+.app-footer {
+  position: fixed; left: 0; right: 0; bottom: 0;
+  height: var(--footer-h);
+  background: var(--bg-dark);
+  z-index: 800;
 }
 
 /* ===== SIDEBAR ===== */
@@ -507,13 +522,15 @@ input[type=range].sat-range::-webkit-slider-thumb {
 /* ===== HEX INPUT ===== */
 .hex-wrap {
   display: flex; align-items: center; gap: 8px; margin-top: 6px; margin-bottom: 4px;
+  width: 100%;
 }
 .hex-preview {
   width: 24px; height: 24px; border-radius: 5px; flex-shrink: 0;
   border: 1px solid var(--border); transition: background .15s;
 }
 .hex-input {
-  flex: 1; background: var(--bg-dark); border: 1px solid var(--border-sub);
+  flex: 1 1 auto; min-width: 0; width: 100%;   /* autorise le champ à rétrécir */
+  background: var(--bg-dark); border: 1px solid var(--border-sub);
   border-radius: 6px; padding: 5px 8px; color: var(--text-main);
   font-size: 12px; font-family: "DM Sans", sans-serif; outline: none;
   transition: border-color .2s; letter-spacing: .06em;
@@ -521,6 +538,7 @@ input[type=range].sat-range::-webkit-slider-thumb {
 .hex-input:focus { border-color: var(--accent); }
 .hex-input.invalid { border-color: rgba(251,113,133,.5); color: #fca5a5; }
 .hex-apply-btn {
+  flex-shrink: 0;                              /* le bouton garde sa taille */
   padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border);
   background: var(--bg-hover); color: var(--text-soft); font-size: 11px;
   cursor: pointer; font-family: "DM Sans", sans-serif; transition: background .15s, color .15s;
@@ -785,6 +803,9 @@ input[type=range].sat-range::-webkit-slider-thumb {
   </div>
 
 </div>
+
+<!-- ===== BANDEAU BAS ===== -->
+<div class="app-footer"></div>
 
 <!-- ===== TOAST ===== -->
 <div class="toast" id="toast">⚠ Ce compte est temporairement suspendu — action impossible</div>
