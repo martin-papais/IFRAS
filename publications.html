@@ -2,462 +2,599 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
-<title>Publications — IFRAS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<title>Publications | IFRAS</title>
+<meta name="description" content="Articles scientifiques, revues et rapports de l'IFRAS, conférences et séminaires à venir.">
+<meta name="theme-color" content="#050b1e">
+<link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
 
 <style>
-
+/* =========================================================
+   TOKENS (identiques aux autres pages)
+   ========================================================= */
 :root {
   --bg-main: #050b1e;
   --bg-dark: #020617;
   --bg-light: #070f2b;
-  --border: #1b2555;
+  --bg-raise: #0a1436;
   --accent: #4f6bed;
+  --accent-hover: #3d5adb;
+  --accent-soft: rgba(79,107,237,.14);
+  --accent-line: rgba(79,107,237,.38);
   --text-main: #e6e6e6;
+  --text-strong: #f5f7ff;
   --text-soft: #aab3d6;
+  --text-mute: #8891b8;
+  --border: #1b2555;
+
+  /* Une couleur par type de contenu */
+  --t-sci: #60a5fa;
+  --t-ifras: #34d399;
+  --t-event: #f97316;
+  /* Types de publications IFRAS */
+  --t-lettre: #60a5fa;
+  --t-rapport: #34d399;
+  --t-hs: #f97316;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --header-h: 68px;
+  --subnav-h: 48px;
 }
 
-* { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 20px); }
 
 body {
   margin: 0;
-  font-family: "DM Sans", "Segoe UI", sans-serif;
+  font-family: "DM Sans", "Segoe UI", system-ui, sans-serif;
   background: var(--bg-main);
   color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* ===== HEADER ===== */
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+[hidden] { display: none !important; }
 
-header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-  background: rgba(5,11,30,.85);
-  backdrop-filter: blur(10px);
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.skip-link {
+  position: absolute; left: 16px; top: -48px;
+  padding: 10px 16px;
+  background: var(--accent); color: #fff;
+  border-radius: var(--radius-sm);
+  z-index: 3000; text-decoration: none;
+  transition: top 160ms var(--ease-out);
+}
+.skip-link:focus { top: 12px; }
+
+.container { max-width: 1300px; margin: 0 auto; padding: 0 30px; }
+
+/* =========================================================
+   BOUTONS
+   ========================================================= */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 22px;
+  border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 500;
+  text-decoration: none; white-space: nowrap;
+  border: 1px solid transparent;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.btn:active { transform: scale(0.97); }
+.btn i { font-size: 16px; transition: transform 200ms var(--ease-out); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-ghost { border-color: var(--accent-line); color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-ghost:hover { background: var(--accent-soft); border-color: var(--accent); }
+  .btn:hover i { transform: translateX(3px); }
+}
+
+.text-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--text-soft);
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.text-link i { transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .text-link:hover { color: #fff; }
+  .text-link:hover i { transform: translateX(3px); }
+}
+
+/* =========================================================
+   HEADER (opaque)
+   ========================================================= */
+.site-header {
+  position: fixed; inset: 0 0 auto 0;
+  z-index: 2000;
+  height: var(--header-h);
+  background: rgba(5,11,30,.88);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
   border-bottom: 1px solid var(--border);
 }
+.header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.header-left { display: flex; align-items: center; gap: 44px; }
+.logo-link { display: flex; align-items: center; }
+.logo-link img { height: 44px; width: auto; }
 
-.header-inner {
-  max-width: 1300px;
-  margin: auto;
-  padding: 12px 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-}
-
-.logo-link img { height: 60px; cursor: pointer; }
-
-.main-nav {
-  list-style: none;
-  display: flex;
-  gap: 32px;
-  margin: 0; padding: 0;
-}
-
+.main-nav { list-style: none; display: flex; gap: 6px; margin: 0; padding: 0; }
 .main-nav a {
+  position: relative; display: block;
+  padding: 8px 12px;
   text-decoration: none;
   color: var(--text-soft);
-  font-size: 14px;
-  letter-spacing: .05em;
-}
-
-.main-nav a:hover { color: white; }
-
-.header-right .login-btn {
-  padding: 8px 18px;
+  font-size: 14px; letter-spacing: .02em;
   border-radius: 6px;
-  border: 1px solid var(--accent);
-  color: white;
-  text-decoration: none;
-  font-size: 13px;
+  transition: color 160ms ease;
+}
+.main-nav a::after {
+  content: ""; position: absolute;
+  left: 12px; right: 12px; bottom: 2px; height: 1px;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 200ms var(--ease-out);
+}
+.main-nav a[aria-current="page"] { color: #fff; }
+.main-nav a[aria-current="page"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .main-nav a:hover { color: #fff; }
+  .main-nav a:hover::after { transform: scaleX(1); }
 }
 
-.header-right .login-btn:hover { background: var(--accent); }
+.header-right { display: flex; align-items: center; gap: 10px; }
+.header-right .btn { padding: 9px 18px; font-size: 13px; }
 
-/* ===== SOUS BANDEAU ===== */
+.menu-toggle {
+  display: none;
+  width: 42px; height: 42px;
+  align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: #fff; font-size: 20px; cursor: pointer;
+  transition: transform 160ms var(--ease-out);
+}
+.menu-toggle:active { transform: scale(0.95); }
 
-.sub-nav {
-  margin-top: 84px;
-  background: var(--bg-light);
+.mobile-panel {
+  position: fixed; top: var(--header-h); left: 12px; right: 12px;
+  z-index: 1999;
+  padding: 10px;
+  background: rgba(7,15,43,.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(2,6,23,.6);
+  transform-origin: top right;
+  opacity: 0; transform: scale(0.96) translateY(-6px);
+  pointer-events: none; visibility: hidden;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s linear 220ms;
+}
+.mobile-panel.is-open {
+  opacity: 1; transform: none; pointer-events: auto; visibility: visible;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s;
+}
+.mobile-panel ul { list-style: none; margin: 0; padding: 0; }
+.mobile-panel a {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px; color: var(--text-main);
+  text-decoration: none; font-size: 16px; border-radius: 10px;
+}
+.mobile-panel a[aria-current="page"] { background: var(--accent-soft); color: #fff; }
+.mobile-panel .btn { width: 100%; justify-content: center; margin-top: 8px; }
+
+/* =========================================================
+   SOUS-NAVIGATION (ancres + section visible)
+   ========================================================= */
+.subnav {
+  position: sticky;
+  top: var(--header-h);
+  margin-top: var(--header-h);
+  z-index: 1500;
+  height: var(--subnav-h);
+  background: rgba(8,18,53,.94);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
 }
-
-.sub-nav ul {
+.subnav-list {
+  height: 100%;
+  list-style: none; margin: 0 auto; padding: 0 30px;
   max-width: 1300px;
-  margin: 0 auto;
-  padding: 0 30px;
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
+  display: flex; align-items: stretch; justify-content: space-between;
 }
-
-.sub-nav li { padding: 14px 0; }
-
-.sub-nav a {
+.subnav-list li { display: flex; }
+.subnav-link {
+  position: relative;
+  display: flex; align-items: center; gap: 9px;
+  padding: 0 14px;
   color: var(--text-soft);
   text-decoration: none;
-  font-size: 14px;
-  letter-spacing: .06em;
+  font-size: 14px; font-weight: 500;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.subnav-link i { font-size: 17px; color: var(--c); }
+.subnav-link::after {
+  content: ""; position: absolute;
+  left: 14px; right: 14px; bottom: -1px; height: 2px;
+  background: var(--c);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+.subnav-link[aria-current="true"] { color: #fff; }
+.subnav-link[aria-current="true"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .subnav-link:hover { color: #fff; }
 }
 
-.sub-nav a:hover { color: white; }
-
-/* ===== HERO ===== */
-
+/* =========================================================
+   HERO
+   ========================================================= */
 .hero {
   position: relative;
-  padding: 90px 30px 80px;
+  padding: 80px 0 0;
   overflow: hidden;
+  isolation: isolate;
 }
-
+/* réseau de connaissances animé (canvas) */
+.network {
+  position: absolute; inset: 0; z-index: -2;
+  width: 100%; height: 100%;
+  opacity: 0;
+  transition: opacity 1200ms ease;
+}
+.network.is-ready { opacity: 1; }
 .hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
+  content: ""; position: absolute; inset: 0; z-index: -1;
   background:
-    radial-gradient(ellipse 65% 55% at 50% 40%, rgba(79,107,237,0.11) 0%, transparent 65%),
-    radial-gradient(ellipse 35% 45% at 90% 75%, rgba(52,211,153,0.07) 0%, transparent 60%);
+    radial-gradient(ellipse 55% 60% at 25% 40%, rgba(5,11,30,.85) 0%, transparent 70%),
+    linear-gradient(180deg, transparent 70%, var(--bg-main) 100%);
   pointer-events: none;
 }
 
-.hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(79,107,237,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(79,107,237,0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  pointer-events: none;
-}
-
-.hero-inner {
-  max-width: 1300px;
-  margin: auto;
-  position: relative;
-  z-index: 1;
+.hero-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0 80px;
+  gap: 70px;
   align-items: center;
 }
 
-.hero-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 11px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 28px;
-  font-weight: 500;
+.kicker {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--accent); font-weight: 500;
+  margin-bottom: 22px;
 }
-
-.hero-eyebrow::before {
-  content: '';
-  display: block;
-  width: 28px; height: 1px;
-  background: var(--accent);
-}
+.kicker::before { content: ""; width: 24px; height: 1px; background: currentColor; }
 
 .hero h1 {
   font-family: "Syne", sans-serif;
-  font-size: clamp(52px, 7.5vw, 100px);
-  font-weight: 800;
-  line-height: 0.88;
+  font-size: clamp(44px, 6.2vw, 84px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--text-strong);
   margin: 0 0 28px;
-  letter-spacing: -0.05em;
-  color: #fff;
 }
-
-.hero h1 span {
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(79,107,237,0.6);
+.hero h1 .line { display: block; overflow: hidden; padding-bottom: .14em; margin-bottom: -.14em; }
+.hero h1 .line > span {
+  display: block;
+  transform: translateY(105%);
+  animation: lineUp 900ms var(--ease-out) forwards;
+  animation-delay: calc(120ms + var(--i, 0) * 110ms);
 }
+.hero h1 .line--soft { color: #8fa2ff; font-weight: 600; }
+@keyframes lineUp { to { transform: none; } }
 
 .hero-desc {
+  max-width: 46ch;
   color: var(--text-soft);
-  font-size: 16px;
-  line-height: 1.75;
-  margin: 0 0 36px;
+  font-size: 17px; line-height: 1.7;
+  margin: 0;
   font-weight: 300;
 }
 
-.hero-stats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+.hero-in {
+  opacity: 0;
+  animation: heroIn 700ms var(--ease-out) forwards;
+  animation-delay: calc(100ms + var(--i, 0) * 80ms);
+}
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(14px); filter: blur(4px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
 }
 
-.hero-stat {
-  background: rgba(79,107,237,0.06);
-  border: 1px solid rgba(79,107,237,0.15);
+/* ----- Panneau de recherche ----- */
+.finder-panel {
+  position: relative;
+  padding: 26px;
+  border-radius: 20px;
+  background: rgba(7,15,43,.72);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  box-shadow: 0 30px 80px rgba(2,6,23,.55), inset 0 1px 0 rgba(255,255,255,.04);
+}
+.finder-panel h2 {
+  font-family: "Syne", sans-serif;
+  font-size: 18px; font-weight: 700; color: #fff;
+  margin: 0 0 14px;
+}
+
+.finder-field { position: relative; }
+.finder-field > i {
+  position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+  font-size: 19px; color: var(--text-mute); pointer-events: none;
+}
+.finder-field input {
+  width: 100%; height: 50px;
+  padding: 0 44px;
+  background: rgba(2,6,23,.6);
+  border: 1px solid var(--border);
   border-radius: 10px;
-  padding: 16px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  color: #fff; font: inherit; font-size: 15px;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+.finder-field input::placeholder { color: var(--text-mute); }
+.finder-field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(79,107,237,.2); }
+.finder-field input::-webkit-search-cancel-button { display: none; }
+.finder-clear {
+  position: absolute; right: 9px; top: 50%; transform: translateY(-50%);
+  width: 32px; height: 32px;
+  display: grid; place-items: center;
+  border: 0; border-radius: 8px;
+  background: transparent; color: var(--text-soft);
+  font-size: 16px; cursor: pointer;
+  opacity: 0; pointer-events: none;
+  transition: opacity 120ms ease;
+}
+.finder-panel.has-value .finder-clear { opacity: 1; pointer-events: auto; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; }
+.chip {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-soft);
+  font: inherit; font-size: 13px;
+  cursor: pointer;
+  transition: color 120ms ease, border-color 120ms ease, background-color 120ms ease, transform 160ms var(--ease-out);
+}
+.chip:active { transform: scale(0.96); }
+.chip[aria-pressed="true"] { color: #fff; border-color: var(--accent); background: var(--accent-soft); }
+@media (hover: hover) and (pointer: fine) {
+  .chip:hover { color: #fff; border-color: var(--accent-line); }
 }
 
+.finder-result {
+  min-height: 22px;
+  margin-top: 14px;
+  font-size: 13.5px; color: var(--text-soft);
+}
+.finder-result a { color: #9fb0ff; text-decoration: none; }
+.finder-result a:hover { text-decoration: underline; }
+
+.latest {
+  margin-top: 18px; padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+.latest-label { font-size: 12.5px; color: var(--text-mute); margin-bottom: 10px; }
+.latest ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.latest a {
+  display: grid; grid-template-columns: 1fr auto; gap: 4px 16px;
+  padding: 12px 14px;
+  margin: 0 -14px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background-color 160ms ease;
+}
+.latest-meta { font-size: 12.5px; color: var(--c); font-weight: 500; }
+.latest-title { grid-column: 1; font-size: 14.5px; color: #fff; line-height: 1.4; }
+.latest a i { grid-column: 2; grid-row: 1 / span 2; align-self: center; color: var(--text-mute); font-size: 16px; transition: transform 200ms var(--ease-out), color 160ms ease; }
+@media (hover: hover) and (pointer: fine) {
+  .latest a:hover { background: rgba(255,255,255,.035); }
+  .latest a:hover i { transform: translate(2px, -2px); color: #fff; }
+}
+
+/* ----- Chiffres ----- */
+.hero-stats {
+  margin-top: 70px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.hero-stat { padding: 28px 24px; display: flex; flex-direction: column; gap: 6px; }
+.hero-stat + .hero-stat { border-left: 1px solid var(--border); }
 .hero-stat-value {
   font-family: "Syne", sans-serif;
-  font-size: 28px;
-  font-weight: 800;
-  color: white;
-  letter-spacing: -0.03em;
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 800; color: #fff;
+  letter-spacing: -0.03em; line-height: 1;
+  font-variant-numeric: tabular-nums;
 }
+.hero-stat-label { font-size: 13px; color: var(--text-soft); }
 
-.hero-stat-label {
-  font-size: 11px;
-  color: var(--text-soft);
-  letter-spacing: .1em;
-  text-transform: uppercase;
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+.pub-section { padding: 100px 0 0; }
+
+.section-head {
+  display: flex; align-items: end; justify-content: space-between;
+  gap: 30px; margin-bottom: 36px; flex-wrap: wrap;
 }
-
-/* Colonne droite hero : bento des dernières publis */
-.hero-right {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
-  gap: 12px;
+.section-type {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 500;
+  color: var(--c);
+  margin-bottom: 12px;
 }
-
-.hero-pub-tile {
-  background: var(--bg-light);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  animation: fadeUp .5s ease both;
-  text-decoration: none;
-  color: inherit;
-  transition: border-color .3s, transform .3s;
-}
-
-.hero-pub-tile:hover {
-  border-color: rgba(79,107,237,.3);
-  transform: translateY(-3px);
-}
-
-.hero-pub-tile--wide {
-  grid-column: 1 / 3;
-}
-
-.tile-date {
-  font-size: 10px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 500;
-}
-
-.tile-title {
+.section-type i { font-size: 17px; }
+.section-title {
   font-family: "Syne", sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: white;
-  line-height: 1.3;
+  font-size: clamp(28px, 3.2vw, 42px);
+  font-weight: 700; color: #fff;
+  margin: 0; letter-spacing: -0.02em; line-height: 1.1;
+}
+.section-sub { margin: 12px 0 0; color: var(--text-soft); font-size: 15px; font-weight: 300; max-width: 56ch; line-height: 1.6; }
+
+.section-empty {
+  padding: 26px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  color: var(--text-soft); font-size: 14.5px; text-align: center;
 }
 
-.tile-excerpt {
-  font-size: 12px;
-  color: var(--text-soft);
-  line-height: 1.55;
-  font-weight: 300;
-}
-
-.tile-tag {
-  margin-top: auto;
-  font-size: 11px;
-  padding: 3px 9px;
-  border-radius: 20px;
-  background: rgba(79,107,237,.08);
-  border: 1px solid rgba(79,107,237,.18);
-  color: var(--text-soft);
-  width: fit-content;
-}
-
-/* ===== SECTIONS ===== */
-
-.pub-section {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 70px 30px;
-}
-
-.pub-section + .pub-section { padding-top: 10px; }
-
-.pub-section-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin-bottom: 40px;
-  gap: 30px;
-}
-
-.section-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 11px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  font-weight: 500;
-  margin-bottom: 10px;
-}
-
-.section-eyebrow::before {
-  content: '';
-  display: block;
-  width: 22px; height: 1px;
-  background: currentColor;
-}
-
-.pub-section-header h2 {
-  font-family: "Syne", sans-serif;
-  font-size: clamp(24px, 3vw, 34px);
-  font-weight: 700;
-  margin: 0;
-  color: white;
-}
-
-.pub-section-header p {
-  font-size: 14px;
-  color: var(--text-soft);
-  max-width: 400px;
-  text-align: right;
-  line-height: 1.65;
-  margin: 0;
-  font-weight: 300;
-}
-
-/* ===== GRILLE PUBLICATIONS SCIENTIFIQUES ===== */
-/* Grande carte + petites */
-
+/* =========================================================
+   ARTICLES SCIENTIFIQUES
+   ========================================================= */
 .sci-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: auto auto;
+  grid-template-columns: repeat(3, 1fr);
   gap: 18px;
 }
 
 .sci-card {
+  position: relative;
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 26px 26px 24px;
   background: var(--bg-light);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 28px;
-  position: relative;
+  border-radius: var(--radius);
   overflow: hidden;
-  text-decoration: none;
-  color: inherit;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  transition: border-color .3s, transform .3s, box-shadow .3s;
-  animation: fadeUp .5s ease both;
+  text-decoration: none; color: inherit;
+  transition: border-color 200ms ease, transform 200ms var(--ease-out), box-shadow 200ms ease;
 }
-
-.sci-card:hover {
-  border-color: rgba(79,107,237,.35);
-  transform: translateY(-4px);
-  box-shadow: 0 18px 48px rgba(0,0,10,.5);
+.sci-card:active { transform: scale(0.99); }
+.sci-card::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--c);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 260ms var(--ease-out);
 }
-
-.sci-card::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: var(--card-accent, var(--accent));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform .35s ease;
+@media (hover: hover) and (pointer: fine) {
+  .sci-card:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--c) 40%, transparent);
+    box-shadow: 0 18px 44px rgba(2,6,23,.55);
+  }
+  .sci-card:hover::before { transform: scaleX(1); }
+  .sci-card:hover .card-arrow { opacity: 1; transform: none; }
 }
-
-.sci-card:hover::after { transform: scaleX(1); }
 
 .sci-card--featured {
-  grid-column: 1 / 3;
+  grid-column: span 2;
+  padding: 34px;
+  background:
+    radial-gradient(ellipse 60% 90% at 100% 0%, color-mix(in srgb, var(--c) 13%, transparent), transparent 60%),
+    var(--bg-light);
 }
 
-.sci-card--featured .sci-title { font-size: 20px; }
-
-.sci-card--featured .sci-excerpt { font-size: 14.5px; }
-
-.sci-meta {
-  font-size: 11px;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--card-accent, var(--accent));
-  font-weight: 500;
+.journal {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  font-size: 13px;
 }
+.journal strong { color: var(--c); font-weight: 500; font-style: italic; }
+.journal time { color: var(--text-mute); white-space: nowrap; font-variant-numeric: tabular-nums; }
 
 .sci-title {
   font-family: "Syne", sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  color: white;
-  line-height: 1.3;
-  margin: 0;
+  font-size: 18px; font-weight: 700; line-height: 1.3;
+  color: #fff; margin: 0;
+  text-wrap: balance;
+}
+.sci-card--featured .sci-title { font-size: clamp(22px, 2.2vw, 28px); max-width: 28ch; }
+.sci-excerpt { font-size: 14px; color: var(--text-soft); line-height: 1.65; font-weight: 300; margin: 0; flex: 1; }
+.sci-card--featured .sci-excerpt { font-size: 15.5px; max-width: 64ch; }
+
+.program-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  align-self: flex-start;
+  font-family: "Syne", sans-serif;
+  font-size: 12px; font-weight: 700; letter-spacing: .08em;
+  padding: 4px 10px; border-radius: 6px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 9%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c) 26%, transparent);
 }
 
-.sci-excerpt {
-  font-size: 13px;
-  color: var(--text-soft);
-  line-height: 1.7;
-  font-weight: 300;
-  flex: 1;
-}
-
-.sci-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  margin-top: 4px;
-}
-
-.sci-tag {
-  font-size: 11px;
-  padding: 3px 10px;
-  border-radius: 20px;
+.tags { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.tags li {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
   background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.09);
   color: var(--text-soft);
 }
 
-.sci-arrow {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  font-size: 15px;
-  color: var(--card-accent, var(--accent));
-  opacity: 0;
-  transform: translateX(-5px);
-  transition: opacity .3s, transform .3s;
+.card-arrow {
+  position: absolute; right: 22px; bottom: 22px;
+  font-size: 17px; color: var(--c);
+  opacity: 0; transform: translate(-4px, 4px);
+  transition: opacity 200ms ease, transform 200ms var(--ease-out);
 }
 
-.sci-card:hover .sci-arrow { opacity: 1; transform: translateX(0); }
+mark {
+  background: color-mix(in srgb, var(--accent) 35%, transparent);
+  color: #fff;
+  border-radius: 3px;
+  padding: 0 2px;
+}
 
-.sci-card:nth-child(1) { animation-delay: .05s; }
-.sci-card:nth-child(2) { animation-delay: .10s; }
-.sci-card:nth-child(3) { animation-delay: .15s; }
-.sci-card:nth-child(4) { animation-delay: .20s; }
-.sci-card:nth-child(5) { animation-delay: .25s; }
-
-/* ===== PUBLICATIONS IFRAS (magazine cards) ===== */
+/* =========================================================
+   PUBLICATIONS IFRAS
+   ========================================================= */
+.segmented {
+  position: relative;
+  display: inline-flex;
+  padding: 4px;
+  border-radius: 12px;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+}
+.segmented-indicator {
+  position: absolute; top: 4px; bottom: 4px; left: 0;
+  width: var(--w, 0px);
+  transform: translateX(var(--x, 4px));
+  border-radius: 9px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+  transition: transform 260ms var(--ease-out), width 260ms var(--ease-out);
+  pointer-events: none;
+}
+.segmented button {
+  position: relative; z-index: 1;
+  padding: 8px 14px;
+  border: 0; background: transparent;
+  color: var(--text-soft);
+  font: inherit; font-size: 13.5px; font-weight: 500;
+  border-radius: 9px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.segmented button[aria-pressed="true"] { color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .segmented button:hover { color: #fff; }
+}
 
 .ifras-grid {
   display: grid;
@@ -466,595 +603,890 @@ header {
 }
 
 .ifras-card {
+  position: relative;
+  display: flex; flex-direction: column;
   background: var(--bg-light);
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: var(--radius);
   overflow: hidden;
-  text-decoration: none;
-  color: inherit;
-  display: flex;
-  flex-direction: column;
-  transition: border-color .3s, transform .3s, box-shadow .3s;
-  animation: fadeUp .5s ease both;
+  text-decoration: none; color: inherit;
+  transition: border-color 200ms ease, transform 200ms var(--ease-out), box-shadow 200ms ease;
+}
+.ifras-card:active { transform: scale(0.99); }
+@media (hover: hover) and (pointer: fine) {
+  .ifras-card:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--c) 40%, transparent);
+    box-shadow: 0 18px 44px rgba(2,6,23,.55);
+  }
+  .ifras-card:hover .cover-rings { transform: scale(1.06) rotate(8deg); }
+  .ifras-card:hover .ifras-cta i { transform: translateX(3px); }
 }
 
-.ifras-card:hover {
-  border-color: rgba(79,107,237,.3);
-  transform: translateY(-4px);
-  box-shadow: 0 18px 48px rgba(0,0,10,.5);
-}
-
-.ifras-cover {
-  height: 140px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Couverture générée en CSS, une couleur par type */
+.cover {
   position: relative;
+  height: 150px;
   overflow: hidden;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  padding: 18px 20px;
+  background:
+    radial-gradient(ellipse 80% 120% at 100% 0%, color-mix(in srgb, var(--c) 30%, transparent), transparent 65%),
+    linear-gradient(135deg, color-mix(in srgb, var(--c) 10%, #0a1330), #060c24);
+  border-bottom: 1px solid color-mix(in srgb, var(--c) 20%, transparent);
 }
-
-.ifras-cover-inner {
+.cover-rings {
+  position: absolute; right: -60px; top: -60px;
+  width: 220px; height: 220px; border-radius: 50%;
+  background: repeating-radial-gradient(circle, transparent 0 18px, color-mix(in srgb, var(--c) 22%, transparent) 18px 19px);
+  opacity: .7;
+  transition: transform 600ms var(--ease-out);
+}
+.cover-num {
   position: relative;
-  z-index: 1;
-  text-align: center;
-}
-
-.ifras-cover-num {
   font-family: "Syne", sans-serif;
-  font-size: 52px;
-  font-weight: 800;
-  line-height: 1;
-  opacity: .18;
-  letter-spacing: -0.05em;
+  font-size: 46px; font-weight: 800; line-height: .9;
+  letter-spacing: -0.04em;
+  color: #fff;
+}
+.cover-type {
+  position: relative;
+  font-size: 12px; font-weight: 500;
+  color: var(--c);
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(2,6,23,.55);
+  border: 1px solid color-mix(in srgb, var(--c) 30%, transparent);
 }
 
-.ifras-cover-label {
-  font-size: 10px;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  opacity: .5;
-  margin-top: -8px;
+.ifras-body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.ifras-date { font-size: 13px; color: var(--text-mute); }
+.ifras-title { font-family: "Syne", sans-serif; font-size: 17px; font-weight: 700; color: #fff; line-height: 1.3; margin: 0; }
+.ifras-desc { font-size: 14px; color: var(--text-soft); line-height: 1.6; font-weight: 300; margin: 0; flex: 1; }
+.ifras-cta {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  margin-top: 8px; padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-size: 13.5px; color: #9fb0ff;
 }
+.ifras-cta span:first-child { display: inline-flex; align-items: center; gap: 8px; }
+.ifras-cta i { transition: transform 200ms var(--ease-out); }
+.ifras-cta small { font-size: 12.5px; color: var(--text-mute); }
 
-.ifras-body {
-  padding: 20px 22px 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
-}
-
-.ifras-date {
-  font-size: 11px;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
-.ifras-title {
-  font-family: "Syne", sans-serif;
-  font-size: 15px;
-  font-weight: 700;
-  color: white;
-  line-height: 1.3;
-}
-
-.ifras-desc {
-  font-size: 13px;
-  color: var(--text-soft);
-  line-height: 1.65;
-  font-weight: 300;
-  flex: 1;
-}
-
-.ifras-link {
-  font-size: 12px;
-  color: var(--accent);
-  margin-top: 8px;
-}
-
-.ifras-card:nth-child(1) { animation-delay: .05s; }
-.ifras-card:nth-child(2) { animation-delay: .10s; }
-.ifras-card:nth-child(3) { animation-delay: .15s; }
-.ifras-card:nth-child(4) { animation-delay: .20s; }
-.ifras-card:nth-child(5) { animation-delay: .25s; }
-.ifras-card:nth-child(6) { animation-delay: .30s; }
-
-/* ===== ÉVÉNEMENTS ===== */
-
-.events-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
+/* =========================================================
+   ÉVÉNEMENTS
+   ========================================================= */
+.event-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
 
 .event-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 84px 1fr auto;
+  align-items: center;
+  gap: 26px;
+  padding: 20px 26px;
   background: var(--bg-light);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 22px 28px;
-  display: grid;
-  grid-template-columns: 90px 1fr auto;
-  align-items: center;
-  gap: 28px;
-  text-decoration: none;
-  color: inherit;
-  transition: border-color .25s, transform .25s;
-  animation: fadeUp .4s ease both;
+  border-radius: var(--radius);
+  text-decoration: none; color: inherit;
+  transition: border-color 200ms ease, transform 200ms var(--ease-out), background-color 200ms ease;
+}
+.event-card:active { transform: scale(0.99); }
+@media (hover: hover) and (pointer: fine) {
+  .event-card:hover { border-color: color-mix(in srgb, var(--c) 40%, transparent); transform: translateX(3px); }
 }
 
-.event-card:hover {
-  border-color: rgba(79,107,237,.3);
-  transform: translateX(4px);
-}
-
-.event-date-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: rgba(79,107,237,.08);
-  border: 1px solid rgba(79,107,237,.18);
-  border-radius: 10px;
-  padding: 10px;
+.event-date {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 2px;
+  padding: 11px 6px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--c) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c) 25%, transparent);
 }
+.event-day { font-family: "Syne", sans-serif; font-size: 28px; font-weight: 800; color: #fff; line-height: 1; letter-spacing: -0.03em; }
+.event-month { font-size: 11.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--c); font-weight: 500; }
 
-.event-day {
-  font-family: "Syne", sans-serif;
-  font-size: 28px;
-  font-weight: 800;
-  color: white;
-  line-height: 1;
-  letter-spacing: -0.03em;
-}
+.event-type { font-size: 13px; font-weight: 500; color: var(--c); margin-bottom: 4px; }
+.event-title { font-family: "Syne", sans-serif; font-size: 17px; font-weight: 700; color: #fff; margin: 0 0 6px; line-height: 1.3; text-wrap: balance; }
+.event-place { display: flex; align-items: center; gap: 6px; font-size: 13.5px; color: var(--text-soft); font-weight: 300; }
+.event-place i { color: var(--text-mute); font-size: 15px; }
 
-.event-month {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: .12em;
-  color: var(--accent);
-  font-weight: 500;
-}
-
-.event-info {}
-
-.event-type {
-  font-size: 11px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  font-weight: 500;
-  margin-bottom: 4px;
-}
-
-.event-title {
-  font-family: "Syne", sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  color: white;
-  margin-bottom: 4px;
-}
-
-.event-location {
-  font-size: 13px;
-  color: var(--text-soft);
-  font-weight: 300;
-}
-
-.event-badge {
-  font-size: 11px;
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-weight: 500;
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12.5px; font-weight: 500;
+  padding: 5px 12px; border-radius: 999px;
+  color: var(--b);
+  background: color-mix(in srgb, var(--b) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--b) 26%, transparent);
   white-space: nowrap;
 }
+.badge--open { --b: #34d399; }
+.badge--soon { --b: #facc15; }
+.badge--full { --b: #9ca3af; }
+.badge--online { --b: #60a5fa; }
+.badge--past { --b: #8891b8; }
 
-.badge--open     { background: rgba(52,211,153,.1);  color: #34d399; border: 1px solid rgba(52,211,153,.25); }
-.badge--soon     { background: rgba(250,204,21,.1);  color: #facc15; border: 1px solid rgba(250,204,21,.25); }
-.badge--full     { background: rgba(156,163,175,.1); color: #9ca3af; border: 1px solid rgba(156,163,175,.2); }
-.badge--online   { background: rgba(96,165,250,.1);  color: #60a5fa; border: 1px solid rgba(96,165,250,.25); }
+/* Prochain événement mis en avant */
+.event-card.is-next {
+  padding: 26px 30px;
+  background:
+    radial-gradient(ellipse 50% 140% at 0% 50%, color-mix(in srgb, var(--c) 14%, transparent), transparent 70%),
+    var(--bg-light);
+  border-color: color-mix(in srgb, var(--c) 40%, transparent);
+}
+.next-flag {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-bottom: 8px;
+  font-size: 12.5px; font-weight: 500; color: #fff;
+}
+.next-flag i { color: var(--c); }
 
-.event-card:nth-child(1) { animation-delay: .05s; }
-.event-card:nth-child(2) { animation-delay: .10s; }
-.event-card:nth-child(3) { animation-delay: .15s; }
-.event-card:nth-child(4) { animation-delay: .20s; }
-.event-card:nth-child(5) { animation-delay: .25s; }
+/* Événements passés */
+.past-events {
+  margin-top: 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: rgba(7,15,43,.4);
+}
+.past-events summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 16px 22px;
+  cursor: pointer;
+  list-style: none;
+  font-size: 14.5px; color: var(--text-soft);
+  border-radius: var(--radius);
+  transition: color 160ms ease;
+}
+.past-events summary::-webkit-details-marker { display: none; }
+.past-events summary i { transition: transform 220ms var(--ease-out); }
+.past-events[open] summary i { transform: rotate(180deg); }
+.past-events[open] summary { color: #fff; }
+@media (hover: hover) and (pointer: fine) { .past-events summary:hover { color: #fff; } }
+.past-events .event-list { padding: 0 12px 12px; }
+.past-events .event-card { opacity: .62; background: transparent; }
+.past-events .event-card:hover { opacity: 1; }
 
-/* ===== FOOTER ===== */
-
-footer {
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.site-footer {
+  margin-top: 100px;
   background: var(--bg-dark);
   border-top: 1px solid var(--border);
-  padding: 40px 30px;
-  text-align: center;
-  font-size: 12px;
-  color: #6b7280;
+  padding: 36px 0;
+  font-size: 13px; color: var(--text-mute);
+}
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+/* =========================================================
+   APPARITION AU DÉFILEMENT
+   ========================================================= */
+.js .reveal {
+  opacity: 0; transform: translateY(16px);
+  transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 60ms);
+}
+.js .reveal.is-visible { opacity: 1; transform: none; }
+.js .sci-card.reveal.is-visible,
+.js .ifras-card.reveal.is-visible,
+.js .event-card.reveal.is-visible {
+  transition: border-color 200ms ease, transform 200ms var(--ease-out), box-shadow 200ms ease, background-color 200ms ease, opacity 700ms var(--ease-out);
+  transition-delay: 0ms;
+}
+/* carte qui réapparaît après un filtre */
+.pop-in { animation: popIn 260ms var(--ease-out); }
+@keyframes popIn { from { opacity: 0; transform: scale(.98); } to { opacity: 1; transform: none; } }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1100px) {
+  .sci-grid, .ifras-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ===== ANIMATIONS ===== */
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
+@media (max-width: 960px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); }
+  .hero-stat:nth-child(3) { border-left: 0; }
+  .hero-stat:nth-child(n+3) { border-top: 1px solid var(--border); }
+  .event-card { grid-template-columns: 72px 1fr; }
+  .event-card .badge { grid-column: 2; justify-self: start; }
+  .subnav-list { justify-content: flex-start; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+  .subnav-list::-webkit-scrollbar { display: none; }
 }
 
+@media (max-width: 860px) {
+  .main-nav, .header-right .btn-desktop { display: none; }
+  .menu-toggle { display: inline-flex; }
+}
+
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .subnav-list { padding: 0 20px; }
+  .subnav-link { padding: 0 10px; font-size: 13.5px; }
+  .hero { padding-top: 56px; }
+  .hero-desc { font-size: 16px; }
+  .finder-panel { padding: 20px; }
+  .pub-section { padding-top: 72px; }
+  .sci-grid, .ifras-grid { grid-template-columns: 1fr; }
+  .sci-card--featured { grid-column: auto; padding: 26px; }
+  .segmented { width: 100%; overflow-x: auto; scrollbar-width: none; }
+  .event-card, .event-card.is-next { padding: 18px; gap: 16px; grid-template-columns: 62px 1fr; }
+  .event-day { font-size: 24px; }
+  .site-footer { margin-top: 72px; }
+}
+
+/* =========================================================
+   MOUVEMENT RÉDUIT
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-in { animation: fadeOnly 300ms ease forwards; }
+  .hero h1 .line > span { animation: none; transform: none; }
+  .js .reveal { transform: none; transition: opacity 300ms ease; transition-delay: 0ms; }
+  .pop-in { animation: none; }
+  .segmented-indicator { transition: none; }
+}
+@keyframes fadeOnly { to { opacity: 1; } }
 </style>
+
+<script>document.documentElement.classList.add('js');</script>
 </head>
 
 <body>
 
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+
 <!-- ===== HEADER ===== -->
-<header>
-  <div class="header-inner">
+<header class="site-header" id="header">
+  <div class="container header-inner">
     <div class="header-left">
-      <a href="index.html" class="logo-link"><img src="logo.png" alt="Logo IFRAS"></a>
-      <nav>
+      <a href="index.html" class="logo-link" aria-label="IFRAS, accueil">
+        <img src="logo.png" alt="Logo IFRAS" width="44" height="44">
+      </a>
+      <nav aria-label="Navigation principale">
         <ul class="main-nav">
           <li><a href="index.html">Accueil</a></li>
           <li><a href="recherche.html">Recherche</a></li>
           <li><a href="programmes.html">Programmes</a></li>
-          <li><a href="publications.html">Publications</a></li>
+          <li><a href="publications.html" aria-current="page">Publications</a></li>
         </ul>
       </nav>
     </div>
     <div class="header-right">
-      <a href="connexion.html" class="login-btn">Connexion</a>
+      <a href="connexion.html" class="btn btn-ghost btn-desktop">Connexion</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-panel" aria-label="Ouvrir le menu">
+        <i class="ph-light ph-list" aria-hidden="true"></i>
+      </button>
     </div>
   </div>
 </header>
 
-<!-- ===== SOUS BANDEAU ===== -->
-<div class="sub-nav">
+<div class="mobile-panel" id="mobile-panel">
   <ul>
-    <li><a href="publications-scientifiques.html">Publications scientifiques</a></li>
-    <li><a href="publications-ifras.html">Publications IFRAS</a></li>
-    <li><a href="evenements.html">Événements</a></li>
+    <li><a href="index.html">Accueil <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="recherche.html">Recherche <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="programmes.html">Programmes <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="publications.html" aria-current="page">Publications <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
   </ul>
+  <a href="connexion.html" class="btn btn-primary">Connexion</a>
 </div>
 
+<!-- ===== SOUS-NAVIGATION ===== -->
+<nav class="subnav" id="subnav" aria-label="Sections de la page">
+  <ul class="subnav-list">
+    <li><a class="subnav-link" href="#articles" data-section="articles" style="--c:var(--t-sci)"><i class="ph-light ph-article" aria-hidden="true"></i>Publications scientifiques</a></li>
+    <li><a class="subnav-link" href="#ifras" data-section="ifras" style="--c:var(--t-ifras)"><i class="ph-light ph-book-open" aria-hidden="true"></i>Publications IFRAS</a></li>
+    <li><a class="subnav-link" href="#evenements" data-section="evenements" style="--c:var(--t-event)"><i class="ph-light ph-calendar-dots" aria-hidden="true"></i>Événements</a></li>
+  </ul>
+</nav>
+
+<main id="contenu">
+
 <!-- ===== HERO ===== -->
-<section class="hero">
-  <div class="hero-inner">
+<section class="hero" aria-labelledby="hero-title">
+  <canvas class="network" id="network" aria-hidden="true"></canvas>
+  <div class="container">
+    <div class="hero-grid">
 
-    <div class="hero-left">
-      <div class="hero-eyebrow">Diffusion des savoirs</div>
-      <h1>Publica<span>tions</span></h1>
-      <p class="hero-desc">
-        L'IFRAS s'engage à diffuser l'ensemble de ses résultats scientifiques auprès de la communauté internationale.
-        Articles en revues à comité de lecture, rapports institutionnels, lettres de recherche et conférences —
-        retrouvez ici l'intégralité de notre production intellectuelle.
-      </p>
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <span class="hero-stat-value">+1 240</span>
-          <span class="hero-stat-label">Articles publiés</span>
+      <div class="hero-left">
+        <div class="kicker hero-in" style="--i:0">Diffusion des savoirs</div>
+        <h1 id="hero-title"><span class="line"><span style="--i:0">Publications</span></span><span class="line line--soft"><span style="--i:1">IFRAS</span></span></h1>
+        <p class="hero-desc hero-in" style="--i:2">Articles en revues à comité de lecture, rapports institutionnels, lettres de recherche et conférences : toute la production scientifique de l'institut, en accès ouvert.</p>
+      </div>
+
+      <div class="finder-panel hero-in" style="--i:3" id="finder">
+        <h2>Trouver une publication</h2>
+        <div class="finder-field">
+          <i class="ph-light ph-magnifying-glass" aria-hidden="true"></i>
+          <input id="finder-input" type="search" placeholder="Titre, thème, programme, revue…" autocomplete="off" aria-describedby="finder-result">
+          <button class="finder-clear" type="button" aria-label="Effacer la recherche"><i class="ph-light ph-x" aria-hidden="true"></i></button>
         </div>
-        <div class="hero-stat">
-          <span class="hero-stat-value">38</span>
-          <span class="hero-stat-label">Revues partenaires</span>
-        </div>
-        <div class="hero-stat">
-          <span class="hero-stat-value">18</span>
-          <span class="hero-stat-label">Publications IFRAS</span>
-        </div>
-        <div class="hero-stat">
-          <span class="hero-stat-value">6</span>
-          <span class="hero-stat-label">Événements 2026</span>
+        <ul class="chips" aria-label="Thèmes fréquents">
+          <li><button class="chip" type="button" aria-pressed="false" data-q="ARTEMIS">ARTEMIS-9</button></li>
+          <li><button class="chip" type="button" aria-pressed="false" data-q="biologie">Biologie spatiale</button></li>
+          <li><button class="chip" type="button" aria-pressed="false" data-q="propulsion">Propulsion</button></li>
+          <li><button class="chip" type="button" aria-pressed="false" data-q="IA">IA</button></li>
+          <li><button class="chip" type="button" aria-pressed="false" data-q="rapport annuel">Rapports annuels</button></li>
+        </ul>
+        <div class="finder-result" id="finder-result" aria-live="polite"></div>
+
+        <div class="latest">
+          <div class="latest-label">Dernières parutions</div>
+          <ul>
+            <li>
+              <a href="#" style="--c:#c084fc">
+                <span class="latest-meta">Janvier 2026, HERMES</span>
+                <span class="latest-title">Fidélité des protocoles quantiques en canal bruité longue portée</span>
+                <i class="ph-light ph-arrow-up-right" aria-hidden="true"></i>
+              </a>
+            </li>
+            <li>
+              <a href="#" style="--c:#f97316">
+                <span class="latest-meta">Décembre 2025, PROMETHEUS</span>
+                <span class="latest-title">Impulsion spécifique record sur banc plasma froid : 6 800 s validées</span>
+                <i class="ph-light ph-arrow-up-right" aria-hidden="true"></i>
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
+
     </div>
 
-    <!-- Bento des 4 dernières publis -->
-    <div class="hero-right">
+    <div class="hero-stats">
+      <div class="hero-stat reveal" style="--i:0">
+        <span class="hero-stat-value" data-count="1240" data-prefix="+">+1 240</span>
+        <span class="hero-stat-label">Articles publiés</span>
+      </div>
+      <div class="hero-stat reveal" style="--i:1">
+        <span class="hero-stat-value" data-count="38">38</span>
+        <span class="hero-stat-label">Revues partenaires</span>
+      </div>
+      <div class="hero-stat reveal" style="--i:2">
+        <span class="hero-stat-value" data-count="18">18</span>
+        <span class="hero-stat-label">Publications IFRAS</span>
+      </div>
+      <div class="hero-stat reveal" style="--i:3">
+        <span class="hero-stat-value" data-count="6">6</span>
+        <span class="hero-stat-label">Événements en 2026</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-      <a class="hero-pub-tile hero-pub-tile--wide" href="#" style="animation-delay:.05s">
-        <div class="tile-date">Mars 2026 · ARTEMIS-9</div>
-        <div class="tile-title">Variabilité inattendue des signatures biologiques en environnement confiné sous microgravité</div>
-        <div class="tile-excerpt">Première mise en évidence d'une dérive métabolique systématique après 90 jours en confinement orbital simulé.</div>
-        <span class="tile-tag">Biologie · Priorité éditoriale</span>
+<!-- ===== PUBLICATIONS SCIENTIFIQUES ===== -->
+<section class="pub-section" id="articles" aria-labelledby="articles-title">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-type reveal" style="--c:var(--t-sci)"><i class="ph-light ph-article" aria-hidden="true"></i> Publications scientifiques</div>
+        <h2 class="section-title reveal" id="articles-title" style="--i:1">Articles et revues</h2>
+        <p class="section-sub reveal" style="--i:2">Articles évalués par les pairs, parus dans les principales revues internationales.</p>
+      </div>
+      <a href="publications-scientifiques.html" class="text-link reveal" style="--i:3">Base documentaire complète <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
+    </div>
+
+    <div class="sci-grid" data-group="articles">
+
+      <a class="sci-card sci-card--featured reveal searchable" href="#" style="--c:#60a5fa">
+        <div class="journal"><strong>Nature Astronautics</strong><time datetime="2026-03">Mars 2026</time></div>
+        <span class="program-tag">ARTEMIS-9</span>
+        <h3 class="sci-title">Variabilité inattendue des signatures biologiques en confinement sous microgravité prolongée</h3>
+        <p class="sci-excerpt">Six sujets suivis pendant 120 jours en habitat orbital analogique : les biomarqueurs métaboliques et immunitaires dérivent systématiquement après le 90e jour. Un résultat déterminant pour la planification médicale d'ARTEMIS-9.</p>
+        <ul class="tags"><li>Biologie spatiale</li><li>Microgravité</li><li>Biomarqueurs</li><li>Médecine de l'isolement</li></ul>
+        <i class="ph-light ph-arrow-up-right card-arrow" aria-hidden="true"></i>
       </a>
 
-      <a class="hero-pub-tile" href="#" style="animation-delay:.10s">
-        <div class="tile-date">Jan 2026 · HERMES</div>
-        <div class="tile-title">Fidélité des protocoles quantiques en canal bruité longue portée</div>
-        <div class="tile-excerpt">Résultats expérimentaux sur 40 000 km de liaison simulée.</div>
-        <span class="tile-tag">Quantique</span>
+      <a class="sci-card reveal searchable" href="#" style="--c:#f97316;--i:1">
+        <div class="journal"><strong>J. Space Medicine</strong><time datetime="2025-11">Nov. 2025</time></div>
+        <h3 class="sci-title">Effets cognitifs de la désynchronisation temporelle en mission longue</h3>
+        <p class="sci-excerpt">Troubles neurologiques et baisse des performances décisionnelles liés aux cycles temporels artificiels sur 18 mois.</p>
+        <ul class="tags"><li>Neurosciences</li><li>Cognition</li><li>Physiologie</li></ul>
+        <i class="ph-light ph-arrow-up-right card-arrow" aria-hidden="true"></i>
       </a>
 
-      <a class="hero-pub-tile" href="#" style="animation-delay:.15s">
-        <div class="tile-date">Déc 2025 · PROMETHEUS</div>
-        <div class="tile-title">Impulsion spécifique record sur banc plasma froid</div>
-        <div class="tile-excerpt">Validation expérimentale à 6 800 s d'Isp en conditions représentatives.</div>
-        <span class="tile-tag">Propulsion</span>
+      <a class="sci-card reveal searchable" href="#" style="--c:#34d399;--i:0">
+        <div class="journal"><strong>Astrobiology</strong><time datetime="2025-04">Avr. 2025</time></div>
+        <h3 class="sci-title">Adaptation comportementale en environnement isolé extrême</h3>
+        <p class="sci-excerpt">Trois bases analogues aux conditions martiennes : dynamiques de groupe, stress chronique et résilience individuelle.</p>
+        <ul class="tags"><li>Psychologie</li><li>Bases analogues</li></ul>
+        <i class="ph-light ph-arrow-up-right card-arrow" aria-hidden="true"></i>
+      </a>
+
+      <a class="sci-card reveal searchable" href="#" style="--c:#c084fc;--i:1">
+        <div class="journal"><strong>AI &amp; Robotics</strong><time datetime="2024-08">Août 2024</time></div>
+        <h3 class="sci-title">Limites décisionnelles des systèmes autonomes en situation ambiguë</h3>
+        <p class="sci-excerpt">Comportements émergents d'IA embarquées face à des données contradictoires et à l'incertitude instrumentale.</p>
+        <ul class="tags"><li>IA embarquée</li><li>Autonomie</li></ul>
+        <i class="ph-light ph-arrow-up-right card-arrow" aria-hidden="true"></i>
+      </a>
+
+      <a class="sci-card reveal searchable" href="#" style="--c:#facc15;--i:2">
+        <div class="journal"><strong>Microbiology Letters</strong><time datetime="2024-01">Janv. 2024</time></div>
+        <span class="program-tag">DSVT</span>
+        <h3 class="sci-title">Résilience microbienne en conditions extrêmes simulées</h3>
+        <p class="sci-excerpt">Bactéries et champignons face aux irradiations, pressions et températures de la surface martienne.</p>
+        <ul class="tags"><li>Astrobiologie</li><li>Microbiologie</li></ul>
+        <i class="ph-light ph-arrow-up-right card-arrow" aria-hidden="true"></i>
       </a>
 
     </div>
-
+    <p class="section-empty" data-empty-for="articles" hidden>Aucun article ne correspond à votre recherche.</p>
   </div>
 </section>
 
-<!-- =========================================== -->
-<!-- PUBLICATIONS SCIENTIFIQUES                  -->
-<!-- =========================================== -->
-<section class="pub-section">
-
-  <div class="pub-section-header">
-    <div>
-      <div class="section-eyebrow" style="color: #60a5fa;">Publications scientifiques</div>
-      <h2>Articles & revues</h2>
+<!-- ===== PUBLICATIONS IFRAS ===== -->
+<section class="pub-section" id="ifras" aria-labelledby="ifras-title">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-type reveal" style="--c:var(--t-ifras)"><i class="ph-light ph-book-open" aria-hidden="true"></i> Publications IFRAS</div>
+        <h2 class="section-title reveal" id="ifras-title" style="--i:1">Revues et rapports</h2>
+        <p class="section-sub reveal" style="--i:2">Lettres trimestrielles, rapports annuels et hors-séries édités par l'institut.</p>
+      </div>
+      <div class="segmented reveal" style="--i:3" id="segmented" role="group" aria-label="Filtrer par type">
+        <span class="segmented-indicator" aria-hidden="true"></span>
+        <button type="button" aria-pressed="true" data-type="all">Tout</button>
+        <button type="button" aria-pressed="false" data-type="lettre">Lettres</button>
+        <button type="button" aria-pressed="false" data-type="rapport">Rapports annuels</button>
+        <button type="button" aria-pressed="false" data-type="hs">Hors-séries</button>
+      </div>
     </div>
-    <p>Articles peer-reviewed publiés dans les principales revues internationales. Pour une consultation exhaustive, accédez à la base documentaire complète.</p>
-  </div>
 
-  <div class="sci-grid">
+    <div class="ifras-grid" data-group="ifras">
 
-    <!-- Vedette -->
-    <a class="sci-card sci-card--featured" href="#" style="--card-accent: #60a5fa;">
-      <div class="sci-meta">Mars 2026 — Programme ARTEMIS-9 · Nature Astronautics</div>
-      <div class="sci-title">Variabilité inattendue des signatures biologiques en environnement confiné sous microgravité prolongée</div>
-      <p class="sci-excerpt">
-        Analyse approfondie des fluctuations métaboliques et immunitaires observées sur 6 sujets lors de 120 jours
-        de confinement en habitat orbital analogique. L'étude révèle une dérive systématique des biomarqueurs
-        après le 90e jour, ouvrant de nouvelles questions sur la tolérance humaine aux séjours de longue durée.
-        Ces résultats sont déterminants pour la planification médicale d'ARTEMIS-9.
-      </p>
-      <div class="sci-tags">
-        <span class="sci-tag">Biologie spatiale</span>
-        <span class="sci-tag">Microgravité</span>
-        <span class="sci-tag">Biomarqueurs</span>
-        <span class="sci-tag">Médecine isolement</span>
-      </div>
-      <div class="sci-arrow">→</div>
-    </a>
+      <a class="ifras-card reveal searchable" data-type="lettre" href="#" style="--c:var(--t-lettre);--i:0">
+        <div class="cover"><span class="cover-rings" aria-hidden="true"></span><span class="cover-num">N°22</span><span class="cover-type">Lettre trimestrielle</span></div>
+        <div class="ifras-body">
+          <div class="ifras-date">Printemps 2026</div>
+          <h3 class="ifras-title">Lettre de la Direction scientifique</h3>
+          <p class="ifras-desc">Avancées d'ARTEMIS-9, résultats de PROMETHEUS phase II, partenariats ESA et NASA signés en janvier.</p>
+          <div class="ifras-cta"><span>Consulter <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span></div>
+        </div>
+      </a>
 
-    <!-- Colonne droite -->
-    <a class="sci-card" href="#" style="--card-accent: #f97316;">
-      <div class="sci-meta">Nov 2025 — Physiologie · J. Space Medicine</div>
-      <div class="sci-title">Effets cognitifs de la désynchronisation temporelle en mission longue</div>
-      <p class="sci-excerpt">Perturbations neurologiques et déclin des performances décisionnelles liés aux cycles temporels artificiels prolongés sur 18 mois.</p>
-      <div class="sci-tags">
-        <span class="sci-tag">Neurosciences</span>
-        <span class="sci-tag">Cognition</span>
-      </div>
-      <div class="sci-arrow">→</div>
-    </a>
+      <a class="ifras-card reveal searchable" data-type="lettre" href="#" style="--c:var(--t-lettre);--i:1">
+        <div class="cover"><span class="cover-rings" aria-hidden="true"></span><span class="cover-num">N°21</span><span class="cover-type">Lettre trimestrielle</span></div>
+        <div class="ifras-body">
+          <div class="ifras-date">Hiver 2025</div>
+          <h3 class="ifras-title">Lettre de la Direction scientifique</h3>
+          <p class="ifras-desc">Bilan annuel de la recherche, transferts de technologie et ouverture de LYNX phase II.</p>
+          <div class="ifras-cta"><span>Consulter <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span></div>
+        </div>
+      </a>
 
-    <!-- 2e ligne -->
-    <a class="sci-card" href="#" style="--card-accent: #34d399;">
-      <div class="sci-meta">Avr 2025 — Bases analogues · Astrobiology</div>
-      <div class="sci-title">Adaptation comportementale en environnement isolé extrême</div>
-      <p class="sci-excerpt">Étude longitudinale sur 3 bases analogues simulant des conditions martiennes — dynamiques de groupe, stress chronique et résilience individuelle.</p>
-      <div class="sci-tags">
-        <span class="sci-tag">Psychologie</span>
-        <span class="sci-tag">Analogues</span>
-      </div>
-      <div class="sci-arrow">→</div>
-    </a>
+      <a class="ifras-card reveal searchable" data-type="rapport" href="#" style="--c:var(--t-rapport);--i:2">
+        <div class="cover"><span class="cover-rings" aria-hidden="true"></span><span class="cover-num">2025</span><span class="cover-type">Rapport annuel</span></div>
+        <div class="ifras-body">
+          <div class="ifras-date">Décembre 2025</div>
+          <h3 class="ifras-title">Rapport annuel IFRAS 2025</h3>
+          <p class="ifras-desc">Activité scientifique, finances et partenariats de l'institut. Diffusion publique.</p>
+          <div class="ifras-cta"><span><i class="ph-light ph-file-pdf" aria-hidden="true"></i> Télécharger</span><small>PDF, 148 pages</small></div>
+        </div>
+      </a>
 
-    <a class="sci-card" href="#" style="--card-accent: #c084fc;">
-      <div class="sci-meta">Août 2024 — IA embarquée · AI & Robotics</div>
-      <div class="sci-title">Limites décisionnelles des systèmes autonomes en situation ambiguë</div>
-      <p class="sci-excerpt">Comportements émergents d'architectures IA confrontées à des données contradictoires et à l'incertitude instrumentale en conditions dégradées.</p>
-      <div class="sci-tags">
-        <span class="sci-tag">IA</span>
-        <span class="sci-tag">Autonomie</span>
-      </div>
-      <div class="sci-arrow">→</div>
-    </a>
+      <a class="ifras-card reveal searchable" data-type="hs" href="#" style="--c:var(--t-hs);--i:0">
+        <div class="cover"><span class="cover-rings" aria-hidden="true"></span><span class="cover-num">HS 4</span><span class="cover-type">Hors-série</span></div>
+        <div class="ifras-body">
+          <div class="ifras-date">Septembre 2025</div>
+          <h3 class="ifras-title">Propulsion du futur</h3>
+          <p class="ifras-desc">Propulsion ionique, nucléaire thermique et voile solaire : les architectures de demain.</p>
+          <div class="ifras-cta"><span>Consulter <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span></div>
+        </div>
+      </a>
 
-    <a class="sci-card" href="#" style="--card-accent: #facc15;">
-      <div class="sci-meta">Jan 2024 — DSVT · Microbiology Letters</div>
-      <div class="sci-title">Résilience microbienne en conditions extrêmes simulées</div>
-      <p class="sci-excerpt">Capacités d'adaptation de souches bactériennes et fongiques face aux irradiations, pressions et températures représentatives de la surface martienne.</p>
-      <div class="sci-tags">
-        <span class="sci-tag">Astrobiologie</span>
-        <span class="sci-tag">Microbiologie</span>
-      </div>
-      <div class="sci-arrow">→</div>
-    </a>
+      <a class="ifras-card reveal searchable" data-type="hs" href="#" style="--c:var(--t-hs);--i:1">
+        <div class="cover"><span class="cover-rings" aria-hidden="true"></span><span class="cover-num">HS 3</span><span class="cover-type">Hors-série</span></div>
+        <div class="ifras-body">
+          <div class="ifras-date">Mars 2025</div>
+          <h3 class="ifras-title">Intelligence artificielle embarquée</h3>
+          <p class="ifras-desc">IA sur systèmes spatiaux autonomes : cas d'usage, limites et cadre réglementaire.</p>
+          <div class="ifras-cta"><span>Consulter <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span></div>
+        </div>
+      </a>
 
-  </div>
+      <a class="ifras-card reveal searchable" data-type="rapport" href="#" style="--c:var(--t-rapport);--i:2">
+        <div class="cover"><span class="cover-rings" aria-hidden="true"></span><span class="cover-num">2024</span><span class="cover-type">Rapport annuel</span></div>
+        <div class="ifras-body">
+          <div class="ifras-date">Décembre 2024</div>
+          <h3 class="ifras-title">Rapport annuel IFRAS 2024</h3>
+          <p class="ifras-desc">Résultats scientifiques, faits marquants et budget de l'exercice 2024.</p>
+          <div class="ifras-cta"><span><i class="ph-light ph-file-pdf" aria-hidden="true"></i> Télécharger</span><small>PDF, 136 pages</small></div>
+        </div>
+      </a>
 
-</section>
-
-<!-- =========================================== -->
-<!-- PUBLICATIONS IFRAS                          -->
-<!-- =========================================== -->
-<section class="pub-section" style="padding-top: 10px;">
-
-  <div class="pub-section-header">
-    <div>
-      <div class="section-eyebrow" style="color: #34d399;">Publications IFRAS</div>
-      <h2>Revues & rapports institutionnels</h2>
     </div>
-    <p>Lettres trimestrielles, rapports annuels et numéros thématiques produits et édités directement par l'IFRAS.</p>
+    <p class="section-empty" data-empty-for="ifras" hidden>Aucune publication IFRAS ne correspond.</p>
   </div>
-
-  <div class="ifras-grid">
-
-    <!-- Lettre trimestrielle -->
-    <a class="ifras-card" href="#">
-      <div class="ifras-cover" style="background: linear-gradient(135deg, #0d1f4a, #0a1535);">
-        <div class="ifras-cover-inner">
-          <div class="ifras-cover-num" style="color:#60a5fa;">N°22</div>
-          <div class="ifras-cover-label" style="color:#60a5fa;">Lettre trimestrielle</div>
-        </div>
-      </div>
-      <div class="ifras-body">
-        <div class="ifras-date" style="color:#60a5fa;">T1 2026</div>
-        <div class="ifras-title">Lettre de la Direction Scientifique — Printemps 2026</div>
-        <div class="ifras-desc">Avancées ARTEMIS-9, résultats PROMETHEUS phase II, bilan des partenariats ESA et NASA signés en janvier.</div>
-        <div class="ifras-link">Consulter →</div>
-      </div>
-    </a>
-
-    <a class="ifras-card" href="#">
-      <div class="ifras-cover" style="background: linear-gradient(135deg, #1a0d3a, #0f0828);">
-        <div class="ifras-cover-inner">
-          <div class="ifras-cover-num" style="color:#c084fc;">N°21</div>
-          <div class="ifras-cover-label" style="color:#c084fc;">Lettre trimestrielle</div>
-        </div>
-      </div>
-      <div class="ifras-body">
-        <div class="ifras-date" style="color:#c084fc;">T4 2025</div>
-        <div class="ifras-title">Lettre de la Direction Scientifique — Hiver 2025</div>
-        <div class="ifras-desc">Bilan annuel de la recherche, transferts de technologie réalisés, ouverture du programme LYNX phase II.</div>
-        <div class="ifras-link">Consulter →</div>
-      </div>
-    </a>
-
-    <a class="ifras-card" href="#">
-      <div class="ifras-cover" style="background: linear-gradient(135deg, #0d2e1a, #071a0f);">
-        <div class="ifras-cover-inner">
-          <div class="ifras-cover-num" style="color:#34d399;">2025</div>
-          <div class="ifras-cover-label" style="color:#34d399;">Rapport annuel</div>
-        </div>
-      </div>
-      <div class="ifras-body">
-        <div class="ifras-date" style="color:#34d399;">Décembre 2025</div>
-        <div class="ifras-title">Rapport Annuel IFRAS 2025</div>
-        <div class="ifras-desc">Bilan complet de l'activité scientifique, financière et partenariale de l'institut. 148 pages — diffusion publique.</div>
-        <div class="ifras-link">Télécharger (PDF) →</div>
-      </div>
-    </a>
-
-    <a class="ifras-card" href="#">
-      <div class="ifras-cover" style="background: linear-gradient(135deg, #2a1a08, #180e04);">
-        <div class="ifras-cover-inner">
-          <div class="ifras-cover-num" style="color:#f97316;">HS·4</div>
-          <div class="ifras-cover-label" style="color:#f97316;">Hors-série thématique</div>
-        </div>
-      </div>
-      <div class="ifras-body">
-        <div class="ifras-date" style="color:#f97316;">Septembre 2025</div>
-        <div class="ifras-title">Hors-série : Propulsion du futur</div>
-        <div class="ifras-desc">Dossier spécial consacré aux nouvelles architectures de propulsion — ionique, nucléaire thermique et à voile solaire.</div>
-        <div class="ifras-link">Consulter →</div>
-      </div>
-    </a>
-
-    <a class="ifras-card" href="#">
-      <div class="ifras-cover" style="background: linear-gradient(135deg, #0d2535, #06131d);">
-        <div class="ifras-cover-inner">
-          <div class="ifras-cover-num" style="color:#38bdf8;">HS·3</div>
-          <div class="ifras-cover-label" style="color:#38bdf8;">Hors-série thématique</div>
-        </div>
-      </div>
-      <div class="ifras-body">
-        <div class="ifras-date" style="color:#38bdf8;">Mars 2025</div>
-        <div class="ifras-title">Hors-série : Intelligence artificielle embarquée</div>
-        <div class="ifras-desc">Panorama des architectures IA déployées sur systèmes autonomes spatiaux — cas d'usage, limites et perspectives réglementaires.</div>
-        <div class="ifras-link">Consulter →</div>
-      </div>
-    </a>
-
-    <a class="ifras-card" href="#">
-      <div class="ifras-cover" style="background: linear-gradient(135deg, #1a1208, #0e0a04);">
-        <div class="ifras-cover-inner">
-          <div class="ifras-cover-num" style="color:#facc15;">2024</div>
-          <div class="ifras-cover-label" style="color:#facc15;">Rapport annuel</div>
-        </div>
-      </div>
-      <div class="ifras-body">
-        <div class="ifras-date" style="color:#facc15;">Décembre 2024</div>
-        <div class="ifras-title">Rapport Annuel IFRAS 2024</div>
-        <div class="ifras-desc">Résultats scientifiques, faits marquants et données budgétaires de l'exercice 2024. 136 pages.</div>
-        <div class="ifras-link">Télécharger (PDF) →</div>
-      </div>
-    </a>
-
-  </div>
-
 </section>
 
-<!-- =========================================== -->
-<!-- ÉVÉNEMENTS                                  -->
-<!-- =========================================== -->
-<section class="pub-section" style="padding-top: 10px; padding-bottom: 110px;">
-
-  <div class="pub-section-header">
-    <div>
-      <div class="section-eyebrow" style="color: #f97316;">Événements</div>
-      <h2>Conférences & séminaires</h2>
+<!-- ===== ÉVÉNEMENTS ===== -->
+<section class="pub-section" id="evenements" aria-labelledby="evenements-title">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-type reveal" style="--c:var(--t-event)"><i class="ph-light ph-calendar-dots" aria-hidden="true"></i> Événements</div>
+        <h2 class="section-title reveal" id="evenements-title" style="--i:1">Conférences et séminaires</h2>
+        <p class="section-sub reveal" style="--i:2">Colloques, séminaires et journées portes ouvertes organisés ou co-organisés par l'IFRAS en 2026.</p>
+      </div>
+      <a href="evenements.html" class="text-link reveal" style="--i:3">Tout l'agenda <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
     </div>
-    <p>Colloques internationaux, journées portes ouvertes et séminaires internes organisés ou co-organisés par l'IFRAS en 2026.</p>
+
+    <!-- Les dates décident seules : les événements passés rejoignent la liste repliée -->
+    <ul class="event-list" id="upcoming" data-group="evenements">
+
+      <li class="reveal searchable" data-date="2026-05-14">
+        <a class="event-card" href="#" style="--c:#34d399">
+          <div class="event-date"><span class="event-day">14</span><span class="event-month">Mai</span></div>
+          <div>
+            <div class="event-type">Colloque international</div>
+            <h3 class="event-title">ISABS 2026 : International Symposium on Astrobiology &amp; Space Biology</h3>
+            <div class="event-place"><i class="ph-light ph-map-pin" aria-hidden="true"></i> Palais des Congrès, Paris. IFRAS et CNES</div>
+          </div>
+          <span class="badge badge--open">Inscriptions ouvertes</span>
+        </a>
+      </li>
+
+      <li class="reveal searchable" data-date="2026-06-03" style="--i:1">
+        <a class="event-card" href="#" style="--c:#60a5fa">
+          <div class="event-date"><span class="event-day">03</span><span class="event-month">Juin</span></div>
+          <div>
+            <div class="event-type">Séminaire interne</div>
+            <h3 class="event-title">Journées DSTI : simulation multi-physique et IA générative</h3>
+            <div class="event-place"><i class="ph-light ph-map-pin" aria-hidden="true"></i> Campus IFRAS, Toulouse. Personnel habilité</div>
+          </div>
+          <span class="badge badge--soon">Bientôt complet</span>
+        </a>
+      </li>
+
+      <li class="reveal searchable" data-date="2026-09-18" style="--i:2">
+        <a class="event-card" href="#" style="--c:#a78bfa">
+          <div class="event-date"><span class="event-day">18</span><span class="event-month">Sept.</span></div>
+          <div>
+            <div class="event-type">Conférence plénière</div>
+            <h3 class="event-title">Propulsion Europe 2026 : nouvelles architectures ioniques</h3>
+            <div class="event-place"><i class="ph-light ph-map-pin" aria-hidden="true"></i> Convention Center, Munich. DLR et IFRAS</div>
+          </div>
+          <span class="badge badge--open">Inscriptions ouvertes</span>
+        </a>
+      </li>
+
+      <li class="reveal searchable" data-date="2026-10-07" style="--i:3">
+        <a class="event-card" href="#" style="--c:#38bdf8">
+          <div class="event-date"><span class="event-day">07</span><span class="event-month">Oct.</span></div>
+          <div>
+            <div class="event-type">Webinaire</div>
+            <h3 class="event-title">Série mensuelle IFRAS : résultats scientifiques en accès libre</h3>
+            <div class="event-place"><i class="ph-light ph-globe" aria-hidden="true"></i> En ligne. Accès public, inscription gratuite</div>
+          </div>
+          <span class="badge badge--online"><i class="ph-light ph-broadcast" aria-hidden="true"></i> En ligne</span>
+        </a>
+      </li>
+
+      <li class="reveal searchable" data-date="2026-11-20" style="--i:4">
+        <a class="event-card" href="#" style="--c:#fb7185">
+          <div class="event-date"><span class="event-day">20</span><span class="event-month">Nov.</span></div>
+          <div>
+            <div class="event-type">Journée portes ouvertes</div>
+            <h3 class="event-title">IFRAS Open Day 2026 : science et société</h3>
+            <div class="event-place"><i class="ph-light ph-map-pin" aria-hidden="true"></i> Tous les sites IFRAS. Grand public</div>
+          </div>
+          <span class="badge badge--full">Complet</span>
+        </a>
+      </li>
+
+    </ul>
+    <p class="section-empty" data-empty-for="evenements" hidden>Aucun événement ne correspond.</p>
+
+    <details class="past-events" id="past-wrap" hidden>
+      <summary><span id="past-label">Événements passés</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></summary>
+      <ul class="event-list" id="past"></ul>
+    </details>
   </div>
-
-  <div class="events-grid">
-
-    <a class="event-card" href="#">
-      <div class="event-date-block">
-        <div class="event-day">14</div>
-        <div class="event-month" style="color:#34d399;">Mai 2026</div>
-      </div>
-      <div class="event-info">
-        <div class="event-type" style="color:#34d399;">Colloque international</div>
-        <div class="event-title">ISABS 2026 — International Symposium on Astrobiology & Space Biology</div>
-        <div class="event-location">Palais des Congrès, Paris · Organisation IFRAS & CNES</div>
-      </div>
-      <span class="event-badge badge--open">Inscriptions ouvertes</span>
-    </a>
-
-    <a class="event-card" href="#">
-      <div class="event-date-block">
-        <div class="event-day">03</div>
-        <div class="event-month" style="color:#60a5fa;">Juin 2026</div>
-      </div>
-      <div class="event-info">
-        <div class="event-type" style="color:#60a5fa;">Séminaire interne</div>
-        <div class="event-title">Journées DSTI — Simulation multi-physique et IA générative</div>
-        <div class="event-location">Campus IFRAS, Toulouse · Accès personnel habilité</div>
-      </div>
-      <span class="event-badge badge--soon">Bientôt complet</span>
-    </a>
-
-    <a class="event-card" href="#">
-      <div class="event-date-block">
-        <div class="event-day">18</div>
-        <div class="event-month" style="color:#a78bfa;">Sep 2026</div>
-      </div>
-      <div class="event-info">
-        <div class="event-type" style="color:#a78bfa;">Conférence plénière</div>
-        <div class="event-title">PROPULSION EUROPE 2026 — Nouvelles architectures ioniques</div>
-        <div class="event-location">Convention Center, Munich · Co-organisation DLR–IFRAS</div>
-      </div>
-      <span class="event-badge badge--open">Inscriptions ouvertes</span>
-    </a>
-
-    <a class="event-card" href="#">
-      <div class="event-date-block">
-        <div class="event-day">07</div>
-        <div class="event-month" style="color:#38bdf8;">Oct 2026</div>
-      </div>
-      <div class="event-info">
-        <div class="event-type" style="color:#38bdf8;">Webinaire</div>
-        <div class="event-title">Série mensuelle IFRAS — Résultats scientifiques en accès libre</div>
-        <div class="event-location">En ligne — Accès public, inscription gratuite</div>
-      </div>
-      <span class="event-badge badge--online">En ligne</span>
-    </a>
-
-    <a class="event-card" href="#">
-      <div class="event-date-block">
-        <div class="event-day">20</div>
-        <div class="event-month" style="color:#fb7185;">Nov 2026</div>
-      </div>
-      <div class="event-info">
-        <div class="event-type" style="color:#fb7185;">Journée portes ouvertes</div>
-        <div class="event-title">IFRAS Open Day 2026 — Science & Société</div>
-        <div class="event-location">Tous sites IFRAS · Ouvert au grand public</div>
-      </div>
-      <span class="event-badge badge--full">Complet</span>
-    </a>
-
-  </div>
-
 </section>
 
-<footer>
-© IFRAS — Institut Français de Recherche Aéronautique et Spatiale<br>
-Publications soumises à validation institutionnelle
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© IFRAS, Institut Français de Recherche Aéronautique et Spatiale</span>
+    <span>Publications soumises à validation institutionnelle</span>
+  </div>
 </footer>
+
+<script>
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Menu mobile ---------- */
+  const toggle = document.querySelector('.menu-toggle');
+  const panel = document.getElementById('mobile-panel');
+  const icon = toggle.querySelector('i');
+  const setMenu = (open) => {
+    panel.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    icon.className = open ? 'ph-light ph-x' : 'ph-light ph-list';
+  };
+  toggle.addEventListener('click', () => setMenu(!panel.classList.contains('is-open')));
+  document.addEventListener('click', (e) => {
+    if (panel.classList.contains('is-open') && !panel.contains(e.target) && !toggle.contains(e.target)) setMenu(false);
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+  window.addEventListener('pageshow', () => setMenu(false));
+
+  /* ---------- Section visible = onglet actif ---------- */
+  const links = new Map([...document.querySelectorAll('[data-section]')].map((l) => [l.dataset.section, l]));
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) links.forEach((l, id) => l.setAttribute('aria-current', String(id === entry.target.id)));
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  links.forEach((_, id) => spy.observe(document.getElementById(id)));
+  new IntersectionObserver(([entry]) => {
+    if (entry.isIntersecting) links.forEach((l) => l.setAttribute('aria-current', 'false'));
+  }, { rootMargin: '-40% 0px -55% 0px' }).observe(document.querySelector('.hero'));
+
+  /* ---------- Apparition au défilement ---------- */
+  const revealIO = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      revealIO.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach((el) => revealIO.observe(el));
+
+  /* ---------- Compteurs ---------- */
+  if (!reduceMotion) {
+    const fmt = new Intl.NumberFormat('fr-FR');
+    const countIO = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target, target = Number(el.dataset.count), prefix = el.dataset.prefix || '';
+        const start = performance.now();
+        const tick = (now) => {
+          const t = Math.min((now - start) / 1000, 1);
+          el.textContent = prefix + fmt.format(Math.round(target * (1 - Math.pow(1 - t, 4))));
+          if (t < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+        countIO.unobserve(el);
+      });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('[data-count]').forEach((el) => countIO.observe(el));
+  }
+
+  /* ---------- Événements : passés / à venir selon la date du jour ---------- */
+  const upcoming = document.getElementById('upcoming');
+  const past = document.getElementById('past');
+  const pastWrap = document.getElementById('past-wrap');
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const dayMs = 86400000;
+
+  [...upcoming.children].forEach((li) => {
+    const d = new Date(li.dataset.date + 'T00:00:00');
+    if (d < today) {
+      const badge = li.querySelector('.badge');
+      badge.className = 'badge badge--past';
+      badge.textContent = 'Terminé';
+      li.classList.remove('reveal');
+      li.classList.add('is-visible');
+      past.prepend(li);  /* le plus récent en premier */
+    }
+  });
+  if (past.children.length) {
+    pastWrap.hidden = false;
+    document.getElementById('past-label').textContent =
+      `${past.children.length} événement${past.children.length > 1 ? 's' : ''} passé${past.children.length > 1 ? 's' : ''} en 2026`;
+  }
+  const next = upcoming.querySelector('li');
+  if (next) {
+    const card = next.querySelector('.event-card');
+    card.classList.add('is-next');
+    const days = Math.round((new Date(next.dataset.date + 'T00:00:00') - today) / dayMs);
+    const when = days === 0 ? "aujourd'hui" : days === 1 ? 'demain' : `dans ${days} jours`;
+    const flag = document.createElement('div');
+    flag.className = 'next-flag';
+    flag.innerHTML = `<i class="ph-light ph-clock" aria-hidden="true"></i> Prochain rendez-vous, ${when}`;
+    card.children[1].prepend(flag);
+  }
+
+  /* ---------- Filtre par type (publications IFRAS) ---------- */
+  const seg = document.getElementById('segmented');
+  const indicator = seg.querySelector('.segmented-indicator');
+  const segBtns = [...seg.querySelectorAll('button')];
+  let currentType = 'all';
+  const moveIndicator = (btn) => {
+    seg.style.setProperty('--x', `${btn.offsetLeft}px`);
+    seg.style.setProperty('--w', `${btn.offsetWidth}px`);
+  };
+  segBtns.forEach((btn) => btn.addEventListener('click', () => {
+    currentType = btn.dataset.type;
+    segBtns.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+    moveIndicator(btn);
+    applyFilters();
+  }));
+  const initIndicator = () => moveIndicator(seg.querySelector('[aria-pressed="true"]'));
+  initIndicator();
+  window.addEventListener('resize', initIndicator);
+  document.fonts?.ready.then(initIndicator);
+
+  /* ---------- Recherche globale ---------- */
+  const finder = document.getElementById('finder');
+  const input = document.getElementById('finder-input');
+  const result = document.getElementById('finder-result');
+  const chips = [...document.querySelectorAll('.chip')];
+  const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
+
+  const items = [...document.querySelectorAll('.searchable')].map((el) => ({
+    el,
+    group: el.closest('[data-group]')?.dataset.group || 'evenements',
+    text: norm(el.textContent),
+    type: el.dataset.type
+  }));
+  const labels = { articles: ['article', 'articles'], ifras: ['publication IFRAS', 'publications IFRAS'], evenements: ['événement', 'événements'] };
+
+  function applyFilters() {
+    const q = norm(input.value);
+    finder.classList.toggle('has-value', q.length > 0);
+    const counts = { articles: 0, ifras: 0, evenements: 0 };
+
+    items.forEach(({ el, group, text, type }) => {
+      const okQuery = !q || text.includes(q);
+      const okType = group !== 'ifras' || currentType === 'all' || type === currentType;
+      const show = okQuery && okType;
+      const wasHidden = el.hidden;
+      el.hidden = !show;
+      if (show && wasHidden && !reduceMotion) {
+        el.classList.remove('pop-in'); void el.offsetWidth; el.classList.add('pop-in');
+      }
+      if (show) counts[group]++;
+    });
+
+    document.querySelectorAll('[data-empty-for]').forEach((p) => {
+      p.hidden = counts[p.dataset.emptyFor] > 0;
+    });
+    const pastCount = [...past.children].filter((li) => !li.hidden).length;
+    if (past.children.length) pastWrap.hidden = q ? pastCount === 0 : false;
+    if (q && pastCount) pastWrap.open = true;
+
+    if (!q) { result.textContent = ''; return; }
+    const total = counts.articles + counts.ifras + counts.evenements;
+    if (!total) { result.textContent = 'Aucun résultat. Essayez un autre mot-clé.'; return; }
+    const parts = Object.entries(counts).filter(([, n]) => n).map(([g, n]) =>
+      `<a href="#${g}">${n} ${labels[g][n > 1 ? 1 : 0]}</a>`);
+    result.innerHTML = `${total} résultat${total > 1 ? 's' : ''} : ${parts.join(', ')}`;
+  }
+
+  input.addEventListener('input', () => {
+    chips.forEach((c) => c.setAttribute('aria-pressed', String(norm(c.dataset.q) === norm(input.value))));
+    applyFilters();
+  });
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const first = items.find((i) => !i.el.hidden && i.el.offsetParent !== null);
+      first?.el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+    }
+    if (e.key === 'Escape' && input.value) { e.stopPropagation(); clear(); }
+  });
+  const clear = () => { input.value = ''; chips.forEach((c) => c.setAttribute('aria-pressed', 'false')); applyFilters(); input.focus(); };
+  finder.querySelector('.finder-clear').addEventListener('click', clear);
+  chips.forEach((chip) => chip.addEventListener('click', () => {
+    const on = chip.getAttribute('aria-pressed') !== 'true';
+    chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip && on)));
+    input.value = on ? chip.dataset.q : '';
+    applyFilters();
+  }));
+
+  /* ---------- Réseau de connaissances (fond du hero) ---------- */
+  const canvas = document.getElementById('network');
+  const ctx = canvas.getContext('2d');
+  const hero = document.querySelector('.hero');
+  const COLORS = ['#60a5fa', '#34d399', '#f97316', '#8fa2ff'];
+  let nodes = [], w = 0, h = 0, running = false, raf = 0, last = 0;
+  const pointer = { x: -9999, y: -9999 };
+  const LINK = 130;
+
+  const build = () => {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = hero.clientWidth; h = hero.clientHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const count = Math.min(90, Math.round((w * h) / 16000));
+    nodes = Array.from({ length: count }, () => ({
+      x: Math.random() * w, y: Math.random() * h,
+      vx: (Math.random() - .5) * .018, vy: (Math.random() - .5) * .018,
+      r: Math.random() * 1.4 + .8,
+      c: Math.random() < .18 ? COLORS[Math.floor(Math.random() * COLORS.length)] : '#aab3d6'
+    }));
+  };
+
+  const draw = () => {
+    ctx.clearRect(0, 0, w, h);
+    for (let i = 0; i < nodes.length; i++) {
+      const a = nodes[i];
+      for (let j = i + 1; j < nodes.length; j++) {
+        const b = nodes[j];
+        const dx = a.x - b.x, dy = a.y - b.y, d = Math.hypot(dx, dy);
+        if (d < LINK) {
+          ctx.globalAlpha = (1 - d / LINK) * .22;
+          ctx.strokeStyle = '#4f6bed';
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+        }
+      }
+      /* liens vers le curseur : le réseau réagit à la souris */
+      const pd = Math.hypot(a.x - pointer.x, a.y - pointer.y);
+      if (pd < LINK * 1.4) {
+        ctx.globalAlpha = (1 - pd / (LINK * 1.4)) * .45;
+        ctx.strokeStyle = '#8fa2ff';
+        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(pointer.x, pointer.y); ctx.stroke();
+      }
+    }
+    for (const n of nodes) {
+      ctx.globalAlpha = n.c === '#aab3d6' ? .55 : .9;
+      ctx.fillStyle = n.c;
+      ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  };
+
+  const loop = (t) => {
+    const dt = Math.min(64, t - (last || t)); last = t;
+    for (const n of nodes) {
+      n.x += n.vx * dt; n.y += n.vy * dt;
+      if (n.x < -20) n.x = w + 20; else if (n.x > w + 20) n.x = -20;
+      if (n.y < -20) n.y = h + 20; else if (n.y > h + 20) n.y = -20;
+    }
+    draw();
+    if (running) raf = requestAnimationFrame(loop);
+  };
+  const start = () => { if (running || reduceMotion) return; running = true; last = 0; raf = requestAnimationFrame(loop); };
+  const stop = () => { running = false; cancelAnimationFrame(raf); };
+
+  build(); draw(); canvas.classList.add('is-ready');
+
+  hero.addEventListener('pointermove', (e) => {
+    if (e.pointerType !== 'mouse') return;
+    const r = canvas.getBoundingClientRect();
+    pointer.x = e.clientX - r.left; pointer.y = e.clientY - r.top;
+    if (reduceMotion) draw();
+  });
+  hero.addEventListener('pointerleave', () => { pointer.x = pointer.y = -9999; if (reduceMotion) draw(); });
+
+  let heroVisible = true;
+  new IntersectionObserver(([entry]) => {
+    heroVisible = entry.isIntersecting;
+    heroVisible && !document.hidden ? start() : stop();
+  }).observe(hero);
+  document.addEventListener('visibilitychange', () => { document.hidden ? stop() : heroVisible && start(); });
+  let resizeTimer = 0;
+  window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => { build(); draw(); }, 150); });
+})();
+</script>
 
 </body>
 </html>
