@@ -2,1243 +2,1699 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
-<title>Programmes actifs — IFRAS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<title>Programmes actifs | IFRAS</title>
+<meta name="description" content="Les six programmes actifs de l'IFRAS : exploration habitée, exoplanètes, propulsion, communication quantique, simulation et robotique.">
+<meta name="theme-color" content="#050b1e">
+<link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
 
 <style>
-
+/* =========================================================
+   TOKENS (identiques à programmes.html)
+   ========================================================= */
 :root {
-  --bg-main:  #050b1e;
-  --bg-dark:  #020617;
+  --bg-main: #050b1e;
+  --bg-dark: #020617;
   --bg-light: #070f2b;
-  --bg-menu:  #081235;
-  --border:   #1b2555;
-  --accent:   #4f6bed;
+  --bg-raise: #0a1436;
+  --accent: #4f6bed;
+  --accent-hover: #3d5adb;
+  --accent-soft: rgba(79,107,237,.14);
+  --accent-line: rgba(79,107,237,.38);
   --text-main: #e6e6e6;
+  --text-strong: #f5f7ff;
   --text-soft: #aab3d6;
-  --sidebar-w: 270px;
+  --text-mute: #8891b8;
+  --border: #1b2555;
+
+  /* Couleurs de statut : une seule légende pour toute la page */
+  --st-active: #34d399;
+  --st-phase: #60a5fa;
+  --st-restricted: #facc15;
+  --st-future: #a78bfa;
+  --st-archived: #9ca3af;
+  --st-aborted: #fb7185;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --header-h: 68px;
+  --subnav-h: 48px;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 20px); }
 
 body {
-  font-family: "DM Sans", sans-serif;
+  margin: 0;
+  font-family: "DM Sans", "Segoe UI", system-ui, sans-serif;
   background: var(--bg-main);
   color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* ===== HEADER ===== */
+img { display: block; max-width: 100%; }
+a { color: inherit; }
 
-header {
-  position: fixed; top: 0; width: 100%;
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.skip-link {
+  position: absolute; left: 16px; top: -48px;
+  padding: 10px 16px;
+  background: var(--accent); color: #fff;
+  border-radius: var(--radius-sm);
+  z-index: 3000; text-decoration: none;
+  transition: top 160ms var(--ease-out);
+}
+.skip-link:focus { top: 12px; }
+
+.container { max-width: 1300px; margin: 0 auto; padding: 0 30px; }
+
+/* =========================================================
+   BOUTONS
+   ========================================================= */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 22px;
+  border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 500;
+  text-decoration: none; white-space: nowrap;
+  border: 1px solid transparent;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.btn:active { transform: scale(0.97); }
+.btn i { font-size: 16px; transition: transform 200ms var(--ease-out); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-ghost { border-color: var(--accent-line); color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-ghost:hover { background: var(--accent-soft); border-color: var(--accent); }
+  .btn:hover i { transform: translateX(3px); }
+}
+
+/* =========================================================
+   HEADER (opaque)
+   ========================================================= */
+.site-header {
+  position: fixed; inset: 0 0 auto 0;
   z-index: 2000;
+  height: var(--header-h);
   background: rgba(5,11,30,.88);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
   border-bottom: 1px solid var(--border);
 }
+.header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.header-left { display: flex; align-items: center; gap: 44px; }
+.logo-link { display: flex; align-items: center; }
+.logo-link img { height: 44px; width: auto; }
 
-.header-inner {
-  max-width: 1300px; margin: auto;
-  padding: 12px 30px;
-  display: flex; align-items: center; justify-content: space-between;
-}
-
-.header-left { display: flex; align-items: center; gap: 40px; }
-.logo-link img { height: 60px; }
-.main-nav { list-style: none; display: flex; gap: 32px; }
-
+.main-nav { list-style: none; display: flex; gap: 6px; margin: 0; padding: 0; }
 .main-nav a {
-  text-decoration: none; color: var(--text-soft);
-  font-size: 14px; letter-spacing: .05em;
+  position: relative; display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--text-soft);
+  font-size: 14px; letter-spacing: .02em;
+  border-radius: 6px;
+  transition: color 160ms ease;
+}
+.main-nav a::after {
+  content: ""; position: absolute;
+  left: 12px; right: 12px; bottom: 2px; height: 1px;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 200ms var(--ease-out);
+}
+.main-nav a[aria-current="page"] { color: #fff; }
+.main-nav a[aria-current="page"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .main-nav a:hover { color: #fff; }
+  .main-nav a:hover::after { transform: scaleX(1); }
 }
 
-.main-nav a:hover,
-.main-nav a.active-nav { color: white; }
+.header-right { display: flex; align-items: center; gap: 10px; }
+.header-right .btn { padding: 9px 18px; font-size: 13px; }
 
-.header-right a {
-  padding: 8px 18px; border-radius: 6px;
-  border: 1px solid var(--accent);
-  color: white; text-decoration: none; font-size: 13px;
+.menu-toggle {
+  display: none;
+  width: 42px; height: 42px;
+  align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: #fff; font-size: 20px; cursor: pointer;
+  transition: transform 160ms var(--ease-out);
 }
+.menu-toggle:active { transform: scale(0.95); }
 
-.header-right a:hover { background: var(--accent); }
+.mobile-panel {
+  position: fixed; top: var(--header-h); left: 12px; right: 12px;
+  z-index: 1999;
+  padding: 10px;
+  background: rgba(7,15,43,.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(2,6,23,.6);
+  transform-origin: top right;
+  opacity: 0; transform: scale(0.96) translateY(-6px);
+  pointer-events: none; visibility: hidden;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s linear 220ms;
+}
+.mobile-panel.is-open {
+  opacity: 1; transform: none; pointer-events: auto; visibility: visible;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s;
+}
+.mobile-panel ul { list-style: none; margin: 0; padding: 0; }
+.mobile-panel a {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px; color: var(--text-main);
+  text-decoration: none; font-size: 16px; border-radius: 10px;
+}
+.mobile-panel a[aria-current="page"] { background: var(--accent-soft); color: #fff; }
+.mobile-panel .btn { width: 100%; justify-content: center; margin-top: 8px; }
 
-/* ===== BANDEAU PROGRAMMES ===== */
-
-.program-filter {
-  margin-top: 84px;
-  background: var(--bg-light);
+/* =========================================================
+   SOUS-NAVIGATION PAR STATUT + MENUS DÉROULANTS
+   ========================================================= */
+.subnav {
+  position: sticky;
+  top: var(--header-h);
+  margin-top: var(--header-h);
+  z-index: 1500;
+  height: var(--subnav-h);
+  background: rgba(8,18,53,.94);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
 }
 
-.program-filter ul {
+.subnav-list {
+  height: 100%;
+  list-style: none; margin: 0 auto; padding: 0 30px;
   max-width: 1300px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  list-style: none;
-  padding: 0 30px;
+  display: flex; align-items: stretch; justify-content: space-between;
 }
 
-.program-filter li {
+.subnav-item { position: relative; display: flex; }
+
+.subnav-trigger {
   position: relative;
-  padding: 14px 18px;
-  cursor: pointer;
-  font-size: 14px;
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 14px;
   color: var(--text-soft);
-  letter-spacing: .06em;
-  transition: color .2s;
+  text-decoration: none;
+  font-size: 14px; font-weight: 500;
+  letter-spacing: .02em;
+  white-space: nowrap;
+  transition: color 160ms ease;
 }
-
-.program-filter li.active-filter {
-  color: white;
-  border-bottom: 2px solid var(--accent);
+.subnav-count {
+  min-width: 22px; height: 20px; padding: 0 6px;
+  display: inline-grid; place-items: center;
+  border-radius: 999px;
+  font-size: 11.5px; font-weight: 500;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c) 26%, transparent);
+  font-variant-numeric: tabular-nums;
 }
+.subnav-trigger > i { font-size: 11px; opacity: .6; transition: transform 200ms var(--ease-out); }
 
-.program-filter li:hover { color: white; background: rgba(79,107,237,.1); border-radius: 6px; }
+.subnav-trigger::after {
+  content: ""; position: absolute;
+  left: 14px; right: 14px; bottom: -1px; height: 2px;
+  background: var(--c, var(--accent));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+/* section visible à l'écran (scrollspy) */
+.subnav-trigger[aria-current="true"] { color: #fff; }
+.subnav-trigger[aria-current="true"]::after { transform: scaleX(1); }
+
+.subnav-item.is-open .subnav-trigger,
+.subnav-item:has(:focus-visible) .subnav-trigger { color: #fff; }
+.subnav-item.is-open .subnav-trigger::after,
+.subnav-item:has(:focus-visible) .subnav-trigger::after { transform: scaleX(1); }
+.subnav-item.is-open .subnav-trigger > i { transform: rotate(180deg); }
 
 .dropdown {
   position: absolute;
-  top: 48px; left: 0;
-  background: #050b1e;
+  top: calc(100% + 1px); left: 0;
+  width: 360px;
+  padding: 10px;
+  background: rgba(6,13,40,.98);
   border: 1px solid var(--border);
-  min-width: 220px;
-  display: none;
-  z-index: 200;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 16px 40px rgba(0,0,0,.4);
+  border-top: 2px solid var(--c, var(--accent));
+  border-radius: 0 0 var(--radius) var(--radius);
+  box-shadow: 0 24px 60px rgba(2,6,23,.6);
+  transform-origin: top left;
+  opacity: 0; transform: scale(0.97) translateY(-4px);
+  visibility: hidden; pointer-events: none;
+  transition: opacity 160ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s linear 200ms;
 }
+.subnav-item--end .dropdown { left: auto; right: 0; transform-origin: top right; }
 
+.subnav-item.is-open .dropdown,
+.subnav-item:has(:focus-visible) .dropdown {
+  opacity: 1; transform: none; visibility: visible; pointer-events: auto;
+  transition: opacity 160ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s;
+}
+.subnav.is-instant .dropdown { transition-duration: 0ms !important; }
+
+.dropdown ul { list-style: none; margin: 0; padding: 0; }
 .dropdown a {
-  display: block; padding: 10px 16px;
-  font-size: 13px; color: var(--text-soft);
+  display: flex; align-items: baseline; gap: 12px;
+  padding: 9px 10px;
+  border-radius: 8px;
   text-decoration: none;
-  border-bottom: 1px solid rgba(27,37,85,.5);
-  transition: background .15s, color .15s;
+  transition: background-color 120ms ease;
+}
+.dropdown a strong {
+  font-family: "Syne", sans-serif;
+  font-size: 12.5px; font-weight: 700; letter-spacing: .06em;
+  color: #fff;
+  min-width: 96px;
+}
+.dropdown a span { font-size: 13px; color: var(--text-soft); line-height: 1.35; }
+@media (hover: hover) and (pointer: fine) {
+  .subnav-trigger:hover { color: #fff; }
+  .dropdown a:hover { background: rgba(255,255,255,.04); }
+  .dropdown a:hover span { color: #fff; }
 }
 
-.dropdown a:hover { background: rgba(79,107,237,.12); color: white; }
-.program-filter li:hover .dropdown { display: block; }
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero {
+  position: relative;
+  padding: 64px 0 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+.starfield {
+  position: absolute; inset: 0; z-index: -2;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1200ms ease;
+}
+.starfield.is-ready { opacity: 1; }
+.hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(ellipse 55% 60% at 74% 42%, rgba(52,211,153,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 55% at 70% 35%, rgba(79,107,237,0.12) 0%, transparent 70%),
+    linear-gradient(180deg, transparent 70%, var(--bg-main) 100%);
+  pointer-events: none;
+}
 
-/* ===== LAYOUT ===== */
-
-.page-wrap {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 0 30px;
+.hero-grid {
   display: grid;
-  grid-template-columns: var(--sidebar-w) 1fr;
-  gap: 0;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  margin: 0 0 26px; padding: 0; list-style: none;
+  font-size: 13px; color: var(--text-mute);
+}
+.breadcrumb a { color: var(--text-soft); text-decoration: none; transition: color 160ms ease; }
+.breadcrumb i { font-size: 11px; }
+@media (hover: hover) and (pointer: fine) { .breadcrumb a:hover { color: #fff; } }
+
+.live-badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 6px 13px 6px 11px;
+  border-radius: 999px;
+  font-size: 13px; font-weight: 500;
+  color: var(--st-active);
+  background: color-mix(in srgb, var(--st-active) 9%, transparent);
+  border: 1px solid color-mix(in srgb, var(--st-active) 26%, transparent);
+  margin-bottom: 22px;
+}
+.live-dot { position: relative; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.live-dot::after {
+  content: ""; position: absolute; inset: -4px; border-radius: 50%;
+  border: 1px solid currentColor;
+  animation: pulse 2400ms var(--ease-out) infinite;
+}
+@keyframes pulse {
+  0%   { transform: scale(.6); opacity: .9; }
+  70%  { transform: scale(1.9); opacity: 0; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
+.hero h1 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(44px, 6.2vw, 84px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--text-strong);
+  margin: 0 0 28px;
+}
+.hero h1 .line { display: block; overflow: hidden; padding-bottom: .14em; margin-bottom: -.14em; }
+.hero h1 .line > span {
+  display: block;
+  transform: translateY(105%);
+  animation: lineUp 900ms var(--ease-out) forwards;
+  animation-delay: calc(120ms + var(--i, 0) * 110ms);
+}
+.hero h1 .line--soft { color: #6ee7b7; font-weight: 600; }
+@keyframes lineUp { to { transform: none; } }
+
+.hero-desc {
+  max-width: 44ch;
+  color: var(--text-soft);
+  font-size: 17px; line-height: 1.7;
+  margin: 0 0 34px;
+  font-weight: 300;
+}
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.hero-in {
+  opacity: 0;
+  animation: heroIn 700ms var(--ease-out) forwards;
+  animation-delay: calc(100ms + var(--i, 0) * 80ms);
+}
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(14px); filter: blur(4px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+
+/* ----- Système orbital : un programme = une orbite ----- */
+.orbit-wrap {
+  position: relative;
+  height: 480px;
+  opacity: 0;
+  animation: fadeOnly 1400ms ease 300ms forwards;
+  -webkit-mask-image: radial-gradient(ellipse 70% 72% at 50% 50%, #000 62%, transparent 100%);
+          mask-image: radial-gradient(ellipse 70% 72% at 50% 50%, #000 62%, transparent 100%);
+}
+.orbit-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+.orbit-node {
+  position: absolute; left: 0; top: 0;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 4px 9px 4px 5px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-family: "Syne", sans-serif;
+  font-size: 11.5px; font-weight: 700; letter-spacing: .08em;
+  color: #fff;
+  background: rgba(5,11,30,.72);
+  border: 1px solid color-mix(in srgb, var(--c) 34%, transparent);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  white-space: nowrap;
+  will-change: transform, opacity;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+.orbit-node::before {
+  content: ""; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--c);
+  box-shadow: 0 0 10px var(--c);
+  flex-shrink: 0;
+}
+.orbit-node:active { scale: .96; }
+@media (hover: hover) and (pointer: fine) {
+  .orbit-node:hover { border-color: var(--c); background: color-mix(in srgb, var(--c) 18%, rgba(5,11,30,.9)); }
+}
+
+/* ----- Chiffres (3 seulement) ----- */
+.hero-stats {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.hero-stat { padding: 26px 24px; display: flex; flex-direction: column; gap: 6px; }
+.hero-stat + .hero-stat { border-left: 1px solid var(--border); }
+.hero-stat-value {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 800; color: #fff;
+  letter-spacing: -0.03em; line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.hero-stat-label { font-size: 13px; color: var(--text-soft); }
+
+/* =========================================================
+   MISE EN PAGE : SOMMAIRE + PROGRAMMES
+   ========================================================= */
+.layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 56px;
   align-items: start;
 }
 
-/* ===== SIDEBAR ===== */
-
-.sidebar {
+.toc {
   position: sticky;
-  top: 148px;
-  padding: 48px 32px 48px 0;
+  top: calc(var(--header-h) + var(--subnav-h) + 32px);
+  padding: 64px 0;
 }
-
-.sidebar-label {
-  font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
-  color: rgba(170,179,214,.35); font-weight: 500;
-  margin-bottom: 24px; padding-left: 16px;
+.toc-label { font-size: 13px; color: var(--text-mute); margin: 0 0 14px 16px; }
+.toc-track { position: relative; }
+.toc-track::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 1px;
+  background: var(--border);
 }
-
-.sidebar-nav { list-style: none; position: relative; }
-
-.sidebar-progress {
-  position: absolute; left: 0; top: 0; bottom: 0;
-  width: 2px; background: rgba(79,107,237,.08);
+.toc-indicator {
+  position: absolute; left: 0; top: 0;
+  width: 2px; height: var(--h, 0px);
+  background: var(--c, var(--accent));
+  border-radius: 2px;
+  transform: translateY(var(--y, 0px));
+  transition: transform 320ms var(--ease-out), height 320ms var(--ease-out), background-color 320ms ease;
 }
-
-.sidebar-nav a {
+.toc-list { list-style: none; margin: 0; padding: 0; }
+.toc-list a {
   display: flex; align-items: center; gap: 12px;
-  padding: 10px 16px; font-size: 13px;
-  color: var(--text-soft); text-decoration: none;
-  border-left: 2px solid transparent;
-  transition: color .2s, border-color .2s, background .2s;
-  border-radius: 0 6px 6px 0; font-weight: 300;
-  line-height: 1.4;
+  padding: 10px 16px;
+  font-family: "Syne", sans-serif;
+  font-size: 13.5px; font-weight: 600; letter-spacing: .05em;
+  color: var(--text-soft);
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+.toc-list a::before {
+  content: ""; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--c);
+  opacity: .45;
+  transition: opacity 160ms ease, box-shadow 200ms ease;
+}
+.toc-list a[aria-current="true"] { color: #fff; }
+.toc-list a[aria-current="true"]::before { opacity: 1; box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 20%, transparent); }
+@media (hover: hover) and (pointer: fine) {
+  .toc-list a:hover { color: #fff; }
+  .toc-list a:hover::before { opacity: 1; }
+}
+.toc-back {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 26px 0 0 16px;
+  font-size: 13.5px; color: var(--text-soft);
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+.toc-back i { transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .toc-back:hover { color: #fff; }
+  .toc-back:hover i { transform: translateX(-3px); }
 }
 
-.sidebar-nav a:hover {
-  color: white; background: rgba(255,255,255,.03);
-  border-left-color: rgba(79,107,237,.3);
-}
-
-.sidebar-nav a.active {
-  color: white; font-weight: 500;
-  background: rgba(79,107,237,.07);
-  border-left-color: var(--accent);
-}
-
-.sidebar-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  flex-shrink: 0; opacity: .85;
-}
-
-.sidebar-divider { height: 1px; background: var(--border); margin: 20px 16px; }
-
-.sidebar-back {
-  display: flex; align-items: center; gap: 8px;
-  padding: 8px 16px; font-size: 12px;
-  color: rgba(170,179,214,.4); text-decoration: none;
-  transition: color .2s; font-weight: 300;
-}
-
-.sidebar-back:hover { color: white; }
-
-/* ===== CONTENU PRINCIPAL ===== */
-
-.main-content {
-  padding: 48px 0 100px 52px;
-  border-left: 1px solid var(--border);
-  min-width: 0;
-}
-
-/* ===== SECTION PRÉSENTATION ===== */
-
-.intro-section {
-  padding-bottom: 60px;
+.toc-mobile {
+  display: none;
+  position: sticky;
+  top: calc(var(--header-h) + var(--subnav-h));
+  z-index: 10;
+  margin: 0 -20px;
+  padding: 10px 20px;
+  background: rgba(5,11,30,.94);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
-  scroll-margin-top: 160px;
+  overflow-x: auto; scrollbar-width: none;
+  white-space: nowrap;
+}
+.toc-mobile::-webkit-scrollbar { display: none; }
+.toc-mobile a {
+  display: inline-flex; align-items: center; gap: 7px;
+  margin-right: 6px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  font-family: "Syne", sans-serif;
+  font-size: 12px; font-weight: 700; letter-spacing: .06em;
+  color: var(--text-soft);
+  text-decoration: none;
+  transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease;
+}
+.toc-mobile a::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--c); }
+.toc-mobile a[aria-current="true"] {
+  color: #fff;
+  border-color: color-mix(in srgb, var(--c) 45%, transparent);
+  background: color-mix(in srgb, var(--c) 12%, transparent);
 }
 
-.section-eyebrow {
+.content { min-width: 0; padding-bottom: 20px; }
+
+/* =========================================================
+   PROGRAMME
+   ========================================================= */
+.prog {
+  position: relative;
+  padding: 72px 0;
+  border-top: 1px solid var(--border);
+}
+.prog:first-child { border-top: 0; }
+/* halo coloré discret, propre à chaque programme */
+.prog::before {
+  content: ""; position: absolute; top: 0; right: -10%;
+  width: 520px; height: 420px;
+  background: radial-gradient(ellipse at center, color-mix(in srgb, var(--c) 9%, transparent) 0%, transparent 65%);
+  pointer-events: none; z-index: -1;
+}
+.prog::after {
+  content: ""; position: absolute; top: -1px; left: 0; width: 72px; height: 2px;
+  background: var(--c);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 700ms var(--ease-out) 150ms;
+}
+.prog.is-visible::after { transform: scaleX(1); }
+.prog:first-child::after { display: none; }
+
+.prog-top { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+
+.card-code {
+  font-family: "Syne", sans-serif;
+  font-size: 12.5px; font-weight: 700; letter-spacing: .1em;
+  padding: 5px 11px; border-radius: 6px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 9%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c) 26%, transparent);
+}
+.status {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 12px; font-weight: 500;
+  padding: 4px 10px 4px 9px;
+  border-radius: 999px;
+  color: var(--s);
+  background: color-mix(in srgb, var(--s) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--s) 26%, transparent);
+  white-space: nowrap;
+}
+.status i { font-size: 13px; }
+.status .live-dot { width: 6px; height: 6px; }
+
+.prog-title {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(28px, 3.2vw, 42px);
+  font-weight: 700; color: #fff;
+  margin: 0 0 16px; letter-spacing: -0.02em; line-height: 1.1;
+  max-width: 22ch;
+  text-wrap: balance;
+}
+.lead {
+  margin: 0;
+  max-width: 60ch;
+  color: var(--text-soft);
+  font-size: 16.5px; line-height: 1.7; font-weight: 300;
+}
+
+.launch {
   display: inline-flex; align-items: center; gap: 10px;
-  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
-  color: #34d399; font-weight: 500; margin-bottom: 20px;
+  margin: 24px 0 0;
+  padding: 8px 14px 8px 10px;
+  border-radius: 999px;
+  background: rgba(5,11,30,.55);
+  border: 1px solid var(--border);
+  font-size: 13.5px; color: var(--text-main);
 }
+.launch i { font-size: 18px; color: var(--c); }
+.launch strong { color: #fff; font-weight: 500; }
 
-.section-eyebrow::before {
-  content: ''; display: block;
-  width: 24px; height: 1px; background: currentColor;
+.kpis {
+  display: flex; flex-wrap: wrap; gap: 14px 44px;
+  margin-top: 28px;
 }
-
-.intro-section h1 {
+.kpi { display: flex; flex-direction: column; gap: 4px; }
+.kpi-val {
   font-family: "Syne", sans-serif;
-  font-size: clamp(28px, 3.5vw, 46px);
-  font-weight: 800; letter-spacing: -0.03em;
-  line-height: 1.05; color: white; margin-bottom: 24px;
+  font-size: clamp(24px, 2.4vw, 32px); font-weight: 800;
+  color: #fff; letter-spacing: -0.03em; line-height: 1.05;
+}
+.kpi-val small { font-size: .55em; font-weight: 700; color: var(--c); margin-left: 4px; letter-spacing: 0; }
+.kpi-label { font-size: 13px; color: var(--text-soft); }
+
+.prog-body {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 28px;
+  margin-top: 40px;
+  align-items: start;
 }
 
-.intro-section h1 span {
-  color: transparent;
-  -webkit-text-stroke: 1.5px rgba(52,211,153,.5);
+/* Axes de recherche : icône + libellé, pas de paragraphe */
+.axes-label, .fiche-label {
+  font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text-mute); font-weight: 500;
+  margin: 0 0 14px;
 }
-
-.intro-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 36px;
-  margin-top: 32px;
+.axes {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
 }
-
-.intro-grid p {
-  font-size: 14.5px; color: var(--text-soft);
-  line-height: 1.85; font-weight: 300;
-}
-
-.intro-stats {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-  margin-top: 36px;
-}
-
-.intro-stat {
-  background: rgba(79,107,237,.05);
-  border: 1px solid rgba(79,107,237,.14);
-  border-radius: 10px; padding: 16px 20px;
-}
-
-.intro-stat-val {
-  font-family: "Syne", sans-serif; font-size: 24px;
-  font-weight: 800; color: white; letter-spacing: -0.03em;
-}
-
-.intro-stat-lbl {
-  font-size: 11px; color: var(--text-soft); font-weight: 300;
-  text-transform: uppercase; letter-spacing: .1em; margin-top: 3px;
-}
-
-/* ===== SECTIONS PROGRAMME ===== */
-
-.prog-section {
-  padding: 70px 0;
-  border-bottom: 1px solid var(--border);
-  scroll-margin-top: 160px;
-}
-
-.prog-section:last-child { border-bottom: none; }
-
-/* En-tête programme */
-
-.prog-header {
-  display: flex; align-items: flex-start;
-  justify-content: space-between; gap: 24px;
-  margin-bottom: 36px;
-}
-
-.prog-code-badge {
-  font-family: "Syne", sans-serif;
-  font-size: 11px; font-weight: 700; letter-spacing: .16em;
-  padding: 4px 12px; border-radius: 5px;
-  margin-bottom: 12px; display: inline-block;
-}
-
-.prog-header h2 {
-  font-family: "Syne", sans-serif;
-  font-size: clamp(20px, 2.5vw, 28px);
-  font-weight: 700; color: white;
-  letter-spacing: -0.02em; line-height: 1.15;
-}
-
-.prog-status-badge {
-  font-size: 11px; padding: 5px 12px; border-radius: 20px;
-  font-weight: 500; letter-spacing: .05em;
-  white-space: nowrap; flex-shrink: 0; margin-top: 4px;
-}
-
-.status-active    { background: rgba(52,211,153,.12); color: #34d399; border: 1px solid rgba(52,211,153,.25); }
-.status-restricted{ background: rgba(250,204,21,.10); color: #facc15; border: 1px solid rgba(250,204,21,.25); }
-.status-phase     { background: rgba(96,165,250,.12); color: #60a5fa; border: 1px solid rgba(96,165,250,.25); }
-
-/* Corps du programme */
-
-.prog-intro {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
-  margin-bottom: 32px;
-}
-
-.prog-intro p {
-  font-size: 14.5px; color: var(--text-soft);
-  line-height: 1.85; font-weight: 300;
-}
-
-.prog-intro p + p { margin-top: 14px; }
-
-/* Bloc fiche technique */
-.prog-fiche {
+.axes li {
+  display: flex; align-items: center; gap: 14px;
+  padding: 15px 16px;
   background: var(--bg-light);
   border: 1px solid var(--border);
-  border-radius: 14px; padding: 26px 28px;
-  display: flex; flex-direction: column; gap: 16px;
+  border-radius: 12px;
+  font-size: 14.5px; color: var(--text-main);
+  transition: border-color 200ms ease, transform 200ms var(--ease-out);
+}
+.axes i {
+  flex-shrink: 0;
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  font-size: 19px;
+  border-radius: 10px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 10%, transparent);
+  transition: transform 260ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .axes li:hover { border-color: color-mix(in srgb, var(--c) 38%, transparent); transform: translateY(-2px); }
+  .axes li:hover i { transform: rotate(-8deg) scale(1.06); }
 }
 
-.fiche-label {
-  font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
-  color: rgba(170,179,214,.4); font-weight: 500;
+/* Fiche compacte */
+.fiche {
+  padding: 22px;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.fiche-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: 14px; }
+.fiche-row + .fiche-row { margin-top: 10px; }
+.fiche-row dt { color: var(--text-mute); }
+.fiche-row dd { margin: 0; color: #fff; font-weight: 500; }
+.fiche dl { margin: 0 0 20px; }
+
+.depts { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 20px; padding: 0; list-style: none; }
+.depts a {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 5px 11px 5px 9px;
+  border-radius: 999px;
+  font-family: "Syne", sans-serif;
+  font-size: 11.5px; font-weight: 700; letter-spacing: .08em;
+  color: #fff; text-decoration: none;
+  background: color-mix(in srgb, var(--d) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--d) 28%, transparent);
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.depts a::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--d); }
+.depts a:active { transform: scale(.97); }
+@media (hover: hover) and (pointer: fine) {
+  .depts a:hover { background: color-mix(in srgb, var(--d) 20%, transparent); border-color: var(--d); }
 }
 
-.fiche-rows { display: flex; flex-direction: column; gap: 10px; }
-
-.fiche-row {
-  display: flex; align-items: baseline;
-  justify-content: space-between; gap: 12px;
-  font-size: 13px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid rgba(27,37,85,.6);
+.pubs { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+.pubs a {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  font-size: 13.5px; line-height: 1.45; color: var(--text-soft);
+  transition: color 160ms ease;
+}
+.pubs li:last-child a { border-bottom: 0; padding-bottom: 0; }
+.pubs i { font-size: 15px; color: var(--c); flex-shrink: 0; margin-top: 2px; transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .pubs a:hover { color: #fff; }
+  .pubs a:hover i { transform: translate(2px, -2px); }
 }
 
-.fiche-row:last-child { border-bottom: none; padding-bottom: 0; }
+/* =========================================================
+   BANDEAU FINAL (identique à programmes.html)
+   ========================================================= */
+.cta-band {
+  margin: 30px 0 100px;
+  padding: 52px 56px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background:
+    radial-gradient(ellipse 50% 90% at 100% 0%, rgba(167,139,250,.16), transparent 60%),
+    var(--bg-light);
+  display: grid;
+  grid-template-columns: 1.3fr auto;
+  gap: 32px;
+  align-items: center;
+}
+.cta-band h2 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(24px, 2.6vw, 34px);
+  font-weight: 700; color: #fff; margin: 0 0 10px; letter-spacing: -0.02em;
+}
+.cta-band p { margin: 0; color: var(--text-soft); font-size: 15.5px; line-height: 1.6; font-weight: 300; max-width: 52ch; }
+.cta-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
-.fiche-key {
-  color: rgba(170,179,214,.5); font-weight: 300; flex-shrink: 0;
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.site-footer {
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border);
+  padding: 36px 0;
+  font-size: 13px; color: var(--text-mute);
+}
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.footer-inner span:last-child { display: inline-flex; align-items: center; gap: 6px; }
+
+/* =========================================================
+   APPARITION AU DÉFILEMENT
+   ========================================================= */
+.js .reveal {
+  opacity: 0; transform: translateY(16px);
+  transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 60ms);
+}
+.js .reveal.is-visible { opacity: 1; transform: none; }
+.js .axes li.reveal.is-visible {
+  transition: border-color 200ms ease, transform 200ms var(--ease-out), opacity 700ms var(--ease-out);
+  transition-delay: 0ms;
 }
 
-.fiche-val {
-  color: var(--text-main); text-align: right; font-weight: 400;
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1100px) {
+  .layout { grid-template-columns: 180px 1fr; gap: 36px; }
+  .prog-body { grid-template-columns: 1fr; }
+  .fiche { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; }
+  .fiche > .pubs-wrap { grid-column: 2; grid-row: 1 / span 3; }
+}
+@media (max-width: 960px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 0; }
+  .orbit-wrap { height: 340px; order: -1; margin: -20px 0 10px; }
+  .hero-stats { grid-template-columns: repeat(3, 1fr); }
+  .layout { grid-template-columns: 1fr; gap: 0; }
+  .toc { display: none; }
+  .toc-mobile { display: block; }
+  html { scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 72px); }
+  .cta-band { grid-template-columns: 1fr; padding: 36px; }
+}
+@media (max-width: 960px), (hover: none) {
+  .subnav-list {
+    justify-content: flex-start; gap: 4px;
+    overflow-x: auto; scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+  }
+  .subnav-list::-webkit-scrollbar { display: none; }
+  .subnav-trigger > i, .dropdown { display: none; }
+}
+@media (max-width: 860px) {
+  .main-nav, .header-right .btn-desktop { display: none; }
+  .menu-toggle { display: inline-flex; }
+}
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .subnav-list { padding: 0 20px; }
+  .hero { padding-top: 36px; }
+  .hero-desc, .lead { font-size: 15.5px; }
+  .orbit-wrap { height: 240px; margin: -30px 0 0; -webkit-mask-image: none; mask-image: none; }
+  .orbit-node { font-size: 10px; padding: 3px 7px 3px 4px; gap: 6px; }
+  .orbit-node::before { width: 7px; height: 7px; }
+  .hero-stat { padding: 20px 12px; }
+  .hero-stat-label { font-size: 12px; }
+  .prog { padding: 52px 0; }
+  .axes { grid-template-columns: 1fr; }
+  .fiche { display: block; }
+  .kpis { gap: 14px 28px; }
+  .hero-actions .btn { flex: 1 1 100%; justify-content: center; }
+  .cta-band { padding: 28px 22px; border-radius: var(--radius); margin-bottom: 72px; }
+  .cta-actions .btn { flex: 1 1 100%; justify-content: center; }
 }
 
-/* KPIs programme */
-.prog-kpis {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
-  margin-bottom: 32px;
+/* =========================================================
+   MOUVEMENT RÉDUIT
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-in, .orbit-wrap { animation: fadeOnly 300ms ease forwards; }
+  .hero h1 .line > span { animation: none; transform: none; }
+  .live-dot::after { animation: none; opacity: 0; }
+  .js .reveal { transform: none; transition: opacity 300ms ease; transition-delay: 0ms; }
+  .prog::after, .toc-indicator { transition: none; }
+  .dropdown { transition-duration: 0ms; }
 }
-
-.prog-kpi {
-  border-radius: 10px; padding: 16px 18px;
-  border: 1px solid; display: flex; flex-direction: column; gap: 4px;
-}
-
-.prog-kpi-val {
-  font-family: "Syne", sans-serif; font-size: 22px;
-  font-weight: 800; letter-spacing: -0.03em;
-}
-
-.prog-kpi-lbl {
-  font-size: 11px; color: var(--text-soft);
-  font-weight: 300; line-height: 1.4;
-  text-transform: uppercase; letter-spacing: .08em;
-}
-
-/* Axes scientifiques */
-.prog-axes-wrap {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
-  margin-bottom: 32px;
-}
-
-.prog-axe {
-  background: rgba(255,255,255,.02);
-  border: 1px solid rgba(255,255,255,.05);
-  border-radius: 10px; padding: 18px 20px;
-  display: flex; gap: 14px; align-items: flex-start;
-  transition: background .2s, border-color .2s;
-}
-
-.prog-axe:hover {
-  background: rgba(79,107,237,.04);
-  border-color: rgba(79,107,237,.15);
-}
-
-.axe-icon {
-  font-size: 20px; flex-shrink: 0; margin-top: 2px;
-}
-
-.axe-title {
-  font-size: 13px; font-weight: 500; color: white;
-  margin-bottom: 4px;
-}
-
-.axe-desc {
-  font-size: 12.5px; color: var(--text-soft);
-  font-weight: 300; line-height: 1.6;
-}
-
-/* Partenaires */
-.prog-partners {
-  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px;
-}
-
-.partner-chip {
-  font-size: 12px; padding: 5px 14px; border-radius: 6px;
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(255,255,255,.07);
-  color: var(--text-soft); font-weight: 300;
-}
-
-/* Divider interne */
-.inner-divider {
-  height: 1px; background: var(--border);
-  margin: 28px 0;
-}
-
-/* Publications liées */
-.prog-pubs { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
-
-.pubs-label {
-  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
-  color: rgba(170,179,214,.35); margin-bottom: 4px;
-}
-
-.pub-item {
-  display: flex; align-items: center; gap: 14px;
-  padding: 11px 16px;
-  background: rgba(255,255,255,.02);
-  border: 1px solid rgba(255,255,255,.05);
-  border-radius: 8px; text-decoration: none; color: inherit;
-  transition: background .2s, border-color .2s; font-size: 13px;
-}
-
-.pub-item:hover { background: rgba(79,107,237,.06); border-color: rgba(79,107,237,.2); }
-
-.pub-chip {
-  font-size: 10px; padding: 2px 8px; border-radius: 4px;
-  background: rgba(79,107,237,.1); border: 1px solid rgba(79,107,237,.2);
-  color: #818cf8; font-weight: 500; white-space: nowrap; flex-shrink: 0;
-}
-
-.pub-text { color: var(--text-soft); font-weight: 300; flex: 1; }
-.pub-arrow { color: rgba(170,179,214,.3); font-size: 12px; }
-
-/* ===== FOOTER ===== */
-
-footer {
-  background: var(--bg-dark); border-top: 1px solid var(--border);
-  padding: 40px 30px; text-align: center;
-  font-size: 12px; color: #6b7280;
-}
-
-/* ===== ANIMATIONS ===== */
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.prog-section { animation: fadeUp .55s ease both; }
-.prog-section:nth-child(1) { animation-delay: .05s; }
-.prog-section:nth-child(2) { animation-delay: .10s; }
-.prog-section:nth-child(3) { animation-delay: .15s; }
-.prog-section:nth-child(4) { animation-delay: .20s; }
-.prog-section:nth-child(5) { animation-delay: .25s; }
-.prog-section:nth-child(6) { animation-delay: .30s; }
-
+@keyframes fadeOnly { to { opacity: 1; } }
 </style>
+
+<script>document.documentElement.classList.add('js');</script>
 </head>
+
 
 <body>
 
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+
 <!-- ===== HEADER ===== -->
-<header>
-  <div class="header-inner">
+<header class="site-header" id="header">
+  <div class="container header-inner">
     <div class="header-left">
-      <a href="index.html" class="logo-link"><img src="logo.png" alt="Logo IFRAS"></a>
-      <ul class="main-nav">
-        <li><a href="index.html">Accueil</a></li>
-        <li><a href="recherche.html">Recherche</a></li>
-        <li><a href="programmes.html" class="active-nav">Programmes</a></li>
-        <li><a href="publications.html">Publications</a></li>
-      </ul>
+      <a href="index.html" class="logo-link" aria-label="IFRAS, accueil">
+        <img src="logo.png" alt="Logo IFRAS" width="44" height="44">
+      </a>
+      <nav aria-label="Navigation principale">
+        <ul class="main-nav">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="recherche.html">Recherche</a></li>
+          <li><a href="programmes.html" aria-current="page">Programmes</a></li>
+          <li><a href="publications.html">Publications</a></li>
+        </ul>
+      </nav>
     </div>
     <div class="header-right">
-      <a href="connexion.html">Connexion</a>
+      <a href="connexion.html" class="btn btn-ghost btn-desktop">Connexion</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-panel" aria-label="Ouvrir le menu">
+        <i class="ph-light ph-list" aria-hidden="true"></i>
+      </button>
     </div>
   </div>
 </header>
 
-<!-- ===== BANDEAU PROGRAMMES ===== -->
-<div class="program-filter">
+<div class="mobile-panel" id="mobile-panel">
   <ul>
-    <li class="active-filter">Programmes actifs
-      <div class="dropdown">
-        <a href="programmes-actifs.html#artemis9">ARTEMIS-9</a>
-        <a href="programmes-actifs.html#orion3">ORION-3</a>
-        <a href="programmes-actifs.html#hermes">HERMES</a>
-        <a href="programmes-actifs.html#atlas">ATLAS</a>
-        <a href="programmes-actifs.html#lynx">LYNX</a>
-        <a href="programmes-actifs.html#prometheus">PROMETHEUS</a>
-      </div>
-    </li>
-    <li>Programmes archivés
-      <div class="dropdown">
-        <a href="programmes-archives.html#apollox">APOLLO-X</a>
-        <a href="programmes-archives.html#delphi">DELPHI</a>
-        <a href="programmes-archives.html#cassinir">CASSINI-R</a>
-      </div>
-    </li>
-    <li>Programmes futurs
-      <div class="dropdown">
-        <a href="programmes-futurs.html#hera">HERA</a>
-        <a href="programmes-futurs.html#noe">NOE</a>
-        <a href="programmes-futurs.html#titan0">TITAN-0</a>
-      </div>
-    </li>
-    <li>Programmes avortés
-      <div class="dropdown">
-        <a href="programmes-avortes.html#phoenix">PHOENIX</a>
-        <a href="programmes-avortes.html#daedalus">DAEDALUS</a>
-        <a href="programmes-avortes.html#icarus2">ICARUS-2</a>
-      </div>
-    </li>
+    <li><a href="index.html">Accueil <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="recherche.html">Recherche <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="programmes.html" aria-current="page">Programmes <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="publications.html">Publications <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
   </ul>
+  <a href="connexion.html" class="btn btn-primary">Connexion</a>
 </div>
 
-<!-- ===== LAYOUT ===== -->
-<div class="page-wrap">
 
-  <!-- ===== SIDEBAR ===== -->
-  <aside class="sidebar">
-    <div class="sidebar-label">Programmes actifs</div>
-    <ul class="sidebar-nav" id="sidebar-nav">
-      <div class="sidebar-progress"></div>
-      <li>
-        <a href="#presentation" class="active">
-          <span class="sidebar-dot" style="background:#34d399;"></span>
-          Vue d'ensemble
-        </a>
-      </li>
-      <li>
-        <a href="#artemis9">
-          <span class="sidebar-dot" style="background:#34d399;"></span>
-          ARTEMIS-9
-        </a>
-      </li>
-      <li>
-        <a href="#orion3">
-          <span class="sidebar-dot" style="background:#60a5fa;"></span>
-          ORION-3
-        </a>
-      </li>
-      <li>
-        <a href="#prometheus">
-          <span class="sidebar-dot" style="background:#f97316;"></span>
-          PROMETHEUS
-        </a>
-      </li>
-      <li>
-        <a href="#hermes">
-          <span class="sidebar-dot" style="background:#c084fc;"></span>
-          HERMES
-        </a>
-      </li>
-      <li>
-        <a href="#atlas">
-          <span class="sidebar-dot" style="background:#34d399;"></span>
-          ATLAS
-        </a>
-      </li>
-      <li>
-        <a href="#lynx">
-          <span class="sidebar-dot" style="background:#facc15;"></span>
-          LYNX
-        </a>
-      </li>
-    </ul>
-    <div class="sidebar-divider"></div>
-    <a href="programmes.html" class="sidebar-back">← Retour aux Programmes</a>
-  </aside>
+<!-- ===== SOUS-NAVIGATION PAR STATUT (identique à programmes.html) ===== -->
+<nav class="subnav" id="subnav" aria-label="Programmes par statut">
+  <ul class="subnav-list">
 
-  <!-- ===== CONTENU ===== -->
-  <main class="main-content">
+    <li class="subnav-item" style="--c:var(--st-active)">
+      <a class="subnav-trigger" href="#artemis9" aria-current="true" aria-haspopup="true" aria-expanded="false">Actifs <span class="subnav-count">6</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
+      <div class="dropdown">
+        <ul>
+          <li><a href="#artemis9"><strong>ARTEMIS-9</strong><span>Mission habitée sur Mars</span></a></li>
+          <li><a href="#orion3"><strong>ORION-3</strong><span>Biosignatures d'exoplanètes</span></a></li>
+          <li><a href="#prometheus"><strong>PROMETHEUS</strong><span>Propulsion ionique</span></a></li>
+          <li><a href="#hermes"><strong>HERMES</strong><span>Communication quantique</span></a></li>
+          <li><a href="#atlas"><strong>ATLAS</strong><span>Environnements extraterrestres</span></a></li>
+          <li><a href="#lynx"><strong>LYNX</strong><span>Robotique autonome</span></a></li>
+        </ul>
+      </div>
+    </li>
+    <li class="subnav-item" style="--c:var(--st-future)">
+      <a class="subnav-trigger" href="programmes.html#futurs" aria-haspopup="true" aria-expanded="false">Futurs <span class="subnav-count">3</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
+      <div class="dropdown">
+        <ul>
+          <li><a href="programmes-futurs.html#noe"><strong>NOE</strong><span>Observation exosphérique, 2027</span></a></li>
+          <li><a href="programmes-futurs.html#hera"><strong>HERA</strong><span>Habitabilité des exolunes, 2028</span></a></li>
+          <li><a href="programmes-futurs.html#titan0"><strong>TITAN-0</strong><span>Sonde atmosphérique, 2029</span></a></li>
+        </ul>
+      </div>
+    </li>
 
-    <!-- ── PRÉSENTATION ── -->
-    <section class="intro-section" id="presentation">
-      <div class="section-eyebrow">Vue d'ensemble</div>
-      <h1>Programmes<br><span>actifs</span></h1>
+    <li class="subnav-item subnav-item--end" style="--c:var(--st-archived)">
+      <a class="subnav-trigger" href="programmes.html#archives" aria-haspopup="true" aria-expanded="false">Archivés <span class="subnav-count">3</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
+      <div class="dropdown">
+        <ul>
+          <li><a href="programmes-archives.html#apollox"><strong>APOLLO-X</strong><span>Cratères polaires lunaires</span></a></li>
+          <li><a href="programmes-archives.html#delphi"><strong>DELPHI</strong><span>Prédiction sismique</span></a></li>
+          <li><a href="programmes-archives.html#cassinir"><strong>CASSINI-R</strong><span>Archives Cassini par IA</span></a></li>
+        </ul>
+      </div>
+    </li>
 
-      <div class="intro-grid">
-        <div>
-          <p>Les six programmes actifs de l'IFRAS représentent le cœur battant de l'activité scientifique de l'institut. Chacun engage des équipes pluridisciplinaires sur des horizons de 5 à 15 ans, autour d'objectifs de rupture technologique ou de découverte scientifique de première importance. Ils couvrent l'ensemble de la chaîne — de la recherche fondamentale à la démonstration en conditions réelles.</p>
-          <p>Ces programmes sont pilotés par des comités de direction dédiés, font l'objet d'évaluations externes annuelles par des comités scientifiques internationaux, et sont soumis à des jalons de validation rigoureux. Leur financement repose sur une combinaison de crédits publics nationaux, de dotations de l'ESA et de contrats de recherche partenariale avec le secteur industriel.</p>
-        </div>
-        <div>
-          <p>La diversité thématique du portefeuille — exploration habitée, observation astrophysique, propulsion avancée, simulation expérimentale, robotique autonome et communications quantiques — reflète la volonté de l'IFRAS d'adresser simultanément les grands défis scientifiques de la décennie spatiale 2020–2035.</p>
-          <p>Les pages qui suivent détaillent pour chaque programme son contexte, ses objectifs, ses axes scientifiques, ses partenaires et ses publications récentes les plus significatives.</p>
+    <li class="subnav-item subnav-item--end" style="--c:var(--st-aborted)">
+      <a class="subnav-trigger" href="programmes.html#avortes" aria-haspopup="true" aria-expanded="false">Avortés <span class="subnav-count">3</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
+      <div class="dropdown">
+        <ul>
+          <li><a href="programmes-avortes.html#phoenix"><strong>PHOENIX</strong><span>Hypothermie profonde</span></a></li>
+          <li><a href="programmes-avortes.html#daedalus"><strong>DAEDALUS</strong><span>Voilier solaire</span></a></li>
+          <li><a href="programmes-avortes.html#icarus2"><strong>ICARUS-2</strong><span>Plongeur vénusien</span></a></li>
+        </ul>
+      </div>
+    </li>
+
+  </ul>
+</nav>
+
+<main id="contenu">
+
+<!-- ===== HERO ===== -->
+<section class="hero" aria-labelledby="hero-title">
+  <canvas class="starfield" id="starfield" aria-hidden="true"></canvas>
+  <div class="container">
+    <div class="hero-grid">
+
+      <div class="hero-left">
+        <ol class="breadcrumb hero-in" style="--i:0" aria-label="Fil d'Ariane">
+          <li><a href="programmes.html">Programmes</a></li>
+          <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+          <li aria-current="page">Actifs</li>
+        </ol>
+        <div class="live-badge hero-in" style="--i:1"><span class="live-dot" aria-hidden="true"></span> En cours d'exécution</div>
+        <h1 id="hero-title"><span class="line"><span style="--i:0">Programmes</span></span><span class="line line--soft"><span style="--i:1">actifs</span></span></h1>
+        <p class="hero-desc hero-in" style="--i:3">Six programmes en orbite autour d'une même ambition : repousser les limites de l'exploration. Chacun réunit plusieurs départements de l'IFRAS.</p>
+        <div class="hero-actions hero-in" style="--i:4">
+          <a href="#artemis9" class="btn btn-primary">Découvrir ARTEMIS-9 <i class="ph-light ph-arrow-down" aria-hidden="true"></i></a>
+          <a href="programmes.html" class="btn btn-ghost">Tous les programmes</a>
         </div>
       </div>
 
-      <div class="intro-stats">
-        <div class="intro-stat">
-          <div class="intro-stat-val">6</div>
-          <div class="intro-stat-lbl">Programmes en cours</div>
-        </div>
-        <div class="intro-stat">
-          <div class="intro-stat-val">+850</div>
-          <div class="intro-stat-lbl">Chercheurs mobilisés</div>
-        </div>
-        <div class="intro-stat">
-          <div class="intro-stat-val">12</div>
-          <div class="intro-stat-lbl">Agences partenaires</div>
-        </div>
-        <div class="intro-stat">
-          <div class="intro-stat-val">2027</div>
-          <div class="intro-stat-lbl">Prochain lancement majeur</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- ARTEMIS-9                                                     -->
-    <!-- ============================================================ -->
-    <section class="prog-section" id="artemis9">
-
-      <div class="prog-header">
-        <div>
-          <span class="prog-code-badge" style="color:#34d399; background:rgba(52,211,153,.08); border:1px solid rgba(52,211,153,.22);">ARTEMIS-9</span>
-          <h2>Mission habitée longue durée sur Mars</h2>
-        </div>
-        <span class="prog-status-badge status-restricted">Diffusion restreinte</span>
+      <div class="orbit-wrap" id="orbit-wrap">
+        <canvas class="orbit-canvas" id="orbit" aria-hidden="true"></canvas>
+        <nav aria-label="Accès rapide aux programmes">
+      <a class="orbit-node" href="#artemis9" style="--c:#34d399" data-i="0">ARTEMIS-9</a>
+      <a class="orbit-node" href="#orion3" style="--c:#60a5fa" data-i="1">ORION-3</a>
+      <a class="orbit-node" href="#prometheus" style="--c:#f97316" data-i="2">PROMETHEUS</a>
+      <a class="orbit-node" href="#hermes" style="--c:#c084fc" data-i="3">HERMES</a>
+      <a class="orbit-node" href="#atlas" style="--c:#2dd4bf" data-i="4">ATLAS</a>
+      <a class="orbit-node" href="#lynx" style="--c:#facc15" data-i="5">LYNX</a>
+        </nav>
       </div>
 
-      <div class="prog-kpis">
-        <div class="prog-kpi" style="background:rgba(52,211,153,.04); border-color:rgba(52,211,153,.14);">
-          <span class="prog-kpi-val" style="color:#34d399;">18 mois</span>
-          <span class="prog-kpi-lbl">Durée de séjour sur Mars</span>
-        </div>
-        <div class="prog-kpi" style="background:rgba(52,211,153,.04); border-color:rgba(52,211,153,.14);">
-          <span class="prog-kpi-val" style="color:#34d399;">6</span>
-          <span class="prog-kpi-lbl">Astronautes-chercheurs</span>
-        </div>
-        <div class="prog-kpi" style="background:rgba(52,211,153,.04); border-color:rgba(52,211,153,.14);">
-          <span class="prog-kpi-val" style="color:#34d399;">2027</span>
-          <span class="prog-kpi-lbl">Lancement prévu</span>
-        </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat reveal" style="--i:0">
+        <span class="hero-stat-value" data-count="6">6</span>
+        <span class="hero-stat-label">Programmes actifs</span>
       </div>
-
-      <div class="prog-intro">
-        <div>
-          <p>ARTEMIS-9 est le programme le plus ambitieux jamais conduit par l'IFRAS. Il vise à envoyer six astronautes-chercheurs sur la surface martienne pour un séjour scientifique de dix-huit mois, dans une base pressurisée entièrement autonome en énergie, en eau et en nourriture. Le programme constitue une rupture fondamentale avec les approches précédentes : pour la première fois, les équipages ne seront pas des explorateurs mais des scientifiques résidents, dont la mission principale est de produire des données irréproductibles sur site.</p>
-          <p>La base ARTEMIS, actuellement en assemblage final en orbite basse, repose sur une architecture modulaire en carbone pressé renforcé de Zylon — un matériau développé conjointement par le DSMR et un partenaire industriel — capable de résister aux tempêtes de poussière martiennes et aux fluctuations thermiques de ±120 °C de la surface. La production d'oxygène s'appuie sur un électrolyseur alimenté par une centrale nucléaire de petite taille à réacteur de sel fondu, une première pour une mission habitée.</p>
-          <p style="margin-top:14px">Sur le plan médical, le programme développe un protocole sans précédent de surveillance biologique continue des équipages, incluant séquençage ADN embarqué, biomarqueurs immunologiques et IRM portable — des technologies portées par le DSVT qui constitueront autant d'innovations médicales directement transférables à la médecine terrestre en milieu isolé.</p>
-        </div>
-        <div class="prog-fiche">
-          <span class="fiche-label">Fiche programme</span>
-          <div class="fiche-rows">
-            <div class="fiche-row">
-              <span class="fiche-key">Statut</span>
-              <span class="fiche-val">Phase III — Intégration finale</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Début programme</span>
-              <span class="fiche-val">Janvier 2018</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Budget total</span>
-              <span class="fiche-val">Classifié</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Département pilote</span>
-              <span class="fiche-val">DSVT / DSMR</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Chercheurs impliqués</span>
-              <span class="fiche-val">+340</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Partenaires principaux</span>
-              <span class="fiche-val">ESA, CNES, NASA, Airbus</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Publications produites</span>
-              <span class="fiche-val">127 à ce jour</span>
-            </div>
-          </div>
-        </div>
+      <div class="hero-stat reveal" style="--i:1">
+        <span class="hero-stat-value" data-count="8">8</span>
+        <span class="hero-stat-label">Départements mobilisés</span>
       </div>
+      <div class="hero-stat reveal" style="--i:2">
+        <span class="hero-stat-value" data-count="850" data-prefix="+">+850</span>
+        <span class="hero-stat-label">Chercheurs engagés</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-      <div class="inner-divider"></div>
+<!-- ===== PROGRAMMES ===== -->
+<div class="container">
+  <div class="layout">
 
-      <div style="margin-bottom:16px; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(170,179,214,.4);">Axes scientifiques prioritaires</div>
-      <div class="prog-axes-wrap">
-        <div class="prog-axe">
-          <span class="axe-icon">🧬</span>
+    <aside class="toc" aria-label="Sommaire">
+      <p class="toc-label">Programmes actifs</p>
+      <div class="toc-track">
+        <span class="toc-indicator" aria-hidden="true"></span>
+        <ul class="toc-list" id="toc">
+          <li><a href="#artemis9" data-target="artemis9" style="--c:#34d399">ARTEMIS-9</a></li>
+          <li><a href="#orion3" data-target="orion3" style="--c:#60a5fa">ORION-3</a></li>
+          <li><a href="#prometheus" data-target="prometheus" style="--c:#f97316">PROMETHEUS</a></li>
+          <li><a href="#hermes" data-target="hermes" style="--c:#c084fc">HERMES</a></li>
+          <li><a href="#atlas" data-target="atlas" style="--c:#2dd4bf">ATLAS</a></li>
+          <li><a href="#lynx" data-target="lynx" style="--c:#facc15">LYNX</a></li>
+        </ul>
+      </div>
+      <a href="programmes.html" class="toc-back"><i class="ph-light ph-arrow-left" aria-hidden="true"></i> Tous les programmes</a>
+    </aside>
+
+    <div class="content">
+      <nav class="toc-mobile" id="toc-mobile" aria-label="Programmes actifs">
+        <a href="#artemis9" data-target="artemis9" style="--c:#34d399">ARTEMIS-9</a>
+        <a href="#orion3" data-target="orion3" style="--c:#60a5fa">ORION-3</a>
+        <a href="#prometheus" data-target="prometheus" style="--c:#f97316">PROMETHEUS</a>
+        <a href="#hermes" data-target="hermes" style="--c:#c084fc">HERMES</a>
+        <a href="#atlas" data-target="atlas" style="--c:#2dd4bf">ATLAS</a>
+        <a href="#lynx" data-target="lynx" style="--c:#facc15">LYNX</a>
+      </nav>
+
+      <!-- ===== ARTEMIS-9 ===== -->
+      <section class="prog spy" id="artemis9" style="--c:#34d399" aria-labelledby="artemis9-title">
+        <div class="prog-top reveal">
+          <span class="card-code">ARTEMIS-9</span>
+          <span class="status" style="--s:var(--st-active)"><span class="live-dot" aria-hidden="true"></span> Actif, phase III</span>
+          <span class="status" style="--s:var(--st-restricted)"><i class="ph-light ph-lock-simple" aria-hidden="true"></i> Diffusion restreinte</span>
+        </div>
+        <h2 class="prog-title reveal" id="artemis9-title" style="--i:1">Mission habitée longue durée sur Mars</h2>
+        <p class="lead reveal" style="--i:2">Le programme phare de l'IFRAS : six astronautes-chercheurs vivront dans une base martienne autonome en énergie et en ressources vitales. Un seul objectif relie toutes les équipes : tenir dans la durée.</p>
+        <div class="launch reveal" style="--i:3"><i class="ph-light ph-rocket" aria-hidden="true"></i> <span>Lancement <strong>T2 2027</strong><span id="launch-countdown"></span></span></div>
+        <div class="kpis">
+          <div class="kpi reveal" style="--i:3"><span class="kpi-val">18<small>mois</small></span><span class="kpi-label">Durée de séjour</span></div>
+          <div class="kpi reveal" style="--i:4"><span class="kpi-val">6</span><span class="kpi-label">Astronautes-chercheurs</span></div>
+          <div class="kpi reveal" style="--i:5"><span class="kpi-val">2027</span><span class="kpi-label">Lancement prévu</span></div>
+        </div>
+
+        <div class="prog-body">
           <div>
-            <div class="axe-title">Biologie d'adaptation</div>
-            <div class="axe-desc">Étude des effets de la gravité martienne (0,38 g), du rayonnement cosmique et de l'isolement prolongé sur la physiologie et la psychologie humaines sur 18 mois consécutifs.</div>
+            <p class="axes-label">Axes de recherche</p>
+            <ul class="axes">
+            <li class="reveal" style="--i:0"><i class="ph-light ph-dna" aria-hidden="true"></i> Biologie d'adaptation</li>
+            <li class="reveal" style="--i:1"><i class="ph-light ph-mountains" aria-hidden="true"></i> Géologie sub-surfacique</li>
+            <li class="reveal" style="--i:2"><i class="ph-light ph-house-line" aria-hidden="true"></i> Habitat autonome</li>
+            <li class="reveal" style="--i:3"><i class="ph-light ph-lightning" aria-hidden="true"></i> Énergie en boucle fermée</li>
+            <li class="reveal" style="--i:4"><i class="ph-light ph-first-aid" aria-hidden="true"></i> Télémédecine</li>
+            <li class="reveal" style="--i:5"><i class="ph-light ph-plant" aria-hidden="true"></i> Terraformation expérimentale</li>
+            </ul>
           </div>
+          <aside class="fiche reveal" style="--i:2" aria-label="Fiche ARTEMIS-9">
+            <div>
+              <p class="fiche-label">Fiche</p>
+              <dl>
+                <div class="fiche-row"><dt>Lancé en</dt><dd>2021</dd></div>
+              </dl>
+            </div>
+            <div>
+              <p class="fiche-label">Départements pilotes</p>
+              <ul class="depts">
+              <li><a href="DSVT.html" style="--d:#34d399" title="Sciences du Vivant et de la Terre">DSVT</a></li>
+              <li><a href="DPET.html" style="--d:#f97316" title="Physique Énergétique et Thermique">DPET</a></li>
+              <li><a href="DSMR.html" style="--d:#fb7185" title="Structures, Matériaux et Résistance">DSMR</a></li>
+              </ul>
+            </div>
+            <div class="pubs-wrap">
+              <p class="fiche-label">Publications récentes</p>
+              <ul class="pubs">
+              <li><a href="publications.html"><span>Cultures végétales en régolithe simulé <span style="color:var(--text-mute)">· 2025</span></span><i class="ph-light ph-arrow-up-right" aria-hidden="true"></i></a></li>
+              <li><a href="publications.html"><span>Isolement prolongé et cohésion d'équipage <span style="color:var(--text-mute)">· 2024</span></span><i class="ph-light ph-arrow-up-right" aria-hidden="true"></i></a></li>
+              </ul>
+            </div>
+          </aside>
         </div>
-        <div class="prog-axe">
-          <span class="axe-icon">🌍</span>
+      </section>
+
+      <!-- ===== ORION-3 ===== -->
+      <section class="prog spy" id="orion3" style="--c:#60a5fa" aria-labelledby="orion3-title">
+        <div class="prog-top reveal">
+          <span class="card-code">ORION-3</span>
+          <span class="status" style="--s:var(--st-active)"><span class="live-dot" aria-hidden="true"></span> Actif</span>
+        </div>
+        <h2 class="prog-title reveal" id="orion3-title" style="--i:1">Biosignatures à grande distance</h2>
+        <p class="lead reveal" style="--i:2">Chercher la trace du vivant dans la lumière d'autres mondes : en croisant les spectres de plusieurs observatoires, ORION-3 isole les molécules qu'aucun processus géologique ne suffit à expliquer.</p>
+        <div class="kpis">
+          <div class="kpi reveal" style="--i:3"><span class="kpi-val">3</span><span class="kpi-label">Planètes cibles prioritaires</span></div>
+        </div>
+
+        <div class="prog-body">
           <div>
-            <div class="axe-title">Géologie sub-surfacique</div>
-            <div class="axe-desc">Forage jusqu'à 50 mètres de profondeur pour prélèvement de carottes, recherche d'eau liquide fossile et de traces chimiques de vie passée dans les couches sédimentaires martiennes.</div>
+            <p class="axes-label">Axes de recherche</p>
+            <ul class="axes">
+            <li class="reveal" style="--i:0"><i class="ph-light ph-rainbow" aria-hidden="true"></i> Spectroscopie haute résolution</li>
+            <li class="reveal" style="--i:1"><i class="ph-light ph-cloud" aria-hidden="true"></i> Modèles atmosphériques</li>
+            <li class="reveal" style="--i:2"><i class="ph-light ph-wave-sine" aria-hidden="true"></i> Traitement du signal</li>
+            <li class="reveal" style="--i:3"><i class="ph-light ph-flask" aria-hidden="true"></i> Faux positifs abiotiques</li>
+            </ul>
           </div>
+          <aside class="fiche reveal" style="--i:2" aria-label="Fiche ORION-3">
+            <div>
+              <p class="fiche-label">Fiche</p>
+              <dl>
+                <div class="fiche-row"><dt>Lancé en</dt><dd>2022</dd></div>
+              </dl>
+            </div>
+            <div>
+              <p class="fiche-label">Départements pilotes</p>
+              <ul class="depts">
+              <li><a href="DAI.html" style="--d:#67e8f9" title="Astrophysique et Instrumentation">DAI</a></li>
+              <li><a href="DOL.html" style="--d:#38bdf8" title="Optique et Lumière">DOL</a></li>
+              <li><a href="DSVT.html" style="--d:#34d399" title="Sciences du Vivant et de la Terre">DSVT</a></li>
+              </ul>
+            </div>
+            <div class="pubs-wrap">
+              <p class="fiche-label">Publications récentes</p>
+              <ul class="pubs">
+              <li><a href="publications.html"><span>Oxygène et méthane : un couple ambigu <span style="color:var(--text-mute)">· 2025</span></span><i class="ph-light ph-arrow-up-right" aria-hidden="true"></i></a></li>
+              <li><a href="publications.html"><span>Filtrer le bruit stellaire en spectroscopie de transit <span style="color:var(--text-mute)">· 2024</span></span><i class="ph-light ph-arrow-up-right" aria-hidden="true"></i></a></li>
+              </ul>
+            </div>
+          </aside>
         </div>
-        <div class="prog-axe">
-          <span class="axe-icon">🌱</span>
+      </section>
+
+      <!-- ===== PROMETHEUS ===== -->
+      <section class="prog spy" id="prometheus" style="--c:#f97316" aria-labelledby="prometheus-title">
+        <div class="prog-top reveal">
+          <span class="card-code">PROMETHEUS</span>
+          <span class="status" style="--s:var(--st-active)"><span class="live-dot" aria-hidden="true"></span> Actif, phase II</span>
+        </div>
+        <h2 class="prog-title reveal" id="prometheus-title" style="--i:1">Propulsion ionique à plasma froid</h2>
+        <p class="lead reveal" style="--i:2">Un propulseur ionique à basse température, plus sobre et plus endurant, pour rendre possibles des missions lointaines sans emporter une masse de carburant démesurée.</p>
+        <div class="kpis">
+          <div class="kpi reveal" style="--i:3"><span class="kpi-val">×3</span><span class="kpi-label">Impulsion spécifique visée</span></div>
+        </div>
+
+        <div class="prog-body">
           <div>
-            <div class="axe-title">Terraformation expérimentale</div>
-            <div class="axe-desc">Tests à l'échelle de parcelles de 100 m² de protocoles de modification du sol martien par introduction de micro-organismes extremophiles et de mélanges minéraux précurseurs.</div>
+            <p class="axes-label">Axes de recherche</p>
+            <ul class="axes">
+            <li class="reveal" style="--i:0"><i class="ph-light ph-atom" aria-hidden="true"></i> Physique des plasmas</li>
+            <li class="reveal" style="--i:1"><i class="ph-light ph-grid-four" aria-hidden="true"></i> Grilles d'extraction</li>
+            <li class="reveal" style="--i:2"><i class="ph-light ph-thermometer" aria-hidden="true"></i> Gestion thermique</li>
+            <li class="reveal" style="--i:3"><i class="ph-light ph-timer" aria-hidden="true"></i> Essais d'endurance</li>
+            </ul>
           </div>
+          <aside class="fiche reveal" style="--i:2" aria-label="Fiche PROMETHEUS">
+            <div>
+              <p class="fiche-label">Fiche</p>
+              <dl>
+                <div class="fiche-row"><dt>Lancé en</dt><dd>2020</dd></div>
+              </dl>
+            </div>
+            <div>
+              <p class="fiche-label">Départements pilotes</p>
+              <ul class="depts">
+              <li><a href="DPET.html" style="--d:#f97316" title="Physique Énergétique et Thermique">DPET</a></li>
+              <li><a href="DPM.html" style="--d:#c084fc" title="Physique et Mécanique">DPM</a></li>
+              <li><a href="DSMR.html" style="--d:#fb7185" title="Structures, Matériaux et Résistance">DSMR</a></li>
+              </ul>
+            </div>
+            <div class="pubs-wrap">
+              <p class="fiche-label">Publications récentes</p>
+              <ul class="pubs">
+              <li><a href="publications.html"><span>Érosion des grilles d'extraction en régime froid <span style="color:var(--text-mute)">· 2025</span></span><i class="ph-light ph-arrow-up-right" aria-hidden="true"></i></a></li>
+              <li><a href="publications.html"><span>Instabilités d'un plasma faiblement ionisé <span style="color:var(--text-mute)">· 2023</span></span><i class="ph-light ph-arrow-up-right" aria-hidden="true"></i></a></li>
+              </ul>
+            </div>
+          </aside>
         </div>
-        <div class="prog-axe">
-          <span class="axe-icon">🏥</span>
+      </section>
+
+      <!-- ===== HERMES ===== -->
+      <section class="prog spy" id="hermes" style="--c:#c084fc" aria-labelledby="hermes-title">
+        <div class="prog-top reveal">
+          <span class="card-code">HERMES</span>
+          <span class="status" style="--s:var(--st-phase)"><i class="ph-light ph-flask" aria-hidden="true"></i> Phase expérimentale</span>
+        </div>
+        <h2 class="prog-title reveal" id="hermes-title" style="--i:1">Communication quantique interplanétaire</h2>
+        <p class="lead reveal" style="--i:2">Des liaisons fondées sur l'intrication : toute tentative d'interception laisse une trace, et la clé partagée entre la Terre et un vaisseau reste inviolable.</p>
+
+        <div class="prog-body">
           <div>
-            <div class="axe-title">Télémédecine de l'isolement</div>
-            <div class="axe-desc">Développement et validation des protocoles de diagnostic et d'intervention médicale autonome avec un délai de communication Terre-Mars pouvant atteindre 24 minutes.</div>
+            <p class="axes-label">Axes de recherche</p>
+            <ul class="axes">
+            <li class="reveal" style="--i:0"><i class="ph-light ph-circles-three" aria-hidden="true"></i> Sources de photons intriqués</li>
+            <li class="reveal" style="--i:1"><i class="ph-light ph-key" aria-hidden="true"></i> Distribution de clés</li>
+            <li class="reveal" style="--i:2"><i class="ph-light ph-broadcast" aria-hidden="true"></i> Liaisons optiques longue portée</li>
+            <li class="reveal" style="--i:3"><i class="ph-light ph-shield-check" aria-hidden="true"></i> Correction d'erreurs</li>
+            </ul>
           </div>
+          <aside class="fiche reveal" style="--i:2" aria-label="Fiche HERMES">
+            <div>
+              <p class="fiche-label">Fiche</p>
+              <dl>
+                <div class="fiche-row"><dt>Lancé en</dt><dd>2023</dd></div>
+              </dl>
+            </div>
+            <div>
+              <p class="fiche-label">Départements pilotes</p>
+              <ul class="depts">
+              <li><a href="DOL.html" style="--d:#38bdf8" title="Optique et Lumière">DOL</a></li>
+              <li><a href="DSTI.html" style="--d:#818cf8" title="Simulation et Traitement de l'Information">DSTI</a></li>
+              <li><a href="DMA.html" style="--d:#facc15" title="Mathématiques Appliquées">DMA</a></li>
+              </ul>
+            </div>
+            <div class="pubs-wrap">
+              <p class="fiche-label">Publications récentes</p>
+              <ul class="pubs">
+              <li><a href="publications.html"><span>Maintenir l'intrication sur une liaison sol–orbite <span style="color:var(--text-mute)">· 2025</span></span><i class="ph-light ph-arrow-up-right" aria-hidden="true"></i></a></li>
+              <li><a href="publications.html"><span>Distribution de clés à très forte latence <span style="color:var(--text-mute)">· 2024</span></span><i class="ph-light ph-arrow-up-right" aria-hidden="true"></i></a></li>
+              </ul>
+            </div>
+          </aside>
         </div>
-        <div class="prog-axe">
-          <span class="axe-icon">⚡</span>
+      </section>
+
+      <!-- ===== ATLAS ===== -->
+      <section class="prog spy" id="atlas" style="--c:#2dd4bf" aria-labelledby="atlas-title">
+        <div class="prog-top reveal">
+          <span class="card-code">ATLAS</span>
+          <span class="status" style="--s:var(--st-active)"><span class="live-dot" aria-hidden="true"></span> Actif</span>
+        </div>
+        <h2 class="prog-title reveal" id="atlas-title" style="--i:1">Simulation d'environnements extraterrestres</h2>
+        <p class="lead reveal" style="--i:2">Froid, vide, poussières, rayonnements : nos chambres d'essai reproduisent la surface de Mars, d'Europe et de Titan. Matériaux, instruments et organismes y sont éprouvés avant de partir.</p>
+        <div class="kpis">
+          <div class="kpi reveal" style="--i:3"><span class="kpi-val">3</span><span class="kpi-label">Mondes reproduits en laboratoire</span></div>
+        </div>
+
+        <div class="prog-body">
           <div>
-            <div class="axe-title">Autonomie énergétique</div>
-            <div class="axe-desc">Opération d'un réacteur nucléaire à sel fondu de 40 kWe, d'une ferme solaire de 600 m² et d'un système de stockage par électrolyse de l'eau martienne produite in situ.</div>
+            <p class="axes-label">Axes de recherche</p>
+            <ul class="axes">
+            <li class="reveal" style="--i:0"><i class="ph-light ph-planet" aria-hidden="true"></i> Chambre martienne</li>
+            <li class="reveal" style="--i:1"><i class="ph-light ph-snowflake" aria-hidden="true"></i> Glaces d'Europe</li>
+            <li class="reveal" style="--i:2"><i class="ph-light ph-cloud-fog" aria-hidden="true"></i> Atmosphère de Titan</li>
+            <li class="reveal" style="--i:3"><i class="ph-light ph-cube" aria-hidden="true"></i> Vieillissement des matériaux</li>
+            </ul>
           </div>
+          <aside class="fiche reveal" style="--i:2" aria-label="Fiche ATLAS">
+            <div>
+              <p class="fiche-label">Fiche</p>
+              <dl>
+                <div class="fiche-row"><dt>Lancé en</dt><dd>2019</dd></div>
+              </dl>
+            </div>
+            <div>
+              <p class="fiche-label">Départements pilotes</p>
+              <ul class="depts">
+              <li><a href="DSMR.html" style="--d:#fb7185" title="Structures, Matériaux et Résistance">DSMR</a></li>
+              <li><a href="DSVT.html" style="--d:#34d399" title="Sciences du Vivant et de la Terre">DSVT</a></li>
+              <li><a href="DAI.html" style="--d:#67e8f9" title="Astrophysique et Instrumentation">DAI</a></li>
+              </ul>
+            </div>
+            <div class="pubs-wrap">
+              <p class="fiche-label">Publications récentes</p>
+              <ul class="pubs">
+              <li><a href="publications.html"><span>Survie microbienne sous rayonnement martien simulé <span style="color:var(--text-mute)">· 2025</span></span><i class="ph-light ph-arrow-up-right" aria-hidden="true"></i></a></li>
+              <li><a href="publications.html"><span>Abrasion des textiles d'habitat par poussières fines <span style="color:var(--text-mute)">· 2024</span></span><i class="ph-light ph-arrow-up-right" aria-hidden="true"></i></a></li>
+              </ul>
+            </div>
+          </aside>
         </div>
-        <div class="prog-axe">
-          <span class="axe-icon">🤖</span>
+      </section>
+
+      <!-- ===== LYNX ===== -->
+      <section class="prog spy" id="lynx" style="--c:#facc15" aria-labelledby="lynx-title">
+        <div class="prog-top reveal">
+          <span class="card-code">LYNX</span>
+          <span class="status" style="--s:var(--st-phase)"><i class="ph-light ph-flask" aria-hidden="true"></i> Phase expérimentale</span>
+        </div>
+        <h2 class="prog-title reveal" id="lynx-title" style="--i:1">Robotique autonome en milieu hostile</h2>
+        <p class="lead reveal" style="--i:2">Une flotte de robots légers qui explorent, se répartissent les tâches et se réparent seuls, sans attendre d'instruction venue de la Terre.</p>
+
+        <div class="prog-body">
           <div>
-            <div class="axe-title">Robotique assistante</div>
-            <div class="axe-desc">Déploiement de 8 robots autonomes de type LYNX pré-positionnés avant l'arrivée de l'équipage, chargés de la construction partielle de la base et de l'exploration du périmètre proche.</div>
+            <p class="axes-label">Axes de recherche</p>
+            <ul class="axes">
+            <li class="reveal" style="--i:0"><i class="ph-light ph-compass" aria-hidden="true"></i> Navigation sans carte</li>
+            <li class="reveal" style="--i:1"><i class="ph-light ph-cpu" aria-hidden="true"></i> Décision embarquée</li>
+            <li class="reveal" style="--i:2"><i class="ph-light ph-wrench" aria-hidden="true"></i> Auto-réparation</li>
+            <li class="reveal" style="--i:3"><i class="ph-light ph-graph" aria-hidden="true"></i> Coopération en essaim</li>
+            </ul>
           </div>
+          <aside class="fiche reveal" style="--i:2" aria-label="Fiche LYNX">
+            <div>
+              <p class="fiche-label">Fiche</p>
+              <dl>
+                <div class="fiche-row"><dt>Lancé en</dt><dd>2022</dd></div>
+              </dl>
+            </div>
+            <div>
+              <p class="fiche-label">Départements pilotes</p>
+              <ul class="depts">
+              <li><a href="DSTI.html" style="--d:#818cf8" title="Simulation et Traitement de l'Information">DSTI</a></li>
+              <li><a href="DPM.html" style="--d:#c084fc" title="Physique et Mécanique">DPM</a></li>
+              <li><a href="DMA.html" style="--d:#facc15" title="Mathématiques Appliquées">DMA</a></li>
+              </ul>
+            </div>
+            <div class="pubs-wrap">
+              <p class="fiche-label">Publications récentes</p>
+              <ul class="pubs">
+              <li><a href="publications.html"><span>Planification coopérative sous contrainte de communication <span style="color:var(--text-mute)">· 2025</span></span><i class="ph-light ph-arrow-up-right" aria-hidden="true"></i></a></li>
+              <li><a href="publications.html"><span>Diagnostic de panne par apprentissage embarqué <span style="color:var(--text-mute)">· 2024</span></span><i class="ph-light ph-arrow-up-right" aria-hidden="true"></i></a></li>
+              </ul>
+            </div>
+          </aside>
         </div>
-      </div>
+      </section>
 
-      <div class="prog-partners">
-        <span class="partner-chip">ESA</span>
-        <span class="partner-chip">CNES</span>
-        <span class="partner-chip">NASA JPL</span>
-        <span class="partner-chip">Airbus Defence & Space</span>
-        <span class="partner-chip">Safran</span>
-        <span class="partner-chip">CEA</span>
-        <span class="partner-chip">Institut Pasteur</span>
-        <span class="partner-chip">DLR</span>
-      </div>
-
-      <div class="prog-pubs">
-        <div class="pubs-label">Publications récentes</div>
-        <a href="publications-scientifiques.html" class="pub-item">
-          <span class="pub-chip">Mars 2026</span>
-          <span class="pub-text">Variabilité inattendue des signatures biologiques en environnement confiné sous microgravité prolongée — cohorte ARTEMIS-9</span>
-          <span class="pub-arrow">→</span>
-        </a>
-        <a href="publications-scientifiques.html" class="pub-item">
-          <span class="pub-chip">Nov. 2025</span>
-          <span class="pub-text">Protocole de surveillance immunitaire embarquée pour mission interplanétaire habitée longue durée</span>
-          <span class="pub-arrow">→</span>
-        </a>
-      </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- ORION-3                                                       -->
-    <!-- ============================================================ -->
-    <section class="prog-section" id="orion3">
-
-      <div class="prog-header">
+      <div class="cta-band reveal">
         <div>
-          <span class="prog-code-badge" style="color:#60a5fa; background:rgba(96,165,250,.08); border:1px solid rgba(96,165,250,.22);">ORION-3</span>
-          <h2>Observation des biosignatures à grande distance</h2>
+          <h2>Et après ?</h2>
+          <p>Trois programmes se préparent déjà. Découvrez aussi les missions clôturées et leurs résultats.</p>
         </div>
-        <span class="prog-status-badge status-active">Actif</span>
-      </div>
-
-      <div class="prog-kpis">
-        <div class="prog-kpi" style="background:rgba(96,165,250,.04); border-color:rgba(96,165,250,.14);">
-          <span class="prog-kpi-val" style="color:#60a5fa;">14</span>
-          <span class="prog-kpi-lbl">Exoplanètes candidates ciblées</span>
-        </div>
-        <div class="prog-kpi" style="background:rgba(96,165,250,.04); border-color:rgba(96,165,250,.14);">
-          <span class="prog-kpi-val" style="color:#60a5fa;">3</span>
-          <span class="prog-kpi-lbl">Observatoires conjugués</span>
-        </div>
-        <div class="prog-kpi" style="background:rgba(96,165,250,.04); border-color:rgba(96,165,250,.14);">
-          <span class="prog-kpi-val" style="color:#60a5fa;">R = 80 000</span>
-          <span class="prog-kpi-lbl">Résolution spectrale atteinte</span>
+        <div class="cta-actions">
+          <a href="programmes.html#futurs" class="btn btn-primary">Programmes futurs <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
+          <a href="publications.html" class="btn btn-ghost">Publications</a>
         </div>
       </div>
+    </div>
 
-      <div class="prog-intro">
-        <div>
-          <p>ORION-3 est le programme de l'IFRAS consacré à la recherche de la vie au-delà du système solaire. Son approche repose sur la spectroscopie de transmission à très haute résolution : lors de chaque transit d'une exoplanète devant son étoile, une fraction infime du rayonnement stellaire filtre à travers l'atmosphère planétaire et y laisse des empreintes spectrales caractéristiques des molécules présentes. Ces empreintes, séparées de la signature stellaire par des méthodes d'analyse en composantes indépendantes développées au DSTI, constituent les "biosignatures" dont la détection ferait l'effet d'une bombe dans la communauté scientifique mondiale.</p>
-          <p>Pour atteindre la résolution nécessaire à cette analyse, ORION-3 combine les observations de trois grands télescopes — l'IFRAS-Obs en altitude, le VLT de l'ESO au Chili et le télescope spatial Euclid en orbite — dans un protocole d'observation synchronisée élaboré par le DAI. Les molécules prioritairement recherchées sont l'oxygène moléculaire (O₂), le méthane (CH₄), la vapeur d'eau (H₂O) et la phosphine (PH₃), dont la présence simultanée constituerait une signature quasi-certaine d'activité métabolique.</p>
-          <p style="margin-top:14px">En janvier 2026, l'équipe ORION-3 a publié une détection candidate d'oxygène moléculaire dans l'atmosphère de Kepler-442b, exoplanète rocheuse en zone habitable à 1 206 années-lumière. Le résultat, à 4,2 sigma de significativité, est considéré comme prometteur mais pas encore conclusif — une campagne d'observations de confirmation est en cours avec le James Webb Space Telescope.</p>
-        </div>
-        <div class="prog-fiche">
-          <span class="fiche-label">Fiche programme</span>
-          <div class="fiche-rows">
-            <div class="fiche-row">
-              <span class="fiche-key">Statut</span>
-              <span class="fiche-val">Phase II — Observations actives</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Début programme</span>
-              <span class="fiche-val">Septembre 2020</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Département pilote</span>
-              <span class="fiche-val">DAI / DOL</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Chercheurs impliqués</span>
-              <span class="fiche-val">+85</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Partenaires principaux</span>
-              <span class="fiche-val">ESO, ESA, NASA JWST</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Publications produites</span>
-              <span class="fiche-val">43 à ce jour</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="prog-partners">
-        <span class="partner-chip">ESO — VLT</span>
-        <span class="partner-chip">ESA — Euclid</span>
-        <span class="partner-chip">NASA — JWST</span>
-        <span class="partner-chip">Observatoire de Paris</span>
-        <span class="partner-chip">Max Planck Institute</span>
-      </div>
-
-      <div class="prog-pubs">
-        <div class="pubs-label">Publications récentes</div>
-        <a href="publications-scientifiques.html" class="pub-item">
-          <span class="pub-chip">Jan. 2026</span>
-          <span class="pub-text">Détection candidate d'oxygène moléculaire dans l'atmosphère de Kepler-442b — première analyse ORION-3/JWST</span>
-          <span class="pub-arrow">→</span>
-        </a>
-        <a href="publications-scientifiques.html" class="pub-item">
-          <span class="pub-chip">Août 2025</span>
-          <span class="pub-text">Séparation des signatures atmosphériques planétaires par ICA haute résolution sur spectres de transit</span>
-          <span class="pub-arrow">→</span>
-        </a>
-      </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- PROMETHEUS                                                    -->
-    <!-- ============================================================ -->
-    <section class="prog-section" id="prometheus">
-
-      <div class="prog-header">
-        <div>
-          <span class="prog-code-badge" style="color:#f97316; background:rgba(249,115,22,.08); border:1px solid rgba(249,115,22,.22);">PROMETHEUS</span>
-          <h2>Propulsion ionique à plasma froid</h2>
-        </div>
-        <span class="prog-status-badge status-active">Actif</span>
-      </div>
-
-      <div class="prog-kpis">
-        <div class="prog-kpi" style="background:rgba(249,115,22,.04); border-color:rgba(249,115,22,.14);">
-          <span class="prog-kpi-val" style="color:#f97316;">6 800 s</span>
-          <span class="prog-kpi-lbl">Impulsion spécifique record</span>
-        </div>
-        <div class="prog-kpi" style="background:rgba(249,115,22,.04); border-color:rgba(249,115,22,.14);">
-          <span class="prog-kpi-val" style="color:#f97316;">×3</span>
-          <span class="prog-kpi-lbl">vs propulsion ionique actuelle</span>
-        </div>
-        <div class="prog-kpi" style="background:rgba(249,115,22,.04); border-color:rgba(249,115,22,.14);">
-          <span class="prog-kpi-val" style="color:#f97316;">2028</span>
-          <span class="prog-kpi-lbl">1ère mise en orbite qualifiée</span>
-        </div>
-      </div>
-
-      <div class="prog-intro">
-        <div>
-          <p>Le programme PROMETHEUS repose sur un pari technologique audacieux : utiliser un plasma d'hélium ionisé à basse température (environ 800 K, contre 15 000 K pour les propulseurs à effet Hall actuels) pour générer une poussée d'une efficacité sans précédent. Cette approche, théorisée dans les années 2000 mais jamais mise en œuvre à l'échelle d'un propulseur de vol, est rendue possible par les avancées du DPET en physique des plasmas froids et par les nouveaux matériaux céramiques ultra-résistants du DSMR.</p>
-          <p>Le principe fondamental est celui de l'accélération électrostatique d'ions issus d'un plasma dit "négatif" — une configuration où les électrons sont majoritaires — ce qui permet d'extraire des ions lourds avec une énergie d'ionisation bien inférieure aux procédés classiques. Le résultat expérimental clé du programme : une impulsion spécifique de 6 800 secondes mesurée sur le banc PROMETHEUS-II du DPET, record mondial toutes filières confondues.</p>
-          <p style="margin-top:14px">La miniaturisation de ce propulseur pour le vol spatial représente le défi majeur de la phase actuelle. Les équipes travaillent sur une version qualifiée de 500 W propulsant un satellite de 200 kg avec une poussée de 80 mN — suffisante pour les missions de maintien à poste en GEO et les transferts orbitaux de petits engins dans le système solaire interne. La mise en orbite de qualification est prévue pour 2028.</p>
-        </div>
-        <div class="prog-fiche">
-          <span class="fiche-label">Fiche programme</span>
-          <div class="fiche-rows">
-            <div class="fiche-row">
-              <span class="fiche-key">Statut</span>
-              <span class="fiche-val">Phase II — Qualification vol</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Début programme</span>
-              <span class="fiche-val">Mars 2017</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Département pilote</span>
-              <span class="fiche-val">DPET / DSMR</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Chercheurs impliqués</span>
-              <span class="fiche-val">+130</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Partenaires principaux</span>
-              <span class="fiche-val">Safran, ESA, Thales Alenia</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Publications produites</span>
-              <span class="fiche-val">74 à ce jour</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="prog-partners">
-        <span class="partner-chip">Safran Aircraft Engines</span>
-        <span class="partner-chip">ESA — ESTEC</span>
-        <span class="partner-chip">Thales Alenia Space</span>
-        <span class="partner-chip">CNRS</span>
-        <span class="partner-chip">Polytechnique</span>
-      </div>
-
-      <div class="prog-pubs">
-        <div class="pubs-label">Publications récentes</div>
-        <a href="publications-scientifiques.html" class="pub-item">
-          <span class="pub-chip">Déc. 2025</span>
-          <span class="pub-text">Record d'impulsion spécifique à 6 800 s sur propulseur ionique plasma froid — résultats banc PROMETHEUS-II</span>
-          <span class="pub-arrow">→</span>
-        </a>
-      </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- HERMES                                                        -->
-    <!-- ============================================================ -->
-    <section class="prog-section" id="hermes">
-
-      <div class="prog-header">
-        <div>
-          <span class="prog-code-badge" style="color:#c084fc; background:rgba(192,132,252,.08); border:1px solid rgba(192,132,252,.22);">HERMES</span>
-          <h2>Communication quantique interplanétaire</h2>
-        </div>
-        <span class="prog-status-badge status-phase">Phase expérimentale</span>
-      </div>
-
-      <div class="prog-kpis">
-        <div class="prog-kpi" style="background:rgba(192,132,252,.04); border-color:rgba(192,132,252,.14);">
-          <span class="prog-kpi-val" style="color:#c084fc;">100 Gbps</span>
-          <span class="prog-kpi-lbl">Débit lien FSO démontré</span>
-        </div>
-        <div class="prog-kpi" style="background:rgba(192,132,252,.04); border-color:rgba(192,132,252,.14);">
-          <span class="prog-kpi-val" style="color:#c084fc;">0 bit</span>
-          <span class="prog-kpi-lbl">Erreur sur lien quantique (QKD)</span>
-        </div>
-        <div class="prog-kpi" style="background:rgba(192,132,252,.04); border-color:rgba(192,132,252,.14);">
-          <span class="prog-kpi-val" style="color:#c084fc;">2026</span>
-          <span class="prog-kpi-lbl">Premiers résultats en orbite</span>
-        </div>
-      </div>
-
-      <div class="prog-intro">
-        <div>
-          <p>HERMES s'attaque à l'un des problèmes les plus fondamentaux de l'exploration spatiale profonde : la communication. Lorsqu'une mission habitée s'éloigne vers Mars ou au-delà, le délai de propagation des signaux radio peut atteindre 24 minutes, rendant impossible tout échange en temps réel et toute assistance à distance. HERMES explore la possibilité de dépasser cette limitation grâce à deux approches complémentaires : les communications optiques à très haut débit (FSO) et les protocoles cryptographiques quantiques (QKD) à longue portée.</p>
-          <p>La première partie du programme, développée par le DOL, porte sur les liaisons optiques inter-satellites à 100 Gbps — des "lasers de communication" permettant de transmettre en quelques secondes des volumes de données qui exigeraient des heures via les antennes radio actuelles. Ces liaisons ne réduisent pas le délai de propagation physique, mais elles permettent de compresser les créneaux de communication et d'augmenter massivement la quantité d'information échangée pendant ces fenêtres.</p>
-          <p style="margin-top:14px">La seconde partie, plus fondamentale, est portée par le DPM (optique quantique). Elle explore la distribution de clés cryptographiques quantiques (QKD) via satellite, rendant les communications Terre-sonde impossible à intercepter sans détection immédiate. Un démonstrateur en orbite basse est en cours d'intégration et devrait produire ses premiers résultats fin 2026.</p>
-        </div>
-        <div class="prog-fiche">
-          <span class="fiche-label">Fiche programme</span>
-          <div class="fiche-rows">
-            <div class="fiche-row">
-              <span class="fiche-key">Statut</span>
-              <span class="fiche-val">Phase expérimentale — Démonstrateur LEO</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Début programme</span>
-              <span class="fiche-val">Juin 2021</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Département pilote</span>
-              <span class="fiche-val">DOL / DPM</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Chercheurs impliqués</span>
-              <span class="fiche-val">+70</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Partenaires principaux</span>
-              <span class="fiche-val">ESA, Thales, ID Quantique</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Publications produites</span>
-              <span class="fiche-val">29 à ce jour</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="prog-partners">
-        <span class="partner-chip">ESA</span>
-        <span class="partner-chip">Thales Alenia Space</span>
-        <span class="partner-chip">ID Quantique</span>
-        <span class="partner-chip">École Polytechnique</span>
-        <span class="partner-chip">DLR</span>
-        <span class="partner-chip">Sorbonne Université</span>
-      </div>
-
-      <div class="prog-pubs">
-        <div class="pubs-label">Publications récentes</div>
-        <a href="publications-scientifiques.html" class="pub-item">
-          <span class="pub-chip">Jan. 2026</span>
-          <span class="pub-text">Peigne de fréquences optiques embarqué à base de micro-résonateur — stabilité sub-femtoseconde pour liaison FSO</span>
-          <span class="pub-arrow">→</span>
-        </a>
-        <a href="publications-scientifiques.html" class="pub-item">
-          <span class="pub-chip">Sep. 2025</span>
-          <span class="pub-text">Distribution de clés quantiques QKD par satellite en orbite basse — protocole BB84 adapté aux pertes atmosphériques</span>
-          <span class="pub-arrow">→</span>
-        </a>
-      </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- ATLAS                                                         -->
-    <!-- ============================================================ -->
-    <section class="prog-section" id="atlas">
-
-      <div class="prog-header">
-        <div>
-          <span class="prog-code-badge" style="color:#34d399; background:rgba(52,211,153,.08); border:1px solid rgba(52,211,153,.22);">ATLAS</span>
-          <h2>Simulation d'environnements extraterrestres</h2>
-        </div>
-        <span class="prog-status-badge status-active">Actif</span>
-      </div>
-
-      <div class="prog-kpis">
-        <div class="prog-kpi" style="background:rgba(52,211,153,.04); border-color:rgba(52,211,153,.14);">
-          <span class="prog-kpi-val" style="color:#34d399;">3</span>
-          <span class="prog-kpi-lbl">Environnements simulés (Mars, Europa, Titan)</span>
-        </div>
-        <div class="prog-kpi" style="background:rgba(52,211,153,.04); border-color:rgba(52,211,153,.14);">
-          <span class="prog-kpi-val" style="color:#34d399;">120 m³</span>
-          <span class="prog-kpi-lbl">Volume chambre principale</span>
-        </div>
-        <div class="prog-kpi" style="background:rgba(52,211,153,.04); border-color:rgba(52,211,153,.14);">
-          <span class="prog-kpi-val" style="color:#34d399;">−140 °C</span>
-          <span class="prog-kpi-lbl">Température minimale atteinte</span>
-        </div>
-      </div>
-
-      <div class="prog-intro">
-        <div>
-          <p>ATLAS est une infrastructure de simulation unique en Europe. Son cœur est une chambre à environnement contrôlé de 120 m³ — la plus grande d'Europe occidentale — capable de reproduire simultanément la pression atmosphérique, la composition chimique, le régime thermique, l'irradiation UV et le champ gravitationnel apparent de trois environnements extraterrestres : la surface de Mars, la glace de surface d'Europa et les nuages de Titan.</p>
-          <p>L'intérêt de disposer d'une telle infrastructure est double. D'abord, elle permet de tester matériaux, équipements, combinaisons spatiales et systèmes robotiques dans des conditions d'une fidélité bien supérieure à ce que permettent les bancs spécialisés existants. La résine époxy modifiée du bouclier thermique d'ARTEMIS-9 a ainsi été validée après 14 cycles jour-nuit martiens complets dans la chambre ATLAS, révélant une fragilisation insoupçonnée à −120 °C qui a conduit à reformuler le matériau.</p>
-          <p style="margin-top:14px">Ensuite, ATLAS permet de tester la survie et l'activité métabolique d'organismes candidats à la vie dans ces environnements. Des dizaines d'espèces d'extremophiles terrestres ont été exposées aux conditions martiennes simulées, produisant des données cruciales pour évaluer si une contamination biologique accidentelle d'une mission pourrait effectivement proliférer sur Mars — une question centrale pour la politique de protection planétaire internationale.</p>
-        </div>
-        <div class="prog-fiche">
-          <span class="fiche-label">Fiche programme</span>
-          <div class="fiche-rows">
-            <div class="fiche-row">
-              <span class="fiche-key">Statut</span>
-              <span class="fiche-val">Actif — Opérations continues</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Mise en service</span>
-              <span class="fiche-val">Novembre 2019</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Département pilote</span>
-              <span class="fiche-val">DSVT / DSMR / DOL</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Chercheurs impliqués</span>
-              <span class="fiche-val">+160</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Partenaires d'accès</span>
-              <span class="fiche-val">ESA, JAXA, équipes ext.</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Publications produites</span>
-              <span class="fiche-val">91 à ce jour</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="prog-partners">
-        <span class="partner-chip">ESA — ESTEC</span>
-        <span class="partner-chip">JAXA</span>
-        <span class="partner-chip">CNRS INSU</span>
-        <span class="partner-chip">Institut de Chimie de Strasbourg</span>
-        <span class="partner-chip">Université Paris-Cité</span>
-        <span class="partner-chip">CEA Saclay</span>
-      </div>
-
-      <div class="prog-pubs">
-        <div class="pubs-label">Publications récentes</div>
-        <a href="publications-scientifiques.html" class="pub-item">
-          <span class="pub-chip">Fév. 2025</span>
-          <span class="pub-text">Comportement des aérosols stratosphériques martiens en chambre ATLAS — caractérisation spectroscopique et dynamique</span>
-          <span class="pub-arrow">→</span>
-        </a>
-        <a href="publications-scientifiques.html" class="pub-item">
-          <span class="pub-chip">Jan. 2024</span>
-          <span class="pub-text">Résilience microbienne en conditions extrêmes simulées représentatives de la surface martienne — résultats ATLAS cycle 7</span>
-          <span class="pub-arrow">→</span>
-        </a>
-      </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- LYNX                                                          -->
-    <!-- ============================================================ -->
-    <section class="prog-section" id="lynx">
-
-      <div class="prog-header">
-        <div>
-          <span class="prog-code-badge" style="color:#facc15; background:rgba(250,204,21,.07); border:1px solid rgba(250,204,21,.22);">LYNX</span>
-          <h2>Robotique autonome en milieu non coopératif</h2>
-        </div>
-        <span class="prog-status-badge status-phase">Phase expérimentale</span>
-      </div>
-
-      <div class="prog-kpis">
-        <div class="prog-kpi" style="background:rgba(250,204,21,.04); border-color:rgba(250,204,21,.12);">
-          <span class="prog-kpi-val" style="color:#facc15;">8</span>
-          <span class="prog-kpi-lbl">Robots pré-positionnés ARTEMIS-9</span>
-        </div>
-        <div class="prog-kpi" style="background:rgba(250,204,21,.04); border-color:rgba(250,204,21,.12);">
-          <span class="prog-kpi-val" style="color:#facc15;">12 kg</span>
-          <span class="prog-kpi-lbl">Masse unitaire du robot LYNX-3</span>
-        </div>
-        <div class="prog-kpi" style="background:rgba(250,204,21,.04); border-color:rgba(250,204,21,.12);">
-          <span class="prog-kpi-val" style="color:#facc15;">96 h</span>
-          <span class="prog-kpi-lbl">Autonomie max. sans recharge</span>
-        </div>
-      </div>
-
-      <div class="prog-intro">
-        <div>
-          <p>La promesse du programme LYNX est de concevoir des robots capables de faire ce que les humains ne peuvent pas ou ne devraient pas faire dans l'espace : arriver en premier, préparer l'environnement, survivre aux pannes et s'auto-réparer. L'ambition n'est pas de faire des robots qui reproduisent les gestes humains, mais des machines qui prennent des décisions adaptées à des situations qui n'ont pas été anticipées lors de leur programmation.</p>
-          <p>Le robot LYNX-3, la troisième génération du programme, est une plateforme hexapode de 12 kg équipée de 6 jambes articulées à 3 degrés de liberté chacune, capable de traverser des terrains accidentés sans tomber même si deux jambes sont défaillantes. Son système de navigation est fondé sur des réseaux de neurones de type Transformer entraînés sur les données du terrain martien simulé dans la chambre ATLAS, lui permettant d'anticiper sa trajectoire sur des horizons de 4 secondes — suffisant pour éviter les obstacles imprévus à vitesse de marche.</p>
-          <p style="margin-top:14px">Les huit robots de la flotte ARTEMIS-9 seront envoyés 18 mois avant l'équipage humain pour construire l'ossature de la base pressurisée, creuser les tranchées d'accès aux couches protectrices du sol martien et tester les systèmes de production d'oxygène et d'eau. Leur travail autonome, guidé uniquement par les instructions générales transmises depuis la Terre, sera la première démonstration grandeur nature de la robotique spatiale autonome à longue durée.</p>
-        </div>
-        <div class="prog-fiche">
-          <span class="fiche-label">Fiche programme</span>
-          <div class="fiche-rows">
-            <div class="fiche-row">
-              <span class="fiche-key">Statut</span>
-              <span class="fiche-val">Phase expérimentale — Tests terrains</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Début programme</span>
-              <span class="fiche-val">Avril 2019</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Département pilote</span>
-              <span class="fiche-val">DSTI / DPM</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Chercheurs impliqués</span>
-              <span class="fiche-val">+95</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Partenaires principaux</span>
-              <span class="fiche-val">CNES, Boston Dynamics R, INRIA</span>
-            </div>
-            <div class="fiche-row">
-              <span class="fiche-key">Publications produites</span>
-              <span class="fiche-val">52 à ce jour</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="prog-partners">
-        <span class="partner-chip">CNES</span>
-        <span class="partner-chip">INRIA</span>
-        <span class="partner-chip">Boston Dynamics Research</span>
-        <span class="partner-chip">Airbus Defence</span>
-        <span class="partner-chip">Université de Bordeaux</span>
-      </div>
-
-      <div class="prog-pubs">
-        <div class="pubs-label">Publications récentes</div>
-        <a href="publications-scientifiques.html" class="pub-item">
-          <span class="pub-chip">Oct. 2025</span>
-          <span class="pub-text">Navigation anticipative à horizon court pour robots hexapodes sur terrain martien simulé — résultats LYNX-3 / ATLAS</span>
-          <span class="pub-arrow">→</span>
-        </a>
-        <a href="publications-scientifiques.html" class="pub-item">
-          <span class="pub-chip">Avr. 2025</span>
-          <span class="pub-text">Auto-réparation par reconfiguration de démarche sur robot multi-jambes — démonstration en environnement dégradé</span>
-          <span class="pub-arrow">→</span>
-        </a>
-      </div>
-    </section>
-
-  </main>
+  </div>
 </div>
 
-<footer>
-  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale ·
-  Programmes actifs
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© IFRAS, Institut Français de Recherche Aéronautique et Spatiale</span>
+    <span><i class="ph-light ph-lock-simple" aria-hidden="true"></i> Accès contrôlé, données sensibles</span>
+  </div>
 </footer>
 
 <script>
-// Scroll spy sidebar
-const sections = document.querySelectorAll('.intro-section, .prog-section');
-const navLinks  = document.querySelectorAll('#sidebar-nav a');
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)');
 
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const id = entry.target.id;
-      navLinks.forEach(link => {
-        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
-      });
-    }
+  /* ---------- Menu mobile ---------- */
+  const toggle = document.querySelector('.menu-toggle');
+  const panel = document.getElementById('mobile-panel');
+  const icon = toggle.querySelector('i');
+  const setMenu = (open) => {
+    panel.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    icon.className = open ? 'ph-light ph-x' : 'ph-light ph-list';
+  };
+  toggle.addEventListener('click', () => setMenu(!panel.classList.contains('is-open')));
+  document.addEventListener('click', (e) => {
+    if (panel.classList.contains('is-open') && !panel.contains(e.target) && !toggle.contains(e.target)) setMenu(false);
   });
-}, {
-  rootMargin: '-148px 0px -60% 0px',
-  threshold: 0
-});
 
-sections.forEach(s => observer.observe(s));
+  /* ---------- Menus déroulants : intention de survol + passage instantané ---------- */
+  const subnav = document.getElementById('subnav');
+  const items = [...subnav.querySelectorAll('.subnav-item')];
+  let openItem = null, openTimer = 0, closeTimer = 0;
+
+  const openMenu = (item) => {
+    items.forEach((i) => {
+      const on = i === item;
+      i.classList.toggle('is-open', on);
+      i.querySelector('.subnav-trigger').setAttribute('aria-expanded', String(on));
+    });
+    openItem = item;
+  };
+  const closeMenus = () => {
+    subnav.classList.remove('is-instant');
+    items.forEach((i) => {
+      i.classList.remove('is-open');
+      i.querySelector('.subnav-trigger').setAttribute('aria-expanded', 'false');
+    });
+    openItem = null;
+  };
+  const resetMenus = () => {
+    clearTimeout(openTimer);
+    clearTimeout(closeTimer);
+    closeMenus();
+    if (subnav.contains(document.activeElement)) document.activeElement.blur();
+  };
+
+  items.forEach((item) => {
+    item.addEventListener('pointerenter', (e) => {
+      if (e.pointerType !== 'mouse' || !canHover.matches) return;
+      clearTimeout(closeTimer);
+      clearTimeout(openTimer);
+      if (openItem && openItem !== item) {
+        subnav.classList.add('is-instant');
+        openMenu(item);
+      } else if (!openItem) {
+        openTimer = setTimeout(() => openMenu(item), 90);
+      }
+    });
+    item.addEventListener('pointerleave', (e) => {
+      if (e.pointerType !== 'mouse') return;
+      clearTimeout(openTimer);
+      closeTimer = setTimeout(closeMenus, 180);
+    });
+  });
+
+  /* Retour arrière : on referme tout (la page est restaurée telle qu'on l'a quittée) */
+  window.addEventListener('pageshow', resetMenus);
+  window.addEventListener('pagehide', resetMenus);
+  subnav.addEventListener('click', (e) => { if (e.target.closest('a')) resetMenus(); });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    setMenu(false);
+    resetMenus();
+  });
+
+  /* ---------- Apparition au défilement ---------- */
+  const revealIO = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      revealIO.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach((el) => revealIO.observe(el));
+
+  /* ---------- Compteurs ---------- */
+  if (!reduceMotion) {
+    const fmt = new Intl.NumberFormat('fr-FR');
+    const countIO = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = Number(el.dataset.count);
+        const prefix = el.dataset.prefix || '';
+        const start = performance.now();
+        const tick = (now) => {
+          const t = Math.min((now - start) / 1000, 1);
+          el.textContent = prefix + fmt.format(Math.round(target * (1 - Math.pow(1 - t, 4))));
+          if (t < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+        countIO.unobserve(el);
+      });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('[data-count]').forEach((el) => countIO.observe(el));
+  }
+
+  /* ---------- Compte à rebours ARTEMIS-9 (début du T2 2027) ---------- */
+  const countdown = document.getElementById('launch-countdown');
+  const launch = new Date(2027, 3, 1);
+  const now = new Date();
+  const months = (launch.getFullYear() - now.getFullYear()) * 12 + (launch.getMonth() - now.getMonth());
+  if (months > 1) countdown.textContent = `, dans environ ${months} mois`;
+  else if (months >= 0) countdown.textContent = ', imminent';
+
+  document.querySelectorAll('.prog').forEach((el) => revealIO.observe(el));
+
+  /* ---------- Sommaire : programme en cours + repère glissant (couleur du programme) ---------- */
+  const tocLinks = [...document.querySelectorAll('#toc a')];
+  const tocMobileLinks = [...document.querySelectorAll('#toc-mobile a')];
+  const tocMobile = document.getElementById('toc-mobile');
+  const indicator = document.querySelector('.toc-indicator');
+  const setActive = (id) => {
+    tocLinks.forEach((a) => {
+      const on = a.dataset.target === id;
+      a.setAttribute('aria-current', String(on));
+      if (on) {
+        indicator.style.setProperty('--y', `${a.offsetTop}px`);
+        indicator.style.setProperty('--h', `${a.offsetHeight}px`);
+        indicator.style.setProperty('--c', a.style.getPropertyValue('--c'));
+      }
+    });
+    tocMobileLinks.forEach((a) => {
+      const on = a.dataset.target === id;
+      a.setAttribute('aria-current', String(on));
+      if (on && tocMobile.offsetParent !== null) {
+        tocMobile.scrollTo({ left: a.offsetLeft - 20, behavior: reduceMotion ? 'auto' : 'smooth' });
+      }
+    });
+  };
+  const tocSpy = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => { if (entry.isIntersecting) setActive(entry.target.id); });
+  }, { rootMargin: '-35% 0px -60% 0px' });
+  document.querySelectorAll('.spy').forEach((s) => tocSpy.observe(s));
+  setActive('artemis9');
+  window.addEventListener('resize', () => setActive(document.querySelector('#toc a[aria-current="true"]')?.dataset.target || 'artemis9'));
+
+  /* ---------- Système orbital : chaque programme suit sa propre orbite ---------- */
+  {
+    const wrap = document.getElementById('orbit-wrap');
+    const canvas = document.getElementById('orbit');
+    const ctx = canvas.getContext('2d');
+    const nodes = [...wrap.querySelectorAll('.orbit-node')];
+    const TILT = -0.2;                         /* inclinaison du plan orbital */
+    const cosT = Math.cos(TILT), sinT = Math.sin(TILT);
+    const orbits = nodes.map((node, i) => ({
+      node,
+      color: getComputedStyle(node).getPropertyValue('--c').trim(),
+      k: 0.34 + i * 0.13,                      /* rayon relatif */
+      phase: i * 2.4 + 0.6,                    /* départ réparti sur le cercle */
+      x: 0, y: 0, depth: 0
+    }));
+    orbits.forEach((o) => { o.speed = 0.22 / Math.pow(o.k, 1.5); });   /* plus loin = plus lent */
+
+    let w = 0, h = 0, cx = 0, cy = 0, R = 0, dpr = 1, running = false, raf = 0, last = 0, time = 0, hovered = -1, pace = 1;
+
+    const size = () => {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = wrap.clientWidth; h = wrap.clientHeight;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cx = w / 2; cy = h / 2;
+      R = Math.min(w < 600 ? w / 2 - 50 : w * 0.46, h * 1.05) / (0.34 + 5 * 0.13);   /* marge pour les étiquettes sur mobile */
+    };
+
+    const project = (o, a) => {
+      const rx = o.k * R, ry = o.k * R * 0.4;
+      const px = Math.cos(a) * rx, py = Math.sin(a) * ry;
+      return [cx + px * cosT - py * sinT, cy + px * sinT + py * cosT];
+    };
+
+    const ellipse = (o) => {
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, o.k * R, o.k * R * 0.4, TILT, 0, Math.PI * 2);
+    };
+
+    const planet = () => {
+      const r = R * 0.16;
+      const halo = ctx.createRadialGradient(cx, cy, r * 0.4, cx, cy, r * 3.4);
+      halo.addColorStop(0, 'rgba(79,107,237,.28)');
+      halo.addColorStop(1, 'rgba(79,107,237,0)');
+      ctx.fillStyle = halo;
+      ctx.beginPath(); ctx.arc(cx, cy, r * 3.4, 0, Math.PI * 2); ctx.fill();
+      const body = ctx.createRadialGradient(cx - r * 0.4, cy - r * 0.45, r * 0.1, cx, cy, r);
+      body.addColorStop(0, '#c7d2fe');
+      body.addColorStop(0.45, '#4f6bed');
+      body.addColorStop(1, '#0b1440');
+      ctx.fillStyle = body;
+      ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill();
+    };
+
+    const draw = () => {
+      ctx.clearRect(0, 0, w, h);
+      /* orbites */
+      orbits.forEach((o, i) => {
+        ellipse(o);
+        ctx.strokeStyle = o.color;
+        ctx.globalAlpha = hovered === i ? 0.55 : hovered === -1 ? 0.16 : 0.07;
+        ctx.lineWidth = hovered === i ? 1.4 : 1;
+        ctx.stroke();
+      });
+      ctx.globalAlpha = 1;
+
+      /* positions + traînées */
+      orbits.forEach((o, i) => {
+        const a = o.phase + time * o.speed;
+        [o.x, o.y] = project(o, a);
+        o.depth = Math.sin(a);                 /* > 0 : devant la planète */
+        const TRAIL = 22, SPAN = 0.9;
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = o.color;
+        let [px, py] = project(o, a - SPAN);
+        for (let s = 1; s <= TRAIL; s++) {
+          const [nx, ny] = project(o, a - SPAN + (SPAN * s) / TRAIL);
+          ctx.globalAlpha = (s / TRAIL) * (hovered === -1 || hovered === i ? 0.6 : 0.2);
+          ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(nx, ny); ctx.stroke();
+          px = nx; py = ny;
+        }
+      });
+      ctx.globalAlpha = 1;
+
+      /* la planète masque les satellites qui passent derrière */
+      const behind = orbits.filter((o) => o.depth < 0);
+      const front = orbits.filter((o) => o.depth >= 0);
+      const glow = (o) => {
+        const g = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, 16);
+        g.addColorStop(0, o.color); g.addColorStop(1, 'transparent');
+        ctx.globalAlpha = 0.35 + 0.25 * (o.depth + 1) / 2;
+        ctx.fillStyle = g;
+        ctx.beginPath(); ctx.arc(o.x, o.y, 16, 0, Math.PI * 2); ctx.fill();
+        ctx.globalAlpha = 1;
+      };
+      behind.forEach(glow);
+      planet();
+      front.forEach(glow);
+
+      /* étiquettes HTML cliquables, calées sur les satellites */
+      const pr = R * 0.16;
+      orbits.forEach((o, i) => {
+        const hidden = o.depth < 0 && Math.hypot(o.x - cx, o.y - cy) < pr + 6;
+        const op = hidden ? 0.15 : 0.6 + 0.4 * (o.depth + 1) / 2;
+        o.node.style.transform = `translate(${(o.x - 10).toFixed(1)}px, ${(o.y - o.node.offsetHeight / 2).toFixed(1)}px)`;
+        o.node.style.opacity = hovered === -1 || hovered === i ? op.toFixed(2) : Math.min(op, 0.45).toFixed(2);
+        o.node.style.zIndex = o.depth >= 0 ? 3 : 1;
+      });
+    };
+
+    const loop = (t) => {
+      const dt = Math.min(64, t - (last || t)); last = t;
+      pace += ((hovered === -1 ? 1 : 0.15) - pace) * 0.08;  /* ralentit en douceur au survol */
+      time += (dt / 1000) * pace;
+      draw();
+      if (running) raf = requestAnimationFrame(loop);
+    };
+    const start = () => { if (running || reduceMotion) return; running = true; last = 0; raf = requestAnimationFrame(loop); };
+    const stop = () => { running = false; cancelAnimationFrame(raf); };
+
+    nodes.forEach((n, i) => {
+      n.addEventListener('pointerenter', () => { hovered = i; if (!running) draw(); });
+      n.addEventListener('pointerleave', () => { hovered = -1; if (!running) draw(); });
+      n.addEventListener('focus', () => { hovered = i; if (!running) draw(); });
+      n.addEventListener('blur', () => { hovered = -1; if (!running) draw(); });
+    });
+
+    size(); draw();
+
+    let visible = true;
+    new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      visible && !document.hidden ? start() : stop();
+    }).observe(wrap);
+    document.addEventListener('visibilitychange', () => { document.hidden ? stop() : visible && start(); });
+    let rt = 0;
+    window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { size(); draw(); }, 150); });
+  }
+
+  {
+  /* ---------- Champ d'étoiles (fond du hero) ---------- */
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  const hero = document.querySelector('.hero');
+  let stars = [], w = 0, h = 0, dpr = 1, running = false, raf = 0, last = 0;
+
+  const build = () => {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = hero.clientWidth; h = hero.clientHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const count = Math.round((w * h) / 9000);
+    stars = Array.from({ length: count }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: Math.random() * 1.1 + 0.2,
+      depth: Math.random() * 0.8 + 0.2,
+      phase: Math.random() * Math.PI * 2,
+      speed: Math.random() * 0.6 + 0.4
+    }));
+  };
+
+  const draw = (t) => {
+    ctx.clearRect(0, 0, w, h);
+    for (const s of stars) {
+      const tw = reduceMotion ? 0.8 : 0.55 + 0.45 * Math.sin(t / 1000 * s.speed + s.phase);
+      ctx.globalAlpha = tw * (0.35 + s.depth * 0.6);
+      ctx.fillStyle = s.depth > 0.85 ? '#c7d2fe' : '#ffffff';
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r * (0.6 + s.depth * 0.6), 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  };
+
+  const loop = (t) => {
+    const dt = Math.min(64, t - (last || t)); last = t;
+    for (const s of stars) {
+      s.x -= s.depth * 0.012 * dt;           /* dérive lente : les étoiles proches vont plus vite */
+      if (s.x < -2) { s.x = w + 2; s.y = Math.random() * h; }
+    }
+    draw(t);
+    if (running) raf = requestAnimationFrame(loop);
+  };
+
+  const start = () => { if (running || reduceMotion) return; running = true; last = 0; raf = requestAnimationFrame(loop); };
+  const stop = () => { running = false; cancelAnimationFrame(raf); };
+
+  build();
+  draw(0);
+  canvas.classList.add('is-ready');
+
+  /* on n'anime que si le hero est visible et l'onglet actif */
+  let heroVisible = true;
+  new IntersectionObserver(([entry]) => {
+    heroVisible = entry.isIntersecting;
+    heroVisible && !document.hidden ? start() : stop();
+  }).observe(hero);
+  document.addEventListener('visibilitychange', () => {
+    document.hidden ? stop() : heroVisible && start();
+  });
+  let resizeTimer = 0;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => { build(); draw(performance.now()); }, 150);
+  });
+  }
+})();
 </script>
 
 </body>
