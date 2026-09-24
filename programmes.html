@@ -1,1225 +1,1530 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
-  <title>Programmes — IFRAS</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --bg-main: #050b1e;
-      --bg-dark: #020617;
-      --bg-light: #070f2b;
-      --border: #1b2555;
-      --accent: #4f6bed;
-      --text-main: #e6e6e6;
-      --text-soft: #aab3d6;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: "DM Sans", "Segoe UI", Roboto, Arial, sans-serif;
-      background: var(--bg-main);
-      color: var(--text-main);
-    }
-
-    /* ===== HEADER ===== */
-
-    header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-      background: rgba(5,11,30,.85);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .header-inner {
-      max-width: 1300px;
-      margin: auto;
-      padding: 12px 30px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 40px;
-    }
-
-    .logo-link img {
-      height: 60px;
-      cursor: pointer;
-    }
-
-    .main-nav {
-      list-style: none;
-      display: flex;
-      gap: 32px;
-      margin: 0;
-      padding: 0;
-    }
-
-    .main-nav a {
-      text-decoration: none;
-      color: var(--text-soft);
-      font-size: 14px;
-      letter-spacing: .05em;
-    }
-
-    .main-nav a:hover { color: white; }
-
-    .header-right .login-btn {
-      padding: 8px 18px;
-      border-radius: 6px;
-      border: 1px solid var(--accent);
-      color: white;
-      text-decoration: none;
-      font-size: 13px;
-    }
-
-    .header-right .login-btn:hover {
-      background: var(--accent);
-    }
-
-    /* ===== BANDEAU PROGRAMMES ===== */
-
-    .program-filter {
-      margin-top: 84px;
-      background: var(--bg-light);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .program-filter ul {
-      max-width: 1300px;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      list-style: none;
-      padding: 0 30px;
-      margin: 0 auto;
-    }
-
-    .program-filter li {
-      position: relative;
-      padding: 14px 18px;
-      cursor: pointer;
-      font-size: 14px;
-      color: var(--text-soft);
-      font-family: "DM Sans", sans-serif;
-      letter-spacing: .06em;
-    }
-
-    .program-filter li:hover {
-      color: white;
-      background: rgba(79,107,237,.15);
-      border-radius: 6px;
-    }
-
-    .dropdown {
-      position: absolute;
-      top: 48px;
-      left: 0;
-      background: #050b1e;
-      border: 1px solid var(--border);
-      min-width: 240px;
-      display: none;
-      z-index: 20;
-      border-radius: 6px;
-      overflow: hidden;
-    }
-
-    .dropdown a {
-      display: block;
-      padding: 10px 14px;
-      font-size: 13px;
-      color: var(--text-soft);
-      text-decoration: none;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .dropdown a:hover {
-      background: rgba(79,107,237,.15);
-      color: white;
-    }
-
-    .program-filter li:hover .dropdown { display: block; }
-
-    /* ===== HERO ===== */
-
-    .hero {
-      position: relative;
-      padding: 90px 30px 80px;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 70% 60% at 55% 45%, rgba(79,107,237,0.12) 0%, transparent 65%),
-        radial-gradient(ellipse 40% 50% at 85% 70%, rgba(139,92,246,0.08) 0%, transparent 60%);
-      pointer-events: none;
-    }
-
-    .hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(79,107,237,0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(79,107,237,0.035) 1px, transparent 1px);
-      background-size: 60px 60px;
-      pointer-events: none;
-    }
-
-    .hero-inner {
-      max-width: 1300px;
-      margin: auto;
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0 80px;
-      align-items: center;
-    }
-
-    .hero-left {}
-
-    .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 11px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 28px;
-      font-weight: 500;
-    }
-
-    .hero-eyebrow::before {
-      content: '';
-      display: block;
-      width: 28px;
-      height: 1px;
-      background: var(--accent);
-    }
-
-    .hero h1 {
-      font-family: "Syne", sans-serif;
-      font-size: clamp(50px, 7vw, 90px);
-      font-weight: 800;
-      line-height: 0.95;
-      margin: 0 0 28px;
-      letter-spacing: -0.04em;
-      color: #fff;
-    }
-
-    .hero h1 span {
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(79,107,237,0.65);
-    }
-
-    .hero-desc {
-      color: var(--text-soft);
-      font-size: 16px;
-      line-height: 1.75;
-      margin: 0 0 36px;
-      font-weight: 300;
-    }
-
-    /* Stats héro */
-    .hero-stats {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-
-    .hero-stat {
-      background: rgba(79,107,237,0.06);
-      border: 1px solid rgba(79,107,237,0.15);
-      border-radius: 10px;
-      padding: 16px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .hero-stat-value {
-      font-family: "Syne", sans-serif;
-      font-size: 28px;
-      font-weight: 800;
-      color: white;
-      letter-spacing: -0.03em;
-    }
-
-    .hero-stat-label {
-      font-size: 11px;
-      color: var(--text-soft);
-      letter-spacing: .1em;
-      text-transform: uppercase;
-    }
-
-    /* Timeline décorative droite */
-    .hero-right {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      position: relative;
-    }
-
-    .hero-timeline {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      border-left: 1px solid rgba(79,107,237,0.22);
-      padding-left: 28px;
-      margin-left: 12px;
-    }
-
-    .timeline-item {
-      position: relative;
-      padding-bottom: 26px;
-      animation: fadeUp .5s ease both;
-    }
-
-    .timeline-item:last-child { padding-bottom: 0; }
-
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: -35px;
-      top: 6px;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--dot-color, var(--accent));
-      box-shadow: 0 0 12px var(--dot-color, var(--accent));
-    }
-
-    .tl-category {
-      font-size: 10px;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--dot-color, var(--accent));
-      margin-bottom: 4px;
-      font-weight: 500;
-    }
-
-    .tl-name {
-      font-family: "Syne", sans-serif;
-      font-size: 18px;
-      font-weight: 700;
-      color: white;
-      margin-bottom: 4px;
-    }
-
-    .tl-desc {
-      font-size: 13px;
-      color: var(--text-soft);
-      font-weight: 300;
-      line-height: 1.5;
-    }
-
-    /* ===== SÉPARATEUR ===== */
-
-    .section-sep {
-      max-width: 1300px;
-      margin: 0 auto 0;
-      padding: 0 30px;
-      border-top: 1px solid var(--border);
-    }
-
-    /* ===== SECTION GÉNÉRIQUE ===== */
-
-    .prog-section {
-      max-width: 1300px;
-      margin: 0 auto;
-      padding: 70px 30px;
-    }
-
-    .prog-section + .prog-section {
-      padding-top: 0;
-    }
-
-    .prog-section-header {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      margin-bottom: 40px;
-      gap: 30px;
-    }
-
-    .prog-section-header-left {}
-
-    .section-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 11px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      font-weight: 500;
-      margin-bottom: 10px;
-    }
-
-    .section-eyebrow::before {
-      content: '';
-      display: block;
-      width: 22px;
-      height: 1px;
-      background: currentColor;
-    }
-
-    .prog-section-header h2 {
-      font-family: "Syne", sans-serif;
-      font-size: clamp(24px, 3vw, 34px);
-      font-weight: 700;
-      margin: 0;
-      color: white;
-    }
-
-    .prog-section-header p {
-      font-size: 14px;
-      color: var(--text-soft);
-      max-width: 420px;
-      text-align: right;
-      line-height: 1.65;
-      margin: 0;
-      font-weight: 300;
-    }
-
-    /* ===== GRILLE ACTIVE ===== */
-
-    .active-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      grid-template-rows: auto auto;
-      gap: 18px;
-    }
-
-    .prog-card {
-      background: var(--bg-light);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 28px 30px;
-      position: relative;
-      overflow: hidden;
-      text-decoration: none;
-      color: inherit;
-      display: flex;
-      flex-direction: column;
-      transition: border-color .3s, transform .3s, box-shadow .3s;
-      animation: fadeUp .5s ease both;
-    }
-
-    .prog-card:hover {
-      border-color: rgba(79,107,237,.35);
-      transform: translateY(-4px);
-      box-shadow: 0 18px 48px rgba(0,0,10,.5);
-    }
-
-    .prog-card::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--card-accent, var(--accent));
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform .35s ease;
-    }
-
-    .prog-card:hover::after { transform: scaleX(1); }
-
-    /* Carte principale large */
-    .prog-card--featured {
-      grid-column: 1;
-      grid-row: 1 / 3;
-      padding: 36px;
-    }
-
-    .prog-card--featured .card-title {
-      font-size: 22px;
-    }
-
-    .card-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      margin-bottom: 16px;
-    }
-
-    .card-code {
-      font-family: "Syne", sans-serif;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: .12em;
-      padding: 4px 12px;
-      border-radius: 5px;
-      background: rgba(79,107,237,0.1);
-      border: 1px solid rgba(79,107,237,0.2);
-      color: var(--card-accent, var(--accent));
-    }
-
-    .card-status {
-      font-size: 11px;
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-weight: 500;
-      letter-spacing: .05em;
-    }
-
-    .status--active    { background: rgba(52,211,153,.12); color: #34d399; border: 1px solid rgba(52,211,153,.25); }
-    .status--restricted{ background: rgba(250,204,21,.10); color: #facc15; border: 1px solid rgba(250,204,21,.25); }
-    .status--phase     { background: rgba(96,165,250,.12); color: #60a5fa; border: 1px solid rgba(96,165,250,.25); }
-    .status--archived  { background: rgba(156,163,175,.10); color: #9ca3af; border: 1px solid rgba(156,163,175,.2); }
-    .status--future    { background: rgba(167,139,250,.12); color: #a78bfa; border: 1px solid rgba(167,139,250,.25); }
-    .status--aborted   { background: rgba(251,113,133,.10); color: #fb7185; border: 1px solid rgba(251,113,133,.25); }
-
-    .card-title {
-      font-family: "Syne", sans-serif;
-      font-size: 17px;
-      font-weight: 700;
-      color: white;
-      margin: 0 0 10px;
-    }
-
-    .card-desc {
-      font-size: 13.5px;
-      color: var(--text-soft);
-      line-height: 1.7;
-      margin: 0 0 20px;
-      font-weight: 300;
-      flex: 1;
-    }
-
-    .card-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: auto;
-    }
-
-    .card-tag {
-      font-size: 11px;
-      padding: 3px 10px;
-      border-radius: 20px;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.08);
-      color: var(--text-soft);
-    }
-
-    .card-arrow {
-      position: absolute;
-      bottom: 22px;
-      right: 22px;
-      font-size: 16px;
-      color: var(--card-accent, var(--accent));
-      opacity: 0;
-      transform: translateX(-6px);
-      transition: opacity .3s, transform .3s;
-    }
-
-    .prog-card:hover .card-arrow { opacity: 1; transform: translateX(0); }
-
-    /* Carte featured : chiffres clés */
-    .featured-kpis {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-top: 28px;
-      padding-top: 24px;
-      border-top: 1px solid rgba(79,107,237,0.15);
-    }
-
-    .kpi {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .kpi-val {
-      font-family: "Syne", sans-serif;
-      font-size: 22px;
-      font-weight: 700;
-      color: white;
-    }
-
-    .kpi-label {
-      font-size: 11px;
-      color: var(--text-soft);
-      text-transform: uppercase;
-      letter-spacing: .08em;
-    }
-
-    /* ===== GRILLES SECONDAIRES ===== */
-
-    .standard-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 18px;
-    }
-
-    /* ===== GRILLE ARCHIVÉS (horizontal cards) ===== */
-
-    .archive-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .archive-card {
-      background: var(--bg-light);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 22px 28px;
-      display: grid;
-      grid-template-columns: 110px 1fr auto;
-      align-items: center;
-      gap: 28px;
-      text-decoration: none;
-      color: inherit;
-      transition: border-color .25s, background .25s;
-      animation: fadeUp .4s ease both;
-    }
-
-    .archive-card:hover {
-      border-color: rgba(156,163,175,.3);
-      background: rgba(10,18,45,.6);
-    }
-
-    .archive-code {
-      font-family: "Syne", sans-serif;
-      font-size: 20px;
-      font-weight: 800;
-      color: rgba(156,163,175,.5);
-      letter-spacing: -0.02em;
-    }
-
-    .archive-info {}
-
-    .archive-name {
-      font-size: 15px;
-      font-weight: 500;
-      color: rgba(230,230,230,.7);
-      margin-bottom: 4px;
-    }
-
-    .archive-desc {
-      font-size: 13px;
-      color: rgba(170,179,214,.55);
-      font-weight: 300;
-      line-height: 1.5;
-    }
-
-    .archive-dates {
-      font-size: 12px;
-      color: rgba(170,179,214,.4);
-      text-align: right;
-      white-space: nowrap;
-    }
-
-    /* ===== GRILLE FUTURS ===== */
-
-    .future-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 18px;
-    }
-
-    .future-card {
-      background: var(--bg-light);
-      border: 1px dashed rgba(167,139,250,.25);
-      border-radius: 14px;
-      padding: 28px 30px;
-      position: relative;
-      overflow: hidden;
-      text-decoration: none;
-      color: inherit;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      transition: border-color .3s, transform .3s;
-      animation: fadeUp .5s ease both;
-    }
-
-    .future-card:hover {
-      border-color: rgba(167,139,250,.5);
-      transform: translateY(-3px);
-    }
-
-    .future-card-bg {
-      position: absolute;
-      top: -40px; right: -40px;
-      width: 140px; height: 140px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(167,139,250,.07) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .future-year {
-      font-family: "Syne", sans-serif;
-      font-size: 40px;
-      font-weight: 800;
-      color: rgba(167,139,250,.18);
-      letter-spacing: -0.05em;
-      line-height: 1;
-    }
-
-    .future-title {
-      font-family: "Syne", sans-serif;
-      font-size: 18px;
-      font-weight: 700;
-      color: rgba(255,255,255,.75);
-    }
-
-    .future-desc {
-      font-size: 13.5px;
-      color: var(--text-soft);
-      line-height: 1.65;
-      font-weight: 300;
-    }
-
-    .future-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-      margin-top: 4px;
-    }
-
-    .future-tag {
-      font-size: 11px;
-      padding: 3px 10px;
-      border-radius: 20px;
-      background: rgba(167,139,250,.08);
-      border: 1px solid rgba(167,139,250,.18);
-      color: rgba(167,139,250,.8);
-    }
-
-    /* ===== GRILLE AVORTÉS ===== */
-
-    .aborted-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 18px;
-    }
-
-    .aborted-card {
-      background: rgba(251,113,133,.03);
-      border: 1px solid rgba(251,113,133,.12);
-      border-radius: 14px;
-      padding: 26px 28px;
-      position: relative;
-      overflow: hidden;
-      text-decoration: none;
-      color: inherit;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      animation: fadeUp .4s ease both;
-    }
-
-    .aborted-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 3px; height: 100%;
-      background: rgba(251,113,133,.3);
-    }
-
-    .aborted-code {
-      font-family: "Syne", sans-serif;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: .1em;
-      color: rgba(251,113,133,.6);
-    }
-
-    .aborted-title {
-      font-family: "Syne", sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      color: rgba(255,255,255,.6);
-      text-decoration: line-through;
-      text-decoration-color: rgba(251,113,133,.35);
-    }
-
-    .aborted-desc {
-      font-size: 13px;
-      color: rgba(170,179,214,.5);
-      line-height: 1.6;
-      font-weight: 300;
-    }
-
-    .aborted-reason {
-      font-size: 11px;
-      color: rgba(251,113,133,.6);
-      border-top: 1px solid rgba(251,113,133,.1);
-      padding-top: 10px;
-      margin-top: 4px;
-      font-style: italic;
-    }
-
-    /* ===== FOOTER ===== */
-
-    footer {
-      background: var(--bg-dark);
-      border-top: 1px solid var(--border);
-      padding: 40px 30px;
-      font-size: 12px;
-      color: #6b7280;
-      text-align: center;
-    }
-
-    /* ===== ANIMATIONS ===== */
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .prog-card:nth-child(1) { animation-delay: .05s; }
-    .prog-card:nth-child(2) { animation-delay: .10s; }
-    .prog-card:nth-child(3) { animation-delay: .15s; }
-    .prog-card:nth-child(4) { animation-delay: .20s; }
-    .archive-card:nth-child(1) { animation-delay: .05s; }
-    .archive-card:nth-child(2) { animation-delay: .10s; }
-    .archive-card:nth-child(3) { animation-delay: .15s; }
-    .future-card:nth-child(1) { animation-delay: .05s; }
-    .future-card:nth-child(2) { animation-delay: .10s; }
-    .future-card:nth-child(3) { animation-delay: .15s; }
-    .aborted-card:nth-child(1) { animation-delay: .05s; }
-    .aborted-card:nth-child(2) { animation-delay: .10s; }
-    .aborted-card:nth-child(3) { animation-delay: .15s; }
-
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programmes | IFRAS</title>
+<meta name="description" content="Le portefeuille de programmes de l'IFRAS : missions actives, programmes futurs, missions clôturées et projets interrompus.">
+<meta name="theme-color" content="#050b1e">
+<link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+
+<style>
+/* =========================================================
+   TOKENS (identiques à index.html et recherche.html)
+   ========================================================= */
+:root {
+  --bg-main: #050b1e;
+  --bg-dark: #020617;
+  --bg-light: #070f2b;
+  --bg-raise: #0a1436;
+  --accent: #4f6bed;
+  --accent-hover: #3d5adb;
+  --accent-soft: rgba(79,107,237,.14);
+  --accent-line: rgba(79,107,237,.38);
+  --text-main: #e6e6e6;
+  --text-strong: #f5f7ff;
+  --text-soft: #aab3d6;
+  --text-mute: #8891b8;
+  --border: #1b2555;
+
+  /* Couleurs de statut : une seule légende pour toute la page */
+  --st-active: #34d399;
+  --st-phase: #60a5fa;
+  --st-restricted: #facc15;
+  --st-future: #a78bfa;
+  --st-archived: #9ca3af;
+  --st-aborted: #fb7185;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --header-h: 68px;
+  --subnav-h: 48px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 20px); }
+
+body {
+  margin: 0;
+  font-family: "DM Sans", "Segoe UI", system-ui, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.skip-link {
+  position: absolute; left: 16px; top: -48px;
+  padding: 10px 16px;
+  background: var(--accent); color: #fff;
+  border-radius: var(--radius-sm);
+  z-index: 3000; text-decoration: none;
+  transition: top 160ms var(--ease-out);
+}
+.skip-link:focus { top: 12px; }
+
+.container { max-width: 1300px; margin: 0 auto; padding: 0 30px; }
+
+/* =========================================================
+   BOUTONS
+   ========================================================= */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 22px;
+  border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 500;
+  text-decoration: none; white-space: nowrap;
+  border: 1px solid transparent;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.btn:active { transform: scale(0.97); }
+.btn i { font-size: 16px; transition: transform 200ms var(--ease-out); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-ghost { border-color: var(--accent-line); color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-ghost:hover { background: var(--accent-soft); border-color: var(--accent); }
+  .btn:hover i { transform: translateX(3px); }
+}
+
+/* =========================================================
+   HEADER (opaque)
+   ========================================================= */
+.site-header {
+  position: fixed; inset: 0 0 auto 0;
+  z-index: 2000;
+  height: var(--header-h);
+  background: rgba(5,11,30,.88);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.header-left { display: flex; align-items: center; gap: 44px; }
+.logo-link { display: flex; align-items: center; }
+.logo-link img { height: 44px; width: auto; }
+
+.main-nav { list-style: none; display: flex; gap: 6px; margin: 0; padding: 0; }
+.main-nav a {
+  position: relative; display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--text-soft);
+  font-size: 14px; letter-spacing: .02em;
+  border-radius: 6px;
+  transition: color 160ms ease;
+}
+.main-nav a::after {
+  content: ""; position: absolute;
+  left: 12px; right: 12px; bottom: 2px; height: 1px;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 200ms var(--ease-out);
+}
+.main-nav a[aria-current="page"] { color: #fff; }
+.main-nav a[aria-current="page"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .main-nav a:hover { color: #fff; }
+  .main-nav a:hover::after { transform: scaleX(1); }
+}
+
+.header-right { display: flex; align-items: center; gap: 10px; }
+.header-right .btn { padding: 9px 18px; font-size: 13px; }
+
+.menu-toggle {
+  display: none;
+  width: 42px; height: 42px;
+  align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: #fff; font-size: 20px; cursor: pointer;
+  transition: transform 160ms var(--ease-out);
+}
+.menu-toggle:active { transform: scale(0.95); }
+
+.mobile-panel {
+  position: fixed; top: var(--header-h); left: 12px; right: 12px;
+  z-index: 1999;
+  padding: 10px;
+  background: rgba(7,15,43,.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(2,6,23,.6);
+  transform-origin: top right;
+  opacity: 0; transform: scale(0.96) translateY(-6px);
+  pointer-events: none; visibility: hidden;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s linear 220ms;
+}
+.mobile-panel.is-open {
+  opacity: 1; transform: none; pointer-events: auto; visibility: visible;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s;
+}
+.mobile-panel ul { list-style: none; margin: 0; padding: 0; }
+.mobile-panel a {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px; color: var(--text-main);
+  text-decoration: none; font-size: 16px; border-radius: 10px;
+}
+.mobile-panel a[aria-current="page"] { background: var(--accent-soft); color: #fff; }
+.mobile-panel .btn { width: 100%; justify-content: center; margin-top: 8px; }
+
+/* =========================================================
+   SOUS-NAVIGATION PAR STATUT + MENUS DÉROULANTS
+   ========================================================= */
+.subnav {
+  position: sticky;
+  top: var(--header-h);
+  margin-top: var(--header-h);
+  z-index: 1500;
+  height: var(--subnav-h);
+  background: rgba(8,18,53,.94);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.subnav-list {
+  height: 100%;
+  list-style: none; margin: 0 auto; padding: 0 30px;
+  max-width: 1300px;
+  display: flex; align-items: stretch; justify-content: space-between;
+}
+
+.subnav-item { position: relative; display: flex; }
+
+.subnav-trigger {
+  position: relative;
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 14px;
+  color: var(--text-soft);
+  text-decoration: none;
+  font-size: 14px; font-weight: 500;
+  letter-spacing: .02em;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.subnav-count {
+  min-width: 22px; height: 20px; padding: 0 6px;
+  display: inline-grid; place-items: center;
+  border-radius: 999px;
+  font-size: 11.5px; font-weight: 500;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c) 26%, transparent);
+  font-variant-numeric: tabular-nums;
+}
+.subnav-trigger > i { font-size: 11px; opacity: .6; transition: transform 200ms var(--ease-out); }
+
+.subnav-trigger::after {
+  content: ""; position: absolute;
+  left: 14px; right: 14px; bottom: -1px; height: 2px;
+  background: var(--c, var(--accent));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+/* section visible à l'écran (scrollspy) */
+.subnav-trigger[aria-current="true"] { color: #fff; }
+.subnav-trigger[aria-current="true"]::after { transform: scaleX(1); }
+
+.subnav-item.is-open .subnav-trigger,
+.subnav-item:has(:focus-visible) .subnav-trigger { color: #fff; }
+.subnav-item.is-open .subnav-trigger::after,
+.subnav-item:has(:focus-visible) .subnav-trigger::after { transform: scaleX(1); }
+.subnav-item.is-open .subnav-trigger > i { transform: rotate(180deg); }
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 1px); left: 0;
+  width: 360px;
+  padding: 10px;
+  background: rgba(6,13,40,.98);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--c, var(--accent));
+  border-radius: 0 0 var(--radius) var(--radius);
+  box-shadow: 0 24px 60px rgba(2,6,23,.6);
+  transform-origin: top left;
+  opacity: 0; transform: scale(0.97) translateY(-4px);
+  visibility: hidden; pointer-events: none;
+  transition: opacity 160ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s linear 200ms;
+}
+.subnav-item--end .dropdown { left: auto; right: 0; transform-origin: top right; }
+
+.subnav-item.is-open .dropdown,
+.subnav-item:has(:focus-visible) .dropdown {
+  opacity: 1; transform: none; visibility: visible; pointer-events: auto;
+  transition: opacity 160ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s;
+}
+.subnav.is-instant .dropdown { transition-duration: 0ms !important; }
+
+.dropdown ul { list-style: none; margin: 0; padding: 0; }
+.dropdown a {
+  display: flex; align-items: baseline; gap: 12px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 120ms ease;
+}
+.dropdown a strong {
+  font-family: "Syne", sans-serif;
+  font-size: 12.5px; font-weight: 700; letter-spacing: .06em;
+  color: #fff;
+  min-width: 96px;
+}
+.dropdown a span { font-size: 13px; color: var(--text-soft); line-height: 1.35; }
+@media (hover: hover) and (pointer: fine) {
+  .subnav-trigger:hover { color: #fff; }
+  .dropdown a:hover { background: rgba(255,255,255,.04); }
+  .dropdown a:hover span { color: #fff; }
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero {
+  position: relative;
+  padding: 90px 0 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+/* champ d'étoiles animé (canvas) */
+.starfield {
+  position: absolute; inset: 0; z-index: -2;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1200ms ease;
+}
+.starfield.is-ready { opacity: 1; }
+.hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(ellipse 60% 55% at 70% 35%, rgba(79,107,237,0.14) 0%, transparent 70%),
+    linear-gradient(180deg, transparent 70%, var(--bg-main) 100%);
+  pointer-events: none;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 70px;
+  align-items: center;
+}
+
+.kicker {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--accent); font-weight: 500;
+  margin-bottom: 22px;
+}
+.kicker::before { content: ""; width: 24px; height: 1px; background: currentColor; }
+
+.hero h1 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(44px, 6.2vw, 84px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--text-strong);
+  margin: 0 0 28px;
+}
+.hero h1 .line { display: block; overflow: hidden; padding-bottom: .14em; margin-bottom: -.14em; }
+.hero h1 .line > span {
+  display: block;
+  transform: translateY(105%);
+  animation: lineUp 900ms var(--ease-out) forwards;
+  animation-delay: calc(120ms + var(--i, 0) * 110ms);
+}
+.hero h1 .line--soft { color: #8fa2ff; font-weight: 600; }
+@keyframes lineUp { to { transform: none; } }
+
+.hero-desc {
+  max-width: 46ch;
+  color: var(--text-soft);
+  font-size: 17px; line-height: 1.7;
+  margin: 0 0 34px;
+  font-weight: 300;
+}
+
+.hero-in {
+  opacity: 0;
+  animation: heroIn 700ms var(--ease-out) forwards;
+  animation-delay: calc(100ms + var(--i, 0) * 80ms);
+}
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(14px); filter: blur(4px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+
+/* Légende des statuts */
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 0; padding: 0; list-style: none; }
+.legend li { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-soft); }
+.legend li::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--c);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 18%, transparent);
+}
+
+/* ----- Frise des programmes phares ----- */
+.timeline {
+  position: relative;
+  list-style: none; margin: 0; padding: 6px 0 6px 34px;
+}
+.timeline::before {
+  content: ""; position: absolute;
+  left: 9px; top: 12px; bottom: 12px; width: 1px;
+  background: linear-gradient(180deg, rgba(79,107,237,.5), rgba(79,107,237,.12));
+  transform-origin: top;
+  transform: scaleY(0);
+  animation: drawLine 1200ms var(--ease-in-out) 300ms forwards;
+}
+@keyframes drawLine { to { transform: scaleY(1); } }
+
+.tl-item {
+  position: relative;
+  opacity: 0;
+  animation: heroIn 700ms var(--ease-out) forwards;
+  animation-delay: calc(450ms + var(--i, 0) * 130ms);
+}
+.tl-item + .tl-item { margin-top: 6px; }
+
+.tl-link {
+  display: block;
+  padding: 14px 18px;
+  margin-left: -8px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  text-decoration: none;
+  transition: background-color 200ms ease, border-color 200ms ease, transform 200ms var(--ease-out);
+}
+.tl-link:active { transform: scale(0.99); }
+
+.tl-dot {
+  position: absolute;
+  left: -30px; top: 21px;
+  width: 11px; height: 11px; border-radius: 50%;
+  background: var(--c);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 16%, var(--bg-main)), 0 0 14px color-mix(in srgb, var(--c) 55%, transparent);
+}
+/* anneau qui pulse : uniquement sur les programmes en cours (état réel) */
+.tl-item.is-live .tl-dot::after {
+  content: ""; position: absolute; inset: -5px; border-radius: 50%;
+  border: 1px solid var(--c);
+  animation: pulse 2400ms var(--ease-out) infinite;
+}
+@keyframes pulse {
+  0%   { transform: scale(.6); opacity: .9; }
+  70%  { transform: scale(1.9); opacity: 0; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
+.tl-status { font-size: 12.5px; color: var(--c); font-weight: 500; margin-bottom: 4px; }
+.tl-name {
+  display: flex; align-items: center; gap: 8px;
+  font-family: "Syne", sans-serif; font-size: 19px; font-weight: 700; color: #fff;
+  margin-bottom: 3px;
+}
+.tl-name i { font-size: 15px; color: var(--text-mute); opacity: 0; transform: translateX(-4px); transition: opacity 200ms ease, transform 200ms var(--ease-out); }
+.tl-desc { font-size: 14px; color: var(--text-soft); font-weight: 300; line-height: 1.5; }
+
+@media (hover: hover) and (pointer: fine) {
+  .tl-link:hover { background: rgba(7,15,43,.7); border-color: var(--border); }
+  .tl-link:hover .tl-name i { opacity: 1; transform: none; }
+}
+
+/* ----- Chiffres ----- */
+.hero-stats {
+  margin-top: 70px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.hero-stat { padding: 28px 24px; display: flex; flex-direction: column; gap: 6px; }
+.hero-stat + .hero-stat { border-left: 1px solid var(--border); }
+.hero-stat-value {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 800; color: #fff;
+  letter-spacing: -0.03em; line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.hero-stat-label { font-size: 13px; color: var(--text-soft); }
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+.prog-section { padding: 100px 0 0; }
+.prog-section:last-of-type { padding-bottom: 100px; }
+
+.section-head {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 420px);
+  align-items: end;
+  gap: 30px;
+  margin-bottom: 36px;
+}
+.section-status {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 500;
+  color: var(--c);
+  margin-bottom: 12px;
+}
+.section-status i { font-size: 17px; }
+.section-title {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(28px, 3.2vw, 42px);
+  font-weight: 700; color: #fff;
+  margin: 0; letter-spacing: -0.02em; line-height: 1.1;
+}
+.section-head p {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 15px; line-height: 1.65; font-weight: 300;
+}
+
+/* Pastille de statut */
+.status {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 12px; font-weight: 500;
+  padding: 4px 10px 4px 9px;
+  border-radius: 999px;
+  color: var(--s);
+  background: color-mix(in srgb, var(--s) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--s) 26%, transparent);
+  white-space: nowrap;
+}
+.status i { font-size: 13px; }
+
+/* =========================================================
+   PROGRAMMES ACTIFS (bento 3 x 3, sans case vide)
+   ========================================================= */
+.active-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.prog-card {
+  position: relative;
+  display: flex; flex-direction: column;
+  padding: 26px 26px 24px;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 200ms ease, transform 200ms var(--ease-out), box-shadow 200ms ease;
+}
+.prog-card:active { transform: scale(0.99); }
+.prog-card::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--c);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 260ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .prog-card:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--c) 40%, transparent);
+    box-shadow: 0 18px 44px rgba(2,6,23,.55);
+  }
+  .prog-card:hover::before { transform: scaleX(1); }
+  .prog-card:hover .card-arrow { opacity: 1; transform: none; }
+}
+
+.card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 18px; }
+
+.card-code {
+  font-family: "Syne", sans-serif;
+  font-size: 12.5px; font-weight: 700; letter-spacing: .1em;
+  padding: 5px 11px; border-radius: 6px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 9%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c) 26%, transparent);
+}
+
+.card-title {
+  font-family: "Syne", sans-serif;
+  font-size: 18px; font-weight: 700; line-height: 1.3;
+  color: #fff; margin: 0 0 10px;
+  text-wrap: balance;
+}
+.card-desc {
+  font-size: 14px; color: var(--text-soft);
+  line-height: 1.65; font-weight: 300;
+  margin: 0 0 20px; flex: 1;
+}
+.card-tags { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.card-tags li {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.09);
+  color: var(--text-soft);
+}
+.card-arrow {
+  position: absolute; right: 22px; bottom: 22px;
+  font-size: 17px; color: var(--c);
+  opacity: 0; transform: translate(-4px, 4px);
+  transition: opacity 200ms ease, transform 200ms var(--ease-out);
+}
+
+/* Carte vedette ARTEMIS-9 */
+.prog-card--featured {
+  grid-column: span 2;
+  grid-row: span 2;
+  padding: 36px;
+  background:
+    radial-gradient(ellipse 70% 80% at 100% 0%, color-mix(in srgb, var(--c) 14%, transparent), transparent 60%),
+    var(--bg-light);
+}
+.prog-card--featured .card-title { font-size: clamp(24px, 2.4vw, 32px); max-width: 20ch; margin-bottom: 14px; }
+.prog-card--featured .card-desc { font-size: 15.5px; max-width: 58ch; }
+
+.launch {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin: 0 0 22px;
+  padding: 8px 14px 8px 10px;
+  border-radius: 999px;
+  background: rgba(5,11,30,.55);
+  border: 1px solid var(--border);
+  font-size: 13.5px; color: var(--text-main);
+  align-self: flex-start;
+}
+.launch i { font-size: 18px; color: var(--c); }
+.launch strong { color: #fff; font-weight: 500; }
+
+.featured-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid color-mix(in srgb, var(--c) 18%, transparent);
+}
+.kpi { display: flex; flex-direction: column; gap: 4px; }
+.kpi-val {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(24px, 2.4vw, 32px); font-weight: 800;
+  color: #fff; letter-spacing: -0.03em; line-height: 1.05;
+}
+.kpi-label { font-size: 13px; color: var(--text-soft); }
+
+/* =========================================================
+   PROGRAMMES FUTURS
+   ========================================================= */
+.future-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  position: relative;
+}
+
+.future-card {
+  position: relative;
+  display: flex; flex-direction: column; gap: 12px;
+  padding: 26px 26px 24px;
+  background: var(--bg-light);
+  border: 1px dashed color-mix(in srgb, var(--st-future) 32%, transparent);
+  border-radius: var(--radius);
+  overflow: hidden;
+  text-decoration: none; color: inherit;
+  transition: border-color 200ms ease, transform 200ms var(--ease-out);
+}
+.future-card:active { transform: scale(0.99); }
+.future-card::after {
+  content: ""; position: absolute; top: -60px; right: -60px;
+  width: 180px; height: 180px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(167,139,250,.10) 0%, transparent 70%);
+  pointer-events: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .future-card:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--st-future) 60%, transparent); border-style: solid; }
+  .future-card:hover .card-arrow { opacity: 1; transform: none; }
+}
+
+.future-year {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
+}
+.future-year strong {
+  font-family: "Syne", sans-serif;
+  font-size: 44px; font-weight: 800; line-height: 1;
+  letter-spacing: -0.04em;
+  color: color-mix(in srgb, var(--st-future) 55%, #fff 0%);
+}
+.future-year span { font-size: 13px; color: var(--text-mute); }
+.future-code {
+  font-family: "Syne", sans-serif; font-size: 13px; font-weight: 700; letter-spacing: .1em;
+  color: var(--st-future);
+}
+.future-title { font-family: "Syne", sans-serif; font-size: 18px; font-weight: 700; color: #fff; margin: 0; line-height: 1.3; }
+.future-card .card-desc { margin-bottom: 8px; }
+.future-card .card-tags li {
+  background: rgba(167,139,250,.08);
+  border-color: rgba(167,139,250,.2);
+  color: #c9bcfb;
+}
+.future-card .card-arrow { color: var(--st-future); }
+
+/* =========================================================
+   PROGRAMMES ARCHIVÉS (lignes + frise de durée)
+   ========================================================= */
+.archive-scale {
+  display: grid;
+  grid-template-columns: 150px 1fr 280px;
+  gap: 28px;
+  padding: 0 28px 10px;
+  font-size: 12px; color: var(--text-mute);
+}
+.archive-scale .ticks { display: flex; justify-content: space-between; font-variant-numeric: tabular-nums; }
+
+.archive-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+
+.archive-card {
+  display: grid;
+  grid-template-columns: 150px 1fr 280px;
+  align-items: center;
+  gap: 28px;
+  padding: 22px 28px;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-decoration: none; color: inherit;
+  transition: border-color 200ms ease, background-color 200ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .archive-card:hover { border-color: rgba(156,163,175,.35); background: var(--bg-raise); }
+  .archive-card:hover .archive-code { color: #d1d5db; }
+}
+
+.archive-code {
+  font-family: "Syne", sans-serif;
+  font-size: 19px; font-weight: 800; letter-spacing: -0.01em;
+  color: var(--st-archived);
+  transition: color 200ms ease;
+}
+.archive-name { font-size: 15.5px; font-weight: 500; color: var(--text-main); margin-bottom: 4px; }
+.archive-desc { font-size: 13.5px; color: var(--text-soft); font-weight: 300; line-height: 1.55; }
+
+.archive-span { display: flex; flex-direction: column; gap: 10px; }
+.span-track { position: relative; height: 6px; border-radius: 999px; background: rgba(255,255,255,.05); }
+.span-bar {
+  position: absolute; top: 0; bottom: 0;
+  left: var(--from); width: var(--len);
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(156,163,175,.45), rgba(209,213,219,.8));
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 1000ms var(--ease-out) 200ms;
+}
+.archive-card.is-visible .span-bar,
+html:not(.js) .span-bar { transform: scaleX(1); }
+.span-meta { display: flex; justify-content: space-between; gap: 10px; font-size: 12.5px; color: var(--text-mute); }
+.span-meta strong { color: var(--text-main); font-weight: 500; }
+
+/* =========================================================
+   PROGRAMMES AVORTÉS
+   ========================================================= */
+.aborted-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+
+.aborted-card {
+  position: relative;
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 24px 26px 22px 28px;
+  background: rgba(251,113,133,.03);
+  border: 1px solid rgba(251,113,133,.14);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.aborted-card::before {
+  content: ""; position: absolute; top: 0; left: 0; bottom: 0; width: 3px;
+  background: rgba(251,113,133,.45);
+}
+.aborted-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.aborted-code { font-family: "Syne", sans-serif; font-size: 13px; font-weight: 700; letter-spacing: .1em; color: var(--st-aborted); }
+.aborted-year { font-size: 12.5px; color: var(--text-mute); font-variant-numeric: tabular-nums; }
+.aborted-title { font-family: "Syne", sans-serif; font-size: 17px; font-weight: 700; color: #d7dbef; margin: 0; line-height: 1.3; }
+.aborted-desc { font-size: 13.5px; color: var(--text-soft); line-height: 1.6; font-weight: 300; margin: 0; flex: 1; }
+.aborted-reason {
+  display: flex; align-items: flex-start; gap: 8px;
+  margin-top: 6px; padding-top: 12px;
+  border-top: 1px solid rgba(251,113,133,.12);
+  font-size: 13px; color: #fda4af;
+}
+.aborted-reason i { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+/* =========================================================
+   BANDEAU FINAL
+   ========================================================= */
+.cta-band {
+  margin-top: 100px;
+  padding: 52px 56px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background:
+    radial-gradient(ellipse 50% 90% at 100% 0%, rgba(79,107,237,.18), transparent 60%),
+    var(--bg-light);
+  display: grid;
+  grid-template-columns: 1.3fr auto;
+  gap: 32px;
+  align-items: center;
+}
+.cta-band h2 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(24px, 2.6vw, 34px);
+  font-weight: 700; color: #fff; margin: 0 0 10px; letter-spacing: -0.02em;
+}
+.cta-band p { margin: 0; color: var(--text-soft); font-size: 15.5px; line-height: 1.6; font-weight: 300; max-width: 52ch; }
+.cta-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.site-footer {
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border);
+  padding: 36px 0;
+  font-size: 13px; color: var(--text-mute);
+}
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.footer-inner span:last-child { display: inline-flex; align-items: center; gap: 6px; }
+
+/* =========================================================
+   APPARITION AU DÉFILEMENT
+   ========================================================= */
+.js .reveal {
+  opacity: 0; transform: translateY(16px);
+  transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 60ms);
+}
+.js .reveal.is-visible { opacity: 1; transform: none; }
+.js .prog-card.reveal.is-visible,
+.js .future-card.reveal.is-visible {
+  transition: border-color 200ms ease, transform 200ms var(--ease-out), box-shadow 200ms ease, opacity 700ms var(--ease-out);
+  transition-delay: 0ms;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1100px) {
+  .active-grid { grid-template-columns: repeat(2, 1fr); }
+  .prog-card--featured { grid-row: auto; }
+  .future-grid, .aborted-grid { grid-template-columns: repeat(2, 1fr); }
+  .future-grid > :last-child, .aborted-grid > :last-child { grid-column: 1 / -1; }
+  .archive-scale, .archive-card { grid-template-columns: 120px 1fr 220px; gap: 20px; }
+}
+
+@media (max-width: 960px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); }
+  .hero-stat:nth-child(3) { border-left: 0; }
+  .hero-stat:nth-child(n+3) { border-top: 1px solid var(--border); }
+  .section-head { grid-template-columns: 1fr; gap: 14px; }
+  .archive-scale { display: none; }
+  .archive-card { grid-template-columns: 1fr; gap: 12px; }
+  .cta-band { grid-template-columns: 1fr; padding: 36px; }
+}
+
+@media (max-width: 960px), (hover: none) {
+  .subnav-list {
+    justify-content: flex-start; gap: 4px;
+    overflow-x: auto; scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+  }
+  .subnav-list::-webkit-scrollbar { display: none; }
+  .subnav-trigger > i, .dropdown { display: none; }
+}
+
+@media (max-width: 860px) {
+  .main-nav, .header-right .btn-desktop { display: none; }
+  .menu-toggle { display: inline-flex; }
+}
+
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .subnav-list { padding: 0 20px; }
+  .hero { padding-top: 56px; }
+  .hero-desc { font-size: 16px; }
+  .prog-section { padding-top: 72px; }
+  .prog-section:last-of-type { padding-bottom: 72px; }
+  .active-grid, .future-grid, .aborted-grid { grid-template-columns: 1fr; }
+  .prog-card--featured { grid-column: auto; padding: 26px; }
+  .featured-kpis { grid-template-columns: 1fr 1fr; }
+  .archive-card { padding: 20px; }
+  .cta-band { padding: 28px 22px; border-radius: var(--radius); margin-top: 72px; }
+  .cta-actions .btn { flex: 1 1 100%; justify-content: center; }
+}
+
+/* =========================================================
+   MOUVEMENT RÉDUIT
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-in, .tl-item { animation: fadeOnly 300ms ease forwards; }
+  .hero h1 .line > span { animation: none; transform: none; }
+  .timeline::before { animation: none; transform: none; }
+  .tl-item.is-live .tl-dot::after { animation: none; opacity: 0; }
+  .js .reveal { transform: none; transition: opacity 300ms ease; transition-delay: 0ms; }
+  .span-bar { transition: none; transform: none; }
+  .dropdown { transition-duration: 0ms; }
+}
+@keyframes fadeOnly { to { opacity: 1; } }
+</style>
+
+<script>document.documentElement.classList.add('js');</script>
 </head>
 
 <body>
 
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+
 <!-- ===== HEADER ===== -->
-<header>
-  <div class="header-inner">
+<header class="site-header" id="header">
+  <div class="container header-inner">
     <div class="header-left">
-      <a href="index.html" class="logo-link">
-        <img src="logo.png" alt="Logo IFRAS">
+      <a href="index.html" class="logo-link" aria-label="IFRAS, accueil">
+        <img src="logo.png" alt="Logo IFRAS" width="44" height="44">
       </a>
-      <nav>
+      <nav aria-label="Navigation principale">
         <ul class="main-nav">
           <li><a href="index.html">Accueil</a></li>
           <li><a href="recherche.html">Recherche</a></li>
-          <li><a href="programmes.html">Programmes</a></li>
+          <li><a href="programmes.html" aria-current="page">Programmes</a></li>
           <li><a href="publications.html">Publications</a></li>
         </ul>
       </nav>
     </div>
     <div class="header-right">
-      <a href="connexion.html" class="login-btn">Connexion</a>
+      <a href="connexion.html" class="btn btn-ghost btn-desktop">Connexion</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-panel" aria-label="Ouvrir le menu">
+        <i class="ph-light ph-list" aria-hidden="true"></i>
+      </button>
     </div>
   </div>
 </header>
 
-<!-- ===== BANDEAU PROGRAMMES ===== -->
-<div class="program-filter">
+<div class="mobile-panel" id="mobile-panel">
   <ul>
-    <li>Programmes actifs
-      <div class="dropdown">
-        <a href="programmes-actifs.html#artemis9">ARTEMIS-9</a>
-        <a href="programmes-actifs.html#orion3">ORION-3</a>
-        <a href="programmes-actifs.html#hermes">HERMES</a>
-        <a href="programmes-actifs.html#atlas">ATLAS</a>
-        <a href="programmes-actifs.html#lynx">LYNX</a>
-        <a href="programmes-actifs.html#prometheus">PROMETHEUS</a>
-      </div>
-    </li>
-    <li>Programmes archivés
-      <div class="dropdown">
-        <a href="programmes-archives.html#apollox">APOLLO-X</a>
-        <a href="programmes-archives.html#delphi">DELPHI</a>
-        <a href="programmes-archives.html#cassinir">CASSINI-R</a>
-      </div>
-    </li>
-    <li>Programmes futurs
-      <div class="dropdown">
-        <a href="programmes-futurs.html#hera">HERA</a>
-        <a href="programmes-futurs.html#noe">NOE</a>
-        <a href="programmes-futurs.html#titan0">TITAN-0</a>
-      </div>
-    </li>
-    <li>Programmes avortés
-      <div class="dropdown">
-        <a href="programmes-avortes.html#phoenix">PHOENIX</a>
-        <a href="programmes-avortes.html#daedalus">DAEDALUS</a>
-        <a href="programmes-avortes.html#icarus2">ICARUS-2</a>
-      </div>
-    </li>
+    <li><a href="index.html">Accueil <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="recherche.html">Recherche <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="programmes.html" aria-current="page">Programmes <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="publications.html">Publications <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
   </ul>
+  <a href="connexion.html" class="btn btn-primary">Connexion</a>
 </div>
 
+<!-- ===== SOUS-NAVIGATION PAR STATUT ===== -->
+<nav class="subnav" id="subnav" aria-label="Programmes par statut">
+  <ul class="subnav-list">
+
+    <li class="subnav-item" style="--c:var(--st-active)">
+      <a class="subnav-trigger" href="#actifs" data-section="actifs" aria-haspopup="true" aria-expanded="false">Actifs <span class="subnav-count">6</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
+      <div class="dropdown">
+        <ul>
+          <li><a href="programmes-actifs.html#artemis9"><strong>ARTEMIS-9</strong><span>Mission habitée sur Mars</span></a></li>
+          <li><a href="programmes-actifs.html#orion3"><strong>ORION-3</strong><span>Biosignatures d'exoplanètes</span></a></li>
+          <li><a href="programmes-actifs.html#prometheus"><strong>PROMETHEUS</strong><span>Propulsion ionique</span></a></li>
+          <li><a href="programmes-actifs.html#hermes"><strong>HERMES</strong><span>Communication quantique</span></a></li>
+          <li><a href="programmes-actifs.html#atlas"><strong>ATLAS</strong><span>Environnements extraterrestres</span></a></li>
+          <li><a href="programmes-actifs.html#lynx"><strong>LYNX</strong><span>Robotique autonome</span></a></li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="subnav-item" style="--c:var(--st-future)">
+      <a class="subnav-trigger" href="#futurs" data-section="futurs" aria-haspopup="true" aria-expanded="false">Futurs <span class="subnav-count">3</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
+      <div class="dropdown">
+        <ul>
+          <li><a href="programmes-futurs.html#noe"><strong>NOE</strong><span>Observation exosphérique, 2027</span></a></li>
+          <li><a href="programmes-futurs.html#hera"><strong>HERA</strong><span>Habitabilité des exolunes, 2028</span></a></li>
+          <li><a href="programmes-futurs.html#titan0"><strong>TITAN-0</strong><span>Sonde atmosphérique, 2029</span></a></li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="subnav-item subnav-item--end" style="--c:var(--st-archived)">
+      <a class="subnav-trigger" href="#archives" data-section="archives" aria-haspopup="true" aria-expanded="false">Archivés <span class="subnav-count">3</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
+      <div class="dropdown">
+        <ul>
+          <li><a href="programmes-archives.html#apollox"><strong>APOLLO-X</strong><span>Cratères polaires lunaires</span></a></li>
+          <li><a href="programmes-archives.html#delphi"><strong>DELPHI</strong><span>Prédiction sismique</span></a></li>
+          <li><a href="programmes-archives.html#cassinir"><strong>CASSINI-R</strong><span>Archives Cassini par IA</span></a></li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="subnav-item subnav-item--end" style="--c:var(--st-aborted)">
+      <a class="subnav-trigger" href="#avortes" data-section="avortes" aria-haspopup="true" aria-expanded="false">Avortés <span class="subnav-count">3</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
+      <div class="dropdown">
+        <ul>
+          <li><a href="programmes-avortes.html#phoenix"><strong>PHOENIX</strong><span>Hypothermie profonde</span></a></li>
+          <li><a href="programmes-avortes.html#daedalus"><strong>DAEDALUS</strong><span>Voilier solaire</span></a></li>
+          <li><a href="programmes-avortes.html#icarus2"><strong>ICARUS-2</strong><span>Plongeur vénusien</span></a></li>
+        </ul>
+      </div>
+    </li>
+
+  </ul>
+</nav>
+
+<main id="contenu">
+
 <!-- ===== HERO ===== -->
-<section class="hero">
-  <div class="hero-inner">
+<section class="hero" aria-labelledby="hero-title">
+  <canvas class="starfield" id="starfield" aria-hidden="true"></canvas>
+  <div class="container">
+    <div class="hero-grid">
 
-    <div class="hero-left">
-      <div class="hero-eyebrow">Portefeuille scientifique</div>
-      <h1>Programmes<br><span>IFRAS</span></h1>
-      <p class="hero-desc">
-        De la mission habitée longue durée aux sondes d'observation autonomes,
-        l'IFRAS pilote un portefeuille de programmes scientifiques ambitieux à l'échelle nationale et internationale.
-        Chaque programme engage des équipes transversales autour d'objectifs de rupture technologique.
-      </p>
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <span class="hero-stat-value">6</span>
-          <span class="hero-stat-label">Programmes actifs</span>
-        </div>
-        <div class="hero-stat">
-          <span class="hero-stat-value">3</span>
-          <span class="hero-stat-label">En développement</span>
-        </div>
-        <div class="hero-stat">
-          <span class="hero-stat-value">+850</span>
-          <span class="hero-stat-label">Chercheurs mobilisés</span>
-        </div>
-        <div class="hero-stat">
-          <span class="hero-stat-value">12</span>
-          <span class="hero-stat-label">Agences partenaires</span>
-        </div>
+      <div class="hero-left">
+        <div class="kicker hero-in" style="--i:0">Portefeuille scientifique</div>
+        <h1 id="hero-title"><span class="line"><span style="--i:0">Programmes</span></span><span class="line line--soft"><span style="--i:1">IFRAS</span></span></h1>
+        <p class="hero-desc hero-in" style="--i:2">De la mission habitée sur Mars aux sondes autonomes, l'IFRAS pilote des programmes nationaux et internationaux. Chacun réunit des équipes de plusieurs départements autour d'un objectif de rupture.</p>
+        <ul class="legend hero-in" style="--i:3" aria-label="Légende des statuts">
+          <li style="--c:var(--st-active)">Actif</li>
+          <li style="--c:var(--st-phase)">Phase expérimentale</li>
+          <li style="--c:var(--st-future)">Futur</li>
+          <li style="--c:var(--st-archived)">Archivé</li>
+          <li style="--c:var(--st-aborted)">Avorté</li>
+        </ul>
       </div>
+
+      <ol class="timeline" aria-label="Programmes phares">
+        <li class="tl-item is-live" style="--c:var(--st-active);--i:0">
+          <span class="tl-dot" aria-hidden="true"></span>
+          <a class="tl-link" href="#artemis9">
+            <div class="tl-status">Actif, phase III</div>
+            <div class="tl-name">ARTEMIS-9 <i class="ph-light ph-arrow-down-right" aria-hidden="true"></i></div>
+            <div class="tl-desc">Mission habitée longue durée sur Mars, lancement T2 2027</div>
+          </a>
+        </li>
+        <li class="tl-item is-live" style="--c:var(--st-active);--i:1">
+          <span class="tl-dot" aria-hidden="true"></span>
+          <a class="tl-link" href="#prometheus">
+            <div class="tl-status">Actif, phase II</div>
+            <div class="tl-name">PROMETHEUS <i class="ph-light ph-arrow-down-right" aria-hidden="true"></i></div>
+            <div class="tl-desc">Propulsion ionique nouvelle génération à plasma froid</div>
+          </a>
+        </li>
+        <li class="tl-item is-live" style="--c:var(--st-phase);--i:2">
+          <span class="tl-dot" aria-hidden="true"></span>
+          <a class="tl-link" href="#hermes">
+            <div class="tl-status">Phase expérimentale</div>
+            <div class="tl-name">HERMES <i class="ph-light ph-arrow-down-right" aria-hidden="true"></i></div>
+            <div class="tl-desc">Communications quantiques interplanétaires, premiers résultats en 2026</div>
+          </a>
+        </li>
+        <li class="tl-item" style="--c:var(--st-future);--i:3">
+          <span class="tl-dot" aria-hidden="true"></span>
+          <a class="tl-link" href="#titan0">
+            <div class="tl-status">Futur, horizon 2029</div>
+            <div class="tl-name">TITAN-0 <i class="ph-light ph-arrow-down-right" aria-hidden="true"></i></div>
+            <div class="tl-desc">Sonde orbitale autour de Titan, analyse atmosphérique in situ</div>
+          </a>
+        </li>
+        <li class="tl-item" style="--c:var(--st-archived);--i:4">
+          <span class="tl-dot" aria-hidden="true"></span>
+          <a class="tl-link" href="#cassinir">
+            <div class="tl-status">Archivé, clôturé en 2021</div>
+            <div class="tl-name">CASSINI-R <i class="ph-light ph-arrow-down-right" aria-hidden="true"></i></div>
+            <div class="tl-desc">Retraitement des données Cassini par IA, 48 publications</div>
+          </a>
+        </li>
+      </ol>
+
     </div>
 
-    <div class="hero-right">
-      <div class="hero-timeline">
-
-        <div class="timeline-item" style="--dot-color: #34d399;">
-          <div class="tl-category">Actif · Phase III</div>
-          <div class="tl-name">ARTEMIS-9</div>
-          <div class="tl-desc">Mission Mars habitée longue durée — lancement T2 2027</div>
-        </div>
-
-        <div class="timeline-item" style="--dot-color: #60a5fa;">
-          <div class="tl-category">Actif · Phase II</div>
-          <div class="tl-name">PROMETHEUS</div>
-          <div class="tl-desc">Propulsion ionique nouvelle génération à plasma froid</div>
-        </div>
-
-        <div class="timeline-item" style="--dot-color: #f97316;">
-          <div class="tl-category">Phase expérimentale</div>
-          <div class="tl-name">HERMES</div>
-          <div class="tl-desc">Communications quantiques interplanétaires — premiers résultats 2026</div>
-        </div>
-
-        <div class="timeline-item" style="--dot-color: #a78bfa;">
-          <div class="tl-category">Futur · Horizon 2029</div>
-          <div class="tl-name">TITAN-0</div>
-          <div class="tl-desc">Sonde orbitale autour de Titan, analyse atmosphérique in situ</div>
-        </div>
-
-        <div class="timeline-item" style="--dot-color: #fb7185;">
-          <div class="tl-category">Archivé · Clôturé 2021</div>
-          <div class="tl-name">CASSINI-R</div>
-          <div class="tl-desc">Retraitement des données Cassini par IA — 48 publications produites</div>
-        </div>
-
+    <div class="hero-stats">
+      <div class="hero-stat reveal" style="--i:0">
+        <span class="hero-stat-value" data-count="6">6</span>
+        <span class="hero-stat-label">Programmes actifs</span>
+      </div>
+      <div class="hero-stat reveal" style="--i:1">
+        <span class="hero-stat-value" data-count="3">3</span>
+        <span class="hero-stat-label">En développement</span>
+      </div>
+      <div class="hero-stat reveal" style="--i:2">
+        <span class="hero-stat-value" data-count="850" data-prefix="+">+850</span>
+        <span class="hero-stat-label">Chercheurs mobilisés</span>
+      </div>
+      <div class="hero-stat reveal" style="--i:3">
+        <span class="hero-stat-value" data-count="12">12</span>
+        <span class="hero-stat-label">Agences partenaires</span>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- ===================================================== -->
-<!-- PROGRAMMES ACTIFS                                     -->
-<!-- ===================================================== -->
-<section class="prog-section">
-
-  <div class="prog-section-header">
-    <div class="prog-section-header-left">
-      <div class="section-eyebrow" style="color: #34d399;">Programmes actifs</div>
-      <h2>En cours d'exécution</h2>
+<!-- ===== PROGRAMMES ACTIFS ===== -->
+<section class="prog-section" id="actifs" aria-labelledby="actifs-title">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-status reveal" style="--c:var(--st-active)"><i class="ph-light ph-rocket-launch" aria-hidden="true"></i> 6 programmes actifs</div>
+        <h2 class="section-title reveal" id="actifs-title" style="--i:1">En cours d'exécution</h2>
+      </div>
+      <p class="reveal" style="--i:2">Exploration spatiale, propulsion, biologie en microgravité et modélisation numérique : six programmes mobilisent aujourd'hui nos équipes.</p>
     </div>
-    <p>Six programmes mobilisent actuellement les équipes de l'IFRAS, couvrant exploration spatiale, propulsion, biologie en microgravité et modélisation numérique avancée.</p>
-  </div>
 
-  <div class="active-grid">
+    <div class="active-grid">
 
-    <!-- Carte vedette -->
-    <a class="prog-card prog-card--featured" href="artemis9.html" style="--card-accent: #34d399;">
-      <div class="card-top">
-        <span class="card-code" style="color:#34d399; border-color:rgba(52,211,153,.25); background:rgba(52,211,153,.08);">ARTEMIS-9</span>
-        <span class="card-status status--restricted">Diffusion restreinte</span>
-      </div>
-      <div class="card-title">Mission habitée longue durée sur Mars</div>
-      <p class="card-desc">
-        Programme phare de l'IFRAS, ARTEMIS-9 constitue la première mission scientifique habitée de longue durée sur la surface martienne.
-        À l'horizon 2027, six astronautes-chercheurs séjourneront 18 mois sur Mars dans une base pressurisée entièrement autonome
-        en énergie et en ressources vitales. Les axes prioritaires couvrent la biologie d'adaptation, la géologie sub-surfacique,
-        la terraformation expérimentale et la télémédecine de l'isolement extrême.
-      </p>
-      <div class="card-meta">
-        <span class="card-tag">Biologie d'adaptation</span>
-        <span class="card-tag">Terraformation</span>
-        <span class="card-tag">Autonomie système</span>
-        <span class="card-tag">Télémédecine</span>
-        <span class="card-tag">Géologie Mars</span>
-      </div>
-      <div class="featured-kpis">
-        <div class="kpi">
-          <span class="kpi-val">18 mois</span>
-          <span class="kpi-label">Durée de séjour</span>
+      <a class="prog-card prog-card--featured reveal" id="artemis9" href="artemis9.html" style="--c:#34d399">
+        <div class="card-top">
+          <span class="card-code">ARTEMIS-9</span>
+          <span class="status" style="--s:var(--st-restricted)"><i class="ph-light ph-lock-simple" aria-hidden="true"></i> Diffusion restreinte</span>
         </div>
-        <div class="kpi">
-          <span class="kpi-val">6</span>
-          <span class="kpi-label">Astronautes-chercheurs</span>
+        <h3 class="card-title">Mission habitée longue durée sur Mars</h3>
+        <div class="launch"><i class="ph-light ph-rocket" aria-hidden="true"></i> <span>Lancement <strong>T2 2027</strong><span id="launch-countdown"></span></span></div>
+        <p class="card-desc">Le programme phare de l'IFRAS : six astronautes-chercheurs vivront 18 mois dans une base martienne autonome en énergie et en ressources vitales. Au programme : biologie d'adaptation, géologie sub-surfacique, terraformation expérimentale et télémédecine en isolement extrême.</p>
+        <ul class="card-tags">
+          <li>Biologie d'adaptation</li>
+          <li>Terraformation</li>
+          <li>Autonomie système</li>
+          <li>Télémédecine</li>
+          <li>Géologie martienne</li>
+        </ul>
+        <div class="featured-kpis">
+          <div class="kpi"><span class="kpi-val">18 mois</span><span class="kpi-label">Durée de séjour</span></div>
+          <div class="kpi"><span class="kpi-val">6</span><span class="kpi-label">Astronautes-chercheurs</span></div>
+          <div class="kpi"><span class="kpi-val">2027</span><span class="kpi-label">Lancement prévu</span></div>
         </div>
-        <div class="kpi">
-          <span class="kpi-val">2027</span>
-          <span class="kpi-label">Lancement prévu</span>
+        <i class="ph-light ph-arrow-up-right card-arrow" aria-hidden="true"></i>
+      </a>
+
+      <a class="prog-card reveal" style="--c:#60a5fa;--i:1" id="orion3" href="orion3.html">
+        <div class="card-top">
+          <span class="card-code">ORION-3</span>
+          <span class="status" style="--s:var(--st-active)">Actif</span>
         </div>
-      </div>
-      <div class="card-arrow">→</div>
-    </a>
+        <h3 class="card-title">Biosignatures à grande distance</h3>
+        <p class="card-desc">Détecter par spectroscopie des signatures biologiques sur des exoplanètes candidates, grâce à un réseau d'observatoires conjugués.</p>
+        <ul class="card-tags"><li>Spectroscopie</li><li>Exoplanètes</li><li>Biosignatures</li></ul>
+        <i class="ph-light ph-arrow-up-right card-arrow" aria-hidden="true"></i>
+      </a>
 
-    <!-- ORION-3 -->
-    <a class="prog-card" href="orion3.html" style="--card-accent: #60a5fa;">
-      <div class="card-top">
-        <span class="card-code" style="color:#60a5fa; border-color:rgba(96,165,250,.25); background:rgba(96,165,250,.08);">ORION-3</span>
-        <span class="card-status status--active">Actif</span>
-      </div>
-      <div class="card-title">Observation biosignature à grande distance</div>
-      <p class="card-desc">Détection et analyse spectroscopique de signatures biologiques et chimiques sur des exoplanètes candidates via un réseau d'observatoires conjugués.</p>
-      <div class="card-meta">
-        <span class="card-tag">Spectroscopie</span>
-        <span class="card-tag">Exoplanètes</span>
-        <span class="card-tag">Biosignatures</span>
-      </div>
-      <div class="card-arrow">→</div>
-    </a>
+      <a class="prog-card reveal" style="--c:#f97316;--i:2" id="prometheus" href="prometheus.html">
+        <div class="card-top">
+          <span class="card-code">PROMETHEUS</span>
+          <span class="status" style="--s:var(--st-active)">Actif</span>
+        </div>
+        <h3 class="card-title">Propulsion ionique à plasma froid</h3>
+        <p class="card-desc">Un nouveau type de propulsion ionique à basse température, pour tripler l'impulsion spécifique des systèmes actuels.</p>
+        <ul class="card-tags"><li>Propulsion</li><li>Plasma</li><li>Énergie</li></ul>
+        <i class="ph-light ph-arrow-up-right card-arrow" aria-hidden="true"></i>
+      </a>
 
-    <!-- PROMETHEUS -->
-    <a class="prog-card" href="prometheus.html" style="--card-accent: #f97316;">
-      <div class="card-top">
-        <span class="card-code" style="color:#f97316; border-color:rgba(249,115,22,.25); background:rgba(249,115,22,.08);">PROMETHEUS</span>
-        <span class="card-status status--active">Actif</span>
-      </div>
-      <div class="card-title">Propulsion ionique plasma froid</div>
-      <p class="card-desc">Développement d'un nouveau paradigme de propulsion ionique opérant à basse température, visant à tripler l'impulsion spécifique des systèmes actuels.</p>
-      <div class="card-meta">
-        <span class="card-tag">Propulsion</span>
-        <span class="card-tag">Plasma</span>
-        <span class="card-tag">Énergie</span>
-      </div>
-      <div class="card-arrow">→</div>
-    </a>
+      <a class="prog-card reveal" style="--c:#c084fc;--i:0" id="hermes" href="hermes.html">
+        <div class="card-top">
+          <span class="card-code">HERMES</span>
+          <span class="status" style="--s:var(--st-phase)">Phase expérimentale</span>
+        </div>
+        <h3 class="card-title">Communication quantique interplanétaire</h3>
+        <p class="card-desc">Des protocoles longue portée fondés sur l'intrication quantique, insensibles aux interférences.</p>
+        <ul class="card-tags"><li>Quantique</li><li>Télécoms</li><li>Cryptographie</li></ul>
+        <i class="ph-light ph-arrow-up-right card-arrow" aria-hidden="true"></i>
+      </a>
 
-    <!-- HERMES -->
-    <a class="prog-card" href="hermes.html" style="--card-accent: #c084fc;">
-      <div class="card-top">
-        <span class="card-code" style="color:#c084fc; border-color:rgba(192,132,252,.25); background:rgba(192,132,252,.08);">HERMES</span>
-        <span class="card-status status--phase">Phase expérimentale</span>
-      </div>
-      <div class="card-title">Communication quantique interplanétaire</div>
-      <p class="card-desc">Protocoles de communication à longue portée reposant sur l'intrication quantique, insensibles aux délais de propagation classiques et aux interférences.</p>
-      <div class="card-meta">
-        <span class="card-tag">Quantique</span>
-        <span class="card-tag">Télécoms</span>
-        <span class="card-tag">Cryptographie</span>
-      </div>
-      <div class="card-arrow">→</div>
-    </a>
+      <a class="prog-card reveal" style="--c:#2dd4bf;--i:1" id="atlas" href="atlas.html">
+        <div class="card-top">
+          <span class="card-code">ATLAS</span>
+          <span class="status" style="--s:var(--st-active)">Actif</span>
+        </div>
+        <h3 class="card-title">Simulation d'environnements extraterrestres</h3>
+        <p class="card-desc">Les conditions de surface de Mars, Europa et Titan reproduites en laboratoire pour tester matériaux, équipements et organismes.</p>
+        <ul class="card-tags"><li>Simulation</li><li>Matériaux</li><li>Astrobiologie</li></ul>
+        <i class="ph-light ph-arrow-up-right card-arrow" aria-hidden="true"></i>
+      </a>
 
-    <!-- ATLAS -->
-    <a class="prog-card" href="atlas.html" style="--card-accent: #34d399;">
-      <div class="card-top">
-        <span class="card-code" style="color:#34d399; border-color:rgba(52,211,153,.25); background:rgba(52,211,153,.08);">ATLAS</span>
-        <span class="card-status status--active">Actif</span>
-      </div>
-      <div class="card-title">Simulation d'environnements extraterrestres</div>
-      <p class="card-desc">Reproduction en laboratoire des conditions physico-chimiques de surface de Mars, Europa et Titan pour tester matériaux, équipements et organismes candidats.</p>
-      <div class="card-meta">
-        <span class="card-tag">Simulation</span>
-        <span class="card-tag">Matériaux</span>
-        <span class="card-tag">Astrobiologie</span>
-      </div>
-      <div class="card-arrow">→</div>
-    </a>
+      <a class="prog-card reveal" style="--c:#facc15;--i:2" id="lynx" href="lynx.html">
+        <div class="card-top">
+          <span class="card-code">LYNX</span>
+          <span class="status" style="--s:var(--st-phase)">Phase expérimentale</span>
+        </div>
+        <h3 class="card-title">Robotique autonome en milieu hostile</h3>
+        <p class="card-desc">Une flotte de robots légers capables d'opérer, de se réparer et de décider seuls en terrain inconnu.</p>
+        <ul class="card-tags"><li>Robotique</li><li>IA embarquée</li><li>Autonomie</li></ul>
+        <i class="ph-light ph-arrow-up-right card-arrow" aria-hidden="true"></i>
+      </a>
 
-    <!-- LYNX -->
-    <a class="prog-card" href="lynx.html" style="--card-accent: #facc15;">
-      <div class="card-top">
-        <span class="card-code" style="color:#facc15; border-color:rgba(250,204,21,.25); background:rgba(250,204,21,.07);">LYNX</span>
-        <span class="card-status status--phase">Phase expérimentale</span>
-      </div>
-      <div class="card-title">Robotique autonome en milieu non coopératif</div>
-      <p class="card-desc">Développement d'une flotte de robots légers capables d'opérer, de se réparer et de prendre des décisions autonomes dans des environnements inconnus et dégradés.</p>
-      <div class="card-meta">
-        <span class="card-tag">Robotique</span>
-        <span class="card-tag">IA embarquée</span>
-        <span class="card-tag">Autonomie</span>
-      </div>
-      <div class="card-arrow">→</div>
-    </a>
-
-  </div>
-
-</section>
-
-<!-- ===================================================== -->
-<!-- PROGRAMMES ARCHIVÉS                                   -->
-<!-- ===================================================== -->
-<section class="prog-section" style="padding-top: 20px;">
-
-  <div class="prog-section-header">
-    <div class="prog-section-header-left">
-      <div class="section-eyebrow" style="color: #9ca3af;">Programmes archivés</div>
-      <h2>Missions clôturées</h2>
     </div>
-    <p>Ces programmes ont atteint leurs objectifs et sont officiellement clos. Leurs données et publications restent accessibles dans la base documentaire de l'IFRAS.</p>
   </div>
-
-  <div class="archive-grid">
-
-    <a class="archive-card" href="apollox.html">
-      <div class="archive-code">APOLLO-X</div>
-      <div class="archive-info">
-        <div class="archive-name">Exploration robotique des cratères polaires lunaires</div>
-        <div class="archive-desc">Première cartographie haute résolution de la glace d'eau subsurfacique dans les bassins permanemment ombragés du pôle Sud lunaire. 6 rovers déployés, 3 encore opérationnels.</div>
-      </div>
-      <div class="archive-dates">2014 – 2022<br><span style="color:rgba(156,163,175,.35); font-size:11px;">142 publications</span></div>
-    </a>
-
-    <a class="archive-card" href="delphi.html">
-      <div class="archive-code">DELPHI</div>
-      <div class="archive-info">
-        <div class="archive-name">Prédiction sismique par réseau de capteurs orbitaux</div>
-        <div class="archive-desc">Corrélation entre données ionosphériques satellitaires et précurseurs sismiques terrestres. Développement d'un modèle prédictif à 72h reconnu par l'ONU-Space.</div>
-      </div>
-      <div class="archive-dates">2016 – 2023<br><span style="color:rgba(156,163,175,.35); font-size:11px;">89 publications</span></div>
-    </a>
-
-    <a class="archive-card" href="cassinir.html">
-      <div class="archive-code">CASSINI-R</div>
-      <div class="archive-info">
-        <div class="archive-name">Retraitement IA des archives Cassini</div>
-        <div class="archive-desc">Application de modèles d'apprentissage profond aux 635 Go de données brutes de la sonde Cassini-Huygens, révélant de nouvelles structures dans les anneaux de Saturne et l'atmosphère de Titan.</div>
-      </div>
-      <div class="archive-dates">2019 – 2021<br><span style="color:rgba(156,163,175,.35); font-size:11px;">48 publications</span></div>
-    </a>
-
-  </div>
-
 </section>
 
-<!-- ===================================================== -->
-<!-- PROGRAMMES FUTURS                                     -->
-<!-- ===================================================== -->
-<section class="prog-section" style="padding-top: 20px;">
-
-  <div class="prog-section-header">
-    <div class="prog-section-header-left">
-      <div class="section-eyebrow" style="color: #a78bfa;">Programmes futurs</div>
-      <h2>En cours de développement</h2>
+<!-- ===== PROGRAMMES FUTURS ===== -->
+<section class="prog-section" id="futurs" aria-labelledby="futurs-title">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-status reveal" style="--c:var(--st-future)"><i class="ph-light ph-hourglass-medium" aria-hidden="true"></i> 3 programmes futurs</div>
+        <h2 class="section-title reveal" id="futurs-title" style="--i:1">En cours de développement</h2>
+      </div>
+      <p class="reveal" style="--i:2">En conception ou en attente d'approbation budgétaire. Leur démarrage dépend de la validation des financements pluriannuels.</p>
     </div>
-    <p>Ces programmes sont en phase de conception ou d'approbation budgétaire. Leur démarrage effectif est conditionné à la validation des financements pluriannuels.</p>
-  </div>
 
-  <div class="future-grid">
+    <div class="future-grid">
 
-    <a class="future-card" href="hera.html">
-      <div class="future-card-bg"></div>
-      <div class="future-year">2028</div>
-      <div class="future-title">HERA — Habitabilité des exolunes</div>
-      <div class="future-desc">Étude des conditions d'habitabilité sur les lunes de géantes gazeuses, avec développement d'une sonde dédiée à l'analyse de l'océan sous-glaciaire d'Europa. Collaboration ESA–IFRAS.</div>
-      <div class="future-tags">
-        <span class="future-tag">Astrobiologie</span>
-        <span class="future-tag">Europa</span>
-        <span class="future-tag">ESA</span>
-        <span class="future-tag">Océanologie</span>
-      </div>
-    </a>
+      <a class="future-card reveal" style="--i:0" id="noe" href="noe.html">
+        <div class="future-year"><strong>2027</strong><span class="future-code">NOE</span></div>
+        <h3 class="future-title">Réseau d'observation exosphérique</h3>
+        <p class="card-desc">24 microsatellites en orbite haute pour étudier l'interaction du vent solaire avec les magnétosphères du système solaire interne.</p>
+        <ul class="card-tags"><li>Magnétosphère</li><li>Vent solaire</li><li>Constellation</li></ul>
+        <i class="ph-light ph-arrow-up-right card-arrow" aria-hidden="true"></i>
+      </a>
 
-    <a class="future-card" href="noe.html">
-      <div class="future-card-bg"></div>
-      <div class="future-year">2027</div>
-      <div class="future-title">NOE — Réseau d'observation exosphérique</div>
-      <div class="future-desc">Constellation de 24 microsatellites en orbite haute dédiée à l'étude des interactions entre le vent solaire et les magnétosphères planétaires du système interne.</div>
-      <div class="future-tags">
-        <span class="future-tag">Magnétosphère</span>
-        <span class="future-tag">Vent solaire</span>
-        <span class="future-tag">Constellation</span>
-      </div>
-    </a>
+      <a class="future-card reveal" style="--i:1" id="hera" href="hera.html">
+        <div class="future-year"><strong>2028</strong><span class="future-code">HERA</span></div>
+        <h3 class="future-title">Habitabilité des exolunes</h3>
+        <p class="card-desc">Une sonde dédiée à l'océan sous-glaciaire d'Europa, pour évaluer l'habitabilité des lunes de géantes gazeuses. En collaboration avec l'ESA.</p>
+        <ul class="card-tags"><li>Astrobiologie</li><li>Europa</li><li>ESA</li><li>Océanologie</li></ul>
+        <i class="ph-light ph-arrow-up-right card-arrow" aria-hidden="true"></i>
+      </a>
 
-    <a class="future-card" href="titan0.html">
-      <div class="future-card-bg"></div>
-      <div class="future-year">2029</div>
-      <div class="future-title">TITAN-0 — Sonde atmosphérique Titan</div>
-      <div class="future-desc">Première sonde orbitale entièrement conçue par l'IFRAS, destinée à analyser in situ la chimie prébiotique de l'atmosphère de Titan, analogue présumé de la Terre primitive.</div>
-      <div class="future-tags">
-        <span class="future-tag">Titan</span>
-        <span class="future-tag">Chimie prébiotique</span>
-        <span class="future-tag">Atmosphère</span>
-        <span class="future-tag">Sonde autonome</span>
-      </div>
-    </a>
+      <a class="future-card reveal" style="--i:2" id="titan0" href="titan0.html">
+        <div class="future-year"><strong>2029</strong><span class="future-code">TITAN-0</span></div>
+        <h3 class="future-title">Sonde atmosphérique de Titan</h3>
+        <p class="card-desc">La première sonde orbitale entièrement conçue par l'IFRAS, pour analyser in situ la chimie prébiotique de Titan.</p>
+        <ul class="card-tags"><li>Titan</li><li>Chimie prébiotique</li><li>Atmosphère</li><li>Sonde autonome</li></ul>
+        <i class="ph-light ph-arrow-up-right card-arrow" aria-hidden="true"></i>
+      </a>
 
-  </div>
-
-</section>
-
-<!-- ===================================================== -->
-<!-- PROGRAMMES AVORTÉS                                    -->
-<!-- ===================================================== -->
-<section class="prog-section" style="padding-top: 20px; padding-bottom: 100px;">
-
-  <div class="prog-section-header">
-    <div class="prog-section-header-left">
-      <div class="section-eyebrow" style="color: #fb7185;">Programmes avortés</div>
-      <h2>Projets interrompus</h2>
     </div>
-    <p>Ces programmes ont été définitivement arrêtés avant leur terme, pour des raisons budgétaires, techniques ou stratégiques. Leur documentation reste archivée à des fins de retour d'expérience.</p>
   </div>
-
-  <div class="aborted-grid">
-
-    <a class="aborted-card" href="#">
-      <div class="aborted-code">PHOENIX</div>
-      <div class="aborted-title">Réanimation cellulaire en hypothermie profonde</div>
-      <div class="aborted-desc">Programme visant à développer des protocoles de cryoconservation réversible pour équipages de longue durée. Résultats de phase II insuffisants sur la viabilité cellulaire à –80 °C.</div>
-      <div class="aborted-reason">Arrêt : Résultats phase II non concluants — 2020</div>
-    </a>
-
-    <a class="aborted-card" href="#">
-      <div class="aborted-code">DAEDALUS</div>
-      <div class="aborted-title">Voilier solaire interstellaire ultra-léger</div>
-      <div class="aborted-desc">Concept de propulsion par pression de radiation laser pour une sonde de 10 g capable d'atteindre Proxima Centauri en 20 ans. Annulé suite à la réévaluation des priorités du CSN.</div>
-      <div class="aborted-reason">Arrêt : Abandon stratégique CSN — 2019</div>
-    </a>
-
-    <a class="aborted-card" href="#">
-      <div class="aborted-code">ICARUS-2</div>
-      <div class="aborted-title">Plongeur atmosphérique vénusien autonome</div>
-      <div class="aborted-desc">Développement d'un drone capable de survivre et d'opérer 24 h dans l'atmosphère de Vénus à 50 km d'altitude. Destruction du prototype lors des essais thermiques en chambre.</div>
-      <div class="aborted-reason">Arrêt : Perte du prototype — incident chambre thermique 2022</div>
-    </a>
-
-  </div>
-
 </section>
 
-<footer>
-  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale<br>
-  Accès contrôlé — Données sensibles
+<!-- ===== PROGRAMMES ARCHIVÉS ===== -->
+<section class="prog-section" id="archives" aria-labelledby="archives-title">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-status reveal" style="--c:var(--st-archived)"><i class="ph-light ph-archive" aria-hidden="true"></i> 3 programmes archivés</div>
+        <h2 class="section-title reveal" id="archives-title" style="--i:1">Missions clôturées</h2>
+      </div>
+      <p class="reveal" style="--i:2">Objectifs atteints, programmes clos. Leurs données et publications restent accessibles dans la base documentaire de l'IFRAS.</p>
+    </div>
+
+    <div class="archive-scale" aria-hidden="true">
+      <span></span><span></span>
+      <span class="ticks"><span>2014</span><span>2017</span><span>2020</span><span>2023</span></span>
+    </div>
+
+    <ul class="archive-list">
+      <li>
+        <a class="archive-card reveal" id="apollox" href="apollox.html" style="--i:0">
+          <span class="archive-code">APOLLO-X</span>
+          <span>
+            <span class="archive-name" style="display:block">Exploration robotique des cratères polaires lunaires</span>
+            <span class="archive-desc" style="display:block">Première cartographie haute résolution de la glace d'eau du pôle Sud lunaire. 6 rovers déployés, 3 encore opérationnels.</span>
+          </span>
+          <span class="archive-span">
+            <span class="span-track"><span class="span-bar" style="--from:0%;--len:88.9%"></span></span>
+            <span class="span-meta"><span>2014 à 2022</span><strong>142 publications</strong></span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="archive-card reveal" id="delphi" href="delphi.html" style="--i:1">
+          <span class="archive-code">DELPHI</span>
+          <span>
+            <span class="archive-name" style="display:block">Prédiction sismique par capteurs orbitaux</span>
+            <span class="archive-desc" style="display:block">Données ionosphériques et précurseurs sismiques : un modèle prédictif à 72 h reconnu par l'ONU-Space.</span>
+          </span>
+          <span class="archive-span">
+            <span class="span-track"><span class="span-bar" style="--from:22.2%;--len:77.8%"></span></span>
+            <span class="span-meta"><span>2016 à 2023</span><strong>89 publications</strong></span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="archive-card reveal" id="cassinir" href="cassinir.html" style="--i:2">
+          <span class="archive-code">CASSINI-R</span>
+          <span>
+            <span class="archive-name" style="display:block">Retraitement par IA des archives Cassini</span>
+            <span class="archive-desc" style="display:block">635 Go de données brutes analysées par apprentissage profond : nouvelles structures dans les anneaux de Saturne et l'atmosphère de Titan.</span>
+          </span>
+          <span class="archive-span">
+            <span class="span-track"><span class="span-bar" style="--from:55.6%;--len:22.2%"></span></span>
+            <span class="span-meta"><span>2019 à 2021</span><strong>48 publications</strong></span>
+          </span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== PROGRAMMES AVORTÉS ===== -->
+<section class="prog-section" id="avortes" aria-labelledby="avortes-title">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-status reveal" style="--c:var(--st-aborted)"><i class="ph-light ph-prohibit" aria-hidden="true"></i> 3 programmes avortés</div>
+        <h2 class="section-title reveal" id="avortes-title" style="--i:1">Projets interrompus</h2>
+      </div>
+      <p class="reveal" style="--i:2">Arrêtés avant leur terme pour des raisons budgétaires, techniques ou stratégiques. Leur documentation est conservée pour le retour d'expérience.</p>
+    </div>
+
+    <div class="aborted-grid">
+
+      <article class="aborted-card reveal" style="--i:0">
+        <div class="aborted-top"><span class="aborted-code">DAEDALUS</span><span class="aborted-year">Arrêté en 2019</span></div>
+        <h3 class="aborted-title">Voilier solaire interstellaire ultra-léger</h3>
+        <p class="aborted-desc">Une sonde de 10 g propulsée par laser, capable d'atteindre Proxima Centauri en 20 ans.</p>
+        <div class="aborted-reason"><i class="ph-light ph-x-circle" aria-hidden="true"></i> Abandon stratégique décidé par le CSN</div>
+      </article>
+
+      <article class="aborted-card reveal" style="--i:1">
+        <div class="aborted-top"><span class="aborted-code">PHOENIX</span><span class="aborted-year">Arrêté en 2020</span></div>
+        <h3 class="aborted-title">Réanimation cellulaire en hypothermie profonde</h3>
+        <p class="aborted-desc">Des protocoles de cryoconservation réversible pour les équipages de longue durée.</p>
+        <div class="aborted-reason"><i class="ph-light ph-x-circle" aria-hidden="true"></i> Viabilité cellulaire insuffisante à -80 °C en phase II</div>
+      </article>
+
+      <article class="aborted-card reveal" style="--i:2">
+        <div class="aborted-top"><span class="aborted-code">ICARUS-2</span><span class="aborted-year">Arrêté en 2022</span></div>
+        <h3 class="aborted-title">Plongeur atmosphérique vénusien autonome</h3>
+        <p class="aborted-desc">Un drone conçu pour opérer 24 h dans l'atmosphère de Vénus, à 50 km d'altitude.</p>
+        <div class="aborted-reason"><i class="ph-light ph-x-circle" aria-hidden="true"></i> Prototype détruit lors des essais en chambre thermique</div>
+      </article>
+
+    </div>
+
+    <div class="cta-band reveal">
+      <div>
+        <h2>279 publications issues de nos missions clôturées</h2>
+        <p>Résultats, jeux de données et retours d'expérience sont consultables dans la base documentaire de l'IFRAS.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="publications.html" class="btn btn-primary">Voir les publications <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
+        <a href="recherche.html" class="btn btn-ghost">Nos départements</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© IFRAS, Institut Français de Recherche Aéronautique et Spatiale</span>
+    <span><i class="ph-light ph-lock-simple" aria-hidden="true"></i> Accès contrôlé, données sensibles</span>
+  </div>
 </footer>
+
+<script>
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)');
+
+  /* ---------- Menu mobile ---------- */
+  const toggle = document.querySelector('.menu-toggle');
+  const panel = document.getElementById('mobile-panel');
+  const icon = toggle.querySelector('i');
+  const setMenu = (open) => {
+    panel.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    icon.className = open ? 'ph-light ph-x' : 'ph-light ph-list';
+  };
+  toggle.addEventListener('click', () => setMenu(!panel.classList.contains('is-open')));
+  document.addEventListener('click', (e) => {
+    if (panel.classList.contains('is-open') && !panel.contains(e.target) && !toggle.contains(e.target)) setMenu(false);
+  });
+
+  /* ---------- Menus déroulants : intention de survol + passage instantané ---------- */
+  const subnav = document.getElementById('subnav');
+  const items = [...subnav.querySelectorAll('.subnav-item')];
+  let openItem = null, openTimer = 0, closeTimer = 0;
+
+  const openMenu = (item) => {
+    items.forEach((i) => {
+      const on = i === item;
+      i.classList.toggle('is-open', on);
+      i.querySelector('.subnav-trigger').setAttribute('aria-expanded', String(on));
+    });
+    openItem = item;
+  };
+  const closeMenus = () => {
+    subnav.classList.remove('is-instant');
+    items.forEach((i) => {
+      i.classList.remove('is-open');
+      i.querySelector('.subnav-trigger').setAttribute('aria-expanded', 'false');
+    });
+    openItem = null;
+  };
+  const resetMenus = () => {
+    clearTimeout(openTimer);
+    clearTimeout(closeTimer);
+    closeMenus();
+    if (subnav.contains(document.activeElement)) document.activeElement.blur();
+  };
+
+  items.forEach((item) => {
+    item.addEventListener('pointerenter', (e) => {
+      if (e.pointerType !== 'mouse' || !canHover.matches) return;
+      clearTimeout(closeTimer);
+      clearTimeout(openTimer);
+      if (openItem && openItem !== item) {
+        subnav.classList.add('is-instant');
+        openMenu(item);
+      } else if (!openItem) {
+        openTimer = setTimeout(() => openMenu(item), 90);
+      }
+    });
+    item.addEventListener('pointerleave', (e) => {
+      if (e.pointerType !== 'mouse') return;
+      clearTimeout(openTimer);
+      closeTimer = setTimeout(closeMenus, 180);
+    });
+  });
+
+  /* Retour arrière : on referme tout (la page est restaurée telle qu'on l'a quittée) */
+  window.addEventListener('pageshow', resetMenus);
+  window.addEventListener('pagehide', resetMenus);
+  subnav.addEventListener('click', (e) => { if (e.target.closest('a')) resetMenus(); });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    setMenu(false);
+    resetMenus();
+  });
+
+  /* ---------- Section visible = onglet actif ---------- */
+  const triggers = new Map([...subnav.querySelectorAll('[data-section]')].map((t) => [t.dataset.section, t]));
+  const spyIO = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      triggers.forEach((t, id) => t.setAttribute('aria-current', String(id === entry.target.id)));
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  triggers.forEach((_, id) => { const s = document.getElementById(id); if (s) spyIO.observe(s); });
+  new IntersectionObserver(([entry]) => {
+    if (entry.isIntersecting) triggers.forEach((t) => t.setAttribute('aria-current', 'false'));
+  }, { rootMargin: '-40% 0px -55% 0px' }).observe(document.querySelector('.hero'));
+
+  /* ---------- Apparition au défilement ---------- */
+  const revealIO = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      revealIO.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach((el) => revealIO.observe(el));
+
+  /* ---------- Compteurs ---------- */
+  if (!reduceMotion) {
+    const fmt = new Intl.NumberFormat('fr-FR');
+    const countIO = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = Number(el.dataset.count);
+        const prefix = el.dataset.prefix || '';
+        const start = performance.now();
+        const tick = (now) => {
+          const t = Math.min((now - start) / 1000, 1);
+          el.textContent = prefix + fmt.format(Math.round(target * (1 - Math.pow(1 - t, 4))));
+          if (t < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+        countIO.unobserve(el);
+      });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('[data-count]').forEach((el) => countIO.observe(el));
+  }
+
+  /* ---------- Compte à rebours ARTEMIS-9 (début du T2 2027) ---------- */
+  const countdown = document.getElementById('launch-countdown');
+  const launch = new Date(2027, 3, 1);
+  const now = new Date();
+  const months = (launch.getFullYear() - now.getFullYear()) * 12 + (launch.getMonth() - now.getMonth());
+  if (months > 1) countdown.textContent = `, dans environ ${months} mois`;
+  else if (months >= 0) countdown.textContent = ', imminent';
+
+  /* ---------- Champ d'étoiles (fond du hero) ---------- */
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  const hero = document.querySelector('.hero');
+  let stars = [], w = 0, h = 0, dpr = 1, running = false, raf = 0, last = 0;
+
+  const build = () => {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = hero.clientWidth; h = hero.clientHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const count = Math.round((w * h) / 9000);
+    stars = Array.from({ length: count }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: Math.random() * 1.1 + 0.2,
+      depth: Math.random() * 0.8 + 0.2,
+      phase: Math.random() * Math.PI * 2,
+      speed: Math.random() * 0.6 + 0.4
+    }));
+  };
+
+  const draw = (t) => {
+    ctx.clearRect(0, 0, w, h);
+    for (const s of stars) {
+      const tw = reduceMotion ? 0.8 : 0.55 + 0.45 * Math.sin(t / 1000 * s.speed + s.phase);
+      ctx.globalAlpha = tw * (0.35 + s.depth * 0.6);
+      ctx.fillStyle = s.depth > 0.85 ? '#c7d2fe' : '#ffffff';
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r * (0.6 + s.depth * 0.6), 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  };
+
+  const loop = (t) => {
+    const dt = Math.min(64, t - (last || t)); last = t;
+    for (const s of stars) {
+      s.x -= s.depth * 0.012 * dt;           /* dérive lente : les étoiles proches vont plus vite */
+      if (s.x < -2) { s.x = w + 2; s.y = Math.random() * h; }
+    }
+    draw(t);
+    if (running) raf = requestAnimationFrame(loop);
+  };
+
+  const start = () => { if (running || reduceMotion) return; running = true; last = 0; raf = requestAnimationFrame(loop); };
+  const stop = () => { running = false; cancelAnimationFrame(raf); };
+
+  build();
+  draw(0);
+  canvas.classList.add('is-ready');
+
+  /* on n'anime que si le hero est visible et l'onglet actif */
+  let heroVisible = true;
+  new IntersectionObserver(([entry]) => {
+    heroVisible = entry.isIntersecting;
+    heroVisible && !document.hidden ? start() : stop();
+  }).observe(hero);
+  document.addEventListener('visibilitychange', () => {
+    document.hidden ? stop() : heroVisible && start();
+  });
+  let resizeTimer = 0;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => { build(); draw(performance.now()); }, 150);
+  });
+})();
+</script>
 
 </body>
 </html>
