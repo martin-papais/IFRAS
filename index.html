@@ -2,257 +2,423 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" type="image/png" sizes="360x360" href="logo.png">
-<title>IFRAS — Institut Français de Recherche Aéronautique et Spatiale</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<title>IFRAS | Institut Français de Recherche Aéronautique et Spatiale</title>
+<meta name="description" content="Recherche scientifique, innovation technologique et exploration spatiale au service de l'avenir.">
+<meta name="theme-color" content="#050b1e">
+<link rel="icon" type="image/png" sizes="360x360" href="logo.png">
+<link rel="preload" as="image" href="banniere.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<!-- Icônes : Phosphor (remplace les emojis) -->
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
 
 <style>
-
+/* =========================================================
+   TOKENS
+   ========================================================= */
 :root {
   --bg-main: #050b1e;
   --bg-dark: #020617;
   --bg-light: #070f2b;
+  --bg-raise: #0a1436;
   --accent: #4f6bed;
+  --accent-hover: #3d5adb;
+  --accent-soft: rgba(79,107,237,.14);
+  --accent-line: rgba(79,107,237,.38);
   --text-main: #e6e6e6;
+  --text-strong: #f5f7ff;
   --text-soft: #aab3d6;
+  --text-mute: #8891b8;
   --border: #1b2555;
+
+  /* Courbes custom (emil-design-eng) */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --header-h: 68px;
 }
 
-* { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px); }
 
 body {
   margin: 0;
-  font-family: "DM Sans", "Segoe UI", sans-serif;
+  font-family: "DM Sans", "Segoe UI", system-ui, sans-serif;
   background: var(--bg-main);
   color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* ===== HEADER ===== */
+img { display: block; max-width: 100%; }
 
-header {
+a { color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 16px; top: -48px;
+  padding: 10px 16px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  z-index: 2000;
+  text-decoration: none;
+  transition: top 160ms var(--ease-out);
+}
+.skip-link:focus { top: 12px; }
+
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+
+/* =========================================================
+   BOUTONS (retour tactile au clic)
+   ========================================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 22px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms var(--ease-out);
+}
+.btn:active { transform: scale(0.97); }
+.btn i { font-size: 16px; transition: transform 200ms var(--ease-out); }
+
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-ghost { border-color: var(--accent-line); color: #fff; }
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-ghost:hover { background: var(--accent-soft); border-color: var(--accent); }
+  .btn:hover i { transform: translateX(3px); }
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+.site-header {
   position: fixed;
-  top: 0;
-  width: 100%;
+  inset: 0 0 auto 0;
   z-index: 1000;
-  background: rgba(5,11,30,.85);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
+  height: var(--header-h);
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background-color 240ms ease, border-color 240ms ease, backdrop-filter 240ms ease;
+}
+
+.site-header.is-scrolled {
+  background: rgba(5,11,30,.82);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border-bottom-color: var(--border);
 }
 
 .header-inner {
-  max-width: 1300px;
-  margin: auto;
-  padding: 12px 30px;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 24px;
 }
 
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-}
+.header-left { display: flex; align-items: center; gap: 44px; }
 
-.logo-link img { height: 60px; cursor: pointer; }
+.logo-link { display: flex; align-items: center; }
+.logo-link img { height: 44px; width: auto; }
 
 .main-nav {
   list-style: none;
   display: flex;
-  gap: 32px;
+  gap: 6px;
   margin: 0; padding: 0;
 }
 
 .main-nav a {
+  position: relative;
+  display: block;
+  padding: 8px 12px;
   text-decoration: none;
   color: var(--text-soft);
   font-size: 14px;
-  letter-spacing: .05em;
-}
-
-.main-nav a:hover { color: white; }
-
-.header-right .login-btn {
-  padding: 8px 18px;
+  letter-spacing: .02em;
   border-radius: 6px;
-  border: 1px solid var(--accent);
-  color: white;
-  text-decoration: none;
-  font-size: 13px;
+  transition: color 160ms ease;
 }
 
-.header-right .login-btn:hover { background: var(--accent); }
+/* Soulignement qui part de la gauche */
+.main-nav a::after {
+  content: "";
+  position: absolute;
+  left: 12px; right: 12px; bottom: 2px;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 200ms var(--ease-out);
+}
 
-/* ===== HERO ===== */
+.main-nav a[aria-current="page"] { color: #fff; }
+.main-nav a[aria-current="page"]::after { transform: scaleX(1); }
 
+@media (hover: hover) and (pointer: fine) {
+  .main-nav a:hover { color: #fff; }
+  .main-nav a:hover::after { transform: scaleX(1); }
+}
+
+.header-right { display: flex; align-items: center; gap: 10px; }
+.header-right .btn { padding: 9px 18px; font-size: 13px; }
+
+/* Bouton menu mobile */
+.menu-toggle {
+  display: none;
+  width: 42px; height: 42px;
+  align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform 160ms var(--ease-out), border-color 160ms ease;
+}
+.menu-toggle:active { transform: scale(0.95); }
+
+/* Panneau mobile */
+.mobile-panel {
+  position: fixed;
+  top: var(--header-h); left: 12px; right: 12px;
+  z-index: 999;
+  padding: 10px;
+  background: rgba(7,15,43,.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(2,6,23,.6);
+  transform-origin: top right;
+  opacity: 0;
+  transform: scale(0.96) translateY(-6px);
+  pointer-events: none;
+  visibility: hidden;
+  transition:
+    opacity 180ms var(--ease-out),
+    transform 220ms var(--ease-out),
+    visibility 0s linear 220ms;
+}
+.mobile-panel.is-open {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  visibility: visible;
+  transition:
+    opacity 180ms var(--ease-out),
+    transform 220ms var(--ease-out),
+    visibility 0s;
+}
+.mobile-panel ul { list-style: none; margin: 0; padding: 0; }
+.mobile-panel a {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 14px;
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 10px;
+}
+.mobile-panel a[aria-current="page"] { background: var(--accent-soft); color: #fff; }
+.mobile-panel .btn { width: 100%; justify-content: center; margin-top: 8px; }
+
+/* =========================================================
+   HERO
+   ========================================================= */
 .hero {
-  height: 100vh;
-  background:
-    linear-gradient(180deg, rgba(5,11,30,.25), rgba(5,11,30,.95)),
-    url("banniere.png") center / cover no-repeat;
+  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   position: relative;
+  overflow: hidden;
+  isolation: isolate;
 }
 
-.hero-content {
-  max-width: 1300px;
-  margin: auto;
-  padding: 0 30px;
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: url("banniere.png") center / cover no-repeat;
+  transform: scale(1.06);
+  animation: heroSettle 1600ms var(--ease-out) both;
 }
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(5,11,30,.88) 0%, rgba(5,11,30,.55) 45%, rgba(5,11,30,.15) 100%),
+    linear-gradient(180deg, rgba(5,11,30,0) 55%, var(--bg-main) 100%);
+}
+
+.hero-content { padding-top: var(--header-h); width: 100%; }
 
 .hero h1 {
-  font-size: clamp(34px, 5vw, 56px);
-  max-width: 900px;
-  margin: 0 0 20px;
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+  font-size: clamp(34px, 5vw, 60px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--text-strong);
+  max-width: 19ch;
+  margin: 0 0 22px;
+  text-wrap: balance;
 }
 
 .hero p {
-  font-size: 20px;
-  max-width: 650px;
+  font-size: clamp(17px, 1.6vw, 20px);
+  line-height: 1.55;
+  max-width: 34ch;
   color: #c7d2fe;
-  margin: 0 0 40px;
+  margin: 0 0 36px;
+  font-weight: 300;
 }
 
-.hero-btns {
-  display: flex;
-  gap: 20px;
+.hero-btns { display: flex; flex-wrap: wrap; gap: 14px; }
+
+/* Entrée du hero : cascade courte, jouée une seule fois */
+.hero-in {
+  opacity: 0;
+  animation: heroIn 700ms var(--ease-out) forwards;
+  animation-delay: calc(120ms + var(--i, 0) * 80ms);
 }
 
-.hero-btns a {
-  padding: 14px 26px;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 14px;
-  transition: .2s;
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(14px); filter: blur(4px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+@keyframes heroSettle {
+  from { transform: scale(1.12); }
+  to   { transform: scale(1.06); }
 }
 
-.primary { background: var(--accent); color: white; }
-.primary:hover { background: #3d5adb; }
-.secondary { border: 1px solid var(--accent); color: white; }
-.secondary:hover { background: rgba(79,107,237,.15); }
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+.section { padding: 110px 0; position: relative; }
 
-.hero-scroll {
-  position: absolute;
-  bottom: 36px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  color: var(--text-soft);
-  font-size: 11px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  animation: bounce 2s infinite;
-}
-
-.hero-scroll::after {
-  content: '↓';
-  font-size: 18px;
-  color: var(--accent);
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50%       { transform: translateX(-50%) translateY(7px); }
-}
-
-/* ===== SECTION BASE ===== */
-
-main { padding-top: 0; }
-
-.section {
-  padding: 90px 30px;
-}
-
-.container {
-  max-width: 1300px;
-  margin: auto;
-}
-
-.section-eyebrow {
+.section-kicker {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-size: 11px;
-  letter-spacing: .18em;
+  font-size: 12px;
+  letter-spacing: .16em;
   text-transform: uppercase;
   color: var(--accent);
   font-weight: 500;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
-
-.section-eyebrow::before {
-  content: '';
-  display: block;
+.section-kicker::before {
+  content: "";
   width: 24px; height: 1px;
   background: currentColor;
 }
 
+.section-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 44px;
+}
+
 .section-title {
   font-family: "Syne", sans-serif;
-  font-size: clamp(26px, 3vw, 38px);
+  font-size: clamp(28px, 3.2vw, 42px);
   font-weight: 700;
-  color: white;
-  margin: 0 0 44px;
+  color: #fff;
+  margin: 0;
   letter-spacing: -0.02em;
+  line-height: 1.1;
 }
 
-/* ===== QUI SOMMES-NOUS ===== */
-
-.qui-section {
-  background: var(--bg-dark);
-  position: relative;
-  overflow: hidden;
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-soft);
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 160ms ease;
 }
+.text-link i { transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .text-link:hover { color: #fff; }
+  .text-link:hover i { transform: translateX(3px); }
+}
+
+/* =========================================================
+   QUI SOMMES-NOUS
+   ========================================================= */
+.qui-section { background: var(--bg-dark); overflow: hidden; }
 
 .qui-section::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse 60% 70% at 80% 50%, rgba(79,107,237,0.08) 0%, transparent 65%);
+  background: radial-gradient(ellipse 55% 65% at 85% 40%, rgba(79,107,237,0.10) 0%, transparent 65%);
   pointer-events: none;
 }
 
 .qui-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.1fr 1fr;
   gap: 80px;
   align-items: center;
+  position: relative;
 }
 
-.qui-left {}
+.qui-left .section-title { margin-bottom: 26px; }
 
-.qui-left p {
+.qui-lead {
+  font-size: 19px;
+  line-height: 1.6;
+  color: var(--text-main);
+  margin: 0 0 18px;
+  font-weight: 400;
+  max-width: 56ch;
+}
+
+.qui-left p:not(.qui-lead) {
   color: var(--text-soft);
   font-size: 15px;
   line-height: 1.8;
   font-weight: 300;
-  margin: 0 0 18px;
+  margin: 0 0 32px;
+  max-width: 60ch;
 }
-
-.qui-left p:last-of-type { margin-bottom: 32px; }
-
-.qui-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 11px 22px;
-  border-radius: 8px;
-  border: 1px solid rgba(79,107,237,.4);
-  color: white;
-  text-decoration: none;
-  font-size: 13px;
-  font-weight: 500;
-  transition: .2s;
-}
-
-.qui-cta:hover { background: rgba(79,107,237,.15); }
 
 .qui-right {
   display: grid;
@@ -263,93 +429,85 @@ main { padding-top: 0; }
 .qui-stat {
   background: var(--bg-light);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 22px 20px;
+  border-radius: var(--radius);
+  padding: 26px 22px 24px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  transition: border-color .3s, transform .3s;
+  gap: 8px;
+  transition: border-color 200ms ease, transform 200ms var(--ease-out);
 }
+/* décalage vertical : rythme moins "grille" */
+.qui-stat:nth-child(even) { transform: translateY(24px); }
 
-.qui-stat:hover {
-  border-color: rgba(79,107,237,.35);
-  transform: translateY(-3px);
+@media (hover: hover) and (pointer: fine) {
+  .qui-stat:hover { border-color: var(--accent-line); }
 }
 
 .qui-stat-value {
   font-family: "Syne", sans-serif;
-  font-size: 34px;
+  font-size: clamp(30px, 3vw, 40px);
   font-weight: 800;
-  color: white;
+  color: #fff;
   letter-spacing: -0.04em;
   line-height: 1;
+  font-variant-numeric: tabular-nums;
 }
 
 .qui-stat-label {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text-soft);
-  line-height: 1.4;
+  line-height: 1.45;
   font-weight: 300;
 }
 
 .qui-stat-accent {
-  width: 28px;
-  height: 2px;
+  width: 28px; height: 2px;
   background: var(--accent);
-  margin-top: 4px;
+  margin-top: 6px;
+  transform-origin: left;
 }
 
 .qui-pillars {
-  margin-top: 60px;
-  padding-top: 60px;
+  margin-top: 96px;
+  padding-top: 56px;
   border-top: 1px solid var(--border);
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  gap: 32px;
+  position: relative;
 }
 
-.pillar {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+.pillar { display: flex; flex-direction: column; gap: 10px; }
 
 .pillar-icon {
-  font-size: 26px;
-  margin-bottom: 2px;
+  width: 44px; height: 44px;
+  display: grid; place-items: center;
+  border-radius: 12px;
+  background: var(--accent-soft);
+  border: 1px solid rgba(79,107,237,.25);
+  color: #c7d2fe;
+  font-size: 22px;
+  margin-bottom: 6px;
 }
 
 .pillar-title {
   font-family: "Syne", sans-serif;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
-  color: white;
+  color: #fff;
 }
 
 .pillar-desc {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-soft);
   line-height: 1.65;
   font-weight: 300;
 }
 
-/* ===== À LA UNE ===== */
-
-.une-section {
-  background: var(--bg-main);
-  position: relative;
-}
-
-.une-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(79,107,237,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(79,107,237,0.025) 1px, transparent 1px);
-  background-size: 60px 60px;
-  pointer-events: none;
-}
+/* =========================================================
+   À LA UNE
+   ========================================================= */
+.une-section { background: var(--bg-main); }
 
 .une-grid {
   display: grid;
@@ -360,74 +518,57 @@ main { padding-top: 0; }
 .card {
   background: var(--bg-light);
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: var(--radius);
   overflow: hidden;
-  transition: border-color .3s, transform .3s, box-shadow .3s;
   text-decoration: none;
   color: inherit;
   display: flex;
   flex-direction: column;
   position: relative;
-  cursor: pointer;
+  transition:
+    border-color 200ms ease,
+    transform 200ms var(--ease-out),
+    box-shadow 200ms ease;
 }
+.card:active { transform: scale(0.99); }
 
-.card::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform .3s ease;
-}
+.card-media { overflow: hidden; aspect-ratio: 16 / 10; background: var(--bg-raise); }
+.card--lead .card-media { aspect-ratio: 16 / 9; }
 
-.card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(79,107,237,.35);
-  box-shadow: 0 20px 50px rgba(0,0,10,.5);
-}
-
-.card:hover::after { transform: scaleX(1); }
-
-.card img {
-  width: 100%;
-  height: 200px;
+.card-media img {
+  width: 100%; height: 100%;
   object-fit: cover;
-  transition: transform .4s ease;
+  transition: transform 600ms var(--ease-out);
 }
-
-.card:first-child img { height: 260px; }
-
-.card:hover img { transform: scale(1.04); }
 
 .card-content {
-  padding: 22px 24px 26px;
+  padding: 22px 24px 24px;
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .card-tag {
-  font-size: 10px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--accent);
+  font-size: 12px;
+  letter-spacing: .04em;
+  color: #9fb0ff;
   font-weight: 500;
 }
 
 .card-content h3 {
   font-family: "Syne", sans-serif;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 700;
-  color: white;
+  color: #fff;
   margin: 0;
   line-height: 1.3;
+  text-wrap: balance;
 }
+.card--lead .card-content h3 { font-size: clamp(20px, 1.8vw, 26px); }
 
 .card-content p {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-soft);
   line-height: 1.65;
   font-weight: 300;
@@ -436,164 +577,176 @@ main { padding-top: 0; }
 }
 
 .card-link {
-  font-size: 12px;
-  color: var(--accent);
-  margin-top: 10px;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 13px;
+  color: #9fb0ff;
+  margin-top: 6px;
+}
+.card-link i { transition: transform 200ms var(--ease-out); }
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent-line);
+    box-shadow: 0 18px 40px rgba(2,6,23,.55);
+  }
+  .card:hover .card-media img { transform: scale(1.03); }
+  .card:hover .card-link i { transform: translateX(3px); }
 }
 
-/* ===== FIL D'ACTUALITÉ ===== */
+/* =========================================================
+   FIL D'ACTUALITÉ (défilement natif, swipe mobile)
+   ========================================================= */
+.actu-section { background: var(--bg-dark); }
 
-.actu-section {
-  background: var(--bg-dark);
-  padding: 80px 0;
+.rail-controls { display: flex; gap: 10px; }
+
+.rail-btn {
+  width: 42px; height: 42px;
+  display: grid; place-items: center;
+  background: rgba(79,107,237,.08);
+  border: 1px solid rgba(79,107,237,.3);
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    opacity 160ms ease,
+    transform 160ms var(--ease-out);
+}
+.rail-btn:active { transform: scale(0.94); }
+.rail-btn:disabled { opacity: .35; cursor: default; }
+@media (hover: hover) and (pointer: fine) {
+  .rail-btn:not(:disabled):hover { background: var(--accent); border-color: var(--accent); }
 }
 
-.actu-header {
-  max-width: 1300px;
-  margin: 0 auto 36px;
-  padding: 0 30px;
-}
-
-.carousel-wrapper {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 0 30px;
-  position: relative;
-}
-
-.carousel {
-  overflow: hidden;
-  padding: 8px 0 8px;
-}
-
-.carousel-track {
-  display: flex;
+.rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(280px, calc((100% - 3 * 20px) / 4));
   gap: 20px;
-  transition: transform 0.45s cubic-bezier(.4,0,.2,1);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 30px;
+  padding: 6px 30px 14px;
+  margin: 0 -30px;
+  scrollbar-width: none;
+  cursor: grab;
 }
+.rail::-webkit-scrollbar { display: none; }
+.rail.is-dragging { cursor: grabbing; scroll-snap-type: none; }
+.rail.is-dragging * { pointer-events: none; }
 
-.carousel-item {
-  min-width: 260px;
-  max-width: 260px;
+.rail-item {
+  scroll-snap-align: start;
   background: var(--bg-light);
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: var(--radius);
   overflow: hidden;
-  transition: border-color .3s, transform .3s;
-  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 200ms ease;
+  user-select: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .rail-item:hover { border-color: var(--accent-line); }
+  .rail-item:hover img { transform: scale(1.03); }
 }
 
-.carousel-item:hover {
-  border-color: rgba(79,107,237,.3);
-  transform: translateY(-4px);
-}
-
-.carousel-item img {
-  width: 100%;
-  height: 200px;
+.rail-item .media { overflow: hidden; aspect-ratio: 4 / 3; background: var(--bg-raise); }
+.rail-item img {
+  width: 100%; height: 100%;
   object-fit: cover;
-  transition: transform .4s;
+  transition: transform 600ms var(--ease-out);
+  -webkit-user-drag: none;
 }
 
-.carousel-item:hover img { transform: scale(1.04); }
+.rail-content { padding: 18px 20px 22px; }
 
-.carousel-content {
-  padding: 16px 18px 20px;
-}
-
-.carousel-date {
-  font-size: 11px;
-  color: var(--accent);
-  letter-spacing: .1em;
+.rail-date {
+  display: block;
+  font-size: 12px;
+  color: #9fb0ff;
+  letter-spacing: .04em;
   font-weight: 500;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
-.carousel-content h3 {
+.rail-content h3 {
   font-family: "Syne", sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
-  color: white;
-  margin: 0 0 6px;
+  color: #fff;
+  margin: 0 0 8px;
 }
 
-.carousel-content p {
-  font-size: 12.5px;
+.rail-content p {
+  font-size: 13.5px;
   color: var(--text-soft);
   line-height: 1.6;
   font-weight: 300;
   margin: 0;
 }
 
-.carousel-controls {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 28px;
+.rail-progress {
+  margin-top: 26px;
+  height: 2px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.rail-progress span {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--accent);
+  transform-origin: left;
+  transform: scaleX(0.25);
+  transition: transform 120ms linear;
 }
 
-.carousel-btn {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(79,107,237,.1);
-  border: 1px solid rgba(79,107,237,.3);
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-  border-radius: 50%;
-  transition: .2s;
-}
-
-.carousel-btn:hover { background: var(--accent); border-color: var(--accent); }
-
-/* ===== AGENDA ===== */
-
-.agenda-section {
-  background: var(--bg-main);
-  position: relative;
-}
-
-.agenda-section::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border), transparent);
-}
+/* =========================================================
+   AGENDA
+   ========================================================= */
+.agenda-section { background: var(--bg-main); }
 
 .agenda-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
 
 .event {
   background: var(--bg-light);
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: var(--radius);
   padding: 24px 26px;
   display: grid;
-  grid-template-columns: 80px 1fr;
+  grid-template-columns: 76px 1fr;
   gap: 22px;
   align-items: start;
-  transition: border-color .3s, transform .3s;
   text-decoration: none;
   color: inherit;
+  transition: border-color 200ms ease, transform 200ms var(--ease-out), background-color 200ms ease;
 }
+.event:active { transform: scale(0.99); }
 
-.event:hover {
-  border-color: rgba(79,107,237,.35);
-  transform: translateY(-3px);
+@media (hover: hover) and (pointer: fine) {
+  .event:hover { border-color: var(--accent-line); transform: translateY(-2px); }
 }
 
 .event--featured {
-  grid-column: 1 / 3;
-  grid-template-columns: 90px 1fr;
-  background: rgba(79,107,237,0.05);
-  border-color: rgba(79,107,237,.2);
+  grid-column: 1 / -1;
+  grid-template-columns: 96px 1fr auto;
+  align-items: center;
+  padding: 30px 32px;
+  background:
+    radial-gradient(ellipse 60% 120% at 0% 0%, rgba(79,107,237,.16), transparent 60%),
+    var(--bg-light);
+  border-color: rgba(79,107,237,.3);
 }
 
 .date-box {
@@ -601,52 +754,54 @@ main { padding-top: 0; }
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgba(79,107,237,.12);
+  background: var(--accent-soft);
   border: 1px solid rgba(79,107,237,.25);
-  border-radius: 10px;
-  padding: 12px 8px;
-  gap: 1px;
+  border-radius: 12px;
+  padding: 12px 6px;
+  gap: 2px;
 }
+.event--featured .date-box { padding: 16px 8px; background: var(--accent); border-color: var(--accent); }
+.event--featured .date-box .month { color: #e0e7ff; }
 
 .date-box .day {
   font-family: "Syne", sans-serif;
   font-size: 26px;
   font-weight: 800;
-  color: white;
+  color: #fff;
   line-height: 1;
   letter-spacing: -0.03em;
 }
+.event--featured .date-box .day { font-size: 34px; }
 
 .date-box .month {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: .1em;
-  color: var(--accent);
+  color: #9fb0ff;
   font-weight: 500;
 }
 
-.event-info {}
-
 .event-type {
-  font-size: 10px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--accent);
+  font-size: 12px;
+  letter-spacing: .04em;
+  color: #9fb0ff;
   font-weight: 500;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
 .event-info h3 {
   font-family: "Syne", sans-serif;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
-  color: white;
-  margin: 0 0 6px;
+  color: #fff;
+  margin: 0 0 8px;
   line-height: 1.3;
+  text-wrap: balance;
 }
+.event--featured .event-info h3 { font-size: clamp(19px, 1.8vw, 24px); }
 
 .event-info p {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-soft);
   margin: 0;
   line-height: 1.6;
@@ -654,94 +809,126 @@ main { padding-top: 0; }
 }
 
 .event-location {
-  margin-top: 8px;
-  font-size: 11px;
-  color: rgba(170,179,214,.5);
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--text-mute);
   display: flex;
   align-items: center;
-  gap: 5px;
-}
-
-/* ===== CHIFFRES CLÉS ===== */
-
-.chiffres-section {
-  background: var(--bg-dark);
-  padding: 80px 30px;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-
-.chiffres-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  overflow: hidden;
-}
-
-.chiffre-item {
-  background: var(--bg-dark);
-  padding: 32px 24px;
-  display: flex;
-  flex-direction: column;
   gap: 6px;
-  align-items: center;
-  text-align: center;
 }
+.event-location i { font-size: 15px; color: var(--accent); }
 
-.chiffre-val {
-  font-family: "Syne", sans-serif;
-  font-size: 38px;
-  font-weight: 800;
-  color: white;
-  letter-spacing: -0.04em;
-  line-height: 1;
-}
+.event-cta { align-self: center; }
 
-.chiffre-label {
-  font-size: 12px;
-  color: var(--text-soft);
-  text-transform: uppercase;
-  letter-spacing: .1em;
-  font-weight: 300;
-}
-
-/* ===== FOOTER ===== */
-
-footer {
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.site-footer {
   background: var(--bg-dark);
   border-top: 1px solid var(--border);
-  padding: 40px 30px;
-  font-size: 12px;
-  color: #6b7280;
+  padding: 36px 0;
+  font-size: 13px;
+  color: var(--text-mute);
+}
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.site-footer a { color: var(--text-mute); text-decoration: none; transition: color 160ms ease; }
+@media (hover: hover) and (pointer: fine) {
+  .site-footer a:hover { color: #fff; }
 }
 
-/* ===== ANIMATIONS ===== */
+/* =========================================================
+   APPARITION AU DÉFILEMENT (active seulement si JS)
+   ========================================================= */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 700ms var(--ease-out),
+    transform 700ms var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+.js .reveal.is-visible { opacity: 1; transform: none; }
+.js .qui-stat.reveal.is-visible:nth-child(even) { transform: translateY(24px); }
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0); }
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1100px) {
+  .une-grid { grid-template-columns: 1fr 1fr; }
+  .card--lead { grid-column: 1 / -1; }
+  .qui-grid { gap: 56px; }
+  .qui-pillars { grid-template-columns: 1fr 1fr; gap: 36px 32px; }
+  .rail { grid-auto-columns: minmax(260px, calc((100% - 2 * 20px) / 3)); }
+  .agenda-grid { grid-template-columns: 1fr 1fr; }
+  .agenda-grid .event:last-child { grid-column: 1 / -1; }
 }
 
-.fade-in { animation: fadeUp .6s ease both; }
+@media (max-width: 860px) {
+  .main-nav, .header-right .btn-desktop { display: none; }
+  .menu-toggle { display: inline-flex; }
+  .qui-grid { grid-template-columns: 1fr; }
+  .qui-stat:nth-child(even),
+  .js .qui-stat.reveal.is-visible:nth-child(even) { transform: none; }
+  .agenda-grid { grid-template-columns: 1fr; }
+  .event--featured { grid-template-columns: 80px 1fr; }
+  .event--featured .event-cta { grid-column: 1 / -1; justify-self: start; }
+  .rail { grid-auto-columns: 78%; }
+}
 
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .section { padding: 80px 0; }
+  .hero::before {
+    background:
+      linear-gradient(180deg, rgba(5,11,30,.55) 0%, rgba(5,11,30,.85) 60%, var(--bg-main) 100%);
+  }
+  .hero-btns .btn { flex: 1 1 100%; justify-content: center; }
+  .section-head { flex-direction: column; align-items: start; }
+  .une-grid { grid-template-columns: 1fr; }
+  .qui-pillars { grid-template-columns: 1fr; margin-top: 64px; }
+  .event, .event--featured { grid-template-columns: 64px 1fr; padding: 20px; gap: 16px; }
+  .rail { margin: 0 -20px; padding: 6px 20px 14px; scroll-padding-inline: 20px; grid-auto-columns: 84%; }
+  .rail-controls { display: none; }
+}
+
+/* =========================================================
+   MOUVEMENT RÉDUIT
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-bg { animation: none; transform: none; }
+  .hero-in { animation: fadeOnly 300ms ease forwards; }
+  .js .reveal { transform: none; transition: opacity 300ms ease; transition-delay: 0ms; }
+  .js .qui-stat.reveal.is-visible:nth-child(even),
+  .qui-stat:nth-child(even) { transform: none; }
+  .card-media img, .rail-item img { transition: none; }
+}
+@keyframes fadeOnly { to { opacity: 1; } }
 </style>
+
+<script>document.documentElement.classList.add('js');</script>
 </head>
 
 <body>
 
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+
 <!-- ===== HEADER ===== -->
-<header>
-  <div class="header-inner">
+<header class="site-header" id="header">
+  <div class="container header-inner">
     <div class="header-left">
-      <a href="index.html" class="logo-link">
-        <img src="logo.png" alt="Logo IFRAS">
+      <a href="index.html" class="logo-link" aria-label="IFRAS, accueil">
+        <img src="logo.png" alt="Logo IFRAS" width="44" height="44">
       </a>
-      <nav>
+      <nav aria-label="Navigation principale">
         <ul class="main-nav">
-          <li><a href="index.html">Accueil</a></li>
+          <li><a href="index.html" aria-current="page">Accueil</a></li>
           <li><a href="recherche.html">Recherche</a></li>
           <li><a href="programmes.html">Programmes</a></li>
           <li><a href="publications.html">Publications</a></li>
@@ -749,63 +936,74 @@ footer {
       </nav>
     </div>
     <div class="header-right">
-      <a href="connexion.html" class="login-btn">Connexion</a>
+      <a href="connexion.html" class="btn btn-ghost btn-desktop">Connexion</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-panel" aria-label="Ouvrir le menu">
+        <i class="ph-light ph-list" aria-hidden="true"></i>
+      </button>
     </div>
   </div>
 </header>
 
+<div class="mobile-panel" id="mobile-panel">
+  <ul>
+    <li><a href="index.html" aria-current="page">Accueil <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="recherche.html">Recherche <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="programmes.html">Programmes <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="publications.html">Publications <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+  </ul>
+  <a href="connexion.html" class="btn btn-primary">Connexion</a>
+</div>
+
 <!-- ===== HERO ===== -->
 <section class="hero">
-  <div class="hero-content">
-    <h1>Institut Français de Recherche Aéronautique et Spatiale</h1>
-    <p>Recherche scientifique, innovation technologique et exploration spatiale au service de l'avenir.</p>
-    <div class="hero-btns">
-      <a href="programmes.html" class="primary">Découvrir nos programmes</a>
-      <a href="recherche.html" class="secondary">Domaines de recherche</a>
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="container hero-content">
+    <h1 class="hero-in" style="--i:0">Institut Français de Recherche Aéronautique et Spatiale</h1>
+    <p class="hero-in" style="--i:1">Recherche scientifique, innovation technologique et exploration spatiale au service de l'avenir.</p>
+    <div class="hero-btns hero-in" style="--i:2">
+      <a href="programmes.html" class="btn btn-primary">Découvrir nos programmes <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
+      <a href="recherche.html" class="btn btn-ghost">Domaines de recherche</a>
     </div>
   </div>
-  <div class="hero-scroll">Défiler</div>
 </section>
 
-<main>
+<main id="contenu">
 
 <!-- ===== QUI SOMMES-NOUS ===== -->
-<section class="section qui-section">
+<section class="section qui-section" aria-labelledby="qui-title">
   <div class="container">
 
     <div class="qui-grid">
 
       <div class="qui-left">
-        <div class="section-eyebrow">À propos de l'IFRAS</div>
-        <h2 class="section-title">Qui sommes-nous ?</h2>
+        <div class="section-kicker reveal">À propos de l'IFRAS</div>
+        <h2 class="section-title reveal" id="qui-title" style="--i:1">Qui sommes-nous ?</h2>
 
-        <p>L'Institut Français de Recherche Aéronautique et Spatiale est un établissement public à caractère scientifique et technologique, placé sous la tutelle conjointe du ministère chargé de la Recherche et du ministère chargé de la Défense. Depuis sa fondation en 1962, l'IFRAS incarne l'ambition française en matière de conquête de l'espace et de maîtrise des technologies aéronautiques.</p>
+        <p class="qui-lead reveal" style="--i:2">Établissement public scientifique et technologique fondé en 1962, l'IFRAS incarne l'ambition française dans la conquête de l'espace et la maîtrise des technologies aéronautiques.</p>
 
-        <p>Organisé en huit départements scientifiques et deux directions techniques, l'institut réunit plus de 2 400 collaborateurs répartis sur quatre sites en France — Paris, Toulouse, Bordeaux et Saclay — ainsi que deux antennes internationales à Houston et Kourou. Notre mission est d'anticiper les ruptures technologiques, de former les chercheurs de demain et de valoriser nos travaux au bénéfice de l'industrie et de la société.</p>
+        <p class="reveal" style="--i:3">Placé sous la double tutelle des ministères de la Recherche et de la Défense, l'institut réunit plus de 2 400 collaborateurs à Paris, Toulouse, Bordeaux et Saclay, ainsi qu'à Houston et Kourou. Notre mission : anticiper les ruptures technologiques, former les chercheurs de demain et valoriser nos travaux au bénéfice de l'industrie et de la société.</p>
 
-        <p>Partenaire privilégié avec de nombreuses agences spatiales internationales, l'IFRAS contribue chaque année à plusieurs dizaines de missions scientifiques et programmes d'exploration à l'échelle mondiale.</p>
-
-        <a href="a-propos.html" class="qui-cta">En savoir plus sur l'IFRAS →</a>
+        <a href="a-propos.html" class="btn btn-ghost reveal" style="--i:4">En savoir plus sur l'IFRAS <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
       </div>
 
       <div class="qui-right">
-        <div class="qui-stat">
-          <div class="qui-stat-value">2 400</div>
+        <div class="qui-stat reveal" style="--i:0">
+          <div class="qui-stat-value" data-count="2400">2 400</div>
           <div class="qui-stat-label">Collaborateurs sur 4 sites en France</div>
           <div class="qui-stat-accent"></div>
         </div>
-        <div class="qui-stat">
-          <div class="qui-stat-value">+1 240</div>
+        <div class="qui-stat reveal" style="--i:1">
+          <div class="qui-stat-value" data-count="1240" data-prefix="+">+1 240</div>
           <div class="qui-stat-label">Publications scientifiques référencées</div>
           <div class="qui-stat-accent"></div>
         </div>
-        <div class="qui-stat">
-          <div class="qui-stat-value">63 ans</div>
+        <div class="qui-stat reveal" style="--i:2">
+          <div class="qui-stat-value" data-count="63" data-suffix=" ans">63 ans</div>
           <div class="qui-stat-label">D'histoire et d'innovation continue</div>
           <div class="qui-stat-accent"></div>
         </div>
-        <div class="qui-stat">
-          <div class="qui-stat-value">38</div>
+        <div class="qui-stat reveal" style="--i:3">
+          <div class="qui-stat-value" data-count="38">38</div>
           <div class="qui-stat-label">Partenaires institutionnels internationaux</div>
           <div class="qui-stat-accent"></div>
         </div>
@@ -814,25 +1012,25 @@ footer {
     </div>
 
     <div class="qui-pillars">
-      <div class="pillar">
-        <div class="pillar-icon">🔬</div>
+      <div class="pillar reveal" style="--i:0">
+        <div class="pillar-icon"><i class="ph-light ph-flask" aria-hidden="true"></i></div>
         <div class="pillar-title">Recherche fondamentale</div>
-        <div class="pillar-desc">Production de connaissances scientifiques nouvelles dans les domaines de la physique, de la biologie spatiale, des matériaux et des mathématiques appliquées.</div>
+        <div class="pillar-desc">Connaissances nouvelles en physique, biologie spatiale, matériaux et mathématiques appliquées.</div>
       </div>
-      <div class="pillar">
-        <div class="pillar-icon">⚙️</div>
+      <div class="pillar reveal" style="--i:1">
+        <div class="pillar-icon"><i class="ph-light ph-gear-six" aria-hidden="true"></i></div>
         <div class="pillar-title">Innovation technologique</div>
-        <div class="pillar-desc">Développement de systèmes et de procédés de rupture — propulsion, capteurs, IA embarquée, matériaux composites — pour l'aéronautique et le spatial.</div>
+        <div class="pillar-desc">Propulsion, capteurs, IA embarquée et composites : des systèmes de rupture pour l'aéronautique et le spatial.</div>
       </div>
-      <div class="pillar">
-        <div class="pillar-icon">🌍</div>
+      <div class="pillar reveal" style="--i:2">
+        <div class="pillar-icon"><i class="ph-light ph-globe-hemisphere-west" aria-hidden="true"></i></div>
         <div class="pillar-title">Partenariats internationaux</div>
-        <div class="pillar-desc">Collaboration active avec les grandes agences spatiales mondiales et les principaux instituts de recherche européens, américains et asiatiques.</div>
+        <div class="pillar-desc">Collaboration avec les grandes agences spatiales et instituts de recherche européens, américains et asiatiques.</div>
       </div>
-      <div class="pillar">
-        <div class="pillar-icon">🎓</div>
-        <div class="pillar-title">Formation & valorisation</div>
-        <div class="pillar-desc">Accueil de doctorants, post-doctorants et ingénieurs en formation, et transfert de technologies vers les acteurs industriels du secteur.</div>
+      <div class="pillar reveal" style="--i:3">
+        <div class="pillar-icon"><i class="ph-light ph-graduation-cap" aria-hidden="true"></i></div>
+        <div class="pillar-title">Formation et valorisation</div>
+        <div class="pillar-desc">Accueil de doctorants et d'ingénieurs, et transfert de technologies vers l'industrie.</div>
       </div>
     </div>
 
@@ -840,40 +1038,42 @@ footer {
 </section>
 
 <!-- ===== À LA UNE ===== -->
-<section class="section une-section">
+<section class="section une-section" aria-labelledby="une-title">
   <div class="container">
-    <div class="section-eyebrow">Dernières actualités</div>
-    <h2 class="section-title">À la une</h2>
+    <div class="section-head">
+      <h2 class="section-title reveal" id="une-title">À la une</h2>
+      <a href="publications.html" class="text-link reveal">Toutes les publications <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
+    </div>
 
     <div class="une-grid">
 
-      <a class="card" href="publications-scientifiques.html">
-        <img src="Assets/accueil/alaune01.png" alt="Matériaux composites">
+      <a class="card card--lead reveal" style="--i:0" href="publications-scientifiques.html">
+        <div class="card-media"><img src="Assets/accueil/alaune01.png" alt="Matériaux composites" loading="lazy"></div>
         <div class="card-content">
-          <span class="card-tag">Innovation · Matériaux</span>
+          <span class="card-tag">Innovation, matériaux</span>
           <h3>La prouesse des matériaux composites</h3>
-          <p>Quand l'innovation des matériaux propulse la conquête spatiale. Les équipes de la DSMR publient leurs derniers résultats sur des composites à matrice céramique capables de résister à des températures de rentrée atmosphérique supérieures à 2 000 °C.</p>
-          <span class="card-link">Lire l'article →</span>
+          <p>Les équipes de la DSMR publient leurs résultats sur des composites à matrice céramique qui résistent à plus de 2 000 °C lors de la rentrée atmosphérique.</p>
+          <span class="card-link">Lire l'article <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span>
         </div>
       </a>
 
-      <a class="card" href="publications-scientifiques.html">
-        <img src="Assets/accueil/alaune02.png" alt="NK-125">
+      <a class="card reveal" style="--i:1" href="publications-scientifiques.html">
+        <div class="card-media"><img src="Assets/accueil/alaune02.png" alt="Moteur NK-125" loading="lazy"></div>
         <div class="card-content">
-          <span class="card-tag">Propulsion · PROMETHEUS</span>
-          <h3>NK-125 : Nouveau moteur ultra-performant</h3>
-          <p>Un concentré d'innovation pour une propulsion plus puissante, plus fiable et plus efficiente. Le NK-125 atteint une poussée spécifique record validée en chambre d'essais.</p>
-          <span class="card-link">Lire l'article →</span>
+          <span class="card-tag">Propulsion, PROMETHEUS</span>
+          <h3>NK-125 : nouveau moteur ultra-performant</h3>
+          <p>Une poussée spécifique record, validée en chambre d'essais.</p>
+          <span class="card-link">Lire l'article <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span>
         </div>
       </a>
 
-      <a class="card" href="publications-ifras.html">
-        <img src="Assets/accueil/alaune03.png" alt="PSS 2030">
+      <a class="card reveal" style="--i:2" href="publications-ifras.html">
+        <div class="card-media"><img src="Assets/accueil/alaune03.png" alt="Plan Stratégique Scientifique 2030" loading="lazy"></div>
         <div class="card-content">
-          <span class="card-tag">Stratégie · Institutionnel</span>
-          <h3>Publication du Plan Stratégique Scientifique IFRAS — PSS 2030</h3>
-          <p>Le PSS 2030 définit les grandes orientations de recherche à l'horizon 2030. Il complète le contrat d'objectifs et de performance et la feuille de route de l'IFRAS.</p>
-          <span class="card-link">Lire l'article →</span>
+          <span class="card-tag">Stratégie, institutionnel</span>
+          <h3>Plan Stratégique Scientifique PSS 2030</h3>
+          <p>Les grandes orientations de recherche de l'IFRAS à l'horizon 2030.</p>
+          <span class="card-link">Lire l'article <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span>
         </div>
       </a>
 
@@ -882,102 +1082,103 @@ footer {
 </section>
 
 <!-- ===== FIL D'ACTUALITÉ ===== -->
-<section class="actu-section">
-  <div class="actu-header">
-    <div class="section-eyebrow">En continu</div>
-    <h2 class="section-title" style="margin-bottom: 0;">Fil d'actualité</h2>
-  </div>
-
-  <div class="carousel-wrapper">
-    <div class="carousel">
-      <div class="carousel-track">
-
-        <div class="carousel-item">
-          <img src="Assets/accueil/actualite01.png" alt="Alliance internationale">
-          <div class="carousel-content">
-            <div class="carousel-date">14 février 2026</div>
-            <h3>Alliance internationale</h3>
-            <p>L'IFRAS signe un accord-cadre de coopération scientifique avec le JAXA japonais, ouvrant la voie à des échanges de chercheurs et à des programmes communs d'observation solaire.</p>
-          </div>
-        </div>
-
-        <div class="carousel-item">
-          <img src="Assets/accueil/actualite02.png" alt="IA embarquée">
-          <div class="carousel-content">
-            <div class="carousel-date">16 février 2026</div>
-            <h3>IA embarquée</h3>
-            <p>Le département DSTI valide un nouveau système de navigation autonome capable de reconstruire sa trajectoire en temps réel sans liaison sol, lors d'une simulation orbitale de 72 heures.</p>
-          </div>
-        </div>
-
-        <div class="carousel-item">
-          <img src="Assets/accueil/actualite03.png" alt="Station orbitale">
-          <div class="carousel-content">
-            <div class="carousel-date">19 février 2026</div>
-            <h3>Station orbitale</h3>
-            <p>Déploiement réussi de trois nouveaux modules expérimentaux sur la station orbitale partenaire. Les équipes IFRAS piloteront les expériences de biologie en microgravité prévues au T2 2026.</p>
-          </div>
-        </div>
-
-        <div class="carousel-item">
-          <img src="Assets/accueil/actualite04.png" alt="Simulation Mars">
-          <div class="carousel-content">
-            <div class="carousel-date">21 février 2026</div>
-            <h3>Simulation Mars</h3>
-            <p>ATLAS franchit une étape clé : reconstitution environnementale totale de la surface martienne atteinte en chambre pressurisée, incluant température, pression atmosphérique et flux UV.</p>
-          </div>
-        </div>
-
-        <div class="carousel-item">
-          <img src="Assets/accueil/actualite05.png" alt="Condensation">
-          <div class="carousel-content">
-            <div class="carousel-date">29 février 2026</div>
-            <h3>Échanges thermiques</h3>
-            <p>Publication dans Nature Physics des nouveaux modèles de calcul des échanges de condensation en microgravité, développés conjointement par le DPET et le DPM de l'IFRAS.</p>
-          </div>
-        </div>
-
-        <div class="carousel-item">
-          <img src="Assets/accueil/actualite06.png" alt="Challenge drone">
-          <div class="carousel-content">
-            <div class="carousel-date">13 mars 2026</div>
-            <h3>Challenge Drone IFRAS</h3>
-            <p>10 grandes écoles d'ingénieurs ont relevé le défi lancé par l'IFRAS : concevoir en 48 h un drone autonome capable d'atterrir sur surface non préparée. Résultats dévoilés lors de la finale à Toulouse.</p>
-          </div>
-        </div>
-
+<section class="section actu-section" aria-labelledby="actu-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title reveal" id="actu-title">Fil d'actualité</h2>
+      <div class="rail-controls reveal">
+        <button class="rail-btn" type="button" data-dir="-1" aria-label="Actualités précédentes"><i class="ph-light ph-arrow-left" aria-hidden="true"></i></button>
+        <button class="rail-btn" type="button" data-dir="1" aria-label="Actualités suivantes"><i class="ph-light ph-arrow-right" aria-hidden="true"></i></button>
       </div>
     </div>
 
-    <div class="carousel-controls">
-      <button class="carousel-btn prev">‹</button>
-      <button class="carousel-btn next">›</button>
+    <div class="rail reveal" id="rail" tabindex="0" role="region" aria-label="Fil d'actualité, faites défiler horizontalement">
+
+      <article class="rail-item">
+        <div class="media"><img src="Assets/accueil/actualite01.png" alt="Alliance internationale" loading="lazy"></div>
+        <div class="rail-content">
+          <time class="rail-date" datetime="2026-02-14">14 février 2026</time>
+          <h3>Alliance internationale</h3>
+          <p>Accord-cadre avec la JAXA : échanges de chercheurs et programmes communs d'observation solaire.</p>
+        </div>
+      </article>
+
+      <article class="rail-item">
+        <div class="media"><img src="Assets/accueil/actualite02.png" alt="IA embarquée" loading="lazy"></div>
+        <div class="rail-content">
+          <time class="rail-date" datetime="2026-02-16">16 février 2026</time>
+          <h3>IA embarquée</h3>
+          <p>La DSTI valide une navigation autonome sans liaison sol, testée sur 72 heures de simulation orbitale.</p>
+        </div>
+      </article>
+
+      <article class="rail-item">
+        <div class="media"><img src="Assets/accueil/actualite03.png" alt="Station orbitale" loading="lazy"></div>
+        <div class="rail-content">
+          <time class="rail-date" datetime="2026-02-19">19 février 2026</time>
+          <h3>Station orbitale</h3>
+          <p>Trois modules expérimentaux déployés. L'IFRAS pilotera les expériences de biologie en microgravité au T2 2026.</p>
+        </div>
+      </article>
+
+      <article class="rail-item">
+        <div class="media"><img src="Assets/accueil/actualite04.png" alt="Simulation Mars" loading="lazy"></div>
+        <div class="rail-content">
+          <time class="rail-date" datetime="2026-02-21">21 février 2026</time>
+          <h3>Simulation Mars</h3>
+          <p>ATLAS reconstitue entièrement l'environnement martien en chambre pressurisée : température, pression et flux UV.</p>
+        </div>
+      </article>
+
+      <article class="rail-item">
+        <div class="media"><img src="Assets/accueil/actualite05.png" alt="Condensation en microgravité" loading="lazy"></div>
+        <div class="rail-content">
+          <time class="rail-date" datetime="2026-02-28">28 février 2026</time>
+          <h3>Échanges thermiques</h3>
+          <p>Publication dans Nature Physics de nouveaux modèles de condensation en microgravité (DPET et DPM).</p>
+        </div>
+      </article>
+
+      <article class="rail-item">
+        <div class="media"><img src="Assets/accueil/actualite06.png" alt="Challenge drone" loading="lazy"></div>
+        <div class="rail-content">
+          <time class="rail-date" datetime="2026-03-13">13 mars 2026</time>
+          <h3>Challenge Drone IFRAS</h3>
+          <p>10 écoles d'ingénieurs, 48 h pour concevoir un drone autonome capable d'atterrir sur terrain non préparé.</p>
+        </div>
+      </article>
+
     </div>
+
+    <div class="rail-progress" aria-hidden="true"><span id="rail-progress"></span></div>
   </div>
 </section>
 
 <!-- ===== AGENDA ===== -->
-<section class="section agenda-section">
+<section class="section agenda-section" aria-labelledby="agenda-title">
   <div class="container">
-    <div class="section-eyebrow">Prochains rendez-vous</div>
-    <h2 class="section-title">Agenda</h2>
+    <div class="section-kicker reveal">Prochains rendez-vous</div>
+    <div class="section-head">
+      <h2 class="section-title reveal" id="agenda-title" style="--i:1">Agenda</h2>
+    </div>
 
     <div class="agenda-grid">
 
-      <a class="event event--featured" href="#">
+      <a class="event event--featured reveal" href="#">
         <div class="date-box">
           <span class="day">14</span>
           <span class="month">Mai</span>
         </div>
         <div class="event-info">
           <div class="event-type">Colloque international</div>
-          <h3>ISABS 2026 — International Symposium on Astrobiology & Space Biology</h3>
-          <p>Présentation des résultats ARTEMIS-9 et ORION-3 devant plus de 600 scientifiques internationaux. Ouvert aux chercheurs et doctorants accrédités. Retransmission publique disponible.</p>
-          <div class="event-location">📍 Palais des Congrès, Paris · Organisation IFRAS & CNES</div>
+          <h3>ISABS 2026 : International Symposium on Astrobiology &amp; Space Biology</h3>
+          <p>Résultats ARTEMIS-9 et ORION-3 présentés devant plus de 600 scientifiques. Retransmission publique disponible.</p>
+          <div class="event-location"><i class="ph-light ph-map-pin" aria-hidden="true"></i> Palais des Congrès, Paris. Organisation IFRAS et CNES</div>
         </div>
+        <span class="btn btn-primary event-cta">S'inscrire <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span>
       </a>
 
-      <a class="event" href="#">
+      <a class="event reveal" style="--i:0" href="#">
         <div class="date-box">
           <span class="day">12</span>
           <span class="month">Mar</span>
@@ -985,34 +1186,34 @@ footer {
         <div class="event-info">
           <div class="event-type">Conférence scientifique</div>
           <h3>Conférence internationale d'astrophysique</h3>
-          <p>Présentation des résultats ORION-3 et échanges avec les partenaires européens sur les biosignatures exoplanétaires détectées lors de la campagne d'observation 2025.</p>
-          <div class="event-location">📍 Campus IFRAS, Saclay</div>
+          <p>Résultats ORION-3 et échanges avec les partenaires européens sur les biosignatures exoplanétaires.</p>
+          <div class="event-location"><i class="ph-light ph-map-pin" aria-hidden="true"></i> Campus IFRAS, Saclay</div>
         </div>
       </a>
 
-      <a class="event" href="#">
+      <a class="event reveal" style="--i:1" href="#">
         <div class="date-box">
           <span class="day">28</span>
           <span class="month">Avr</span>
         </div>
         <div class="event-info">
-          <div class="event-type">Expérimentation · ATLAS</div>
-          <h3>Simulation habitabilité martienne — Phase terrain</h3>
-          <p>Phase expérimentale grandeur nature du programme ATLAS sur le site analogique du Désert d'Atacama. 12 chercheurs engagés pour 21 jours d'isolement total.</p>
-          <div class="event-location">📍 Désert d'Atacama, Chili</div>
+          <div class="event-type">Expérimentation ATLAS</div>
+          <h3>Simulation d'habitabilité martienne, phase terrain</h3>
+          <p>12 chercheurs, 21 jours d'isolement total sur le site analogique d'Atacama.</p>
+          <div class="event-location"><i class="ph-light ph-map-pin" aria-hidden="true"></i> Désert d'Atacama, Chili</div>
         </div>
       </a>
 
-      <a class="event" href="#">
+      <a class="event reveal" style="--i:2" href="#">
         <div class="date-box">
           <span class="day">15</span>
           <span class="month">Juin</span>
         </div>
         <div class="event-info">
           <div class="event-type">Sommet stratégique</div>
-          <h3>Sommet Spatial International — Paris Aerospace Week</h3>
-          <p>Rencontres stratégiques avec agences et industriels du secteur. L'IFRAS présentera les grandes orientations du PSS 2030 et les opportunités de co-investissement.</p>
-          <div class="event-location">📍 Le Bourget, Paris</div>
+          <h3>Sommet Spatial International, Paris Aerospace Week</h3>
+          <p>Présentation du PSS 2030 et des opportunités de co-investissement aux agences et industriels.</p>
+          <div class="event-location"><i class="ph-light ph-map-pin" aria-hidden="true"></i> Le Bourget, Paris</div>
         </div>
       </a>
 
@@ -1022,83 +1223,151 @@ footer {
 
 </main>
 
-<footer style="display:flex; justify-content:space-between; align-items:center; max-width:1300px; margin:auto;">
-  <span>© IFRAS — Institut Français de Recherche Aéronautique et Spatiale</span>
-  <a href="mention-legale.html" style="color:#6b7280; text-decoration:none;">Mentions légales</a>
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© IFRAS, Institut Français de Recherche Aéronautique et Spatiale</span>
+    <a href="mention-legale.html">Mentions légales</a>
+  </div>
 </footer>
 
 <script>
-const track = document.querySelector('.carousel-track');
-const items = Array.from(document.querySelectorAll('.carousel-item'));
-const prevBtn = document.querySelector('.prev');
-const nextBtn = document.querySelector('.next');
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-const visibleCount = 4;
-let index = visibleCount;
-let isTransitioning = false;
-let autoTimer;
+  /* ---------- Header : fond qui apparaît après le hero (sans écouteur scroll) ---------- */
+  const header = document.getElementById('header');
+  const hero = document.querySelector('.hero');
+  new IntersectionObserver(([entry]) => {
+    header.classList.toggle('is-scrolled', !entry.isIntersecting);
+  }, { rootMargin: `-${parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'))}px 0px 0px 0px`, threshold: 0.02 })
+  .observe(hero);
 
-function getItemWidth() {
-  return items[0].getBoundingClientRect().width + 20;
-}
+  /* ---------- Menu mobile ---------- */
+  const toggle = document.querySelector('.menu-toggle');
+  const panel = document.getElementById('mobile-panel');
+  const icon = toggle.querySelector('i');
+  const setMenu = (open) => {
+    panel.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    icon.className = open ? 'ph-light ph-x' : 'ph-light ph-list';
+    header.classList.toggle('is-scrolled', open || !isHeroVisible());
+  };
+  const isHeroVisible = () => hero.getBoundingClientRect().bottom > 80;
+  toggle.addEventListener('click', () => setMenu(!panel.classList.contains('is-open')));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+  document.addEventListener('click', (e) => {
+    if (panel.classList.contains('is-open') && !panel.contains(e.target) && !toggle.contains(e.target)) setMenu(false);
+  });
 
-// Clones
-const headClones = items.slice(0, visibleCount).map(el => el.cloneNode(true));
-const tailClones = items.slice(-visibleCount).map(el => el.cloneNode(true));
-tailClones.forEach(clone => track.insertBefore(clone, track.firstChild));
-headClones.forEach(clone => track.appendChild(clone));
+  /* ---------- Apparition au défilement ---------- */
+  const revealIO = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      revealIO.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach((el) => revealIO.observe(el));
 
-function setPos(animated) {
-  track.style.transition = animated ? 'transform 0.45s cubic-bezier(.4,0,.2,1)' : 'none';
-  track.style.transform = `translateX(-${index * getItemWidth()}px)`;
-}
-
-setPos(false);
-
-function resetIfNeeded() {
-  if (index >= items.length + visibleCount) {
-    index = visibleCount;
-    setPos(false);
+  /* ---------- Compteurs (une seule fois, désactivés si mouvement réduit) ---------- */
+  const fmt = new Intl.NumberFormat('fr-FR');
+  const animateCount = (el) => {
+    const target = Number(el.dataset.count);
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
+    const duration = 1100;
+    const start = performance.now();
+    const easeOut = (t) => 1 - Math.pow(1 - t, 4);
+    const tick = (now) => {
+      const t = Math.min((now - start) / duration, 1);
+      el.textContent = prefix + fmt.format(Math.round(target * easeOut(t))) + suffix;
+      if (t < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+  if (!reduceMotion) {
+    const countIO = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        animateCount(entry.target);
+        countIO.unobserve(entry.target);
+      });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('[data-count]').forEach((el) => countIO.observe(el));
   }
-  if (index < visibleCount) {
-    index = items.length + visibleCount - 1;
-    setPos(false);
-  }
-  isTransitioning = false;
-}
 
-function goNext() {
-  if (isTransitioning) return;
-  isTransitioning = true;
-  index++;
-  setPos(true);
-  setTimeout(resetIfNeeded, 500);
-}
+  /* ---------- Fil d'actualité : défilement natif + boutons + glisser à la souris ---------- */
+  const rail = document.getElementById('rail');
+  const progress = document.getElementById('rail-progress');
+  const [prevBtn, nextBtn] = document.querySelectorAll('.rail-btn');
 
-function goPrev() {
-  if (isTransitioning) return;
-  isTransitioning = true;
-  index--;
-  setPos(true);
-  setTimeout(resetIfNeeded, 500);
-}
+  const step = () => {
+    const item = rail.querySelector('.rail-item');
+    return item.getBoundingClientRect().width + parseFloat(getComputedStyle(rail).columnGap || 20);
+  };
 
-function startAuto() {
-  autoTimer = setInterval(goNext, 3000);
-}
+  const update = () => {
+    const max = rail.scrollWidth - rail.clientWidth;
+    const ratio = max > 0 ? rail.scrollLeft / max : 1;
+    const visible = rail.clientWidth / rail.scrollWidth;
+    progress.style.transform = `scaleX(${Math.min(1, visible + ratio * (1 - visible))})`;
+    prevBtn.disabled = rail.scrollLeft <= 2;
+    nextBtn.disabled = rail.scrollLeft >= max - 2;
+  };
 
-function stopAuto() {
-  clearInterval(autoTimer);
-}
+  [prevBtn, nextBtn].forEach((btn) => btn.addEventListener('click', () => {
+    rail.scrollBy({ left: Number(btn.dataset.dir) * step(), behavior: reduceMotion ? 'auto' : 'smooth' });
+  }));
 
-// Pause on hover
-track.addEventListener('mouseenter', stopAuto);
-track.addEventListener('mouseleave', startAuto);
+  rail.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') { e.preventDefault(); nextBtn.click(); }
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); prevBtn.click(); }
+  });
 
-nextBtn.addEventListener('click', () => { stopAuto(); goNext(); startAuto(); });
-prevBtn.addEventListener('click', () => { stopAuto(); goPrev(); startAuto(); });
+  rail.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
+  window.addEventListener('resize', update);
+  update();
 
-startAuto();
+  /* Glisser à la souris avec inertie (le tactile utilise le défilement natif) */
+  let isDown = false, startX = 0, startLeft = 0, lastX = 0, lastT = 0, velocity = 0, moved = false;
+
+  rail.addEventListener('pointerdown', (e) => {
+    if (e.pointerType !== 'mouse' || e.button !== 0) return;
+    isDown = true; moved = false;
+    startX = lastX = e.clientX; startLeft = rail.scrollLeft; lastT = performance.now(); velocity = 0;
+  });
+
+  rail.addEventListener('pointermove', (e) => {
+    if (!isDown) return;
+    const dx = e.clientX - startX;
+    if (!moved && Math.abs(dx) > 4) {
+      moved = true;
+      rail.classList.add('is-dragging');
+      rail.setPointerCapture(e.pointerId);
+    }
+    if (!moved) return;
+    const now = performance.now();
+    velocity = (e.clientX - lastX) / Math.max(1, now - lastT);
+    lastX = e.clientX; lastT = now;
+    rail.scrollLeft = startLeft - dx;
+  });
+
+  const endDrag = () => {
+    if (!isDown) return;
+    isDown = false;
+    if (!moved) return;
+    rail.classList.remove('is-dragging');
+    /* Un geste rapide suffit à passer à la carte suivante */
+    const s = step();
+    let target = Math.round(rail.scrollLeft / s);
+    if (Math.abs(velocity) > 0.11) target = velocity < 0 ? Math.ceil(rail.scrollLeft / s) : Math.floor(rail.scrollLeft / s);
+    rail.scrollTo({ left: target * s, behavior: reduceMotion ? 'auto' : 'smooth' });
+  };
+  rail.addEventListener('pointerup', endDrag);
+  rail.addEventListener('pointercancel', endDrag);
+  rail.addEventListener('click', (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+})();
 </script>
 
 </body>
