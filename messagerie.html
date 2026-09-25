@@ -2,848 +2,754 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
-<title>IFRAS — Messagerie interne</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<title>Messagerie | Espace IFRAS</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#050b1e">
+<link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
 
 <style>
-/* ============================================================
-   THEME SYSTEM
-   H  = hue (0-360)
-   S  = saturation %
-   L  = lightness offset base
-   ============================================================ */
+/* =========================================================
+   THÈME : tout découle de --hue et --sat (réglables par l'utilisateur)
+   ========================================================= */
 :root {
   --hue: 228;
   --sat: 65%;
 
-  /* dérivées automatiques */
   --bg-dark:    hsl(var(--hue), var(--sat), 4%);
   --bg-main:    hsl(var(--hue), var(--sat), 7%);
   --bg-light:   hsl(var(--hue), var(--sat), 10%);
   --bg-hover:   hsl(var(--hue), var(--sat), 13%);
-  --bg-card:    hsl(var(--hue), var(--sat), 8%);
   --border:     hsl(var(--hue), calc(var(--sat) - 10%), 20%);
   --border-sub: hsl(var(--hue), calc(var(--sat) - 10%), 14%);
   --accent:     hsl(var(--hue), 70%, 60%);
   --accent-dim: hsl(var(--hue), 60%, 45%);
-  --accent-glow:hsl(var(--hue), 70%, 60%);
   --text-main:  hsl(var(--hue), 20%, 88%);
-  --text-soft:  hsl(var(--hue), 20%, 62%);
-  --text-muted: hsl(var(--hue), 15%, 40%);
+  --text-soft:  hsl(var(--hue), 20%, 66%);
+  --text-muted: hsl(var(--hue), 15%, 48%);
   --unread-dot: hsl(var(--hue), 80%, 65%);
+  --danger: #fb7185;
+  --ok: #34d399;
 
-  --sidebar-w:  220px;
-  --list-w:     320px;
-  --header-h:   84px;
-  --subnav-h:   48px;
-  --footer-h:   26px;   /* bandeau bas */
-  --right-gap:  14px;   /* marge droite */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --header-h: 68px;
+  --subnav-h: 48px;
+  --status-h: 30px;
+  --sidebar-w: 232px;
+  --list-w: 360px;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; }
 body {
-  font-family: "DM Sans", sans-serif;
+  margin: 0;
+  font-family: "DM Sans", "Segoe UI", system-ui, sans-serif;
   background: var(--bg-dark);
   color: var(--text-main);
-  height: 100vh;
   overflow: hidden;
+  -webkit-font-smoothing: antialiased;
 }
-
-/* ===== SCROLLBAR ===== */
-::-webkit-scrollbar { width: 4px; }
+button { font: inherit; color: inherit; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+kbd {
+  display: inline-grid; place-items: center;
+  min-width: 20px; height: 20px; padding: 0 5px;
+  font: 500 11px/1 "DM Sans", sans-serif; color: var(--text-soft);
+  border: 1px solid var(--border); border-radius: 5px;
+  background: var(--bg-light);
+}
 
-/* ===== HEADER ===== */
-header {
-  position: fixed; top: 0; width: 100%; z-index: 1000;
+/* =========================================================
+   HEADER (même structure que le site public)
+   ========================================================= */
+.site-header {
+  position: fixed; inset: 0 0 auto 0; z-index: 2000;
   height: var(--header-h);
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  padding: 0 24px;
   background: hsl(var(--hue), var(--sat), 5%);
-  backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
-  display: flex; align-items: center;
 }
-
-.header-inner {
-  width: 100%; padding: 0 28px;
-  display: flex; align-items: center; justify-content: space-between;
-}
-
 .header-left { display: flex; align-items: center; gap: 40px; }
-.logo-link img { height: 54px; }
-
-.main-nav { list-style: none; display: flex; gap: 28px; }
+.logo-link img { height: 44px; width: auto; display: block; }
+.main-nav { list-style: none; display: flex; gap: 4px; margin: 0; padding: 0; }
 .main-nav a {
-  text-decoration: none; color: var(--text-soft);
-  font-size: 13.5px; letter-spacing: .05em; transition: color .2s;
+  display: block; padding: 8px 12px;
+  color: var(--text-soft); text-decoration: none;
+  font-size: 14px; letter-spacing: .02em; border-radius: 6px;
+  transition: color 160ms ease;
 }
-.main-nav a:hover { color: var(--text-main); }
+@media (hover: hover) and (pointer: fine) { .main-nav a:hover { color: var(--text-main); } }
 
 .header-right { display: flex; align-items: center; gap: 10px; }
+.secure {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 12.5px; color: var(--text-soft);
+  padding: 6px 11px; border-radius: 999px;
+  border: 1px solid var(--border-sub);
+}
+.secure i { color: var(--ok); font-size: 15px; }
 
-/* User chip */
 .user-chip {
   display: flex; align-items: center; gap: 9px;
-  padding: 5px 12px 5px 6px;
+  padding: 4px 12px 4px 4px;
   background: var(--bg-light); border: 1px solid var(--border);
-  border-radius: 20px; font-size: 12.5px; color: var(--text-soft);
+  border-radius: 999px; font-size: 13px; color: var(--text-main);
+}
+.avatar {
+  --ah: var(--hue);
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  display: grid; place-items: center;
+  background: linear-gradient(135deg, hsl(var(--ah), 55%, 42%), hsl(var(--ah), 70%, 62%));
+  font-family: "Syne", sans-serif; font-weight: 700; font-size: 11px; color: #fff;
+  letter-spacing: .02em;
 }
 
-.user-avatar {
-  width: 26px; height: 26px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent-dim), var(--accent));
-  display: flex; align-items: center; justify-content: center;
-  font-family: "Syne", sans-serif; font-weight: 700; font-size: 10px; color: white;
-}
-
-/* Icon buttons */
 .icon-btn {
-  width: 34px; height: 34px; border-radius: 8px;
+  width: 38px; height: 38px; border-radius: 10px;
+  display: grid; place-items: center;
   border: 1px solid var(--border); background: var(--bg-light);
-  color: var(--text-soft); cursor: pointer; font-size: 15px;
-  display: flex; align-items: center; justify-content: center;
-  transition: background .15s, color .15s, border-color .15s;
+  color: var(--text-soft); font-size: 18px; cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease, transform 160ms var(--ease-out);
 }
-.icon-btn:hover { background: var(--bg-hover); color: var(--text-main); border-color: var(--accent); }
+.icon-btn:active { transform: scale(.95); }
+.icon-btn[aria-expanded="true"] { color: var(--text-main); border-color: var(--accent); }
+.icon-btn[aria-expanded="true"] i { transform: rotate(60deg); }
+.icon-btn i { transition: transform 300ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) { .icon-btn:hover { color: var(--text-main); border-color: var(--accent); } }
 
-/* Settings dropdown */
-.settings-wrapper { position: relative; }
-
+/* ----- Panneau de réglages ----- */
+.settings { position: relative; }
 .settings-panel {
-  display: none; position: absolute; right: 0; top: calc(100% + 8px);
-  width: 260px; background: var(--bg-light); border: 1px solid var(--border);
-  border-radius: 12px; padding: 16px; z-index: 2000;
-  box-shadow: 0 20px 60px rgba(0,0,0,.5);
-  animation: panelIn .15s ease;
+  position: absolute; right: 0; top: calc(100% + 10px); z-index: 2100;
+  width: 290px; padding: 16px;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.55);
+  transform-origin: top right;
+  opacity: 0; transform: scale(.96) translateY(-4px);
+  visibility: hidden; pointer-events: none;
+  transition: opacity 160ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s linear 200ms;
 }
-
-@keyframes panelIn {
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: translateY(0); }
+.settings-panel.is-open {
+  opacity: 1; transform: none; visibility: visible; pointer-events: auto;
+  transition: opacity 160ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s;
 }
-
-.settings-panel.active { display: block; }
-
 .panel-title {
-  font-family: "Syne", sans-serif; font-size: 11px; font-weight: 700;
-  letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted);
-  margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border-sub);
+  font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--text-muted); font-weight: 500;
+  margin: 0 0 12px;
 }
-
-.theme-section { margin-bottom: 16px; }
-
-.theme-label {
-  font-size: 11px; color: var(--text-soft); margin-bottom: 8px;
-  font-weight: 400; letter-spacing: .04em;
+.theme-label { font-size: 12.5px; color: var(--text-soft); margin: 0 0 8px; }
+.swatches { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+.swatch {
+  width: 24px; height: 24px; border-radius: 7px; padding: 0;
+  border: 2px solid transparent; cursor: pointer;
+  transition: transform 160ms var(--ease-out), border-color 160ms ease;
 }
+.swatch:active { transform: scale(.9); }
+.swatch.active { border-color: #fff; box-shadow: 0 0 0 2px var(--bg-light); }
+@media (hover: hover) and (pointer: fine) { .swatch:hover { transform: scale(1.12); } }
 
-/* Hue picker */
 .hue-wrap {
-  position: relative; height: 20px; border-radius: 10px; overflow: hidden; cursor: pointer;
-  background: linear-gradient(90deg,
-    hsl(0,65%,55%), hsl(30,65%,55%), hsl(60,65%,55%), hsl(90,65%,55%),
-    hsl(120,65%,55%), hsl(150,65%,55%), hsl(180,65%,55%), hsl(210,65%,55%),
-    hsl(240,65%,55%), hsl(270,65%,55%), hsl(300,65%,55%), hsl(330,65%,55%), hsl(360,65%,55%)
-  );
-  margin-bottom: 10px;
+  position: relative; height: 18px; border-radius: 9px; cursor: pointer; margin-bottom: 12px;
+  touch-action: none;
+  background: linear-gradient(90deg, hsl(0,65%,55%), hsl(60,65%,55%), hsl(120,65%,55%), hsl(180,65%,55%), hsl(240,65%,55%), hsl(300,65%,55%), hsl(360,65%,55%));
 }
-
 .hue-thumb {
-  position: absolute; top: 50%; transform: translate(-50%, -50%);
+  position: absolute; top: 50%; left: 0;
   width: 18px; height: 18px; border-radius: 50%;
-  border: 2px solid white; box-shadow: 0 2px 6px rgba(0,0,0,.4);
-  pointer-events: none; transition: left .1s;
+  transform: translate(-50%, -50%);
+  border: 2px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,.45);
+  background: hsl(var(--hue), 65%, 55%);
+  pointer-events: none;
 }
-
-/* Sat slider */
-.sat-wrap { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
-.sat-label { font-size: 11px; color: var(--text-muted); width: 24px; }
-
+.sat-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.sat-label { font-size: 12px; color: var(--text-muted); width: 26px; }
 input[type=range].sat-range {
-  flex: 1; height: 4px; border-radius: 4px; outline: none; border: none; cursor: pointer;
+  flex: 1; height: 4px; border-radius: 4px; cursor: pointer;
   -webkit-appearance: none; appearance: none;
   background: linear-gradient(90deg, hsl(var(--hue),0%,55%), hsl(var(--hue),100%,55%));
 }
 input[type=range].sat-range::-webkit-slider-thumb {
-  -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%;
-  background: var(--accent); border: 2px solid white; box-shadow: 0 1px 4px rgba(0,0,0,.3);
-  cursor: pointer;
+  -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--accent); border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.35);
 }
-
-/* Preset swatches */
-.swatches { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 14px; }
-
-.swatch {
-  width: 24px; height: 24px; border-radius: 6px; cursor: pointer;
-  border: 2px solid transparent; transition: transform .15s, border-color .15s;
+input[type=range].sat-range::-moz-range-thumb {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--accent); border: 2px solid #fff;
 }
-.swatch:hover { transform: scale(1.15); }
-.swatch.active { border-color: white; }
+.hex-wrap { display: flex; align-items: center; gap: 8px; }
+.hex-preview { width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0; border: 1px solid var(--border); }
+.hex-input {
+  flex: 1 1 auto; min-width: 0; height: 30px;
+  background: var(--bg-dark); border: 1px solid var(--border-sub);
+  border-radius: 8px; padding: 0 10px; color: var(--text-main);
+  font-size: 13px; letter-spacing: .06em; outline: none;
+  transition: border-color 160ms ease;
+}
+.hex-input:focus { border-color: var(--accent); }
+.hex-input.invalid { border-color: rgba(251,113,133,.6); color: #fca5a5; animation: shake 300ms var(--ease-out); }
+@keyframes shake { 25% { transform: translateX(-3px); } 75% { transform: translateX(3px); } }
+.hex-apply {
+  height: 30px; padding: 0 12px; border-radius: 8px; flex-shrink: 0;
+  border: 1px solid var(--border); background: var(--bg-hover);
+  color: var(--text-soft); font-size: 12.5px; cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out);
+}
+.hex-apply:active { transform: scale(.96); }
+@media (hover: hover) and (pointer: fine) { .hex-apply:hover { background: var(--accent); border-color: var(--accent); color: #fff; } }
 
-/* Panel divider */
-.panel-divider { height: 1px; background: var(--border-sub); margin: 14px 0; }
-
-/* Panel items */
+.panel-divider { height: 1px; background: var(--border-sub); margin: 16px 0; }
 .panel-item {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 8px 10px; border-radius: 7px; font-size: 13px; color: var(--text-soft);
-  cursor: pointer; transition: background .15s, color .15s;
-  margin-bottom: 2px;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 8px 8px; margin: 0 -8px; border-radius: 8px;
+  font-size: 13.5px; color: var(--text-soft); cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease;
 }
-.panel-item:hover { background: var(--bg-hover); color: var(--text-main); }
-.panel-item-label { display: flex; align-items: center; gap: 8px; }
-.panel-item-icon { font-size: 14px; opacity: .65; }
-
-/* Toggle switch */
-.toggle {
-  position: relative; width: 32px; height: 18px;
-}
-.toggle input { opacity: 0; width: 0; height: 0; }
-.toggle-track {
-  position: absolute; inset: 0; border-radius: 9px;
-  background: var(--border); transition: background .2s; cursor: pointer;
-}
-.toggle input:checked + .toggle-track { background: var(--accent); }
+.panel-item i { font-size: 16px; margin-right: 8px; vertical-align: -3px; }
+@media (hover: hover) and (pointer: fine) { .panel-item:hover { background: var(--bg-hover); color: var(--text-main); } }
+.toggle { position: relative; width: 34px; height: 20px; flex-shrink: 0; }
+.toggle input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.toggle-track { position: absolute; inset: 0; border-radius: 10px; background: var(--border); transition: background-color 200ms ease; pointer-events: none; }
 .toggle-thumb {
-  position: absolute; top: 3px; left: 3px;
-  width: 12px; height: 12px; border-radius: 50%;
-  background: white; transition: left .2s; pointer-events: none;
+  position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%;
+  background: #fff; pointer-events: none;
+  transition: transform 220ms var(--ease-out);
 }
-.toggle input:checked ~ .toggle-thumb { left: 17px; }
+.toggle input:checked ~ .toggle-track { background: var(--accent); }
+.toggle input:checked ~ .toggle-thumb { transform: translateX(14px); }
+.toggle input:focus-visible ~ .toggle-track { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-.logout-btn {
-  padding: 7px 14px; border-radius: 7px;
+.logout {
+  width: 100%; height: 38px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
   border: 1px solid var(--border); background: transparent;
-  color: var(--text-soft); cursor: pointer; font-size: 12.5px;
-  font-family: "DM Sans", sans-serif;
-  transition: background .15s, color .15s, border-color .15s;
-  display: flex; align-items: center; gap: 6px;
+  color: var(--text-soft); font-size: 13.5px; cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
 }
-.logout-btn:hover { background: rgba(251,113,133,.1); color: #fb7185; border-color: rgba(251,113,133,.3); }
+.logout:active { transform: scale(.98); }
+@media (hover: hover) and (pointer: fine) {
+  .logout:hover { background: rgba(251,113,133,.1); color: var(--danger); border-color: rgba(251,113,133,.35); }
+}
 
-/* ===== SOUS-BANDEAU ===== */
-.sub-nav {
-  position: fixed; top: var(--header-h); width: 100%; z-index: 900;
+/* =========================================================
+   SOUS-BANDEAU DE L'ESPACE PRIVÉ
+   ========================================================= */
+.subnav {
+  position: fixed; top: var(--header-h); left: 0; right: 0; z-index: 1500;
   height: var(--subnav-h);
   background: hsl(var(--hue), var(--sat), 6%);
   border-bottom: 1px solid var(--border-sub);
-  display: flex; align-items: center;
 }
-
-.sub-nav-inner {
-  padding: 0 28px; display: flex; gap: 4px;
+.subnav-list {
+  height: 100%; margin: 0; padding: 0 16px; list-style: none;
+  display: flex; align-items: stretch; gap: 2px;
+  overflow-x: auto; scrollbar-width: none;
 }
-
+.subnav-list::-webkit-scrollbar { display: none; }
+.subnav-list li { display: flex; }
 .sub-tab {
-  padding: 6px 16px; border-radius: 7px; font-size: 13px;
-  color: var(--text-soft); text-decoration: none; letter-spacing: .04em;
-  display: flex; align-items: center; gap: 7px;
-  transition: background .15s, color .15s;
   position: relative;
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 14px;
+  color: var(--text-soft); text-decoration: none;
+  font-size: 14px; white-space: nowrap;
+  transition: color 160ms ease;
 }
-.sub-tab:hover { background: var(--bg-hover); color: var(--text-main); }
-.sub-tab.active { background: var(--bg-light); color: var(--text-main); font-weight: 500; }
-.sub-tab.active::after {
-  content: ''; position: absolute; bottom: -1px; left: 16px; right: 16px;
-  height: 2px; background: var(--accent); border-radius: 2px 2px 0 0;
+.sub-tab i { font-size: 17px; }
+.sub-tab::after {
+  content: ""; position: absolute; left: 14px; right: 14px; bottom: -1px; height: 2px;
+  background: var(--accent); border-radius: 2px;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 220ms var(--ease-out);
 }
-
-.tab-icon { font-size: 13px; opacity: .7; }
-
+.sub-tab[aria-current="page"] { color: var(--text-main); font-weight: 500; }
+.sub-tab[aria-current="page"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) { .sub-tab:hover { color: var(--text-main); } }
 .tab-badge {
-  background: var(--accent); color: white;
-  font-size: 10px; font-weight: 700; min-width: 16px; height: 16px;
-  border-radius: 8px; padding: 0 4px;
-  display: flex; align-items: center; justify-content: center;
+  min-width: 18px; height: 18px; padding: 0 5px;
+  display: inline-grid; place-items: center;
+  border-radius: 999px; background: var(--accent); color: #fff;
+  font-size: 11px; font-weight: 500; font-variant-numeric: tabular-nums;
 }
+.tab-badge[hidden] { display: none; }
 
-/* ===== LAYOUT PRINCIPAL ===== */
-.app-layout {
+/* =========================================================
+   APPLICATION : dossiers | liste | lecture
+   ========================================================= */
+.app {
   position: fixed;
   top: calc(var(--header-h) + var(--subnav-h));
-  left: 0;
-  right: var(--right-gap);          /* marge droite */
-  bottom: var(--footer-h);          /* laisse la place au bandeau bas */
-  display: flex;
-  border-right: 1px solid var(--border-sub);
-  border-bottom: 1px solid var(--border-sub);
-  border-bottom-right-radius: 10px;
+  left: 0; right: 0; bottom: var(--status-h);
+  display: grid;
+  grid-template-columns: var(--sidebar-w) var(--list-w) 1fr;
   overflow: hidden;
 }
 
-/* ===== BANDEAU BAS ===== */
-.app-footer {
-  position: fixed; left: 0; right: 0; bottom: 0;
-  height: var(--footer-h);
-  background: var(--bg-dark);
-  z-index: 800;
-}
-
-/* ===== SIDEBAR ===== */
+/* ----- Dossiers ----- */
 .sidebar {
-  width: var(--sidebar-w);
+  display: flex; flex-direction: column; gap: 18px;
+  padding: 16px 12px;
   background: var(--bg-dark);
   border-right: 1px solid var(--border-sub);
-  display: flex; flex-direction: column;
-  padding: 16px 12px;
-  flex-shrink: 0;
+  overflow-y: auto;
 }
-
 .compose-btn {
-  width: 100%; padding: 10px; margin-bottom: 20px; border-radius: 8px;
-  border: none; cursor: pointer; font-family: "DM Sans", sans-serif;
-  font-size: 13px; font-weight: 500;
-  background: var(--accent); color: white;
-  display: flex; align-items: center; justify-content: center; gap: 7px;
-  transition: opacity .15s, transform .15s;
+  height: 42px; border: 0; border-radius: 10px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  background: var(--accent); color: #fff; font-size: 14px; font-weight: 500;
+  box-shadow: 0 8px 24px -8px var(--accent);
+  transition: transform 160ms var(--ease-out), filter 160ms ease;
 }
-.compose-btn:hover { opacity: .88; transform: translateY(-1px); }
+.compose-btn i { font-size: 17px; }
+.compose-btn:active { transform: scale(.97); }
+@media (hover: hover) and (pointer: fine) { .compose-btn:hover { filter: brightness(1.08); } }
 
-.sidebar-section { margin-bottom: 20px; }
-
-.sidebar-section-label {
-  font-size: 10px; letter-spacing: .15em; text-transform: uppercase;
-  color: var(--text-muted); font-weight: 500; padding: 0 8px; margin-bottom: 6px;
-}
-
-.folder-item {
+.folder-label { font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-muted); font-weight: 500; margin: 0 0 6px 10px; }
+.folders { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; position: relative; }
+.folder {
+  position: relative; z-index: 1;
+  width: 100%;
   display: flex; align-items: center; gap: 10px;
-  padding: 8px 10px; border-radius: 7px; cursor: pointer;
-  font-size: 13px; color: var(--text-soft);
-  transition: background .15s, color .15s;
-  position: relative;
+  padding: 9px 10px; border: 0; border-radius: 8px;
+  background: transparent; color: var(--text-soft);
+  font-size: 14px; text-align: left; cursor: pointer;
+  transition: color 160ms ease, background-color 160ms ease;
 }
-.folder-item:hover { background: var(--bg-hover); color: var(--text-main); }
-.folder-item.active { background: var(--bg-light); color: var(--text-main); font-weight: 500; }
-
-.folder-icon { font-size: 14px; width: 20px; text-align: center; flex-shrink: 0; }
+.folder i { font-size: 18px; width: 20px; text-align: center; }
+.folder[aria-current="true"] { color: var(--text-main); background: var(--bg-light); font-weight: 500; }
+.folder[aria-current="true"] i { color: var(--accent); }
+@media (hover: hover) and (pointer: fine) { .folder:hover { color: var(--text-main); background: var(--bg-hover); } }
 .folder-count {
-  margin-left: auto; font-size: 11px; color: var(--text-muted);
-  background: var(--bg-hover); padding: 1px 7px; border-radius: 10px;
+  margin-left: auto;
+  min-width: 22px; padding: 1px 7px; border-radius: 999px;
+  font-size: 12px; text-align: center; font-variant-numeric: tabular-nums;
+  color: var(--text-muted); background: var(--bg-hover);
 }
-.folder-count.has-new { background: var(--accent); color: white; font-weight: 600; }
+.folder-count:empty { display: none; }
+.folder-count.has-new { color: #fff; background: var(--accent); font-weight: 500; }
 
-.sidebar-divider { height: 1px; background: var(--border-sub); margin: 8px 2px 16px; }
+.shortcuts { margin-top: auto; padding: 12px 10px 4px; border-top: 1px solid var(--border-sub); font-size: 12.5px; color: var(--text-muted); display: grid; gap: 8px; }
+.shortcuts div { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 
-/* ===== LISTE MESSAGES ===== */
-.msg-list-pane {
-  width: var(--list-w);
+/* ----- Liste ----- */
+.list-pane {
+  display: flex; flex-direction: column; min-height: 0;
   background: var(--bg-main);
   border-right: 1px solid var(--border-sub);
-  display: flex; flex-direction: column;
-  flex-shrink: 0;
 }
-
-.msg-list-header {
-  padding: 14px 16px 10px;
-  border-bottom: 1px solid var(--border-sub);
-  display: flex; align-items: center; justify-content: space-between;
-  flex-shrink: 0;
+.list-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 16px 16px 10px;
 }
+.list-title { margin: 0; font-family: "Syne", sans-serif; font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
+.list-count { font-size: 13px; color: var(--text-muted); margin-left: 8px; font-weight: 400; font-family: "DM Sans", sans-serif; letter-spacing: 0; }
+.refresh { width: 32px; height: 32px; font-size: 16px; border-radius: 8px; }
+.refresh.is-loading i { animation: spin 900ms linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
 
-.msg-list-title {
-  font-family: "Syne", sans-serif; font-size: 14px; font-weight: 700;
-  color: var(--text-main);
+.search { position: relative; margin: 0 16px 10px; }
+.search i { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 16px; pointer-events: none; }
+.search input {
+  width: 100%; height: 38px; padding: 0 36px 0 34px;
+  border-radius: 10px; border: 1px solid var(--border-sub);
+  background: var(--bg-light); color: var(--text-main);
+  font-size: 14px; outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
 }
+.search input::placeholder { color: var(--text-muted); }
+.search input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent); }
+.search input::-webkit-search-cancel-button { display: none; }
+.search kbd { position: absolute; right: 9px; top: 50%; transform: translateY(-50%); transition: opacity 120ms ease; }
+.search input:focus ~ kbd, .search.has-value kbd { opacity: 0; }
 
-.msg-list-count {
-  font-size: 11px; color: var(--text-muted); background: var(--bg-light);
-  padding: 2px 8px; border-radius: 10px;
+.msg-list { flex: 1; overflow-y: auto; padding: 0 8px 12px; outline: none; }
+.group-label {
+  position: sticky; top: 0; z-index: 2;
+  padding: 10px 10px 6px;
+  font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--text-muted); font-weight: 500;
+  background: var(--bg-main);
 }
-
-/* Search bar */
-.search-bar {
-  padding: 10px 14px; border-bottom: 1px solid var(--border-sub); flex-shrink: 0;
-}
-
-.search-input-wrap {
-  position: relative; display: flex; align-items: center;
-}
-
-.search-icon {
-  position: absolute; left: 10px; font-size: 13px; color: var(--text-muted);
-  pointer-events: none;
-}
-
-.search-input {
-  width: 100%; padding: 7px 10px 7px 32px; border-radius: 7px;
-  border: 1px solid var(--border-sub); background: var(--bg-light);
-  color: var(--text-main); font-size: 13px; font-family: "DM Sans", sans-serif;
-  outline: none; transition: border-color .2s;
-}
-.search-input::placeholder { color: var(--text-muted); }
-.search-input:focus { border-color: var(--accent); }
-
-.msg-list-scroll { overflow-y: auto; flex: 1; }
-
-/* Message item */
-.msg-item {
-  padding: 12px 16px; border-bottom: 1px solid var(--border-sub);
-  cursor: pointer; transition: background .12s;
+.msg {
   position: relative;
+  display: grid; grid-template-columns: 34px 1fr; gap: 12px;
+  width: 100%; padding: 12px 12px 12px 14px;
+  border: 0; border-radius: 10px;
+  background: transparent; text-align: left; cursor: pointer;
+  transition: background-color 120ms ease;
 }
-.msg-item:hover { background: var(--bg-light); }
-.msg-item.active { background: var(--bg-hover); }
-
-.msg-item-top {
-  display: flex; align-items: center; justify-content: space-between; margin-bottom: 3px;
+.msg .avatar { width: 34px; height: 34px; font-size: 12px; }
+.msg-main { min-width: 0; }
+.msg-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.msg-from { font-size: 14px; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.msg-date { font-size: 12px; color: var(--text-muted); flex-shrink: 0; font-variant-numeric: tabular-nums; }
+.msg-subject { font-size: 13.5px; color: var(--text-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+.msg-preview { font-size: 13px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; font-weight: 300; }
+.msg-flags { display: inline-flex; gap: 4px; margin-left: 6px; color: var(--text-muted); font-size: 13px; vertical-align: -2px; }
+.msg::before {
+  content: ""; position: absolute; left: 4px; top: 50%;
+  width: 6px; height: 6px; margin-top: -3px; border-radius: 50%;
+  background: var(--unread-dot);
+  transform: scale(0); transition: transform 200ms var(--ease-out);
 }
-
-.msg-sender {
-  font-size: 13px; font-weight: 500; color: var(--text-main);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px;
+.msg.unread::before { transform: scale(1); }
+.msg.unread .msg-from { font-weight: 700; }
+.msg.unread .msg-subject { color: var(--text-main); font-weight: 500; }
+.msg[aria-selected="true"] { background: var(--bg-hover); }
+.msg[aria-selected="true"]::after {
+  content: ""; position: absolute; left: 0; top: 10px; bottom: 10px; width: 2px;
+  border-radius: 2px; background: var(--accent);
 }
+@media (hover: hover) and (pointer: fine) { .msg:hover { background: var(--bg-light); } .msg[aria-selected="true"]:hover { background: var(--bg-hover); } }
+.msg mark { background: color-mix(in srgb, var(--accent) 35%, transparent); color: inherit; border-radius: 2px; }
 
-.msg-item.unread .msg-sender { font-weight: 700; }
+/* squelette de chargement */
+.skel { display: grid; grid-template-columns: 34px 1fr; gap: 12px; padding: 12px 14px; }
+.skel span { display: block; border-radius: 6px; background: linear-gradient(90deg, var(--bg-light) 0%, var(--bg-hover) 50%, var(--bg-light) 100%); background-size: 200% 100%; animation: shimmer 1400ms ease-in-out infinite; }
+.skel .s-av { width: 34px; height: 34px; border-radius: 50%; }
+.skel .s-l1 { height: 12px; width: 60%; margin: 3px 0 8px; }
+.skel .s-l2 { height: 10px; width: 90%; margin-bottom: 6px; }
+.skel .s-l3 { height: 10px; width: 75%; }
+@keyframes shimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
 
-.msg-date { font-size: 11px; color: var(--text-muted); flex-shrink: 0; }
+.list-empty { padding: 50px 20px; text-align: center; color: var(--text-muted); font-size: 14px; }
+.list-empty i { display: block; font-size: 34px; margin-bottom: 10px; opacity: .6; }
 
-.msg-subject {
-  font-size: 12.5px; color: var(--text-soft); font-weight: 300;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  margin-bottom: 2px;
+/* ----- Lecture ----- */
+.reader { position: relative; min-width: 0; overflow-y: auto; background: var(--bg-main); display: flex; flex-direction: column; }
+.reader-inner { max-width: 820px; width: 100%; margin: 0 auto; padding: 26px 34px 40px; }
+.reader-inner.enter { animation: readerIn 280ms var(--ease-out); }
+@keyframes readerIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+.back { display: none; align-items: center; gap: 6px; margin: 0 0 14px; padding: 0; border: 0; background: none; color: var(--text-soft); font-size: 14px; cursor: pointer; }
+
+.reader-toolbar { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 22px; }
+.act {
+  display: inline-flex; align-items: center; gap: 7px;
+  height: 34px; padding: 0 12px; border-radius: 9px;
+  border: 1px solid var(--border-sub); background: transparent;
+  color: var(--text-soft); font-size: 13.5px; cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease, transform 160ms var(--ease-out);
 }
-.msg-item.unread .msg-subject { color: var(--text-main); font-weight: 500; }
-
-.msg-preview {
-  font-size: 11.5px; color: var(--text-muted);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-
-/* Unread dot */
-.unread-dot {
-  position: absolute; left: 5px; top: 50%; transform: translateY(-50%);
-  width: 5px; height: 5px; border-radius: 50%; background: var(--unread-dot);
-  display: none;
-}
-.msg-item.unread .unread-dot { display: block; }
-
-/* ===== READER ===== */
-.reader-pane {
-  flex: 1; background: var(--bg-main); overflow-y: auto;
-  display: flex; flex-direction: column;
-}
-
-.reader-empty {
-  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-  color: var(--text-muted); gap: 12px;
-}
-.reader-empty-icon { font-size: 40px; opacity: .3; }
-.reader-empty-text { font-size: 13px; font-weight: 300; }
-
-/* Reader header */
-.reader-header {
-  padding: 24px 28px 16px; border-bottom: 1px solid var(--border-sub);
-  flex-shrink: 0;
-}
-
-.reader-subject {
-  font-family: "Syne", sans-serif; font-size: 20px; font-weight: 700;
-  color: var(--text-main); line-height: 1.2; margin-bottom: 16px;
-}
-
-.reader-meta-row {
-  display: flex; align-items: center; gap: 12px; margin-bottom: 4px;
-}
-
-.meta-avatar {
-  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
-  background: linear-gradient(135deg, var(--accent-dim), var(--accent));
-  display: flex; align-items: center; justify-content: center;
-  font-family: "Syne", sans-serif; font-weight: 700; font-size: 12px; color: white;
+.act i { font-size: 16px; }
+.act:active { transform: scale(.96); }
+.act--danger { margin-left: auto; }
+@media (hover: hover) and (pointer: fine) {
+  .act:hover { color: var(--text-main); border-color: var(--border); background: var(--bg-light); }
+  .act--danger:hover { color: var(--danger); border-color: rgba(251,113,133,.35); background: rgba(251,113,133,.08); }
 }
 
-.meta-info { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+.reader-subject { margin: 0 0 20px; font-family: "Syne", sans-serif; font-size: clamp(22px, 2.2vw, 28px); font-weight: 700; line-height: 1.25; letter-spacing: -0.015em; text-wrap: balance; }
+.reader-meta { display: flex; align-items: center; gap: 14px; padding-bottom: 20px; border-bottom: 1px solid var(--border-sub); }
+.reader-meta .avatar { width: 42px; height: 42px; font-size: 14px; }
+.meta-info { display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1; }
+.meta-from { font-size: 14.5px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; }
+.meta-to { font-size: 13px; color: var(--text-soft); overflow: hidden; text-overflow: ellipsis; }
+.meta-date { font-size: 13px; color: var(--text-muted); text-align: right; flex-shrink: 0; }
+.meta-date small { display: block; margin-top: 3px; }
 
-.meta-from { font-size: 13px; font-weight: 500; color: var(--text-main); }
-.meta-to   { font-size: 12px; color: var(--text-soft); font-weight: 300; }
-.meta-date { font-size: 12px; color: var(--text-muted); flex-shrink: 0; }
-
-/* Reader actions */
-.reader-actions {
-  display: flex; gap: 8px; padding: 12px 28px;
-  border-bottom: 1px solid var(--border-sub); flex-shrink: 0;
-}
-
-.action-btn {
-  padding: 6px 14px; border-radius: 6px; font-size: 12.5px;
-  border: 1px solid var(--border); background: transparent;
-  color: var(--text-soft); cursor: pointer; font-family: "DM Sans", sans-serif;
-  display: flex; align-items: center; gap: 6px;
-  transition: background .15s, color .15s, border-color .15s;
-}
-.action-btn:hover { background: var(--bg-hover); color: var(--text-main); border-color: var(--accent); }
-
-/* Reader body */
 .reader-body {
-  padding: 28px; flex: 1;
-  font-size: 14px; line-height: 1.85; color: var(--text-soft); font-weight: 300;
-  white-space: pre-wrap;
+  padding: 26px 0 10px;
+  font-size: 15px; line-height: 1.8; color: var(--text-soft); font-weight: 300;
+  white-space: pre-wrap; overflow-wrap: anywhere;
 }
+.reader-body.swap { animation: bodySwap 360ms var(--ease-out); }
+@keyframes bodySwap { from { opacity: 0; filter: blur(3px); } to { opacity: 1; filter: none; } }
 
-.reader-attachment {
-  margin: 0 28px 28px;
-  display: flex; align-items: center; gap: 10px;
-  padding: 12px 16px; border-radius: 8px;
-  background: var(--bg-light); border: 1px solid var(--border-sub);
-  font-size: 13px; color: var(--text-soft); text-decoration: none;
-  transition: background .15s, color .15s;
-  width: fit-content;
+.attachment {
+  display: inline-flex; align-items: center; gap: 12px;
+  margin-top: 14px; padding: 12px 16px 12px 12px;
+  border-radius: 12px; border: 1px solid var(--border-sub); background: var(--bg-light);
+  text-decoration: none; color: var(--text-main); font-size: 14px;
+  transition: border-color 160ms ease, transform 160ms var(--ease-out);
 }
-.reader-attachment:hover { background: var(--bg-hover); color: var(--text-main); }
+.attachment:active { transform: scale(.98); }
+.attachment .att-icon { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; font-size: 20px; color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.attachment small { display: block; font-size: 12.5px; color: var(--text-muted); }
+.attachment > i { color: var(--text-muted); font-size: 16px; margin-left: 8px; }
+@media (hover: hover) and (pointer: fine) { .attachment:hover { border-color: var(--accent); } }
 
-/* ===== EMPTY STATE (list) ===== */
-.list-empty {
-  padding: 40px 20px; text-align: center;
-  color: var(--text-muted); font-size: 13px; font-weight: 300;
+/* état vide : radar discret */
+.reader-empty {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+  color: var(--text-muted); font-size: 14px; text-align: center; padding: 30px;
 }
-.list-empty-icon { font-size: 32px; margin-bottom: 10px; opacity: .3; }
+.radar { position: relative; width: 120px; height: 120px; display: grid; place-items: center; margin-bottom: 6px; }
+.radar::before, .radar::after, .radar span {
+  content: ""; position: absolute; inset: 0; border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  animation: ring 3200ms var(--ease-out) infinite;
+}
+.radar::after { animation-delay: 1066ms; }
+.radar span { animation-delay: 2133ms; }
+.radar i { font-size: 34px; color: var(--accent); position: relative; }
+@keyframes ring { from { transform: scale(.35); opacity: .9; } to { transform: scale(1); opacity: 0; } }
 
-/* ===== TOAST ===== */
+/* =========================================================
+   BARRE D'ÉTAT (bas de l'écran)
+   ========================================================= */
+.statusbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 1500;
+  height: var(--status-h);
+  display: flex; align-items: center; gap: 22px;
+  padding: 0 16px;
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border-sub);
+  font-size: 12px; color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.statusbar span { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.statusbar i { font-size: 14px; }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 20%, transparent); }
+.statusbar .push { margin-left: auto; }
+.statusbar .warn { color: #facc15; }
+
+/* =========================================================
+   TOAST
+   ========================================================= */
 .toast {
-  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(20px);
-  background: hsl(var(--hue), 30%, 14%);
-  border: 1px solid rgba(251,113,133,.3);
-  color: #fca5a5; font-size: 13px; font-weight: 400;
-  padding: 10px 20px; border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(0,0,0,.5);
-  z-index: 9999; opacity: 0; pointer-events: none;
-  transition: opacity .25s, transform .25s;
-  display: flex; align-items: center; gap: 8px;
-  white-space: nowrap;
+  position: fixed; left: 50%; bottom: calc(var(--status-h) + 18px); z-index: 4000;
+  display: flex; align-items: center; gap: 10px;
+  max-width: calc(100vw - 32px);
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: hsl(var(--hue), 30%, 12%);
+  border: 1px solid rgba(251,113,133,.35);
+  color: #fecdd3; font-size: 14px;
+  box-shadow: 0 16px 40px rgba(0,0,0,.5);
+  transform: translate(-50%, 16px); opacity: 0; pointer-events: none;
+  transition: transform 260ms var(--ease-out), opacity 200ms ease;
 }
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast i { font-size: 18px; color: var(--danger); flex-shrink: 0; }
+.toast.show { transform: translate(-50%, 0); opacity: 1; }
 
-/* ===== HEX INPUT ===== */
-.hex-wrap {
-  display: flex; align-items: center; gap: 8px; margin-top: 6px; margin-bottom: 4px;
-  width: 100%;
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1200px) {
+  :root { --sidebar-w: 200px; --list-w: 320px; }
+  .secure { display: none; }
 }
-.hex-preview {
-  width: 24px; height: 24px; border-radius: 5px; flex-shrink: 0;
-  border: 1px solid var(--border); transition: background .15s;
+@media (max-width: 1000px) {
+  .main-nav { display: none; }
+  .app { grid-template-columns: var(--list-w) 1fr; grid-template-rows: auto 1fr; }
+  .sidebar {
+    grid-column: 1 / -1;
+    flex-direction: row; align-items: center; gap: 10px;
+    padding: 8px 12px; border-right: 0; border-bottom: 1px solid var(--border-sub);
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .sidebar::-webkit-scrollbar { display: none; }
+  .compose-btn { flex-shrink: 0; height: 36px; padding: 0 14px; }
+  .folder-label, .shortcuts { display: none; }
+  .folders { flex-direction: row; }
+  .folder { white-space: nowrap; padding: 7px 10px; }
+  .sidebar section { display: contents; }
 }
-.hex-input {
-  flex: 1 1 auto; min-width: 0; width: 100%;   /* autorise le champ à rétrécir */
-  background: var(--bg-dark); border: 1px solid var(--border-sub);
-  border-radius: 6px; padding: 5px 8px; color: var(--text-main);
-  font-size: 12px; font-family: "DM Sans", sans-serif; outline: none;
-  transition: border-color .2s; letter-spacing: .06em;
-}
-.hex-input:focus { border-color: var(--accent); }
-.hex-input.invalid { border-color: rgba(251,113,133,.5); color: #fca5a5; }
-.hex-apply-btn {
-  flex-shrink: 0;                              /* le bouton garde sa taille */
-  padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border);
-  background: var(--bg-hover); color: var(--text-soft); font-size: 11px;
-  cursor: pointer; font-family: "DM Sans", sans-serif; transition: background .15s, color .15s;
-  white-space: nowrap;
-}
-.hex-apply-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
-
-/* ===== COMPOSE MODAL ===== */
-.compose-overlay {
-  display: none; position: fixed; inset: 0; z-index: 3000;
-  background: rgba(0,0,0,.55); backdrop-filter: blur(4px);
-  align-items: flex-end; justify-content: flex-end; padding: 20px;
-}
-.compose-overlay.active { display: flex; }
-
-.compose-modal {
-  width: 480px; background: var(--bg-light); border: 1px solid var(--border);
-  border-radius: 14px; overflow: hidden;
-  box-shadow: 0 24px 80px rgba(0,0,0,.6);
-  animation: slideUp .2s ease;
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.compose-header {
-  padding: 14px 16px; background: var(--bg-hover);
-  border-bottom: 1px solid var(--border-sub);
-  display: flex; align-items: center; justify-content: space-between;
-  font-family: "Syne", sans-serif; font-size: 13px; font-weight: 700; color: var(--text-main);
+@media (max-width: 720px) {
+  :root { --header-h: 60px; }
+  .site-header { padding: 0 14px; }
+  .logo-link img { height: 36px; }
+  #userLabel { display: none; }
+  .user-chip { padding: 3px; }
+  .app { grid-template-columns: 1fr; }
+  .compose-btn span { display: none; }
+  .compose-btn { width: 36px; padding: 0; }
+  /* la lecture recouvre la liste, avec un bouton retour */
+  .reader { position: absolute; inset: 0; top: auto; height: 100%; transform: translateX(100%); transition: transform 320ms var(--ease-out); z-index: 5; }
+  .app.is-reading .reader { transform: none; }
+  .app { grid-template-rows: auto 1fr; }
+  .reader { grid-row: 1 / -1; }
+  .back { display: inline-flex; }
+  .reader-inner { padding: 18px 18px 30px; }
+  .statusbar .hide-sm, #syncLabel { display: none; }
+  .reader-meta { flex-wrap: wrap; }
+  .meta-date { width: 100%; text-align: left; padding-left: 56px; }
+  .act { padding: 0 10px; }
 }
 
-.compose-close {
-  background: none; border: none; color: var(--text-muted); cursor: pointer;
-  font-size: 18px; line-height: 1;
-  transition: color .15s;
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
+  .radar::before, .radar::after, .radar span { animation: none; opacity: .25; transform: scale(.7); }
 }
-.compose-close:hover { color: var(--text-main); }
-
-.compose-field {
-  display: flex; align-items: center;
-  border-bottom: 1px solid var(--border-sub); padding: 10px 16px; gap: 10px;
-}
-
-.compose-field-label {
-  font-size: 11px; color: var(--text-muted); width: 34px; flex-shrink: 0;
-  text-transform: uppercase; letter-spacing: .08em;
-}
-
-.compose-field input, .compose-body-area {
-  flex: 1; background: none; border: none; outline: none;
-  color: var(--text-main); font-size: 13.5px; font-family: "DM Sans", sans-serif;
-}
-.compose-field input::placeholder { color: var(--text-muted); }
-
-.compose-body-area {
-  width: 100%; padding: 14px 16px; min-height: 180px;
-  resize: none; line-height: 1.7; font-size: 13.5px;
-}
-.compose-body-area::placeholder { color: var(--text-muted); }
-
-.compose-footer {
-  padding: 12px 16px; border-top: 1px solid var(--border-sub);
-  display: flex; align-items: center; justify-content: space-between;
-}
-
-.compose-send-btn {
-  padding: 8px 20px; background: var(--accent); border: none; border-radius: 7px;
-  color: white; font-size: 13px; font-weight: 500; font-family: "DM Sans", sans-serif;
-  cursor: pointer; display: flex; align-items: center; gap: 7px;
-  transition: opacity .15s;
-}
-.compose-send-btn:hover { opacity: .85; }
 </style>
 </head>
 
 <body>
 
 <!-- ===== HEADER ===== -->
-<header>
-  <div class="header-inner">
-    <div class="header-left">
-      <a href="index.html" class="logo-link"><img src="logo.png" alt="Logo IFRAS"></a>
-      <nav>
-        <ul class="main-nav">
-          <li><a href="index.html">Accueil</a></li>
-          <li><a href="recherche.html">Recherche</a></li>
-          <li><a href="programmes.html">Programmes</a></li>
-          <li><a href="publications.html">Publications</a></li>
-        </ul>
-      </nav>
+<header class="site-header">
+  <div class="header-left">
+    <a href="index.html" class="logo-link" aria-label="IFRAS, accueil"><img src="logo.png" alt="Logo IFRAS" width="44" height="44"></a>
+    <nav aria-label="Navigation principale">
+      <ul class="main-nav">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="recherche.html">Recherche</a></li>
+        <li><a href="programmes.html">Programmes</a></li>
+        <li><a href="publications.html">Publications</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="header-right">
+    <span class="secure"><i class="ph-light ph-shield-check" aria-hidden="true"></i> Espace sécurisé</span>
+    <div class="user-chip" title="Compte connecté">
+      <span class="avatar" id="userAvatar">?</span>
+      <span id="userLabel">…</span>
     </div>
-    <div class="header-right">
-      <div class="user-chip" id="userChip">
-        <div class="user-avatar" id="userAvatar">?</div>
-        <span id="userLabel" style="font-size:12px">—</span>
-      </div>
 
-      <div class="settings-wrapper">
-        <button class="icon-btn" onclick="toggleSettings()" title="Paramètres">⚙</button>
+    <div class="settings">
+      <button class="icon-btn" id="settingsBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="settingsPanel" aria-label="Paramètres">
+        <i class="ph-light ph-gear-six" aria-hidden="true"></i>
+      </button>
 
-        <div class="settings-panel" id="settingsPanel">
-          <div class="panel-title">Apparence</div>
+      <div class="settings-panel" id="settingsPanel" role="dialog" aria-label="Paramètres">
+        <p class="panel-title">Apparence</p>
+        <p class="theme-label">Couleur principale</p>
+        <div class="swatches" id="swatches"></div>
 
-          <!-- Hue picker -->
-          <div class="theme-section">
-            <div class="theme-label">Couleur principale</div>
-
-            <!-- Presets -->
-            <div class="swatches" id="swatches"></div>
-
-            <!-- Hue bar -->
-            <div class="theme-label" style="margin-top:6px;">Personnalisée</div>
-            <div class="hue-wrap" id="hueWrap">
-              <div class="hue-thumb" id="hueThumb"></div>
-            </div>
-
-            <!-- Saturation -->
-            <div class="sat-wrap">
-              <span class="sat-label">Sat.</span>
-              <input type="range" class="sat-range" id="satRange" min="20" max="90" value="65">
-            </div>
-
-            <!-- HEX input -->
-            <div class="theme-label" style="margin-top:4px;">Code HEX</div>
-            <div class="hex-wrap">
-              <div class="hex-preview" id="hexPreview"></div>
-              <input type="text" class="hex-input" id="hexInput" placeholder="#4f6bed" maxlength="7">
-              <button class="hex-apply-btn" onclick="applyHex()">Appliquer</button>
-            </div>
-          </div>
-
-          <div class="panel-divider"></div>
-          <div class="panel-title">Options</div>
-
-          <label class="panel-item" style="cursor:pointer">
-            <span class="panel-item-label"><span class="panel-item-icon">🔔</span> Notifications sonores</span>
-            <div class="toggle">
-              <input type="checkbox" id="toggleSound">
-              <div class="toggle-track"></div>
-              <div class="toggle-thumb"></div>
-            </div>
-          </label>
-
-          <label class="panel-item" style="cursor:pointer">
-            <span class="panel-item-label"><span class="panel-item-icon">👁</span> Aperçu des messages</span>
-            <div class="toggle">
-              <input type="checkbox" id="togglePreview" checked>
-              <div class="toggle-track"></div>
-              <div class="toggle-thumb"></div>
-            </div>
-          </label>
-
-          <label class="panel-item" style="cursor:pointer">
-            <span class="panel-item-label"><span class="panel-item-icon">⚡</span> Rafraîchissement auto</span>
-            <div class="toggle">
-              <input type="checkbox" id="toggleRefresh" checked>
-              <div class="toggle-track"></div>
-              <div class="toggle-thumb"></div>
-            </div>
-          </label>
-
-          <div class="panel-divider"></div>
-
-          <button class="logout-btn" onclick="logout()" style="width:100%;justify-content:center;margin-top:2px;">
-            <span>↩</span> Déconnexion
-          </button>
+        <p class="theme-label">Teinte personnalisée</p>
+        <div class="hue-wrap" id="hueWrap" role="slider" tabindex="0" aria-label="Teinte" aria-valuemin="0" aria-valuemax="360" aria-valuenow="228">
+          <span class="hue-thumb" id="hueThumb"></span>
         </div>
+        <div class="sat-wrap">
+          <span class="sat-label">Sat.</span>
+          <input type="range" class="sat-range" id="satRange" min="20" max="90" value="65" aria-label="Saturation">
+        </div>
+
+        <p class="theme-label">Code HEX</p>
+        <div class="hex-wrap">
+          <span class="hex-preview" id="hexPreview"></span>
+          <input type="text" class="hex-input" id="hexInput" placeholder="#4f6bed" maxlength="7" spellcheck="false" autocomplete="off" aria-label="Couleur au format HEX">
+          <button class="hex-apply" id="hexApply" type="button">Appliquer</button>
+        </div>
+
+        <div class="panel-divider"></div>
+        <p class="panel-title">Options</p>
+
+        <label class="panel-item">
+          <span><i class="ph-light ph-bell" aria-hidden="true"></i>Notifications sonores</span>
+          <span class="toggle"><input type="checkbox" id="toggleSound"><span class="toggle-track"></span><span class="toggle-thumb"></span></span>
+        </label>
+        <label class="panel-item">
+          <span><i class="ph-light ph-eye" aria-hidden="true"></i>Aperçu des messages</span>
+          <span class="toggle"><input type="checkbox" id="togglePreview" checked><span class="toggle-track"></span><span class="toggle-thumb"></span></span>
+        </label>
+        <label class="panel-item">
+          <span><i class="ph-light ph-arrows-clockwise" aria-hidden="true"></i>Rafraîchissement auto</span>
+          <span class="toggle"><input type="checkbox" id="toggleRefresh" checked><span class="toggle-track"></span><span class="toggle-thumb"></span></span>
+        </label>
+
+        <div class="panel-divider"></div>
+        <button class="logout" id="logoutBtn" type="button"><i class="ph-light ph-sign-out" aria-hidden="true"></i> Déconnexion</button>
       </div>
     </div>
   </div>
 </header>
 
 <!-- ===== SOUS-BANDEAU ===== -->
-<nav class="sub-nav">
-  <div class="sub-nav-inner">
-    <a href="messagerie.html" class="sub-tab active">
-      <span class="tab-icon">✉</span> Messagerie
-      <span class="tab-badge" id="inboxBadge" style="display:none">0</span>
-    </a>
-    <a href="coffre-fort.html" class="sub-tab">
-      <span class="tab-icon">🔐</span> Coffre-fort
-    </a>
-    <a href="profil.html" class="sub-tab">
-      <span class="tab-icon">👤</span> Profil
-    </a>
-    <a href="tableau-de-bord.html" class="sub-tab">
-      <span class="tab-icon">📊</span> Tableau de bord
-    </a>
-    <a href="annuaire.html" class="sub-tab">
-      <span class="tab-icon">📋</span> Annuaire
-    </a>
-    <a href="boutique.html"class="sub-tab">
-       <span class="tab-icon">🛍</span> Boutique
-    </a>
-  </div>
+<nav class="subnav" aria-label="Espace personnel">
+  <ul class="subnav-list">
+    <li><a href="messagerie.html" class="sub-tab" aria-current="page"><i class="ph-light ph-envelope-simple" aria-hidden="true"></i> Messagerie <span class="tab-badge" id="inboxBadge" hidden>0</span></a></li>
+    <li><a href="coffre-fort.html" class="sub-tab"><i class="ph-light ph-vault" aria-hidden="true"></i> Coffre-fort</a></li>
+    <li><a href="profil.html" class="sub-tab"><i class="ph-light ph-user-circle" aria-hidden="true"></i> Profil</a></li>
+    <li><a href="tableau-de-bord.html" class="sub-tab"><i class="ph-light ph-squares-four" aria-hidden="true"></i> Tableau de bord</a></li>
+    <li><a href="annuaire.html" class="sub-tab"><i class="ph-light ph-address-book" aria-hidden="true"></i> Annuaire</a></li>
+    <li><a href="boutique.html" class="sub-tab"><i class="ph-light ph-storefront" aria-hidden="true"></i> Boutique</a></li>
+  </ul>
 </nav>
 
-<!-- ===== APP LAYOUT ===== -->
-<div class="app-layout">
+<!-- ===== APPLICATION ===== -->
+<main class="app" id="app">
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <button class="compose-btn" onclick="openCompose()">
-      <span>✏</span> Nouveau message
-    </button>
+  <aside class="sidebar" aria-label="Dossiers">
+    <button class="compose-btn" id="composeBtn" type="button"><i class="ph-light ph-pencil-simple-line" aria-hidden="true"></i><span>Nouveau message</span></button>
 
-    <div class="sidebar-section">
-      <div class="sidebar-section-label">Dossiers</div>
-      <div class="folder-item active" data-folder="inbox" onclick="switchFolder(this)">
-        <span class="folder-icon">📥</span> Réception
-        <span class="folder-count has-new" id="cnt-inbox">—</span>
-      </div>
-      <div class="folder-item" data-folder="sent" onclick="switchFolder(this)">
-        <span class="folder-icon">📤</span> Envoyés
-        <span class="folder-count" id="cnt-sent"></span>
-      </div>
-      <div class="folder-item" data-folder="favorites" onclick="switchFolder(this)">
-        <span class="folder-icon">⭐</span> Favoris
-        <span class="folder-count" id="cnt-favorites"></span>
-      </div>
-      <div class="folder-item" data-folder="classified" onclick="switchFolder(this)">
-        <span class="folder-icon">🔒</span> Classés
-        <span class="folder-count" id="cnt-classified"></span>
-      </div>
-    </div>
+    <section>
+      <p class="folder-label">Dossiers</p>
+      <ul class="folders">
+        <li><button class="folder" type="button" data-folder="inbox" aria-current="true"><i class="ph-light ph-tray" aria-hidden="true"></i> Réception <span class="folder-count" id="cnt-inbox"></span></button></li>
+        <li><button class="folder" type="button" data-folder="sent"><i class="ph-light ph-paper-plane-tilt" aria-hidden="true"></i> Envoyés <span class="folder-count" id="cnt-sent"></span></button></li>
+        <li><button class="folder" type="button" data-folder="favorites"><i class="ph-light ph-star" aria-hidden="true"></i> Favoris <span class="folder-count" id="cnt-favorites"></span></button></li>
+        <li><button class="folder" type="button" data-folder="classified"><i class="ph-light ph-lock-key" aria-hidden="true"></i> Classés <span class="folder-count" id="cnt-classified"></span></button></li>
+      </ul>
+    </section>
 
-    <div class="sidebar-divider"></div>
+    <section>
+      <p class="folder-label">Système</p>
+      <ul class="folders">
+        <li><button class="folder" type="button" data-folder="trash"><i class="ph-light ph-trash" aria-hidden="true"></i> Corbeille <span class="folder-count" id="cnt-trash"></span></button></li>
+      </ul>
+    </section>
 
-    <div class="sidebar-section">
-      <div class="sidebar-section-label">Système</div>
-      <div class="folder-item" data-folder="trash" onclick="switchFolder(this)">
-        <span class="folder-icon">🗑</span> Corbeille
-        <span class="folder-count" id="cnt-trash"></span>
-      </div>
+    <div class="shortcuts" aria-label="Raccourcis clavier">
+      <div><span>Rechercher</span><kbd>/</kbd></div>
+      <div><span>Message suivant</span><span><kbd>↓</kbd> <kbd>J</kbd></span></div>
+      <div><span>Message précédent</span><span><kbd>↑</kbd> <kbd>K</kbd></span></div>
     </div>
   </aside>
 
-  <!-- LISTE -->
-  <div class="msg-list-pane">
-    <div class="msg-list-header">
-      <span class="msg-list-title" id="listTitle">Réception</span>
-      <span class="msg-list-count" id="listCount">0 message</span>
+  <section class="list-pane" aria-labelledby="listTitle">
+    <div class="list-head">
+      <h1 class="list-title" id="listTitle">Réception<span class="list-count" id="listCount"></span></h1>
+      <button class="icon-btn refresh" id="refreshBtn" type="button" aria-label="Actualiser"><i class="ph-light ph-arrows-clockwise" aria-hidden="true"></i></button>
     </div>
-    <div class="search-bar">
-      <div class="search-input-wrap">
-        <span class="search-icon">🔍</span>
-        <input class="search-input" type="text" placeholder="Rechercher…" oninput="filterMessages(this.value)">
-      </div>
+    <div class="search" id="searchWrap">
+      <i class="ph-light ph-magnifying-glass" aria-hidden="true"></i>
+      <input type="search" id="searchInput" placeholder="Rechercher un message…" autocomplete="off" aria-label="Rechercher dans le dossier">
+      <kbd aria-hidden="true">/</kbd>
     </div>
-    <div class="msg-list-scroll" id="msgList"></div>
-  </div>
+    <div class="msg-list" id="msgList" role="listbox" aria-label="Messages" tabindex="-1">
+      <div class="skel"><span class="s-av"></span><div><span class="s-l1"></span><span class="s-l2"></span><span class="s-l3"></span></div></div>
+      <div class="skel"><span class="s-av"></span><div><span class="s-l1"></span><span class="s-l2"></span><span class="s-l3"></span></div></div>
+      <div class="skel"><span class="s-av"></span><div><span class="s-l1"></span><span class="s-l2"></span><span class="s-l3"></span></div></div>
+      <div class="skel"><span class="s-av"></span><div><span class="s-l1"></span><span class="s-l2"></span><span class="s-l3"></span></div></div>
+    </div>
+  </section>
 
-  <!-- READER -->
-  <div class="reader-pane" id="readerPane">
-    <div class="reader-empty">
-      <div class="reader-empty-icon">✉</div>
-      <div class="reader-empty-text">Sélectionnez un message</div>
-    </div>
-  </div>
+  <section class="reader" id="readerPane" aria-label="Lecture du message" aria-live="polite"></section>
 
-</div>
+</main>
 
-<!-- ===== BANDEAU BAS ===== -->
-<div class="app-footer"></div>
+<!-- ===== BARRE D'ÉTAT ===== -->
+<footer class="statusbar" aria-label="État de la session">
+  <span><span class="status-dot" aria-hidden="true"></span> Connecté</span>
+  <span class="hide-sm"><i class="ph-light ph-lock-simple" aria-hidden="true"></i> Chiffrement IFRAS actif</span>
+  <span id="syncLabel"><i class="ph-light ph-arrows-clockwise" aria-hidden="true"></i> Synchronisation…</span>
+  <span class="push" id="idleLabel"><i class="ph-light ph-timer" aria-hidden="true"></i> Déconnexion auto dans 10:00</span>
+</footer>
 
-<!-- ===== TOAST ===== -->
-<div class="toast" id="toast">⚠ Ce compte est temporairement suspendu — action impossible</div>
-
-<!-- ===== COMPOSE MODAL ===== -->
-<div class="compose-overlay" id="composeOverlay" onclick="closeComposeOutside(event)">
-  <div class="compose-modal">
-    <div class="compose-header">
-      Nouveau message
-      <button class="compose-close" onclick="closeCompose()">×</button>
-    </div>
-    <div class="compose-field">
-      <span class="compose-field-label">À</span>
-      <input type="email" id="compTo" placeholder="destinataire@ifras.fr">
-    </div>
-    <div class="compose-field">
-      <span class="compose-field-label">Objet</span>
-      <input type="text" id="compSubject" placeholder="Objet du message">
-    </div>
-    <textarea class="compose-body-area" id="compBody" placeholder="Rédigez votre message…"></textarea>
-    <div class="compose-footer">
-      <div style="font-size:12px; color:var(--text-muted)">Chiffrement IFRAS activé 🔒</div>
-      <button class="compose-send-btn" onclick="sendMessage()"><span>↗</span> Envoyer</button>
-    </div>
-  </div>
-</div>
+<div class="toast" id="toast" role="status"><i class="ph-light ph-warning-circle" aria-hidden="true"></i><span></span></div>
 
 <script>
 /* ============================================================
-   SUPABASE
+   SUPABASE (inchangé)
    ============================================================ */
 const _sb = supabase.createClient(
   "https://fqijbltymdeudnlitcrs.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZxaWpibHR5bWRldWRubGl0Y3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzOTQ2NDQsImV4cCI6MjA4NTk3MDY0NH0.HZA0VxkaRTGLRTBA0Vz51mJjw8Xuj8f__yzaQKpGfbE"
 );
 
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const SUSPENDED = 'Ce compte est temporairement suspendu — action impossible';
+
 /* ============================================================
-   THEME SYSTEM
+   THÈME (même logique que l'original : presets, teinte, saturation, HEX)
    ============================================================ */
 const PRESETS = [
   { label: 'Bleu IFRAS', h: 228, s: 65 },
@@ -851,389 +757,335 @@ const PRESETS = [
   { label: 'Violet',     h: 270, s: 55 },
   { label: 'Cyan',       h: 195, s: 65 },
   { label: 'Vert',       h: 152, s: 55 },
-  { label: 'Emeraude',   h: 168, s: 60 },
+  { label: 'Émeraude',   h: 168, s: 60 },
   { label: 'Ambre',      h: 38,  s: 75 },
   { label: 'Rouge',      h: 355, s: 60 },
   { label: 'Rose',       h: 330, s: 60 },
   { label: 'Noir',       h: 228, s: 10, special: 'dark' },
   { label: 'Blanc',      h: 228, s: 10, special: 'light' },
 ];
+const THEME_VARS = ['--bg-dark', '--bg-main', '--bg-light', '--bg-hover', '--border', '--border-sub', '--accent', '--accent-dim', '--text-main', '--text-soft', '--text-muted', '--unread-dot'];
+const SPECIAL = {
+  dark:  { header: 'hsl(0,0%,4%)', sub: 'hsl(0,0%,5%)', vars: ['hsl(0,0%,3%)', 'hsl(0,0%,6%)', 'hsl(0,0%,9%)', 'hsl(0,0%,13%)', 'hsl(0,0%,18%)', 'hsl(0,0%,12%)', 'hsl(228,65%,60%)', 'hsl(228,55%,45%)', 'hsl(0,0%,90%)', 'hsl(0,0%,62%)', 'hsl(0,0%,44%)', 'hsl(228,70%,65%)'] },
+  light: { header: 'hsl(220,20%,95%)', sub: 'hsl(220,20%,94%)', vars: ['hsl(220,20%,96%)', 'hsl(220,20%,98%)', 'hsl(220,15%,93%)', 'hsl(220,15%,89%)', 'hsl(220,15%,82%)', 'hsl(220,15%,88%)', 'hsl(228,65%,55%)', 'hsl(228,55%,40%)', 'hsl(220,25%,15%)', 'hsl(220,15%,38%)', 'hsl(220,10%,52%)', 'hsl(228,70%,55%)'] }
+};
 
 let currentH = 228, currentS = 65, currentSpecial = null;
+let currentContentBg = null;
 
-function applyTheme(h, s, special) {
-  currentH = h; currentS = s; currentSpecial = special || null;
+function setVisual(h, s, special) {
   const root = document.documentElement;
-
-  if (special === 'dark') {
+  const header = document.querySelector('.site-header');
+  const sub = document.querySelector('.subnav');
+  if (special && SPECIAL[special]) {
+    const cfg = SPECIAL[special];
     root.style.setProperty('--hue', 228);
     root.style.setProperty('--sat', '8%');
-    root.style.setProperty('--bg-dark',    'hsl(0,0%,3%)');
-    root.style.setProperty('--bg-main',    'hsl(0,0%,6%)');
-    root.style.setProperty('--bg-light',   'hsl(0,0%,9%)');
-    root.style.setProperty('--bg-hover',   'hsl(0,0%,13%)');
-    root.style.setProperty('--border',     'hsl(0,0%,18%)');
-    root.style.setProperty('--border-sub', 'hsl(0,0%,12%)');
-    root.style.setProperty('--accent',     'hsl(228,65%,60%)');
-    root.style.setProperty('--accent-dim', 'hsl(228,55%,45%)');
-    root.style.setProperty('--text-main',  'hsl(0,0%,90%)');
-    root.style.setProperty('--text-soft',  'hsl(0,0%,60%)');
-    root.style.setProperty('--text-muted', 'hsl(0,0%,38%)');
-    root.style.setProperty('--unread-dot', 'hsl(228,70%,65%)');
-    document.querySelector('header').style.background = 'hsl(0,0%,4%)';
-    document.querySelector('.sub-nav').style.background = 'hsl(0,0%,5%)';
-  } else if (special === 'light') {
-    root.style.setProperty('--hue', 228);
-    root.style.setProperty('--sat', '8%');
-    root.style.setProperty('--bg-dark',    'hsl(220,20%,96%)');
-    root.style.setProperty('--bg-main',    'hsl(220,20%,98%)');
-    root.style.setProperty('--bg-light',   'hsl(220,15%,93%)');
-    root.style.setProperty('--bg-hover',   'hsl(220,15%,89%)');
-    root.style.setProperty('--border',     'hsl(220,15%,82%)');
-    root.style.setProperty('--border-sub', 'hsl(220,15%,88%)');
-    root.style.setProperty('--accent',     'hsl(228,65%,55%)');
-    root.style.setProperty('--accent-dim', 'hsl(228,55%,40%)');
-    root.style.setProperty('--text-main',  'hsl(220,25%,15%)');
-    root.style.setProperty('--text-soft',  'hsl(220,15%,40%)');
-    root.style.setProperty('--text-muted', 'hsl(220,10%,60%)');
-    root.style.setProperty('--unread-dot', 'hsl(228,70%,55%)');
-    document.querySelector('header').style.background = 'hsl(220,20%,95%)';
-    document.querySelector('.sub-nav').style.background = 'hsl(220,20%,94%)';
+    THEME_VARS.forEach((v, i) => root.style.setProperty(v, cfg.vars[i]));
+    header.style.background = cfg.header;
+    sub.style.background = cfg.sub;
+    document.querySelector('meta[name="theme-color"]').content = cfg.header;
   } else {
-    // Reset inline overrides from special modes
-    document.querySelector('header').style.background = '';
-    document.querySelector('.sub-nav').style.background = '';
-    root.style.removeProperty('--bg-dark');
-    root.style.removeProperty('--bg-main');
-    root.style.removeProperty('--bg-light');
-    root.style.removeProperty('--bg-hover');
-    root.style.removeProperty('--border');
-    root.style.removeProperty('--border-sub');
-    root.style.removeProperty('--accent');
-    root.style.removeProperty('--accent-dim');
-    root.style.removeProperty('--text-main');
-    root.style.removeProperty('--text-soft');
-    root.style.removeProperty('--text-muted');
-    root.style.removeProperty('--unread-dot');
+    THEME_VARS.forEach((v) => root.style.removeProperty(v));
+    header.style.background = ''; sub.style.background = '';
     root.style.setProperty('--hue', h);
     root.style.setProperty('--sat', s + '%');
   }
-
-  document.getElementById('satRange').style.background =
-    `linear-gradient(90deg, hsl(${h},0%,55%), hsl(${h},100%,55%))`;
-  document.getElementById('satRange').value = s;
+  $('satRange').value = s;
   updateHueThumb(h);
   updateSwatches(h, s, special);
-  updateHexPreview();
+  $('hexPreview').style.background = `hsl(${h},${s}%,55%)`;
+}
 
-  // Vider le champ HEX (on n'a plus tapé de valeur manuelle) et re-render le message ouvert
-  const hexInp = document.getElementById('hexInput');
+function applyTheme(h, s, special) {
+  currentH = h; currentS = s; currentSpecial = special || null;
+  setVisual(h, s, special);
+  /* on vide le champ HEX (plus de valeur manuelle) puis on ré-affiche le message ouvert */
+  const hexInp = $('hexInput');
   if (hexInp) { hexInp.value = ''; hexInp.classList.remove('invalid'); }
-  if (currentMail) openMessage(currentMail);
+  if (currentMail) openMessage(currentMail, { keep: true });
+  try { sessionStorage.setItem('ifras_theme', JSON.stringify({ h, s, special: special || null })); } catch (e) {}
+}
 
-  // Persister le thème pour les autres onglets
-  sessionStorage.setItem('ifras_theme', JSON.stringify({ h, s, special: special || null }));
-
-
+/* applique uniquement le visuel, sans toucher au champ HEX ni à currentContentBg */
+function applyThemeVisualOnly(h, s) {
+  currentH = h; currentS = s; currentSpecial = null;
+  setVisual(h, s, null);
 }
 
 function updateHueThumb(h) {
-  const pct = h / 360 * 100;
-  document.getElementById('hueThumb').style.left = pct + '%';
+  $('hueThumb').style.left = (h / 360 * 100) + '%';
+  $('hueWrap').setAttribute('aria-valuenow', h);
 }
-
 function updateSwatches(h, s, special) {
-  document.querySelectorAll('.swatch').forEach(sw => {
+  document.querySelectorAll('.swatch').forEach((sw) => {
     const match = special
       ? sw.dataset.special === special
-      : parseInt(sw.dataset.h) === h && parseInt(sw.dataset.s) === s && !sw.dataset.special;
+      : Number(sw.dataset.h) === h && Number(sw.dataset.s) === s && !sw.dataset.special;
     sw.classList.toggle('active', match);
+    sw.setAttribute('aria-pressed', String(match));
   });
 }
 
-function updateHexPreview() {
-  const h = currentH, s = currentS;
-  const preview = document.getElementById('hexPreview');
-  if (preview) preview.style.background = `hsl(${h},${s}%,55%)`;
+function normalizeHex(hex) {
+  if (!hex || typeof hex !== 'string') return null;
+  hex = hex.trim().toLowerCase();
+  if (/^#[0-9a-f]{3}$/.test(hex)) return '#' + hex[1] + hex[1] + hex[2] + hex[2] + hex[3] + hex[3];
+  if (/^#[0-9a-f]{6}$/.test(hex)) return hex;
+  return null;
 }
-
-function hslToHex(h, s, l) {
-  s /= 100; l /= 100;
-  const a = s * Math.min(l, 1 - l);
-  const f = n => {
-    const k = (n + h / 30) % 12;
-    const c = l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1));
-    return Math.round(255 * c).toString(16).padStart(2, '0');
-  };
-  return `#${f(0)}${f(8)}${f(4)}`;
+function colorsMatch(a, b) {
+  const na = normalizeHex(a), nb = normalizeHex(b);
+  return na && nb && na === nb;
 }
 
 function applyHex() {
-  const val = document.getElementById('hexInput').value.trim();
-  const inp = document.getElementById('hexInput');
-  if (!val.startsWith('#') || (val.length !== 4 && val.length !== 7)) {
-    inp.classList.add('invalid'); return;
+  const inp = $('hexInput');
+  const val = inp.value.trim();
+  const norm = normalizeHex(val);
+  if (!norm) {
+    inp.classList.remove('invalid'); void inp.offsetWidth; inp.classList.add('invalid');
+    return;
   }
   inp.classList.remove('invalid');
-
-  const norm = normalizeHex(val);
-  if (!norm) return;
-
-  // 1. Mettre à jour currentContentBg avec le HEX exact — ne pas laisser applyTheme l'écraser
+  /* 1. le HEX exact est mémorisé tel quel */
   currentContentBg = norm;
-
-  // 2. Changer le thème visuel sans toucher à currentContentBg
-  let hex = norm.slice(1);
-  const r = parseInt(hex.slice(0,2),16)/255;
-  const g = parseInt(hex.slice(2,4),16)/255;
-  const b = parseInt(hex.slice(4,6),16)/255;
-  const max = Math.max(r,g,b), min = Math.min(r,g,b);
-  let hh = 0, ss = 0, ll = (max+min)/2;
+  /* 2. conversion en teinte / saturation pour le visuel */
+  const hex = norm.slice(1);
+  const r = parseInt(hex.slice(0, 2), 16) / 255, g = parseInt(hex.slice(2, 4), 16) / 255, b = parseInt(hex.slice(4, 6), 16) / 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  let hh = 0, ss = 0; const ll = (max + min) / 2;
   if (max !== min) {
     const d = max - min;
-    ss = ll > 0.5 ? d/(2-max-min) : d/(max+min);
-    switch(max) {
-      case r: hh = ((g-b)/d + (g<b?6:0))/6; break;
-      case g: hh = ((b-r)/d + 2)/6; break;
-      case b: hh = ((r-g)/d + 4)/6; break;
+    ss = ll > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: hh = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+      case g: hh = ((b - r) / d + 2) / 6; break;
+      case b: hh = ((r - g) / d + 4) / 6; break;
     }
   }
-  applyThemeVisualOnly(Math.round(hh*360), Math.round(ss*100));
-
-  // 3. Re-render le message ouvert avec le nouveau currentContentBg
-  if (currentMail) openMessage(currentMail);
+  applyThemeVisualOnly(Math.round(hh * 360), Math.round(ss * 100));
+  /* 3. le message ouvert est ré-affiché avec la nouvelle valeur */
+  if (currentMail) openMessage(currentMail, { keep: true });
 }
 
-// Applique uniquement le visuel du thème sans toucher à currentContentBg
-function applyThemeVisualOnly(h, s) {
-  currentH = h; currentS = s; currentSpecial = null;
-  const root = document.documentElement;
-  document.querySelector('header').style.background = '';
-  document.querySelector('.sub-nav').style.background = '';
-  root.style.removeProperty('--bg-dark');
-  root.style.removeProperty('--bg-main');
-  root.style.removeProperty('--bg-light');
-  root.style.removeProperty('--bg-hover');
-  root.style.removeProperty('--border');
-  root.style.removeProperty('--border-sub');
-  root.style.removeProperty('--accent');
-  root.style.removeProperty('--accent-dim');
-  root.style.removeProperty('--text-main');
-  root.style.removeProperty('--text-soft');
-  root.style.removeProperty('--text-muted');
-  root.style.removeProperty('--unread-dot');
-  root.style.setProperty('--hue', h);
-  root.style.setProperty('--sat', s + '%');
-  document.getElementById('satRange').style.background =
-    `linear-gradient(90deg, hsl(${h},0%,55%), hsl(${h},100%,55%))`;
-  document.getElementById('satRange').value = s;
-  updateHueThumb(h);
-  updateSwatches(h, s, null);
-  updateHexPreview();
-}
-
-// Build swatches
 (function buildSwatches() {
-  const wrap = document.getElementById('swatches');
-  PRESETS.forEach(p => {
-    const sw = document.createElement('div');
+  const wrap = $('swatches');
+  PRESETS.forEach((p) => {
+    const sw = document.createElement('button');
+    sw.type = 'button';
     sw.className = 'swatch';
     sw.dataset.h = p.h; sw.dataset.s = p.s;
     if (p.special) sw.dataset.special = p.special;
     sw.title = p.label;
-    if (p.special === 'dark')  sw.style.background = '#111';
-    else if (p.special === 'light') {
-      sw.style.background = '#eee';
-      sw.style.border = '2px solid #ccc';
-    } else {
-      sw.style.background = `hsl(${p.h},${p.s}%,55%)`;
-    }
+    sw.setAttribute('aria-label', p.label);
+    sw.style.background = p.special === 'dark' ? '#111' : p.special === 'light' ? '#eee' : `hsl(${p.h},${p.s}%,55%)`;
     if (p.h === 228 && !p.special) sw.classList.add('active');
     sw.addEventListener('click', () => applyTheme(p.h, p.s, p.special));
     wrap.appendChild(sw);
   });
-  updateHexPreview();
+  $('hexPreview').style.background = `hsl(${currentH},${currentS}%,55%)`;
 })();
 
-// Hue bar drag
+/* barre de teinte : souris, doigt et clavier */
 (function initHueBar() {
-  const wrap  = document.getElementById('hueWrap');
+  const wrap = $('hueWrap');
   let dragging = false;
-
-  function setFromEvent(e) {
+  const setFrom = (e) => {
     const rect = wrap.getBoundingClientRect();
-    const x    = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
-    const h    = Math.round(x / rect.width * 360);
-    applyTheme(h, currentS, null);
-  }
-
-  wrap.addEventListener('mousedown', e => { dragging = true; setFromEvent(e); });
-  document.addEventListener('mousemove', e => { if (dragging) setFromEvent(e); });
-  document.addEventListener('mouseup', () => { dragging = false; });
-
+    const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+    applyTheme(Math.round(x / rect.width * 360), currentS, null);
+  };
+  wrap.addEventListener('pointerdown', (e) => { dragging = true; wrap.setPointerCapture(e.pointerId); setFrom(e); });
+  wrap.addEventListener('pointermove', (e) => { if (dragging) setFrom(e); });
+  wrap.addEventListener('pointerup', () => { dragging = false; });
+  wrap.addEventListener('keydown', (e) => {
+    const step = e.shiftKey ? 20 : 5;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { e.preventDefault(); applyTheme((currentH + step) % 360, currentS, null); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { e.preventDefault(); applyTheme((currentH - step + 360) % 360, currentS, null); }
+  });
   updateHueThumb(currentH);
 })();
-
-// Sat slider
-document.getElementById('satRange').addEventListener('input', function() {
-  applyTheme(currentH, parseInt(this.value), null);
+$('satRange').addEventListener('input', function () { applyTheme(currentH, parseInt(this.value, 10), null); });
+$('hexApply').addEventListener('click', applyHex);
+$('hexInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') applyHex(); });
+$('hexInput').addEventListener('input', function () {
+  const n = normalizeHex(this.value);
+  if (n) $('hexPreview').style.background = n;
+  this.classList.remove('invalid');
 });
 
 /* ============================================================
-   SETTINGS PANEL
+   PANNEAU DE RÉGLAGES
    ============================================================ */
-function toggleSettings() {
-  document.getElementById('settingsPanel').classList.toggle('active');
-}
-
-document.addEventListener('click', e => {
-  const wrap = document.querySelector('.settings-wrapper');
-  if (!wrap.contains(e.target)) {
-    document.getElementById('settingsPanel').classList.remove('active');
-  }
-});
+const settingsBtn = $('settingsBtn'), settingsPanel = $('settingsPanel');
+const setSettings = (open) => {
+  settingsPanel.classList.toggle('is-open', open);
+  settingsBtn.setAttribute('aria-expanded', String(open));
+};
+settingsBtn.addEventListener('click', () => setSettings(!settingsPanel.classList.contains('is-open')));
+document.addEventListener('click', (e) => { if (!e.target.closest('.settings')) setSettings(false); });
 
 /* ============================================================
    TOAST
    ============================================================ */
 let toastTimer = null;
 function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = '⚠ ' + msg;
+  const t = $('toast');
+  t.querySelector('span').textContent = msg;
   t.classList.add('show');
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
 }
 
 /* ============================================================
-   AUTH / STATE
+   AUTH / ÉTAT
    ============================================================ */
 let userEmail = '';
 let currentFolder = 'inbox';
-let allMessages   = [];
-let currentMail   = null;
+let allMessages = [];
+let currentMail = null;
+let searchQuery = '';
 
 async function logout() {
-  sessionStorage.removeItem('ifras_theme');
+  try { sessionStorage.removeItem('ifras_theme'); } catch (e) {}
   await _sb.auth.signOut();
   window.location.href = 'connexion.html';
 }
+$('logoutBtn').addEventListener('click', logout);
 
-/* ============================================================
-   AUTO-LOGOUT après 10 min d'inactivité
-   ============================================================ */
+/* Déconnexion automatique après 10 min d'inactivité, avec décompte visible */
+const IDLE_MS = 10 * 60 * 1000;
+let idleDeadline = Date.now() + IDLE_MS;
 let inactivityTimer = null;
 function resetInactivityTimer() {
+  idleDeadline = Date.now() + IDLE_MS;
   clearTimeout(inactivityTimer);
-  inactivityTimer = setTimeout(async () => {
-    await logout();
-  }, 10 * 60 * 1000); // 10 minutes
+  inactivityTimer = setTimeout(logout, IDLE_MS);
 }
-['mousemove','mousedown','keydown','touchstart','scroll','click'].forEach(evt =>
-  document.addEventListener(evt, resetInactivityTimer, { passive: true })
-);
+['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll', 'click'].forEach((evt) =>
+  document.addEventListener(evt, resetInactivityTimer, { passive: true, capture: true }));
 resetInactivityTimer();
+setInterval(() => {
+  const left = Math.max(0, idleDeadline - Date.now());
+  const m = Math.floor(left / 60000), s = Math.floor(left / 1000) % 60;
+  const el = $('idleLabel');
+  el.innerHTML = `<i class="ph-light ph-timer" aria-hidden="true"></i> Déconnexion auto dans ${m}:${String(s).padStart(2, '0')}`;
+  el.classList.toggle('warn', left < 60000);
+}, 1000);
 
-// Prevent spurious disconnections — only redirect on real sign-out events
-_sb.auth.onAuthStateChange((event, session) => {
-  if (event === 'SIGNED_OUT') {
-    window.location.href = 'connexion.html';
-  }
+/* seule une vraie déconnexion redirige */
+_sb.auth.onAuthStateChange((event) => {
+  if (event === 'SIGNED_OUT') window.location.href = 'connexion.html';
 });
 
 /* ============================================================
-   HELPERS
+   UTILITAIRES
    ============================================================ */
 function initials(email) {
-  const parts = email.split('@')[0].split('.');
-  return (parts[0][0] + (parts[1] ? parts[1][0] : '')).toUpperCase();
+  const parts = String(email || '?').split('@')[0].split(/[._-]/);
+  return ((parts[0] || '?')[0] + (parts[1] ? parts[1][0] : '')).toUpperCase();
 }
+/* une teinte stable par correspondant : on reconnaît les gens d'un coup d'œil */
+function hueOf(str) {
+  let h = 0;
+  for (const c of String(str)) h = (h * 31 + c.charCodeAt(0)) % 360;
+  return h;
+}
+const displayName = (email) => String(email || '').split('@')[0].split(/[._-]/).map((p) => p ? p[0].toUpperCase() + p.slice(1) : '').join(' ');
 
 function formatDate(iso) {
-  const d = new Date(iso);
-  const now = new Date();
-  const diff = now - d;
-  if (diff < 86400000 && d.getDate() === now.getDate())
-    return d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-  if (diff < 86400000 * 7)
-    return d.toLocaleDateString('fr-FR', { weekday: 'short' });
-  return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' });
+  const d = new Date(iso), now = new Date();
+  const sameDay = d.toDateString() === now.toDateString();
+  if (sameDay) return d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+  if (now - d < 86400000 * 7) return d.toLocaleDateString('fr-FR', { weekday: 'short' });
+  if (d.getFullYear() === now.getFullYear()) return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+  return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: '2-digit' });
+}
+function groupOf(iso) {
+  const d = new Date(iso), now = new Date();
+  const start = new Date(now); start.setHours(0, 0, 0, 0);
+  const t = d.getTime(), day = 86400000;
+  if (t >= start.getTime()) return "Aujourd'hui";
+  if (t >= start.getTime() - day) return 'Hier';
+  if (t >= start.getTime() - 6 * day) return 'Cette semaine';
+  if (d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear()) return 'Ce mois-ci';
+  return 'Plus ancien';
+}
+function relativeLong(iso) {
+  const diff = (Date.now() - new Date(iso)) / 1000;
+  if (diff < 3600) return `il y a ${Math.max(1, Math.round(diff / 60))} min`;
+  if (diff < 86400) return `il y a ${Math.round(diff / 3600)} h`;
+  if (diff < 86400 * 30) return `il y a ${Math.round(diff / 86400)} j`;
+  return '';
 }
 
-function normalizeHex(hex) {
-  if (!hex || typeof hex !== 'string') return null;
-  hex = hex.trim().toLowerCase();
-  if (/^#[0-9a-f]{3}$/.test(hex)) return '#'+hex[1]+hex[1]+hex[2]+hex[2]+hex[3]+hex[3];
-  if (/^#[0-9a-f]{6}$/.test(hex)) return hex;
-  return null;
+/* messages lus : mémorisés dans ce navigateur */
+const readKey = () => 'ifras_read_' + userEmail;
+let readIds = new Set();
+function loadRead() { try { readIds = new Set(JSON.parse(localStorage.getItem(readKey()) || '[]')); } catch (e) { readIds = new Set(); } }
+function markRead(id) {
+  readIds.add(String(id));
+  try { localStorage.setItem(readKey(), JSON.stringify([...readIds].slice(-500))); } catch (e) {}
 }
-
-function colorsMatch(a, b) {
-  const na = normalizeHex(a); const nb = normalizeHex(b);
-  return na && nb && na === nb;
-}
+const isUnread = (m) => currentFolder !== 'sent' && m.receiver === userEmail && !readIds.has(String(m.id));
 
 /* ============================================================
-   FOLDER NAMES
+   DOSSIERS
    ============================================================ */
-const FOLDER_LABELS = {
-  inbox: 'Réception', sent: 'Envoyés', favorites: 'Favoris',
-  classified: 'Classés', trash: 'Corbeille'
+const FOLDER_LABELS = { inbox: 'Réception', sent: 'Envoyés', favorites: 'Favoris', classified: 'Classés', trash: 'Corbeille' };
+const FOLDER_EMPTY = {
+  inbox: ['ph-tray', 'Aucun message reçu'], sent: ['ph-paper-plane-tilt', 'Aucun message envoyé'],
+  favorites: ['ph-star', 'Aucun favori pour le moment'], classified: ['ph-lock-key', 'Aucun message classé'],
+  trash: ['ph-trash', 'La corbeille est vide']
 };
 
+function folderQuery(q, f) {
+  if (f === 'sent') return q.eq('sender', userEmail).not('sender_folder', 'eq', 'trash');
+  if (f === 'trash') return q.or(`receiver.eq.${userEmail}.and(folder.eq.trash),sender.eq.${userEmail}.and(sender_folder.eq.trash)`);
+  if (f === 'inbox') return q.eq('receiver', userEmail).or('folder.eq.inbox,folder.is.null,folder.eq.EMPTY');
+  return q.eq('receiver', userEmail).eq('folder', f);
+}
+
 /* ============================================================
-   LOAD MESSAGES
+   CHARGEMENT
    ============================================================ */
+let loading = false;
 async function loadMessages() {
-  const { data: { session } } = await _sb.auth.getSession();
-  if (!session) { window.location.href = 'connexion.html'; return; }
-  const user = session.user;
-  userEmail = user.email;
+  if (loading) return;
+  loading = true;
+  $('refreshBtn').classList.add('is-loading');
+  try {
+    const { data: { session } } = await _sb.auth.getSession();
+    if (!session) { window.location.href = 'connexion.html'; return; }
+    if (userEmail !== session.user.email) {
+      userEmail = session.user.email;
+      loadRead();
+      const av = $('userAvatar');
+      av.textContent = initials(userEmail);
+      av.style.setProperty('--ah', hueOf(userEmail));
+      $('userLabel').textContent = userEmail.split('@')[0];
+    }
 
-  // User chip
-  document.getElementById('userAvatar').textContent = initials(userEmail);
-  document.getElementById('userLabel').textContent  = userEmail.split('@')[0];
+    const folderAtStart = currentFolder;
+    const { data, error } = await folderQuery(_sb.from('email').select('*').order('send_at', { ascending: false }), currentFolder);
+    if (error) { console.error(error); return; }
+    if (folderAtStart !== currentFolder) return;   /* l'utilisateur a changé de dossier entre-temps */
 
-  let query = _sb.from('email').select('*').order('send_at', { ascending: false });
-
-  if (currentFolder === 'sent') {
-    // sender_folder peut valoir 'sent', 'EMPTY', null, ou être absent
-    query = query.eq('sender', userEmail).not('sender_folder', 'eq', 'trash');
-  } else if (currentFolder === 'trash') {
-    query = query.or(
-      `receiver.eq.${userEmail}.and(folder.eq.trash),sender.eq.${userEmail}.and(sender_folder.eq.trash)`
-    );
-  } else if (currentFolder === 'inbox') {
-    query = query.eq('receiver', userEmail).or('folder.eq.inbox,folder.is.null,folder.eq.EMPTY');
-  } else {
-    query = query.eq('receiver', userEmail).eq('folder', currentFolder);
+    allMessages = data || [];
+    renderList();
+    updateCounters();
+    $('syncLabel').innerHTML = `<i class="ph-light ph-check" aria-hidden="true"></i> Synchronisé à ${new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
+  } finally {
+    loading = false;
+    setTimeout(() => $('refreshBtn').classList.remove('is-loading'), 300);
   }
-
-  const { data, error } = await query;
-  if (error) { console.error(error); return; }
-
-  allMessages = data || [];
-  renderList(allMessages);
-
-  // Mise à jour compteurs sidebar
-  updateCounters();
 }
 
 async function updateCounters() {
-  const folders = ['inbox', 'sent', 'favorites', 'classified', 'trash'];
-  for (const f of folders) {
-    let q = _sb.from('email').select('id', { count: 'exact', head: true });
-    if (f === 'sent') {
-      q = q.eq('sender', userEmail).not('sender_folder', 'eq', 'trash');
-    } else if (f === 'trash') {
-      q = q.or(`receiver.eq.${userEmail}.and(folder.eq.trash),sender.eq.${userEmail}.and(sender_folder.eq.trash)`);
-    } else if (f === 'inbox') {
-      q = q.eq('receiver', userEmail).or('folder.eq.inbox,folder.is.null,folder.eq.EMPTY');
-    } else {
-      q = q.eq('receiver', userEmail).eq('folder', f);
-    }
-    const { count } = await q;
-    const el = document.getElementById('cnt-' + f);
+  for (const f of ['inbox', 'sent', 'favorites', 'classified', 'trash']) {
+    const { count } = await folderQuery(_sb.from('email').select('id', { count: 'exact', head: true }), f);
+    const el = $('cnt-' + f);
     if (el) {
       el.textContent = count || '';
       el.className = 'folder-count' + (f === 'inbox' && count > 0 ? ' has-new' : '');
@@ -1242,175 +1094,228 @@ async function updateCounters() {
 }
 
 /* ============================================================
-   RENDER LIST
+   LISTE
    ============================================================ */
-function renderList(messages) {
-  const list  = document.getElementById('msgList');
-  const title = document.getElementById('listTitle');
-  const count = document.getElementById('listCount');
+function highlight(text, q) {
+  const safe = esc(text);
+  if (!q) return safe;
+  const i = safe.toLowerCase().indexOf(esc(q).toLowerCase());
+  if (i < 0) return safe;
+  return safe.slice(0, i) + '<mark>' + safe.slice(i, i + esc(q).length) + '</mark>' + safe.slice(i + esc(q).length);
+}
 
-  title.textContent = FOLDER_LABELS[currentFolder] || currentFolder;
-  count.textContent = messages.length + ' message' + (messages.length > 1 ? 's' : '');
+function visibleMessages() {
+  const q = searchQuery.toLowerCase();
+  if (!q) return allMessages;
+  return allMessages.filter((m) =>
+    (m.subject || '').toLowerCase().includes(q) ||
+    (m.sender || '').toLowerCase().includes(q) ||
+    (m.receiver || '').toLowerCase().includes(q) ||
+    (m.body || '').toLowerCase().includes(q));
+}
+
+function renderList() {
+  const list = $('msgList');
+  const messages = visibleMessages();
+  $('listTitle').firstChild.textContent = FOLDER_LABELS[currentFolder] || currentFolder;
+  $('listCount').textContent = messages.length ? String(messages.length) : '';
+
+  /* pastille « non lus » sur l'onglet Messagerie */
+  if (currentFolder === 'inbox') {
+    const unread = allMessages.filter(isUnread).length;
+    const badge = $('inboxBadge');
+    badge.textContent = unread; badge.hidden = unread === 0;
+  }
 
   list.innerHTML = '';
-
   if (!messages.length) {
-    list.innerHTML = `<div class="list-empty">
-      <div class="list-empty-icon">📭</div>
-      <div>Aucun message dans ce dossier</div>
-    </div>`;
-    renderEmptyReader();
+    const [ic, txt] = searchQuery ? ['ph-magnifying-glass', 'Aucun message ne correspond'] : FOLDER_EMPTY[currentFolder] || ['ph-tray', 'Aucun message'];
+    list.innerHTML = `<div class="list-empty"><i class="ph-light ${ic}" aria-hidden="true"></i>${txt}</div>`;
+    if (!currentMail || !allMessages.some((m) => m.id === currentMail.id)) renderEmptyReader();
     return;
   }
 
-  const showPreview = document.getElementById('togglePreview').checked;
-
-  messages.forEach((mail, idx) => {
+  const showPreview = $('togglePreview').checked;
+  let lastGroup = '';
+  messages.forEach((mail) => {
+    const g = groupOf(mail.send_at);
+    if (g !== lastGroup) {
+      const lab = document.createElement('div');
+      lab.className = 'group-label'; lab.textContent = g;
+      list.appendChild(lab);
+      lastGroup = g;
+    }
     const contact = mail.sender === userEmail ? mail.receiver : mail.sender;
-    const dateStr = formatDate(mail.send_at);
-
-    const item = document.createElement('div');
-    item.className = 'msg-item';
-    item._mail = mail; // attach directly to avoid closure/reference issues
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.className = 'msg' + (isUnread(mail) ? ' unread' : '');
+    item.setAttribute('role', 'option');
+    item.setAttribute('aria-selected', 'false');
+    item._mail = mail;
+    const flags = [];
+    if (mail.attachment) flags.push('<i class="ph-light ph-paperclip" aria-label="Pièce jointe"></i>');
+    const preview = (mail.body || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 90);
     item.innerHTML = `
-      <div class="unread-dot"></div>
-      <div class="msg-item-top">
-        <span class="msg-sender">${contact}</span>
-        <span class="msg-date">${dateStr}</span>
-      </div>
-      <div class="msg-subject">${mail.subject || '(sans objet)'}</div>
-      ${showPreview ? `<div class="msg-preview">${(mail.body || '').substring(0, 70)}…</div>` : ''}
-    `;
-    item.addEventListener('click', function(e) {
-      e.stopPropagation();
-      document.querySelectorAll('.msg-item').forEach(i => i.classList.remove('active'));
-      this.classList.add('active');
-      this.classList.remove('unread');
-      openMessage(this._mail);
-    });
+      <span class="avatar" style="--ah:${hueOf(contact)}" aria-hidden="true">${esc(initials(contact))}</span>
+      <span class="msg-main">
+        <span class="msg-top">
+          <span class="msg-from">${mail.sender === userEmail ? 'À : ' : ''}${highlight(displayName(contact), searchQuery)}</span>
+          <span class="msg-date">${esc(formatDate(mail.send_at))}</span>
+        </span>
+        <span class="msg-subject" style="display:block">${highlight(mail.subject || '(sans objet)', searchQuery)}<span class="msg-flags">${flags.join('')}</span></span>
+        ${showPreview ? `<span class="msg-preview" style="display:block">${highlight(preview, searchQuery)}</span>` : ''}
+      </span>`;
+    item.addEventListener('click', () => selectItem(item));
     list.appendChild(item);
   });
 
-  // Restaurer la sélection du mail courant, ou sélectionner le premier sans l'ouvrir
-  if (currentMail) {
-    const match = [...list.querySelectorAll('.msg-item')].find(i => i._mail.id === currentMail.id);
-    if (match) match.classList.add('active');
-  } else {
-    const firstItem = list.querySelector('.msg-item');
-    if (firstItem) {
-      firstItem.classList.add('active');
-      setTimeout(() => openMessage(firstItem._mail), 0);
-    }
+  /* on garde la sélection en cours, sinon on ouvre le premier message (sans le marquer lu) */
+  const items = [...list.querySelectorAll('.msg')];
+  const match = currentMail && items.find((i) => i._mail.id === currentMail.id);
+  if (match) match.setAttribute('aria-selected', 'true');
+  else if (!isMobile()) {
+    items[0].setAttribute('aria-selected', 'true');
+    openMessage(items[0]._mail);
   }
 }
 
-/* ============================================================
-   FILTER
-   ============================================================ */
-function filterMessages(query) {
-  const q = query.toLowerCase();
-  const filtered = allMessages.filter(m =>
-    (m.subject || '').toLowerCase().includes(q) ||
-    m.sender.toLowerCase().includes(q) ||
-    m.receiver.toLowerCase().includes(q) ||
-    (m.body || '').toLowerCase().includes(q)
-  );
-  renderList(filtered);
+const isMobile = () => window.matchMedia('(max-width: 720px)').matches;
+
+function selectItem(item, { focus = false } = {}) {
+  document.querySelectorAll('.msg[aria-selected="true"]').forEach((i) => i.setAttribute('aria-selected', 'false'));
+  item.setAttribute('aria-selected', 'true');
+  item.classList.remove('unread');
+  markRead(item._mail.id);
+  if (currentFolder === 'inbox') {
+    const unread = allMessages.filter(isUnread).length;
+    $('inboxBadge').textContent = unread; $('inboxBadge').hidden = unread === 0;
+  }
+  if (focus) item.focus({ preventScroll: true });
+  item.scrollIntoView({ block: 'nearest' });
+  openMessage(item._mail);
+  $('app').classList.add('is-reading');
 }
 
+let searchTimer = 0;
+$('searchInput').addEventListener('input', function () {
+  $('searchWrap').classList.toggle('has-value', this.value.length > 0);
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => { searchQuery = this.value.trim(); renderList(); }, 120);
+});
+$('togglePreview').addEventListener('change', renderList);
+
 /* ============================================================
-   OPEN MESSAGE
+   LECTURE
    ============================================================ */
-function openMessage(mail) {
+function openMessage(mail, { keep = false } = {}) {
+  const sameMail = currentMail && currentMail.id === mail.id;
   currentMail = mail;
   const contact = mail.sender === userEmail ? mail.receiver : mail.sender;
-  const ini     = initials(contact);
 
-  // Résolution du corps : comparer rgb du mail avec le HEX tapé dans le champ paramètres
-  const rgbVal   = (mail.rgb && mail.rgb !== 'NULL' && mail.rgb !== 'EMPTY') ? mail.rgb : null;
-  const hexTyped = normalizeHex((document.getElementById('hexInput').value || '').trim());
+  /* Résolution du corps : on compare le rgb du mail au HEX tapé dans les paramètres (logique d'origine) */
+  const rgbVal = (mail.rgb && mail.rgb !== 'NULL' && mail.rgb !== 'EMPTY') ? mail.rgb : null;
+  const hexTyped = normalizeHex(($('hexInput').value || '').trim());
   const showHidden = rgbVal && hexTyped && colorsMatch(hexTyped, rgbVal);
   const body = showHidden ? mail.hidden_body : (mail.body || mail.hidden_body || '');
 
-  const reader = document.getElementById('readerPane');
+  const d = new Date(mail.send_at);
+  const rel = relativeLong(mail.send_at);
+  const reader = $('readerPane');
   reader.innerHTML = `
-    <div class="reader-header">
-      <div class="reader-subject">${mail.subject || '(sans objet)'}</div>
-      <div class="reader-meta-row">
-        <div class="meta-avatar">${ini}</div>
-        <div class="meta-info">
-          <span class="meta-from">${mail.sender}</span>
-          <span class="meta-to">À : ${mail.receiver}</span>
-        </div>
-        <span class="meta-date">${new Date(mail.send_at).toLocaleString('fr-FR')}</span>
+    <article class="reader-inner${sameMail && keep ? '' : ' enter'}">
+      <button class="back" type="button" data-back><i class="ph-light ph-arrow-left" aria-hidden="true"></i> ${esc(FOLDER_LABELS[currentFolder])}</button>
+      <div class="reader-toolbar">
+        <button class="act" type="button" data-blocked><i class="ph-light ph-arrow-bend-up-left" aria-hidden="true"></i> Répondre</button>
+        <button class="act" type="button" data-blocked><i class="ph-light ph-arrow-bend-up-right" aria-hidden="true"></i> Transférer</button>
+        <button class="act" type="button" data-blocked><i class="ph-light ph-star" aria-hidden="true"></i> Favori</button>
+        <button class="act act--danger" type="button" data-blocked><i class="ph-light ph-trash" aria-hidden="true"></i> Supprimer</button>
       </div>
-    </div>
-    <div class="reader-actions">
-      <button class="action-btn" onclick="showToast('Ce compte est temporairement suspendu — action impossible')">↩ Répondre</button>
-      <button class="action-btn" onclick="showToast('Ce compte est temporairement suspendu — action impossible')">↪ Transférer</button>
-      <button class="action-btn" onclick="showToast('Ce compte est temporairement suspendu — action impossible')">⭐ Favori</button>
-      <button class="action-btn" onclick="showToast('Ce compte est temporairement suspendu — action impossible')">🗑 Supprimer</button>
-    </div>
-    <div class="reader-body">${body || ''}</div>
-    ${mail.attachment ? `<a class="reader-attachment" href="${mail.attachment}" target="_blank">📎 Pièce jointe</a>` : ''}
-  `;
+      <h2 class="reader-subject">${esc(mail.subject || '(sans objet)')}</h2>
+      <div class="reader-meta">
+        <span class="avatar" style="--ah:${hueOf(contact)}" aria-hidden="true">${esc(initials(contact))}</span>
+        <div class="meta-info">
+          <span class="meta-from">${esc(displayName(mail.sender))} <span style="color:var(--text-muted);font-weight:400">&lt;${esc(mail.sender)}&gt;</span></span>
+          <span class="meta-to">À : ${esc(mail.receiver)}</span>
+        </div>
+        <div class="meta-date">${esc(d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }))}, ${esc(d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }))}${rel ? `<small>${esc(rel)}</small>` : ''}</div>
+      </div>
+      <div class="reader-body${sameMail && keep ? ' swap' : ''}">${body || ''}</div>
+      ${mail.attachment ? `<a class="attachment" href="${esc(mail.attachment)}" target="_blank" rel="noopener"><span class="att-icon"><i class="ph-light ph-file-text" aria-hidden="true"></i></span><span>Pièce jointe<small>Ouvrir dans un nouvel onglet</small></span><i class="ph-light ph-arrow-up-right" aria-hidden="true"></i></a>` : ''}
+    </article>`;
+  reader.scrollTop = 0;
+  reader.querySelectorAll('[data-blocked]').forEach((b) => b.addEventListener('click', () => showToast(SUSPENDED)));
+  reader.querySelector('[data-back]').addEventListener('click', () => $('app').classList.remove('is-reading'));
 }
 
 function renderEmptyReader() {
-  document.getElementById('readerPane').innerHTML = `
+  currentMail = null;
+  $('readerPane').innerHTML = `
     <div class="reader-empty">
-      <div class="reader-empty-icon">✉</div>
-      <div class="reader-empty-text">Sélectionnez un message</div>
+      <div class="radar" aria-hidden="true"><span></span><i class="ph-light ph-envelope-simple-open"></i></div>
+      <div>Sélectionnez un message pour le lire</div>
+      <div style="font-size:13px">Astuce : <kbd>↑</kbd> <kbd>↓</kbd> pour naviguer</div>
     </div>`;
 }
 
 /* ============================================================
-   FOLDER SWITCH
+   CHANGEMENT DE DOSSIER
    ============================================================ */
-function switchFolder(el) {
-  document.querySelectorAll('.folder-item').forEach(f => f.classList.remove('active'));
-  el.classList.add('active');
-  currentFolder = el.dataset.folder;
+document.querySelectorAll('.folder').forEach((btn) => btn.addEventListener('click', () => {
+  if (btn.dataset.folder === currentFolder) return;
+  document.querySelectorAll('.folder').forEach((f) => f.removeAttribute('aria-current'));
+  btn.setAttribute('aria-current', 'true');
+  currentFolder = btn.dataset.folder;
+  currentMail = null;
+  searchQuery = ''; $('searchInput').value = ''; $('searchWrap').classList.remove('has-value');
+  $('app').classList.remove('is-reading');
   renderEmptyReader();
+  $('msgList').innerHTML = '<div class="skel"><span class="s-av"></span><div><span class="s-l1"></span><span class="s-l2"></span><span class="s-l3"></span></div></div>'.repeat(3);
   loadMessages();
-}
+}));
 
 /* ============================================================
-   COMPOSE
+   RÉDACTION : le compte est suspendu (comportement d'origine)
    ============================================================ */
-function openCompose() {
-  showToast('Ce compte est temporairement suspendu — action impossible');
-}
-
-function closeCompose() {
-  document.getElementById('composeOverlay').classList.remove('active');
-}
-
-function closeComposeOutside(e) {
-  if (e.target === document.getElementById('composeOverlay')) closeCompose();
-}
-
-async function sendMessage() {
-  showToast('Ce compte est temporairement suspendu — action impossible');
-}
+$('composeBtn').addEventListener('click', () => showToast(SUSPENDED));
 
 /* ============================================================
-   AUTO-REFRESH
+   CLAVIER
    ============================================================ */
-let refreshInterval = null;
-
-document.getElementById('toggleRefresh').addEventListener('change', function() {
-  if (this.checked) {
-    refreshInterval = setInterval(loadMessages, 30000);
-  } else {
-    clearInterval(refreshInterval);
+document.addEventListener('keydown', (e) => {
+  const typing = /input|textarea|select/i.test(document.activeElement.tagName);
+  if (e.key === 'Escape') {
+    setSettings(false);
+    if (document.activeElement === $('searchInput') && $('searchInput').value) {
+      $('searchInput').value = ''; searchQuery = ''; $('searchWrap').classList.remove('has-value'); renderList();
+    }
+    $('app').classList.remove('is-reading');
+    return;
   }
+  if (typing) return;
+  if (e.key === '/') { e.preventDefault(); $('searchInput').focus(); return; }
+  const dir = (e.key === 'ArrowDown' || e.key === 'j') ? 1 : (e.key === 'ArrowUp' || e.key === 'k') ? -1 : 0;
+  if (!dir || settingsPanel.classList.contains('is-open')) return;
+  const items = [...document.querySelectorAll('.msg')];
+  if (!items.length) return;
+  e.preventDefault();
+  const cur = items.findIndex((i) => i.getAttribute('aria-selected') === 'true');
+  const next = items[Math.max(0, Math.min(items.length - 1, cur + dir))];
+  if (next && next !== items[cur]) selectItem(next, { focus: true });
 });
 
 /* ============================================================
-   BOOT
+   RAFRAÎCHISSEMENT
    ============================================================ */
-// Restaurer le thème sauvegardé (persistance inter-onglets)
+let refreshInterval = null;
+$('refreshBtn').addEventListener('click', loadMessages);
+$('toggleRefresh').addEventListener('change', function () {
+  clearInterval(refreshInterval);
+  if (this.checked) refreshInterval = setInterval(loadMessages, 30000);
+});
+
+/* ============================================================
+   DÉMARRAGE
+   ============================================================ */
 (function restoreTheme() {
   try {
     const saved = sessionStorage.getItem('ifras_theme');
@@ -1418,9 +1323,10 @@ document.getElementById('toggleRefresh').addEventListener('change', function() {
       const { h, s, special } = JSON.parse(saved);
       applyTheme(h, s, special);
     }
-  } catch(e) {}
+  } catch (e) {}
 })();
 
+renderEmptyReader();
 loadMessages();
 refreshInterval = setInterval(loadMessages, 30000);
 </script>
