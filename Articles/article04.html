@@ -2,646 +2,1758 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Sécurité des systèmes d'authentification · IFRAS DSIN</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<style>
-:root {
-  --bg-main:#050b1e; --bg-dark:#020617; --bg-light:#070f2b;
-  --border:#1b2555; --border-sub:#0e1535;
-  --accent:#34d399; --accent2:#4f6bed; --accent3:#f97316;
-  --text-main:#e6e6e6; --text-soft:#aab3d6; --text-muted:#4a5280;
-  --mono:"DM Mono",monospace;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:"DM Sans",sans-serif;background:var(--bg-main);color:var(--text-main);line-height:1.7;}
-::-webkit-scrollbar{width:4px;} ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
-header{position:fixed;top:0;width:100%;z-index:1000;background:rgba(5,11,30,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
-.header-inner{max-width:1300px;margin:auto;padding:12px 30px;display:flex;align-items:center;justify-content:space-between;}
-.header-left{display:flex;align-items:center;gap:40px;}
-.logo-link img{height:60px;}
-.main-nav{list-style:none;display:flex;gap:32px;}
-.main-nav a{text-decoration:none;color:var(--text-soft);font-size:14px;letter-spacing:.05em;}
-.main-nav a:hover{color:white;}
-.login-btn{padding:8px 18px;border-radius:6px;border:1px solid var(--accent2);color:white;text-decoration:none;font-size:13px;}
-.login-btn:hover{background:var(--accent2);}
-.sub-nav{margin-top:84px;background:var(--bg-light);border-bottom:1px solid var(--border);}
-.sub-nav ul{max-width:1300px;margin:0 auto;padding:0 30px;list-style:none;display:flex;justify-content:space-between;}
-.sub-nav li{padding:14px 0;}
-.sub-nav a{color:var(--text-soft);text-decoration:none;font-size:14px;letter-spacing:.06em;}
-.sub-nav a:hover{color:white;}
-.sub-nav a.active{color:white;border-bottom:2px solid var(--accent2);padding-bottom:12px;}
-.pub-wrapper{max-width:900px;margin:0 auto;padding:52px 30px 100px;}
-.breadcrumb{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--text-muted);letter-spacing:.06em;margin-bottom:36px;font-family:var(--mono);}
-.breadcrumb a{color:var(--text-muted);text-decoration:none;}
-.breadcrumb a:hover{color:var(--accent);}
-.breadcrumb span{opacity:.4;}
-/* META BADGES */
-.meta-top{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
-.badge{font-size:10.5px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;font-weight:500;}
-.badge-j{background:rgba(52,211,153,.1);color:var(--accent);border:1px solid rgba(52,211,153,.25);}
-.badge-d{background:rgba(79,107,237,.1);color:var(--accent2);border:1px solid rgba(79,107,237,.2);}
-.badge-o{background:rgba(52,211,153,.07);color:var(--accent);border:1px solid rgba(52,211,153,.15);}
-.badge-dt{background:rgba(255,255,255,.04);color:var(--text-muted);border:1px solid rgba(255,255,255,.08);}
-/* TITRE */
-.article-title{font-family:"DM Sans",sans-serif;font-size:clamp(18px,2.4vw,23px);font-weight:400;color:var(--text-main);line-height:1.5;letter-spacing:0;margin-bottom:18px;}
-.article-subtitle{font-size:15px;color:var(--text-soft);font-weight:300;line-height:1.65;margin-bottom:28px;font-style:italic;border-left:2px solid var(--accent);padding-left:16px;}
-.authors-block{background:var(--bg-light);border:1px solid var(--border);border-radius:10px;padding:16px 20px;display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;margin-bottom:28px;}
-.author-entry{display:flex;flex-direction:column;gap:2px;}
-.author-name{font-size:13.5px;font-weight:600;color:white;}
-.author-role{font-size:11px;color:var(--text-muted);letter-spacing:.04em;}
-.author-sep{width:1px;background:var(--border);align-self:stretch;}
-.cite-block{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:12px 16px;background:rgba(0,0,0,.25);border:1px solid var(--border-sub);border-radius:8px;}
-.cite-item{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;color:var(--text-muted);}
-.cite-label{color:var(--accent);font-weight:500;}
-.cite-sep{color:var(--border);}
-.art-divider{height:1px;background:linear-gradient(90deg,var(--accent) 0%,transparent 60%);margin:40px 0;opacity:.3;}
-/* ABSTRACT */
-.abstract-box{background:rgba(52,211,153,.04);border:1px solid rgba(52,211,153,.14);border-radius:12px;padding:28px 32px;margin-bottom:44px;}
-.abstract-label{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;font-weight:500;}
-.abstract-text{font-size:14.5px;line-height:1.85;color:var(--text-soft);font-weight:300;}
-.kw-wrap{margin-top:16px;display:flex;flex-wrap:wrap;gap:7px;align-items:center;}
-.kw-lbl{font-size:11px;color:var(--text-muted);font-family:var(--mono);letter-spacing:.08em;}
-.kw-tag{font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--text-soft);}
-/* SECTIONS */
-.section-heading{font-family:"Syne",sans-serif;font-size:18px;font-weight:700;color:white;margin:44px 0 16px;display:flex;align-items:center;gap:12px;}
-.section-heading::before{content:'';display:block;width:4px;height:18px;background:var(--accent);border-radius:2px;flex-shrink:0;}
-.section-heading.blue::before{background:var(--accent2);}
-.section-heading.orange::before{background:var(--accent3);}
-.sub{font-family:"Syne",sans-serif;font-weight:700;color:var(--text-soft);margin:28px 0 10px;letter-spacing:.04em;text-transform:uppercase;font-size:11.5px;}
-p.bt{font-size:14.5px;color:var(--text-soft);line-height:1.85;font-weight:300;margin-bottom:16px;}
-ul.bt-list{font-size:14.5px;color:var(--text-soft);line-height:1.85;font-weight:300;margin-bottom:16px;padding-left:20px;display:flex;flex-direction:column;gap:8px;}
-ul.bt-list li{padding-left:8px;}
-ul.bt-list li strong{color:var(--text-main);font-weight:500;}
-/* TABLEAU */
-.tbl-wrap{margin:36px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);}
-.tbl-head{background:rgba(52,211,153,.08);padding:12px 20px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--border);}
-table{width:100%;border-collapse:collapse;font-size:13px;}
-thead th{background:rgba(0,0,0,.3);padding:11px 16px;text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--border-sub);font-weight:500;}
-thead th:not(:first-child){text-align:center;}
-tbody tr{border-bottom:1px solid var(--border-sub);transition:background .15s;}
-tbody tr:last-child{border-bottom:none;}
-tbody tr:hover{background:rgba(255,255,255,.025);}
-tbody td{padding:10px 16px;color:var(--text-soft);vertical-align:middle;font-weight:300;}
-tbody td:not(:first-child){text-align:center;font-family:var(--mono);font-size:12.5px;color:var(--text-main);}
-tbody td:first-child{font-weight:500;color:var(--text-main);}
-tbody td span{font-size:11px;color:var(--text-muted);display:block;font-family:var(--mono);}
-.tbl-note{padding:10px 20px;font-size:11.5px;color:var(--text-muted);background:rgba(0,0,0,.2);font-style:italic;border-top:1px solid var(--border-sub);}
-/* ÉQUATION */
-.equation-box{background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:10px;padding:24px 32px;margin:28px 0;text-align:center;font-family:var(--mono);color:#c7d2fe;font-size:15px;}
-/* HIGHLIGHT */
-.hl{border-left:3px solid var(--accent);background:rgba(52,211,153,.04);border-radius:0 8px 8px 0;padding:16px 20px;margin:24px 0;font-size:14px;color:var(--text-soft);font-style:italic;line-height:1.75;}
-.hl.blue{border-color:var(--accent2);background:rgba(79,107,237,.05);}
-.hl.orange{border-color:var(--accent3);background:rgba(249,115,22,.04);}
-/* FIGURE IMAGE */
-.fig-wrap{margin:36px 0;background:var(--bg-light);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
-.fig-img{width:100%;display:block;border-bottom:1px solid var(--border);}
-.fig-cap{padding:14px 20px;font-size:12.5px;color:var(--text-muted);line-height:1.6;}
-.fig-cap strong{font-weight:600;color:var(--text-soft);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
-/* SPLIT LAYOUT */
-.split-wrap{display:flex;gap:24px;align-items:flex-start;margin:28px 0;}
-.split-wrap.reverse{flex-direction:row-reverse;}
-.split-wrap img{width:42%;border-radius:10px;border:1px solid var(--border);}
-.split-wrap .split-text{flex:1;}
-/* REFS */
-.refs-sec{margin-top:60px;padding-top:32px;border-top:1px solid var(--border);}
-.ref-ttl{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:20px;}
-.ref-list{counter-reset:ref;display:flex;flex-direction:column;gap:6px;}
-.ref-item{counter-increment:ref;display:flex;align-items:baseline;gap:12px;font-size:13px;line-height:1.55;color:var(--text-muted);padding:9px 14px;border-radius:6px;background:rgba(0,0,0,.15);border:1px solid var(--border-sub);}
-.ref-item::before{content:'[' counter(ref) ']';font-family:var(--mono);font-size:11px;color:var(--accent);flex-shrink:0;min-width:26px;}
-.ref-item b{color:var(--text-soft);font-weight:500;}
-.ref-item em{color:var(--text-muted);}
-.footnote{margin-top:48px;padding:20px 24px;background:rgba(0,0,0,.25);border:1px solid var(--border-sub);border-radius:10px;font-size:11.5px;color:var(--text-muted);line-height:1.7;}
-.footnote strong{color:var(--text-soft);}
-/* PROGRESS / TOC */
-.progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent2),#818cf8);z-index:9999;width:0%;transition:width .1s linear;}
-.toc-sidebar{position:fixed;right:32px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:100;}
-.toc-dot{width:6px;height:6px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s,transform .2s;position:relative;}
-.toc-dot:hover,.toc-dot.active{background:var(--accent2);transform:scale(1.5);}
-.toc-dot::after{content:attr(data-label);position:absolute;right:14px;top:50%;transform:translateY(-50%);background:var(--bg-light);border:1px solid var(--border);border-radius:5px;padding:3px 8px;font-size:10.5px;color:var(--text-soft);white-space:nowrap;font-family:var(--mono);letter-spacing:.04em;opacity:0;pointer-events:none;transition:opacity .2s;}
-.toc-dot:hover::after{opacity:1;}
-@media(max-width:1100px){.toc-sidebar{display:none;}}
-@media(max-width:640px){.split-wrap,.split-wrap.reverse{flex-direction:column;}.split-wrap img{width:100%;}}
+<title>Mots de passe : la longueur protège mieux que la complexité | Publications IFRAS</title>
+<meta name="description" content="Entropie, longueur et diversité : ce que vaut vraiment chaque caractère d'un mot de passe, et la nouvelle politique d'accès de l'IFRAS.">
+<meta name="theme-color" content="#050b1e">
+<link rel="icon" type="image/png" sizes="1000x1000" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
 
-/* MathJax override pour le thème sombre */
-.MathJax{color:#c7d2fe !important;}
+<style>
+/* =========================================================
+   TOKENS (identiques aux autres pages)
+   ========================================================= */
+:root {
+  --bg-main: #050b1e;
+  --bg-dark: #020617;
+  --bg-light: #070f2b;
+  --bg-raise: #0a1436;
+  --accent: #4f6bed;
+  --accent-hover: #3d5adb;
+  --accent-soft: rgba(79,107,237,.14);
+  --accent-line: rgba(79,107,237,.38);
+  --text-main: #e6e6e6;
+  --text-strong: #f5f7ff;
+  --text-soft: #aab3d6;
+  --text-mute: #8891b8;
+  --border: #1b2555;
+
+  /* Une couleur par type de contenu */
+  --t-sci: #60a5fa;
+  --t-ifras: #34d399;
+  --t-event: #f97316;
+  /* Types de publications IFRAS */
+  --t-lettre: #60a5fa;
+  --t-rapport: #34d399;
+  --t-hs: #f97316;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --header-h: 68px;
+  --subnav-h: 48px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 20px); }
+
+body {
+  margin: 0;
+  font-family: "DM Sans", "Segoe UI", system-ui, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+[hidden] { display: none !important; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.skip-link {
+  position: absolute; left: 16px; top: -48px;
+  padding: 10px 16px;
+  background: var(--accent); color: #fff;
+  border-radius: var(--radius-sm);
+  z-index: 3000; text-decoration: none;
+  transition: top 160ms var(--ease-out);
+}
+.skip-link:focus { top: 12px; }
+
+.container { max-width: 1300px; margin: 0 auto; padding: 0 30px; }
+
+/* =========================================================
+   BOUTONS
+   ========================================================= */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 22px;
+  border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 500;
+  text-decoration: none; white-space: nowrap;
+  border: 1px solid transparent;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.btn:active { transform: scale(0.97); }
+.btn i { font-size: 16px; transition: transform 200ms var(--ease-out); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-ghost { border-color: var(--accent-line); color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-ghost:hover { background: var(--accent-soft); border-color: var(--accent); }
+  .btn:hover i { transform: translateX(3px); }
+}
+
+.text-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--text-soft);
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.text-link i { transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .text-link:hover { color: #fff; }
+  .text-link:hover i { transform: translateX(3px); }
+}
+
+/* =========================================================
+   HEADER (opaque)
+   ========================================================= */
+.site-header {
+  position: fixed; inset: 0 0 auto 0;
+  z-index: 2000;
+  height: var(--header-h);
+  background: rgba(5,11,30,.88);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.header-left { display: flex; align-items: center; gap: 44px; }
+.logo-link { display: flex; align-items: center; }
+.logo-link img { height: 44px; width: auto; }
+
+.main-nav { list-style: none; display: flex; gap: 6px; margin: 0; padding: 0; }
+.main-nav a {
+  position: relative; display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--text-soft);
+  font-size: 14px; letter-spacing: .02em;
+  border-radius: 6px;
+  transition: color 160ms ease;
+}
+.main-nav a::after {
+  content: ""; position: absolute;
+  left: 12px; right: 12px; bottom: 2px; height: 1px;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 200ms var(--ease-out);
+}
+.main-nav a[aria-current="page"] { color: #fff; }
+.main-nav a[aria-current="page"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .main-nav a:hover { color: #fff; }
+  .main-nav a:hover::after { transform: scaleX(1); }
+}
+
+.header-right { display: flex; align-items: center; gap: 10px; }
+.header-right .btn { padding: 9px 18px; font-size: 13px; }
+
+.menu-toggle {
+  display: none;
+  width: 42px; height: 42px;
+  align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: #fff; font-size: 20px; cursor: pointer;
+  transition: transform 160ms var(--ease-out);
+}
+.menu-toggle:active { transform: scale(0.95); }
+
+.mobile-panel {
+  position: fixed; top: var(--header-h); left: 12px; right: 12px;
+  z-index: 1999;
+  padding: 10px;
+  background: rgba(7,15,43,.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(2,6,23,.6);
+  transform-origin: top right;
+  opacity: 0; transform: scale(0.96) translateY(-6px);
+  pointer-events: none; visibility: hidden;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s linear 220ms;
+}
+.mobile-panel.is-open {
+  opacity: 1; transform: none; pointer-events: auto; visibility: visible;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s;
+}
+.mobile-panel ul { list-style: none; margin: 0; padding: 0; }
+.mobile-panel a {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px; color: var(--text-main);
+  text-decoration: none; font-size: 16px; border-radius: 10px;
+}
+.mobile-panel a[aria-current="page"] { background: var(--accent-soft); color: #fff; }
+.mobile-panel .btn { width: 100%; justify-content: center; margin-top: 8px; }
+
+/* =========================================================
+   SOUS-NAVIGATION (ancres + section visible)
+   ========================================================= */
+.subnav {
+  position: sticky;
+  top: var(--header-h);
+  margin-top: var(--header-h);
+  z-index: 1500;
+  height: var(--subnav-h);
+  background: rgba(8,18,53,.94);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.subnav-list {
+  height: 100%;
+  list-style: none; margin: 0 auto; padding: 0 30px;
+  max-width: 1300px;
+  display: flex; align-items: stretch; justify-content: space-between;
+}
+.subnav-list li { display: flex; }
+.subnav-link {
+  position: relative;
+  display: flex; align-items: center; gap: 9px;
+  padding: 0 14px;
+  color: var(--text-soft);
+  text-decoration: none;
+  font-size: 14px; font-weight: 500;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.subnav-link i { font-size: 17px; color: var(--c); }
+.subnav-link::after {
+  content: ""; position: absolute;
+  left: 14px; right: 14px; bottom: -1px; height: 2px;
+  background: var(--c);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+.subnav-link[aria-current="true"] { color: #fff; }
+.subnav-link[aria-current="true"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .subnav-link:hover { color: #fff; }
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.site-footer {
+  margin-top: 100px;
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border);
+  padding: 36px 0;
+  font-size: 13px; color: var(--text-mute);
+}
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+/* =========================================================
+   ARTICLE
+   ========================================================= */
+:root {
+  --mono: "DM Mono", ui-monospace, Menlo, Consolas, monospace;
+  --c10: #3b82f6;   /* CMC-10Z */
+  --c20: #059669;   /* CMC-20Z */
+  --c30: #ea580c;   /* CMC-30Z */
+  --hot: #f97316;
+  --ok: #34d399;
+  --warn: #fbbf24;
+  --bad: #f87171;
+  --surface: #070f2b;
+  --line: #13204d;
+}
+html { scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 24px); }
+
+/* barre de lecture sous la sous-navigation */
+.progress {
+  position: fixed; left: 0; right: 0; top: calc(var(--header-h) + var(--subnav-h)); z-index: 1400;
+  height: 2px; background: transparent; pointer-events: none;
+}
+.progress span { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, var(--accent), #fb7185); transform-origin: left; transform: scaleX(0); }
+
+/* ----- En-tête de l'article ----- */
+.art-hero { position: relative; overflow: hidden; isolation: isolate; border-bottom: 1px solid var(--border); }
+.art-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(ellipse 45% 70% at 78% 45%, rgba(249,115,22,.16), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(79,107,237,.14), transparent 60%);
+}
+.art-hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 48px; align-items: center; padding: 48px 0 56px; }
+.crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 26px; padding: 0; list-style: none; font-size: 13px; color: var(--text-mute); }
+.crumbs a { color: var(--text-soft); text-decoration: none; transition: color 160ms ease; }
+.crumbs i { font-size: 11px; opacity: .6; }
+@media (hover: hover) and (pointer: fine) { .crumbs a:hover { color: #fff; } }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 11px; border-radius: 999px; font-size: 12.5px; font-weight: 500;
+  color: var(--b, var(--text-soft));
+  background: color-mix(in srgb, var(--b, var(--text-soft)) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--b, var(--text-soft)) 28%, transparent);
+}
+.badge i { font-size: 14px; }
+.art-title {
+  margin: 0 0 18px; font-family: "Syne", sans-serif; font-weight: 700;
+  font-size: clamp(30px, 3.6vw, 48px); line-height: 1.08; letter-spacing: -0.025em; color: var(--text-strong);
+  text-wrap: balance;
+}
+.art-lede { margin: 0 0 28px; max-width: 60ch; font-size: 18px; line-height: 1.6; color: var(--text-soft); font-weight: 300; }
+.authors { display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 0 0 22px; padding: 0; list-style: none; }
+.author { display: flex; align-items: center; gap: 10px; }
+.author .av { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-family: "Syne", sans-serif; font-size: 12px; font-weight: 700; color: #fff; background: linear-gradient(135deg, hsl(var(--ah) 55% 38%), hsl(var(--ah) 70% 60%)); }
+.author strong { display: block; font-size: 14px; font-weight: 500; color: var(--text-main); }
+.author small { display: block; font-size: 12.5px; color: var(--text-mute); }
+.meta-line { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 13px; color: var(--text-mute); }
+.meta-line span { display: inline-flex; align-items: center; gap: 7px; }
+.meta-line i { font-size: 15px; color: var(--text-soft); }
+.meta-line code { font-family: var(--mono); font-size: 12.5px; color: var(--text-soft); }
+
+.hero-in { opacity: 0; transform: translateY(12px); animation: heroIn 700ms var(--ease-out) forwards; animation-delay: calc(80ms + var(--i, 0) * 90ms); }
+@keyframes heroIn { to { opacity: 1; transform: none; } }
+
+/* illustration : capsule en rentrée */
+.reentry { position: relative; aspect-ratio: 1 / 0.86; max-width: 520px; justify-self: end; width: 100%; }
+.reentry canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.reentry svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.reentry .shock { animation: shock 2.4s var(--ease-in-out) infinite alternate; transform-origin: 62% 50%; }
+@keyframes shock { from { opacity: .75; transform: scale(.985); } to { opacity: 1; transform: scale(1.015); } }
+.reentry .glow { animation: glow 1.6s ease-in-out infinite alternate; }
+@keyframes glow { from { opacity: .55; } to { opacity: .95; } }
+.reentry-tag {
+  position: absolute; display: flex; align-items: center; gap: 8px;
+  padding: 6px 10px; border-radius: 8px; font-family: var(--mono); font-size: 12px; color: var(--text-soft);
+  background: rgba(2,6,23,.7); border: 1px solid var(--border); backdrop-filter: blur(6px);
+}
+.reentry-tag b { color: #fff; font-weight: 500; }
+.reentry-tag i { width: 7px; height: 7px; border-radius: 50%; background: var(--hot); }
+
+/* ----- Mise en page 3 colonnes ----- */
+.art-layout {
+  display: grid; grid-template-columns: 220px minmax(0, 720px) 280px; justify-content: space-between; gap: 48px;
+  padding-top: 48px;
+}
+.toc, .rail { position: sticky; top: calc(var(--header-h) + var(--subnav-h) + 28px); align-self: start; }
+.toc-title, .rail-title { margin: 0 0 14px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.toc ol { position: relative; list-style: none; margin: 0; padding: 0 0 0 14px; border-left: 1px solid var(--border); }
+.toc-ind { list-style: none; position: absolute; left: -1px; top: 0; width: 2px; height: 34px; background: var(--accent); border-radius: 2px; transition: transform 300ms var(--ease-out), height 300ms var(--ease-out); }
+.toc a {
+  display: flex; gap: 10px; padding: 7px 0; font-size: 14px; line-height: 1.35;
+  color: var(--text-mute); text-decoration: none; transition: color 160ms ease;
+}
+.toc a span { font-family: var(--mono); font-size: 12px; padding-top: 1px; color: inherit; opacity: .8; min-width: 16px; }
+.toc a.on { color: #fff; }
+@media (hover: hover) and (pointer: fine) { .toc a:hover { color: var(--text-main); } }
+.toc-time { display: flex; align-items: center; gap: 8px; margin-top: 18px; font-size: 13px; color: var(--text-mute); }
+.toc-time i { font-size: 15px; }
+
+/* ----- Colonne de droite ----- */
+.rail { display: grid; gap: 16px; max-height: calc(100vh - var(--header-h) - var(--subnav-h) - 44px); overflow-y: auto; scrollbar-width: none; overscroll-behavior: contain; }
+.rail::-webkit-scrollbar { display: none; }
+.rail-card { padding: 18px; border-radius: var(--radius); background: var(--bg-light); border: 1px solid var(--border); }
+.cite-text { margin: 0 0 14px; font-size: 13px; line-height: 1.6; color: var(--text-soft); }
+.cite-text em { color: var(--text-main); }
+.rail-actions { display: grid; gap: 8px; }
+.rbtn {
+  display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 40px; border-radius: 10px;
+  border: 1px solid var(--border); background: transparent; color: var(--text-main); font: inherit; font-size: 13.5px; cursor: pointer; text-decoration: none;
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out);
+}
+.rbtn i { font-size: 16px; }
+.rbtn:active { transform: scale(.97); }
+.rbtn.done { border-color: color-mix(in srgb, var(--ok) 45%, transparent); color: var(--ok); }
+@media (hover: hover) and (pointer: fine) { .rbtn:hover { border-color: var(--accent); background: var(--accent-soft); } }
+.fig-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.fig-list a { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: center; padding: 7px 8px; margin: 0 -8px; border-radius: 8px; font-size: 13.5px; color: var(--text-soft); text-decoration: none; transition: background-color 120ms ease, color 120ms ease; }
+.fig-list i { font-size: 17px; color: var(--accent); }
+@media (hover: hover) and (pointer: fine) { .fig-list a:hover { background: var(--bg-raise); color: #fff; } }
+.prog-link { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.prog-link .pi { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; font-size: 19px; color: var(--hot); background: rgba(249,115,22,.12); flex-shrink: 0; }
+.prog-link strong { display: block; font-size: 14px; font-weight: 500; }
+.prog-link small { display: block; font-size: 12.5px; color: var(--text-mute); }
+
+/* ----- Corps de texte ----- */
+.art { min-width: 0; counter-reset: fig; }
+.art p { margin: 0 0 18px; font-size: 17px; line-height: 1.75; color: #c3cae6; font-weight: 300; }
+.art p strong { color: var(--text-main); font-weight: 500; }
+.art h2 {
+  display: flex; align-items: baseline; gap: 14px;
+  margin: 64px 0 18px; font-family: "Syne", sans-serif; font-size: 26px; font-weight: 700; letter-spacing: -0.01em; color: var(--text-strong);
+}
+.art h2 .n { font-family: var(--mono); font-size: 14px; font-weight: 400; color: var(--accent); }
+.art h3 { margin: 34px 0 12px; font-size: 18px; font-weight: 500; color: var(--text-main); }
+sub, sup { line-height: 0; }
+
+/* L'essentiel */
+.essentials { padding: 26px; border-radius: 18px; background: linear-gradient(160deg, var(--bg-raise), var(--bg-light)); border: 1px solid var(--border); }
+.essentials-head { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; }
+.essentials-head i { font-size: 17px; color: var(--hot); }
+.kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 22px; }
+.kpi { padding: 16px; border-radius: 14px; background: rgba(2,6,23,.45); border: 1px solid var(--line); }
+.kpi strong { display: block; font-family: "Syne", sans-serif; font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -0.02em; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.kpi strong small { font-size: .55em; font-weight: 700; margin-left: 2px; color: var(--text-soft); }
+.kpi span { display: block; margin-top: 8px; font-size: 13.5px; line-height: 1.4; color: var(--text-soft); }
+.takeaways { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.takeaways li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 15.5px; line-height: 1.55; color: var(--text-main); }
+.takeaways i { font-size: 18px; color: var(--ok); margin-top: 2px; }
+
+/* Résumé */
+.abstract { margin-top: 28px; padding: 24px 26px; border-radius: 16px; border: 1px solid var(--border); background: rgba(79,107,237,.05); }
+.abstract .label { display: block; margin-bottom: 10px; font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+.abstract p { font-size: 15.5px !important; margin: 0 !important; }
+.kw { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+.kw span { padding: 3px 10px; border-radius: 999px; font-size: 12.5px; color: var(--text-soft); border: 1px solid var(--border); }
+
+/* Termes expliqués (infobulle) */
+.term {
+  position: relative; display: inline; padding: 0; border: 0; background: none; font: inherit; color: var(--text-main); cursor: help;
+  text-decoration: underline dotted color-mix(in srgb, var(--accent) 80%, transparent); text-decoration-thickness: 1.5px; text-underline-offset: 4px;
+}
+.tip {
+  position: absolute; z-index: 1600; width: min(300px, calc(100vw - 32px));
+  padding: 12px 14px; border-radius: 12px;
+  background: #0b1540; border: 1px solid var(--accent-line); box-shadow: 0 18px 50px rgba(0,0,0,.5);
+  font-size: 13.5px; line-height: 1.55; color: var(--text-soft); font-weight: 400;
+  opacity: 0; transform: scale(.97) translateY(4px); pointer-events: none;
+  transition: opacity 140ms ease, transform 160ms var(--ease-out);
+}
+.tip.show { opacity: 1; transform: none; }
+.tip.instant { transition: none; }
+.tip b { display: block; margin-bottom: 3px; color: #fff; font-weight: 500; font-size: 14px; }
+.cite { font-family: var(--mono); font-size: .78em; color: var(--accent); text-decoration: none; vertical-align: .15em; padding: 0 1px; border: 0; background: none; cursor: pointer; }
+
+/* Encadrés */
+.note { display: grid; grid-template-columns: 26px 1fr; gap: 12px; margin: 26px 0; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.note i { font-size: 22px; color: var(--nc, var(--accent)); }
+.note p { margin: 0 !important; font-size: 15.5px !important; color: var(--text-main) !important; }
+.note .nt { display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--nc, var(--accent)); font-weight: 500; }
+
+/* ----- Figures ----- */
+.fig { margin: 34px 0; border-radius: 18px; border: 1px solid var(--border); background: var(--surface); overflow: hidden; counter-increment: fig; scroll-margin-top: calc(var(--header-h) + var(--subnav-h) + 24px); }
+.fig-stage { position: relative; padding: 22px; background: radial-gradient(ellipse at 50% 0%, rgba(79,107,237,.06), transparent 70%); }
+.fig-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin-bottom: 16px; }
+.fig-name { font-size: 14.5px; font-weight: 500; color: var(--text-main); }
+.fig figcaption, .fig .cap { padding: 14px 22px 18px; border-top: 1px solid var(--line); font-size: 14px; line-height: 1.6; color: var(--text-soft); }
+.fig figcaption b, .fig .cap b { font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-right: 8px; }
+.fig svg { display: block; width: 100%; height: auto; overflow: visible; }
+.fig text { font-family: "DM Sans", sans-serif; }
+.fig .mono, .fig text.mono { font-family: var(--mono); }
+.ctrl { display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 12px; border-radius: 9px; border: 1px solid var(--border); background: var(--bg-light); color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out); }
+.ctrl i { font-size: 15px; }
+.ctrl:active { transform: scale(.96); }
+@media (hover: hover) and (pointer: fine) { .ctrl:hover { color: #fff; border-color: var(--accent); } }
+
+/* Fig. 1 trajectoire */
+.readouts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+.readout { padding: 10px 12px; border-radius: 10px; background: rgba(2,6,23,.5); border: 1px solid var(--line); }
+.readout small { display: block; font-size: 12px; color: var(--text-mute); }
+.readout strong { display: block; margin-top: 2px; font-family: var(--mono); font-size: 17px; font-weight: 500; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.readout.hot strong { color: var(--rc, var(--text-strong)); }
+.scrub { display: flex; align-items: center; gap: 12px; margin-top: 14px; }
+.scrub input { flex: 1; accent-color: var(--hot); }
+.scrub output { min-width: 52px; text-align: right; font-family: var(--mono); font-size: 13px; color: var(--text-soft); }
+
+/* Fig. 2 microstructure */
+.parts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.part { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease; }
+.part i { width: 10px; height: 10px; border-radius: 3px; background: var(--pc); }
+.part[aria-pressed="true"] { color: #fff; border-color: var(--pc); background: color-mix(in srgb, var(--pc) 14%, transparent); }
+.art .part-desc { margin: 12px 0 0; min-height: 44px; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+.part-desc b { color: #fff; font-weight: 500; }
+.micro [data-part] { transition: opacity 220ms ease; }
+.micro.focus [data-part] { opacity: .16; }
+.micro.focus [data-part].lit { opacity: 1; }
+
+/* Fig. 3 banc d'essai */
+.bench-v { display: none !important; }
+.flow { stroke-dasharray: 6 10; animation: flow 900ms linear infinite; }
+@keyframes flow { to { stroke-dashoffset: -32; } }
+.flame { animation: glow 900ms ease-in-out infinite alternate; }
+
+/* Tableau */
+.table-wrap { margin: 30px 0; border-radius: 16px; border: 1px solid var(--border); overflow: hidden; background: var(--surface); }
+.table-cap { padding: 14px 20px; font-size: 14px; color: var(--text-soft); border-bottom: 1px solid var(--line); }
+.table-cap b { font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-right: 8px; }
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { padding: 11px 12px; text-align: left; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; background: rgba(2,6,23,.4); border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 11px 12px; color: var(--text-soft); border-bottom: 1px solid var(--line); white-space: nowrap; font-variant-numeric: tabular-nums; }
+tr:last-child td { border-bottom: 0; }
+td:last-child, th:last-child { white-space: normal; }
+td:first-child, th:first-child { padding-left: 18px; }
+td.num { font-family: var(--mono); font-size: 13.5px; color: var(--text-main); }
+th.num, td.num { text-align: right; }
+tbody tr { transition: background-color 120ms ease; }
+@media (hover: hover) and (pointer: fine) { tbody tr:hover { background: rgba(79,107,237,.06); } }
+.mat { display: inline-flex; align-items: center; gap: 8px; color: var(--text-main); }
+.mat i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.state { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--sc); }
+.state i { font-size: 15px; }
+.table-note { padding: 12px 20px; font-size: 13px; color: var(--text-mute); border-top: 1px solid var(--line); background: rgba(2,6,23,.3); }
+
+/* Fig. 4 graphique */
+.legend { display: flex; flex-wrap: wrap; gap: 6px; }
+.lg { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-main); font: inherit; font-size: 13px; cursor: pointer; transition: opacity 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out); }
+.lg:active { transform: scale(.96); }
+.lg i { width: 14px; height: 3px; border-radius: 2px; background: var(--lc); }
+.lg[aria-pressed="false"] { opacity: .45; }
+.lg[aria-pressed="false"] i { background: transparent; border: 1px solid var(--lc); height: 5px; }
+.chart { position: relative; }
+.chart .series { transition: opacity 220ms ease; }
+.chart .series.off { opacity: 0; }
+.chart .draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); }
+.chart.drawn .draw { transition: stroke-dashoffset 1400ms var(--ease-in-out); stroke-dashoffset: 0; }
+.chart .dot { opacity: 0; transition: opacity 300ms ease 1100ms; }
+.chart.drawn .dot { opacity: 1; }
+.hit { fill: transparent; cursor: crosshair; }
+.xhair { opacity: 0; transition: opacity 120ms ease; pointer-events: none; }
+.xhair.show { opacity: 1; }
+.ctip {
+  position: absolute; z-index: 5; pointer-events: none; min-width: 170px;
+  padding: 10px 12px; border-radius: 10px; background: #0b1540; border: 1px solid var(--accent-line);
+  box-shadow: 0 14px 40px rgba(0,0,0,.5); font-size: 13px; color: var(--text-soft);
+  opacity: 0; transform: translateY(4px); transition: opacity 120ms ease, transform 140ms var(--ease-out);
+}
+.ctip.show { opacity: 1; transform: none; }
+.ctip b { display: block; margin-bottom: 6px; color: #fff; font-weight: 500; font-family: var(--mono); }
+.ctip div { display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+.ctip div span { display: inline-flex; align-items: center; gap: 7px; }
+.ctip div span i { width: 8px; height: 8px; border-radius: 50%; background: var(--lc); }
+.ctip div em { font-style: normal; font-family: var(--mono); color: var(--text-main); }
+.data-toggle { margin-top: 12px; }
+.data-table { margin-top: 12px; border-radius: 12px; border: 1px solid var(--line); overflow-x: auto; }
+.data-table[hidden] { display: none; }
+
+/* Fig. 5 carte thermique */
+.thermo { display: grid; grid-template-columns: minmax(0, 1fr) 70px; gap: 18px; align-items: stretch; }
+.thermo-plate { position: relative; aspect-ratio: 1; max-width: 420px; width: 100%; justify-self: center; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); cursor: crosshair; }
+.thermo-plate canvas { width: 100%; height: 100%; display: block; }
+.probe { position: absolute; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.5); pointer-events: none; opacity: 0; transition: opacity 120ms ease; }
+.probe.show { opacity: 1; }
+.probe-read { position: absolute; left: 12px; top: 12px; padding: 6px 10px; border-radius: 8px; background: rgba(2,6,23,.78); font-family: var(--mono); font-size: 13px; color: #fff; pointer-events: none; }
+.scale { display: grid; grid-template-columns: 14px 1fr; gap: 8px; align-self: center; height: min(100%, 420px); aspect-ratio: auto; }
+.scale-bar { display: block; width: 14px; height: 100%; border-radius: 6px; }
+.scale-labels { display: flex; flex-direction: column; justify-content: space-between; font-family: var(--mono); font-size: 12px; color: var(--text-soft); }
+
+/* Fig. 6 couche protectrice */
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.duo-card { border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.4); overflow: hidden; }
+.duo-card h4 { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0; padding: 12px 14px; font-size: 14px; font-weight: 500; color: var(--text-main); border-bottom: 1px solid var(--line); }
+.duo-card h4 span { display: inline-flex; align-items: center; gap: 8px; }
+.duo-card h4 i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.duo-card svg { aspect-ratio: 1.25; }
+.duo-stats { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
+.duo-stats div { padding: 10px 14px; }
+.duo-stats div + div { border-left: 1px solid var(--line); }
+.duo-stats small { display: block; font-size: 12px; color: var(--text-mute); }
+.duo-stats strong { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--text-main); font-variant-numeric: tabular-nums; }
+.verdict { font-size: 12px; font-weight: 500; padding: 2px 8px; border-radius: 999px; color: var(--vc); background: color-mix(in srgb, var(--vc) 14%, transparent); transition: color 200ms ease, background-color 200ms ease; }
+
+/* Équation */
+.eq { margin: 26px 0; padding: 22px; border-radius: 14px; background: rgba(2,6,23,.5); border: 1px solid var(--border); text-align: center; font-family: var(--mono); font-size: 17px; color: #d5dcfb; overflow-x: auto; white-space: nowrap; }
+.eq-parts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: -12px 0 26px; }
+.eq-part { padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-light); font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.eq-part b { display: block; margin-bottom: 2px; font-family: var(--mono); font-weight: 500; color: #fff; }
+
+/* Suite du programme */
+.next { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.next li { position: relative; padding: 16px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.next li::before { content: ""; position: absolute; top: 20px; right: -13px; width: 13px; height: 1px; background: var(--border); }
+.next li:last-child::before { display: none; }
+.next time { font-family: var(--mono); font-size: 12.5px; color: var(--nc, var(--accent)); }
+.next strong { display: block; margin: 6px 0 4px; font-size: 15px; font-weight: 500; color: var(--text-main); }
+.next span { font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.next li.now { border-color: color-mix(in srgb, var(--ok) 45%, var(--border)); }
+
+/* Références */
+.refs { list-style: none; margin: 0; padding: 0; counter-reset: r; display: grid; gap: 4px; }
+.refs li { counter-increment: r; position: relative; display: block; padding: 10px 12px 10px 54px; margin: 0 -12px; border-radius: 10px; font-size: 14px; line-height: 1.6; color: var(--text-soft); transition: background-color 600ms ease; scroll-margin-top: calc(var(--header-h) + var(--subnav-h) + 40px); }
+.refs li::before { content: "[" counter(r) "]"; position: absolute; left: 12px; top: 11px; font-family: var(--mono); font-size: 13px; color: var(--accent); }
+.refs li.flash { background: rgba(79,107,237,.16); transition: none; }
+.refs em { color: var(--text-main); }
+.decl { margin-top: 28px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.35); display: grid; gap: 8px; font-size: 13.5px; line-height: 1.6; color: var(--text-mute); }
+.decl strong { color: var(--text-soft); font-weight: 500; }
+
+/* Articles liés */
+.related { margin-top: 72px; padding-top: 40px; border-top: 1px solid var(--border); }
+.related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
+.rel { display: flex; flex-direction: column; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); background: var(--bg-light); text-decoration: none; transition: border-color 200ms ease, transform 220ms var(--ease-out); }
+.rel-img { aspect-ratio: 16 / 9; overflow: hidden; background: linear-gradient(135deg, color-mix(in srgb, var(--c) 30%, var(--bg-raise)), var(--bg-light)); }
+.rel-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 500ms var(--ease-out); }
+.rel-body { padding: 16px; }
+.rel-body small { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--text-soft); }
+.rel-body small::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c); }
+.rel-body strong { display: block; margin-top: 6px; font-size: 16px; font-weight: 500; line-height: 1.4; color: var(--text-main); }
+.rel:active { transform: scale(.98); }
+@media (hover: hover) and (pointer: fine) {
+  .rel:hover { border-color: color-mix(in srgb, var(--c) 55%, var(--border)); transform: translateY(-3px); }
+  .rel:hover .rel-img img { transform: scale(1.04); }
+}
+.section-title { margin: 0; font-family: "Syne", sans-serif; font-size: 22px; font-weight: 700; color: var(--text-strong); }
+
+/* apparition des figures */
+.js .rv { opacity: 0; transform: translateY(16px); transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
+.js .rv.in { opacity: 1; transform: none; }
+
+.toast {
+  position: fixed; left: 50%; bottom: 24px; z-index: 4000;
+  display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 12px;
+  background: #0b1540; border: 1px solid rgba(52,211,153,.35); color: #a7f3d0; font-size: 14px;
+  box-shadow: 0 16px 40px rgba(0,0,0,.5);
+  transform: translate(-50%, 16px); opacity: 0; pointer-events: none;
+  transition: transform 260ms var(--ease-out), opacity 200ms ease;
+}
+.toast.show { transform: translate(-50%, 0); opacity: 1; }
+.toast i { font-size: 18px; color: var(--ok); }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1320px) {
+  .art-layout { grid-template-columns: minmax(0, 720px) 280px; justify-content: center; }
+  .toc { display: none; }
+}
+@media (max-width: 1060px) {
+  .art-layout { grid-template-columns: minmax(0, 720px); }
+  .rail { position: static; max-height: none; overflow: visible; grid-template-columns: repeat(2, minmax(0, 1fr)); order: 2; }
+  .rail .rail-figs { display: none; }
+  .art-hero-grid { grid-template-columns: 1fr; gap: 10px; padding-bottom: 36px; }
+  .reentry { justify-self: center; max-width: 440px; order: -1; margin-top: -10px; }
+}
+@media (max-width: 860px) {
+  .main-nav, .header-right .btn-desktop { display: none; }
+  .menu-toggle { display: inline-flex; }
+}
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .subnav-list { padding: 0 20px; overflow-x: auto; scrollbar-width: none; }
+  .subnav-link { padding: 0 10px; font-size: 13.5px; }
+  .art-lede { font-size: 16.5px; }
+  .art p { font-size: 16px; }
+  .art h2 { font-size: 22px; margin-top: 52px; }
+  .kpis { grid-template-columns: 1fr; }
+  .kpi { display: flex; align-items: baseline; gap: 14px; }
+  .kpi span { margin: 0; }
+  .essentials { padding: 20px; }
+  .fig-stage { padding: 16px; }
+  .fig figcaption, .fig .cap { padding: 12px 16px 16px; }
+  .readouts { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .readout strong { font-size: 14px; }
+  .thermo { grid-template-columns: 1fr 56px; gap: 10px; }
+  .duo { grid-template-columns: 1fr; }
+  .eq { font-size: 14px; }
+  #trajSvg text { font-size: 22px; }
+  .bench-h { display: none !important; }
+  .bench-v { display: block !important; }
+  .duo-card svg text { font-size: 13px; }
+  .eq-parts { grid-template-columns: 1fr; }
+  .next { grid-template-columns: 1fr; }
+  .next li::before { display: none; }
+  .rail { grid-template-columns: 1fr; }
+  .related-grid { grid-template-columns: 1fr; }
+  .site-footer { margin-top: 72px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
+  .hero-in { opacity: 1; transform: none; }
+}
+
+/* impression / PDF : texte seul, figures conservées */
+@media print {
+  .site-header, .subnav, .mobile-panel, .progress, .toc, .rail, .related, .site-footer, .ctrl, .legend, .scrub, .parts, .skip-link { display: none !important; }
+  body { background: #fff; color: #111; }
+  .art-layout { display: block; padding: 0; }
+  .art p, .art h2, .art h3, .art-title, .art-lede { color: #111 !important; }
+  .fig, .table-wrap, .essentials, .abstract, .note { break-inside: avoid; }
+  .js .rv { opacity: 1; transform: none; }
+}
+
+/* =========================================================
+   ARTICLE 02 : PROPULSION IONIQUE
+   ========================================================= */
+.art-hero--ion::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 82% 45%, rgba(59,130,246,.2), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(249,115,22,.1), transparent 60%);
+}
+.thruster .glow { animation: glow 1.4s ease-in-out infinite alternate; }
+
+.seg { display: inline-flex; padding: 3px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-light); }
+.seg button { height: 30px; padding: 0 12px; border: 0; border-radius: 7px; background: none; color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out); }
+.seg button:active { transform: scale(.96); }
+.seg button[aria-pressed="true"] { background: var(--bg-raise); color: #fff; box-shadow: inset 0 0 0 1px var(--border); }
+@media (hover: hover) and (pointer: fine) { .seg button:hover { color: #fff; } }
+
+.lg.static { cursor: default; }
+#howSvg .zone { transition: opacity 240ms ease; }
+#howSvg.focus .zone { opacity: .22; }
+#howSvg.focus .zone.lit { opacity: 1; }
+
+tr.hi td { background: rgba(59,130,246,.07); }
+td.gain { color: var(--ok); }
+
+.multiples { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.multiples .chart { border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.35); padding: 8px 4px 0; }
+
+.wear { display: grid; grid-template-columns: minmax(0, 1fr) 170px; gap: 16px; align-items: center; }
+.discs { display: grid; gap: 12px; }
+.disc { display: grid; justify-items: center; gap: 4px; padding: 10px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.35); }
+.disc svg { width: 110px; height: 110px; }
+.disc span { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--text-soft); }
+.disc span i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.disc strong { font-family: var(--mono); font-size: 14px; font-weight: 500; color: var(--text-main); }
+.disc.over { border-color: rgba(248,113,113,.5); }
+.disc.over strong { color: var(--bad); }
+
+@media (max-width: 640px) {
+  .multiples { grid-template-columns: 1fr; }
+  .wear { grid-template-columns: 1fr; }
+  .discs { grid-template-columns: 1fr 1fr; }
+  .disc svg { width: 96px; height: 96px; }
+  #howSvg text { display: none; }
+  .readouts { grid-template-columns: 1fr; gap: 6px; }
+  .readout { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 8px 12px; }
+  .readout strong { margin: 0; white-space: nowrap; }
+  #orbitSvg text { font-size: 18px; }
+}
+#gridSvg, #orbitSvg, #howSvg { overflow: hidden; border-radius: 10px; }
+
+/* =========================================================
+   ARTICLE 03 : ASTROBIOLOGIE
+   ========================================================= */
+.art-hero--mars::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 78% 45%, rgba(234,88,12,.18), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(52,211,153,.12), transparent 60%);
+}
+.art-hero--mars .reentry svg { overflow: visible; }
+
+/* jauges Terre / Mars */
+.gauges { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 22px; }
+.gauge { display: grid; gap: 8px; padding: 14px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.4); }
+.gauge-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.gauge-top span { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--text-soft); }
+.gauge-top span i { font-size: 16px; color: var(--text-mute); }
+.gauge-top strong { font-family: var(--mono); font-size: 14.5px; font-weight: 500; color: var(--text-strong); white-space: nowrap; transition: color 200ms ease; }
+.gauge-bar { position: relative; height: 8px; border-radius: 8px; background: linear-gradient(90deg, rgba(52,211,153,.18), rgba(251,191,36,.18) 60%, rgba(248,113,113,.22)); }
+.gauge-fill { position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(90deg, #34d399, #fbbf24 60%, #f87171); transform-origin: left; transform: scaleX(var(--v, 0)); transition: transform 600ms var(--ease-out); clip-path: inset(0 round 8px); }
+.gauge-limit { position: absolute; top: -5px; bottom: -5px; width: 2px; border-radius: 2px; background: #fff; left: var(--l); }
+.gauge-foot { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; color: var(--text-mute); }
+.gauge.beyond .gauge-top strong { color: #fca5a5; }
+
+/* fiches espèces */
+.orgs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 26px 0 12px; }
+.org { position: relative; display: grid; grid-template-columns: 64px 1fr; gap: 14px; padding: 16px; border-radius: 16px; border: 1px solid var(--border); background: var(--bg-light); overflow: hidden; }
+.org::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--oc); }
+.org-pic { width: 64px; height: 64px; border-radius: 14px; background: radial-gradient(circle, color-mix(in srgb, var(--oc) 22%, transparent), rgba(2,6,23,.6)); }
+.org-kind { display: block; font-size: 12px; color: var(--text-mute); }
+.org h4 { margin: 2px 0 6px; font-size: 16px; font-weight: 500; color: var(--text-strong); }
+.art .org p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+.org-state { grid-column: 1 / -1; justify-self: start; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 500; color: var(--sc); background: color-mix(in srgb, var(--sc) 12%, transparent); border: 1px solid color-mix(in srgb, var(--sc) 28%, transparent); }
+.art .small-note { font-size: 14px; color: var(--text-mute); }
+
+/* journal des cultures */
+.dishes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.dish { display: grid; justify-items: center; gap: 6px; padding: 12px 8px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.4); }
+.dish svg { width: 100%; max-width: 132px; aspect-ratio: 1; }
+.dish svg circle.cell { transition: opacity 400ms ease, fill 400ms ease; }
+.dish span { font-size: 12.5px; color: var(--text-soft); text-align: center; }
+.dish strong { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--text-strong); }
+.event { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-items: baseline; margin-top: 14px; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-light); min-height: 78px; }
+.event time { font-family: var(--mono); font-size: 13px; color: var(--ec, var(--accent)); grid-row: span 2; }
+.event strong { font-size: 14.5px; font-weight: 500; color: var(--text-main); }
+.event span { font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.event.swap { animation: evIn 260ms var(--ease-out); }
+@keyframes evIn { from { opacity: 0; transform: translateY(4px); } }
+.scrub { position: relative; }
+.ticks { position: absolute; left: 0; right: 0; top: -6px; height: 6px; pointer-events: none; }
+
+/* comparaison microscope */
+.compare { position: relative; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; background: #000; cursor: ew-resize; touch-action: pan-y; user-select: none; }
+.compare canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+#micB { clip-path: inset(0 0 0 var(--p, 50%)); }
+.cmp-label { position: absolute; top: 12px; padding: 4px 10px; border-radius: 8px; font-family: var(--mono); font-size: 12.5px; color: #fff; background: rgba(0,0,0,.55); pointer-events: none; }
+.cmp-label.l { left: 12px; }
+.cmp-label.r { right: 12px; }
+.cmp-handle { position: absolute; top: 0; bottom: 0; left: var(--p, 50%); width: 2px; margin-left: -1px; background: #fff; pointer-events: none; }
+.cmp-handle i { position: absolute; top: 50%; left: 50%; width: 38px; height: 38px; margin: -19px 0 0 -19px; border-radius: 50%; display: grid; place-items: center; font-size: 18px; color: #050b1e; background: #fff; box-shadow: 0 6px 20px rgba(0,0,0,.5); transition: transform 160ms var(--ease-out); }
+.compare:active .cmp-handle i { transform: scale(.92); }
+.compare:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+#chamberSvg { overflow: hidden; border-radius: 10px; }
+
+@media (max-width: 640px) {
+  .gauges { grid-template-columns: 1fr; }
+  .orgs { grid-template-columns: 1fr; }
+  .dishes { grid-template-columns: 1fr 1fr; }
+  #chamberSvg text { font-size: 15px; }
+  #chamberSvg text.side { display: none; }
+  .compare { aspect-ratio: 4 / 3; }
+}
+
+/* =========================================================
+   ARTICLE 04 : PHYSIQUE QUANTIQUE
+   ========================================================= */
+.art-hero--q::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 78% 40%, rgba(168,85,247,.18), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(59,130,246,.12), transparent 60%);
+}
+.qlink svg { overflow: hidden; -webkit-mask-image: radial-gradient(ellipse 52% 52% at 60% 44%, #000 55%, transparent 100%); mask-image: radial-gradient(ellipse 52% 52% at 60% 44%, #000 55%, transparent 100%); }
+
+/* jeu de Bell */
+.bell { display: grid; grid-template-columns: 150px minmax(0, 1fr) 150px; gap: 16px; align-items: center; }
+.bell-side { display: grid; justify-items: center; gap: 8px; padding: 12px; border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.4); }
+.bell-who { font-size: 13px; color: var(--text-soft); }
+.dial { width: 96px; height: 96px; }
+.dial .needle { transition: transform 260ms var(--ease-out); transform-origin: 50px 50px; }
+.bell-angle { display: grid; gap: 6px; width: 100%; font-size: 12px; color: var(--text-mute); text-align: center; }
+.bell-angle output { font-family: var(--mono); color: var(--text-main); }
+.bell-angle input { width: 100%; accent-color: #a855f7; }
+.bell-mid { display: grid; gap: 14px; min-width: 0; }
+.bell-rows { display: grid; gap: 8px; padding: 14px; border-radius: 12px; background: rgba(2,6,23,.5); border: 1px solid var(--line); overflow: hidden; }
+.bell-row { display: flex; gap: 5px; justify-content: flex-end; height: 16px; }
+.bell-row i { flex: 0 0 16px; height: 16px; border-radius: 4px; border: 2px solid #c084fc; animation: pop 260ms var(--ease-out); }
+.bell-row i.on { background: #c084fc; }
+.bell-row i.diff { border-color: #f87171; }
+.bell-row i.diff.on { background: #f87171; }
+@keyframes pop { from { transform: scale(.6); opacity: 0; } }
+.bell-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.bell-stats div { padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg-light); }
+.bell-stats small { display: block; font-size: 12px; color: var(--text-mute); }
+.bell-stats strong { display: block; margin-top: 2px; font-family: var(--mono); font-size: 18px; font-weight: 500; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+
+/* pertes : gaufre de points */
+.waffle { position: relative; border-radius: 12px; overflow: hidden; background: #03050f; border: 1px solid var(--line); aspect-ratio: 2.2; }
+.waffle canvas { width: 100%; height: 100%; display: block; }
+
+#setupSvg [data-part] { transition: opacity 220ms ease; }
+#setupSvg.focus [data-part] { opacity: .18; }
+#setupSvg.focus [data-part].lit { opacity: 1; }
+#setupSvg, #bellGauge { overflow: visible; }
+
+@media (max-width: 760px) {
+  .bell { grid-template-columns: 1fr 1fr; }
+  .bell-mid { grid-column: 1 / -1; order: 3; }
+}
+@media (max-width: 640px) {
+  .waffle { aspect-ratio: 1.3; }
+  .dial { width: 80px; height: 80px; }
+  #setupSvg text { display: none; }
+}
+
+/* =========================================================
+   ARTICLE : AUTHENTIFICATION
+   ========================================================= */
+.art-hero--lock::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 76% 48%, rgba(52,211,153,.13), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(167,139,250,.1), transparent 60%);
+}
+.lockart svg { -webkit-mask-image: radial-gradient(ellipse 72% 72% at 50% 50%, #000 60%, transparent 100%); mask-image: radial-gradient(ellipse 72% 72% at 50% 50%, #000 60%, transparent 100%); }
+.lockart .reentry-tag { z-index: 2; }
+.lockart sup { font-size: 9px; }
+.ring { transform-box: view-box; transform-origin: 260px 224px; animation: spin var(--dur, 90s) linear infinite; animation-direction: var(--dir, normal); }
+@keyframes spin { to { transform: rotate(360deg); } }
+.ring text { font-family: var(--mono); }
+.chip-on { animation: chipOn 2.8s ease-in-out infinite alternate; animation-delay: var(--d, 0s); }
+@keyframes chipOn { from { opacity: .25; } to { opacity: 1; } }
+
+.chart svg { display: block; width: 100%; }
+.verdict-pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 500; color: var(--vc); background: color-mix(in srgb, var(--vc) 12%, transparent); border: 1px solid color-mix(in srgb, var(--vc) 30%, transparent); }
+
+/* menaces */
+.threats { list-style: none; margin: 22px 0 26px; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.threats li { display: grid; grid-template-columns: 34px 1fr; gap: 12px; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); transition: border-color 200ms ease, transform 200ms var(--ease-out); }
+.threats li:last-child { grid-column: 1 / -1; }
+.threats li > i { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; font-size: 19px; color: var(--tc); background: color-mix(in srgb, var(--tc) 12%, transparent); }
+.threats strong { display: block; font-size: 15px; font-weight: 500; color: var(--text-strong); }
+.threats span { display: block; margin-top: 2px; font-size: 14px; line-height: 1.5; color: var(--text-soft); }
+.threats em { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; font-style: normal; font-size: 13px; color: #6ee7b7; }
+@media (hover: hover) and (pointer: fine) { .threats li:hover { border-color: color-mix(in srgb, var(--tc) 45%, var(--border)); transform: translateY(-2px); } }
+
+/* figure 2 */
+.art .salt-verdict { margin: 10px 0 0; font-size: 14px; color: var(--text-soft); display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+#saltSvg .hashv { font-family: var(--mono); transition: fill 300ms ease; }
+.pkt { transition: opacity 200ms ease; }
+
+/* équations */
+.eqs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 22px 0 8px; }
+.eqc { padding: 14px 16px; border-radius: 14px; border: 1px solid var(--border); background: rgba(2,6,23,.45); text-align: center; }
+.eqc.hot { border-color: rgba(52,211,153,.4); background: rgba(52,211,153,.06); }
+.eqf { display: block; font-family: var(--mono); font-size: 17px; color: #e0e7ff; white-space: nowrap; }
+.eqc.hot .eqf { color: #6ee7b7; }
+.eqc small { display: block; margin-top: 4px; font-size: 12.5px; line-height: 1.4; color: var(--text-mute); }
+.art b.v { font-family: var(--mono); font-weight: 500; color: #6ee7b7; }
+
+/* figure 3 calculateur */
+.pools { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; }
+.pool { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 4px; border-radius: 10px; border: 1px solid var(--border); background: transparent; color: var(--text-soft); font: inherit; cursor: pointer; transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out); }
+.pool b { font-family: var(--mono); font-weight: 500; font-size: 12.5px; white-space: nowrap; }
+.pool small { font-size: 11.5px; color: var(--text-mute); }
+.pool:active { transform: scale(.96); }
+.pool[aria-pressed="true"] { color: #fff; border-color: #34d399; background: rgba(52,211,153,.1); }
+@media (hover: hover) and (pointer: fine) { .pool:hover { color: #fff; } }
+.scrub-l { font-size: 13px; color: var(--text-soft); }
+#lenRange { accent-color: #34d399; }
+.sample { margin-top: 14px; min-height: 40px; display: flex; flex-wrap: wrap; gap: 4px; }
+.sample span { width: 22px; height: 30px; display: grid; place-items: center; border-radius: 6px; background: #0a1436; border: 1px solid var(--border); font-family: var(--mono); font-size: 14px; color: #e0e7ff; animation: charIn 240ms var(--ease-out); }
+@keyframes charIn { from { opacity: 0; transform: translateY(4px) scale(.9); } }
+.bits { margin-top: 12px; display: grid; grid-template-columns: repeat(40, minmax(0, 1fr)); gap: 3px; }
+.bits i { aspect-ratio: 1; border-radius: 2px; background: #13204d; transition: background-color 240ms ease; }
+.bits i.on { background: var(--bc, #34d399); }
+.readout.hot strong { color: var(--rc, #34d399); transition: color 240ms ease; }
+
+/* tableau thermique */
+.tc-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+.seg-sm button { height: 28px; font-size: 12.5px; padding: 0 10px; }
+table.heat td.num { position: relative; transition: background-color 300ms ease; }
+table.heat td.num span { display: inline-block; transition: opacity 180ms ease, transform 180ms var(--ease-out); }
+table.heat.swap td.num span { opacity: 0; transform: translateY(3px); }
+table.heat td small { display: block; font-size: 12px; color: var(--text-mute); }
+
+/* figure 4 */
+.multi { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+/* règles */
+.rules { list-style: none; margin: 20px 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.rules li { display: grid; grid-template-columns: 30px 1fr; gap: 12px; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.rn { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-family: var(--mono); font-size: 13px; color: #03130d; background: #34d399; }
+.rules strong { display: block; font-size: 15px; font-weight: 500; color: var(--text-strong); }
+.rules span { display: block; margin-top: 2px; font-size: 14px; line-height: 1.5; color: var(--text-soft); }
+
+.keep { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 14px; color: var(--text-soft); }
+.keep li { display: flex; align-items: center; gap: 10px; }
+.keep i { font-size: 18px; color: #34d399; }
+
+@media (max-width: 900px) { .multi { grid-template-columns: 1fr; } }
+@media (max-width: 760px) {
+  .threats, .rules, .eqs { grid-template-columns: 1fr; }
+  .pools { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .bits { grid-template-columns: repeat(20, minmax(0, 1fr)); }
+  .sample span { width: 18px; height: 26px; font-size: 12.5px; }
+}
+@media (prefers-reduced-motion: reduce) { .ring, .chip-on { animation: none; } }
+.art .ctip-p { margin: 6px 0 0; max-width: 230px; font-size: 12.5px; line-height: 1.45; color: var(--text-soft); }
+
 </style>
+<script>document.documentElement.classList.add('js');</script>
 </head>
+
 <body>
 
-<div class="progress-bar" id="progressBar"></div>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
 
-<header>
-  <div class="header-inner">
+<!-- ===== HEADER ===== -->
+<header class="site-header" id="header">
+  <div class="container header-inner">
     <div class="header-left">
-      <a href="../index.html" class="logo-link"><img src="../logo.png" alt="IFRAS"></a>
-      <nav><ul class="main-nav">
-        <li><a href="../index.html">Accueil</a></li>
-        <li><a href="../recherche.html">Recherche</a></li>
-        <li><a href="../programmes.html">Programmes</a></li>
-        <li><a href="../publications.html">Publications</a></li>
-      </ul></nav>
+      <a href="../index.html" class="logo-link" aria-label="IFRAS, accueil">
+        <img src="../logo.png" alt="Logo IFRAS" width="44" height="44">
+      </a>
+      <nav aria-label="Navigation principale">
+        <ul class="main-nav">
+          <li><a href="../index.html">Accueil</a></li>
+          <li><a href="../recherche.html">Recherche</a></li>
+          <li><a href="../programmes.html">Programmes</a></li>
+          <li><a href="../publications.html" aria-current="page">Publications</a></li>
+        </ul>
+      </nav>
     </div>
-    <div class="header-right"><a href="../connexion.html" class="login-btn">Connexion</a></div>
+    <div class="header-right">
+      <a href="../connexion.html" class="btn btn-ghost btn-desktop">Connexion</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-panel" aria-label="Ouvrir le menu">
+        <i class="ph-light ph-list" aria-hidden="true"></i>
+      </button>
+    </div>
   </div>
 </header>
 
-<div class="sub-nav">
+<div class="mobile-panel" id="mobile-panel">
   <ul>
-    <li><a href="../publications-scientifiques.html" class="active">Publications scientifiques</a></li>
-    <li><a href="../publications-ifras.html">Publications IFRAS</a></li>
-    <li><a href="../evenements.html">Événements</a></li>
+    <li><a href="../index.html">Accueil <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../recherche.html">Recherche <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../programmes.html">Programmes <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../publications.html" aria-current="page">Publications <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
   </ul>
+  <a href="../connexion.html" class="btn btn-primary">Connexion</a>
 </div>
 
-<nav class="toc-sidebar">
-  <div class="toc-dot active" data-label="Résumé"        data-target="s0"></div>
-  <div class="toc-dot"        data-label="Historique"    data-target="s1"></div>
-  <div class="toc-dot"        data-label="Attaques"      data-target="s2"></div>
-  <div class="toc-dot"        data-label="Entropie"      data-target="s3"></div>
-  <div class="toc-dot"        data-label="Temps"         data-target="s4"></div>
-  <div class="toc-dot"        data-label="Conclusion"    data-target="s5"></div>
-  <div class="toc-dot"        data-label="Références"    data-target="s6"></div>
+<!-- ===== SOUS-NAVIGATION (mêmes rubriques que publications.html) ===== -->
+<nav class="subnav" id="subnav" aria-label="Rubriques des publications">
+  <ul class="subnav-list">
+    <li><a class="subnav-link" href="../publications-scientifiques.html" aria-current="true" style="--c:var(--t-sci)"><i class="ph-light ph-article" aria-hidden="true"></i>Publications scientifiques</a></li>
+    <li><a class="subnav-link" href="../publications-ifras.html" style="--c:var(--t-ifras)"><i class="ph-light ph-book-open" aria-hidden="true"></i>Publications IFRAS</a></li>
+    <li><a class="subnav-link" href="../evenements.html" style="--c:var(--t-event)"><i class="ph-light ph-calendar-dots" aria-hidden="true"></i>Événements</a></li>
+  </ul>
 </nav>
 
-<div class="pub-wrapper">
+<div class="progress" aria-hidden="true"><span id="progress"></span></div>
 
-  <nav class="breadcrumb">
-    <a href="../publications.html">Publications</a>
-    <span>/</span>
-    <a href="../publications-scientifiques.html">Publications scientifiques</a>
-    <span>/</span>
-    DSIN · 2024 · Cybersécurité
-  </nav>
+<main id="contenu">
 
-  <!-- EN-TÊTE -->
-  <div id="s0">
-    <div class="meta-top">
-      <span class="badge badge-j">Publication institutionnelle · Sept. 2024</span>
-      <span class="badge badge-d">DSIN — Dép. Systèmes &amp; Infrastructures Numériques</span>
-      <span class="badge badge-o">Accès ouvert</span>
-      <span class="badge badge-dt">Publié septembre 2024</span>
-    </div>
-
-    <h1 class="article-title">
-      Sécurité des systèmes d'authentification face à l'augmentation des capacités de calcul assistées par IA
-    </h1>
-
-    <p class="article-subtitle">
-      L'authentification par mot de passe demeure l'un des mécanismes de contrôle d'accès les plus largement déployés
-      dans les infrastructures critiques civiles et scientifiques. L'augmentation rapide des capacités de calcul,
-      combinée aux progrès des modèles d'intelligence artificielle, réduit significativement la durée de vie opérationnelle
-      de schémas historiquement jugés sûrs.
-    </p>
-
-    <div class="authors-block">
-      <div class="author-entry">
-        <span class="author-name">Département DSIN</span>
-        <span class="author-role">Systèmes &amp; Infrastructures Numériques — IFRAS</span>
+<!-- ===== EN-TÊTE DE L'ARTICLE ===== -->
+<header class="art-hero art-hero--lock">
+  <div class="container art-hero-grid">
+    <div>
+      <ol class="crumbs hero-in" style="--i:0" aria-label="Fil d'Ariane">
+        <li><a href="../publications.html">Publications</a></li>
+        <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+        <li><a href="../publications-scientifiques.html">Publications scientifiques</a></li>
+        <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+        <li aria-current="page">Cybersécurité</li>
+      </ol>
+      <div class="badges hero-in" style="--i:1">
+        <span class="badge" style="--b:#34d399"><i class="ph-light ph-shield-check" aria-hidden="true"></i>Cybersécurité · DSIN</span>
+        <span class="badge" style="--b:#60a5fa"><i class="ph-light ph-seal-check" aria-hidden="true"></i>Évalué par les pairs</span>
+        <span class="badge" style="--b:#a78bfa"><i class="ph-light ph-buildings" aria-hidden="true"></i>Publication institutionnelle</span>
+      </div>
+      <h1 class="art-title hero-in" style="--i:2">Mots de passe : la longueur protège mieux que la complexité</h1>
+      <p class="art-lede hero-in" style="--i:3">La puissance de calcul a été multipliée par des millions depuis que nos règles de mots de passe ont été écrites. Nous mesurons ce que vaut vraiment chaque caractère, et pourquoi l'IFRAS passe à des mots de passe plus longs plutôt que plus compliqués.</p>
+      <ul class="authors hero-in" style="--i:4" aria-label="Auteurs">
+        <li class="author"><span class="av" style="--ah:150" aria-hidden="true">IM</span><span><strong>Inès Martel</strong><small>Sécurité des systèmes</small></span></li>
+        <li class="author"><span class="av" style="--ah:230" aria-hidden="true">PG</span><span><strong>Paul Girard</strong><small>Cryptographie appliquée</small></span></li>
+        <li class="author"><span class="av" style="--ah:20" aria-hidden="true">MR</span><span><strong>Maëlle Roux</strong><small>Gouvernance des accès</small></span></li>
+      </ul>
+      <div class="meta-line hero-in" style="--i:5">
+        <span><i class="ph-light ph-calendar-blank" aria-hidden="true"></i>Publié en septembre 2024</span>
+        <span><i class="ph-light ph-clock" aria-hidden="true"></i>8 min de lecture</span>
+        <span><i class="ph-light ph-hash" aria-hidden="true"></i><code>IFRAS-DSIN-2024-004</code></span>
       </div>
     </div>
 
-    <div class="cite-block">
-      <div class="cite-item"><span class="cite-label">Réf. interne</span><span>IFRAS-DSIN-2024-004</span></div>
-      <span class="cite-sep">|</span>
-      <div class="cite-item"><span class="cite-label">Diffusion</span><span>Contrôlée — Document institutionnel</span></div>
-      <span class="cite-sep">|</span>
-      <div class="cite-item"><span class="cite-label">Domaine</span><span>Cybersécurité · Cryptographie</span></div>
+    <!-- Illustration : cadenas et anneaux de caractères -->
+    <div class="reentry lockart hero-in" style="--i:3" aria-hidden="true">
+      <svg viewBox="0 0 520 447" id="heroLock"></svg>
+      <span class="reentry-tag" style="right:2%;top:10%"><i style="background:#34d399"></i> 1 caractère <b>≈ +6 bits</b></span>
+      <span class="reentry-tag" style="left:2%;bottom:12%"><i style="background:#a78bfa"></i> 16 caractères <b>2<sup>105</sup></b></span>
     </div>
   </div>
+</header>
 
-  <div class="art-divider"></div>
+<div class="container art-layout">
 
-  <!-- ABSTRACT -->
-  <div class="abstract-box">
-    <div class="abstract-label">Résumé</div>
-    <p class="abstract-text">
-      L'authentification par mot de passe demeure l'un des mécanismes de contrôle d'accès
-      les plus largement déployés dans les infrastructures critiques civiles et scientifiques.
-      Cependant, l'augmentation rapide des capacités de calcul, combinée aux progrès
-      des modèles d'intelligence artificielle appliqués à l'optimisation des attaques,
-      réduit significativement la durée de vie opérationnelle de schémas historiquement jugés sûrs.
-      Cette étude présente une analyse quantitative de ces évolutions et examine les ajustements
-      progressifs mis en œuvre dans les politiques internes de l'IFRAS.
-    </p>
-    <div class="kw-wrap">
-      <span class="kw-lbl">Mots-clés :</span>
-      <span class="kw-tag">Authentification</span>
-      <span class="kw-tag">Mot de passe</span>
-      <span class="kw-tag">Entropie de Shannon</span>
-      <span class="kw-tag">Force brute</span>
-      <span class="kw-tag">Cryptographie</span>
-      <span class="kw-tag">IA &amp; calcul</span>
-      <span class="kw-tag">Protection planétaire</span>
+  <!-- Sommaire -->
+  <nav class="toc" aria-label="Sommaire">
+    <p class="toc-title">Sommaire</p>
+    <ol id="toc">
+      <li class="toc-ind" aria-hidden="true"></li>
+      <li><a href="#s-essentiel"><span>—</span>L'essentiel</a></li>
+      <li><a href="#s-intro"><span>1</span>Des règles d'un autre temps</a></li>
+      <li><a href="#s-methodes"><span>2</span>Menaces et parades</a></li>
+      <li><a href="#s-resultats"><span>3</span>Mesurer la force</a></li>
+      <li><a href="#s-discussion"><span>4</span>Longueur ou diversité</a></li>
+      <li><a href="#s-conclusion"><span>5</span>Recommandations</a></li>
+    </ol>
+    <p class="toc-time"><i class="ph-light ph-hourglass-medium" aria-hidden="true"></i><span id="timeLeft">8 min restantes</span></p>
+  </nav>
+
+  <!-- ===== ARTICLE ===== -->
+  <article class="art" id="article">
+
+    <section id="s-essentiel" aria-label="L'essentiel">
+      <div class="essentials rv">
+        <div class="essentials-head"><i class="ph-light ph-lightning" aria-hidden="true"></i> L'essentiel en 30 secondes</div>
+        <div class="kpis">
+          <div class="kpi"><strong>+6<small> bits</small></strong><span>apportés par chaque caractère aléatoire supplémentaire</span></div>
+          <div class="kpi"><strong>+0,6<small> bit</small></strong><span>seulement en ajoutant des symboles à un mot de passe déjà varié</span></div>
+          <div class="kpi"><strong data-count="15" data-suffix=" car.">15<small> car.</small></strong><span>longueur minimale désormais demandée à l'IFRAS</span></div>
+        </div>
+        <ul class="takeaways">
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>La force d'un mot de passe se mesure en bits d'entropie : chaque bit double le nombre de combinaisons.</li>
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>Allonger un mot de passe rapporte bien plus que le compliquer.</li>
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>Ce calcul ne vaut que pour un mot de passe tiré au hasard : les motifs humains le rendent trompeur.</li>
+        </ul>
+      </div>
+
+      <div class="abstract rv">
+        <span class="label">Résumé</span>
+        <p>L'authentification par mot de passe reste le premier mécanisme de contrôle d'accès des infrastructures scientifiques. Les règles qui l'encadrent datent pourtant d'une époque où la puissance de calcul était des millions de fois plus faible qu'aujourd'hui. Nous quantifions la robustesse d'un mot de passe aléatoire par son entropie, E = L · log₂(B), où L est la longueur et B la taille du jeu de caractères, et en déduisons le temps nécessaire pour épuiser toutes les combinaisons. Un caractère supplémentaire apporte environ 6 bits, alors qu'élargir un jeu de 62 à 94 caractères n'en apporte que 0,6 par position. Nous montrons aussi que le stockage des empreintes avec un sel et une fonction de calcul volontairement lente multiplie la protection par un facteur de l'ordre de 10⁵. Ces résultats fondent la nouvelle politique d'accès de l'IFRAS : 15 caractères minimum, gestionnaire de mots de passe et double facteur.</p>
+        <div class="kw" aria-label="Mots-clés"><span>Authentification</span><span>Entropie</span><span>Mot de passe</span><span>Hachage</span><span>Politique d'accès</span></div>
+      </div>
+    </section>
+
+    <!-- 1. HISTORIQUE -->
+    <section id="s-intro">
+      <h2><span class="n">01</span>Des règles écrites pour un autre temps</h2>
+      <p>Les premières politiques de mots de passe datent des années 1980. Les comptes vivaient sur des serveurs partagés, accessibles depuis des terminaux internes, et le principal risque était un collègue indiscret. Six à huit caractères mêlant lettres et chiffres semblaient alors largement suffisants : tester toutes les combinaisons aurait demandé des années de calcul.</p>
+      <p>Depuis, les processeurs se sont multipliés sur chaque puce, les cartes graphiques ont rendu le calcul massivement parallèle et le calcul à la demande s'est généralisé. Ce qui constituait une barrière économique est devenu accessible à n'importe qui.</p>
+
+      <figure class="fig rv" id="fig1">
+        <div class="fig-stage">
+          <div class="fig-head"><span class="fig-name">Puissance de calcul accessible à un particulier</span></div>
+          <div class="chart" id="power"><div class="ctip" id="powerTip"></div></div>
+        </div>
+        <figcaption><b>Figure 1</b>Ordre de grandeur de la puissance de calcul d'un ordinateur personnel haut de gamme, relative à 1985 (échelle logarithmique : chaque graduation est 100 fois plus haute que la précédente). Survolez les époques pour les détails.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 2. MENACES -->
+    <section id="s-methodes">
+      <h2><span class="n">02</span>Menaces et parades</h2>
+      <p>Un mot de passe peut être compromis de plusieurs façons. Chaque menace a sa parade, et aucune ne suffit seule.</p>
+
+      <ul class="threats rv">
+        <li style="--tc:#34d399"><i class="ph-light ph-infinity" aria-hidden="true"></i><div><strong>Essais exhaustifs</strong><span>Tester toutes les combinaisons une à une.</span><em><i class="ph-light ph-shield-check" aria-hidden="true"></i>Parade : longueur et tirage aléatoire.</em></div></li>
+        <li style="--tc:#60a5fa"><i class="ph-light ph-list-bullets" aria-hidden="true"></i><div><strong>Mots de passe courants</strong><span>Essayer d'abord les choix humains les plus fréquents.</span><em><i class="ph-light ph-shield-check" aria-hidden="true"></i>Parade : générer au hasard, avec un gestionnaire.</em></div></li>
+        <li style="--tc:#a78bfa"><i class="ph-light ph-table" aria-hidden="true"></i><div><strong>Tables pré-calculées</strong><span>Possible seulement si les empreintes stockées ont été volées.</span><em><i class="ph-light ph-shield-check" aria-hidden="true"></i>Parade : un sel unique par compte (figure 2).</em></div></li>
+        <li style="--tc:#fbbf24"><i class="ph-light ph-user-focus" aria-hidden="true"></i><div><strong>Manipulation</strong><span>Faux message qui pousse à saisir son mot de passe.</span><em><i class="ph-light ph-shield-check" aria-hidden="true"></i>Parade : double facteur et vigilance.</em></div></li>
+        <li style="--tc:#f87171"><i class="ph-light ph-bug" aria-hidden="true"></i><div><strong>Failles logicielles</strong><span>Mot de passe lu en mémoire ou dans des journaux.</span><em><i class="ph-light ph-shield-check" aria-hidden="true"></i>Parade : mises à jour, rien en clair.</em></div></li>
+      </ul>
+
+      <p>Côté serveur, un mot de passe n'est jamais conservé tel quel. On stocke son <button class="term" type="button" data-term="hash">empreinte</button>, calculée par une fonction à sens unique. Deux précautions changent tout : un <button class="term" type="button" data-term="sel">sel</button> aléatoire propre à chaque compte, et une fonction <strong>volontairement lente</strong>, qui rend chaque essai coûteux.</p>
+
+      <figure class="fig rv" id="fig2">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">Deux comptes, le même mot de passe</span>
+            <div class="seg" role="group" aria-label="Mode de stockage" id="saltSeg">
+              <button type="button" data-s="0" aria-pressed="false">Sans sel</button>
+              <button type="button" data-s="1" aria-pressed="true">Avec sel</button>
+            </div>
+          </div>
+          <svg viewBox="0 0 640 250" id="saltSvg" aria-label="Schéma du calcul des empreintes pour deux comptes"></svg>
+          <p class="salt-verdict" id="saltVerdict" aria-live="polite"></p>
+        </div>
+        <figcaption><b>Figure 2</b>Sans sel, deux comptes au même mot de passe ont la même empreinte : les repérer et les comparer à des tables pré-calculées devient possible. Avec un sel aléatoire par compte, les empreintes n'ont plus rien en commun. La fonction lente (ici 100 000 itérations) ralentit chaque essai d'autant.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 3. ENTROPIE -->
+    <section id="s-resultats">
+      <h2><span class="n">03</span>Mesurer la force d'un mot de passe</h2>
+      <p>Pour un mot de passe tiré au hasard, tout dépend de deux nombres : sa longueur <b class="v">L</b> et la taille du jeu de caractères possibles à chaque position, <b class="v">B</b>. Le nombre de combinaisons est C = B<sup>L</sup>. Comme ce nombre devient vite astronomique, on l'exprime en <button class="term" type="button" data-term="entropie">bits d'entropie</button>.</p>
+
+      <div class="eqs rv">
+        <div class="eqc"><span class="eqf">C = B<sup>L</sup></span><small>nombre de combinaisons</small></div>
+        <div class="eqc hot"><span class="eqf">E = L × log₂(B)</span><small>entropie, en bits</small></div>
+        <div class="eqc"><span class="eqf">T = 2<sup>E</sup> / R</span><small>temps pour tout essayer, à R essais par seconde</small></div>
+      </div>
+
+      <figure class="fig rv" id="fig3">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">Calculateur d'entropie</span>
+            <div class="seg" role="group" aria-label="Stockage de l'empreinte" id="rateSeg">
+              <button type="button" data-r="9" aria-pressed="true">Fonction rapide</button>
+              <button type="button" data-r="4" aria-pressed="false">Fonction lente</button>
+            </div>
+          </div>
+          <div class="pools" role="group" aria-label="Jeu de caractères" id="poolSeg">
+            <button type="button" class="pool" data-b="10" aria-pressed="false"><b>0-9</b><small>10</small></button>
+            <button type="button" class="pool" data-b="26" aria-pressed="false"><b>a-z</b><small>26</small></button>
+            <button type="button" class="pool" data-b="36" aria-pressed="false"><b>a-z 0-9</b><small>36</small></button>
+            <button type="button" class="pool" data-b="52" aria-pressed="false"><b>a-z A-Z</b><small>52</small></button>
+            <button type="button" class="pool" data-b="62" aria-pressed="true"><b>a-z A-Z 0-9</b><small>62</small></button>
+            <button type="button" class="pool" data-b="94" aria-pressed="false"><b>+ symboles</b><small>94</small></button>
+          </div>
+          <div class="scrub">
+            <label for="lenRange" class="scrub-l">Longueur</label>
+            <input type="range" id="lenRange" min="4" max="24" value="12" step="1" aria-label="Longueur du mot de passe">
+            <output id="lenOut" for="lenRange">12</output>
+          </div>
+          <div class="sample" id="sample" aria-hidden="true"></div>
+          <div class="bits" id="bits" aria-hidden="true"></div>
+          <div class="readouts" aria-live="polite">
+            <div class="readout"><small>Entropie</small><strong id="roE">71 bits</strong></div>
+            <div class="readout"><small>Combinaisons</small><strong id="roC">3 × 10²¹</strong></div>
+            <div class="readout hot" id="roTBox"><small>Pour tout essayer</small><strong id="roT">102 000 ans</strong></div>
+          </div>
+        </div>
+        <figcaption><b>Figure 3</b>Entropie d'un mot de passe aléatoire selon sa longueur et son jeu de caractères. Chaque case représente un bit : un bit de plus double le travail. Temps calculés pour 10⁹ essais par seconde (empreinte rapide) ou 10⁴ (fonction lente, 100 000 itérations) ; en moyenne, la moitié du temps suffit.</figcaption>
+      </figure>
+
+      <div class="table-wrap rv" id="tab1">
+        <div class="table-cap tc-row"><span><b>Tableau 1</b>Force selon le jeu de caractères et la longueur</span>
+          <span class="seg seg-sm" role="group" aria-label="Valeur affichée" id="tabSeg">
+            <button type="button" data-v="e" aria-pressed="true">Entropie</button>
+            <button type="button" data-v="c" aria-pressed="false">Combinaisons</button>
+            <button type="button" data-v="t" aria-pressed="false">Temps</button>
+          </span>
+        </div>
+        <div class="table-scroll">
+          <table class="heat" id="heat">
+            <thead><tr><th>Jeu de caractères</th><th class="num">8</th><th class="num">12</th><th class="num">15</th><th class="num">18</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="table-note">Temps pour épuiser toutes les combinaisons à 10⁹ essais par seconde, empreinte rapide sans sel. La couleur suit l'entropie : rouge sous 50 bits, vert au-delà de 80.</div>
+      </div>
+
+      <div class="note" style="--nc:#fbbf24">
+        <i class="ph-light ph-warning" aria-hidden="true"></i>
+        <p><span class="nt">Attention aux apparences</span>Ce calcul suppose un tirage au hasard. « Motdepasse2024! » coche toutes les cases (majuscule, chiffres, symbole) et affiche 98 bits théoriques, mais il suit un motif si courant qu'il figure parmi les tout premiers essais. Sa force réelle est quasi nulle.</p>
+      </div>
+    </section>
+
+    <!-- 4. LONGUEUR OU DIVERSITÉ -->
+    <section id="s-discussion">
+      <h2><span class="n">04</span>Longueur ou diversité ?</h2>
+      <p>Les deux paramètres augmentent l'entropie, mais pas de la même façon. La longueur agit en <strong>multiplication</strong> : chaque caractère ajoute log₂(B) bits, environ 6 pour un jeu de 62. La diversité agit à l'intérieur d'un <strong>logarithme</strong> : passer de 62 à 94 caractères n'ajoute que 0,6 bit par position.</p>
+
+      <figure class="fig rv" id="fig4">
+        <div class="fig-stage">
+          <div class="fig-head"><span class="fig-name">Deux leviers, deux pentes</span></div>
+          <div class="multi">
+            <div class="chart" id="byLen"><div class="ctip" id="byLenTip"></div></div>
+            <div class="chart" id="byPool"><div class="ctip" id="byPoolTip"></div></div>
+          </div>
+        </div>
+        <figcaption><b>Figure 4</b>À gauche, l'entropie croît en ligne droite avec la longueur, pour chaque jeu de caractères. À droite, elle s'aplatit quand on élargit le jeu, pour chaque longueur. Les deux graphiques partagent la même échelle verticale.</figcaption>
+      </figure>
+
+      <p>Conséquence pratique : un mot de passe long et simple à retenir peut battre un mot de passe court et compliqué. Une <button class="term" type="button" data-term="phrase">phrase de passe</button> de six mots tirés au hasard dans une liste de 7 776 atteint 77 bits, plus qu'un mot de passe de 12 caractères aléatoires.</p>
+
+      <figure class="fig rv" id="fig5">
+        <div class="fig-stage">
+          <div class="fig-head"><span class="fig-name">Quatre mots de passe comparés</span></div>
+          <div class="chart" id="cmp"></div>
+        </div>
+        <figcaption><b>Figure 5</b>Entropie de quatre types de mots de passe. La ligne pointillée marque 80 bits : à 10⁹ essais par seconde, épuiser 2⁸⁰ combinaisons prendrait environ 38 millions d'années. Le premier exemple n'a de force que sur le papier.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 5. RECOMMANDATIONS -->
+    <section id="s-conclusion">
+      <h2><span class="n">05</span>Recommandations et politique de l'IFRAS</h2>
+      <p>La sécurité d'un mot de passe repose sur trois propriétés : sa <strong>longueur</strong>, la <strong>diversité</strong> de ses caractères et surtout son <strong>caractère aléatoire</strong>. La longueur est le levier le plus efficace et le plus simple à appliquer.</p>
+
+      <ol class="rules">
+        <li><span class="rn">1</span><div><strong>15 caractères minimum</strong><span>ou une phrase de passe de 6 mots tirés au hasard.</span></div></li>
+        <li><span class="rn">2</span><div><strong>Un gestionnaire de mots de passe</strong><span>pour générer et retenir un mot de passe différent par service.</span></div></li>
+        <li><span class="rn">3</span><div><strong>Le double facteur</strong><span>obligatoire pour tous les accès distants et les systèmes critiques.</span></div></li>
+        <li><span class="rn">4</span><div><strong>Côté serveur</strong><span>empreintes salées et fonctions lentes, jamais de mot de passe en clair.</span></div></li>
+      </ol>
+
+      <div class="note" style="--nc:#a78bfa">
+        <i class="ph-light ph-info" aria-hidden="true"></i>
+        <p><span class="nt">Transition</span>Les identifiants existants ne sont pas modifiés d'office, pour ne pas perturber les systèmes historiques validés. La nouvelle règle s'applique à chaque renouvellement.</p>
+      </div>
+
+      <ol class="next" aria-label="Prochaines étapes">
+        <li class="now" style="--nc:var(--ok)"><time>Sept. 2024</time><strong>15 caractères</strong><span>Nouvelle règle pour tout nouveau compte.</span></li>
+        <li><time>2025</time><strong>Double facteur</strong><span>Généralisé à tous les accès distants.</span></li>
+        <li style="--nc:#a78bfa"><time>2026</time><strong>Clés physiques</strong><span>Pour les systèmes de pilotage des missions.</span></li>
+      </ol>
+    </section>
+
+  </article>
+
+  <!-- Colonne de droite -->
+  <aside class="rail" aria-label="Outils de l'article">
+    <div class="rail-card rail-figs">
+      <p class="rail-title">Figures</p>
+      <ul class="fig-list">
+        <li><a href="#fig1"><i class="ph-light ph-cpu" aria-hidden="true"></i>Puissance de calcul</a></li>
+        <li><a href="#fig2"><i class="ph-light ph-fingerprint" aria-hidden="true"></i>Empreinte et sel</a></li>
+        <li><a href="#fig3"><i class="ph-light ph-sliders-horizontal" aria-hidden="true"></i>Calculateur</a></li>
+        <li><a href="#tab1"><i class="ph-light ph-table" aria-hidden="true"></i>Tableau de force</a></li>
+        <li><a href="#fig4"><i class="ph-light ph-chart-line" aria-hidden="true"></i>Longueur ou diversité</a></li>
+        <li><a href="#fig5"><i class="ph-light ph-chart-bar-horizontal" aria-hidden="true"></i>Comparaison</a></li>
+      </ul>
     </div>
-  </div>
-
-  <!-- ===== 1. HISTORIQUE ===== -->
-  <h2 class="section-heading" id="s1">1. Évolution historique des schémas d'authentification</h2>
-
-  <p class="bt">
-    Les premiers systèmes d'authentification informatisés, déployés à grande échelle à partir des années 1980 et 1990,
-    ont été conçus dans un contexte technologique et opérationnel très différent de celui d'aujourd'hui. Les modèles de
-    menace alors retenus reposaient principalement sur l'idée que l'attaquant devait disposer soit d'un accès physique
-    prolongé aux machines, soit de ressources matérielles lourdes, coûteuses et rares. Les attaques à distance étaient
-    limitées par la faible interconnexion des systèmes, l'absence d'Internet grand public et des débits réseau très réduits.
-  </p>
-
-  <div class="split-wrap">
-    <div class="split-text">
-      <p class="bt">
-        Dans les environnements institutionnels de l'époque (universités, administrations, grandes entreprises), les systèmes étaient majoritairement fermés,
-        centralisés et administrés localement. Les comptes utilisateurs étaient hébergés sur des mainframes ou des serveurs Unix partagés, accessibles depuis des terminaux internes.
-        Dans ce cadre, le risque principal était l'usurpation par un utilisateur légitime ou la compromission locale, bien plus que l'attaque automatisée à grande échelle.
-        C'est dans ce contexte que les politiques de mots de passe ont été définies. Des schémas courts, combinant lettres et chiffres sur une longueur limitée (souvent 6 à 8 caractères),
-        étaient considérés comme suffisants. Cette perception était renforcée par les contraintes d'ergonomie (claviers de terminaux, mémorisation humaine) et par le coût des attaques par force brute.
-      </p>
+    <div class="rail-card">
+      <p class="rail-title">À retenir</p>
+      <ul class="keep">
+        <li><i class="ph-light ph-ruler" aria-hidden="true"></i>Allonger plutôt que compliquer</li>
+        <li><i class="ph-light ph-dice-five" aria-hidden="true"></i>Tirer au hasard</li>
+        <li><i class="ph-light ph-key" aria-hidden="true"></i>Un mot de passe par service</li>
+      </ul>
     </div>
-    <img src="/Assets/articles/article04 image01.jpg" alt="Sécurité des systèmes d'authentification">
-  </div>
-
-  <p class="bt">
-    Au début des années 2000, un tel espace de recherche dépassait largement les capacités de calcul accessibles dans un cadre réaliste. Les processeurs grand public fonctionnaient à
-    quelques centaines de MHz, et les architectures parallèles restaient réservées à des centres de calcul spécialisés. Une attaque exhaustive sur un tel espace pouvait théoriquement
-    nécessiter des années, voire des décennies, même en supposant une vérification rapide des tentatives. De plus, les mécanismes de stockage des mots de passe reposaient souvent sur des
-    fonctions de hachage cryptographique conçues pour être relativement coûteuses en calcul (comme DES-based crypt, puis MD5 ou SHA-1 dans certains contextes), ce qui ralentissait encore les
-    tentatives hors ligne. La combinaison d'un espace de recherche large, d'une puissance de calcul limitée et d'un faible niveau d'exposition réseau rendait donc ces schémas acceptables
-    au regard des risques perçus.
-  </p>
-
-  <p class="bt">
-    Cependant, ces hypothèses se sont progressivement effondrées avec la généralisation d'Internet, l'explosion de la puissance de calcul (CPU multicœurs, GPU, ASIC), la démocratisation du calcul
-    distribué et l'industrialisation des attaques automatisées. Ce qui constituait autrefois une barrière économique ou technique est devenu aujourd'hui trivialement accessible, rendant obsolètes
-    les modèles de sécurité hérités de cette période. Mais alors, comment bien se protéger et être certains de la robustesse de son mot de passe ?
-  </p>
-
-  <!-- ===== 2. TYPES D'ATTAQUE ===== -->
-  <h2 class="section-heading blue" id="s2">2. Différents types d'attaque</h2>
-
-  <p class="bt">
-    Il existe plusieurs catégories d'attaques visant à compromettre les mécanismes d'authentification par mot de passe,
-    chacune exploitant des leviers techniques, statistiques ou humains distincts.
-  </p>
-
-  <ul class="bt-list">
-    <li>
-      <strong>Attaque par force brute :</strong>
-      cette méthode consiste à tester systématiquement l'ensemble des combinaisons possibles jusqu'à l'obtention
-      du mot de passe correct. L'efficacité de cette approche dépend directement de la longueur du mot de passe
-      et de la taille du jeu de caractères utilisé. Plus ces paramètres sont élevés, plus l'espace de recherche
-      croît exponentiellement, rendant l'attaque coûteuse en temps et en ressources.
-    </li>
-    <li>
-      <strong>Attaque par dictionnaire :</strong>
-      elle repose sur l'exploitation de listes de mots de passe couramment utilisés, issues de bases de données
-      compromises ou de modèles statistiques du comportement humain. Un mot de passe réellement aléatoire
-      présente une probabilité extrêmement faible de figurer dans ces dictionnaires, ce qui réduit fortement
-      l'efficacité de cette technique.
-    </li>
-    <li>
-      <strong>Attaque par tables arc-en-ciel :</strong>
-      cette approche utilise des bases pré-calculées reliant des mots de passe à leurs empreintes cryptographiques.
-      Elle n'est applicable que si l'attaquant a accès aux mots de passe tels qu'ils sont stockés après hachage,
-      généralement à la suite d'une compromission de base de données. L'ajout d'un sel cryptographique
-      rend ce type d'attaque largement inefficace.
-    </li>
-    <li>
-      <strong>Attaque par ingénierie sociale :</strong>
-      elle exploite le facteur humain, soit en déduisant le mot de passe à partir d'informations personnelles,
-      soit en incitant la victime à le divulguer volontairement, notamment par des campagnes de phishing
-      ou de manipulation psychologique.
-    </li>
-    <li>
-      <strong>Attaques logicielles et système :</strong>
-      ces attaques tirent parti de vulnérabilités applicatives ou système. En cas de compromission,
-      il devient parfois possible d'extraire des mots de passe depuis la mémoire vive, des fichiers temporaires
-      ou des journaux insuffisamment protégés.
-    </li>
-  </ul>
-
-  <p class="bt">
-    Dans une analyse strictement cryptographique, excluant les faiblesses humaines et les compromissions système,
-    le vecteur d'attaque le plus dominant reste la force brute. Ce sont donc ces approches qui constituent les
-    principales références pour l'évaluation quantitative de la robustesse des mots de passe.
-  </p>
-
-  <!-- ===== 3. CALCUL DE L'ENTROPIE ===== -->
-  <h2 class="section-heading" id="s3">3. Calcul de l'entropie</h2>
-
-  <p class="bt">
-    Premièrement, nous devons définir la notion de « force » d'un mot de passe : on désigne communément par la « force » d'un mot de passe sa capacité à résister à une attaque par énumération exhaustive,
-    plus connue sous le nom d'attaque par force brute. Ce type d'attaque consiste à tester systématiquement toutes les combinaisons possibles jusqu'à trouver la bonne. D'un point de vue conceptuel, la force d'un mot
-    de passe peut être rapprochée de celle d'un mécanisme cryptographique : elle est comparable à la taille d'une clé de chiffrement. Plus cette « clé » est grande, plus l'effort nécessaire pour la casser augmente.
-  </p>
-
-  <p class="bt">
-    La robustesse d'un mot de passe est généralement exprimée à l'aide de l'entropie de Shannon, mesurée en bits. Cette mesure permet de quantifier l'imprévisibilité d'un mot de passe de manière compacte,
-    sans avoir à manipuler directement des nombres de combinaisons souvent astronomiques. L'entropie représente la quantité d'information nécessaire pour deviner un mot de passe choisi aléatoirement dans
-    un ensemble donné. Plus l'entropie est élevée, plus le mot de passe est théoriquement difficile à deviner. Cependant, il est crucial de souligner que l'entropie n'est qu'une mesure théorique.
-    Un mot de passe peut afficher une entropie élevée sur le papier tout en étant extrêmement faible en pratique. Par exemple, "Password123*" respecte de nombreuses règles de complexité (majuscules, minuscules,
-    chiffres, caractères spéciaux), mais reste trivial à casser car il repose sur des motifs humains largement intégrés aux dictionnaires d'attaque modernes.
-    C'est pourquoi la génération réellement aléatoire des mots de passe est un facteur déterminant de leur sécurité effective.
-  </p>
-
-  <p class="bt">
-    Cette entropie se calcule à partir de la longueur du mot de passe (L), ainsi que la taille du jeu de caractères utilisé (B), aussi appelée pool. La formule est la suivante :
-  </p>
-
-  <div class="equation-box">
-    \[ E = L \times \log_2(B) \]
-  </div>
-
-  <ul class="bt-list">
-    <li><strong>E</strong> est l'entropie en bits</li>
-    <li><strong>L</strong> est le nombre de caractères du mot de passe</li>
-    <li><strong>B</strong> est le nombre de caractères distincts possibles à chaque position</li>
-  </ul>
-
-  <p class="bt">Voici un tableau représentant l'entropie de différents mots de passe en fonction du nombre de caractères utilisés et du nombre de pools possibles :</p>
-
-  <div class="tbl-wrap">
-    <div class="tbl-head">Tableau 1 — Entropie (en bits) selon la base et la longueur du mot de passe</div>
-    <table>
-      <thead>
-        <tr>
-          <th>Base / Longueur</th>
-          <th>8 caractères</th>
-          <th>12 caractères</th>
-          <th>15 caractères</th>
-          <th>18 caractères</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Base 10</strong><span>(chiffres)</span></td>
-          <td>26 bits</td><td>39 bits</td><td>49 bits</td><td>59 bits</td>
-        </tr>
-        <tr>
-          <td><strong>Base 26</strong><span>(minuscules)</span></td>
-          <td>37 bits</td><td>56 bits</td><td>70 bits</td><td>84 bits</td>
-        </tr>
-        <tr>
-          <td><strong>Base 36</strong><span>(minuscules + chiffres)</span></td>
-          <td>41 bits</td><td>62 bits</td><td>77 bits</td><td>93 bits</td>
-        </tr>
-        <tr>
-          <td><strong>Base 52</strong><span>(min. + maj.)</span></td>
-          <td>45 bits</td><td>68 bits</td><td>85 bits</td><td>102 bits</td>
-        </tr>
-        <tr>
-          <td><strong>Base 62</strong><span>(min. + maj. + chiffres)</span></td>
-          <td>47 bits</td><td>71 bits</td><td>89 bits</td><td>107 bits</td>
-        </tr>
-        <tr>
-          <td><strong>Base 85</strong><span>(alphabet étendu + spéciaux)</span></td>
-          <td>51 bits</td><td>77 bits</td><td>96 bits</td><td>115 bits</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <p class="bt">
-    Nous avons donc une première mesure possible d'estimation de robustesse d'un mot de passe. Ceci étant dit, il est possible de développer légèrement ces équations. En effet, on peut
-    déterminer le nombre total de combinaisons possibles par la formule :
-  </p>
-
-  <div class="equation-box">
-    \[ C = B^L \]
-  </div>
-
-  <ul class="bt-list">
-    <li><strong>C</strong> est le nombre total de combinaisons possibles</li>
-    <li><strong>L</strong> est le nombre de caractères du mot de passe</li>
-    <li><strong>B</strong> est le nombre de caractères distincts possibles à chaque position</li>
-  </ul>
-
-  <p class="bt">Voici le même tableau, mais représentant cette fois le nombre total de combinaisons possibles :</p>
-
-  <div class="tbl-wrap">
-    <div class="tbl-head">Tableau 2 — Nombre total de combinaisons possibles (C = B^L)</div>
-    <table>
-      <thead>
-        <tr>
-          <th>Base / Longueur</th>
-          <th>8 caractères</th>
-          <th>12 caractères</th>
-          <th>15 caractères</th>
-          <th>18 caractères</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Base 10</strong><span>(chiffres)</span></td>
-          <td>100 000 000</td><td>1,00e+12</td><td>1,00e+15</td><td>1,00e+18</td>
-        </tr>
-        <tr>
-          <td><strong>Base 26</strong><span>(minuscules)</span></td>
-          <td>2,09e+11</td><td>9,54e+16</td><td>1,67e+21</td><td>2,94e+25</td>
-        </tr>
-        <tr>
-          <td><strong>Base 36</strong><span>(minuscules + chiffres)</span></td>
-          <td>2,82e+12</td><td>4,73e+18</td><td>2,21e+23</td><td>1,03e+28</td>
-        </tr>
-        <tr>
-          <td><strong>Base 52</strong><span>(min. + maj.)</span></td>
-          <td>5,35e+13</td><td>3,90e+20</td><td>5,49e+25</td><td>7,72e+30</td>
-        </tr>
-        <tr>
-          <td><strong>Base 62</strong><span>(min. + maj. + chiffres)</span></td>
-          <td>2,18e+14</td><td>3,22e+21</td><td>7,68e+26</td><td>1,83e+32</td>
-        </tr>
-        <tr>
-          <td><strong>Base 85</strong><span>(alphabet étendu + spéciaux)</span></td>
-          <td>2,04e+15</td><td>9,24e+22</td><td>5,09e+28</td><td>2,80e+34</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <p class="bt">Par conséquent, nous pouvons relier ce nombre avec l'entropie dans une seule et même équation :</p>
-
-  <div class="equation-box">
-    \[ E = \log_2(C) \]
-  </div>
-
-  <!-- ===== 4. TEMPS DE CASSAGE ===== -->
-  <h2 class="section-heading orange" id="s4">4. Temps estimé de cassage</h2>
-
-  <p class="bt">
-    Nous pouvons, grâce à cette entropie, en déduire le temps estimé de cassage.
-    La complexité d'un mot de passe prend tout son sens lorsqu'on la relie à un temps de cassage estimé.
-    Celui-ci dépend non seulement de l'entropie, mais aussi de la puissance de calcul disponible pour l'attaquant. Une estimation simplifiée du temps nécessaire pour casser un mot de passe est donnée par
-    la formule :
-  </p>
-
-  <div class="equation-box">
-    \[ T = \frac{2^E}{R} \]
-  </div>
-
-  <ul class="bt-list">
-    <li><strong>T</strong> est le temps moyen nécessaire (en secondes)</li>
-    <li><strong>E</strong> est l'entropie en bits</li>
-    <li><strong>R</strong> est le nombre de tentatives par seconde</li>
-  </ul>
-
-  <div class="hl blue">
-    Les systèmes modernes de craquage, notamment basés sur GPU, peuvent atteindre des milliards, voire des trillions de tentatives par seconde pour certains algorithmes mal protégés.
-    Cela rend les mots de passe courts extrêmement vulnérables, même s'ils paraissent complexes.
-  </div>
-
-  <p class="bt">
-    En réutilisant les deux mêmes tableaux utilisés précédemment, voici l'estimation du temps
-    qu'il faudrait pour déchiffrer un mot de passe, avec une valeur arbitraire d'un milliard de tentatives par seconde (ce qui est déjà énorme) :
-  </p>
-
-  <div class="tbl-wrap">
-    <div class="tbl-head">Tableau 3 — Temps estimé de cassage à 10⁹ tentatives/seconde</div>
-    <table>
-      <thead>
-        <tr>
-          <th>Base / Longueur</th>
-          <th>8 caractères</th>
-          <th>12 caractères</th>
-          <th>15 caractères</th>
-          <th>18 caractères</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Base 10</strong><span>(chiffres)</span></td>
-          <td>Instantanément</td><td>17 minutes</td><td>12 jours</td><td>3,17e+1 années</td>
-        </tr>
-        <tr>
-          <td><strong>Base 26</strong><span>(minuscules)</span></td>
-          <td>3 minutes</td><td>3,03 années</td><td>5,32e+4 années</td><td>Éternité</td>
-        </tr>
-        <tr>
-          <td><strong>Base 36</strong><span>(min. + chiffres)</span></td>
-          <td>47 minutes</td><td>1,50e+2 années</td><td>7,01e+6 années</td><td>Éternité</td>
-        </tr>
-        <tr>
-          <td><strong>Base 52</strong><span>(min. + maj.)</span></td>
-          <td>15 heures</td><td>1,24e+4 années</td><td>Éternité</td><td>Éternité</td>
-        </tr>
-        <tr>
-          <td><strong>Base 62</strong><span>(min. + maj. + chiffres)</span></td>
-          <td>3 jours</td><td>1,02e+5 années</td><td>Éternité</td><td>Éternité</td>
-        </tr>
-        <tr>
-          <td><strong>Base 85</strong><span>(alphabet étendu + spéciaux)</span></td>
-          <td>24 jours</td><td>2,93e+6 années</td><td>Éternité</td><td>Éternité</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="tbl-note">
-      Ces estimations supposent un attaquant disposant de matériel GPU grand public (≈ 10⁹ hash/s). Des infrastructures spécialisées (clusters ASIC) peuvent dépasser 10¹² tentatives/s pour certains algorithmes non salés.
-    </div>
-  </div>
-
-  <!-- ===== 5. ANALYSE ET CONCLUSION ===== -->
-  <h2 class="section-heading blue" id="s5">5. Analyse et conclusion</h2>
-
-  <p class="bt">
-    Pour mieux comprendre les tableaux précédents et différencier l'importance des deux paramètres B (nombre de pool) et L (nombre de caractères),
-    nous avons séparé l'évolution de l'entropie en deux graphiques respectifs. Le premier affiche l'évolution de l'entropie en fonction de la taille du pool utilisé
-    pour une longueur fixe donnée. Le second montre l'évolution de l'entropie en fonction de la longueur du mot de passe pour un pool fixé.
-  </p>
-
-  <div class="split-wrap reverse">
-    <div class="split-text">
-      <p class="bt">
-        Sur ce premier graphique, on observe que, quelle que soit la longueur du mot de passe, l'entropie augmente toujours lorsque le nombre de caractères possibles dans le pool augmente.
-      </p>
-      <p class="bt">
-        De plus, on constate que les courbes associées aux longueurs plus élevées sont systématiquement au-dessus des autres.
-      </p>
-      <p class="bt">
-        L'écart entre les courbes s'accentue lorsque le pool devient plus grand, montrant un effet cumulatif entre longueur et diversité des caractères.
-      </p>
-    </div>
-    <img src="/Assets/articles/article04 image02.png" alt="Entropie en fonction du nombre de pool">
-  </div>
-
-  <div class="split-wrap">
-    <div class="split-text">
-      <p class="bt">
-        Sur ce second graphique, on constate que, de la même manière, pour tous les pools fixés, l'entropie augmente de manière quasi linéaire avec la longueur du mot de passe.
-        Chaque caractère supplémentaire rajouté à un mot de passe apporte un gain significatif en sécurité, surtout lorsque le pool est important.
-      </p>
-      <p class="bt">
-        De plus, on observe aussi que les courbes associées aux pools plus élevés sont toujours au-dessus des autres, démontrant encore l'importance de ce paramètre.
-      </p>
-    </div>
-    <img src="/Assets/articles/article04 image03.png" alt="Entropie en fonction de la longueur">
-  </div>
-
-  <h3 class="sub">Propriétés fondamentales d'un mot de passe robuste</h3>
-
-  <p class="bt">
-    Ces deux graphiques montrent clairement que la sécurité d'un mot de passe repose principalement sur deux facteurs : sa longueur et la diversité des caractères utilisés.
-    L'augmentation de l'un ou de l'autre améliore l'entropie, mais c'est leur combinaison qui produit le gain le plus important.
-    Ainsi, pour créer des mots de passe réellement robustes, il est recommandé d'utiliser des mots de passe longs, composés d'un large éventail de caractères
-    (lettres minuscules et majuscules, chiffres et symboles). Cette approche permet de rendre les attaques par force brute et par dictionnaire beaucoup plus difficiles, voire irréalistes en pratique.
-  </p>
-
-  <p class="bt">De ces éléments, on peut tirer trois propriétés fondamentales d'un mot de passe robuste :</p>
-
-  <ul class="bt-list">
-    <li><strong>Longueur :</strong> chaque caractère supplémentaire augmente exponentiellement l'espace de recherche.</li>
-    <li><strong>Diversité du jeu de caractères :</strong> une base plus large accroît le nombre de combinaisons possibles.</li>
-    <li><strong>Aléa réel :</strong> un mot de passe ne doit pas suivre de motifs humains prévisibles ni figurer dans des dictionnaires.</li>
-  </ul>
-
-  <div class="hl orange">
-    Les identifiants existants ne sont pas rétroactivement modifiés.
-    Cette décision vise à éviter toute perturbation des systèmes historiques
-    dont la stabilité repose sur des configurations validées antérieurement.
-  </div>
-
-  <div class="art-divider"></div>
-
-  <!-- RÉFÉRENCES -->
-  <div class="refs-sec" id="s6">
-    <div class="ref-ttl">Références bibliographiques</div>
-    <div class="ref-list">
-      <div class="ref-item"><b>NIST SP 800-63B</b> — <em>Digital Identity Guidelines</em> — 2023</div>
-      <div class="ref-item"><b>Veras et al.</b> — <em>On the Semantic Patterns of Passwords</em> — IEEE S&amp;P</div>
-      <div class="ref-item"><b>IFRAS</b> — <em>Rapport interne sur la résilience des systèmes d'accès</em> — 2024</div>
-    </div>
-  </div>
-
-  <div class="footnote">
-    <strong>Diffusion :</strong> Document institutionnel à diffusion contrôlée — IFRAS. —
-    <strong>Département :</strong> Systèmes &amp; Infrastructures Numériques (DSIN). —
-    <strong>Date de publication :</strong> Septembre 2024. —
-    <strong>Conflits d'intérêts :</strong> Aucun.
-  </div>
-
+  </aside>
 </div>
 
-<footer style="background:#020617;border-top:1px solid #1b2555;padding:32px 30px;text-align:center;font-size:12px;color:#6b7280;">
-  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale · Publications soumises à validation institutionnelle
+<!-- Articles liés -->
+<section class="container related" aria-labelledby="relTitle">
+  <h2 class="section-title" id="relTitle">À lire aussi</h2>
+  <div class="related-grid">
+    <a class="rel" href="../Publication_scientifiques/publications_scientifiques_04.html" style="--c:#c084fc">
+      <div class="rel-img"><img src="../Assets/publication/quantique01.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Physique quantique</small><strong>L'intrication quantique préservée sur une liaison Terre–satellite simulée</strong></div>
+    </a>
+    <a class="rel" href="../Publication_scientifiques/publications_scientifiques_01.html" style="--c:#fb7185">
+      <div class="rel-img"><img src="../Assets/accueil/alaune01.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Matériaux</small><strong>Un bouclier céramique qui résiste à 2 250 °C pour la rentrée atmosphérique</strong></div>
+    </a>
+    <a class="rel" href="../Publication_scientifiques/publications_scientifiques_05.html" style="--c:#67e8f9">
+      <div class="rel-img"><img src="../Assets/publication/exoplanete01.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Astrophysique</small><strong>Une super-Terre au cœur de la zone habitable d'une étoile orange</strong></div>
+    </a>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© IFRAS, Institut Français de Recherche Aéronautique et Spatiale</span>
+    <span>Publications soumises à validation institutionnelle</span>
+  </div>
 </footer>
 
+<div class="toast" id="toast" role="status"><i class="ph-light ph-check-circle" aria-hidden="true"></i><span></span></div>
+<div class="tip" id="tip" role="tooltip"></div>
 <script>
-window.addEventListener('scroll',()=>{
-  const d=document.documentElement;
-  document.getElementById('progressBar').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%';
-});
-const secs=['s0','s1','s2','s3','s4','s5','s6'];
-const dots=document.querySelectorAll('.toc-dot');
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      const i=secs.indexOf(e.target.id);
-      if(i>=0){dots.forEach(d=>d.classList.remove('active'));dots[i]&&dots[i].classList.add('active');}
-    }
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const $ = (id) => document.getElementById(id);
+  const NS = 'http://www.w3.org/2000/svg';
+  const fmt = (n, d = 0) => n.toLocaleString('fr-FR', { minimumFractionDigits: d, maximumFractionDigits: d });
+  const svgEl = (tag, attrs = {}, parent) => {
+    const el = document.createElementNS(NS, tag);
+    for (const k in attrs) el.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(el);
+    return el;
+  };
+  /* lance une fonction quand l'élément devient visible (une seule fois) */
+  const onceVisible = (el, fn, margin = '0px 0px -15% 0px') => {
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { io.disconnect(); fn(); } }, { rootMargin: margin });
+    io.observe(el);
+  };
+  /* boucle d'animation suspendue hors écran et onglet masqué */
+  const loopWhileVisible = (el, frame) => {
+    let raf = 0, visible = false;
+    const tick = (t) => { frame(t); raf = requestAnimationFrame(tick); };
+    const sync = () => { cancelAnimationFrame(raf); if (visible && !document.hidden) raf = requestAnimationFrame(tick); };
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; sync(); }).observe(el);
+    document.addEventListener('visibilitychange', sync);
+  };
+
+  /* ---------- Menu mobile ---------- */
+  const toggle = document.querySelector('.menu-toggle');
+  const panel = $('mobile-panel');
+  const setMenu = (open) => {
+    panel.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    toggle.querySelector('i').className = open ? 'ph-light ph-x' : 'ph-light ph-list';
+  };
+  toggle.addEventListener('click', () => setMenu(!panel.classList.contains('is-open')));
+  document.addEventListener('click', (e) => { if (panel.classList.contains('is-open') && !panel.contains(e.target) && !toggle.contains(e.target)) setMenu(false); });
+
+  /* ---------- Apparition au défilement ---------- */
+  const rvIO = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (e.isIntersecting) { e.target.classList.add('in'); rvIO.unobserve(e.target); }
+  }), { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.rv').forEach((el) => rvIO.observe(el));
+
+  /* ---------- Toast ---------- */
+  let toastT;
+  const toast = (msg) => { const t = $('toast'); t.querySelector('span').textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2600); };
+
+  /* ---------- Progression de lecture + sommaire ---------- */
+  const article = $('article');
+  const tocLinks = [...document.querySelectorAll('#toc a')];
+  const sections = tocLinks.map((a) => document.querySelector(a.getAttribute('href')));
+  const ind = document.querySelector('.toc-ind');
+  const WORDS = article.innerText.split(/\s+/).length;
+  let ticking = false;
+  function onScroll() {
+    ticking = false;
+    const r = article.getBoundingClientRect();
+    const total = r.height - window.innerHeight * 0.6;
+    const p = Math.min(1, Math.max(0, -r.top / total));
+    $('progress').style.transform = `scaleX(${p})`;
+    const left = Math.max(0, Math.ceil((WORDS / 220) * (1 - p)));
+    $('timeLeft').textContent = p >= 0.98 ? 'Lecture terminée' : `${left || 1} min restante${left > 1 ? 's' : ''}`;
+    let cur = 0;
+    sections.forEach((s, i) => { if (s && s.getBoundingClientRect().top < window.innerHeight * 0.35) cur = i; });
+    tocLinks.forEach((a, i) => a.classList.toggle('on', i === cur));
+    const a = tocLinks[cur];
+    if (a && ind) { ind.style.transform = `translateY(${a.parentElement.offsetTop}px)`; ind.style.height = a.offsetHeight + 'px'; }
+  }
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  /* ---------- Chiffres clés animés ---------- */
+  document.querySelectorAll('[data-count]').forEach((el) => {
+    const target = Number(el.dataset.count), suffix = el.dataset.suffix || '';
+    const paint = (v) => { el.innerHTML = `${fmt(v)}<small>${suffix}</small>`; };
+    if (reduceMotion) return;
+    paint(0);
+    onceVisible(el, () => {
+      const t0 = performance.now(), dur = 1100;
+      const step = (t) => { const k = Math.min(1, (t - t0) / dur); paint(Math.round(target * (1 - Math.pow(1 - k, 4)))); if (k < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    });
   });
-},{rootMargin:'-20% 0px -70% 0px'});
-secs.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
-dots.forEach((d,i)=>{d.addEventListener('click',()=>{const el=document.getElementById(secs[i]);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});});});
+
+  /* ---------- Infobulles : termes expliqués ---------- */
+  const TERMS = {
+    hash: ['Empreinte', "Résultat d'une fonction mathématique à sens unique appliquée au mot de passe. Le serveur conserve l'empreinte, jamais le mot de passe : il compare les empreintes à chaque connexion."],
+    sel: ['Sel', "Suite aléatoire propre à chaque compte, ajoutée au mot de passe avant le calcul de l'empreinte. Deux comptes au même mot de passe obtiennent alors des empreintes différentes."],
+    entropie: ['Entropie', "Mesure de l'imprévisibilité, en bits. Un mot de passe de E bits correspond à 2 puissance E combinaisons possibles : chaque bit supplémentaire double ce nombre."],
+    phrase: ['Phrase de passe', "Suite de mots courants tirés au hasard, par exemple avec des dés, dans une liste connue de 7 776 mots. Chaque mot apporte environ 12,9 bits, et la phrase reste facile à retenir."]
+  };
+  const tip = $('tip');
+  let tipOpenAt = 0, hideT = null, tipOwner = null;
+  function showTip(el) {
+    clearTimeout(hideT);
+    const t = TERMS[el.dataset.term];
+    tip.innerHTML = `<b>${t[0]}</b>${t[1]}`;
+    tip.classList.toggle('instant', Date.now() - tipOpenAt < 400 && tip.classList.contains('show'));
+    const r = el.getBoundingClientRect();
+    tip.style.left = '0px'; tip.style.top = '0px';
+    tip.classList.add('show');
+    const w = tip.offsetWidth, h = tip.offsetHeight;
+    let x = r.left + r.width / 2 - w / 2 + window.scrollX;
+    x = Math.max(16 + window.scrollX, Math.min(x, window.scrollX + document.documentElement.clientWidth - w - 16));
+    let y = r.top + window.scrollY - h - 10, below = false;
+    if (r.top - h - 10 < 130) { y = r.bottom + window.scrollY + 10; below = true; }
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+    tip.style.transformOrigin = `${r.left + r.width / 2 + window.scrollX - x}px ${below ? '0%' : '100%'}`;
+    tipOpenAt = Date.now(); tipOwner = el;
+    el.setAttribute('aria-describedby', 'tip');
+  }
+  function hideTip(delay = 80) {
+    clearTimeout(hideT);
+    hideT = setTimeout(() => { tip.classList.remove('show'); if (tipOwner) tipOwner.removeAttribute('aria-describedby'); tipOwner = null; tipOpenAt = Date.now(); }, delay);
+  }
+  document.querySelectorAll('.term').forEach((el) => {
+    if (canHover) { el.addEventListener('mouseenter', () => showTip(el)); el.addEventListener('mouseleave', () => hideTip()); }
+    el.addEventListener('focus', () => showTip(el));
+    el.addEventListener('blur', () => hideTip(0));
+    el.addEventListener('click', () => { if (!canHover) (tipOwner === el && tip.classList.contains('show')) ? hideTip(0) : showTip(el); });
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { hideTip(0); setMenu(false); } });
+  window.addEventListener('scroll', () => { if (!canHover && tip.classList.contains('show')) hideTip(0); }, { passive: true });
+
+  /* petite infobulle de graphique, placée à côté d'un point */
+  const placeTip = (tipEl, box, svg, W, H, px, py) => {
+    const r = svg.getBoundingClientRect(), bx = box.getBoundingClientRect();
+    const sx = px / W * r.width + (r.left - bx.left), sy = py / H * r.height + (r.top - bx.top);
+    tipEl.classList.add('show');
+    tipEl.style.left = (sx + 14 + tipEl.offsetWidth > bx.width ? sx - 14 - tipEl.offsetWidth : sx + 14) + 'px';
+    tipEl.style.top = Math.max(0, Math.min(bx.height - tipEl.offsetHeight, sy - tipEl.offsetHeight / 2)) + 'px';
+  };
+  const BLUE = '#3b82f6', ORANGE = '#ea580c';
+
+    /* ---------- aide : repère de graphique ---------- */
+  function frame(box, o) {
+    const W = Math.round(Math.max(o.minW || 300, Math.min(o.maxW || 680, box.clientWidth))), H = o.H || (W < 520 ? 280 : 300);
+    const m = Object.assign({ l: 50, r: 16, t: 16, b: 40 }, o.m || {});
+    const [x0, x1] = o.x, [y0, y1] = o.y;
+    const x = (v) => m.l + (v - x0) / (x1 - x0) * (W - m.l - m.r);
+    const y = (v) => H - m.b - (v - y0) / (y1 - y0) * (H - m.t - m.b);
+    const svg = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': o.aria || '' });
+    box.prepend(svg);
+    (o.yt || []).forEach((v) => {
+      svgEl('line', { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: '#13204d' }, svg);
+      svgEl('text', { x: m.l - 6, y: y(v) + 4, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 11, class: 'mono' }, svg).textContent = o.yf ? o.yf(v) : fmt(v);
+    });
+    (o.xt || []).forEach((v) => svgEl('text', { x: x(v), y: H - m.b + 18, 'text-anchor': 'middle', fill: '#8891b8', 'font-size': 11, class: 'mono' }, svg).textContent = o.xf ? o.xf(v) : fmt(v));
+    if (o.xl) svgEl('text', { x: W - m.r, y: H - 3, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 11 }, svg).textContent = o.xl;
+    if (o.yl) svgEl('text', { x: m.l + 4, y: m.t + 12, fill: '#8891b8', 'font-size': 11 }, svg).textContent = o.yl;
+    const hit = () => svgEl('rect', { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, class: 'hit' }, svg);
+    return { svg, W, H, m, x, y, hit };
+  }
+  const NBSP = ' ', GREEN = '#34d399';
+  const SUP = { '-': '⁻', 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴', 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹' };
+  const sup = (n) => String(n).split('').map((c) => SUP[c]).join('');
+  /* nombre en notation scientifique lisible : 3,2 × 10²¹ */
+  const sci = (log10v) => {
+    if (log10v < 6) return fmt(Math.round(Math.pow(10, log10v))).replace(/\s/g, NBSP);
+    const e = Math.floor(log10v), mnt = Math.pow(10, log10v - e);
+    return fmt(mnt, 1) + NBSP + '×' + NBSP + '10' + sup(e);
+  };
+  /* durée lisible à partir de log10(secondes) */
+  const YEAR = 3.156e7, UNIVERSE = 1.38e10;
+  const dur = (l10) => {
+    const s = Math.pow(10, l10);
+    if (l10 < 0) return 'moins d\'une seconde';
+    if (s < 60) return Math.round(s) + NBSP + 's';
+    if (s < 3600) return Math.round(s / 60) + NBSP + 'min';
+    if (s < 86400) return Math.round(s / 3600) + NBSP + 'h';
+    if (s < YEAR) return Math.round(s / 86400) + NBSP + 'jours';
+    const y = l10 - Math.log10(YEAR);
+    if (y > Math.log10(UNIVERSE)) return 'plus que l\'âge de l\'Univers';
+    if (y < 3) return fmt(Math.pow(10, y), Math.pow(10, y) < 10 ? 1 : 0) + NBSP + 'ans';
+    if (y < 6) return fmt(Math.round(Math.pow(10, y) / 1000) * 1000).replace(/\s/g, NBSP) + NBSP + 'ans';
+    if (y < 9) return fmt(Math.pow(10, y - 6), y < 7 ? 1 : 0) + NBSP + 'millions d\'années';
+    return fmt(Math.pow(10, y - 9), 1) + NBSP + 'milliard' + (y >= 9.3 ? 's' : '') + ' d\'années';
+  };
+  const strengthCol = (E) => (E < 50 ? '#f87171' : E < 80 ? '#fbbf24' : GREEN);
+  const POOLS = [
+    { b: 10, n: 'Chiffres', d: '0-9' }, { b: 26, n: 'Minuscules', d: 'a-z' }, { b: 36, n: 'Minuscules + chiffres', d: 'a-z 0-9' },
+    { b: 52, n: 'Lettres', d: 'a-z A-Z' }, { b: 62, n: 'Lettres + chiffres', d: 'a-z A-Z 0-9' }, { b: 94, n: 'Tous caractères', d: '+ symboles' }
+  ];
+  const charset = (b) => {
+    const d = '0123456789', l = 'abcdefghijklmnopqrstuvwxyz', u = l.toUpperCase();
+    const all = []; for (let c = 33; c <= 126; c++) all.push(String.fromCharCode(c));
+    return { 10: d, 26: l, 36: l + d, 52: l + u, 62: l + u + d, 94: all.join('') }[b];
+  };
+
+  /* ---------- En-tête : cadenas et anneaux de caractères ---------- */
+  (function hero() {
+    const s = $('heroLock'); if (!s) return;
+    const CX = 260, CY = 224;
+    const defs = svgEl('defs', {}, s);
+    const lg = svgEl('linearGradient', { id: 'lockBody', x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
+    svgEl('stop', { offset: 0, 'stop-color': '#16275c' }, lg); svgEl('stop', { offset: 1, 'stop-color': '#0a1436' }, lg);
+    const gl = svgEl('radialGradient', { id: 'lockGlow' }, defs);
+    svgEl('stop', { offset: 0, 'stop-color': GREEN, 'stop-opacity': 0.25 }, gl); svgEl('stop', { offset: 1, 'stop-color': GREEN, 'stop-opacity': 0 }, gl);
+    svgEl('circle', { cx: CX, cy: CY, r: 150, fill: 'url(#lockGlow)' }, s);
+    const cs = charset(94);
+    [[92, 22, '120s', 'normal', 0.5], [128, 30, '160s', 'reverse', 0.38], [164, 40, '200s', 'normal', 0.28], [200, 50, '260s', 'reverse', 0.2]].forEach(([r, n, d, dir, op], k) => {
+      const g = svgEl('g', { class: 'ring', style: `--dur:${d};--dir:${dir}` }, s);
+      svgEl('circle', { cx: CX, cy: CY, r, fill: 'none', stroke: '#1b2555', 'stroke-dasharray': '2 6' }, g);
+      for (let i = 0; i < n; i++) {
+        const a = i / n * Math.PI * 2, x = CX + Math.cos(a) * r, y = CY + Math.sin(a) * r;
+        const on = (i * 7 + k * 3) % 11 === 0;
+        svgEl('text', { x, y: y + 4, 'text-anchor': 'middle', 'font-size': 12, fill: on ? GREEN : '#8891b8', opacity: on ? 1 : op, class: on ? 'chip-on' : '', style: on ? `--d:${(-i * 0.4).toFixed(1)}s` : '', transform: `rotate(${(a * 180 / Math.PI + 90).toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})` }, g).textContent = cs[(i * 37 + k * 11) % cs.length];
+      }
+    });
+    /* cadenas */
+    svgEl('path', { d: `M${CX - 34} ${CY - 12} V${CY - 40} a34 34 0 0 1 68 0 V${CY - 12}`, fill: 'none', stroke: '#475394', 'stroke-width': 10, 'stroke-linecap': 'round' }, s);
+    svgEl('rect', { x: CX - 56, y: CY - 16, width: 112, height: 84, rx: 16, fill: 'url(#lockBody)', stroke: '#2b3a78' }, s);
+    svgEl('circle', { cx: CX, cy: CY + 16, r: 9, fill: '#03130d', stroke: GREEN }, s);
+    svgEl('rect', { x: CX - 3, y: CY + 22, width: 6, height: 20, rx: 3, fill: GREEN }, s);
+    /* afficheur de longueur */
+    const dots = svgEl('g', {}, s);
+    for (let i = 0; i < 16; i++) svgEl('circle', { cx: CX - 45 + i * 6, cy: CY + 56, r: 1.8, fill: GREEN, class: reduceMotion ? '' : 'chip-on', style: `--d:${(-i * 0.17).toFixed(2)}s` }, dots);
+  })();
+
+  /* ---------- Figure 1 : puissance de calcul ---------- */
+  (function power() {
+    const box = $('power'), tipEl = $('powerTip');
+    const DATA = [[1985, 0], [1990, 1], [1995, 2], [2000, 3], [2005, 4], [2008, 5.2], [2010, 6], [2015, 7], [2020, 8], [2024, 8.5]];
+    const ERAS = [
+      [1985, 1998, 'Terminaux', 'Serveurs partagés et terminaux internes : les règles de 6 à 8 caractères naissent ici.'],
+      [1998, 2005, 'Processeurs', 'L\'ordinateur personnel se généralise et Internet relie les machines.'],
+      [2005, 2010, 'Multicœurs', 'Plusieurs cœurs par puce : le calcul devient parallèle.'],
+      [2010, 2024, 'Cartes graphiques', 'Des milliers de petits calculateurs par carte, puis le calcul à la demande.']
+    ];
+    const narrow = box.clientWidth < 520;
+    const F = frame(box, { x: [1985, 2024], y: [0, 9], xt: narrow ? [1985, 2000, 2010, 2024] : [1985, 1990, 1995, 2000, 2005, 2010, 2015, 2020, 2024], yt: [0, 2, 4, 6, 8], xf: (v) => String(v), yf: (v) => '×' + (v === 0 ? '1' : v === 2 ? '100' : '10' + sup(v)), yl: 'Puissance relative à 1985', aria: 'Courbe montrant une puissance multipliée par environ 300 millions entre 1985 et 2024', m: { l: 54, t: 34 } });
+    const eraG = ERAS.map(([a, b, n], i) => {
+      const g = svgEl('g', {}, F.svg);
+      svgEl('rect', { x: F.x(a), y: F.m.t, width: F.x(b) - F.x(a), height: F.H - F.m.t - F.m.b, fill: i % 2 ? 'rgba(79,107,237,.05)' : 'rgba(52,211,153,.04)', class: 'era' }, g);
+      if (!narrow || i % 2 === 0 || i === 3) svgEl('text', { x: (F.x(a) + F.x(b)) / 2, y: F.m.t - 10, 'text-anchor': 'middle', fill: '#aab3d6', 'font-size': narrow ? 10.5 : 11.5 }, g).textContent = narrow && i === 3 ? 'GPU' : n;
+      return g;
+    });
+    const p = DATA.map(([yr, v], i) => `${i ? 'L' : 'M'}${F.x(yr).toFixed(1)} ${F.y(v).toFixed(1)}`).join(' ');
+    const area = svgEl('path', { d: `${p} L${F.x(2024)} ${F.y(0)} L${F.x(1985)} ${F.y(0)} Z`, fill: 'rgba(52,211,153,.08)', class: 'dot' }, F.svg);
+    const line = svgEl('path', { d: p, fill: 'none', stroke: GREEN, 'stroke-width': 2.4, class: 'draw' }, F.svg);
+    line.style.setProperty('--len', Math.ceil(line.getTotalLength()));
+    const pts = DATA.map(([yr, v]) => svgEl('circle', { cx: F.x(yr), cy: F.y(v), r: 3.5, fill: GREEN, stroke: '#070f2b', 'stroke-width': 1.5, class: 'dot' }, F.svg));
+    svgEl('text', { x: F.x(2023), y: F.y(narrow ? 4.4 : 6.4), 'text-anchor': 'end', fill: '#fff', 'font-size': 12.5, 'font-weight': 500, class: 'dot' }, F.svg).textContent = '≈ ×300 millions';
+    const xh = svgEl('line', { y1: F.m.t, y2: F.H - F.m.b, stroke: '#aab3d6', 'stroke-opacity': 0.5, class: 'xhair' }, F.svg);
+    const hit = F.hit();
+    hit.addEventListener('pointermove', (e) => {
+      const rr = F.svg.getBoundingClientRect(), px = (e.clientX - rr.left) / rr.width * F.W;
+      let i = 0; DATA.forEach((d, k) => { if (Math.abs(F.x(d[0]) - px) < Math.abs(F.x(DATA[i][0]) - px)) i = k; });
+      const [yr, v] = DATA[i], era = ERAS.find(([a, b]) => yr >= a && yr < b) || ERAS[3];
+      pts.forEach((c, k) => c.setAttribute('r', k === i ? 6 : 3.5));
+      xh.setAttribute('x1', F.x(yr)); xh.setAttribute('x2', F.x(yr)); xh.classList.add('show');
+      tipEl.innerHTML = `<b>${yr} · ${era[2]}</b><div><span>Puissance</span><em>×${v < 6 ? fmt(Number(Math.pow(10, v).toPrecision(2))).replace(/\s/g, NBSP) : fmt(Math.pow(10, v - 6), v < 7 ? 1 : 0) + NBSP + 'million' + (v >= 6.3 ? 's' : '')}</em></div><p class="ctip-p">${era[3]}</p>`;
+      placeTip(tipEl, box, F.svg, F.W, F.H, F.x(yr), F.y(v));
+    });
+    hit.addEventListener('pointerleave', () => { tipEl.classList.remove('show'); xh.classList.remove('show'); pts.forEach((c) => c.setAttribute('r', 3.5)); });
+    if (reduceMotion) box.classList.add('drawn'); else onceVisible(box, () => box.classList.add('drawn'), '0px 0px -25% 0px');
+  })();
+
+  /* ---------- Figure 2 : empreintes et sel ---------- */
+  (function salt() {
+    const s = $('saltSvg');
+    s.setAttribute('viewBox', '0 0 460 224');
+    /* petite fonction de brassage (illustration, pas une vraie fonction cryptographique) */
+    const mix = (str) => {
+      let h1 = 0x811c9dc5, h2 = 0x1b873593;
+      for (let i = 0; i < str.length; i++) { const c = str.charCodeAt(i); h1 = Math.imul(h1 ^ c, 16777619); h2 = Math.imul(h2 ^ c, 2246822519); }
+      return ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).slice(0, 12);
+    };
+    const PW = 'orbite2024', SALTS = ['7f3a91', 'c0e25b'];
+    const COLS = [[16, 112, 'Mot de passe'], [128, 196, 'Sel'], [212, 320, 'Fonction lente'], [336, 448, 'Empreinte']];
+    COLS.forEach(([a, b, t]) => svgEl('text', { x: (a + b) / 2, y: 20, 'text-anchor': 'middle', fill: '#8891b8', 'font-size': 12 }, s).textContent = t);
+    const ROWS = [74, 170], rows = [];
+    ROWS.forEach((y, r) => {
+      svgEl('text', { x: 16, y: y - 30, fill: '#aab3d6', 'font-size': 12.5, 'font-weight': 500 }, s).textContent = r ? 'Compte B' : 'Compte A';
+      svgEl('rect', { x: 16, y: y - 18, width: 96, height: 36, rx: 9, fill: '#0a1436', stroke: '#2b3a78' }, s);
+      svgEl('text', { x: 64, y: y + 5, 'text-anchor': 'middle', fill: '#e0e7ff', 'font-size': 13, class: 'mono' }, s).textContent = PW;
+      const sg = svgEl('g', { class: 'pkt' }, s);
+      svgEl('rect', { x: 128, y: y - 18, width: 68, height: 36, rx: 9, fill: 'rgba(167,139,250,.1)', stroke: '#a78bfa', 'stroke-opacity': 0.6 }, sg);
+      svgEl('text', { x: 162, y: y + 5, 'text-anchor': 'middle', fill: '#c4b5fd', 'font-size': 12.5, class: 'mono' }, sg).textContent = SALTS[r];
+      svgEl('rect', { x: 212, y: y - 18, width: 108, height: 36, rx: 9, fill: 'rgba(52,211,153,.08)', stroke: GREEN, 'stroke-opacity': 0.5 }, s);
+      svgEl('text', { x: 266, y: y + 5, 'text-anchor': 'middle', fill: '#6ee7b7', 'font-size': 12.5, class: 'mono' }, s).textContent = '×100' + NBSP + '000';
+      const hb = svgEl('rect', { x: 336, y: y - 18, width: 112, height: 36, rx: 9, fill: '#0a1436', stroke: '#2b3a78' }, s);
+      const hv = svgEl('text', { x: 392, y: y + 5, 'text-anchor': 'middle', fill: '#e0e7ff', 'font-size': 12.5, class: 'mono hashv' }, s);
+      [[112, 128], [196, 212], [320, 336]].forEach(([a, b]) => svgEl('line', { x1: a, x2: b, y1: y, y2: y, stroke: '#475394' }, s));
+      rows.push({ y, sg, hb, hv });
+    });
+    svgEl('text', { x: 230, y: 216, 'text-anchor': 'middle', fill: '#8891b8', 'font-size': 11.5 }, s).textContent = 'Empreintes simplifiées à 12 caractères';
+    const verdict = $('saltVerdict');
+    let salted = true;
+    const set = (v) => {
+      salted = v;
+      document.querySelectorAll('#saltSeg [data-s]').forEach((b) => b.setAttribute('aria-pressed', String(Boolean(Number(b.dataset.s)) === v)));
+      rows.forEach((r, i) => {
+        r.sg.style.opacity = v ? 1 : 0.12;
+        r.hv.textContent = mix(PW + (v ? SALTS[i] : ''));
+        r.hv.setAttribute('fill', v ? '#e0e7ff' : '#fca5a5');
+        r.hb.setAttribute('stroke', v ? '#2b3a78' : '#f87171');
+      });
+      verdict.innerHTML = v
+        ? '<span class="verdict-pill" style="--vc:#34d399"><i class="ph-light ph-check" aria-hidden="true"></i>Empreintes différentes</span>Impossible de voir que les deux comptes partagent le même mot de passe.'
+        : '<span class="verdict-pill" style="--vc:#f87171"><i class="ph-light ph-x" aria-hidden="true"></i>Empreintes identiques</span>Un seul calcul suffit pour les deux comptes, et les tables pré-calculées fonctionnent.';
+    };
+    document.querySelectorAll('#saltSeg [data-s]').forEach((b) => b.addEventListener('click', () => set(Boolean(Number(b.dataset.s)))));
+    set(true);
+  })();
+
+  /* ---------- Figure 3 : calculateur ---------- */
+  (function calc() {
+    let B = 62, L = 12, R = 9;
+    const range = $('lenRange'), out = $('lenOut'), sample = $('sample'), bits = $('bits');
+    for (let i = 0; i < 160; i++) bits.appendChild(document.createElement('i'));
+    const cells = [...bits.children];
+    const roE = $('roE'), roC = $('roC'), roT = $('roT'), roTBox = $('roTBox');
+    const draw = (regen) => {
+      const E = L * Math.log2(B), l10C = L * Math.log10(B), col = strengthCol(E);
+      if (regen) {
+        const cs = charset(B), rnd = new Uint32Array(L);
+        (window.crypto || {}).getRandomValues ? crypto.getRandomValues(rnd) : rnd.forEach((_, i) => { rnd[i] = Math.random() * 1e9; });
+        sample.innerHTML = Array.from(rnd, (v) => `<span>${cs[v % cs.length].replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')}</span>`).join('');
+      }
+      cells.forEach((c, i) => { c.classList.toggle('on', i < Math.round(E)); });
+      bits.style.setProperty('--bc', col);
+      roE.textContent = fmt(E, 0) + NBSP + 'bits';
+      roC.textContent = sci(l10C);
+      roT.textContent = dur(l10C - R);
+      roTBox.style.setProperty('--rc', col);
+      out.textContent = L;
+    };
+    range.addEventListener('input', () => { L = Number(range.value); draw(true); });
+    document.querySelectorAll('#poolSeg .pool').forEach((b) => b.addEventListener('click', () => {
+      B = Number(b.dataset.b);
+      document.querySelectorAll('#poolSeg .pool').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      draw(true);
+    }));
+    document.querySelectorAll('#rateSeg [data-r]').forEach((b) => b.addEventListener('click', () => {
+      R = Number(b.dataset.r);
+      document.querySelectorAll('#rateSeg [data-r]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      draw(false);
+    }));
+    draw(true);
+  })();
+
+  /* ---------- Tableau 1 : carte thermique ---------- */
+  (function heat() {
+    const tb = document.querySelector('#heat tbody'), tbl = $('heat'), LENS = [8, 12, 15, 18];
+    tb.innerHTML = POOLS.map((p) => `<tr><td>${p.n}<small>${p.d} · ${p.b}</small></td>${LENS.map((l) => {
+      const E = l * Math.log2(p.b), t = Math.max(0, Math.min(1, (E - 30) / 70)), h = Math.round(t * 150);
+      return `<td class="num" style="background:hsla(${h},70%,45%,.16)" data-e="${E}" data-l="${l}" data-b="${p.b}"><span></span></td>`;
+    }).join('')}</tr>`).join('');
+    const cells = [...tb.querySelectorAll('td.num')];
+    const fill = (v) => cells.forEach((c) => {
+      const E = Number(c.dataset.e), l10 = Number(c.dataset.l) * Math.log10(Number(c.dataset.b));
+      c.querySelector('span').textContent = v === 'e' ? Math.round(E) + NBSP + 'bits' : v === 'c' ? sci(l10) : dur(l10 - 9);
+    });
+    let tw = 0;
+    document.querySelectorAll('#tabSeg [data-v]').forEach((b) => b.addEventListener('click', () => {
+      document.querySelectorAll('#tabSeg [data-v]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      if (reduceMotion) return fill(b.dataset.v);
+      tbl.classList.add('swap'); clearTimeout(tw);
+      tw = setTimeout(() => { fill(b.dataset.v); tbl.classList.remove('swap'); }, 180);
+    }));
+    fill('e');
+  })();
+
+  /* ---------- Figure 4 : deux leviers ---------- */
+  (function levers() {
+    const PC = [{ b: 26, c: '#3b82f6', n: 'a-z' }, { b: 62, c: '#059669', n: 'a-z A-Z 0-9' }, { b: 94, c: '#ea580c', n: '+ symboles' }];
+    const LC = [{ l: 8, c: '#5b21b6', n: '8 car.' }, { l: 12, c: '#7c3aed', n: '12 car.' }, { l: 16, c: '#a78bfa', n: '16 car.' }];
+    const mk = (boxId, tipId, cfg) => {
+      const box = $(boxId), tipEl = $(tipId);
+      const F = frame(box, { x: cfg.x, y: [0, 160], xt: cfg.xt, yt: [0, 40, 80, 120, 160], xl: cfg.xl, yl: 'Entropie (bits)', maxW: 420, minW: 280, H: 280, m: { r: 74, l: 44 }, aria: cfg.aria });
+      svgEl('line', { x1: F.m.l, x2: F.W - F.m.r, y1: F.y(80), y2: F.y(80), stroke: '#8891b8', 'stroke-dasharray': '4 5', 'stroke-opacity': 0.6 }, F.svg);
+      svgEl('text', { x: F.m.l + 4, y: F.y(80) - 5, fill: '#8891b8', 'font-size': 10.5 }, F.svg).textContent = '80 bits';
+      cfg.series.forEach((sr) => {
+        const pts = []; for (let v = cfg.x[0]; v <= cfg.x[1] + 1e-9; v += (cfg.x[1] - cfg.x[0]) / 60) pts.push(`${pts.length ? 'L' : 'M'}${F.x(v).toFixed(1)} ${F.y(cfg.f(sr, v)).toFixed(1)}`);
+        const el = svgEl('path', { d: pts.join(' '), fill: 'none', stroke: sr.c, 'stroke-width': 2.4, class: 'draw' }, F.svg);
+        el.style.setProperty('--len', Math.ceil(el.getTotalLength()));
+        const ey = Math.max(F.m.t + 6, F.y(cfg.f(sr, cfg.x[1])));
+        svgEl('text', { x: F.x(cfg.x[1]) + 6, y: ey + 4, fill: '#e6e6e6', 'font-size': 11.5, class: 'dot' }, F.svg).textContent = sr.n;
+      });
+      if (cfg.note) svgEl('text', { x: cfg.note[0](F), y: cfg.note[1](F), fill: '#fff', 'font-size': 12, 'font-weight': 500, class: 'dot' }, F.svg).textContent = cfg.note[2];
+      const xh = svgEl('line', { y1: F.m.t, y2: F.H - F.m.b, stroke: '#aab3d6', 'stroke-opacity': 0.5, class: 'xhair' }, F.svg);
+      const hit = F.hit();
+      hit.addEventListener('pointermove', (e) => {
+        const rr = F.svg.getBoundingClientRect(), px = (e.clientX - rr.left) / rr.width * F.W;
+        let v = cfg.x[0] + (px - F.m.l) / (F.W - F.m.l - F.m.r) * (cfg.x[1] - cfg.x[0]);
+        v = Math.round(Math.max(cfg.x[0], Math.min(cfg.x[1], v)));
+        xh.setAttribute('x1', F.x(v)); xh.setAttribute('x2', F.x(v)); xh.classList.add('show');
+        tipEl.innerHTML = `<b>${cfg.tl(v)}</b>` + cfg.series.map((sr) => `<div><span style="--lc:${sr.c}"><i></i>${sr.n}</span><em>${fmt(cfg.f(sr, v), 1)}${NBSP}bits</em></div>`).join('');
+        placeTip(tipEl, box, F.svg, F.W, F.H, F.x(v), F.y(cfg.f(cfg.series[1], v)));
+      });
+      hit.addEventListener('pointerleave', () => { tipEl.classList.remove('show'); xh.classList.remove('show'); });
+      if (reduceMotion) box.classList.add('drawn'); else onceVisible(box, () => box.classList.add('drawn'), '0px 0px -25% 0px');
+    };
+    mk('byLen', 'byLenTip', { x: [4, 24], xt: [4, 8, 12, 16, 20, 24], xl: 'Longueur (caractères)', series: PC, f: (sr, l) => l * Math.log2(sr.b), tl: (v) => v + ' caractères',
+      note: [(F) => F.x(5), (F) => F.y(140), '≈ +6 bits par caractère'], aria: 'Entropie selon la longueur : trois droites, pente de 4,7 à 6,6 bits par caractère' });
+    mk('byPool', 'byPoolTip', { x: [10, 94], xt: [10, 26, 52, 94], xl: 'Taille du jeu', series: LC, f: (sr, b) => sr.l * Math.log2(b), tl: (v) => 'Jeu de ' + v + ' caractères',
+      note: [(F) => F.x(12), (F) => F.y(140), 'La courbe s\'aplatit'], aria: 'Entropie selon la taille du jeu de caractères : trois courbes qui s\'aplatissent' });
+  })();
+
+  /* ---------- Figure 5 : comparaison ---------- */
+  (function compare() {
+    const box = $('cmp');
+    const ITEMS = [
+      { t: '« Motdepasse2024! » (15 car., motif courant)', e: 98.3, fake: true },
+      { t: '12 caractères aléatoires, lettres + chiffres', e: 12 * Math.log2(62) },
+      { t: 'Phrase de 6 mots tirés au hasard', e: 6 * Math.log2(7776) },
+      { t: '16 caractères aléatoires, avec symboles', e: 16 * Math.log2(94) }
+    ];
+    const W = Math.round(Math.max(300, Math.min(680, box.clientWidth))), rowH = 54, top = 10, H = top + ITEMS.length * rowH + 30;
+    const ml = 4, mr = 60, x = (v) => ml + v / 120 * (W - ml - mr);
+    const svg = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Barres : motif courant quasi nul malgré 98 bits théoriques, 71 bits pour 12 caractères, 78 bits pour 6 mots, 105 bits pour 16 caractères' });
+    box.appendChild(svg);
+    const defs = svgEl('defs', {}, svg);
+    const pat = svgEl('pattern', { id: 'hatch', width: 6, height: 6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' }, defs);
+    svgEl('line', { x1: 0, y1: 0, x2: 0, y2: 6, stroke: '#f87171', 'stroke-opacity': 0.45, 'stroke-width': 2 }, pat);
+    const bars = [];
+    ITEMS.forEach((it, i) => {
+      const y = top + i * rowH;
+      svgEl('text', { x: ml, y: y + 13, fill: '#e6e6e6', 'font-size': 13 }, svg).textContent = it.t;
+      svgEl('rect', { x: x(0), y: y + 22, width: x(120) - x(0), height: 16, rx: 5, fill: '#0e1838' }, svg);
+      const col = it.fake ? '#f87171' : strengthCol(it.e);
+      const b = svgEl('rect', { x: x(0), y: y + 22, width: 0, height: 16, rx: 5, fill: it.fake ? 'url(#hatch)' : col, stroke: it.fake ? '#f87171' : 'none', 'stroke-dasharray': it.fake ? '4 3' : '' }, svg);
+      const v = svgEl('text', { x: x(0) + 6, y: y + 34, fill: '#fff', 'font-size': 12.5, class: 'mono', opacity: 0 }, svg);
+      v.textContent = it.fake ? (W < 480 ? '98 bits en théorie seulement' : '98 bits sur le papier, ≈ 0 en réalité') : fmt(it.e, 0) + NBSP + 'bits';
+      bars.push({ b, v, w: x(it.e) - x(0), it });
+    });
+    const tx = x(80);
+    svgEl('line', { x1: tx, x2: tx, y1: top + 16, y2: H - 22, stroke: '#e6e6e6', 'stroke-dasharray': '4 4', 'stroke-opacity': 0.55 }, svg);
+    svgEl('text', { x: tx, y: H - 6, 'text-anchor': 'middle', fill: '#aab3d6', 'font-size': 11.5 }, svg).textContent = '80 bits';
+    const go = () => bars.forEach((r, i) => {
+      const t0 = performance.now() + i * 90;
+      const step = (now) => {
+        const q = reduceMotion ? 1 : Math.max(0, Math.min(1, (now - t0) / 800)), e = 1 - Math.pow(1 - q, 3);
+        r.b.setAttribute('width', (r.w * e).toFixed(1));
+        const lx = r.it.fake ? x(0) + 8 : x(0) + r.w * e + 6;
+        r.v.setAttribute('x', Math.min(lx, W - 4)); r.v.setAttribute('text-anchor', lx > W - 60 ? 'end' : 'start');
+        r.v.setAttribute('opacity', q);
+        if (q < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
+    if (reduceMotion) go(); else onceVisible(box, go, '0px 0px -25% 0px');
+  })();
+
+  /* images des articles liés introuvables : on garde le fond coloré */
+  document.querySelectorAll('.rel-img img').forEach((img) => img.addEventListener('error', () => img.remove()));
+})();
 </script>
 </body>
 </html>
