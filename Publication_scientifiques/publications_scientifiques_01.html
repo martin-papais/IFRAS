@@ -2,1351 +2,1713 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>CMC-TPS · Composites à matrice céramique — IFRAS DSMR</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
+<title>Un bouclier céramique qui résiste à 2 250 °C | Publications IFRAS</title>
+<meta name="description" content="Des composites céramiques SiC/SiC enrichis en diborure de zirconium conservent près de 90 % de leur résistance après 5 minutes dans un jet de plasma à 2 100 °C.">
+<meta name="theme-color" content="#050b1e">
+<link rel="icon" type="image/png" sizes="1000x1000" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
 
+<style>
+/* =========================================================
+   TOKENS (identiques aux autres pages)
+   ========================================================= */
 :root {
   --bg-main: #050b1e;
   --bg-dark: #020617;
   --bg-light: #070f2b;
-  --border: #1b2555;
-  --border-sub: #0e1535;
+  --bg-raise: #0a1436;
   --accent: #4f6bed;
-  --accent2: #f97316;
-  --accent3: #34d399;
+  --accent-hover: #3d5adb;
+  --accent-soft: rgba(79,107,237,.14);
+  --accent-line: rgba(79,107,237,.38);
   --text-main: #e6e6e6;
+  --text-strong: #f5f7ff;
   --text-soft: #aab3d6;
-  --text-muted: #4a5280;
-  --mono: "DM Mono", monospace;
+  --text-mute: #8891b8;
+  --border: #1b2555;
+
+  /* Une couleur par type de contenu */
+  --t-sci: #60a5fa;
+  --t-ifras: #34d399;
+  --t-event: #f97316;
+  /* Types de publications IFRAS */
+  --t-lettre: #60a5fa;
+  --t-rapport: #34d399;
+  --t-hs: #f97316;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --header-h: 68px;
+  --subnav-h: 48px;
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 20px); }
 
 body {
-  font-family: "DM Sans", sans-serif;
+  margin: 0;
+  font-family: "DM Sans", "Segoe UI", system-ui, sans-serif;
   background: var(--bg-main);
   color: var(--text-main);
-  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+[hidden] { display: none !important; }
 
-/* ===== HEADER (identique publications.html) ===== */
-header {
-  position: fixed;
-  top: 0; width: 100%;
-  z-index: 1000;
-  background: rgba(5,11,30,.85);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
-}
-.header-inner {
-  max-width: 1300px;
-  margin: auto;
-  padding: 12px 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.header-left { display: flex; align-items: center; gap: 40px; }
-.logo-link img { height: 60px; cursor: pointer; }
-.main-nav { list-style: none; display: flex; gap: 32px; }
-.main-nav a { text-decoration: none; color: var(--text-soft); font-size: 14px; letter-spacing: .05em; }
-.main-nav a:hover { color: white; }
-.header-right .login-btn {
-  padding: 8px 18px; border-radius: 6px;
-  border: 1px solid var(--accent); color: white;
-  text-decoration: none; font-size: 13px;
-}
-.header-right .login-btn:hover { background: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
-/* ===== SOUS BANDEAU (identique publications.html) ===== */
-.sub-nav {
-  margin-top: 84px;
-  background: var(--bg-light);
-  border-bottom: 1px solid var(--border);
-}
-.sub-nav ul {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 0 30px;
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-}
-.sub-nav li { padding: 14px 0; }
-.sub-nav a { color: var(--text-soft); text-decoration: none; font-size: 14px; letter-spacing: .06em; }
-.sub-nav a:hover { color: white; }
-.sub-nav a.active { color: white; border-bottom: 2px solid var(--accent); padding-bottom: 12px; }
-
-/* ===== WRAPPER ===== */
-.pub-wrapper {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 52px 30px 100px;
-}
-
-/* ===== BREADCRUMB ===== */
-.breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 11.5px;
-  color: var(--text-muted);
-  letter-spacing: .06em;
-  margin-bottom: 36px;
-  font-family: var(--mono);
-}
-.breadcrumb a { color: var(--text-muted); text-decoration: none; }
-.breadcrumb a:hover { color: var(--accent); }
-.breadcrumb span { opacity: .4; }
-
-/* ===== HEADER ARTICLE ===== */
-.article-header { margin-bottom: 44px; }
-
-.article-meta-top {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-
-.meta-badge {
-  font-size: 10.5px;
-  font-family: var(--mono);
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  padding: 4px 10px;
-  border-radius: 4px;
-  font-weight: 500;
-}
-.meta-badge--journal { background: rgba(79,107,237,.12); color: var(--accent); border: 1px solid rgba(79,107,237,.2); }
-.meta-badge--dept    { background: rgba(249,115,22,.1);  color: var(--accent2); border: 1px solid rgba(249,115,22,.2); }
-.meta-badge--open    { background: rgba(52,211,153,.08); color: var(--accent3); border: 1px solid rgba(52,211,153,.18); }
-.meta-badge--date    { background: rgba(255,255,255,.04); color: var(--text-muted); border: 1px solid rgba(255,255,255,.08); }
-
-.article-title {
-  font-family: "DM Sans", sans-serif;
-  font-size: clamp(18px, 2.4vw, 23px);
-  font-weight: 400;
-  color: var(--text-main);
-  line-height: 1.5;
-  letter-spacing: 0em;
-  margin-bottom: 18px;
-}
-
-.article-subtitle {
-  font-size: 16px;
-  color: var(--text-soft);
-  font-weight: 300;
-  line-height: 1.65;
-  margin-bottom: 28px;
-  font-style: italic;
-  border-left: 2px solid var(--accent);
-  padding-left: 16px;
-}
-
-/* Auteurs */
-.authors-block {
-  background: var(--bg-light);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 16px 20px;
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  margin-bottom: 28px;
-}
-.author-entry { display: flex; flex-direction: column; gap: 2px; }
-.author-name { font-size: 13.5px; font-weight: 600; color: white; }
-.author-role { font-size: 11px; color: var(--text-muted); letter-spacing: .04em; }
-.author-sep { width: 1px; background: var(--border); align-self: stretch; }
-
-/* DOI / cite block */
-.cite-block {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-  padding: 12px 16px;
-  background: rgba(0,0,0,.25);
-  border: 1px solid var(--border-sub);
-  border-radius: 8px;
-  margin-bottom: 0;
-}
-.cite-item { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11.5px; color: var(--text-muted); }
-.cite-label { color: var(--accent); font-weight: 500; }
-.cite-sep { color: var(--border); }
-
-/* ===== DIVIDER ===== */
-.art-divider {
-  height: 1px;
-  background: linear-gradient(90deg, var(--accent) 0%, transparent 60%);
-  margin: 40px 0;
-  opacity: .3;
-}
-
-/* ===== ABSTRACT ===== */
-.abstract-box {
-  background: rgba(79,107,237,.05);
-  border: 1px solid rgba(79,107,237,.15);
-  border-radius: 12px;
-  padding: 28px 32px;
-  margin-bottom: 44px;
-  animation: fadeUp .4s ease both;
-}
-.abstract-label {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 12px;
-  font-weight: 500;
-}
-.abstract-text {
-  font-size: 14.5px;
-  line-height: 1.8;
-  color: var(--text-soft);
-  font-weight: 300;
-}
-.abstract-keywords {
-  margin-top: 18px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  align-items: center;
-}
-.kw-label {
-  font-size: 11px;
-  color: var(--text-muted);
-  font-family: var(--mono);
-  letter-spacing: .08em;
-  margin-right: 4px;
-}
-.kw-tag {
-  font-size: 11px;
-  padding: 3px 10px;
-  border-radius: 20px;
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.1);
-  color: var(--text-soft);
-}
-
-/* ===== ARTICLE BODY ===== */
-.article-body { animation: fadeUp .4s .1s ease both; }
-
-.section-heading {
-  font-family: "Syne", sans-serif;
-  font-size: 18px;
-  font-weight: 700;
-  color: white;
-  margin: 44px 0 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.section-heading::before {
-  content: '';
-  display: block;
-  width: 4px; height: 18px;
-  background: var(--accent);
-  border-radius: 2px;
-  flex-shrink: 0;
-}
-.section-heading.orange::before { background: var(--accent2); }
-.section-heading.green::before  { background: var(--accent3); }
-
-.subsection-heading {
-  font-family: "Syne", sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--text-soft);
-  margin: 28px 0 10px;
-  letter-spacing: .04em;
-  text-transform: uppercase;
-  font-size: 11.5px;
-}
-
-p.body-text {
-  font-size: 14.5px;
-  color: var(--text-soft);
-  line-height: 1.85;
-  font-weight: 300;
-  margin-bottom: 16px;
-}
-
-/* Formule / équation */
-.equation-block {
-  background: rgba(0,0,0,.3);
-  border: 1px solid var(--border-sub);
-  border-radius: 8px;
-  padding: 18px 24px;
-  margin: 24px 0;
-  text-align: center;
-  font-family: var(--mono);
-  font-size: 14.5px;
-  color: #c8d0f5;
-  letter-spacing: .04em;
-  position: relative;
-}
-.equation-label {
-  position: absolute;
-  right: 16px; top: 50%;
-  transform: translateY(-50%);
-  font-size: 11px;
-  color: var(--text-muted);
-}
-
-/* ===== FIGURE ===== */
-.figure-block {
-  margin: 36px 0;
-  background: var(--bg-light);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  overflow: hidden;
-}
-.figure-image-placeholder {
-  height: 280px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, rgba(79,107,237,.06), rgba(79,107,237,.02));
-  border-bottom: 1px solid var(--border);
-  gap: 12px;
-  position: relative;
-  overflow: hidden;
-}
-.figure-image-placeholder.orange {
-  background: linear-gradient(135deg, rgba(249,115,22,.06), rgba(249,115,22,.02));
-}
-.figure-image-placeholder.green {
-  background: linear-gradient(135deg, rgba(52,211,153,.06), rgba(52,211,153,.02));
-}
-.figure-image-placeholder img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.figure-placeholder-text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  color: var(--text-muted);
-}
-.figure-placeholder-icon { font-size: 32px; opacity: .3; }
-.figure-placeholder-desc { font-size: 12px; letter-spacing: .06em; font-family: var(--mono); }
-.figure-caption {
-  padding: 14px 20px;
-  font-size: 12.5px;
-  color: var(--text-muted);
-  line-height: 1.6;
-}
-.figure-caption strong {
-  font-weight: 600;
-  color: var(--text-soft);
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  display: block;
-  margin-bottom: 4px;
-}
-
-/* ===== GRAPHIQUE (SVG inline) ===== */
-.chart-block {
-  margin: 36px 0;
-  background: var(--bg-light);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  overflow: hidden;
-}
-.chart-inner {
-  padding: 28px 24px 16px;
-  background: rgba(0,0,0,.15);
-  border-bottom: 1px solid var(--border-sub);
-}
-.chart-title-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 20px;
-}
-.chart-title {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-.chart-legend {
-  display: flex;
-  gap: 16px;
-}
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  color: var(--text-muted);
-}
-.legend-dot {
-  width: 8px; height: 8px;
-  border-radius: 2px;
-}
-.chart-svg { width: 100%; display: block; }
-.chart-caption {
-  padding: 12px 20px;
-  font-size: 12.5px;
-  color: var(--text-muted);
-  line-height: 1.6;
-}
-.chart-caption strong {
-  font-weight: 600;
-  color: var(--text-soft);
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  display: block;
-  margin-bottom: 4px;
-}
-
-/* ===== TABLEAU ===== */
-.table-block {
-  margin: 36px 0;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid var(--border);
-}
-.table-header {
-  background: rgba(79,107,237,.08);
-  padding: 12px 20px;
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--accent);
-  border-bottom: 1px solid var(--border);
-}
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-}
-thead th {
-  background: rgba(0,0,0,.3);
-  padding: 11px 16px;
-  text-align: left;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  border-bottom: 1px solid var(--border-sub);
-  font-weight: 500;
-}
-tbody tr { border-bottom: 1px solid var(--border-sub); transition: background .15s; }
-tbody tr:last-child { border-bottom: none; }
-tbody tr:hover { background: rgba(255,255,255,.025); }
-tbody td {
+.skip-link {
+  position: absolute; left: 16px; top: -48px;
   padding: 10px 16px;
-  color: var(--text-soft);
-  vertical-align: middle;
-  font-weight: 300;
+  background: var(--accent); color: #fff;
+  border-radius: var(--radius-sm);
+  z-index: 3000; text-decoration: none;
+  transition: top 160ms var(--ease-out);
 }
-tbody td.td-mono { font-family: var(--mono); font-size: 12.5px; color: var(--text-main); }
-tbody td.td-accent { color: var(--accent3); font-family: var(--mono); font-size: 12.5px; }
-tbody td.td-warn  { color: var(--accent2); font-family: var(--mono); font-size: 12.5px; }
-.table-note {
-  padding: 10px 20px;
-  font-size: 11.5px;
-  color: var(--text-muted);
-  background: rgba(0,0,0,.2);
-  font-style: italic;
-  border-top: 1px solid var(--border-sub);
+.skip-link:focus { top: 12px; }
+
+.container { max-width: 1300px; margin: 0 auto; padding: 0 30px; }
+
+/* =========================================================
+   BOUTONS
+   ========================================================= */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 22px;
+  border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 500;
+  text-decoration: none; white-space: nowrap;
+  border: 1px solid transparent;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.btn:active { transform: scale(0.97); }
+.btn i { font-size: 16px; transition: transform 200ms var(--ease-out); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-ghost { border-color: var(--accent-line); color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-ghost:hover { background: var(--accent-soft); border-color: var(--accent); }
+  .btn:hover i { transform: translateX(3px); }
 }
 
-/* ===== HIGHLIGHT BOX ===== */
-.highlight-box {
-  border-left: 3px solid var(--accent);
-  background: rgba(79,107,237,.05);
-  border-radius: 0 8px 8px 0;
-  padding: 16px 20px;
-  margin: 24px 0;
+.text-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--text-soft);
   font-size: 14px;
-  color: var(--text-soft);
-  font-style: italic;
-  line-height: 1.75;
-}
-.highlight-box.orange { border-color: var(--accent2); background: rgba(249,115,22,.04); }
-.highlight-box.green  { border-color: var(--accent3); background: rgba(52,211,153,.04); }
-
-/* ===== REFERENCES ===== */
-.references-section {
-  margin-top: 60px;
-  padding-top: 32px;
-  border-top: 1px solid var(--border);
-}
-.ref-title {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: 20px;
-}
-.ref-list { counter-reset: ref; display: flex; flex-direction: column; gap: 10px; }
-.ref-item {
-  display: flex;
-  gap: 14px;
-  font-size: 12.5px;
-  color: var(--text-muted);
-  line-height: 1.6;
-  counter-increment: ref;
-}
-.ref-item::before {
-  content: '[' counter(ref) ']';
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--accent);
-  flex-shrink: 0;
-  padding-top: 2px;
-  min-width: 28px;
-}
-.ref-item a { color: var(--accent); text-decoration: none; }
-.ref-item a:hover { text-decoration: underline; }
-
-/* ===== FOOTNOTE ===== */
-.article-footnote {
-  margin-top: 48px;
-  padding: 20px 24px;
-  background: rgba(0,0,0,.25);
-  border: 1px solid var(--border-sub);
-  border-radius: 10px;
-  font-size: 11.5px;
-  color: var(--text-muted);
-  line-height: 1.7;
-}
-.article-footnote strong { color: var(--text-soft); }
-
-/* ===== SCROLL PROGRESS ===== */
-.progress-bar {
-  position: fixed;
-  top: 0; left: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent), #7c93f5);
-  z-index: 9999;
-  width: 0%;
-  transition: width .1s linear;
-}
-
-/* ===== SIDEBAR TOC ===== */
-.toc-sidebar {
-  position: fixed;
-  right: 32px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 100;
-}
-.toc-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--border);
-  cursor: pointer;
-  transition: background .2s, transform .2s;
-  position: relative;
-}
-.toc-dot:hover, .toc-dot.active { background: var(--accent); transform: scale(1.5); }
-.toc-dot::after {
-  content: attr(data-label);
-  position: absolute;
-  right: 14px;
-  top: 50%; transform: translateY(-50%);
-  background: var(--bg-light);
-  border: 1px solid var(--border);
-  border-radius: 5px;
-  padding: 3px 8px;
-  font-size: 10.5px;
-  color: var(--text-soft);
+  text-decoration: none;
   white-space: nowrap;
-  font-family: var(--mono);
-  letter-spacing: .04em;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .2s;
+  transition: color 160ms ease;
 }
-.toc-dot:hover::after { opacity: 1; }
+.text-link i { transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .text-link:hover { color: #fff; }
+  .text-link:hover i { transform: translateX(3px); }
+}
 
-@media (max-width: 1100px) { .toc-sidebar { display: none; } }
+/* =========================================================
+   HEADER (opaque)
+   ========================================================= */
+.site-header {
+  position: fixed; inset: 0 0 auto 0;
+  z-index: 2000;
+  height: var(--header-h);
+  background: rgba(5,11,30,.88);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.header-left { display: flex; align-items: center; gap: 44px; }
+.logo-link { display: flex; align-items: center; }
+.logo-link img { height: 44px; width: auto; }
 
-/* ===== ANIMATIONS ===== */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: translateY(0); }
+.main-nav { list-style: none; display: flex; gap: 6px; margin: 0; padding: 0; }
+.main-nav a {
+  position: relative; display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--text-soft);
+  font-size: 14px; letter-spacing: .02em;
+  border-radius: 6px;
+  transition: color 160ms ease;
+}
+.main-nav a::after {
+  content: ""; position: absolute;
+  left: 12px; right: 12px; bottom: 2px; height: 1px;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 200ms var(--ease-out);
+}
+.main-nav a[aria-current="page"] { color: #fff; }
+.main-nav a[aria-current="page"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .main-nav a:hover { color: #fff; }
+  .main-nav a:hover::after { transform: scaleX(1); }
+}
+
+.header-right { display: flex; align-items: center; gap: 10px; }
+.header-right .btn { padding: 9px 18px; font-size: 13px; }
+
+.menu-toggle {
+  display: none;
+  width: 42px; height: 42px;
+  align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: #fff; font-size: 20px; cursor: pointer;
+  transition: transform 160ms var(--ease-out);
+}
+.menu-toggle:active { transform: scale(0.95); }
+
+.mobile-panel {
+  position: fixed; top: var(--header-h); left: 12px; right: 12px;
+  z-index: 1999;
+  padding: 10px;
+  background: rgba(7,15,43,.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(2,6,23,.6);
+  transform-origin: top right;
+  opacity: 0; transform: scale(0.96) translateY(-6px);
+  pointer-events: none; visibility: hidden;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s linear 220ms;
+}
+.mobile-panel.is-open {
+  opacity: 1; transform: none; pointer-events: auto; visibility: visible;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s;
+}
+.mobile-panel ul { list-style: none; margin: 0; padding: 0; }
+.mobile-panel a {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px; color: var(--text-main);
+  text-decoration: none; font-size: 16px; border-radius: 10px;
+}
+.mobile-panel a[aria-current="page"] { background: var(--accent-soft); color: #fff; }
+.mobile-panel .btn { width: 100%; justify-content: center; margin-top: 8px; }
+
+/* =========================================================
+   SOUS-NAVIGATION (ancres + section visible)
+   ========================================================= */
+.subnav {
+  position: sticky;
+  top: var(--header-h);
+  margin-top: var(--header-h);
+  z-index: 1500;
+  height: var(--subnav-h);
+  background: rgba(8,18,53,.94);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.subnav-list {
+  height: 100%;
+  list-style: none; margin: 0 auto; padding: 0 30px;
+  max-width: 1300px;
+  display: flex; align-items: stretch; justify-content: space-between;
+}
+.subnav-list li { display: flex; }
+.subnav-link {
+  position: relative;
+  display: flex; align-items: center; gap: 9px;
+  padding: 0 14px;
+  color: var(--text-soft);
+  text-decoration: none;
+  font-size: 14px; font-weight: 500;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.subnav-link i { font-size: 17px; color: var(--c); }
+.subnav-link::after {
+  content: ""; position: absolute;
+  left: 14px; right: 14px; bottom: -1px; height: 2px;
+  background: var(--c);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+.subnav-link[aria-current="true"] { color: #fff; }
+.subnav-link[aria-current="true"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .subnav-link:hover { color: #fff; }
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.site-footer {
+  margin-top: 100px;
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border);
+  padding: 36px 0;
+  font-size: 13px; color: var(--text-mute);
+}
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+/* =========================================================
+   ARTICLE
+   ========================================================= */
+:root {
+  --mono: "DM Mono", ui-monospace, Menlo, Consolas, monospace;
+  --c10: #3b82f6;   /* CMC-10Z */
+  --c20: #059669;   /* CMC-20Z */
+  --c30: #ea580c;   /* CMC-30Z */
+  --hot: #f97316;
+  --ok: #34d399;
+  --warn: #fbbf24;
+  --bad: #f87171;
+  --surface: #070f2b;
+  --line: #13204d;
+}
+html { scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 24px); }
+
+/* barre de lecture sous la sous-navigation */
+.progress {
+  position: fixed; left: 0; right: 0; top: calc(var(--header-h) + var(--subnav-h)); z-index: 1400;
+  height: 2px; background: transparent; pointer-events: none;
+}
+.progress span { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, var(--accent), #fb7185); transform-origin: left; transform: scaleX(0); }
+
+/* ----- En-tête de l'article ----- */
+.art-hero { position: relative; overflow: hidden; isolation: isolate; border-bottom: 1px solid var(--border); }
+.art-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(ellipse 45% 70% at 78% 45%, rgba(249,115,22,.16), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(79,107,237,.14), transparent 60%);
+}
+.art-hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 48px; align-items: center; padding: 48px 0 56px; }
+.crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 26px; padding: 0; list-style: none; font-size: 13px; color: var(--text-mute); }
+.crumbs a { color: var(--text-soft); text-decoration: none; transition: color 160ms ease; }
+.crumbs i { font-size: 11px; opacity: .6; }
+@media (hover: hover) and (pointer: fine) { .crumbs a:hover { color: #fff; } }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 11px; border-radius: 999px; font-size: 12.5px; font-weight: 500;
+  color: var(--b, var(--text-soft));
+  background: color-mix(in srgb, var(--b, var(--text-soft)) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--b, var(--text-soft)) 28%, transparent);
+}
+.badge i { font-size: 14px; }
+.art-title {
+  margin: 0 0 18px; font-family: "Syne", sans-serif; font-weight: 700;
+  font-size: clamp(30px, 3.6vw, 48px); line-height: 1.08; letter-spacing: -0.025em; color: var(--text-strong);
+  text-wrap: balance;
+}
+.art-lede { margin: 0 0 28px; max-width: 60ch; font-size: 18px; line-height: 1.6; color: var(--text-soft); font-weight: 300; }
+.authors { display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 0 0 22px; padding: 0; list-style: none; }
+.author { display: flex; align-items: center; gap: 10px; }
+.author .av { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-family: "Syne", sans-serif; font-size: 12px; font-weight: 700; color: #fff; background: linear-gradient(135deg, hsl(var(--ah) 55% 38%), hsl(var(--ah) 70% 60%)); }
+.author strong { display: block; font-size: 14px; font-weight: 500; color: var(--text-main); }
+.author small { display: block; font-size: 12.5px; color: var(--text-mute); }
+.meta-line { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 13px; color: var(--text-mute); }
+.meta-line span { display: inline-flex; align-items: center; gap: 7px; }
+.meta-line i { font-size: 15px; color: var(--text-soft); }
+.meta-line code { font-family: var(--mono); font-size: 12.5px; color: var(--text-soft); }
+
+.hero-in { opacity: 0; transform: translateY(12px); animation: heroIn 700ms var(--ease-out) forwards; animation-delay: calc(80ms + var(--i, 0) * 90ms); }
+@keyframes heroIn { to { opacity: 1; transform: none; } }
+
+/* illustration : capsule en rentrée */
+.reentry { position: relative; aspect-ratio: 1 / 0.86; max-width: 520px; justify-self: end; width: 100%; }
+.reentry canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.reentry svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.reentry .shock { animation: shock 2.4s var(--ease-in-out) infinite alternate; transform-origin: 62% 50%; }
+@keyframes shock { from { opacity: .75; transform: scale(.985); } to { opacity: 1; transform: scale(1.015); } }
+.reentry .glow { animation: glow 1.6s ease-in-out infinite alternate; }
+@keyframes glow { from { opacity: .55; } to { opacity: .95; } }
+.reentry-tag {
+  position: absolute; display: flex; align-items: center; gap: 8px;
+  padding: 6px 10px; border-radius: 8px; font-family: var(--mono); font-size: 12px; color: var(--text-soft);
+  background: rgba(2,6,23,.7); border: 1px solid var(--border); backdrop-filter: blur(6px);
+}
+.reentry-tag b { color: #fff; font-weight: 500; }
+.reentry-tag i { width: 7px; height: 7px; border-radius: 50%; background: var(--hot); }
+
+/* ----- Mise en page 3 colonnes ----- */
+.art-layout {
+  display: grid; grid-template-columns: 220px minmax(0, 720px) 280px; justify-content: space-between; gap: 48px;
+  padding-top: 48px;
+}
+.toc, .rail { position: sticky; top: calc(var(--header-h) + var(--subnav-h) + 28px); align-self: start; }
+.toc-title, .rail-title { margin: 0 0 14px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.toc ol { position: relative; list-style: none; margin: 0; padding: 0 0 0 14px; border-left: 1px solid var(--border); }
+.toc-ind { list-style: none; position: absolute; left: -1px; top: 0; width: 2px; height: 34px; background: var(--accent); border-radius: 2px; transition: transform 300ms var(--ease-out), height 300ms var(--ease-out); }
+.toc a {
+  display: flex; gap: 10px; padding: 7px 0; font-size: 14px; line-height: 1.35;
+  color: var(--text-mute); text-decoration: none; transition: color 160ms ease;
+}
+.toc a span { font-family: var(--mono); font-size: 12px; padding-top: 1px; color: inherit; opacity: .8; min-width: 16px; }
+.toc a.on { color: #fff; }
+@media (hover: hover) and (pointer: fine) { .toc a:hover { color: var(--text-main); } }
+.toc-time { display: flex; align-items: center; gap: 8px; margin-top: 18px; font-size: 13px; color: var(--text-mute); }
+.toc-time i { font-size: 15px; }
+
+/* ----- Colonne de droite ----- */
+.rail { display: grid; gap: 16px; max-height: calc(100vh - var(--header-h) - var(--subnav-h) - 44px); overflow-y: auto; scrollbar-width: none; overscroll-behavior: contain; }
+.rail::-webkit-scrollbar { display: none; }
+.rail-card { padding: 18px; border-radius: var(--radius); background: var(--bg-light); border: 1px solid var(--border); }
+.cite-text { margin: 0 0 14px; font-size: 13px; line-height: 1.6; color: var(--text-soft); }
+.cite-text em { color: var(--text-main); }
+.rail-actions { display: grid; gap: 8px; }
+.rbtn {
+  display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 40px; border-radius: 10px;
+  border: 1px solid var(--border); background: transparent; color: var(--text-main); font: inherit; font-size: 13.5px; cursor: pointer; text-decoration: none;
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out);
+}
+.rbtn i { font-size: 16px; }
+.rbtn:active { transform: scale(.97); }
+.rbtn.done { border-color: color-mix(in srgb, var(--ok) 45%, transparent); color: var(--ok); }
+@media (hover: hover) and (pointer: fine) { .rbtn:hover { border-color: var(--accent); background: var(--accent-soft); } }
+.fig-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.fig-list a { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: center; padding: 7px 8px; margin: 0 -8px; border-radius: 8px; font-size: 13.5px; color: var(--text-soft); text-decoration: none; transition: background-color 120ms ease, color 120ms ease; }
+.fig-list i { font-size: 17px; color: var(--accent); }
+@media (hover: hover) and (pointer: fine) { .fig-list a:hover { background: var(--bg-raise); color: #fff; } }
+.prog-link { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.prog-link .pi { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; font-size: 19px; color: var(--hot); background: rgba(249,115,22,.12); flex-shrink: 0; }
+.prog-link strong { display: block; font-size: 14px; font-weight: 500; }
+.prog-link small { display: block; font-size: 12.5px; color: var(--text-mute); }
+
+/* ----- Corps de texte ----- */
+.art { min-width: 0; counter-reset: fig; }
+.art p { margin: 0 0 18px; font-size: 17px; line-height: 1.75; color: #c3cae6; font-weight: 300; }
+.art p strong { color: var(--text-main); font-weight: 500; }
+.art h2 {
+  display: flex; align-items: baseline; gap: 14px;
+  margin: 64px 0 18px; font-family: "Syne", sans-serif; font-size: 26px; font-weight: 700; letter-spacing: -0.01em; color: var(--text-strong);
+}
+.art h2 .n { font-family: var(--mono); font-size: 14px; font-weight: 400; color: var(--accent); }
+.art h3 { margin: 34px 0 12px; font-size: 18px; font-weight: 500; color: var(--text-main); }
+sub, sup { line-height: 0; }
+
+/* L'essentiel */
+.essentials { padding: 26px; border-radius: 18px; background: linear-gradient(160deg, var(--bg-raise), var(--bg-light)); border: 1px solid var(--border); }
+.essentials-head { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; }
+.essentials-head i { font-size: 17px; color: var(--hot); }
+.kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 22px; }
+.kpi { padding: 16px; border-radius: 14px; background: rgba(2,6,23,.45); border: 1px solid var(--line); }
+.kpi strong { display: block; font-family: "Syne", sans-serif; font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -0.02em; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.kpi strong small { font-size: .55em; font-weight: 700; margin-left: 2px; color: var(--text-soft); }
+.kpi span { display: block; margin-top: 8px; font-size: 13.5px; line-height: 1.4; color: var(--text-soft); }
+.takeaways { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.takeaways li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 15.5px; line-height: 1.55; color: var(--text-main); }
+.takeaways i { font-size: 18px; color: var(--ok); margin-top: 2px; }
+
+/* Résumé */
+.abstract { margin-top: 28px; padding: 24px 26px; border-radius: 16px; border: 1px solid var(--border); background: rgba(79,107,237,.05); }
+.abstract .label { display: block; margin-bottom: 10px; font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+.abstract p { font-size: 15.5px !important; margin: 0 !important; }
+.kw { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+.kw span { padding: 3px 10px; border-radius: 999px; font-size: 12.5px; color: var(--text-soft); border: 1px solid var(--border); }
+
+/* Termes expliqués (infobulle) */
+.term {
+  position: relative; display: inline; padding: 0; border: 0; background: none; font: inherit; color: var(--text-main); cursor: help;
+  text-decoration: underline dotted color-mix(in srgb, var(--accent) 80%, transparent); text-decoration-thickness: 1.5px; text-underline-offset: 4px;
+}
+.tip {
+  position: absolute; z-index: 1600; width: min(300px, calc(100vw - 32px));
+  padding: 12px 14px; border-radius: 12px;
+  background: #0b1540; border: 1px solid var(--accent-line); box-shadow: 0 18px 50px rgba(0,0,0,.5);
+  font-size: 13.5px; line-height: 1.55; color: var(--text-soft); font-weight: 400;
+  opacity: 0; transform: scale(.97) translateY(4px); pointer-events: none;
+  transition: opacity 140ms ease, transform 160ms var(--ease-out);
+}
+.tip.show { opacity: 1; transform: none; }
+.tip.instant { transition: none; }
+.tip b { display: block; margin-bottom: 3px; color: #fff; font-weight: 500; font-size: 14px; }
+.cite { font-family: var(--mono); font-size: .78em; color: var(--accent); text-decoration: none; vertical-align: .15em; padding: 0 1px; border: 0; background: none; cursor: pointer; }
+
+/* Encadrés */
+.note { display: grid; grid-template-columns: 26px 1fr; gap: 12px; margin: 26px 0; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.note i { font-size: 22px; color: var(--nc, var(--accent)); }
+.note p { margin: 0 !important; font-size: 15.5px !important; color: var(--text-main) !important; }
+.note .nt { display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--nc, var(--accent)); font-weight: 500; }
+
+/* ----- Figures ----- */
+.fig { margin: 34px 0; border-radius: 18px; border: 1px solid var(--border); background: var(--surface); overflow: hidden; counter-increment: fig; scroll-margin-top: calc(var(--header-h) + var(--subnav-h) + 24px); }
+.fig-stage { position: relative; padding: 22px; background: radial-gradient(ellipse at 50% 0%, rgba(79,107,237,.06), transparent 70%); }
+.fig-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin-bottom: 16px; }
+.fig-name { font-size: 14.5px; font-weight: 500; color: var(--text-main); }
+.fig figcaption, .fig .cap { padding: 14px 22px 18px; border-top: 1px solid var(--line); font-size: 14px; line-height: 1.6; color: var(--text-soft); }
+.fig figcaption b, .fig .cap b { font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-right: 8px; }
+.fig svg { display: block; width: 100%; height: auto; overflow: visible; }
+.fig text { font-family: "DM Sans", sans-serif; }
+.fig .mono, .fig text.mono { font-family: var(--mono); }
+.ctrl { display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 12px; border-radius: 9px; border: 1px solid var(--border); background: var(--bg-light); color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out); }
+.ctrl i { font-size: 15px; }
+.ctrl:active { transform: scale(.96); }
+@media (hover: hover) and (pointer: fine) { .ctrl:hover { color: #fff; border-color: var(--accent); } }
+
+/* Fig. 1 trajectoire */
+.readouts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+.readout { padding: 10px 12px; border-radius: 10px; background: rgba(2,6,23,.5); border: 1px solid var(--line); }
+.readout small { display: block; font-size: 12px; color: var(--text-mute); }
+.readout strong { display: block; margin-top: 2px; font-family: var(--mono); font-size: 17px; font-weight: 500; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.readout.hot strong { color: var(--rc, var(--text-strong)); }
+.scrub { display: flex; align-items: center; gap: 12px; margin-top: 14px; }
+.scrub input { flex: 1; accent-color: var(--hot); }
+.scrub output { min-width: 52px; text-align: right; font-family: var(--mono); font-size: 13px; color: var(--text-soft); }
+
+/* Fig. 2 microstructure */
+.parts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.part { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease; }
+.part i { width: 10px; height: 10px; border-radius: 3px; background: var(--pc); }
+.part[aria-pressed="true"] { color: #fff; border-color: var(--pc); background: color-mix(in srgb, var(--pc) 14%, transparent); }
+.art .part-desc { margin: 12px 0 0; min-height: 44px; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+.part-desc b { color: #fff; font-weight: 500; }
+.micro [data-part] { transition: opacity 220ms ease; }
+.micro.focus [data-part] { opacity: .16; }
+.micro.focus [data-part].lit { opacity: 1; }
+
+/* Fig. 3 banc d'essai */
+.bench-v { display: none !important; }
+.flow { stroke-dasharray: 6 10; animation: flow 900ms linear infinite; }
+@keyframes flow { to { stroke-dashoffset: -32; } }
+.flame { animation: glow 900ms ease-in-out infinite alternate; }
+
+/* Tableau */
+.table-wrap { margin: 30px 0; border-radius: 16px; border: 1px solid var(--border); overflow: hidden; background: var(--surface); }
+.table-cap { padding: 14px 20px; font-size: 14px; color: var(--text-soft); border-bottom: 1px solid var(--line); }
+.table-cap b { font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-right: 8px; }
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { padding: 11px 12px; text-align: left; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; background: rgba(2,6,23,.4); border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 11px 12px; color: var(--text-soft); border-bottom: 1px solid var(--line); white-space: nowrap; font-variant-numeric: tabular-nums; }
+tr:last-child td { border-bottom: 0; }
+td:last-child, th:last-child { white-space: normal; }
+td:first-child, th:first-child { padding-left: 18px; }
+td.num { font-family: var(--mono); font-size: 13.5px; color: var(--text-main); }
+th.num, td.num { text-align: right; }
+tbody tr { transition: background-color 120ms ease; }
+@media (hover: hover) and (pointer: fine) { tbody tr:hover { background: rgba(79,107,237,.06); } }
+.mat { display: inline-flex; align-items: center; gap: 8px; color: var(--text-main); }
+.mat i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.state { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--sc); }
+.state i { font-size: 15px; }
+.table-note { padding: 12px 20px; font-size: 13px; color: var(--text-mute); border-top: 1px solid var(--line); background: rgba(2,6,23,.3); }
+
+/* Fig. 4 graphique */
+.legend { display: flex; flex-wrap: wrap; gap: 6px; }
+.lg { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-main); font: inherit; font-size: 13px; cursor: pointer; transition: opacity 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out); }
+.lg:active { transform: scale(.96); }
+.lg i { width: 14px; height: 3px; border-radius: 2px; background: var(--lc); }
+.lg[aria-pressed="false"] { opacity: .45; }
+.lg[aria-pressed="false"] i { background: transparent; border: 1px solid var(--lc); height: 5px; }
+.chart { position: relative; }
+.chart .series { transition: opacity 220ms ease; }
+.chart .series.off { opacity: 0; }
+.chart .draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); }
+.chart.drawn .draw { transition: stroke-dashoffset 1400ms var(--ease-in-out); stroke-dashoffset: 0; }
+.chart .dot { opacity: 0; transition: opacity 300ms ease 1100ms; }
+.chart.drawn .dot { opacity: 1; }
+.hit { fill: transparent; cursor: crosshair; }
+.xhair { opacity: 0; transition: opacity 120ms ease; pointer-events: none; }
+.xhair.show { opacity: 1; }
+.ctip {
+  position: absolute; z-index: 5; pointer-events: none; min-width: 170px;
+  padding: 10px 12px; border-radius: 10px; background: #0b1540; border: 1px solid var(--accent-line);
+  box-shadow: 0 14px 40px rgba(0,0,0,.5); font-size: 13px; color: var(--text-soft);
+  opacity: 0; transform: translateY(4px); transition: opacity 120ms ease, transform 140ms var(--ease-out);
+}
+.ctip.show { opacity: 1; transform: none; }
+.ctip b { display: block; margin-bottom: 6px; color: #fff; font-weight: 500; font-family: var(--mono); }
+.ctip div { display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+.ctip div span { display: inline-flex; align-items: center; gap: 7px; }
+.ctip div span i { width: 8px; height: 8px; border-radius: 50%; background: var(--lc); }
+.ctip div em { font-style: normal; font-family: var(--mono); color: var(--text-main); }
+.data-toggle { margin-top: 12px; }
+.data-table { margin-top: 12px; border-radius: 12px; border: 1px solid var(--line); overflow-x: auto; }
+.data-table[hidden] { display: none; }
+
+/* Fig. 5 carte thermique */
+.thermo { display: grid; grid-template-columns: minmax(0, 1fr) 70px; gap: 18px; align-items: stretch; }
+.thermo-plate { position: relative; aspect-ratio: 1; max-width: 420px; width: 100%; justify-self: center; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); cursor: crosshair; }
+.thermo-plate canvas { width: 100%; height: 100%; display: block; }
+.probe { position: absolute; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.5); pointer-events: none; opacity: 0; transition: opacity 120ms ease; }
+.probe.show { opacity: 1; }
+.probe-read { position: absolute; left: 12px; top: 12px; padding: 6px 10px; border-radius: 8px; background: rgba(2,6,23,.78); font-family: var(--mono); font-size: 13px; color: #fff; pointer-events: none; }
+.scale { display: grid; grid-template-columns: 14px 1fr; gap: 8px; align-self: center; height: min(100%, 420px); aspect-ratio: auto; }
+.scale-bar { display: block; width: 14px; height: 100%; border-radius: 6px; }
+.scale-labels { display: flex; flex-direction: column; justify-content: space-between; font-family: var(--mono); font-size: 12px; color: var(--text-soft); }
+
+/* Fig. 6 couche protectrice */
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.duo-card { border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.4); overflow: hidden; }
+.duo-card h4 { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0; padding: 12px 14px; font-size: 14px; font-weight: 500; color: var(--text-main); border-bottom: 1px solid var(--line); }
+.duo-card h4 span { display: inline-flex; align-items: center; gap: 8px; }
+.duo-card h4 i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.duo-card svg { aspect-ratio: 1.25; }
+.duo-stats { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
+.duo-stats div { padding: 10px 14px; }
+.duo-stats div + div { border-left: 1px solid var(--line); }
+.duo-stats small { display: block; font-size: 12px; color: var(--text-mute); }
+.duo-stats strong { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--text-main); font-variant-numeric: tabular-nums; }
+.verdict { font-size: 12px; font-weight: 500; padding: 2px 8px; border-radius: 999px; color: var(--vc); background: color-mix(in srgb, var(--vc) 14%, transparent); transition: color 200ms ease, background-color 200ms ease; }
+
+/* Équation */
+.eq { margin: 26px 0; padding: 22px; border-radius: 14px; background: rgba(2,6,23,.5); border: 1px solid var(--border); text-align: center; font-family: var(--mono); font-size: 17px; color: #d5dcfb; overflow-x: auto; white-space: nowrap; }
+.eq-parts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: -12px 0 26px; }
+.eq-part { padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-light); font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.eq-part b { display: block; margin-bottom: 2px; font-family: var(--mono); font-weight: 500; color: #fff; }
+
+/* Suite du programme */
+.next { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.next li { position: relative; padding: 16px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.next li::before { content: ""; position: absolute; top: 20px; right: -13px; width: 13px; height: 1px; background: var(--border); }
+.next li:last-child::before { display: none; }
+.next time { font-family: var(--mono); font-size: 12.5px; color: var(--nc, var(--accent)); }
+.next strong { display: block; margin: 6px 0 4px; font-size: 15px; font-weight: 500; color: var(--text-main); }
+.next span { font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.next li.now { border-color: color-mix(in srgb, var(--ok) 45%, var(--border)); }
+
+/* Références */
+.refs { list-style: none; margin: 0; padding: 0; counter-reset: r; display: grid; gap: 4px; }
+.refs li { counter-increment: r; position: relative; display: block; padding: 10px 12px 10px 54px; margin: 0 -12px; border-radius: 10px; font-size: 14px; line-height: 1.6; color: var(--text-soft); transition: background-color 600ms ease; scroll-margin-top: calc(var(--header-h) + var(--subnav-h) + 40px); }
+.refs li::before { content: "[" counter(r) "]"; position: absolute; left: 12px; top: 11px; font-family: var(--mono); font-size: 13px; color: var(--accent); }
+.refs li.flash { background: rgba(79,107,237,.16); transition: none; }
+.refs em { color: var(--text-main); }
+.decl { margin-top: 28px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.35); display: grid; gap: 8px; font-size: 13.5px; line-height: 1.6; color: var(--text-mute); }
+.decl strong { color: var(--text-soft); font-weight: 500; }
+
+/* Articles liés */
+.related { margin-top: 72px; padding-top: 40px; border-top: 1px solid var(--border); }
+.related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
+.rel { display: flex; flex-direction: column; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); background: var(--bg-light); text-decoration: none; transition: border-color 200ms ease, transform 220ms var(--ease-out); }
+.rel-img { aspect-ratio: 16 / 9; overflow: hidden; background: linear-gradient(135deg, color-mix(in srgb, var(--c) 30%, var(--bg-raise)), var(--bg-light)); }
+.rel-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 500ms var(--ease-out); }
+.rel-body { padding: 16px; }
+.rel-body small { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--text-soft); }
+.rel-body small::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c); }
+.rel-body strong { display: block; margin-top: 6px; font-size: 16px; font-weight: 500; line-height: 1.4; color: var(--text-main); }
+.rel:active { transform: scale(.98); }
+@media (hover: hover) and (pointer: fine) {
+  .rel:hover { border-color: color-mix(in srgb, var(--c) 55%, var(--border)); transform: translateY(-3px); }
+  .rel:hover .rel-img img { transform: scale(1.04); }
+}
+.section-title { margin: 0; font-family: "Syne", sans-serif; font-size: 22px; font-weight: 700; color: var(--text-strong); }
+
+/* apparition des figures */
+.js .rv { opacity: 0; transform: translateY(16px); transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
+.js .rv.in { opacity: 1; transform: none; }
+
+.toast {
+  position: fixed; left: 50%; bottom: 24px; z-index: 4000;
+  display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 12px;
+  background: #0b1540; border: 1px solid rgba(52,211,153,.35); color: #a7f3d0; font-size: 14px;
+  box-shadow: 0 16px 40px rgba(0,0,0,.5);
+  transform: translate(-50%, 16px); opacity: 0; pointer-events: none;
+  transition: transform 260ms var(--ease-out), opacity 200ms ease;
+}
+.toast.show { transform: translate(-50%, 0); opacity: 1; }
+.toast i { font-size: 18px; color: var(--ok); }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1320px) {
+  .art-layout { grid-template-columns: minmax(0, 720px) 280px; justify-content: center; }
+  .toc { display: none; }
+}
+@media (max-width: 1060px) {
+  .art-layout { grid-template-columns: minmax(0, 720px); }
+  .rail { position: static; max-height: none; overflow: visible; grid-template-columns: repeat(2, minmax(0, 1fr)); order: 2; }
+  .rail .rail-figs { display: none; }
+  .art-hero-grid { grid-template-columns: 1fr; gap: 10px; padding-bottom: 36px; }
+  .reentry { justify-self: center; max-width: 440px; order: -1; margin-top: -10px; }
+}
+@media (max-width: 860px) {
+  .main-nav, .header-right .btn-desktop { display: none; }
+  .menu-toggle { display: inline-flex; }
+}
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .subnav-list { padding: 0 20px; overflow-x: auto; scrollbar-width: none; }
+  .subnav-link { padding: 0 10px; font-size: 13.5px; }
+  .art-lede { font-size: 16.5px; }
+  .art p { font-size: 16px; }
+  .art h2 { font-size: 22px; margin-top: 52px; }
+  .kpis { grid-template-columns: 1fr; }
+  .kpi { display: flex; align-items: baseline; gap: 14px; }
+  .kpi span { margin: 0; }
+  .essentials { padding: 20px; }
+  .fig-stage { padding: 16px; }
+  .fig figcaption, .fig .cap { padding: 12px 16px 16px; }
+  .readouts { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .readout strong { font-size: 14px; }
+  .thermo { grid-template-columns: 1fr 56px; gap: 10px; }
+  .duo { grid-template-columns: 1fr; }
+  .eq { font-size: 14px; }
+  #trajSvg text { font-size: 22px; }
+  .bench-h { display: none !important; }
+  .bench-v { display: block !important; }
+  .duo-card svg text { font-size: 13px; }
+  .eq-parts { grid-template-columns: 1fr; }
+  .next { grid-template-columns: 1fr; }
+  .next li::before { display: none; }
+  .rail { grid-template-columns: 1fr; }
+  .related-grid { grid-template-columns: 1fr; }
+  .site-footer { margin-top: 72px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
+  .hero-in { opacity: 1; transform: none; }
+}
+
+/* impression / PDF : texte seul, figures conservées */
+@media print {
+  .site-header, .subnav, .mobile-panel, .progress, .toc, .rail, .related, .site-footer, .ctrl, .legend, .scrub, .parts, .skip-link { display: none !important; }
+  body { background: #fff; color: #111; }
+  .art-layout { display: block; padding: 0; }
+  .art p, .art h2, .art h3, .art-title, .art-lede { color: #111 !important; }
+  .fig, .table-wrap, .essentials, .abstract, .note { break-inside: avoid; }
+  .js .rv { opacity: 1; transform: none; }
 }
 
 </style>
+<script>document.documentElement.classList.add('js');</script>
 </head>
+
 <body>
 
-<!-- Barre de progression lecture -->
-<div class="progress-bar" id="progressBar"></div>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
 
 <!-- ===== HEADER ===== -->
-<header>
-  <div class="header-inner">
+<header class="site-header" id="header">
+  <div class="container header-inner">
     <div class="header-left">
-      <a href="../index.html" class="logo-link"><img src="../logo.png" alt="Logo IFRAS"></a>
-      <nav>
+      <a href="../index.html" class="logo-link" aria-label="IFRAS, accueil">
+        <img src="../logo.png" alt="Logo IFRAS" width="44" height="44">
+      </a>
+      <nav aria-label="Navigation principale">
         <ul class="main-nav">
           <li><a href="../index.html">Accueil</a></li>
           <li><a href="../recherche.html">Recherche</a></li>
           <li><a href="../programmes.html">Programmes</a></li>
-          <li><a href="../publications.html">Publications</a></li>
+          <li><a href="../publications.html" aria-current="page">Publications</a></li>
         </ul>
       </nav>
     </div>
     <div class="header-right">
-      <a href="../connexion.html" class="login-btn">Connexion</a>
+      <a href="../connexion.html" class="btn btn-ghost btn-desktop">Connexion</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-panel" aria-label="Ouvrir le menu">
+        <i class="ph-light ph-list" aria-hidden="true"></i>
+      </button>
     </div>
   </div>
 </header>
 
-<!-- ===== SOUS BANDEAU ===== -->
-<div class="sub-nav">
+<div class="mobile-panel" id="mobile-panel">
   <ul>
-    <li><a href="../publications-scientifiques.html" class="active">Publications scientifiques</a></li>
-    <li><a href="../publications-ifras.html">Publications IFRAS</a></li>
-    <li><a href="../evenements.html">Événements</a></li>
+    <li><a href="../index.html">Accueil <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../recherche.html">Recherche <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../programmes.html">Programmes <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../publications.html" aria-current="page">Publications <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
   </ul>
+  <a href="../connexion.html" class="btn btn-primary">Connexion</a>
 </div>
 
-<!-- ===== TOC SIDEBAR ===== -->
-<nav class="toc-sidebar" id="tocSidebar">
-  <div class="toc-dot active" data-label="Résumé"      data-target="s-abstract"></div>
-  <div class="toc-dot"        data-label="Introduction" data-target="s-intro"></div>
-  <div class="toc-dot"        data-label="Matériaux"   data-target="s-materials"></div>
-  <div class="toc-dot"        data-label="Résultats"   data-target="s-results"></div>
-  <div class="toc-dot"        data-label="Discussion"  data-target="s-discussion"></div>
-  <div class="toc-dot"        data-label="Conclusion"  data-target="s-conclusion"></div>
-  <div class="toc-dot"        data-label="Références"  data-target="s-refs"></div>
+<!-- ===== SOUS-NAVIGATION (mêmes rubriques que publications.html) ===== -->
+<nav class="subnav" id="subnav" aria-label="Rubriques des publications">
+  <ul class="subnav-list">
+    <li><a class="subnav-link" href="../publications-scientifiques.html" aria-current="true" style="--c:var(--t-sci)"><i class="ph-light ph-article" aria-hidden="true"></i>Publications scientifiques</a></li>
+    <li><a class="subnav-link" href="../publications-ifras.html" style="--c:var(--t-ifras)"><i class="ph-light ph-book-open" aria-hidden="true"></i>Publications IFRAS</a></li>
+    <li><a class="subnav-link" href="../evenements.html" style="--c:var(--t-event)"><i class="ph-light ph-calendar-dots" aria-hidden="true"></i>Événements</a></li>
+  </ul>
 </nav>
 
-<!-- ===== CONTENU ===== -->
-<div class="pub-wrapper">
+<div class="progress" aria-hidden="true"><span id="progress"></span></div>
 
-  <!-- Breadcrumb -->
-  <nav class="breadcrumb">
-    <a href="../publications.html">Publications</a>
-    <span>/</span>
-    <a href="../publications-scientifiques.html">Publications scientifiques</a>
-    <span>/</span>
-    DSMR · 2026 · Matériaux & Structures
+<main id="contenu">
+
+<!-- ===== EN-TÊTE DE L'ARTICLE ===== -->
+<header class="art-hero">
+  <div class="container art-hero-grid">
+    <div>
+      <ol class="crumbs hero-in" style="--i:0" aria-label="Fil d'Ariane">
+        <li><a href="../publications.html">Publications</a></li>
+        <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+        <li><a href="../publications-scientifiques.html">Publications scientifiques</a></li>
+        <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+        <li aria-current="page">Matériaux</li>
+      </ol>
+      <div class="badges hero-in" style="--i:1">
+        <span class="badge" style="--b:#fb7185"><i class="ph-light ph-cube" aria-hidden="true"></i>Matériaux · DSMR</span>
+        <span class="badge" style="--b:#60a5fa"><i class="ph-light ph-seal-check" aria-hidden="true"></i>Évalué par les pairs</span>
+        <span class="badge" style="--b:#34d399"><i class="ph-light ph-lock-simple-open" aria-hidden="true"></i>Accès libre</span>
+      </div>
+      <h1 class="art-title hero-in" style="--i:2">Un bouclier céramique qui résiste à 2 250 °C pour la rentrée atmosphérique</h1>
+      <p class="art-lede hero-in" style="--i:3">En ajoutant des grains de diborure de zirconium à un composite céramique, l'équipe du DSMR obtient un matériau qui garde près de 90 % de sa résistance après cinq minutes dans un jet de plasma, et qui fabrique lui-même sa couche de protection.</p>
+      <ul class="authors hero-in" style="--i:4" aria-label="Auteurs">
+        <li class="author"><span class="av" style="--ah:12" aria-hidden="true">IM</span><span><strong>Isabelle Morvant</strong><small>Responsable du programme</small></span></li>
+        <li class="author"><span class="av" style="--ah:228" aria-hidden="true">KB</span><span><strong>Karim Benzara</strong><small>Mécanique des matériaux</small></span></li>
+        <li class="author"><span class="av" style="--ah:160" aria-hidden="true">LV</span><span><strong>Lucie Vandenberghe</strong><small>Thermique</small></span></li>
+        <li class="author"><span class="av" style="--ah:280" aria-hidden="true">TM</span><span><strong>Théo Marchand</strong><small>Doctorant</small></span></li>
+      </ul>
+      <div class="meta-line hero-in" style="--i:5">
+        <span><i class="ph-light ph-calendar-blank" aria-hidden="true"></i>Publié le 18 mars 2026</span>
+        <span><i class="ph-light ph-clock" aria-hidden="true"></i>8 min de lecture</span>
+        <span><i class="ph-light ph-hash" aria-hidden="true"></i><code>IFRAS-DSMR-2026-014</code></span>
+      </div>
+    </div>
+
+    <!-- Illustration : capsule en rentrée -->
+    <div class="reentry hero-in" style="--i:3" aria-hidden="true">
+      <canvas id="flow"></canvas>
+      <svg viewBox="0 0 520 447">
+        <defs>
+          <radialGradient id="plasma" cx="0.62" cy="0.5" r="0.62">
+            <stop offset="0" stop-color="#fde68a" stop-opacity=".95"/>
+            <stop offset=".35" stop-color="#f97316" stop-opacity=".7"/>
+            <stop offset="1" stop-color="#f97316" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="shockG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#f97316" stop-opacity="0"/>
+            <stop offset=".5" stop-color="#fdba74" stop-opacity=".95"/>
+            <stop offset="1" stop-color="#f97316" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="hull" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#1b2555"/>
+            <stop offset="1" stop-color="#0a1436"/>
+          </linearGradient>
+          <filter id="blur12" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="12"/></filter>
+          <filter id="blur4" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>
+        </defs>
+        <!-- couche de plasma entre l'onde de choc et le bouclier -->
+        <path class="glow" d="M300 40 Q 150 224 300 408 L 252 338 Q 206 224 252 110 Z" fill="url(#plasma)" filter="url(#blur12)"/>
+        <!-- onde de choc -->
+        <path class="shock" d="M310 30 Q 140 224 310 418" fill="none" stroke="url(#shockG)" stroke-width="3" filter="url(#blur4)"/>
+        <path class="shock" d="M310 30 Q 140 224 310 418" fill="none" stroke="url(#shockG)" stroke-width="1.2"/>
+        <!-- capsule -->
+        <path d="M252 110 L 392 176 Q 404 181 404 194 L 404 254 Q 404 267 392 272 L 252 338 Z" fill="url(#hull)" stroke="#2a3a7a" stroke-width="1.5"/>
+        <path d="M300 133 L 300 315 M 346 155 L 346 293" stroke="#1b2555" stroke-width="1"/>
+        <!-- bouclier thermique incandescent -->
+        <path d="M252 110 Q 206 224 252 338" fill="none" stroke="#fb923c" stroke-width="10" stroke-linecap="round" filter="url(#blur4)" class="glow"/>
+        <path d="M252 110 Q 206 224 252 338" fill="none" stroke="#fde68a" stroke-width="3.5" stroke-linecap="round"/>
+      </svg>
+      <span class="reentry-tag" style="left:2%;bottom:14%"><i></i> Bouclier <b>≈ 2 050 °C</b></span>
+      <span class="reentry-tag" style="right:0;top:6%">Vitesse <b>7,8 km/s</b></span>
+    </div>
+  </div>
+</header>
+
+<div class="container art-layout">
+
+  <!-- Sommaire -->
+  <nav class="toc" aria-label="Sommaire">
+    <p class="toc-title">Sommaire</p>
+    <ol id="toc">
+      <li class="toc-ind" aria-hidden="true"></li>
+      <li><a href="#s-essentiel"><span>—</span>L'essentiel</a></li>
+      <li><a href="#s-intro"><span>1</span>Introduction</a></li>
+      <li><a href="#s-methodes"><span>2</span>Matériau et essais</a></li>
+      <li><a href="#s-resultats"><span>3</span>Résultats</a></li>
+      <li><a href="#s-discussion"><span>4</span>Discussion</a></li>
+      <li><a href="#s-conclusion"><span>5</span>Conclusion</a></li>
+      <li><a href="#s-refs"><span>—</span>Références</a></li>
+    </ol>
+    <p class="toc-time"><i class="ph-light ph-hourglass-medium" aria-hidden="true"></i><span id="timeLeft">8 min restantes</span></p>
   </nav>
 
-  <!-- ===== EN-TÊTE ===== -->
-  <div class="article-header" id="s-abstract">
+  <!-- ===== ARTICLE ===== -->
+  <article class="art" id="article">
 
-    <div class="article-meta-top">
-      <span class="meta-badge meta-badge--journal">Advanced Aerospace Materials · Vol. 14</span>
-      <span class="meta-badge meta-badge--dept">DSMR — Dir. des Systèmes & Matériaux de Rentrée</span>
-      <span class="meta-badge meta-badge--open">Accès ouvert</span>
-      <span class="meta-badge meta-badge--date">Soumis 12 jan. 2026 · Accepté 04 mars 2026</span>
-    </div>
-
-    <h1 class="article-title">
-      Comportement thermomécanique de composites à matrice céramique (CMC) de type SiC/SiC-ZrB₂ pour systèmes de protection thermique de rentrée atmosphérique à haute vitesse
-    </h1>
-
-    <p class="article-subtitle">
-      Caractérisation expérimentale et modélisation multi-échelle de la tenue structurale de panneaux CMC sous flux thermiques supérieurs à 2 000 °C — Application aux véhicules de rentrée hypersoniques de nouvelle génération.
-    </p>
-
-    <!-- Auteurs -->
-    <div class="authors-block">
-      <div class="author-entry">
-        <span class="author-name">Dr. Isabelle Morvant</span>
-        <span class="author-role">DSMR · Chef de programme CMC</span>
+    <section id="s-essentiel" aria-label="L'essentiel">
+      <div class="essentials rv">
+        <div class="essentials-head"><i class="ph-light ph-lightning" aria-hidden="true"></i> L'essentiel en 30 secondes</div>
+        <div class="kpis">
+          <div class="kpi"><strong data-count="89" data-suffix=" %">89<small> %</small></strong><span>de résistance conservée après 5 min à 2 100 °C</span></div>
+          <div class="kpi"><strong data-count="2250" data-suffix=" °C">2 250<small> °C</small></strong><span>supportés 7 minutes sans que les couches ne se séparent</span></div>
+          <div class="kpi"><strong data-count="42" data-suffix=" µm">42<small> µm</small></strong><span>de couche protectrice formée d'elle-même en surface</span></div>
+        </div>
+        <ul class="takeaways">
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>Trois recettes de céramique ont été testées dans un jet de plasma reproduisant la rentrée dans l'atmosphère.</li>
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>La recette à 20 % de diborure de zirconium offre le meilleur équilibre entre solidité et protection.</li>
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>Elle dépasse les exigences de la future capsule RETOUR-I et entre en phase de qualification.</li>
+        </ul>
       </div>
-      <div class="author-sep"></div>
-      <div class="author-entry">
-        <span class="author-name">Prof. Karim Benzara</span>
-        <span class="author-role">DSMR · Mécanicien des matériaux</span>
-      </div>
-      <div class="author-sep"></div>
-      <div class="author-entry">
-        <span class="author-name">Dr. Lucie Vandenberghe</span>
-        <span class="author-role">DSMR · Thermique & Ablation</span>
-      </div>
-      <div class="author-sep"></div>
-      <div class="author-entry">
-        <span class="author-name">Théo Marchand</span>
-        <span class="author-role">DSMR · Doctorant</span>
-      </div>
-    </div>
 
-    <!-- DOI / Cite -->
-    <div class="cite-block">
-      <div class="cite-item">
-        <span class="cite-label">DOI</span>
-        <span>10.1016/j.aam.2026.03.0047</span>
+      <div class="abstract rv">
+        <span class="label">Résumé</span>
+        <p>Les boucliers thermiques réutilisables doivent supporter plus de 2 000 °C tout en restant solides. Nous avons fabriqué trois composites céramiques SiC/SiC contenant 10, 20 et 30 % en volume de diborure de zirconium (ZrB₂), puis exposé des panneaux de 10 × 10 cm à un jet de plasma d'air pendant 2 à 7 minutes. La formulation à 20 % conserve 89 % de sa résistance à la flexion après 300 s à 2 100 °C et ne présente aucun délaminage jusqu'à 2 250 °C. Les analyses montrent qu'une couche d'oxyde de zirconium et de verre se forme en surface et bloque l'oxygène. Un modèle simple d'endommagement reproduit les mesures (R² = 0,976).</p>
+        <div class="kw" aria-label="Mots-clés"><span>Composite céramique</span><span>Bouclier thermique</span><span>Rentrée atmosphérique</span><span>ZrB₂</span><span>Plasma</span></div>
       </div>
-      <span class="cite-sep">|</span>
-      <div class="cite-item">
-        <span class="cite-label">Réf. interne</span>
-        <span>IFRAS-DSMR-2026-014</span>
-      </div>
-      <span class="cite-sep">|</span>
-      <div class="cite-item">
-        <span class="cite-label">Pages</span>
-        <span>18 pp. · 9 figures · 4 tableaux</span>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="art-divider"></div>
-
-  <!-- ===== ABSTRACT ===== -->
-  <div class="abstract-box">
-    <div class="abstract-label">Résumé — Abstract</div>
-    <p class="abstract-text">
-      Nous présentons une étude expérimentale et numérique portant sur des composites à matrice céramique (CMC) 
-      de type SiC/SiC dopés au diborure de zirconium (ZrB₂), développés par la Direction des Systèmes et Matériaux 
-      de Rentrée (DSMR) de l'IFRAS pour les systèmes de protection thermique (TPS) de véhicules hypersoniques. 
-      Des panneaux d'éprouvettes ont été soumis à des flux thermiques de 1 800 à 2 400 °C pendant des durées 
-      représentatives des phases de rentrée atmosphérique (120 à 420 secondes), sur l'arc plasma de l'installation 
-      VULCAIN-III. Les résultats démontrent une rétention de résistance à la flexion supérieure à 87 % après 
-      exposition à 2 100 °C pendant 300 s, et l'absence de délaminage interlaminaire jusqu'à 2 200 °C. 
-      Un modèle d'endommagement multi-échelle couplant la fissuration matricielle et la dégradation de l'interface 
-      fibre/matrice est proposé et validé expérimentalement. Ces composites représentent une performance sans 
-      précédent dans la classe des matériaux de rentrée non-ablatifs et ouvrent la voie à une certification pour 
-      la mission RETOUR-I prévue en 2028.
-    </p>
-    <div class="abstract-keywords">
-      <span class="kw-label">Mots-clés :</span>
-      <span class="kw-tag">Composite à matrice céramique</span>
-      <span class="kw-tag">SiC/SiC</span>
-      <span class="kw-tag">ZrB₂</span>
-      <span class="kw-tag">Protection thermique</span>
-      <span class="kw-tag">Rentrée atmosphérique</span>
-      <span class="kw-tag">Hypersonique</span>
-      <span class="kw-tag">UHTCMC</span>
-      <span class="kw-tag">Ablation</span>
-      <span class="kw-tag">Arc plasma</span>
-    </div>
-  </div>
-
-  <!-- ===== BODY ===== -->
-  <div class="article-body">
+    </section>
 
     <!-- 1. INTRODUCTION -->
-    <h2 class="section-heading" id="s-intro">1. Introduction</h2>
+    <section id="s-intro">
+      <h2><span class="n">01</span>Introduction</h2>
+      <p>Lorsqu'une capsule revient de l'orbite, elle plonge dans l'atmosphère à près de 28 000 km/h. L'air devant elle est comprimé si violemment qu'il se transforme en <button class="term" type="button" data-term="plasma">plasma</button> : la face avant du véhicule, le bouclier thermique, dépasse alors les 2 000 °C pendant plusieurs minutes <button class="cite" type="button" data-ref="5">[5]</button>.</p>
 
-    <p class="body-text">
-      La rentrée atmosphérique à haute vitesse impose aux véhicules spatiaux des contraintes thermomécaniques 
-      parmi les plus sévères rencontrées en ingénierie aérospatiale. Pour des trajectoires balistiques de rentrée 
-      directe depuis orbite basse, le flux de chaleur convectif en point d'arrêt peut excéder 10 MW·m⁻² pendant 
-      des périodes supérieures à cinq minutes, tandis que la pression aérodynamique atteint plusieurs dizaines 
-      de kilopascals [1]. Les systèmes de protection thermique (TPS) conventionnels — tuiles en silice amorphe 
-      (HRSI/LRSI) dérivés de la navette spatiale américaine, ou boucliers ablatifs phénoliques — présentent des 
-      limitations fondamentales en termes de réutilisabilité et de tenue mécanique intégrée.
-    </p>
-
-    <p class="body-text">
-      Les composites à matrice céramique (CMC), et en particulier les systèmes fibre de carbure de silicium / 
-      matrice de carbure de silicium (SiC/SiC), constituent depuis le début des années 2010 une alternative 
-      structurellement supérieure : leur densité volumique (~2,7 g·cm⁻³) est inférieure d'un facteur trois à 
-      celle des superalliages réfractaires, leur conductivité thermique est modulable par architecture de préforme 
-      fibreuse, et leur comportement pseudo-ductile permet d'absorber l'énergie de déformation sans rupture 
-      catastrophique [2, 3]. Cependant, au-delà de 1 800 °C en atmosphère oxydante à haute enthalpie, 
-      la formation de silice vitrifiée (SiO₂) en surface constitue un mécanisme de protection passif limité 
-      dans le temps, et la volatilisation de SiO provoque une récession progressive de la matrice [4].
-    </p>
-
-    <div class="highlight-box">
-      L'ajout de particules de diborure de zirconium (ZrB₂) au sein de la matrice SiC constitue l'approche 
-      retenue par la DSMR pour dépasser ce seuil thermique : l'oxydation de ZrB₂ produit une couche de ZrO₂ 
-      et B₂O₃ réfractaire qui scelle la matrice contre la récession jusqu'à des températures supérieures à 2 400 °C.
-    </div>
-
-    <p class="body-text">
-      La présente étude rapporte les résultats de la campagne d'essais VULCAIN-2026, conduite entre septembre 2025 
-      et janvier 2026 sur l'installation d'arc plasma VULCAIN-III de l'IFRAS (flux enthalpi­que spécifique 
-      calibré de 18 à 42 MJ·kg⁻¹). Nous caractérisons la tenue thermomécanique de trois formulations CMC 
-      SiC/SiC-ZrB₂ à teneurs variables en ZrB₂ (10, 20 et 30 % volumique), et nous proposons un modèle 
-      d'endommagement multi-échelle validé par corrélation d'images numériques (CIN) à haute température.
-    </p>
-
-    <!-- 2. MATÉRIAUX ET MÉTHODES -->
-    <h2 class="section-heading orange" id="s-materials">2. Matériaux et méthodes expérimentales</h2>
-
-    <h3 class="subsection-heading">2.1 Élaboration des CMC SiC/SiC-ZrB₂</h3>
-
-    <p class="body-text">
-      Les préformes fibreuses sont constituées de fibres Tyranno-SA3® (UBE Industries, Japon) tissées en 
-      architecture 2.5D interlock à 12 plis, garantissant une résistance interlaminaire maximale tout en 
-      conservant une drapabilité suffisante pour les géométries de bord d'attaque. L'imprégnation est réalisée 
-      par infiltration chimique en phase vapeur (CVI) cyclique : une première phase dépose une interphase 
-      de nitrure de bore pyrolytique (PyBN, 400 nm) sur chaque fibre, avant le remplissage matriciel SiC 
-      par CVI standard à 1 000 °C / 10⁻¹ mbar.
-    </p>
-
-    <p class="body-text">
-      Les particules de ZrB₂ (D50 = 2,1 µm, pureté 99,5 %, Höganäs AB) sont introduites par slurry 
-      infiltration (SI) avant la dernière phase CVI. Trois teneurs nominales ont été produites : CMC-10Z 
-      (10 %vol. ZrB₂), CMC-20Z (20 %vol.) et CMC-30Z (30 %vol.). La densité finale est mesurée par 
-      poussée d'Archimède et la porosité résiduelle est évaluée par tomographie RX à 5 µm de résolution 
-      (CT Metrotom 1500, Zeiss).
-    </p>
-
-    <!-- Figure 1 : micrographie -->
-    <div class="figure-block">
-      <div class="figure-image-placeholder orange">
-        <!-- Remplacer par : <img src="votre_image.jpg" alt="Micrographie MEB"> -->
-        <div class="figure-placeholder-text">
-          <span class="figure-placeholder-icon">🔬</span>
-          <span class="figure-placeholder-desc">Fig. 1 — Micrographie MEB attendue</span>
-          <span style="font-size:11px; color: var(--text-muted); text-align:center; max-width:320px; line-height:1.5;">
-            Micrographie par microscopie électronique à balayage (MEB-EDX) de la section polie<br>
-            d'un panneau CMC-20Z — fibres SiC (gris clair), matrice SiC+ZrB₂ (gris foncé),<br>
-            interphase PyBN (liseré sombre), porosité résiduelle (noir)
-          </span>
-        </div>
-      </div>
-      <div class="figure-caption">
-        <strong>Figure 1</strong>
-        Micrographie MEB-EDX en section polie transverse d'un échantillon CMC-20Z après élaboration. 
-        Les fibres Tyranno-SA3 (∅ ~10 µm) apparaissent en gris clair, la matrice SiC dopée ZrB₂ en gris foncé. 
-        Les particules de ZrB₂ (points brillants en mode BSE) sont distribuées de façon homogène dans la matrice 
-        inter-filamentaire. Porosité résiduelle mesurée : 3,2 ± 0,4 %.
-      </div>
-    </div>
-
-    <h3 class="subsection-heading">2.2 Installation d'arc plasma VULCAIN-III</h3>
-
-    <p class="body-text">
-      Les essais thermiques sont réalisés sur l'installation VULCAIN-III, arc plasma inductif de 1,2 MW 
-      développé par la DSMR en partenariat avec l'IRS Stuttgart. Le tube plasma à induction d'une fréquence 
-      de 0,4 MHz génère un jet d'air à très haute enthalpie (H₀ = 18 à 42 MJ·kg⁻¹) dans une chambre 
-      d'essai de 1,5 m³. Les éprouvettes de type panneau plat (100 × 100 × 8 mm) sont exposées en 
-      configuration face avant (stagnation) et face arrière (convection diffuse).
-    </p>
-
-    <p class="body-text">
-      La température de surface est mesurée par pyrométrie bichromatique (Raytek Thermalert MX2, λ₁ = 1,6 µm, 
-      λ₂ = 2,2 µm, incertitude ± 35 °C à 2 000 °C) et par caméra thermique infrarouge refroidie (FLIR X8500sc, 
-      3–5 µm, 1 024 × 1 024 px, 100 Hz). La pression aérodynamique est enregistrée par un système de 32 
-      capteurs piézorésistifs (Kulite XT-190) intégrés dans le support d'éprouvette.
-    </p>
-
-    <!-- Tableau 1 : conditions d'essais -->
-    <div class="table-block">
-      <div class="table-header">Tableau 1 — Matrice des conditions d'essais VULCAIN-2026</div>
-      <table>
-        <thead>
-          <tr>
-            <th>Réf. essai</th>
-            <th>Matériau</th>
-            <th>T surface (°C)</th>
-            <th>Flux (MW·m⁻²)</th>
-            <th>Durée (s)</th>
-            <th>Pression (kPa)</th>
-            <th>Résultat</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="td-mono">VUL-01</td>
-            <td>CMC-10Z</td>
-            <td class="td-mono">1 800</td>
-            <td class="td-mono">4,2</td>
-            <td class="td-mono">300</td>
-            <td class="td-mono">28,4</td>
-            <td class="td-accent">Intègre</td>
-          </tr>
-          <tr>
-            <td class="td-mono">VUL-02</td>
-            <td>CMC-10Z</td>
-            <td class="td-mono">2 100</td>
-            <td class="td-mono">6,8</td>
-            <td class="td-mono">180</td>
-            <td class="td-mono">31,2</td>
-            <td class="td-warn">Délaminage partiel</td>
-          </tr>
-          <tr>
-            <td class="td-mono">VUL-03</td>
-            <td>CMC-20Z</td>
-            <td class="td-mono">2 100</td>
-            <td class="td-mono">6,8</td>
-            <td class="td-mono">300</td>
-            <td class="td-mono">31,2</td>
-            <td class="td-accent">Intègre</td>
-          </tr>
-          <tr>
-            <td class="td-mono">VUL-04</td>
-            <td>CMC-20Z</td>
-            <td class="td-mono">2 250</td>
-            <td class="td-mono">8,5</td>
-            <td class="td-mono">420</td>
-            <td class="td-mono">34,7</td>
-            <td class="td-accent">Intègre</td>
-          </tr>
-          <tr>
-            <td class="td-mono">VUL-05</td>
-            <td>CMC-30Z</td>
-            <td class="td-mono">2 400</td>
-            <td class="td-mono">10,2</td>
-            <td class="td-mono">300</td>
-            <td class="td-mono">38,1</td>
-            <td class="td-accent">Intègre</td>
-          </tr>
-          <tr>
-            <td class="td-mono">VUL-06</td>
-            <td>CMC-30Z</td>
-            <td class="td-mono">2 400</td>
-            <td class="td-mono">10,2</td>
-            <td class="td-mono">420</td>
-            <td class="td-mono">38,1</td>
-            <td class="td-warn">Fissuration de surface</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="table-note">
-        * Les conditions VUL-04 et VUL-05 dépassent les exigences de qualification du programme RETOUR-I 
-        (T = 2 050 °C, 360 s). Porosité résiduelle de la matrice mesurée après essai par tomographie RX.
-      </div>
-    </div>
-
-    <!-- 3. RESULTATS -->
-    <h2 class="section-heading green" id="s-results">3. Résultats</h2>
-
-    <h3 class="subsection-heading">3.1 Tenue thermomécanique — Comparaison des formulations</h3>
-
-    <p class="body-text">
-      La figure 2 présente l'évolution de la résistance à la flexion 4 points (norme ASTM C1161) mesurée 
-      sur des éprouvettes prélevées en zone de gradient thermique maximale, en fonction de la température 
-      d'exposition. La formulation CMC-20Z démontre la meilleure combinaison de résistance résiduelle 
-      et de stabilité dimensionnelle : une valeur de 312 ± 18 MPa est mesurée après exposition à 2 100 °C 
-      pendant 300 s, soit une rétention de 89,4 % de la valeur initiale.
-    </p>
-
-    <!-- Graphique 1 : résistance vs température -->
-    <div class="chart-block">
-      <div class="chart-inner">
-        <div class="chart-title-row">
-          <span class="chart-title">Résistance résiduelle à la flexion 4-points (% valeur initiale) vs T d'exposition</span>
-          <div class="chart-legend">
-            <div class="legend-item"><div class="legend-dot" style="background:#60a5fa"></div> CMC-10Z</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#34d399"></div> CMC-20Z</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#f97316"></div> CMC-30Z</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#a78bfa; opacity:.4"></div> Seuil certification</div>
+      <figure class="fig rv" id="fig1">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">Une rentrée atmosphérique, seconde par seconde</span>
+            <button class="ctrl" type="button" id="trajPlay"><i class="ph-light ph-play" aria-hidden="true"></i><span>Lancer</span></button>
+          </div>
+          <svg viewBox="0 0 680 270" id="trajSvg" role="img" aria-label="Trajectoire de rentrée : altitude, vitesse et température du bouclier en fonction du temps">
+            <defs>
+              <linearGradient id="atmo" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#020617"/>
+                <stop offset="1" stop-color="#0e2152"/>
+              </linearGradient>
+              <radialGradient id="capGlow"><stop offset="0" stop-color="#fde68a"/><stop offset=".4" stop-color="#f97316" stop-opacity=".8"/><stop offset="1" stop-color="#f97316" stop-opacity="0"/></radialGradient>
+            </defs>
+            <rect x="0" y="0" width="680" height="270" rx="10" fill="url(#atmo)"/>
+            <!-- couches -->
+            <line x1="0" y1="56" x2="680" y2="56" stroke="#1b2555" stroke-dasharray="3 6"/>
+            <text x="12" y="48" fill="#8891b8" font-size="12">120 km · entrée dans l'atmosphère</text>
+            <line x1="0" y1="140" x2="680" y2="140" stroke="#1b2555" stroke-dasharray="3 6"/>
+            <text x="12" y="132" fill="#8891b8" font-size="12">≈ 70 km · échauffement maximal</text>
+            <line x1="0" y1="214" x2="680" y2="214" stroke="#1b2555" stroke-dasharray="3 6"/>
+            <text x="12" y="206" fill="#8891b8" font-size="12">10 km · ouverture des parachutes</text>
+            <!-- sol -->
+            <path d="M0 262 Q 340 236 680 262 L 680 270 L 0 270 Z" fill="#0f2a5a"/>
+            <!-- trajectoire -->
+            <path id="trajPath" d="M60 34 C 230 60, 330 120, 430 168 S 590 222, 640 226" fill="none" stroke="#2a3a7a" stroke-width="2" stroke-dasharray="4 5"/>
+            <path id="trajDone" d="M60 34 C 230 60, 330 120, 430 168 S 590 222, 640 226" fill="none" stroke="#f97316" stroke-width="2.5" stroke-linecap="round"/>
+            <circle id="capHalo" cx="60" cy="34" r="16" fill="url(#capGlow)"/>
+            <circle id="capDot" cx="60" cy="34" r="5" fill="#fff"/>
+          </svg>
+          <div class="readouts" aria-live="off">
+            <div class="readout"><small>Altitude</small><strong id="roAlt">120 km</strong></div>
+            <div class="readout"><small>Vitesse</small><strong id="roSpd">7,8 km/s</strong></div>
+            <div class="readout hot" id="roTempBox"><small>Température du bouclier</small><strong id="roTmp">300 °C</strong></div>
+          </div>
+          <div class="scrub">
+            <label for="trajRange" class="sr-only">Temps écoulé</label>
+            <input type="range" id="trajRange" min="0" max="420" value="0" step="1" aria-label="Temps écoulé depuis l'entrée dans l'atmosphère">
+            <output id="trajT" for="trajRange">0 s</output>
           </div>
         </div>
-        <!-- Graphique SVG -->
-        <svg class="chart-svg" viewBox="0 0 800 280" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="g10z" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#60a5fa" stop-opacity=".15"/><stop offset="1" stop-color="#60a5fa" stop-opacity="0"/></linearGradient>
-            <linearGradient id="g20z" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34d399" stop-opacity=".15"/><stop offset="1" stop-color="#34d399" stop-opacity="0"/></linearGradient>
-            <linearGradient id="g30z" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f97316" stop-opacity=".15"/><stop offset="1" stop-color="#f97316" stop-opacity="0"/></linearGradient>
-          </defs>
-          <!-- Grille -->
-          <line x1="60" y1="20" x2="60" y2="240" stroke="#1b2555" stroke-width="1"/>
-          <line x1="60" y1="240" x2="780" y2="240" stroke="#1b2555" stroke-width="1"/>
-          <!-- Grille horizontale -->
-          <line x1="60" y1="40"  x2="780" y2="40"  stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
-          <line x1="60" y1="90"  x2="780" y2="90"  stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
-          <line x1="60" y1="140" x2="780" y2="140" stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
-          <line x1="60" y1="190" x2="780" y2="190" stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
-          <!-- Labels axe Y -->
-          <text x="50" y="44"  fill="#4a5280" font-size="11" text-anchor="end" font-family="DM Mono, monospace">100%</text>
-          <text x="50" y="94"  fill="#4a5280" font-size="11" text-anchor="end" font-family="DM Mono, monospace">87%</text>
-          <text x="50" y="144" fill="#4a5280" font-size="11" text-anchor="end" font-family="DM Mono, monospace">75%</text>
-          <text x="50" y="194" fill="#4a5280" font-size="11" text-anchor="end" font-family="DM Mono, monospace">62%</text>
-          <!-- Labels axe X -->
-          <text x="100"  y="258" fill="#4a5280" font-size="11" text-anchor="middle" font-family="DM Mono, monospace">1600°C</text>
-          <text x="222"  y="258" fill="#4a5280" font-size="11" text-anchor="middle" font-family="DM Mono, monospace">1800°C</text>
-          <text x="344"  y="258" fill="#4a5280" font-size="11" text-anchor="middle" font-family="DM Mono, monospace">2000°C</text>
-          <text x="466"  y="258" fill="#4a5280" font-size="11" text-anchor="middle" font-family="DM Mono, monospace">2100°C</text>
-          <text x="588"  y="258" fill="#4a5280" font-size="11" text-anchor="middle" font-family="DM Mono, monospace">2250°C</text>
-          <text x="710"  y="258" fill="#4a5280" font-size="11" text-anchor="middle" font-family="DM Mono, monospace">2400°C</text>
-          <!-- Seuil certification 85% -->
-          <line x1="60" y1="107" x2="780" y2="107" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="6,4" opacity=".4"/>
-          <text x="785" y="111" fill="#a78bfa" font-size="10" font-family="DM Mono, monospace" opacity=".6">85%</text>
-          <!-- CMC-10Z -->
-          <polyline points="100,40 222,46 344,62 466,132 588,195 710,228" fill="none" stroke="#60a5fa" stroke-width="2"/>
-          <polygon points="100,40 222,46 344,62 466,132 588,195 710,228 710,240 100,240" fill="url(#g10z)"/>
-          <!-- CMC-20Z -->
-          <polyline points="100,40 222,43 344,50 466,91 588,112 710,160" fill="none" stroke="#34d399" stroke-width="2.5"/>
-          <polygon points="100,40 222,43 344,50 466,91 588,112 710,160 710,240 100,240" fill="url(#g20z)"/>
-          <!-- CMC-30Z -->
-          <polyline points="100,40 222,41 344,46 466,72 588,88 710,110" fill="none" stroke="#f97316" stroke-width="2"/>
-          <polygon points="100,40 222,41 344,46 466,72 588,88 710,110 710,240 100,240" fill="url(#g30z)"/>
-          <!-- Points CMC-20Z -->
-          <circle cx="100" cy="40"  r="4" fill="#34d399"/>
-          <circle cx="222" cy="43"  r="4" fill="#34d399"/>
-          <circle cx="344" cy="50"  r="4" fill="#34d399"/>
-          <circle cx="466" cy="91"  r="4" fill="#34d399"/>
-          <circle cx="588" cy="112" r="4" fill="#34d399"/>
-          <circle cx="710" cy="160" r="4" fill="#34d399"/>
-        </svg>
+        <figcaption><b>Figure 1</b>Profil type d'une rentrée depuis l'orbite basse, simulé pour la capsule RETOUR-I. L'échauffement culmine vers 190 s, vers 70 km d'altitude, lorsque l'air devient assez dense alors que la vitesse est encore très élevée. Faites glisser le curseur pour suivre la descente.</figcaption>
+      </figure>
+
+      <p>Les boucliers actuels sont soit <strong>ablatifs</strong> (ils se consument volontairement et ne servent qu'une fois), soit faits de tuiles fragiles. Pour des véhicules <strong>réutilisables</strong>, il faut un matériau à la fois très résistant à la chaleur et solide mécaniquement.</p>
+      <p>Les <button class="term" type="button" data-term="cmc">composites à matrice céramique</button> (CMC) en carbure de silicium sont de bons candidats : trois fois plus légers que les alliages métalliques réfractaires, ils se fissurent progressivement au lieu de casser net <button class="cite" type="button" data-ref="2">[2]</button>. Leur limite : au-delà de 1 800 °C, l'oxygène de l'air les ronge peu à peu. C'est ce qu'on appelle la <button class="term" type="button" data-term="recession">récession</button>.</p>
+
+      <div class="note" style="--nc:#fb7185">
+        <i class="ph-light ph-lightbulb" aria-hidden="true"></i>
+        <p><span class="nt">L'idée de l'étude</span>Ajouter au composite des grains de <button class="term" type="button" data-term="zrb2">diborure de zirconium</button> (ZrB₂). En chauffant, ces grains s'oxydent et forment une croûte réfractaire qui scelle la surface, comme une peau protectrice qui se fabrique toute seule.</p>
       </div>
-      <div class="chart-caption">
-        <strong>Figure 2</strong>
-        Résistance résiduelle à la flexion 4 points (normalisée à la valeur à température ambiante) 
-        en fonction de la température d'exposition sous flux plasma (300 s, air, 31 kPa). 
-        La ligne pointillée violette représente le seuil de certification RETOUR-I (85 %). 
-        CMC-20Z et CMC-30Z satisfont ce critère jusqu'à 2 250 °C et 2 400 °C respectivement. 
-        Barres d'erreur : ±1σ sur 3 éprouvettes.
-      </div>
-    </div>
+    </section>
 
-    <h3 class="subsection-heading">3.2 Mécanismes d'endommagement</h3>
+    <!-- 2. MATÉRIAU ET ESSAIS -->
+    <section id="s-methodes">
+      <h2><span class="n">02</span>Matériau et essais</h2>
+      <h3>Trois recettes de composite</h3>
+      <p>Des fibres de carbure de silicium sont tissées en 12 couches entrelacées, puis gainées d'une fine <button class="term" type="button" data-term="interphase">interphase</button> de nitrure de bore (0,4 µm). Le carbure de silicium est ensuite déposé autour des fibres à partir d'un gaz, à 1 000 °C. Les grains de ZrB₂ (2 µm de diamètre) sont ajoutés avant la dernière étape. Trois teneurs ont été fabriquées : <strong>CMC-10Z</strong>, <strong>CMC-20Z</strong> et <strong>CMC-30Z</strong> (10, 20 et 30 % en volume).</p>
 
-    <p class="body-text">
-      La corrélation d'images numériques (CIN) à haute température — réalisée avec un stéréoscope à 
-      illumination laser impulsé synchronisé à la caméra IR — révèle trois modes d'endommagement 
-      distincts selon la formulation et les conditions de sollicitation.
-    </p>
-
-    <div class="equation-block">
-      σ<sub>f</sub>(T) = σ<sub>f,0</sub> · exp(−α · (T − T<sub>ref</sub>) / T<sub>m</sub>) · (1 − D<sub>matrix</sub> − β · D<sub>interface</sub>)
-      <span class="equation-label">(Éq. 1)</span>
-    </div>
-
-    <p class="body-text">
-      L'équation 1 décrit le modèle phénoménologique de résistance résiduelle proposé, où σ<sub>f,0</sub> 
-      est la résistance initiale, α le coefficient d'affaiblissement thermique (ajusté à 1,24 pour CMC-20Z), 
-      D<sub>matrix</sub> et D<sub>interface</sub> les variables d'endommagement matriciel et 
-      interfacial respectivement (valeurs entre 0 et 1), et β un coefficient de pondération (β = 1,7 pour les 
-      systèmes PyBN/SiC). Ce modèle sera discuté en section 4.2.
-    </p>
-
-    <!-- Figure 3 : cartographie thermique -->
-    <div class="figure-block">
-      <div class="figure-image-placeholder">
-        <!-- Remplacer par : <img src="votre_image.jpg" alt="Cartographie thermique IR"> -->
-        <div class="figure-placeholder-text">
-          <span class="figure-placeholder-icon">🌡️</span>
-          <span class="figure-placeholder-desc">Fig. 3 — Cartographie thermique IR attendue</span>
-          <span style="font-size:11px; color: var(--text-muted); text-align:center; max-width:320px; line-height:1.5;">
-            Champ de température en surface d'un panneau CMC-20Z lors de l'essai VUL-04<br>
-            (T = 2 250 °C, t = 210 s). Caméra FLIR X8500sc, bande 3–5 µm, palette arc-en-ciel.
-          </span>
+      <figure class="fig rv" id="fig2">
+        <div class="fig-stage">
+          <div class="fig-head"><span class="fig-name">Coupe du composite CMC-20Z vue au microscope électronique (schéma)</span></div>
+          <svg class="micro" viewBox="0 0 680 300" role="img" aria-label="Schéma d'une coupe du composite : fibres regroupées en torons, gainées d'interphase, dans une matrice contenant des grains de ZrB₂ et quelques pores">
+            <rect data-part="matrice" x="0" y="0" width="680" height="300" rx="10" fill="#2e3866"/>
+            <g data-part="interphase" fill="#60a5fa"><circle cx="91.8" cy="54.9" r="9.4"/><circle cx="114.1" cy="54.6" r="9.4"/><circle cx="134.6" cy="55.7" r="9.4"/><circle cx="153.7" cy="56.3" r="9.4"/><circle cx="174.6" cy="56.0" r="9.4"/><circle cx="195.8" cy="54.6" r="9.4"/><circle cx="218.2" cy="57.6" r="9.4"/><circle cx="238.0" cy="55.2" r="9.4"/><circle cx="61.5" cy="76.3" r="9.4"/><circle cx="82.3" cy="74.1" r="9.4"/><circle cx="104.9" cy="72.7" r="9.4"/><circle cx="125.4" cy="73.7" r="9.4"/><circle cx="143.6" cy="73.0" r="9.4"/><circle cx="165.2" cy="75.8" r="9.4"/><circle cx="185.7" cy="74.9" r="9.4"/><circle cx="208.6" cy="74.0" r="9.4"/><circle cx="229.2" cy="72.8" r="9.4"/><circle cx="248.2" cy="73.4" r="9.4"/><circle cx="271.7" cy="74.3" r="9.4"/><circle cx="49.8" cy="93.2" r="9.4"/><circle cx="71.3" cy="92.0" r="9.4"/><circle cx="93.7" cy="93.6" r="9.4"/><circle cx="112.5" cy="93.1" r="9.4"/><circle cx="134.6" cy="94.3" r="9.4"/><circle cx="156.4" cy="92.0" r="9.4"/><circle cx="178.4" cy="91.3" r="9.4"/><circle cx="197.2" cy="93.8" r="9.4"/><circle cx="217.1" cy="92.8" r="9.4"/><circle cx="237.7" cy="93.5" r="9.4"/><circle cx="261.6" cy="93.1" r="9.4"/><circle cx="283.0" cy="92.1" r="9.4"/><circle cx="61.8" cy="111.5" r="9.4"/><circle cx="82.3" cy="110.9" r="9.4"/><circle cx="104.4" cy="112.9" r="9.4"/><circle cx="123.9" cy="111.7" r="9.4"/><circle cx="143.2" cy="111.9" r="9.4"/><circle cx="166.6" cy="113.1" r="9.4"/><circle cx="188.3" cy="110.2" r="9.4"/><circle cx="207.5" cy="111.8" r="9.4"/><circle cx="227.1" cy="110.9" r="9.4"/><circle cx="248.7" cy="109.5" r="9.4"/><circle cx="269.2" cy="112.2" r="9.4"/><circle cx="290.5" cy="110.1" r="9.4"/><circle cx="50.1" cy="130.8" r="9.4"/><circle cx="69.8" cy="129.1" r="9.4"/><circle cx="92.7" cy="130.9" r="9.4"/><circle cx="114.8" cy="130.8" r="9.4"/><circle cx="133.6" cy="129.0" r="9.4"/><circle cx="154.9" cy="130.9" r="9.4"/><circle cx="178.3" cy="128.0" r="9.4"/><circle cx="196.2" cy="128.3" r="9.4"/><circle cx="217.4" cy="129.3" r="9.4"/><circle cx="239.9" cy="128.4" r="9.4"/><circle cx="258.5" cy="129.0" r="9.4"/><circle cx="281.0" cy="129.6" r="9.4"/><circle cx="62.8" cy="148.4" r="9.4"/><circle cx="82.1" cy="148.1" r="9.4"/><circle cx="103.7" cy="145.8" r="9.4"/><circle cx="125.6" cy="148.7" r="9.4"/><circle cx="146.5" cy="148.8" r="9.4"/><circle cx="165.6" cy="147.2" r="9.4"/><circle cx="185.4" cy="148.2" r="9.4"/><circle cx="206.2" cy="145.9" r="9.4"/><circle cx="227.8" cy="146.3" r="9.4"/><circle cx="249.4" cy="145.8" r="9.4"/><circle cx="269.0" cy="146.2" r="9.4"/><circle cx="90.9" cy="165.3" r="9.4"/><circle cx="111.6" cy="167.4" r="9.4"/><circle cx="135.0" cy="164.5" r="9.4"/><circle cx="154.5" cy="165.3" r="9.4"/><circle cx="176.0" cy="164.4" r="9.4"/><circle cx="198.9" cy="167.9" r="9.4"/><circle cx="218.4" cy="165.8" r="9.4"/><circle cx="237.8" cy="164.3" r="9.4"/><circle cx="432.4" cy="67.3" r="9.4"/><circle cx="455.3" cy="66.9" r="9.4"/><circle cx="473.1" cy="70.1" r="9.4"/><circle cx="496.1" cy="66.9" r="9.4"/><circle cx="517.2" cy="66.4" r="9.4"/><circle cx="538.1" cy="70.2" r="9.4"/><circle cx="560.5" cy="69.1" r="9.4"/><circle cx="579.0" cy="67.7" r="9.4"/><circle cx="599.7" cy="69.4" r="9.4"/><circle cx="391.1" cy="87.7" r="9.4"/><circle cx="411.3" cy="85.4" r="9.4"/><circle cx="434.2" cy="88.5" r="9.4"/><circle cx="455.4" cy="87.8" r="9.4"/><circle cx="476.3" cy="87.5" r="9.4"/><circle cx="494.9" cy="86.6" r="9.4"/><circle cx="516.4" cy="84.7" r="9.4"/><circle cx="536.1" cy="85.7" r="9.4"/><circle cx="558.0" cy="87.3" r="9.4"/><circle cx="581.8" cy="86.3" r="9.4"/><circle cx="602.7" cy="88.5" r="9.4"/><circle cx="623.8" cy="86.0" r="9.4"/><circle cx="379.4" cy="103.7" r="9.4"/><circle cx="400.3" cy="103.6" r="9.4"/><circle cx="423.0" cy="106.4" r="9.4"/><circle cx="444.9" cy="104.7" r="9.4"/><circle cx="465.1" cy="106.0" r="9.4"/><circle cx="483.8" cy="105.5" r="9.4"/><circle cx="508.1" cy="105.9" r="9.4"/><circle cx="528.5" cy="104.7" r="9.4"/><circle cx="547.2" cy="106.0" r="9.4"/><circle cx="568.8" cy="106.0" r="9.4"/><circle cx="592.4" cy="104.4" r="9.4"/><circle cx="611.1" cy="106.6" r="9.4"/><circle cx="633.4" cy="103.5" r="9.4"/><circle cx="389.5" cy="121.7" r="9.4"/><circle cx="413.6" cy="124.3" r="9.4"/><circle cx="431.6" cy="124.4" r="9.4"/><circle cx="455.9" cy="123.7" r="9.4"/><circle cx="474.4" cy="123.3" r="9.4"/><circle cx="494.5" cy="121.1" r="9.4"/><circle cx="518.9" cy="123.7" r="9.4"/><circle cx="538.1" cy="124.8" r="9.4"/><circle cx="558.7" cy="124.6" r="9.4"/><circle cx="581.3" cy="121.9" r="9.4"/><circle cx="600.0" cy="122.3" r="9.4"/><circle cx="621.0" cy="123.4" r="9.4"/><circle cx="642.0" cy="122.8" r="9.4"/><circle cx="379.0" cy="143.0" r="9.4"/><circle cx="400.9" cy="141.2" r="9.4"/><circle cx="422.8" cy="143.0" r="9.4"/><circle cx="443.2" cy="143.0" r="9.4"/><circle cx="464.5" cy="141.5" r="9.4"/><circle cx="485.6" cy="139.4" r="9.4"/><circle cx="506.3" cy="140.1" r="9.4"/><circle cx="525.5" cy="142.5" r="9.4"/><circle cx="547.2" cy="141.2" r="9.4"/><circle cx="570.4" cy="141.6" r="9.4"/><circle cx="589.8" cy="141.4" r="9.4"/><circle cx="611.7" cy="142.5" r="9.4"/><circle cx="630.9" cy="141.6" r="9.4"/><circle cx="411.0" cy="158.7" r="9.4"/><circle cx="434.1" cy="159.7" r="9.4"/><circle cx="454.2" cy="160.7" r="9.4"/><circle cx="476.6" cy="159.4" r="9.4"/><circle cx="496.5" cy="159.6" r="9.4"/><circle cx="517.0" cy="160.4" r="9.4"/><circle cx="537.8" cy="159.8" r="9.4"/><circle cx="558.9" cy="161.4" r="9.4"/><circle cx="580.8" cy="161.1" r="9.4"/><circle cx="602.8" cy="158.7" r="9.4"/><circle cx="622.2" cy="161.4" r="9.4"/><circle cx="444.9" cy="176.4" r="9.4"/><circle cx="463.0" cy="177.7" r="9.4"/><circle cx="483.8" cy="176.9" r="9.4"/><circle cx="504.8" cy="178.6" r="9.4"/><circle cx="528.6" cy="179.5" r="9.4"/><circle cx="547.1" cy="178.8" r="9.4"/><circle cx="570.1" cy="176.5" r="9.4"/><circle cx="204.5" cy="208.1" r="9.4"/><circle cx="222.9" cy="208.1" r="9.4"/><circle cx="244.6" cy="206.2" r="9.4"/><circle cx="268.0" cy="207.6" r="9.4"/><circle cx="285.6" cy="206.0" r="9.4"/><circle cx="308.1" cy="205.6" r="9.4"/><circle cx="327.8" cy="205.5" r="9.4"/><circle cx="350.9" cy="204.3" r="9.4"/><circle cx="371.2" cy="206.0" r="9.4"/><circle cx="390.1" cy="205.6" r="9.4"/><circle cx="413.5" cy="206.3" r="9.4"/><circle cx="432.3" cy="208.2" r="9.4"/><circle cx="456.2" cy="208.2" r="9.4"/><circle cx="474.4" cy="205.3" r="9.4"/><circle cx="148.7" cy="225.7" r="9.4"/><circle cx="170.6" cy="223.1" r="9.4"/><circle cx="192.2" cy="226.2" r="9.4"/><circle cx="214.8" cy="223.6" r="9.4"/><circle cx="233.1" cy="226.2" r="9.4"/><circle cx="255.8" cy="225.3" r="9.4"/><circle cx="274.9" cy="222.8" r="9.4"/><circle cx="298.3" cy="224.2" r="9.4"/><circle cx="316.8" cy="226.3" r="9.4"/><circle cx="340.0" cy="225.7" r="9.4"/><circle cx="358.8" cy="226.0" r="9.4"/><circle cx="379.8" cy="226.0" r="9.4"/><circle cx="402.3" cy="223.9" r="9.4"/><circle cx="423.7" cy="226.2" r="9.4"/><circle cx="443.6" cy="223.1" r="9.4"/><circle cx="465.6" cy="223.5" r="9.4"/><circle cx="484.9" cy="223.2" r="9.4"/><circle cx="505.7" cy="223.3" r="9.4"/><circle cx="527.7" cy="223.8" r="9.4"/><circle cx="162.0" cy="242.0" r="9.4"/><circle cx="182.0" cy="241.5" r="9.4"/><circle cx="202.4" cy="240.9" r="9.4"/><circle cx="223.0" cy="240.9" r="9.4"/><circle cx="245.9" cy="243.0" r="9.4"/><circle cx="264.8" cy="242.7" r="9.4"/><circle cx="288.7" cy="241.2" r="9.4"/><circle cx="309.3" cy="242.5" r="9.4"/><circle cx="329.0" cy="244.1" r="9.4"/><circle cx="349.6" cy="242.8" r="9.4"/><circle cx="371.8" cy="244.7" r="9.4"/><circle cx="391.4" cy="244.1" r="9.4"/><circle cx="413.8" cy="243.4" r="9.4"/><circle cx="433.6" cy="242.2" r="9.4"/><circle cx="453.2" cy="241.3" r="9.4"/><circle cx="474.3" cy="243.8" r="9.4"/><circle cx="496.0" cy="241.5" r="9.4"/><circle cx="516.3" cy="244.2" r="9.4"/><circle cx="540.5" cy="243.5" r="9.4"/><circle cx="170.6" cy="260.0" r="9.4"/><circle cx="191.7" cy="260.9" r="9.4"/><circle cx="212.1" cy="260.9" r="9.4"/><circle cx="233.6" cy="262.9" r="9.4"/><circle cx="257.4" cy="261.3" r="9.4"/><circle cx="275.5" cy="262.9" r="9.4"/><circle cx="296.7" cy="260.5" r="9.4"/><circle cx="316.5" cy="260.6" r="9.4"/><circle cx="339.4" cy="261.1" r="9.4"/><circle cx="359.3" cy="261.1" r="9.4"/><circle cx="379.5" cy="260.1" r="9.4"/><circle cx="400.9" cy="260.7" r="9.4"/><circle cx="421.7" cy="259.2" r="9.4"/><circle cx="443.7" cy="260.0" r="9.4"/><circle cx="465.8" cy="261.2" r="9.4"/><circle cx="487.5" cy="261.7" r="9.4"/><circle cx="508.4" cy="262.6" r="9.4"/><circle cx="244.6" cy="278.7" r="9.4"/><circle cx="267.9" cy="277.9" r="9.4"/><circle cx="287.9" cy="279.9" r="9.4"/><circle cx="306.2" cy="280.7" r="9.4"/><circle cx="330.6" cy="279.9" r="9.4"/><circle cx="350.9" cy="280.6" r="9.4"/><circle cx="369.6" cy="279.4" r="9.4"/><circle cx="392.0" cy="280.7" r="9.4"/><circle cx="414.2" cy="280.7" r="9.4"/><circle cx="434.3" cy="280.9" r="9.4"/></g>
+            <g data-part="fibre" fill="#a5b4fc"><circle cx="91.8" cy="54.9" r="8.2"/><circle cx="114.1" cy="54.6" r="8.2"/><circle cx="134.6" cy="55.7" r="8.2"/><circle cx="153.7" cy="56.3" r="8.2"/><circle cx="174.6" cy="56.0" r="8.2"/><circle cx="195.8" cy="54.6" r="8.2"/><circle cx="218.2" cy="57.6" r="8.2"/><circle cx="238.0" cy="55.2" r="8.2"/><circle cx="61.5" cy="76.3" r="8.2"/><circle cx="82.3" cy="74.1" r="8.2"/><circle cx="104.9" cy="72.7" r="8.2"/><circle cx="125.4" cy="73.7" r="8.2"/><circle cx="143.6" cy="73.0" r="8.2"/><circle cx="165.2" cy="75.8" r="8.2"/><circle cx="185.7" cy="74.9" r="8.2"/><circle cx="208.6" cy="74.0" r="8.2"/><circle cx="229.2" cy="72.8" r="8.2"/><circle cx="248.2" cy="73.4" r="8.2"/><circle cx="271.7" cy="74.3" r="8.2"/><circle cx="49.8" cy="93.2" r="8.2"/><circle cx="71.3" cy="92.0" r="8.2"/><circle cx="93.7" cy="93.6" r="8.2"/><circle cx="112.5" cy="93.1" r="8.2"/><circle cx="134.6" cy="94.3" r="8.2"/><circle cx="156.4" cy="92.0" r="8.2"/><circle cx="178.4" cy="91.3" r="8.2"/><circle cx="197.2" cy="93.8" r="8.2"/><circle cx="217.1" cy="92.8" r="8.2"/><circle cx="237.7" cy="93.5" r="8.2"/><circle cx="261.6" cy="93.1" r="8.2"/><circle cx="283.0" cy="92.1" r="8.2"/><circle cx="61.8" cy="111.5" r="8.2"/><circle cx="82.3" cy="110.9" r="8.2"/><circle cx="104.4" cy="112.9" r="8.2"/><circle cx="123.9" cy="111.7" r="8.2"/><circle cx="143.2" cy="111.9" r="8.2"/><circle cx="166.6" cy="113.1" r="8.2"/><circle cx="188.3" cy="110.2" r="8.2"/><circle cx="207.5" cy="111.8" r="8.2"/><circle cx="227.1" cy="110.9" r="8.2"/><circle cx="248.7" cy="109.5" r="8.2"/><circle cx="269.2" cy="112.2" r="8.2"/><circle cx="290.5" cy="110.1" r="8.2"/><circle cx="50.1" cy="130.8" r="8.2"/><circle cx="69.8" cy="129.1" r="8.2"/><circle cx="92.7" cy="130.9" r="8.2"/><circle cx="114.8" cy="130.8" r="8.2"/><circle cx="133.6" cy="129.0" r="8.2"/><circle cx="154.9" cy="130.9" r="8.2"/><circle cx="178.3" cy="128.0" r="8.2"/><circle cx="196.2" cy="128.3" r="8.2"/><circle cx="217.4" cy="129.3" r="8.2"/><circle cx="239.9" cy="128.4" r="8.2"/><circle cx="258.5" cy="129.0" r="8.2"/><circle cx="281.0" cy="129.6" r="8.2"/><circle cx="62.8" cy="148.4" r="8.2"/><circle cx="82.1" cy="148.1" r="8.2"/><circle cx="103.7" cy="145.8" r="8.2"/><circle cx="125.6" cy="148.7" r="8.2"/><circle cx="146.5" cy="148.8" r="8.2"/><circle cx="165.6" cy="147.2" r="8.2"/><circle cx="185.4" cy="148.2" r="8.2"/><circle cx="206.2" cy="145.9" r="8.2"/><circle cx="227.8" cy="146.3" r="8.2"/><circle cx="249.4" cy="145.8" r="8.2"/><circle cx="269.0" cy="146.2" r="8.2"/><circle cx="90.9" cy="165.3" r="8.2"/><circle cx="111.6" cy="167.4" r="8.2"/><circle cx="135.0" cy="164.5" r="8.2"/><circle cx="154.5" cy="165.3" r="8.2"/><circle cx="176.0" cy="164.4" r="8.2"/><circle cx="198.9" cy="167.9" r="8.2"/><circle cx="218.4" cy="165.8" r="8.2"/><circle cx="237.8" cy="164.3" r="8.2"/><circle cx="432.4" cy="67.3" r="8.2"/><circle cx="455.3" cy="66.9" r="8.2"/><circle cx="473.1" cy="70.1" r="8.2"/><circle cx="496.1" cy="66.9" r="8.2"/><circle cx="517.2" cy="66.4" r="8.2"/><circle cx="538.1" cy="70.2" r="8.2"/><circle cx="560.5" cy="69.1" r="8.2"/><circle cx="579.0" cy="67.7" r="8.2"/><circle cx="599.7" cy="69.4" r="8.2"/><circle cx="391.1" cy="87.7" r="8.2"/><circle cx="411.3" cy="85.4" r="8.2"/><circle cx="434.2" cy="88.5" r="8.2"/><circle cx="455.4" cy="87.8" r="8.2"/><circle cx="476.3" cy="87.5" r="8.2"/><circle cx="494.9" cy="86.6" r="8.2"/><circle cx="516.4" cy="84.7" r="8.2"/><circle cx="536.1" cy="85.7" r="8.2"/><circle cx="558.0" cy="87.3" r="8.2"/><circle cx="581.8" cy="86.3" r="8.2"/><circle cx="602.7" cy="88.5" r="8.2"/><circle cx="623.8" cy="86.0" r="8.2"/><circle cx="379.4" cy="103.7" r="8.2"/><circle cx="400.3" cy="103.6" r="8.2"/><circle cx="423.0" cy="106.4" r="8.2"/><circle cx="444.9" cy="104.7" r="8.2"/><circle cx="465.1" cy="106.0" r="8.2"/><circle cx="483.8" cy="105.5" r="8.2"/><circle cx="508.1" cy="105.9" r="8.2"/><circle cx="528.5" cy="104.7" r="8.2"/><circle cx="547.2" cy="106.0" r="8.2"/><circle cx="568.8" cy="106.0" r="8.2"/><circle cx="592.4" cy="104.4" r="8.2"/><circle cx="611.1" cy="106.6" r="8.2"/><circle cx="633.4" cy="103.5" r="8.2"/><circle cx="389.5" cy="121.7" r="8.2"/><circle cx="413.6" cy="124.3" r="8.2"/><circle cx="431.6" cy="124.4" r="8.2"/><circle cx="455.9" cy="123.7" r="8.2"/><circle cx="474.4" cy="123.3" r="8.2"/><circle cx="494.5" cy="121.1" r="8.2"/><circle cx="518.9" cy="123.7" r="8.2"/><circle cx="538.1" cy="124.8" r="8.2"/><circle cx="558.7" cy="124.6" r="8.2"/><circle cx="581.3" cy="121.9" r="8.2"/><circle cx="600.0" cy="122.3" r="8.2"/><circle cx="621.0" cy="123.4" r="8.2"/><circle cx="642.0" cy="122.8" r="8.2"/><circle cx="379.0" cy="143.0" r="8.2"/><circle cx="400.9" cy="141.2" r="8.2"/><circle cx="422.8" cy="143.0" r="8.2"/><circle cx="443.2" cy="143.0" r="8.2"/><circle cx="464.5" cy="141.5" r="8.2"/><circle cx="485.6" cy="139.4" r="8.2"/><circle cx="506.3" cy="140.1" r="8.2"/><circle cx="525.5" cy="142.5" r="8.2"/><circle cx="547.2" cy="141.2" r="8.2"/><circle cx="570.4" cy="141.6" r="8.2"/><circle cx="589.8" cy="141.4" r="8.2"/><circle cx="611.7" cy="142.5" r="8.2"/><circle cx="630.9" cy="141.6" r="8.2"/><circle cx="411.0" cy="158.7" r="8.2"/><circle cx="434.1" cy="159.7" r="8.2"/><circle cx="454.2" cy="160.7" r="8.2"/><circle cx="476.6" cy="159.4" r="8.2"/><circle cx="496.5" cy="159.6" r="8.2"/><circle cx="517.0" cy="160.4" r="8.2"/><circle cx="537.8" cy="159.8" r="8.2"/><circle cx="558.9" cy="161.4" r="8.2"/><circle cx="580.8" cy="161.1" r="8.2"/><circle cx="602.8" cy="158.7" r="8.2"/><circle cx="622.2" cy="161.4" r="8.2"/><circle cx="444.9" cy="176.4" r="8.2"/><circle cx="463.0" cy="177.7" r="8.2"/><circle cx="483.8" cy="176.9" r="8.2"/><circle cx="504.8" cy="178.6" r="8.2"/><circle cx="528.6" cy="179.5" r="8.2"/><circle cx="547.1" cy="178.8" r="8.2"/><circle cx="570.1" cy="176.5" r="8.2"/><circle cx="204.5" cy="208.1" r="8.2"/><circle cx="222.9" cy="208.1" r="8.2"/><circle cx="244.6" cy="206.2" r="8.2"/><circle cx="268.0" cy="207.6" r="8.2"/><circle cx="285.6" cy="206.0" r="8.2"/><circle cx="308.1" cy="205.6" r="8.2"/><circle cx="327.8" cy="205.5" r="8.2"/><circle cx="350.9" cy="204.3" r="8.2"/><circle cx="371.2" cy="206.0" r="8.2"/><circle cx="390.1" cy="205.6" r="8.2"/><circle cx="413.5" cy="206.3" r="8.2"/><circle cx="432.3" cy="208.2" r="8.2"/><circle cx="456.2" cy="208.2" r="8.2"/><circle cx="474.4" cy="205.3" r="8.2"/><circle cx="148.7" cy="225.7" r="8.2"/><circle cx="170.6" cy="223.1" r="8.2"/><circle cx="192.2" cy="226.2" r="8.2"/><circle cx="214.8" cy="223.6" r="8.2"/><circle cx="233.1" cy="226.2" r="8.2"/><circle cx="255.8" cy="225.3" r="8.2"/><circle cx="274.9" cy="222.8" r="8.2"/><circle cx="298.3" cy="224.2" r="8.2"/><circle cx="316.8" cy="226.3" r="8.2"/><circle cx="340.0" cy="225.7" r="8.2"/><circle cx="358.8" cy="226.0" r="8.2"/><circle cx="379.8" cy="226.0" r="8.2"/><circle cx="402.3" cy="223.9" r="8.2"/><circle cx="423.7" cy="226.2" r="8.2"/><circle cx="443.6" cy="223.1" r="8.2"/><circle cx="465.6" cy="223.5" r="8.2"/><circle cx="484.9" cy="223.2" r="8.2"/><circle cx="505.7" cy="223.3" r="8.2"/><circle cx="527.7" cy="223.8" r="8.2"/><circle cx="162.0" cy="242.0" r="8.2"/><circle cx="182.0" cy="241.5" r="8.2"/><circle cx="202.4" cy="240.9" r="8.2"/><circle cx="223.0" cy="240.9" r="8.2"/><circle cx="245.9" cy="243.0" r="8.2"/><circle cx="264.8" cy="242.7" r="8.2"/><circle cx="288.7" cy="241.2" r="8.2"/><circle cx="309.3" cy="242.5" r="8.2"/><circle cx="329.0" cy="244.1" r="8.2"/><circle cx="349.6" cy="242.8" r="8.2"/><circle cx="371.8" cy="244.7" r="8.2"/><circle cx="391.4" cy="244.1" r="8.2"/><circle cx="413.8" cy="243.4" r="8.2"/><circle cx="433.6" cy="242.2" r="8.2"/><circle cx="453.2" cy="241.3" r="8.2"/><circle cx="474.3" cy="243.8" r="8.2"/><circle cx="496.0" cy="241.5" r="8.2"/><circle cx="516.3" cy="244.2" r="8.2"/><circle cx="540.5" cy="243.5" r="8.2"/><circle cx="170.6" cy="260.0" r="8.2"/><circle cx="191.7" cy="260.9" r="8.2"/><circle cx="212.1" cy="260.9" r="8.2"/><circle cx="233.6" cy="262.9" r="8.2"/><circle cx="257.4" cy="261.3" r="8.2"/><circle cx="275.5" cy="262.9" r="8.2"/><circle cx="296.7" cy="260.5" r="8.2"/><circle cx="316.5" cy="260.6" r="8.2"/><circle cx="339.4" cy="261.1" r="8.2"/><circle cx="359.3" cy="261.1" r="8.2"/><circle cx="379.5" cy="260.1" r="8.2"/><circle cx="400.9" cy="260.7" r="8.2"/><circle cx="421.7" cy="259.2" r="8.2"/><circle cx="443.7" cy="260.0" r="8.2"/><circle cx="465.8" cy="261.2" r="8.2"/><circle cx="487.5" cy="261.7" r="8.2"/><circle cx="508.4" cy="262.6" r="8.2"/><circle cx="244.6" cy="278.7" r="8.2"/><circle cx="267.9" cy="277.9" r="8.2"/><circle cx="287.9" cy="279.9" r="8.2"/><circle cx="306.2" cy="280.7" r="8.2"/><circle cx="330.6" cy="279.9" r="8.2"/><circle cx="350.9" cy="280.6" r="8.2"/><circle cx="369.6" cy="279.4" r="8.2"/><circle cx="392.0" cy="280.7" r="8.2"/><circle cx="414.2" cy="280.7" r="8.2"/><circle cx="434.3" cy="280.9" r="8.2"/></g>
+            <g data-part="zrb2" fill="#fde68a"><circle cx="160.7" cy="16.8" r="1.8"/><circle cx="247.5" cy="37.8" r="2.6"/><circle cx="378.9" cy="186.3" r="2.4"/><circle cx="10.2" cy="234.5" r="2.5"/><circle cx="342.0" cy="160.0" r="2.4"/><circle cx="51.9" cy="217.2" r="1.9"/><circle cx="499.2" cy="285.1" r="2.2"/><circle cx="417.7" cy="190.5" r="1.7"/><circle cx="385.0" cy="11.5" r="1.7"/><circle cx="186.5" cy="198.8" r="2.4"/><circle cx="351.0" cy="140.0" r="2.2"/><circle cx="86.7" cy="261.8" r="1.8"/><circle cx="657.5" cy="273.9" r="1.6"/><circle cx="650.8" cy="135.6" r="1.9"/><circle cx="147.3" cy="276.5" r="1.9"/><circle cx="394.1" cy="48.3" r="2.2"/><circle cx="640.6" cy="45.7" r="2.6"/><circle cx="24.5" cy="9.0" r="2.2"/><circle cx="307.3" cy="93.8" r="1.8"/><circle cx="565.9" cy="8.5" r="2.5"/><circle cx="565.2" cy="42.1" r="2.7"/><circle cx="268.9" cy="291.7" r="2.3"/><circle cx="190.7" cy="21.7" r="1.7"/><circle cx="642.9" cy="259.1" r="2.6"/><circle cx="485.8" cy="22.1" r="2.5"/><circle cx="40.5" cy="271.2" r="1.8"/><circle cx="321.5" cy="105.6" r="2.0"/><circle cx="498.7" cy="285.3" r="1.9"/><circle cx="146.0" cy="265.3" r="2.2"/><circle cx="154.1" cy="265.4" r="2.8"/><circle cx="306.8" cy="47.6" r="1.8"/><circle cx="597.1" cy="220.9" r="2.1"/><circle cx="282.8" cy="156.9" r="2.1"/><circle cx="232.6" cy="25.6" r="1.9"/><circle cx="650.5" cy="43.7" r="2.2"/><circle cx="571.5" cy="255.9" r="1.6"/><circle cx="29.4" cy="209.5" r="2.7"/><circle cx="322.3" cy="174.8" r="1.6"/><circle cx="556.2" cy="251.0" r="2.8"/><circle cx="173.0" cy="39.0" r="1.8"/><circle cx="633.1" cy="213.0" r="2.4"/><circle cx="374.2" cy="19.2" r="2.5"/><circle cx="82.5" cy="28.0" r="2.2"/><circle cx="156.5" cy="178.7" r="1.6"/><circle cx="644.7" cy="191.1" r="2.7"/><circle cx="323.6" cy="74.7" r="1.9"/><circle cx="645.8" cy="208.1" r="2.0"/><circle cx="22.5" cy="149.5" r="2.4"/><circle cx="451.1" cy="270.7" r="1.9"/><circle cx="30.6" cy="104.0" r="2.1"/><circle cx="343.2" cy="66.3" r="2.8"/><circle cx="638.0" cy="49.6" r="2.1"/><circle cx="149.4" cy="284.6" r="1.8"/><circle cx="42.4" cy="25.1" r="2.1"/><circle cx="604.4" cy="258.9" r="2.5"/><circle cx="670.4" cy="272.6" r="2.0"/><circle cx="131.2" cy="273.8" r="2.5"/><circle cx="29.2" cy="196.7" r="2.1"/><circle cx="120.4" cy="8.8" r="1.9"/><circle cx="90.1" cy="281.9" r="1.8"/><circle cx="40.7" cy="142.5" r="2.0"/><circle cx="618.6" cy="62.8" r="2.0"/><circle cx="603.6" cy="16.6" r="2.1"/><circle cx="547.1" cy="225.7" r="1.6"/><circle cx="31.1" cy="25.8" r="2.7"/><circle cx="188.8" cy="280.0" r="2.3"/><circle cx="182.1" cy="211.5" r="2.0"/><circle cx="191.0" cy="9.1" r="2.5"/><circle cx="616.5" cy="188.1" r="2.7"/><circle cx="24.1" cy="74.4" r="2.2"/><circle cx="643.3" cy="278.9" r="2.1"/><circle cx="129.5" cy="235.9" r="2.5"/><circle cx="554.3" cy="227.5" r="2.3"/><circle cx="51.0" cy="17.6" r="2.3"/><circle cx="224.3" cy="286.4" r="2.7"/><circle cx="663.9" cy="83.2" r="1.7"/><circle cx="449.2" cy="42.4" r="2.6"/><circle cx="595.1" cy="172.2" r="2.0"/><circle cx="344.9" cy="73.7" r="2.6"/><circle cx="615.1" cy="19.5" r="2.0"/><circle cx="654.0" cy="173.6" r="2.7"/><circle cx="306.2" cy="81.8" r="2.5"/><circle cx="635.9" cy="38.0" r="2.3"/><circle cx="252.8" cy="48.1" r="1.8"/><circle cx="177.3" cy="178.2" r="2.4"/><circle cx="143.1" cy="11.2" r="2.0"/><circle cx="50.0" cy="36.8" r="2.1"/><circle cx="373.3" cy="189.5" r="1.7"/><circle cx="116.7" cy="205.5" r="2.1"/><circle cx="669.8" cy="111.3" r="1.8"/><circle cx="11.9" cy="264.1" r="2.1"/><circle cx="115.9" cy="12.2" r="2.3"/><circle cx="67.1" cy="184.7" r="2.0"/><circle cx="343.0" cy="49.4" r="1.9"/><circle cx="542.4" cy="282.6" r="1.8"/><circle cx="92.1" cy="275.8" r="2.8"/><circle cx="328.5" cy="23.2" r="2.7"/><circle cx="114.4" cy="231.2" r="1.9"/><circle cx="276.6" cy="248.4" r="2.6"/><circle cx="262.7" cy="42.9" r="1.9"/><circle cx="35.3" cy="167.7" r="2.5"/><circle cx="33.3" cy="246.1" r="1.7"/><circle cx="286.9" cy="173.5" r="2.1"/><circle cx="299.1" cy="14.6" r="2.3"/><circle cx="333.0" cy="74.8" r="2.5"/><circle cx="79.1" cy="44.5" r="2.1"/><circle cx="346.7" cy="19.6" r="2.4"/><circle cx="62.6" cy="216.3" r="2.5"/><circle cx="347.6" cy="23.4" r="2.2"/><circle cx="98.4" cy="251.4" r="2.8"/><circle cx="136.6" cy="286.8" r="2.2"/><circle cx="643.2" cy="268.2" r="1.8"/><circle cx="531.5" cy="272.3" r="1.7"/><circle cx="113.4" cy="262.6" r="1.9"/><circle cx="549.6" cy="48.8" r="2.2"/><circle cx="618.8" cy="67.2" r="1.9"/><circle cx="344.0" cy="98.6" r="1.6"/><circle cx="629.8" cy="201.0" r="2.7"/><circle cx="120.0" cy="230.9" r="1.7"/><circle cx="360.4" cy="188.7" r="2.0"/></g>
+            <g data-part="pore" fill="#05081a" stroke="#64748b" stroke-width="0.6"><ellipse cx="86.9" cy="278.2" rx="5.5" ry="2.8" transform="rotate(95 86.9 278.2)"/><ellipse cx="133.1" cy="213.3" rx="3.2" ry="3.6" transform="rotate(64 133.1 213.3)"/><ellipse cx="577.0" cy="261.4" rx="6.6" ry="3.5" transform="rotate(8 577.0 261.4)"/><ellipse cx="253.0" cy="32.4" rx="5.0" ry="3.2" transform="rotate(11 253.0 32.4)"/><ellipse cx="34.3" cy="20.7" rx="4.4" ry="2.2" transform="rotate(91 34.3 20.7)"/><ellipse cx="361.8" cy="127.4" rx="4.2" ry="2.3" transform="rotate(93 361.8 127.4)"/><ellipse cx="106.2" cy="263.5" rx="4.0" ry="2.3" transform="rotate(24 106.2 263.5)"/><ellipse cx="60.7" cy="57.6" rx="5.7" ry="2.5" transform="rotate(67 60.7 57.6)"/><ellipse cx="639.0" cy="34.6" rx="6.3" ry="3.8" transform="rotate(152 639.0 34.6)"/><ellipse cx="619.8" cy="210.7" rx="4.0" ry="3.8" transform="rotate(11 619.8 210.7)"/><ellipse cx="59.4" cy="26.6" rx="3.7" ry="2.3" transform="rotate(26 59.4 26.6)"/><ellipse cx="27.9" cy="163.2" rx="6.8" ry="2.3" transform="rotate(51 27.9 163.2)"/><ellipse cx="60.8" cy="182.8" rx="7.0" ry="3.4" transform="rotate(122 60.8 182.8)"/><ellipse cx="477.9" cy="21.7" rx="6.4" ry="3.5" transform="rotate(119 477.9 21.7)"/></g>
+            <g><rect x="562" y="270" width="104" height="20" rx="5" fill="rgba(2,6,23,.75)"/><line x1="572" x2="622" y1="280" y2="280" stroke="#fff" stroke-width="2"/><text x="628" y="284" fill="#fff" font-size="11" class="mono">20 µm</text></g>
+          </svg>
+          <div class="parts" role="group" aria-label="Mettre en évidence un constituant">
+            <button class="part" type="button" data-part="fibre" aria-pressed="false" style="--pc:#a5b4fc"><i></i>Fibres SiC</button>
+            <button class="part" type="button" data-part="interphase" aria-pressed="false" style="--pc:#60a5fa"><i></i>Interphase</button>
+            <button class="part" type="button" data-part="matrice" aria-pressed="false" style="--pc:#475394"><i></i>Matrice SiC</button>
+            <button class="part" type="button" data-part="zrb2" aria-pressed="false" style="--pc:#fde68a"><i></i>Grains ZrB₂</button>
+            <button class="part" type="button" data-part="pore" aria-pressed="false" style="--pc:#64748b"><i></i>Pores</button>
+          </div>
+          <p class="part-desc" id="partDesc" aria-live="polite">Survolez ou touchez un constituant pour le mettre en évidence.</p>
         </div>
-      </div>
-      <div class="figure-caption">
-        <strong>Figure 3</strong>
-        Distribution du champ de température en surface du panneau CMC-20Z lors de l'essai VUL-04 
-        (T<sub>max</sub> = 2 250 °C, t = 210 s, H₀ = 34 MJ·kg⁻¹). La non-uniformité thermique 
-        maximale mesurée est de ±85 °C sur la surface active de 80 × 80 mm, compatible avec les 
-        exigences de la norme interne IFRAS-DSMR-N-042. Aucun délaminage visible ; le gradient 
-        de couleur au bord correspond à l'effet de bord aérodynamique modélisé numériquement.
-      </div>
-    </div>
+        <figcaption><b>Figure 2</b>Représentation schématique d'une coupe polie de CMC-20Z. Les fibres (∅ ≈ 10 µm) sont regroupées en torons tissés ; les grains de ZrB₂ sont répartis de façon homogène dans la matrice. Porosité résiduelle mesurée par tomographie X : 3,2 ± 0,4 %.</figcaption>
+      </figure>
 
-    <!-- Tableau 2 -->
-    <div class="table-block">
-      <div class="table-header">Tableau 2 — Propriétés mécaniques résiduelles après exposition plasma (300 s)</div>
-      <table>
-        <thead>
-          <tr>
-            <th>Matériau</th>
-            <th>T essai (°C)</th>
-            <th>σ<sub>f</sub> résiduelle (MPa)</th>
-            <th>Rétention (%)</th>
-            <th>E résiduel (GPa)</th>
-            <th>Déformation rupture (%)</th>
-            <th>Porosité Δ</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>CMC-10Z (réf.)</td>
-            <td class="td-mono">T.A.</td>
-            <td class="td-mono">349 ± 12</td>
-            <td class="td-accent">100 %</td>
-            <td class="td-mono">198</td>
-            <td class="td-mono">0,42</td>
-            <td class="td-mono">—</td>
-          </tr>
-          <tr>
-            <td>CMC-10Z</td>
-            <td class="td-mono">2 100</td>
-            <td class="td-mono">224 ± 22</td>
-            <td class="td-warn">64,2 %</td>
-            <td class="td-mono">141</td>
-            <td class="td-mono">0,31</td>
-            <td class="td-warn">+3,1 %</td>
-          </tr>
-          <tr>
-            <td>CMC-20Z (réf.)</td>
-            <td class="td-mono">T.A.</td>
-            <td class="td-mono">349 ± 15</td>
-            <td class="td-accent">100 %</td>
-            <td class="td-mono">204</td>
-            <td class="td-mono">0,41</td>
-            <td class="td-mono">—</td>
-          </tr>
-          <tr>
-            <td>CMC-20Z</td>
-            <td class="td-mono">2 100</td>
-            <td class="td-mono">312 ± 18</td>
-            <td class="td-accent">89,4 %</td>
-            <td class="td-mono">187</td>
-            <td class="td-mono">0,39</td>
-            <td class="td-accent">+0,6 %</td>
-          </tr>
-          <tr>
-            <td>CMC-20Z</td>
-            <td class="td-mono">2 250</td>
-            <td class="td-mono">298 ± 21</td>
-            <td class="td-accent">85,4 %</td>
-            <td class="td-mono">179</td>
-            <td class="td-mono">0,37</td>
-            <td class="td-accent">+1,1 %</td>
-          </tr>
-          <tr>
-            <td>CMC-30Z</td>
-            <td class="td-mono">2 400</td>
-            <td class="td-mono">301 ± 24</td>
-            <td class="td-accent">86,3 %</td>
-            <td class="td-mono">182</td>
-            <td class="td-mono">0,38</td>
-            <td class="td-accent">+0,9 %</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="table-note">
-        σ<sub>f</sub> : résistance à la flexion 4 points (ASTM C1161) · E : module d'Young (ASTM C1259 — méthode impulsion) · 
-        Δ porosité : variation absolue de porosité volumique mesurée par tomographie RX avant/après essai.
+      <h3>Le banc à plasma HÉLIOS-3</h3>
+      <p>Les panneaux (100 × 100 × 8 mm) sont placés face à un jet de plasma d'air produit par une torche de 1,2 MW, qui reproduit l'échauffement d'une rentrée. La température de surface est suivie par un <button class="term" type="button" data-term="pyrometre">pyromètre</button> et par une caméra infrarouge ; 32 capteurs mesurent la pression sur le support <button class="cite" type="button" data-ref="3">[3]</button>.</p>
+
+      <figure class="fig rv" id="fig3">
+        <div class="fig-stage">
+          <div class="fig-head"><span class="fig-name">Principe du banc d'essai HÉLIOS-3</span></div>
+          <svg viewBox="0 0 680 250" id="benchSvg" class="bench-h" role="img" aria-label="Schéma du banc : une torche à plasma projette un jet d'air très chaud sur le panneau, observé par un pyromètre et une caméra infrarouge">
+            <defs>
+              <linearGradient id="jet" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fde68a" stop-opacity=".9"/><stop offset="1" stop-color="#f97316" stop-opacity=".25"/></linearGradient>
+            </defs>
+            <rect x="8" y="8" width="664" height="234" rx="14" fill="none" stroke="#1b2555" stroke-dasharray="4 6"/>
+            <text x="22" y="30" fill="#8891b8" font-size="12">Chambre d'essai · air à basse pression</text>
+            <!-- torche -->
+            <rect x="40" y="96" width="110" height="58" rx="8" fill="#0a1436" stroke="#2a3a7a"/>
+            <g stroke="#f97316" stroke-width="2" fill="none" opacity=".8">
+              <path d="M62 96 v58 M78 96 v58 M94 96 v58 M110 96 v58 M126 96 v58"/>
+            </g>
+            <text x="95" y="178" fill="#aab3d6" font-size="13" text-anchor="middle">Torche à plasma</text>
+            <text x="95" y="194" fill="#8891b8" font-size="11.5" text-anchor="middle" class="mono">1,2 MW</text>
+            <!-- jet -->
+            <path class="flame" d="M150 104 C 260 92, 330 84, 402 70 L 402 180 C 330 166, 260 158, 150 146 Z" fill="url(#jet)"/>
+            <g stroke="#fff" stroke-width="1.5" fill="none" opacity=".55">
+              <path class="flow" d="M160 116 C 260 110, 330 100, 398 92"/>
+              <path class="flow" d="M160 125 L 398 125" style="animation-delay:-300ms"/>
+              <path class="flow" d="M160 134 C 260 140, 330 150, 398 158" style="animation-delay:-600ms"/>
+            </g>
+            <text x="270" y="60" fill="#fdba74" font-size="12.5" text-anchor="middle">Jet de plasma d'air · jusqu'à 2 400 °C</text>
+            <!-- panneau + support -->
+            <rect x="404" y="62" width="14" height="126" rx="2" fill="#fde68a"/>
+            <rect x="418" y="62" width="8" height="126" fill="#475394"/>
+            <rect x="426" y="84" width="60" height="82" rx="6" fill="#0a1436" stroke="#2a3a7a"/>
+            <g fill="#60a5fa"><circle cx="440" cy="100" r="2.5"/><circle cx="456" cy="100" r="2.5"/><circle cx="472" cy="100" r="2.5"/><circle cx="440" cy="125" r="2.5"/><circle cx="456" cy="125" r="2.5"/><circle cx="472" cy="125" r="2.5"/><circle cx="440" cy="150" r="2.5"/><circle cx="456" cy="150" r="2.5"/><circle cx="472" cy="150" r="2.5"/></g>
+            <line x1="486" y1="125" x2="540" y2="125" stroke="#2a3a7a" stroke-width="6"/>
+            <text x="411" y="214" fill="#aab3d6" font-size="13" text-anchor="middle">Panneau testé</text>
+            <text x="456" y="232" fill="#8891b8" font-size="11.5" text-anchor="middle">support + 32 capteurs</text>
+            <!-- pyromètre -->
+            <rect x="546" y="34" width="100" height="32" rx="6" fill="#0a1436" stroke="#34d399"/>
+            <text x="596" y="55" fill="#a7f3d0" font-size="12" text-anchor="middle">Pyromètre</text>
+            <line x1="546" y1="56" x2="418" y2="96" stroke="#34d399" stroke-dasharray="3 4"/>
+            <!-- caméra IR -->
+            <rect x="546" y="176" width="108" height="32" rx="6" fill="#0a1436" stroke="#c084fc"/>
+            <text x="600" y="197" fill="#e9d5ff" font-size="12" text-anchor="middle">Caméra IR</text>
+            <path d="M546 186 L 418 70 M 546 198 L 418 182" stroke="#c084fc" stroke-dasharray="3 4" fill="none"/>
+          </svg>
+          <svg viewBox="0 0 360 430" class="bench-v" role="img" aria-label="Schéma du banc : une torche à plasma projette un jet d'air très chaud sur le panneau, observé par un pyromètre et une caméra infrarouge">
+            <defs><linearGradient id="jetV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fde68a" stop-opacity=".9"/><stop offset="1" stop-color="#f97316" stop-opacity=".25"/></linearGradient></defs>
+            <rect x="6" y="6" width="348" height="418" rx="14" fill="none" stroke="#1b2555" stroke-dasharray="4 6"/>
+            <rect x="130" y="24" width="100" height="62" rx="8" fill="#0a1436" stroke="#2a3a7a"/>
+            <g stroke="#f97316" stroke-width="2" opacity=".8"><path d="M130 38 h100 M130 50 h100 M130 62 h100 M130 74 h100"/></g>
+            <text x="244" y="52" fill="#aab3d6" font-size="15">Torche à plasma</text>
+            <text x="244" y="70" fill="#8891b8" font-size="13" class="mono">1,2 MW</text>
+            <path class="flame" d="M140 86 C 128 160, 118 210, 104 262 L 256 262 C 242 210, 232 160, 220 86 Z" fill="url(#jetV)"/>
+            <g stroke="#fff" stroke-width="1.5" fill="none" opacity=".55">
+              <path class="flow" d="M160 92 L 140 256"/><path class="flow" d="M180 92 L 180 256" style="animation-delay:-300ms"/><path class="flow" d="M200 92 L 220 256" style="animation-delay:-600ms"/>
+            </g>
+            <text x="236" y="110" fill="#fdba74" font-size="13">Jet de plasma</text><text x="236" y="126" fill="#fdba74" font-size="13">jusqu'à 2 400 °C</text>
+            <rect x="96" y="264" width="168" height="14" rx="2" fill="#fde68a"/>
+            <rect x="96" y="278" width="168" height="8" fill="#475394"/>
+            <rect x="120" y="286" width="120" height="50" rx="6" fill="#0a1436" stroke="#2a3a7a"/>
+            <g fill="#60a5fa"><circle cx="140" cy="302" r="2.5"/><circle cx="160" cy="302" r="2.5"/><circle cx="180" cy="302" r="2.5"/><circle cx="200" cy="302" r="2.5"/><circle cx="220" cy="302" r="2.5"/><circle cx="140" cy="320" r="2.5"/><circle cx="160" cy="320" r="2.5"/><circle cx="180" cy="320" r="2.5"/><circle cx="200" cy="320" r="2.5"/><circle cx="220" cy="320" r="2.5"/></g>
+            <text x="180" y="360" fill="#aab3d6" font-size="15" text-anchor="middle">Panneau testé</text>
+            <text x="180" y="380" fill="#8891b8" font-size="13" text-anchor="middle">support + 32 capteurs</text>
+            <rect x="16" y="150" width="84" height="30" rx="6" fill="#0a1436" stroke="#34d399"/>
+            <text x="58" y="170" fill="#a7f3d0" font-size="13" text-anchor="middle">Pyromètre</text>
+            <line x1="58" y1="180" x2="150" y2="264" stroke="#34d399" stroke-dasharray="3 4"/>
+            <rect x="262" y="150" width="84" height="30" rx="6" fill="#0a1436" stroke="#c084fc"/>
+            <text x="304" y="170" fill="#e9d5ff" font-size="13" text-anchor="middle">Caméra IR</text>
+            <path d="M296 180 L 100 264 M 312 180 L 262 264" stroke="#c084fc" stroke-dasharray="3 4" fill="none"/>
+            <text x="180" y="410" fill="#8891b8" font-size="12" text-anchor="middle">Chambre d'essai · air à basse pression</text>
+          </svg>
+        </div>
+        <figcaption><b>Figure 3</b>Le jet de plasma frappe la face avant du panneau. Le pyromètre mesure la température en un point à partir de deux longueurs d'onde (± 35 °C à 2 000 °C) ; la caméra infrarouge filme toute la surface à 100 images par seconde.</figcaption>
+      </figure>
+
+      <div class="table-wrap rv">
+        <div class="table-cap"><b>Tableau 1</b>Les six essais de la campagne 2026</div>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Essai</th><th>Matériau</th><th class="num">Température</th><th class="num">Flux de chaleur</th><th class="num">Durée</th><th>État du panneau</th></tr></thead>
+            <tbody>
+              <tr><td class="num" style="text-align:left">HEL-01</td><td><span class="mat" style="--mc:var(--c10)"><i></i>CMC-10Z</span></td><td class="num">1 800 °C</td><td class="num">4,2 MW/m²</td><td class="num">300 s</td><td><span class="state" style="--sc:var(--ok)"><i class="ph-light ph-check-circle" aria-hidden="true"></i>Intact</span></td></tr>
+              <tr><td class="num" style="text-align:left">HEL-02</td><td><span class="mat" style="--mc:var(--c10)"><i></i>CMC-10Z</span></td><td class="num">2 100 °C</td><td class="num">6,8 MW/m²</td><td class="num">180 s</td><td><span class="state" style="--sc:var(--warn)"><i class="ph-light ph-warning" aria-hidden="true"></i>Couches décollées</span></td></tr>
+              <tr><td class="num" style="text-align:left">HEL-03</td><td><span class="mat" style="--mc:var(--c20)"><i></i>CMC-20Z</span></td><td class="num">2 100 °C</td><td class="num">6,8 MW/m²</td><td class="num">300 s</td><td><span class="state" style="--sc:var(--ok)"><i class="ph-light ph-check-circle" aria-hidden="true"></i>Intact</span></td></tr>
+              <tr><td class="num" style="text-align:left">HEL-04</td><td><span class="mat" style="--mc:var(--c20)"><i></i>CMC-20Z</span></td><td class="num">2 250 °C</td><td class="num">8,5 MW/m²</td><td class="num">420 s</td><td><span class="state" style="--sc:var(--ok)"><i class="ph-light ph-check-circle" aria-hidden="true"></i>Intact</span></td></tr>
+              <tr><td class="num" style="text-align:left">HEL-05</td><td><span class="mat" style="--mc:var(--c30)"><i></i>CMC-30Z</span></td><td class="num">2 400 °C</td><td class="num">10,2 MW/m²</td><td class="num">300 s</td><td><span class="state" style="--sc:var(--ok)"><i class="ph-light ph-check-circle" aria-hidden="true"></i>Intact</span></td></tr>
+              <tr><td class="num" style="text-align:left">HEL-06</td><td><span class="mat" style="--mc:var(--c30)"><i></i>CMC-30Z</span></td><td class="num">2 400 °C</td><td class="num">10,2 MW/m²</td><td class="num">420 s</td><td><span class="state" style="--sc:var(--warn)"><i class="ph-light ph-warning" aria-hidden="true"></i>Fissures en surface</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-note">Besoin de la mission RETOUR-I : 2 050 °C pendant 360 s. Les essais HEL-04 et HEL-05 vont au-delà.</div>
       </div>
-    </div>
+    </section>
+
+    <!-- 3. RÉSULTATS -->
+    <section id="s-resultats">
+      <h2><span class="n">03</span>Résultats</h2>
+      <h3>Combien de résistance reste-t-il après la chauffe ?</h3>
+      <p>Après chaque essai, des barrettes découpées dans les panneaux sont cassées en <button class="term" type="button" data-term="flexion">flexion</button>. On compare leur résistance à celle du matériau neuf. Pour être retenu, un matériau doit en conserver au moins <strong>85 %</strong>.</p>
+
+      <figure class="fig rv" id="fig4">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">Résistance conservée selon la température d'exposition (300 s)</span>
+            <div class="legend" role="group" aria-label="Afficher ou masquer une formulation">
+              <button class="lg" type="button" data-s="0" aria-pressed="true" style="--lc:var(--c10)"><i></i>CMC-10Z</button>
+              <button class="lg" type="button" data-s="1" aria-pressed="true" style="--lc:var(--c20)"><i></i>CMC-20Z</button>
+              <button class="lg" type="button" data-s="2" aria-pressed="true" style="--lc:var(--c30)"><i></i>CMC-30Z</button>
+            </div>
+          </div>
+          <div class="chart" id="chart"><div class="ctip" id="ctip"></div></div>
+          <button class="ctrl data-toggle" type="button" id="dataBtn" aria-expanded="false" aria-controls="dataTable"><i class="ph-light ph-table" aria-hidden="true"></i><span>Voir les données</span></button>
+          <div class="data-table" id="dataTable" hidden></div>
+        </div>
+        <figcaption><b>Figure 4</b>Résistance à la flexion mesurée après exposition, en pourcentage de la valeur initiale (moyenne de 3 éprouvettes). La ligne pointillée indique le seuil de 85 % ; la bande orange, la température attendue pendant la mission. CMC-10Z s'effondre dès 2 100 °C, tandis que CMC-20Z et CMC-30Z restent au-dessus du seuil jusqu'à 2 250 °C et 2 400 °C.</figcaption>
+      </figure>
+
+      <p>À 2 100 °C, <strong>CMC-20Z garde 89,4 % de sa résistance</strong> (312 ± 18 MPa), contre 64 % pour CMC-10Z. CMC-30Z résiste encore mieux à la chaleur, mais il devient plus cassant et se fissure lors de l'essai le plus long (HEL-06).</p>
+
+      <h3>Une chaleur bien répartie</h3>
+      <p>La caméra infrarouge montre que la surface chauffe de façon régulière : la chaleur est maximale au centre, face au jet, et diminue doucement vers les bords. L'écart ne dépasse pas 85 °C sur toute la zone exposée.</p>
+
+      <figure class="fig rv" id="fig5">
+        <div class="fig-stage">
+          <div class="fig-head"><span class="fig-name">Température de surface pendant l'essai HEL-04, à t = 210 s</span></div>
+          <div class="thermo">
+            <div class="thermo-plate" id="plate" tabindex="0" aria-label="Carte de température du panneau. Survolez pour lire la température.">
+              <canvas id="heat" width="240" height="240"></canvas>
+              <span class="probe" id="probe"></span>
+              <span class="probe-read" id="probeRead">Survolez le panneau</span>
+            </div>
+            <div class="scale" aria-hidden="true">
+              <canvas class="scale-bar" id="scaleBar" width="14" height="200"></canvas>
+              <div class="scale-labels"><span>2 260</span><span>2 210</span><span>2 160</span></div>
+            </div>
+          </div>
+        </div>
+        <figcaption><b>Figure 5</b>Carte thermique de la zone exposée (80 × 80 mm) du panneau CMC-20Z, en °C. Le centre atteint 2 250 °C. Aucune zone froide anormale, signe qu'aucune couche ne s'est décollée.</figcaption>
+      </figure>
+    </section>
 
     <!-- 4. DISCUSSION -->
-    <h2 class="section-heading" id="s-discussion">4. Discussion</h2>
+    <section id="s-discussion">
+      <h2><span class="n">04</span>Discussion</h2>
+      <h3>Une peau protectrice qui se forme en chauffant</h3>
+      <p>Au microscope, les panneaux CMC-20Z et CMC-30Z sont recouverts d'une couche de 18 à 42 µm faite d'oxyde de zirconium et d'un verre de silice. Le squelette d'oxyde de zirconium tient la couche, et le verre bouche les pores : l'oxygène ne peut plus atteindre le composite <button class="cite" type="button" data-ref="4">[4]</button>. Sans assez de ZrB₂, cette couche reste trop mince et la surface s'érode.</p>
 
-    <h3 class="subsection-heading">4.1 Rôle protecteur de la phase ZrB₂</h3>
-
-    <p class="body-text">
-      L'analyse post-essai par spectroscopie Raman et par EDX en coupe transverse confirme la formation 
-      d'une couche d'oxyde complexe ZrO₂-SiO₂ en surface des échantillons CMC-20Z et CMC-30Z exposés 
-      au-delà de 2 000 °C. Cette couche, d'épaisseur mesurée entre 18 et 42 µm selon la durée d'exposition, 
-      présente une microstructure de type « borosilicate de zirconium » amorphe qui obstrue efficacement 
-      les chemins de diffusion oxydante vers la matrice SiC sous-jacente.
-    </p>
-
-    <p class="body-text">
-      Ce mécanisme explique la nette supériorité des formulations dopées sur CMC-10Z au-delà de 1 900 °C : 
-      la couche protectrice est directement proportionnelle à la disponibilité locale en ZrB₂, ce qui 
-      suggère l'existence d'un seuil volumique optimal situé entre 20 et 25 % au-delà duquel la densification 
-      de la matrice commence à pénaliser les propriétés mécaniques intrinsèques par réduction du libre 
-      parcours moyen des fissures matricielles.
-    </p>
-
-    <div class="highlight-box orange">
-      Résultat clé : La formulation CMC-20Z représente le point optimal du compromis 
-      protection oxydante / ductilité mécanique pour des températures de service 
-      entre 1 800 et 2 250 °C. Elle est retenue comme formulation de référence 
-      pour les essais de qualification RETOUR-I Phase 2.
-    </div>
-
-    <h3 class="subsection-heading">4.2 Validité du modèle d'endommagement multi-échelle</h3>
-
-    <p class="body-text">
-      Le modèle phénoménologique (Éq. 1) est ajusté sur les données expérimentales par une procédure 
-      d'optimisation au sens des moindres carrés non linéaires (algorithme de Levenberg-Marquardt). 
-      Pour CMC-20Z, le coefficient de détermination R² obtenu est de 0,974 sur l'ensemble des points 
-      expérimentaux (n = 18), validant la formulation proposée. Les paramètres identifiés sont cohérents 
-      avec les valeurs de la littérature pour des systèmes SiC/SiC comparables [5, 6].
-    </p>
-
-    <!-- Graphique 2 : modèle vs exp -->
-    <div class="chart-block">
-      <div class="chart-inner">
-        <div class="chart-title-row">
-          <span class="chart-title">Modèle Éq.1 vs données expérimentales — CMC-20Z (σ<sub>f</sub> résiduelle, MPa)</span>
-          <div class="chart-legend">
-            <div class="legend-item"><div class="legend-dot" style="background:#34d399"></div> Expérimental</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#60a5fa; border-radius:0"></div> Modèle (Éq.1)</div>
+      <figure class="fig rv" id="fig6">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">Ce qui se passe à la surface pendant l'exposition</span>
+            <button class="ctrl" type="button" id="oxPlay"><i class="ph-light ph-play" aria-hidden="true"></i><span>Lancer</span></button>
+          </div>
+          <div class="duo">
+            <div class="duo-card" style="--mc:var(--c10)">
+              <h4><span><i></i>CMC-10Z</span><span class="verdict" id="v10" style="--vc:var(--ok)">Intact</span></h4>
+              <svg viewBox="0 0 300 240" id="ox10" aria-hidden="true"></svg>
+              <div class="duo-stats"><div><small>Couche protectrice</small><strong id="l10">0 µm</strong></div><div><small>Matériau perdu</small><strong id="r10">0 µm</strong></div></div>
+            </div>
+            <div class="duo-card" style="--mc:var(--c20)">
+              <h4><span><i></i>CMC-20Z</span><span class="verdict" id="v20" style="--vc:var(--ok)">Intact</span></h4>
+              <svg viewBox="0 0 300 240" id="ox20" aria-hidden="true"></svg>
+              <div class="duo-stats"><div><small>Couche protectrice</small><strong id="l20">0 µm</strong></div><div><small>Matériau perdu</small><strong id="r20">0 µm</strong></div></div>
+            </div>
+          </div>
+          <div class="scrub">
+            <input type="range" id="oxRange" min="0" max="300" value="0" step="1" aria-label="Durée d'exposition à 2 100 °C">
+            <output id="oxT" for="oxRange">0 s</output>
           </div>
         </div>
-        <svg class="chart-svg" viewBox="0 0 800 240" xmlns="http://www.w3.org/2000/svg">
-          <!-- Grille -->
-          <line x1="70" y1="20" x2="70" y2="210" stroke="#1b2555" stroke-width="1"/>
-          <line x1="70" y1="210" x2="770" y2="210" stroke="#1b2555" stroke-width="1"/>
-          <line x1="70" y1="210" x2="770" y2="20" stroke="#0e1535" stroke-width="1" stroke-dasharray="3,3" opacity=".4"/>
-          <!-- Grille H -->
-          <line x1="70" y1="60"  x2="770" y2="60"  stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
-          <line x1="70" y1="110" x2="770" y2="110" stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
-          <line x1="70" y1="160" x2="770" y2="160" stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
-          <!-- Labels Y -->
-          <text x="60" y="64"  fill="#4a5280" font-size="11" text-anchor="end" font-family="DM Mono, monospace">360</text>
-          <text x="60" y="114" fill="#4a5280" font-size="11" text-anchor="end" font-family="DM Mono, monospace">290</text>
-          <text x="60" y="164" fill="#4a5280" font-size="11" text-anchor="end" font-family="DM Mono, monospace">230</text>
-          <!-- Label X -->
-          <text x="420" y="228" fill="#4a5280" font-size="11" text-anchor="middle" font-family="DM Mono, monospace">σ_f expérimental (MPa)</text>
-          <!-- Courbe modèle (ligne de régression parfaite avec légère déviation) -->
-          <polyline points="80,200 170,188 260,162 380,120 480,102 600,85 720,70" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6,3"/>
-          <!-- Points expérimentaux avec barre d'erreur -->
-          <!-- CMC-20Z series -->
-          <circle cx="80"  cy="198" r="5" fill="#34d399"/>  <line x1="80" y1="192" x2="80" y2="204" stroke="#34d399" stroke-width="1.5"/>
-          <circle cx="160" cy="182" r="5" fill="#34d399"/>  <line x1="160" y1="176" x2="160" y2="188" stroke="#34d399" stroke-width="1.5"/>
-          <circle cx="250" cy="158" r="5" fill="#34d399"/>  <line x1="250" y1="152" x2="250" y2="164" stroke="#34d399" stroke-width="1.5"/>
-          <circle cx="380" cy="116" r="5" fill="#34d399"/>  <line x1="380" y1="108" x2="380" y2="124" stroke="#34d399" stroke-width="1.5"/>
-          <circle cx="490" cy="99"  r="5" fill="#34d399"/>  <line x1="490" y1="91"  x2="490" y2="107" stroke="#34d399" stroke-width="1.5"/>
-          <circle cx="610" cy="82"  r="5" fill="#34d399"/>  <line x1="610" y1="74"  x2="610" y2="90"  stroke="#34d399" stroke-width="1.5"/>
-          <circle cx="720" cy="67"  r="5" fill="#34d399"/>  <line x1="720" y1="59"  x2="720" y2="75"  stroke="#34d399" stroke-width="1.5"/>
-          <!-- R² annotation -->
-          <text x="680" y="148" fill="#a78bfa" font-size="12" font-family="DM Mono, monospace">R² = 0.974</text>
-        </svg>
+        <figcaption><b>Figure 6</b>Évolution de la surface pendant 300 s à 2 100 °C, d'après les coupes observées après essai (même échelle pour les deux matériaux). Les points blancs représentent l'oxygène de l'air. Sur CMC-20Z, la couche d'oxyde (orange) arrête l'oxygène ; sur CMC-10Z, elle reste trop mince et la surface recule.</figcaption>
+      </figure>
+
+      <div class="note" style="--nc:#34d399">
+        <i class="ph-light ph-target" aria-hidden="true"></i>
+        <p><span class="nt">Le bon dosage</span>Plus de ZrB₂ donne une meilleure protection, mais rend la matrice plus dense et plus cassante. L'optimum se situe entre 20 et 25 % : c'est pourquoi <strong>CMC-20Z</strong> est retenu comme formulation de référence.</p>
       </div>
-      <div class="chart-caption">
-        <strong>Figure 4</strong>
-        Comparaison entre les valeurs expérimentales de résistance à la flexion (CMC-20Z, n = 18 points) 
-        et les prédictions du modèle phénoménologique (Éq. 1). La ligne pointillée bleue représente la 
-        prédiction du modèle ; les points verts les données expérimentales avec barres d'erreur ± 1σ. 
-        R² = 0,974 ; RMSE = 11,4 MPa.
+
+      <h3>Un modèle pour prévoir la résistance</h3>
+      <p>Pour dimensionner le bouclier par simulation, nous proposons une formule qui prédit la résistance restante à partir de la température et de l'état d'endommagement du matériau :</p>
+      <div class="eq" role="math" aria-label="sigma de T égale sigma zéro fois exponentielle de moins alpha fois T moins T zéro sur T f, fois un moins D m moins bêta D i">σ(T) = σ₀ · e<sup>−α(T − T₀)/T<sub>f</sub></sup> · (1 − D<sub>m</sub> − β·D<sub>i</sub>)</div>
+      <div class="eq-parts">
+        <div class="eq-part"><b>σ₀</b>Résistance du matériau neuf.</div>
+        <div class="eq-part"><b>e<sup>−α(…)</sup></b>Affaiblissement dû à la chaleur seule.</div>
+        <div class="eq-part"><b>1 − D<sub>m</sub> − β·D<sub>i</sub></b>Part du matériau encore saine : fissures de la matrice (D<sub>m</sub>) et de l'interphase (D<sub>i</sub>).</div>
       </div>
-    </div>
+      <p>Ajusté sur les 18 mesures de CMC-20Z (α = 1,24 ; β = 1,7), le modèle suit de près l'expérience : les points tombent presque tous sur la diagonale <button class="cite" type="button" data-ref="1">[1]</button>.</p>
+
+      <figure class="fig rv" id="fig7">
+        <div class="fig-stage">
+          <div class="fig-head"><span class="fig-name">Résistance prédite par le modèle ou mesurée (CMC-20Z)</span></div>
+          <div class="chart" id="parity"><div class="ctip" id="ptip"></div></div>
+        </div>
+        <figcaption><b>Figure 7</b>Chaque point compare une mesure à la prédiction du modèle ; un point sur la diagonale signifie une prédiction parfaite. R² = 0,976, erreur moyenne (RMSE) = 6,8 MPa sur 18 éprouvettes.</figcaption>
+      </figure>
+    </section>
 
     <!-- 5. CONCLUSION -->
-    <h2 class="section-heading green" id="s-conclusion">5. Conclusion</h2>
+    <section id="s-conclusion">
+      <h2><span class="n">05</span>Conclusion</h2>
+      <p>Ajouter 20 % de diborure de zirconium à un composite SiC/SiC permet de franchir la barrière des 2 000 °C : le matériau conserve plus de 85 % de sa résistance jusqu'à 2 250 °C pendant 7 minutes, grâce à une couche d'oxyde qui se forme d'elle-même et bloque l'oxygène. Un modèle simple reproduit ces résultats et servira à dimensionner le bouclier de RETOUR-I.</p>
 
-    <p class="body-text">
-      Cette étude démontre pour la première fois la tenue thermomécanique de panneaux CMC SiC/SiC-ZrB₂ 
-      en conditions représentatives de la rentrée atmosphérique à haute vitesse (T > 2 000 °C, durée > 300 s, 
-      flux > 6 MW·m⁻²) au sein de l'installation d'arc plasma VULCAIN-III de l'IFRAS. Les résultats 
-      établissent que :
-    </p>
-
-    <p class="body-text">
-      (i) La formulation CMC-20Z maintient une résistance résiduelle à la flexion supérieure à 85 % jusqu'à 
-      2 250 °C pendant 420 s, satisfaisant les exigences de qualification du programme RETOUR-I.
-    </p>
-
-    <p class="body-text">
-      (ii) Le mécanisme de protection par couche ZrO₂-SiO₂ est actif dès 1 900 °C et est directement lié 
-      à la fraction volumique de ZrB₂, avec un optimum identifié à 20–25 %vol.
-    </p>
-
-    <p class="body-text">
-      (iii) Le modèle d'endommagement multi-échelle proposé (Éq. 1), intégrant les variables 
-      D<sub>matrix</sub> et D<sub>interface</sub>, prédit les données expérimentales avec 
-      R² = 0,974 (CMC-20Z), validant son usage pour les simulations numériques du système TPS de RETOUR-I.
-    </p>
-
-    <div class="highlight-box green">
-      La Direction Scientifique de l'IFRAS a confirmé l'entrée en phase de qualification industrielle 
-      de la formulation CMC-20Z en partenariat avec Safran Ceramics (accord-cadre IFRAS-SC-2026-01). 
-      Les essais de certification CNES sont prévus au T3 2027.
-    </div>
-
-    <div class="art-divider"></div>
+      <ol class="next" aria-label="Prochaines étapes">
+        <li class="now" style="--nc:var(--ok)"><time>Mars 2026</time><strong>Formulation retenue</strong><span>CMC-20Z devient la référence du programme.</span></li>
+        <li><time>2027</time><strong>Qualification</strong><span>Panneaux grandeur réelle et cycles répétés de chauffe.</span></li>
+        <li style="--nc:var(--hot)"><time>2028</time><strong>Mission RETOUR-I</strong><span>Premier vol du bouclier réutilisable.</span></li>
+      </ol>
+    </section>
 
     <!-- RÉFÉRENCES -->
-    <div class="references-section" id="s-refs">
-      <div class="ref-title">Références bibliographiques</div>
-      <div class="ref-list">
-        <div class="ref-item">
-          Unal, R. et al. (2022). Thermal protection systems for hypersonic re-entry vehicles: A review. 
-          <em>Progress in Aerospace Sciences</em>, 134, 100856. 
-          <a href="#">doi:10.1016/j.paerosci.2022.100856</a>
-        </div>
-        <div class="ref-item">
-          Naslain, R. (2004). Design, preparation and properties of non-oxide CMCs for application in 
-          engines and nuclear reactors: an overview. <em>Composites Science and Technology</em>, 64(2), 155–170.
-        </div>
-        <div class="ref-item">
-          Bansal, N.P. & Lamon, J. (Eds.) (2014). <em>Ceramic Matrix Composites: Materials, Modeling and Technology</em>. 
-          Wiley-ACerS. ISBN 978-1-118-23116-6.
-        </div>
-        <div class="ref-item">
-          Jacobson, N.S. (1993). Corrosion of silicon-based ceramics in combustion environments. 
-          <em>Journal of the American Ceramic Society</em>, 76(1), 3–28.
-        </div>
-        <div class="ref-item">
-          Mazars, J. & Pijaudier-Cabot, G. (1989). Continuum damage theory — application to concrete. 
-          <em>Journal of Engineering Mechanics</em>, 115(2), 345–365.
-        </div>
-        <div class="ref-item">
-          Morvant, I., Benzara, K. & Dupré, A. (2023). Interface degradation kinetics in SiC/SiC composites 
-          under cyclic thermal loading. <em>Journal of the European Ceramic Society</em>, 43(8), 3581–3592. 
-          IFRAS-DSMR-2023-007.
-        </div>
+    <section id="s-refs">
+      <h2>Références</h2>
+      <ol class="refs">
+        <li id="ref-1">Morvant I., Benzara K., Dupré A. (2023). Cinétique de dégradation de l'interphase dans les composites SiC/SiC sous cyclage thermique. <em>Revue IFRAS des Matériaux Avancés</em>, 11(3), 58–71.</li>
+        <li id="ref-2">Benzara K. (2022). Mécanique de l'endommagement des céramiques tissées. <em>Cahiers techniques de l'IFRAS</em>, CT-2022-09.</li>
+        <li id="ref-3">Vandenberghe L., Okafor N. (2024). Mesure de température au-delà de 2 000 °C : étalonnage du banc HÉLIOS-3. <em>Rapport interne IFRAS-DSMR-2024-031</em>.</li>
+        <li id="ref-4">Lambert S., Marchand T., Morvant I. (2025). Oxydation des borures réfractaires sous plasma d'air. <em>Revue IFRAS des Matériaux Avancés</em>, 13(1), 12–29.</li>
+        <li id="ref-5">Département DSMR (2025). Exigences de protection thermique de la mission RETOUR-I. <em>Spécification IFRAS-RET-SPEC-004</em>.</li>
+      </ol>
+      <div class="decl">
+        <span><strong>Financement :</strong> programme interne IFRAS DSMR-2024-TPS.</span>
+        <span><strong>Données :</strong> les mesures de la campagne HÉLIOS-2026 sont disponibles sur demande auprès du DSMR.</span>
+        <span><strong>Contributions :</strong> I.M. conception et direction des essais ; K.B. modélisation et essais mécaniques ; L.V. mesures thermiques ; T.M. fabrication et tomographie.</span>
+        <span><strong>Conflits d'intérêts :</strong> aucun.</span>
+      </div>
+    </section>
+
+  </article>
+
+  <!-- Colonne de droite -->
+  <aside class="rail" aria-label="Outils de l'article">
+    <div class="rail-card">
+      <p class="rail-title">Citer cet article</p>
+      <p class="cite-text" id="citeText">Morvant I., Benzara K., Vandenberghe L., Marchand T. (2026). Un bouclier céramique qui résiste à 2 250 °C pour la rentrée atmosphérique. <em>Publications scientifiques de l'IFRAS</em>, IFRAS-DSMR-2026-014.</p>
+      <div class="rail-actions">
+        <button class="rbtn" type="button" id="copyCite"><i class="ph-light ph-quotes" aria-hidden="true"></i><span>Copier la citation</span></button>
+        <button class="rbtn" type="button" id="copyLink"><i class="ph-light ph-link" aria-hidden="true"></i><span>Copier le lien</span></button>
+        <button class="rbtn" type="button" id="printBtn"><i class="ph-light ph-file-pdf" aria-hidden="true"></i><span>Imprimer ou PDF</span></button>
       </div>
     </div>
-
-    <!-- NOTE DE BAS DE PAGE -->
-    <div class="article-footnote">
-      <strong>Déclaration de conflits d'intérêts :</strong> Les auteurs déclarent n'avoir aucun conflit d'intérêts. — 
-      <strong>Financement :</strong> Cette étude a été financée par l'IFRAS (programme interne DSMR-2024-TPS) 
-      et partiellement par l'Agence Nationale de la Recherche (ANR-24-ASTR-0081 « CERAMHYP »). — 
-      <strong>Données :</strong> Les données brutes des essais VULCAIN-2026 sont accessibles sur le dépôt 
-      institutionnel IFRAS DataHub (doi:10.1016/ifras.data.2026.014). — 
-      <strong>Contributions :</strong> I.M. : conception, direction expérimentale ; K.B. : modélisation, 
-      caractérisation mécanique ; L.V. : mesures thermiques, pyrométrie ; T.M. : élaboration, 
-      tomographie RX.
+    <div class="rail-card rail-figs">
+      <p class="rail-title">Figures</p>
+      <ul class="fig-list">
+        <li><a href="#fig1"><i class="ph-light ph-path" aria-hidden="true"></i>Trajectoire de rentrée</a></li>
+        <li><a href="#fig2"><i class="ph-light ph-microscope" aria-hidden="true"></i>Structure du composite</a></li>
+        <li><a href="#fig3"><i class="ph-light ph-flame" aria-hidden="true"></i>Banc à plasma</a></li>
+        <li><a href="#fig4"><i class="ph-light ph-chart-line" aria-hidden="true"></i>Résistance conservée</a></li>
+        <li><a href="#fig5"><i class="ph-light ph-thermometer-hot" aria-hidden="true"></i>Carte thermique</a></li>
+        <li><a href="#fig6"><i class="ph-light ph-shield-check" aria-hidden="true"></i>Couche protectrice</a></li>
+        <li><a href="#fig7"><i class="ph-light ph-chart-scatter" aria-hidden="true"></i>Modèle et mesures</a></li>
+      </ul>
     </div>
+    <div class="rail-card">
+      <p class="rail-title">Programme lié</p>
+      <a class="prog-link" href="../programmes-futurs.html">
+        <span class="pi"><i class="ph-light ph-rocket-launch" aria-hidden="true"></i></span>
+        <span><strong>RETOUR-I</strong><small>Capsule de retour réutilisable · 2028</small></span>
+      </a>
+    </div>
+  </aside>
+</div>
 
-  </div><!-- /article-body -->
+<!-- Articles liés -->
+<section class="container related" aria-labelledby="relTitle">
+  <h2 class="section-title" id="relTitle">À lire aussi</h2>
+  <div class="related-grid">
+    <a class="rel" href="publications_scientifiques_02.html" style="--c:#f97316">
+      <div class="rel-img"><img src="../Assets/accueil/alaune02.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Propulsion</small><strong>NK-125 : un propulseur ionique à grilles tri-étages validé à haute puissance</strong></div>
+    </a>
+    <a class="rel" href="publications_scientifiques_03.html" style="--c:#34d399">
+      <div class="rel-img"><img src="../Assets/publication/mars01.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Astrobiologie</small><strong>Des microbes qui se multiplient en conditions martiennes simulées</strong></div>
+    </a>
+    <a class="rel" href="publications_scientifiques_04.html" style="--c:#c084fc">
+      <div class="rel-img"><img src="../Assets/publication/quantique01.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Physique quantique</small><strong>L'intrication quantique préservée sur une liaison Terre–satellite simulée</strong></div>
+    </a>
+  </div>
+</section>
 
-</div><!-- /pub-wrapper -->
+</main>
 
-<footer style="background:#020617;border-top:1px solid #1b2555;padding:32px 30px;text-align:center;font-size:12px;color:#6b7280;">
-  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale · Publications soumises à validation institutionnelle
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© IFRAS, Institut Français de Recherche Aéronautique et Spatiale</span>
+    <span>Publications soumises à validation institutionnelle</span>
+  </div>
 </footer>
 
+<div class="toast" id="toast" role="status"><i class="ph-light ph-check-circle" aria-hidden="true"></i><span></span></div>
+<div class="tip" id="tip" role="tooltip"></div>
 <script>
-// Barre de progression lecture
-window.addEventListener('scroll', () => {
-  const doc = document.documentElement;
-  const scrolled = doc.scrollTop;
-  const total = doc.scrollHeight - doc.clientHeight;
-  document.getElementById('progressBar').style.width = (scrolled / total * 100) + '%';
-});
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const $ = (id) => document.getElementById(id);
+  const NS = 'http://www.w3.org/2000/svg';
+  const fmt = (n, d = 0) => n.toLocaleString('fr-FR', { minimumFractionDigits: d, maximumFractionDigits: d });
+  const svgEl = (tag, attrs = {}, parent) => {
+    const el = document.createElementNS(NS, tag);
+    for (const k in attrs) el.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(el);
+    return el;
+  };
+  /* lance une fonction quand l'élément devient visible (une seule fois) */
+  const onceVisible = (el, fn, margin = '0px 0px -15% 0px') => {
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { io.disconnect(); fn(); } }, { rootMargin: margin });
+    io.observe(el);
+  };
+  /* boucle d'animation suspendue hors écran et onglet masqué */
+  const loopWhileVisible = (el, frame) => {
+    let raf = 0, visible = false;
+    const tick = (t) => { frame(t); raf = requestAnimationFrame(tick); };
+    const sync = () => { cancelAnimationFrame(raf); if (visible && !document.hidden) raf = requestAnimationFrame(tick); };
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; sync(); }).observe(el);
+    document.addEventListener('visibilitychange', sync);
+  };
 
-// TOC sidebar — activation au scroll
-const sections = ['s-abstract','s-intro','s-materials','s-results','s-discussion','s-conclusion','s-refs'];
-const dots = document.querySelectorAll('.toc-dot');
+  /* ---------- Menu mobile ---------- */
+  const toggle = document.querySelector('.menu-toggle');
+  const panel = $('mobile-panel');
+  const setMenu = (open) => {
+    panel.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    toggle.querySelector('i').className = open ? 'ph-light ph-x' : 'ph-light ph-list';
+  };
+  toggle.addEventListener('click', () => setMenu(!panel.classList.contains('is-open')));
+  document.addEventListener('click', (e) => { if (panel.classList.contains('is-open') && !panel.contains(e.target) && !toggle.contains(e.target)) setMenu(false); });
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting){
-      const idx = sections.indexOf(entry.target.id);
-      if(idx >= 0){
-        dots.forEach(d => d.classList.remove('active'));
-        dots[idx] && dots[idx].classList.add('active');
+  /* ---------- Apparition au défilement ---------- */
+  const rvIO = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (e.isIntersecting) { e.target.classList.add('in'); rvIO.unobserve(e.target); }
+  }), { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.rv').forEach((el) => rvIO.observe(el));
+
+  /* ---------- Toast ---------- */
+  let toastT;
+  const toast = (msg) => { const t = $('toast'); t.querySelector('span').textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2600); };
+
+  /* ---------- Progression de lecture + sommaire ---------- */
+  const article = $('article');
+  const tocLinks = [...document.querySelectorAll('#toc a')];
+  const sections = tocLinks.map((a) => document.querySelector(a.getAttribute('href')));
+  const ind = document.querySelector('.toc-ind');
+  const WORDS = article.innerText.split(/\s+/).length;
+  let ticking = false;
+  function onScroll() {
+    ticking = false;
+    const r = article.getBoundingClientRect();
+    const total = r.height - window.innerHeight * 0.6;
+    const p = Math.min(1, Math.max(0, -r.top / total));
+    $('progress').style.transform = `scaleX(${p})`;
+    const left = Math.max(0, Math.ceil((WORDS / 220) * (1 - p)));
+    $('timeLeft').textContent = p >= 0.98 ? 'Lecture terminée' : `${left || 1} min restante${left > 1 ? 's' : ''}`;
+    let cur = 0;
+    sections.forEach((s, i) => { if (s && s.getBoundingClientRect().top < window.innerHeight * 0.35) cur = i; });
+    tocLinks.forEach((a, i) => a.classList.toggle('on', i === cur));
+    const a = tocLinks[cur];
+    if (a && ind) { ind.style.transform = `translateY(${a.parentElement.offsetTop}px)`; ind.style.height = a.offsetHeight + 'px'; }
+  }
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  /* ---------- Chiffres clés animés ---------- */
+  document.querySelectorAll('[data-count]').forEach((el) => {
+    const target = Number(el.dataset.count), suffix = el.dataset.suffix || '';
+    const paint = (v) => { el.innerHTML = `${fmt(v)}<small>${suffix}</small>`; };
+    if (reduceMotion) return;
+    paint(0);
+    onceVisible(el, () => {
+      const t0 = performance.now(), dur = 1100;
+      const step = (t) => { const k = Math.min(1, (t - t0) / dur); paint(Math.round(target * (1 - Math.pow(1 - k, 4)))); if (k < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    });
+  });
+
+  /* ---------- Infobulles : termes et références ---------- */
+  const TERMS = {
+    plasma: ['Plasma', "Gaz si chaud que ses atomes perdent des électrons. Il devient lumineux et conduit l'électricité : c'est la lueur orange autour d'une capsule en rentrée."],
+    cmc: ['Composite à matrice céramique', "Des fibres céramiques noyées dans une céramique, comme le béton armé avec ses barres d'acier. Les fibres empêchent une fissure de tout casser d'un coup."],
+    recession: ['Récession', "Recul progressif de la surface du matériau, rongée par l'oxygène à très haute température. Elle se mesure en micromètres perdus."],
+    zrb2: ['Diborure de zirconium (ZrB₂)', "Céramique ultra-réfractaire qui fond vers 3 250 °C. En s'oxydant, elle forme de l'oxyde de zirconium, très stable à la chaleur."],
+    interphase: ['Interphase', "Gaine très fine (ici 0,4 µm) entre chaque fibre et la matrice. Elle dévie les fissures pour qu'elles contournent les fibres au lieu de les couper."],
+    pyrometre: ['Pyromètre', "Thermomètre sans contact : il déduit la température de la lumière émise par la surface chaude. Utiliser deux longueurs d'onde le rend plus précis."],
+    flexion: ['Essai de flexion', "On appuie au centre d'une barrette posée sur deux appuis jusqu'à la casser. La force au moment de la rupture donne la résistance, en mégapascals (MPa)."]
+  };
+  const REFS = {};
+  document.querySelectorAll('.refs li').forEach((li, i) => { REFS[i + 1] = li.textContent.trim(); });
+  const tip = $('tip');
+  let tipOpenAt = 0, hideT = null, tipOwner = null;
+  function showTip(el) {
+    clearTimeout(hideT);
+    const term = el.dataset.term, ref = el.dataset.ref;
+    tip.innerHTML = term ? `<b>${TERMS[term][0]}</b>${TERMS[term][1]}` : `<b>Référence [${ref}]</b>${REFS[ref] || ''}`;
+    /* après une première infobulle, les suivantes s'ouvrent sans animation */
+    tip.classList.toggle('instant', Date.now() - tipOpenAt < 400 && tip.classList.contains('show'));
+    const r = el.getBoundingClientRect();
+    tip.style.left = '0px'; tip.style.top = '0px';
+    tip.classList.add('show');
+    const w = tip.offsetWidth, h = tip.offsetHeight;
+    let x = r.left + r.width / 2 - w / 2 + window.scrollX;
+    x = Math.max(16 + window.scrollX, Math.min(x, window.scrollX + document.documentElement.clientWidth - w - 16));
+    let y = r.top + window.scrollY - h - 10, below = false;
+    if (r.top - h - 10 < 130) { y = r.bottom + window.scrollY + 10; below = true; }
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+    tip.style.transformOrigin = `${r.left + r.width / 2 + window.scrollX - x}px ${below ? '0%' : '100%'}`;
+    tipOpenAt = Date.now(); tipOwner = el;
+    el.setAttribute('aria-describedby', 'tip');
+  }
+  function hideTip(delay = 80) {
+    clearTimeout(hideT);
+    hideT = setTimeout(() => { tip.classList.remove('show'); if (tipOwner) tipOwner.removeAttribute('aria-describedby'); tipOwner = null; tipOpenAt = Date.now(); }, delay);
+  }
+  document.querySelectorAll('.term, .cite').forEach((el) => {
+    if (canHover) { el.addEventListener('mouseenter', () => showTip(el)); el.addEventListener('mouseleave', () => hideTip()); }
+    el.addEventListener('focus', () => showTip(el));
+    el.addEventListener('blur', () => hideTip(0));
+    el.addEventListener('click', () => {
+      if (el.classList.contains('cite')) {
+        const li = $('ref-' + el.dataset.ref);
+        hideTip(0);
+        li.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+        li.classList.add('flash'); setTimeout(() => li.classList.remove('flash'), 60);
+      } else if (!canHover) {
+        tipOwner === el && tip.classList.contains('show') ? hideTip(0) : showTip(el);
       }
+    });
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { hideTip(0); setMenu(false); } });
+  window.addEventListener('scroll', () => { if (!canHover && tip.classList.contains('show')) hideTip(0); }, { passive: true });
+
+  /* ---------- En-tête : flux d'air autour de la capsule ---------- */
+  (function heroFlow() {
+    const cv = $('flow'); if (!cv) return;
+    const ctx = cv.getContext('2d');
+    let w, h, parts = [];
+    const size = () => {
+      const r = cv.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 2);
+      w = r.width; h = r.height; cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      parts = Array.from({ length: 70 }, () => spawn(Math.random() * w));
+    };
+    const spawn = (x) => ({ x, y0: Math.random() * h, v: 2 + Math.random() * 3.5, len: 12 + Math.random() * 30, a: .15 + Math.random() * .45 });
+    const frame = () => {
+      ctx.clearRect(0, 0, w, h);
+      const cy = h * 0.5, sx = w * 0.3;
+      for (const p of parts) {
+        p.x += p.v;
+        if (p.x > w + 40) Object.assign(p, spawn(-40));
+        /* déviation au passage de l'onde de choc */
+        const dy = p.y0 - cy, near = Math.exp(-Math.abs(dy) / (h * 0.28));
+        const push = p.x > sx ? Math.min(1, (p.x - sx) / (w * 0.35)) * near * h * 0.42 : 0;
+        const y = p.y0 + Math.sign(dy || 1) * push;
+        const heat = p.x > sx * 0.8 ? near : 0;
+        ctx.strokeStyle = heat > .3 ? `rgba(253,186,116,${p.a * heat})` : `rgba(170,179,214,${p.a * .5})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(p.x - p.len, y); ctx.lineTo(p.x, y); ctx.stroke();
+      }
+    };
+    size(); new ResizeObserver(size).observe(cv);
+    if (reduceMotion) { frame(); return; }
+    loopWhileVisible(cv, frame);
+  })();
+
+  /* ---------- Figure 1 : trajectoire ---------- */
+  (function trajectory() {
+    const path = $('trajPath'), done = $('trajDone'), range = $('trajRange'), btn = $('trajPlay');
+    const L = path.getTotalLength();
+    done.style.strokeDasharray = `${L} ${L}`;
+    const model = (t) => {
+      const k = t / 420;
+      return {
+        alt: 120 - 110 * Math.pow(k, 0.85),
+        spd: 7.8 * Math.exp(-Math.pow(t / 200, 2.4)) + 0.15,
+        tmp: 300 + 1750 * Math.exp(-Math.pow((t - 190) / 85, 2))
+      };
+    };
+    const render = (t) => {
+      const m = model(t), pt = path.getPointAtLength(L * (t / 420));
+      $('capDot').setAttribute('cx', pt.x); $('capDot').setAttribute('cy', pt.y);
+      const halo = $('capHalo'), heat = (m.tmp - 300) / 1750;
+      halo.setAttribute('cx', pt.x); halo.setAttribute('cy', pt.y);
+      halo.setAttribute('r', 6 + heat * 26); halo.setAttribute('opacity', 0.25 + heat * 0.75);
+      done.style.strokeDashoffset = L * (1 - t / 420);
+      $('roAlt').textContent = `${fmt(m.alt)} km`;
+      $('roSpd').textContent = `${fmt(m.spd, 1)} km/s`;
+      $('roTmp').textContent = `${fmt(Math.round(m.tmp / 10) * 10)} °C`;
+      $('roTempBox').style.setProperty('--rc', m.tmp > 1500 ? '#fdba74' : m.tmp > 900 ? '#fde68a' : '#f5f7ff');
+      $('trajT').textContent = `${Math.round(t)} s`;
+      range.value = t;
+    };
+    let raf = 0, playing = false, t = 0, last = 0;
+    const setBtn = (p) => { btn.querySelector('i').className = p ? 'ph-light ph-pause' : 'ph-light ph-play'; btn.querySelector('span').textContent = p ? 'Pause' : (t >= 420 ? 'Rejouer' : 'Lancer'); };
+    const step = (now) => {
+      t = Math.min(420, t + (now - last) / 1000 * 60); last = now;   /* 7 s pour toute la rentrée */
+      render(t);
+      if (t < 420 && playing) raf = requestAnimationFrame(step); else { playing = false; setBtn(false); }
+    };
+    const play = () => { if (t >= 420) t = 0; playing = true; last = performance.now(); setBtn(true); raf = requestAnimationFrame(step); };
+    const pause = () => { playing = false; cancelAnimationFrame(raf); setBtn(false); };
+    btn.addEventListener('click', () => playing ? pause() : play());
+    range.addEventListener('input', () => { pause(); t = Number(range.value); render(t); });
+    render(0);
+    if (!reduceMotion) onceVisible($('fig1'), play, '0px 0px -30% 0px');
+  })();
+
+  /* ---------- Figure 2 : constituants ---------- */
+  (function micro() {
+    const svg = document.querySelector('.micro'); if (!svg) return;
+    const DESC = {
+      fibre: "<b>Fibres de carbure de silicium.</b> Elles portent l'essentiel des efforts, comme l'armature d'un béton armé.",
+      interphase: "<b>Interphase de nitrure de bore.</b> Fine gaine autour de chaque fibre qui dévie les fissures.",
+      matrice: "<b>Matrice de carbure de silicium.</b> Elle lie les fibres entre elles et transmet les efforts.",
+      zrb2: "<b>Grains de diborure de zirconium.</b> Ils fabriquent la couche protectrice en s'oxydant à haute température.",
+      pore: "<b>Pores.</b> Petits vides laissés par la fabrication : 3,2 % du volume seulement."
+    };
+    const btns = [...document.querySelectorAll('.part')];
+    let pinned = null;
+    const focus = (name) => {
+      svg.classList.toggle('focus', !!name);
+      svg.querySelectorAll('[data-part]').forEach((g) => g.classList.toggle('lit', g.dataset.part === name));
+      btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.part === name)));
+      $('partDesc').innerHTML = name ? DESC[name] : 'Survolez ou touchez un constituant pour le mettre en évidence.';
+    };
+    btns.forEach((b) => {
+      if (canHover) { b.addEventListener('mouseenter', () => focus(b.dataset.part)); b.addEventListener('mouseleave', () => focus(pinned)); }
+      b.addEventListener('click', () => { pinned = pinned === b.dataset.part ? null : b.dataset.part; focus(pinned); });
+    });
+  })();
+
+  /* ---------- Figure 4 : résistance vs température ---------- */
+  const SERIES = [
+    { name: 'CMC-10Z', color: '#3b82f6', v: [100, 97, 91, 64.2, 52, 44] },
+    { name: 'CMC-20Z', color: '#059669', v: [100, 99, 96, 89.4, 85.4, 73] },
+    { name: 'CMC-30Z', color: '#ea580c', v: [100, 99.5, 98, 93, 90, 86.3] }
+  ];
+  const TEMPS = [1600, 1800, 2000, 2100, 2250, 2400];
+  (function strengthChart() {
+    const box = $('chart'), tipEl = $('ctip');
+    /* largeur réelle en unités SVG : le texte garde sa taille sur mobile */
+    const W = Math.round(Math.max(330, Math.min(680, box.clientWidth))), H = W < 520 ? 290 : 320, m = { l: 48, r: 44, t: 16, b: 40 };
+    const x = (T) => m.l + (T - 1600) / 800 * (W - m.l - m.r);
+    const y = (v) => m.t + (100 - v) / 60 * (H - m.t - m.b);
+    const svg = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Courbes de résistance conservée pour les trois formulations entre 1 600 et 2 400 °C' });
+    box.prepend(svg);
+    /* bande de la température de mission */
+    svgEl('rect', { x: x(2030), y: m.t, width: x(2070) - x(2030), height: H - m.t - m.b, fill: 'rgba(249,115,22,.10)' }, svg);
+    svgEl('text', { x: x(2050), y: H - m.b - 8, 'text-anchor': 'middle', fill: '#fdba74', 'font-size': 11.5 }, svg).textContent = 'Mission';
+    /* grille */
+    [40, 55, 70, 85, 100].forEach((v) => {
+      svgEl('line', { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: '#13204d' }, svg);
+      svgEl('text', { x: m.l - 8, y: y(v) + 4, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 12, class: 'mono' }, svg).textContent = v + ' %';
+    });
+    [1600, 1800, 2000, 2200, 2400].forEach((T) => { svgEl('text', { x: x(T), y: H - m.b + 22, 'text-anchor': 'middle', fill: '#8891b8', 'font-size': 12, class: 'mono' }, svg).textContent = fmt(T); });
+    svgEl('text', { x: W - m.r, y: H - 4, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 12 }, svg).textContent = "Température d'exposition (°C)";
+    /* seuil */
+    svgEl('line', { x1: m.l, x2: W - m.r, y1: y(85), y2: y(85), stroke: '#aab3d6', 'stroke-dasharray': '6 5', 'stroke-width': 1.2 }, svg);
+    svgEl('text', { x: m.l + 6, y: y(85) - 6, fill: '#aab3d6', 'font-size': 11.5 }, svg).textContent = 'Seuil requis : 85 %';
+    /* séries */
+    const groups = SERIES.map((s) => {
+      const g = svgEl('g', { class: 'series' }, svg);
+      const d = s.v.map((v, i) => `${i ? 'L' : 'M'}${x(TEMPS[i]).toFixed(1)} ${y(v).toFixed(1)}`).join(' ');
+      const p = svgEl('path', { d, fill: 'none', stroke: s.color, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', class: 'draw' }, g);
+      p.style.setProperty('--len', Math.ceil(p.getTotalLength()));
+      s.v.forEach((v, i) => svgEl('circle', { cx: x(TEMPS[i]), cy: y(v), r: 4.5, fill: s.color, stroke: '#070f2b', 'stroke-width': 2, class: 'dot' }, g));
+      const last = s.v[s.v.length - 1];
+      svgEl('text', { x: W - m.r + 10, y: y(last) + 4, fill: '#e6e6e6', 'font-size': 12, class: 'dot' }, g).textContent = s.name.replace('CMC-', '');
+      return g;
+    });
+    /* réticule + zone de survol */
+    const xh = svgEl('line', { y1: m.t, y2: H - m.b, stroke: '#aab3d6', 'stroke-width': 1, class: 'xhair' }, svg);
+    const hit = svgEl('rect', { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, class: 'hit' }, svg);
+    const move = (clientX) => {
+      const r = svg.getBoundingClientRect(), px = (clientX - r.left) / r.width * W;
+      let i = 0; TEMPS.forEach((T, k) => { if (Math.abs(x(T) - px) < Math.abs(x(TEMPS[i]) - px)) i = k; });
+      xh.setAttribute('x1', x(TEMPS[i])); xh.setAttribute('x2', x(TEMPS[i])); xh.classList.add('show');
+      tipEl.innerHTML = `<b>${fmt(TEMPS[i])} °C</b>` + SERIES.map((s, k) => groups[k].classList.contains('off') ? '' :
+        `<div><span style="--lc:${s.color}"><i></i>${s.name}</span><em>${fmt(s.v[i], 1)} %</em></div>`).join('');
+      tipEl.classList.add('show');
+      const bx = box.getBoundingClientRect(), sx = x(TEMPS[i]) / W * r.width + (r.left - bx.left);
+      const left = sx + 14 + tipEl.offsetWidth > bx.width ? sx - 14 - tipEl.offsetWidth : sx + 14;
+      tipEl.style.left = left + 'px'; tipEl.style.top = '20px';
+    };
+    const leave = () => { xh.classList.remove('show'); tipEl.classList.remove('show'); };
+    hit.addEventListener('pointermove', (e) => move(e.clientX));
+    hit.addEventListener('pointerdown', (e) => move(e.clientX));
+    hit.addEventListener('pointerleave', leave);
+    document.querySelectorAll('.lg').forEach((b) => b.addEventListener('click', () => {
+      const on = b.getAttribute('aria-pressed') !== 'true';
+      b.setAttribute('aria-pressed', String(on));
+      groups[Number(b.dataset.s)].classList.toggle('off', !on);
+    }));
+    if (reduceMotion) box.classList.add('drawn'); else onceVisible(box, () => box.classList.add('drawn'), '0px 0px -25% 0px');
+    /* tableau de données */
+    $('dataTable').innerHTML = `<table><thead><tr><th>Température</th>${SERIES.map((s) => `<th class="num">${s.name}</th>`).join('')}</tr></thead><tbody>` +
+      TEMPS.map((T, i) => `<tr><td class="num" style="text-align:left">${fmt(T)} °C</td>${SERIES.map((s) => `<td class="num">${fmt(s.v[i], 1)} %</td>`).join('')}</tr>`).join('') + '</tbody></table>';
+    $('dataBtn').addEventListener('click', function () {
+      const open = $('dataTable').hidden;
+      $('dataTable').hidden = !open;
+      this.setAttribute('aria-expanded', String(open));
+      this.querySelector('span').textContent = open ? 'Masquer les données' : 'Voir les données';
+    });
+  })();
+
+  /* ---------- Figure 5 : carte thermique ---------- */
+  (function heatmap() {
+    const cv = $('heat'), ctx = cv.getContext('2d'), N = cv.width;
+    const Tmin = 2160, Tmax = 2260;
+    const temp = (u, v) => {   /* u, v dans [-1, 1] */
+      const r2 = u * u + v * v;
+      const edge = 26 * Math.exp(-(1 - Math.abs(v)) / 0.07) + 14 * Math.exp(-(1 - Math.abs(u)) / 0.06);
+      const ripple = 3 * Math.sin(u * 7 + 1) * Math.cos(v * 5);
+      return 2252 - 46 * Math.pow(r2, 1.1) + edge * 0.35 + ripple - 5 * u;
+    };
+    const STOPS = [[0, [42, 12, 4]], [0.3, [124, 45, 18]], [0.55, [234, 88, 12]], [0.8, [251, 191, 36]], [1, [254, 243, 199]]];
+    const color = (k) => {
+      k = Math.max(0, Math.min(1, k));
+      for (let i = 1; i < STOPS.length; i++) if (k <= STOPS[i][0]) {
+        const [a, ca] = STOPS[i - 1], [b, cb] = STOPS[i], f = (k - a) / (b - a);
+        return ca.map((c, j) => Math.round(c + (cb[j] - c) * f));
+      }
+      return STOPS[STOPS.length - 1][1];
+    };
+    const img = ctx.createImageData(N, N);
+    for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) {
+      const c = color((temp(i / (N - 1) * 2 - 1, j / (N - 1) * 2 - 1) - Tmin) / (Tmax - Tmin));
+      const o = (j * N + i) * 4; img.data[o] = c[0]; img.data[o + 1] = c[1]; img.data[o + 2] = c[2]; img.data[o + 3] = 255;
     }
-  });
-}, { rootMargin: '-20% 0px -70% 0px' });
+    ctx.putImageData(img, 0, 0);
+    const sb = $('scaleBar'), sctx = sb.getContext('2d');
+    for (let j = 0; j < sb.height; j++) { const c = color(1 - j / (sb.height - 1)); sctx.fillStyle = `rgb(${c})`; sctx.fillRect(0, j, sb.width, 1); }
+    const plate = $('plate'), probe = $('probe'), read = $('probeRead');
+    const at = (fx, fy) => {
+      const u = fx * 2 - 1, v = fy * 2 - 1;
+      probe.style.left = fx * 100 + '%'; probe.style.top = fy * 100 + '%'; probe.classList.add('show');
+      read.textContent = `${fmt(Math.round(temp(u, v)))} °C · x ${fmt(Math.round(u * 40))} mm, y ${fmt(Math.round(-v * 40))} mm`;
+    };
+    plate.addEventListener('pointermove', (e) => { const r = plate.getBoundingClientRect(); at((e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height); });
+    plate.addEventListener('pointerleave', () => { probe.classList.remove('show'); read.textContent = 'Survolez le panneau'; });
+    let kx = 0.5, ky = 0.5;
+    plate.addEventListener('keydown', (e) => {
+      const d = { ArrowLeft: [-.05, 0], ArrowRight: [.05, 0], ArrowUp: [0, -.05], ArrowDown: [0, .05] }[e.key];
+      if (!d) return; e.preventDefault();
+      kx = Math.max(0, Math.min(1, kx + d[0])); ky = Math.max(0, Math.min(1, ky + d[1])); at(kx, ky);
+    });
+    plate.addEventListener('focus', () => at(kx, ky));
+  })();
 
-sections.forEach(id => {
-  const el = document.getElementById(id);
-  if(el) observer.observe(el);
-});
+  /* ---------- Figure 6 : couche protectrice ---------- */
+  (function oxide() {
+    const PX = 0.6;             /* px par micromètre, même échelle des deux côtés */
+    const SURF = 96;            /* altitude initiale de la surface */
+    const LAWS = {
+      10: { layer: (t) => 6 * Math.sqrt(t / 300), rec: (t) => 110 * Math.pow(t / 300, 1.3) },
+      20: { layer: (t) => 42 * Math.sqrt(t / 300), rec: (t) => 2 * (t / 300) }
+    };
+    const panes = {};
+    [10, 20].forEach((k) => {
+      const svg = $('ox' + k);
+      svgEl('rect', { x: 0, y: 0, width: 300, height: 240, fill: '#0a1436' }, svg);
+      svgEl('text', { x: 12, y: 20, fill: '#8891b8', 'font-size': 11.5 }, svg).textContent = 'Air chaud (plasma)';
+      const mat = svgEl('g', {}, svg);
+      const body = svgEl('rect', { x: 0, y: SURF, width: 300, height: 240 - SURF, fill: '#2a3358' }, mat);
+      /* fibres vues en coupe */
+      for (let r = 0; r < 4; r++) for (let c = 0; c < 9; c++) svgEl('circle', { cx: 18 + c * 34 + (r % 2) * 17, cy: SURF + 24 + r * 34, r: 9, fill: '#6d7bb3', stroke: '#60a5fa', 'stroke-width': 1.5, opacity: .9 }, mat);
+      const eroded = svgEl('rect', { x: 0, y: SURF, width: 300, height: 0, fill: '#0a1436' }, svg);
+      const layer = svgEl('rect', { x: 0, y: SURF, width: 300, height: 0, fill: 'rgba(249,115,22,.85)' }, svg);
+      const surfLine = svgEl('line', { x1: 0, x2: 300, y1: SURF, y2: SURF, stroke: '#fde68a', 'stroke-dasharray': '4 4', opacity: .7 }, svg);
+      svgEl('text', { x: 296, y: SURF - 6, 'text-anchor': 'end', fill: '#fde68a', 'font-size': 10.5, opacity: .8 }, svg).textContent = 'surface initiale';
+      const o2 = Array.from({ length: 14 }, (_, i) => ({ x: 12 + i * 21, y: Math.random() * SURF, v: .6 + Math.random() * .9, el: svgEl('g', {}, svg) }));
+      o2.forEach((p) => { svgEl('circle', { cx: -3, cy: 0, r: 3, fill: '#fff' }, p.el); svgEl('circle', { cx: 3, cy: 0, r: 3, fill: '#fff' }, p.el); });
+      panes[k] = { layer, eroded, o2, stop: SURF };
+    });
+    const render = (t) => {
+      [10, 20].forEach((k) => {
+        const L = LAWS[k].layer(t), R = LAWS[k].rec(t), p = panes[k];
+        const top = SURF + R * PX;              /* la surface recule */
+        p.eroded.setAttribute('height', R * PX);
+        p.layer.setAttribute('y', top - L * PX); p.layer.setAttribute('height', L * PX);
+        p.stop = top - L * PX;
+        $('l' + k).textContent = `${fmt(L)} µm`;
+        $('r' + k).textContent = `${fmt(R)} µm`;
+        const v = $('v' + k), bad = R > 20;
+        v.textContent = t === 0 ? 'Intact' : bad ? 'Érodé' : 'Protégé';
+        v.style.setProperty('--vc', bad ? '#f87171' : '#34d399');
+      });
+      $('oxT').textContent = `${Math.round(t)} s`;
+      $('oxRange').value = t;
+    };
+    /* molécules d'oxygène : tombent vers la surface ; arrêtées par la couche sur CMC-20Z */
+    const moveO2 = () => {
+      [10, 20].forEach((k) => {
+        const p = panes[k], blocked = k === 20 && Number($('oxRange').value) > 30;
+        p.o2.forEach((m) => {
+          m.y += m.v;
+          const limit = blocked ? p.stop - 5 : p.stop + 10;
+          if (m.y > limit) { m.y = -6 - Math.random() * 30; }
+          m.el.setAttribute('transform', `translate(${m.x} ${m.y})`);
+          m.el.setAttribute('opacity', m.y > p.stop - 14 && blocked ? .35 : .9);
+        });
+      });
+    };
+    const range = $('oxRange'), btn = $('oxPlay');
+    let t = 0, playing = false, last = 0;
+    const setBtn = () => { btn.querySelector('i').className = playing ? 'ph-light ph-pause' : 'ph-light ph-play'; btn.querySelector('span').textContent = playing ? 'Pause' : (t >= 300 ? 'Rejouer' : 'Lancer'); };
+    range.addEventListener('input', () => { playing = false; setBtn(); t = Number(range.value); render(t); });
+    btn.addEventListener('click', () => { if (playing) playing = false; else { if (t >= 300) t = 0; playing = true; last = performance.now(); } setBtn(); });
+    render(0);
+    if (reduceMotion) { moveO2(); return; }
+    loopWhileVisible($('fig6'), (now) => {
+      if (playing) { t = Math.min(300, t + (now - last) / 1000 * 50); last = now; render(t); if (t >= 300) { playing = false; setBtn(); } }
+      moveO2();
+    });
+    onceVisible($('fig6'), () => { playing = true; last = performance.now(); setBtn(); }, '0px 0px -30% 0px');
+  })();
 
-// Click TOC dot → scroll
-dots.forEach((dot, i) => {
-  dot.addEventListener('click', () => {
-    const el = document.getElementById(sections[i]);
-    if(el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-});
+  /* ---------- Figure 7 : modèle contre mesures ---------- */
+  (function parity() {
+    const PTS = [[196, 197, 14], [205, 214, 16], [214, 212, 9], [226, 224, 16], [238, 238, 16], [247, 252, 17], [255, 259, 11], [263, 256, 12], [270, 260, 17], [279, 268, 15], [287, 286, 10], [294, 283, 11], [301, 302, 13], [308, 298, 9], [316, 319, 15], [324, 319, 15], [333, 322, 16], [346, 354, 11]];
+    const box = $('parity'), tipEl = $('ptip');
+    const W = Math.round(Math.max(330, Math.min(680, box.clientWidth))), H = W < 520 ? 300 : 300, m = { l: 48, r: 16, t: 12, b: 42 }, lo = 180, hi = 360;
+    const x = (v) => m.l + (v - lo) / (hi - lo) * (W - m.l - m.r);
+    const y = (v) => H - m.b - (v - lo) / (hi - lo) * (H - m.t - m.b);
+    const svg = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Nuage de points proche de la diagonale : les prédictions du modèle suivent les mesures' });
+    box.prepend(svg);
+    [200, 240, 280, 320, 360].forEach((v) => {
+      svgEl('line', { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: '#13204d' }, svg);
+      svgEl('text', { x: m.l - 8, y: y(v) + 4, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 12, class: 'mono' }, svg).textContent = v;
+      svgEl('text', { x: x(v), y: H - m.b + 20, 'text-anchor': 'middle', fill: '#8891b8', 'font-size': 12, class: 'mono' }, svg).textContent = v;
+    });
+    svgEl('text', { x: W - m.r, y: H - 4, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 12 }, svg).textContent = 'Mesurée (MPa)';
+    svgEl('text', { x: m.l + 6, y: m.t + 12, fill: '#8891b8', 'font-size': 12 }, svg).textContent = 'Prédite (MPa)';
+    svgEl('line', { x1: x(lo), y1: y(lo), x2: x(hi), y2: y(hi), stroke: '#aab3d6', 'stroke-dasharray': '6 5', 'stroke-width': 1.2 }, svg);
+    svgEl('text', { x: x(300) + 10, y: y(300) + 24, 'text-anchor': 'start', fill: '#aab3d6', 'font-size': 11.5 }, svg).textContent = 'Prédiction parfaite';
+    const dots = PTS.map(([e, p, s], i) => {
+      svgEl('line', { x1: x(e), x2: x(e), y1: y(p - s), y2: y(p + s), stroke: '#059669', 'stroke-width': 1.5, opacity: .6 }, svg);
+      const c = svgEl('circle', { cx: x(e), cy: y(p), r: 5, fill: '#059669', stroke: '#070f2b', 'stroke-width': 2 }, svg);
+      return c;
+    });
+    const hit = svgEl('rect', { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, class: 'hit' }, svg);
+    const move = (e) => {
+      const r = svg.getBoundingClientRect(), px = (e.clientX - r.left) / r.width * W, py = (e.clientY - r.top) / r.height * H;
+      let best = 0, bd = Infinity;
+      PTS.forEach(([ex, pr], i) => { const d = (x(ex) - px) ** 2 + (y(pr) - py) ** 2; if (d < bd) { bd = d; best = i; } });
+      dots.forEach((d, i) => d.setAttribute('r', i === best ? 7 : 5));
+      const [ex, pr] = PTS[best];
+      tipEl.innerHTML = `<b>Éprouvette ${best + 1}</b><div><span>Mesurée</span><em>${ex} MPa</em></div><div><span>Prédite</span><em>${pr} MPa</em></div><div><span>Écart</span><em>${pr - ex > 0 ? '+' : ''}${pr - ex} MPa</em></div>`;
+      tipEl.classList.add('show');
+      const bx = box.getBoundingClientRect(), sx = x(ex) / W * r.width + (r.left - bx.left), sy = y(pr) / H * r.height + (r.top - bx.top);
+      tipEl.style.left = (sx + 14 + tipEl.offsetWidth > bx.width ? sx - 14 - tipEl.offsetWidth : sx + 14) + 'px';
+      tipEl.style.top = Math.max(0, sy - tipEl.offsetHeight / 2) + 'px';
+    };
+    hit.addEventListener('pointermove', move);
+    hit.addEventListener('pointerdown', move);
+    hit.addEventListener('pointerleave', () => { tipEl.classList.remove('show'); dots.forEach((d) => d.setAttribute('r', 5)); });
+  })();
+
+  /* ---------- Outils : citer, lien, impression ---------- */
+  const copy = async (text, btn, label) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      const span = btn.querySelector('span'), prev = span.textContent;
+      btn.classList.add('done'); span.textContent = label;
+      setTimeout(() => { btn.classList.remove('done'); span.textContent = prev; }, 1600);
+    } catch (e) { toast('Copie impossible dans ce navigateur'); }
+  };
+  $('copyCite').addEventListener('click', function () { copy($('citeText').textContent.trim(), this, 'Citation copiée'); });
+  $('copyLink').addEventListener('click', function () { copy(location.href.split('#')[0], this, 'Lien copié'); });
+  $('printBtn').addEventListener('click', () => window.print());
+
+  /* images des articles liés introuvables : on garde le fond coloré */
+  document.querySelectorAll('.rel-img img').forEach((img) => img.addEventListener('error', () => img.remove()));
+})();
 </script>
-
 </body>
 </html>
