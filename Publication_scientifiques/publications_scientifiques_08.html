@@ -2,890 +2,1829 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>BIOSIGN-MARS · Stratégies de détection in situ de biosignatures martiennes — IFRAS DAI</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Chercher la vie sur Mars : où creuser, quoi mesurer, quand y croire | Publications IFRAS</title>
+<meta name="description" content="Six sites martiens classés selon leurs chances de conserver des traces de vie, et un test en aveugle sur 48 échantillons : trois indices concordants, zéro fausse alerte.">
+<meta name="theme-color" content="#050b1e">
+<link rel="icon" type="image/png" sizes="1000x1000" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+
 <style>
+/* =========================================================
+   TOKENS (identiques aux autres pages)
+   ========================================================= */
 :root {
-  --bg-main:#050b1e; --bg-dark:#020617; --bg-light:#070f2b;
-  --border:#1b2555; --border-sub:#0e1535;
-  --accent:#34d399; --accent2:#4f6bed; --accent3:#f97316;
-  --text-main:#e6e6e6; --text-soft:#aab3d6; --text-muted:#4a5280;
-  --mono:"DM Mono",monospace;
+  --bg-main: #050b1e;
+  --bg-dark: #020617;
+  --bg-light: #070f2b;
+  --bg-raise: #0a1436;
+  --accent: #4f6bed;
+  --accent-hover: #3d5adb;
+  --accent-soft: rgba(79,107,237,.14);
+  --accent-line: rgba(79,107,237,.38);
+  --text-main: #e6e6e6;
+  --text-strong: #f5f7ff;
+  --text-soft: #aab3d6;
+  --text-mute: #8891b8;
+  --border: #1b2555;
+
+  /* Une couleur par type de contenu */
+  --t-sci: #60a5fa;
+  --t-ifras: #34d399;
+  --t-event: #f97316;
+  /* Types de publications IFRAS */
+  --t-lettre: #60a5fa;
+  --t-rapport: #34d399;
+  --t-hs: #f97316;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --header-h: 68px;
+  --subnav-h: 48px;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:"DM Sans",sans-serif;background:var(--bg-main);color:var(--text-main);line-height:1.7;}
-::-webkit-scrollbar{width:4px;} ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
 
-/* ===== HEADER ===== */
-header{position:fixed;top:0;width:100%;z-index:1000;background:rgba(5,11,30,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
-.header-inner{max-width:1300px;margin:auto;padding:12px 30px;display:flex;align-items:center;justify-content:space-between;}
-.header-left{display:flex;align-items:center;gap:40px;}
-.logo-link img{height:60px;}
-.main-nav{list-style:none;display:flex;gap:32px;}
-.main-nav a{text-decoration:none;color:var(--text-soft);font-size:14px;letter-spacing:.05em;}
-.main-nav a:hover{color:white;}
-.login-btn{padding:8px 18px;border-radius:6px;border:1px solid var(--accent2);color:white;text-decoration:none;font-size:13px;}
-.login-btn:hover{background:var(--accent2);}
-.sub-nav{margin-top:84px;background:var(--bg-light);border-bottom:1px solid var(--border);}
-.sub-nav ul{max-width:1300px;margin:0 auto;padding:0 30px;list-style:none;display:flex;justify-content:space-between;}
-.sub-nav li{padding:14px 0;}
-.sub-nav a{color:var(--text-soft);text-decoration:none;font-size:14px;letter-spacing:.06em;}
-.sub-nav a:hover{color:white;}
-.sub-nav a.active{color:white;border-bottom:2px solid var(--accent2);padding-bottom:12px;}
+*, *::before, *::after { box-sizing: border-box; }
 
-/* ===== LAYOUT ===== */
-.pub-wrapper{max-width:900px;margin:0 auto;padding:52px 30px 100px;}
-.breadcrumb{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--text-muted);letter-spacing:.06em;margin-bottom:36px;font-family:var(--mono);}
-.breadcrumb a{color:var(--text-muted);text-decoration:none;}
-.breadcrumb a:hover{color:var(--accent);}
-.breadcrumb span{opacity:.4;}
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 20px); }
 
-/* ===== META BADGES ===== */
-.meta-top{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
-.badge{font-size:10.5px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;font-weight:500;}
-.badge-j{background:rgba(52,211,153,.1);color:var(--accent);border:1px solid rgba(52,211,153,.25);}
-.badge-d{background:rgba(79,107,237,.1);color:var(--accent2);border:1px solid rgba(79,107,237,.2);}
-.badge-o{background:rgba(52,211,153,.07);color:var(--accent);border:1px solid rgba(52,211,153,.15);}
-.badge-dt{background:rgba(255,255,255,.04);color:var(--text-muted);border:1px solid rgba(255,255,255,.08);}
+body {
+  margin: 0;
+  font-family: "DM Sans", "Segoe UI", system-ui, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
 
-/* ===== TITRE ===== */
-.article-title{font-family:"DM Sans",sans-serif;font-size:clamp(18px,2.4vw,23px);font-weight:400;color:var(--text-main);line-height:1.5;letter-spacing:0;margin-bottom:18px;}
-.article-subtitle{font-size:15px;color:var(--text-soft);font-weight:300;line-height:1.65;margin-bottom:28px;font-style:italic;border-left:2px solid var(--accent);padding-left:16px;}
-.authors-block{background:var(--bg-light);border:1px solid var(--border);border-radius:10px;padding:16px 20px;display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;margin-bottom:28px;}
-.author-entry{display:flex;flex-direction:column;gap:2px;}
-.author-name{font-size:13.5px;font-weight:600;color:white;}
-.author-role{font-size:11px;color:var(--text-muted);letter-spacing:.04em;}
-.author-sep{width:1px;background:var(--border);align-self:stretch;}
-.cite-block{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:12px 16px;background:rgba(0,0,0,.25);border:1px solid var(--border-sub);border-radius:8px;}
-.cite-item{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;color:var(--text-muted);}
-.cite-label{color:var(--accent);font-weight:500;}
-.cite-sep{color:var(--border);}
-.art-divider{height:1px;background:linear-gradient(90deg,var(--accent) 0%,transparent 60%);margin:40px 0;opacity:.3;}
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+[hidden] { display: none !important; }
 
-/* ===== ABSTRACT ===== */
-.abstract-box{background:rgba(52,211,153,.04);border:1px solid rgba(52,211,153,.14);border-radius:12px;padding:28px 32px;margin-bottom:44px;}
-.abstract-label{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;font-weight:500;}
-.abstract-text{font-size:14.5px;line-height:1.85;color:var(--text-soft);font-weight:300;}
-.kw-wrap{margin-top:16px;display:flex;flex-wrap:wrap;gap:7px;align-items:center;}
-.kw-lbl{font-size:11px;color:var(--text-muted);font-family:var(--mono);letter-spacing:.08em;}
-.kw-tag{font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--text-soft);}
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
-/* ===== SECTIONS ===== */
-.section-heading{font-family:"Syne",sans-serif;font-size:18px;font-weight:700;color:white;margin:44px 0 16px;display:flex;align-items:center;gap:12px;}
-.section-heading::before{content:'';display:block;width:4px;height:18px;background:var(--accent);border-radius:2px;flex-shrink:0;}
-.section-heading.blue::before{background:var(--accent2);}
-.section-heading.orange::before{background:var(--accent3);}
-.sub{font-family:"Syne",sans-serif;font-weight:700;color:var(--text-soft);margin:28px 0 10px;letter-spacing:.04em;text-transform:uppercase;font-size:11.5px;}
-p.bt{font-size:14.5px;color:var(--text-soft);line-height:1.85;font-weight:300;margin-bottom:16px;}
-ul.bt-list{font-size:14.5px;color:var(--text-soft);line-height:1.85;font-weight:300;margin-bottom:16px;padding-left:20px;display:flex;flex-direction:column;gap:8px;}
-ul.bt-list li{padding-left:8px;}
-ul.bt-list li strong{color:var(--text-main);font-weight:500;}
+.skip-link {
+  position: absolute; left: 16px; top: -48px;
+  padding: 10px 16px;
+  background: var(--accent); color: #fff;
+  border-radius: var(--radius-sm);
+  z-index: 3000; text-decoration: none;
+  transition: top 160ms var(--ease-out);
+}
+.skip-link:focus { top: 12px; }
 
-/* ===== GRILLE CIBLES (sites martiens) ===== */
-.site-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:32px 0;}
-.site-card{background:var(--bg-light);border:1px solid var(--border);border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:8px;position:relative;overflow:hidden;}
-.site-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
-.site-card.green::before{background:var(--accent);}
-.site-card.blue::before{background:var(--accent2);}
-.site-card.orange::before{background:var(--accent3);}
-.site-card.yellow::before{background:#facc15;}
-.site-card.red::before{background:#f87171;}
-.site-card.purple::before{background:#a78bfa;}
-.site-name{font-family:"Syne",sans-serif;font-weight:700;font-size:13.5px;color:white;line-height:1.2;}
-.site-type{font-size:11px;font-family:var(--mono);color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase;}
-.site-desc{font-size:12.5px;color:var(--text-soft);font-weight:300;line-height:1.55;}
-.site-score{display:flex;align-items:center;gap:8px;margin-top:4px;}
-.score-bar-wrap{flex:1;height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;}
-.score-bar{height:100%;border-radius:2px;transition:width .3s;}
-.score-val{font-family:var(--mono);font-size:11px;color:var(--text-muted);}
+.container { max-width: 1300px; margin: 0 auto; padding: 0 30px; }
 
-/* ===== TABLEAU ===== */
-.tbl-wrap{margin:36px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);}
-.tbl-head{background:rgba(52,211,153,.08);padding:12px 20px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--border);}
-table{width:100%;border-collapse:collapse;font-size:13px;}
-thead th{background:rgba(0,0,0,.3);padding:11px 16px;text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--border-sub);font-weight:500;}
-tbody tr{border-bottom:1px solid var(--border-sub);transition:background .15s;}
-tbody tr:last-child{border-bottom:none;}
-tbody tr:hover{background:rgba(255,255,255,.025);}
-tbody td{padding:10px 16px;color:var(--text-soft);vertical-align:middle;font-weight:300;}
-.tm{font-family:var(--mono);font-size:12.5px;color:var(--text-main);}
-.tg{font-family:var(--mono);font-size:12.5px;color:var(--accent);}
-.ty{font-family:var(--mono);font-size:12.5px;color:#facc15;}
-.to{font-family:var(--mono);font-size:12.5px;color:var(--accent3);}
-.tr{font-family:var(--mono);font-size:12.5px;color:#f87171;}
-.tb{font-family:var(--mono);font-size:12.5px;color:var(--accent2);}
-.tbl-note{padding:10px 20px;font-size:11.5px;color:var(--text-muted);background:rgba(0,0,0,.2);font-style:italic;border-top:1px solid var(--border-sub);}
+/* =========================================================
+   BOUTONS
+   ========================================================= */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 22px;
+  border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 500;
+  text-decoration: none; white-space: nowrap;
+  border: 1px solid transparent;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.btn:active { transform: scale(0.97); }
+.btn i { font-size: 16px; transition: transform 200ms var(--ease-out); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-ghost { border-color: var(--accent-line); color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-ghost:hover { background: var(--accent-soft); border-color: var(--accent); }
+  .btn:hover i { transform: translateX(3px); }
+}
 
-/* ===== HIGHLIGHT ===== */
-.hl{border-left:3px solid var(--accent);background:rgba(52,211,153,.04);border-radius:0 8px 8px 0;padding:16px 20px;margin:24px 0;font-size:14px;color:var(--text-soft);font-style:italic;line-height:1.75;}
-.hl.blue{border-color:var(--accent2);background:rgba(79,107,237,.05);}
-.hl.orange{border-color:var(--accent3);background:rgba(249,115,22,.04);}
+.text-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--text-soft);
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.text-link i { transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .text-link:hover { color: #fff; }
+  .text-link:hover i { transform: translateX(3px); }
+}
 
-/* ===== FIGURE PLACEHOLDER ===== */
-.fig-wrap{margin:36px 0;background:var(--bg-light);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
-.fig-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;border-bottom:1px solid var(--border);gap:10px;padding:0;}
-.fig-ph svg{width:100%;display:block;}
-.fig-cap{padding:14px 20px;font-size:12.5px;color:var(--text-muted);line-height:1.6;}
-.fig-cap strong{font-weight:600;color:var(--text-soft);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
+/* =========================================================
+   HEADER (opaque)
+   ========================================================= */
+.site-header {
+  position: fixed; inset: 0 0 auto 0;
+  z-index: 2000;
+  height: var(--header-h);
+  background: rgba(5,11,30,.88);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.header-left { display: flex; align-items: center; gap: 44px; }
+.logo-link { display: flex; align-items: center; }
+.logo-link img { height: 44px; width: auto; }
 
-/* ===== PHOTO PLACEHOLDER ===== */
-.photo-wrap{margin:36px 0;border-radius:14px;overflow:hidden;border:1px solid var(--border);position:relative;}
-.photo-ph{height:320px;background:linear-gradient(135deg,#0d1f3c 0%,#0a1628 40%,#12082a 70%,#0d1a1a 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;position:relative;overflow:hidden;}
-.photo-ph::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(249,115,22,.12) 0%,transparent 60%),radial-gradient(ellipse at 70% 30%,rgba(52,211,153,.06) 0%,transparent 50%);}
-.photo-ph-icon{font-size:48px;opacity:.25;z-index:1;}
-.photo-ph-label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);z-index:1;}
-.photo-ph-prompt{font-size:11px;color:var(--text-muted);max-width:520px;text-align:center;line-height:1.6;z-index:1;opacity:.6;}
-.photo-caption{background:var(--bg-light);padding:14px 20px;font-size:12.5px;color:var(--text-muted);line-height:1.6;border-top:1px solid var(--border);}
-.photo-caption strong{font-weight:600;color:var(--text-soft);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
+.main-nav { list-style: none; display: flex; gap: 6px; margin: 0; padding: 0; }
+.main-nav a {
+  position: relative; display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--text-soft);
+  font-size: 14px; letter-spacing: .02em;
+  border-radius: 6px;
+  transition: color 160ms ease;
+}
+.main-nav a::after {
+  content: ""; position: absolute;
+  left: 12px; right: 12px; bottom: 2px; height: 1px;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 200ms var(--ease-out);
+}
+.main-nav a[aria-current="page"] { color: #fff; }
+.main-nav a[aria-current="page"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .main-nav a:hover { color: #fff; }
+  .main-nav a:hover::after { transform: scaleX(1); }
+}
 
-/* ===== DIAGRAMME PIPELINE ===== */
-.pipeline{display:flex;align-items:stretch;gap:0;margin:32px 0;overflow-x:auto;}
-.pipe-step{flex:1;min-width:110px;background:var(--bg-light);border:1px solid var(--border);padding:16px 14px;display:flex;flex-direction:column;gap:8px;position:relative;}
-.pipe-step:not(:first-child){border-left:none;}
-.pipe-step:first-child{border-radius:10px 0 0 10px;}
-.pipe-step:last-child{border-radius:0 10px 10px 0;}
-.pipe-step::after{content:'→';position:absolute;right:-14px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px;z-index:2;}
-.pipe-step:last-child::after{display:none;}
-.pipe-num{font-family:var(--mono);font-size:10px;color:var(--text-muted);letter-spacing:.1em;}
-.pipe-title{font-family:"Syne",sans-serif;font-size:12px;font-weight:700;color:white;line-height:1.3;}
-.pipe-desc{font-size:11px;color:var(--text-muted);line-height:1.5;}
-.pipe-step.active{background:rgba(52,211,153,.06);border-color:rgba(52,211,153,.25);}
-.pipe-step.active .pipe-title{color:var(--accent);}
+.header-right { display: flex; align-items: center; gap: 10px; }
+.header-right .btn { padding: 9px 18px; font-size: 13px; }
 
-/* ===== CHART BIOSIGNATURES ===== */
-.chart-wrap{margin:36px 0;background:var(--bg-light);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
-.chart-inner{padding:28px 24px 16px;background:rgba(0,0,0,.15);border-bottom:1px solid var(--border-sub);}
-.chart-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:8px;}
-.chart-ttl{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);max-width:500px;line-height:1.5;}
-.legend{display:flex;gap:14px;flex-wrap:wrap;}
-.li{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);}
-.ld{width:8px;height:8px;border-radius:2px;}
-.chart-cap{padding:12px 20px;font-size:12.5px;color:var(--text-muted);line-height:1.6;}
-.chart-cap strong{font-weight:600;color:var(--text-soft);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
+.menu-toggle {
+  display: none;
+  width: 42px; height: 42px;
+  align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: #fff; font-size: 20px; cursor: pointer;
+  transition: transform 160ms var(--ease-out);
+}
+.menu-toggle:active { transform: scale(0.95); }
 
-/* ===== REFS ===== */
-.refs-sec{margin-top:60px;padding-top:32px;border-top:1px solid var(--border);}
-.ref-ttl{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:20px;}
-.ref-list{counter-reset:ref;display:flex;flex-direction:column;gap:6px;}
-.ref-item{counter-increment:ref;display:flex;align-items:baseline;gap:12px;font-size:13px;line-height:1.55;color:var(--text-muted);padding:9px 14px;border-radius:6px;background:rgba(0,0,0,.15);border:1px solid var(--border-sub);}
-.ref-item::before{content:'[' counter(ref) ']';font-family:var(--mono);font-size:11px;color:var(--accent);flex-shrink:0;min-width:26px;}
-.ref-item b{color:var(--text-soft);font-weight:500;}
-.ref-item em{color:var(--text-muted);}
-.footnote{margin-top:48px;padding:20px 24px;background:rgba(0,0,0,.25);border:1px solid var(--border-sub);border-radius:10px;font-size:11.5px;color:var(--text-muted);line-height:1.7;}
-.footnote strong{color:var(--text-soft);}
+.mobile-panel {
+  position: fixed; top: var(--header-h); left: 12px; right: 12px;
+  z-index: 1999;
+  padding: 10px;
+  background: rgba(7,15,43,.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(2,6,23,.6);
+  transform-origin: top right;
+  opacity: 0; transform: scale(0.96) translateY(-6px);
+  pointer-events: none; visibility: hidden;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s linear 220ms;
+}
+.mobile-panel.is-open {
+  opacity: 1; transform: none; pointer-events: auto; visibility: visible;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s;
+}
+.mobile-panel ul { list-style: none; margin: 0; padding: 0; }
+.mobile-panel a {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px; color: var(--text-main);
+  text-decoration: none; font-size: 16px; border-radius: 10px;
+}
+.mobile-panel a[aria-current="page"] { background: var(--accent-soft); color: #fff; }
+.mobile-panel .btn { width: 100%; justify-content: center; margin-top: 8px; }
 
-/* ===== PROGRESS / TOC ===== */
-.progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent3),#fb923c);z-index:9999;width:0%;transition:width .1s linear;}
-.toc-sidebar{position:fixed;right:32px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:100;}
-.toc-dot{width:6px;height:6px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s,transform .2s;position:relative;}
-.toc-dot:hover,.toc-dot.active{background:var(--accent3);transform:scale(1.5);}
-.toc-dot::after{content:attr(data-label);position:absolute;right:14px;top:50%;transform:translateY(-50%);background:var(--bg-light);border:1px solid var(--border);border-radius:5px;padding:3px 8px;font-size:10.5px;color:var(--text-soft);white-space:nowrap;font-family:var(--mono);letter-spacing:.04em;opacity:0;pointer-events:none;transition:opacity .2s;}
-.toc-dot:hover::after{opacity:1;}
-@media(max-width:1100px){.toc-sidebar{display:none;}}
-@media(max-width:640px){.site-grid{grid-template-columns:repeat(2,1fr);}.pipeline{flex-direction:column;}.pipe-step{border-radius:0;border-left:1px solid var(--border) !important;}.pipe-step::after{display:none;}}
+/* =========================================================
+   SOUS-NAVIGATION (ancres + section visible)
+   ========================================================= */
+.subnav {
+  position: sticky;
+  top: var(--header-h);
+  margin-top: var(--header-h);
+  z-index: 1500;
+  height: var(--subnav-h);
+  background: rgba(8,18,53,.94);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.subnav-list {
+  height: 100%;
+  list-style: none; margin: 0 auto; padding: 0 30px;
+  max-width: 1300px;
+  display: flex; align-items: stretch; justify-content: space-between;
+}
+.subnav-list li { display: flex; }
+.subnav-link {
+  position: relative;
+  display: flex; align-items: center; gap: 9px;
+  padding: 0 14px;
+  color: var(--text-soft);
+  text-decoration: none;
+  font-size: 14px; font-weight: 500;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.subnav-link i { font-size: 17px; color: var(--c); }
+.subnav-link::after {
+  content: ""; position: absolute;
+  left: 14px; right: 14px; bottom: -1px; height: 2px;
+  background: var(--c);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+.subnav-link[aria-current="true"] { color: #fff; }
+.subnav-link[aria-current="true"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .subnav-link:hover { color: #fff; }
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.site-footer {
+  margin-top: 100px;
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border);
+  padding: 36px 0;
+  font-size: 13px; color: var(--text-mute);
+}
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+/* =========================================================
+   ARTICLE
+   ========================================================= */
+:root {
+  --mono: "DM Mono", ui-monospace, Menlo, Consolas, monospace;
+  --c10: #3b82f6;   /* CMC-10Z */
+  --c20: #059669;   /* CMC-20Z */
+  --c30: #ea580c;   /* CMC-30Z */
+  --hot: #f97316;
+  --ok: #34d399;
+  --warn: #fbbf24;
+  --bad: #f87171;
+  --surface: #070f2b;
+  --line: #13204d;
+}
+html { scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 24px); }
+
+/* barre de lecture sous la sous-navigation */
+.progress {
+  position: fixed; left: 0; right: 0; top: calc(var(--header-h) + var(--subnav-h)); z-index: 1400;
+  height: 2px; background: transparent; pointer-events: none;
+}
+.progress span { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, var(--accent), #fb7185); transform-origin: left; transform: scaleX(0); }
+
+/* ----- En-tête de l'article ----- */
+.art-hero { position: relative; overflow: hidden; isolation: isolate; border-bottom: 1px solid var(--border); }
+.art-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(ellipse 45% 70% at 78% 45%, rgba(249,115,22,.16), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(79,107,237,.14), transparent 60%);
+}
+.art-hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 48px; align-items: center; padding: 48px 0 56px; }
+.crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 26px; padding: 0; list-style: none; font-size: 13px; color: var(--text-mute); }
+.crumbs a { color: var(--text-soft); text-decoration: none; transition: color 160ms ease; }
+.crumbs i { font-size: 11px; opacity: .6; }
+@media (hover: hover) and (pointer: fine) { .crumbs a:hover { color: #fff; } }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 11px; border-radius: 999px; font-size: 12.5px; font-weight: 500;
+  color: var(--b, var(--text-soft));
+  background: color-mix(in srgb, var(--b, var(--text-soft)) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--b, var(--text-soft)) 28%, transparent);
+}
+.badge i { font-size: 14px; }
+.art-title {
+  margin: 0 0 18px; font-family: "Syne", sans-serif; font-weight: 700;
+  font-size: clamp(30px, 3.6vw, 48px); line-height: 1.08; letter-spacing: -0.025em; color: var(--text-strong);
+  text-wrap: balance;
+}
+.art-lede { margin: 0 0 28px; max-width: 60ch; font-size: 18px; line-height: 1.6; color: var(--text-soft); font-weight: 300; }
+.authors { display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 0 0 22px; padding: 0; list-style: none; }
+.author { display: flex; align-items: center; gap: 10px; }
+.author .av { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-family: "Syne", sans-serif; font-size: 12px; font-weight: 700; color: #fff; background: linear-gradient(135deg, hsl(var(--ah) 55% 38%), hsl(var(--ah) 70% 60%)); }
+.author strong { display: block; font-size: 14px; font-weight: 500; color: var(--text-main); }
+.author small { display: block; font-size: 12.5px; color: var(--text-mute); }
+.meta-line { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 13px; color: var(--text-mute); }
+.meta-line span { display: inline-flex; align-items: center; gap: 7px; }
+.meta-line i { font-size: 15px; color: var(--text-soft); }
+.meta-line code { font-family: var(--mono); font-size: 12.5px; color: var(--text-soft); }
+
+.hero-in { opacity: 0; transform: translateY(12px); animation: heroIn 700ms var(--ease-out) forwards; animation-delay: calc(80ms + var(--i, 0) * 90ms); }
+@keyframes heroIn { to { opacity: 1; transform: none; } }
+
+/* illustration : capsule en rentrée */
+.reentry { position: relative; aspect-ratio: 1 / 0.86; max-width: 520px; justify-self: end; width: 100%; }
+.reentry canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.reentry svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.reentry .shock { animation: shock 2.4s var(--ease-in-out) infinite alternate; transform-origin: 62% 50%; }
+@keyframes shock { from { opacity: .75; transform: scale(.985); } to { opacity: 1; transform: scale(1.015); } }
+.reentry .glow { animation: glow 1.6s ease-in-out infinite alternate; }
+@keyframes glow { from { opacity: .55; } to { opacity: .95; } }
+.reentry-tag {
+  position: absolute; display: flex; align-items: center; gap: 8px;
+  padding: 6px 10px; border-radius: 8px; font-family: var(--mono); font-size: 12px; color: var(--text-soft);
+  background: rgba(2,6,23,.7); border: 1px solid var(--border); backdrop-filter: blur(6px);
+}
+.reentry-tag b { color: #fff; font-weight: 500; }
+.reentry-tag i { width: 7px; height: 7px; border-radius: 50%; background: var(--hot); }
+
+/* ----- Mise en page 3 colonnes ----- */
+.art-layout {
+  display: grid; grid-template-columns: 220px minmax(0, 720px) 280px; justify-content: space-between; gap: 48px;
+  padding-top: 48px;
+}
+.toc, .rail { position: sticky; top: calc(var(--header-h) + var(--subnav-h) + 28px); align-self: start; }
+.toc-title, .rail-title { margin: 0 0 14px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.toc ol { position: relative; list-style: none; margin: 0; padding: 0 0 0 14px; border-left: 1px solid var(--border); }
+.toc-ind { list-style: none; position: absolute; left: -1px; top: 0; width: 2px; height: 34px; background: var(--accent); border-radius: 2px; transition: transform 300ms var(--ease-out), height 300ms var(--ease-out); }
+.toc a {
+  display: flex; gap: 10px; padding: 7px 0; font-size: 14px; line-height: 1.35;
+  color: var(--text-mute); text-decoration: none; transition: color 160ms ease;
+}
+.toc a span { font-family: var(--mono); font-size: 12px; padding-top: 1px; color: inherit; opacity: .8; min-width: 16px; }
+.toc a.on { color: #fff; }
+@media (hover: hover) and (pointer: fine) { .toc a:hover { color: var(--text-main); } }
+.toc-time { display: flex; align-items: center; gap: 8px; margin-top: 18px; font-size: 13px; color: var(--text-mute); }
+.toc-time i { font-size: 15px; }
+
+/* ----- Colonne de droite ----- */
+.rail { display: grid; gap: 16px; max-height: calc(100vh - var(--header-h) - var(--subnav-h) - 44px); overflow-y: auto; scrollbar-width: none; overscroll-behavior: contain; }
+.rail::-webkit-scrollbar { display: none; }
+.rail-card { padding: 18px; border-radius: var(--radius); background: var(--bg-light); border: 1px solid var(--border); }
+.cite-text { margin: 0 0 14px; font-size: 13px; line-height: 1.6; color: var(--text-soft); }
+.cite-text em { color: var(--text-main); }
+.rail-actions { display: grid; gap: 8px; }
+.rbtn {
+  display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 40px; border-radius: 10px;
+  border: 1px solid var(--border); background: transparent; color: var(--text-main); font: inherit; font-size: 13.5px; cursor: pointer; text-decoration: none;
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out);
+}
+.rbtn i { font-size: 16px; }
+.rbtn:active { transform: scale(.97); }
+.rbtn.done { border-color: color-mix(in srgb, var(--ok) 45%, transparent); color: var(--ok); }
+@media (hover: hover) and (pointer: fine) { .rbtn:hover { border-color: var(--accent); background: var(--accent-soft); } }
+.fig-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.fig-list a { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: center; padding: 7px 8px; margin: 0 -8px; border-radius: 8px; font-size: 13.5px; color: var(--text-soft); text-decoration: none; transition: background-color 120ms ease, color 120ms ease; }
+.fig-list i { font-size: 17px; color: var(--accent); }
+@media (hover: hover) and (pointer: fine) { .fig-list a:hover { background: var(--bg-raise); color: #fff; } }
+.prog-link { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.prog-link .pi { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; font-size: 19px; color: var(--hot); background: rgba(249,115,22,.12); flex-shrink: 0; }
+.prog-link strong { display: block; font-size: 14px; font-weight: 500; }
+.prog-link small { display: block; font-size: 12.5px; color: var(--text-mute); }
+
+/* ----- Corps de texte ----- */
+.art { min-width: 0; counter-reset: fig; }
+.art p { margin: 0 0 18px; font-size: 17px; line-height: 1.75; color: #c3cae6; font-weight: 300; }
+.art p strong { color: var(--text-main); font-weight: 500; }
+.art h2 {
+  display: flex; align-items: baseline; gap: 14px;
+  margin: 64px 0 18px; font-family: "Syne", sans-serif; font-size: 26px; font-weight: 700; letter-spacing: -0.01em; color: var(--text-strong);
+}
+.art h2 .n { font-family: var(--mono); font-size: 14px; font-weight: 400; color: var(--accent); }
+.art h3 { margin: 34px 0 12px; font-size: 18px; font-weight: 500; color: var(--text-main); }
+sub, sup { line-height: 0; }
+
+/* L'essentiel */
+.essentials { padding: 26px; border-radius: 18px; background: linear-gradient(160deg, var(--bg-raise), var(--bg-light)); border: 1px solid var(--border); }
+.essentials-head { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; }
+.essentials-head i { font-size: 17px; color: var(--hot); }
+.kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 22px; }
+.kpi { padding: 16px; border-radius: 14px; background: rgba(2,6,23,.45); border: 1px solid var(--line); }
+.kpi strong { display: block; font-family: "Syne", sans-serif; font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -0.02em; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.kpi strong small { font-size: .55em; font-weight: 700; margin-left: 2px; color: var(--text-soft); }
+.kpi span { display: block; margin-top: 8px; font-size: 13.5px; line-height: 1.4; color: var(--text-soft); }
+.takeaways { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.takeaways li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 15.5px; line-height: 1.55; color: var(--text-main); }
+.takeaways i { font-size: 18px; color: var(--ok); margin-top: 2px; }
+
+/* Résumé */
+.abstract { margin-top: 28px; padding: 24px 26px; border-radius: 16px; border: 1px solid var(--border); background: rgba(79,107,237,.05); }
+.abstract .label { display: block; margin-bottom: 10px; font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+.abstract p { font-size: 15.5px !important; margin: 0 !important; }
+.kw { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+.kw span { padding: 3px 10px; border-radius: 999px; font-size: 12.5px; color: var(--text-soft); border: 1px solid var(--border); }
+
+/* Termes expliqués (infobulle) */
+.term {
+  position: relative; display: inline; padding: 0; border: 0; background: none; font: inherit; color: var(--text-main); cursor: help;
+  text-decoration: underline dotted color-mix(in srgb, var(--accent) 80%, transparent); text-decoration-thickness: 1.5px; text-underline-offset: 4px;
+}
+.tip {
+  position: absolute; z-index: 1600; width: min(300px, calc(100vw - 32px));
+  padding: 12px 14px; border-radius: 12px;
+  background: #0b1540; border: 1px solid var(--accent-line); box-shadow: 0 18px 50px rgba(0,0,0,.5);
+  font-size: 13.5px; line-height: 1.55; color: var(--text-soft); font-weight: 400;
+  opacity: 0; transform: scale(.97) translateY(4px); pointer-events: none;
+  transition: opacity 140ms ease, transform 160ms var(--ease-out);
+}
+.tip.show { opacity: 1; transform: none; }
+.tip.instant { transition: none; }
+.tip b { display: block; margin-bottom: 3px; color: #fff; font-weight: 500; font-size: 14px; }
+.cite { font-family: var(--mono); font-size: .78em; color: var(--accent); text-decoration: none; vertical-align: .15em; padding: 0 1px; border: 0; background: none; cursor: pointer; }
+
+/* Encadrés */
+.note { display: grid; grid-template-columns: 26px 1fr; gap: 12px; margin: 26px 0; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.note i { font-size: 22px; color: var(--nc, var(--accent)); }
+.note p { margin: 0 !important; font-size: 15.5px !important; color: var(--text-main) !important; }
+.note .nt { display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--nc, var(--accent)); font-weight: 500; }
+
+/* ----- Figures ----- */
+.fig { margin: 34px 0; border-radius: 18px; border: 1px solid var(--border); background: var(--surface); overflow: hidden; counter-increment: fig; scroll-margin-top: calc(var(--header-h) + var(--subnav-h) + 24px); }
+.fig-stage { position: relative; padding: 22px; background: radial-gradient(ellipse at 50% 0%, rgba(79,107,237,.06), transparent 70%); }
+.fig-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin-bottom: 16px; }
+.fig-name { font-size: 14.5px; font-weight: 500; color: var(--text-main); }
+.fig figcaption, .fig .cap { padding: 14px 22px 18px; border-top: 1px solid var(--line); font-size: 14px; line-height: 1.6; color: var(--text-soft); }
+.fig figcaption b, .fig .cap b { font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-right: 8px; }
+.fig svg { display: block; width: 100%; height: auto; overflow: visible; }
+.fig text { font-family: "DM Sans", sans-serif; }
+.fig .mono, .fig text.mono { font-family: var(--mono); }
+.ctrl { display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 12px; border-radius: 9px; border: 1px solid var(--border); background: var(--bg-light); color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out); }
+.ctrl i { font-size: 15px; }
+.ctrl:active { transform: scale(.96); }
+@media (hover: hover) and (pointer: fine) { .ctrl:hover { color: #fff; border-color: var(--accent); } }
+
+/* Fig. 1 trajectoire */
+.readouts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+.readout { padding: 10px 12px; border-radius: 10px; background: rgba(2,6,23,.5); border: 1px solid var(--line); }
+.readout small { display: block; font-size: 12px; color: var(--text-mute); }
+.readout strong { display: block; margin-top: 2px; font-family: var(--mono); font-size: 17px; font-weight: 500; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.readout.hot strong { color: var(--rc, var(--text-strong)); }
+.scrub { display: flex; align-items: center; gap: 12px; margin-top: 14px; }
+.scrub input { flex: 1; accent-color: var(--hot); }
+.scrub output { min-width: 52px; text-align: right; font-family: var(--mono); font-size: 13px; color: var(--text-soft); }
+
+/* Fig. 2 microstructure */
+.parts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.part { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease; }
+.part i { width: 10px; height: 10px; border-radius: 3px; background: var(--pc); }
+.part[aria-pressed="true"] { color: #fff; border-color: var(--pc); background: color-mix(in srgb, var(--pc) 14%, transparent); }
+.art .part-desc { margin: 12px 0 0; min-height: 44px; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+.part-desc b { color: #fff; font-weight: 500; }
+.micro [data-part] { transition: opacity 220ms ease; }
+.micro.focus [data-part] { opacity: .16; }
+.micro.focus [data-part].lit { opacity: 1; }
+
+/* Fig. 3 banc d'essai */
+.bench-v { display: none !important; }
+.flow { stroke-dasharray: 6 10; animation: flow 900ms linear infinite; }
+@keyframes flow { to { stroke-dashoffset: -32; } }
+.flame { animation: glow 900ms ease-in-out infinite alternate; }
+
+/* Tableau */
+.table-wrap { margin: 30px 0; border-radius: 16px; border: 1px solid var(--border); overflow: hidden; background: var(--surface); }
+.table-cap { padding: 14px 20px; font-size: 14px; color: var(--text-soft); border-bottom: 1px solid var(--line); }
+.table-cap b { font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-right: 8px; }
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { padding: 11px 12px; text-align: left; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; background: rgba(2,6,23,.4); border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 11px 12px; color: var(--text-soft); border-bottom: 1px solid var(--line); white-space: nowrap; font-variant-numeric: tabular-nums; }
+tr:last-child td { border-bottom: 0; }
+td:last-child, th:last-child { white-space: normal; }
+td:first-child, th:first-child { padding-left: 18px; }
+td.num { font-family: var(--mono); font-size: 13.5px; color: var(--text-main); }
+th.num, td.num { text-align: right; }
+tbody tr { transition: background-color 120ms ease; }
+@media (hover: hover) and (pointer: fine) { tbody tr:hover { background: rgba(79,107,237,.06); } }
+.mat { display: inline-flex; align-items: center; gap: 8px; color: var(--text-main); }
+.mat i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.state { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--sc); }
+.state i { font-size: 15px; }
+.table-note { padding: 12px 20px; font-size: 13px; color: var(--text-mute); border-top: 1px solid var(--line); background: rgba(2,6,23,.3); }
+
+/* Fig. 4 graphique */
+.legend { display: flex; flex-wrap: wrap; gap: 6px; }
+.lg { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-main); font: inherit; font-size: 13px; cursor: pointer; transition: opacity 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out); }
+.lg:active { transform: scale(.96); }
+.lg i { width: 14px; height: 3px; border-radius: 2px; background: var(--lc); }
+.lg[aria-pressed="false"] { opacity: .45; }
+.lg[aria-pressed="false"] i { background: transparent; border: 1px solid var(--lc); height: 5px; }
+.chart { position: relative; }
+.chart .series { transition: opacity 220ms ease; }
+.chart .series.off { opacity: 0; }
+.chart .draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); }
+.chart.drawn .draw { transition: stroke-dashoffset 1400ms var(--ease-in-out); stroke-dashoffset: 0; }
+.chart .dot { opacity: 0; transition: opacity 300ms ease 1100ms; }
+.chart.drawn .dot { opacity: 1; }
+.hit { fill: transparent; cursor: crosshair; }
+.xhair { opacity: 0; transition: opacity 120ms ease; pointer-events: none; }
+.xhair.show { opacity: 1; }
+.ctip {
+  position: absolute; z-index: 5; pointer-events: none; min-width: 170px;
+  padding: 10px 12px; border-radius: 10px; background: #0b1540; border: 1px solid var(--accent-line);
+  box-shadow: 0 14px 40px rgba(0,0,0,.5); font-size: 13px; color: var(--text-soft);
+  opacity: 0; transform: translateY(4px); transition: opacity 120ms ease, transform 140ms var(--ease-out);
+}
+.ctip.show { opacity: 1; transform: none; }
+.ctip b { display: block; margin-bottom: 6px; color: #fff; font-weight: 500; font-family: var(--mono); }
+.ctip div { display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+.ctip div span { display: inline-flex; align-items: center; gap: 7px; }
+.ctip div span i { width: 8px; height: 8px; border-radius: 50%; background: var(--lc); }
+.ctip div em { font-style: normal; font-family: var(--mono); color: var(--text-main); }
+.data-toggle { margin-top: 12px; }
+.data-table { margin-top: 12px; border-radius: 12px; border: 1px solid var(--line); overflow-x: auto; }
+.data-table[hidden] { display: none; }
+
+/* Fig. 5 carte thermique */
+.thermo { display: grid; grid-template-columns: minmax(0, 1fr) 70px; gap: 18px; align-items: stretch; }
+.thermo-plate { position: relative; aspect-ratio: 1; max-width: 420px; width: 100%; justify-self: center; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); cursor: crosshair; }
+.thermo-plate canvas { width: 100%; height: 100%; display: block; }
+.probe { position: absolute; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.5); pointer-events: none; opacity: 0; transition: opacity 120ms ease; }
+.probe.show { opacity: 1; }
+.probe-read { position: absolute; left: 12px; top: 12px; padding: 6px 10px; border-radius: 8px; background: rgba(2,6,23,.78); font-family: var(--mono); font-size: 13px; color: #fff; pointer-events: none; }
+.scale { display: grid; grid-template-columns: 14px 1fr; gap: 8px; align-self: center; height: min(100%, 420px); aspect-ratio: auto; }
+.scale-bar { display: block; width: 14px; height: 100%; border-radius: 6px; }
+.scale-labels { display: flex; flex-direction: column; justify-content: space-between; font-family: var(--mono); font-size: 12px; color: var(--text-soft); }
+
+/* Fig. 6 couche protectrice */
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.duo-card { border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.4); overflow: hidden; }
+.duo-card h4 { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0; padding: 12px 14px; font-size: 14px; font-weight: 500; color: var(--text-main); border-bottom: 1px solid var(--line); }
+.duo-card h4 span { display: inline-flex; align-items: center; gap: 8px; }
+.duo-card h4 i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.duo-card svg { aspect-ratio: 1.25; }
+.duo-stats { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
+.duo-stats div { padding: 10px 14px; }
+.duo-stats div + div { border-left: 1px solid var(--line); }
+.duo-stats small { display: block; font-size: 12px; color: var(--text-mute); }
+.duo-stats strong { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--text-main); font-variant-numeric: tabular-nums; }
+.verdict { font-size: 12px; font-weight: 500; padding: 2px 8px; border-radius: 999px; color: var(--vc); background: color-mix(in srgb, var(--vc) 14%, transparent); transition: color 200ms ease, background-color 200ms ease; }
+
+/* Équation */
+.eq { margin: 26px 0; padding: 22px; border-radius: 14px; background: rgba(2,6,23,.5); border: 1px solid var(--border); text-align: center; font-family: var(--mono); font-size: 17px; color: #d5dcfb; overflow-x: auto; white-space: nowrap; }
+.eq-parts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: -12px 0 26px; }
+.eq-part { padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-light); font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.eq-part b { display: block; margin-bottom: 2px; font-family: var(--mono); font-weight: 500; color: #fff; }
+
+/* Suite du programme */
+.next { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.next li { position: relative; padding: 16px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.next li::before { content: ""; position: absolute; top: 20px; right: -13px; width: 13px; height: 1px; background: var(--border); }
+.next li:last-child::before { display: none; }
+.next time { font-family: var(--mono); font-size: 12.5px; color: var(--nc, var(--accent)); }
+.next strong { display: block; margin: 6px 0 4px; font-size: 15px; font-weight: 500; color: var(--text-main); }
+.next span { font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.next li.now { border-color: color-mix(in srgb, var(--ok) 45%, var(--border)); }
+
+/* Références */
+.refs { list-style: none; margin: 0; padding: 0; counter-reset: r; display: grid; gap: 4px; }
+.refs li { counter-increment: r; position: relative; display: block; padding: 10px 12px 10px 54px; margin: 0 -12px; border-radius: 10px; font-size: 14px; line-height: 1.6; color: var(--text-soft); transition: background-color 600ms ease; scroll-margin-top: calc(var(--header-h) + var(--subnav-h) + 40px); }
+.refs li::before { content: "[" counter(r) "]"; position: absolute; left: 12px; top: 11px; font-family: var(--mono); font-size: 13px; color: var(--accent); }
+.refs li.flash { background: rgba(79,107,237,.16); transition: none; }
+.refs em { color: var(--text-main); }
+.decl { margin-top: 28px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.35); display: grid; gap: 8px; font-size: 13.5px; line-height: 1.6; color: var(--text-mute); }
+.decl strong { color: var(--text-soft); font-weight: 500; }
+
+/* Articles liés */
+.related { margin-top: 72px; padding-top: 40px; border-top: 1px solid var(--border); }
+.related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
+.rel { display: flex; flex-direction: column; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); background: var(--bg-light); text-decoration: none; transition: border-color 200ms ease, transform 220ms var(--ease-out); }
+.rel-img { aspect-ratio: 16 / 9; overflow: hidden; background: linear-gradient(135deg, color-mix(in srgb, var(--c) 30%, var(--bg-raise)), var(--bg-light)); }
+.rel-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 500ms var(--ease-out); }
+.rel-body { padding: 16px; }
+.rel-body small { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--text-soft); }
+.rel-body small::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c); }
+.rel-body strong { display: block; margin-top: 6px; font-size: 16px; font-weight: 500; line-height: 1.4; color: var(--text-main); }
+.rel:active { transform: scale(.98); }
+@media (hover: hover) and (pointer: fine) {
+  .rel:hover { border-color: color-mix(in srgb, var(--c) 55%, var(--border)); transform: translateY(-3px); }
+  .rel:hover .rel-img img { transform: scale(1.04); }
+}
+.section-title { margin: 0; font-family: "Syne", sans-serif; font-size: 22px; font-weight: 700; color: var(--text-strong); }
+
+/* apparition des figures */
+.js .rv { opacity: 0; transform: translateY(16px); transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
+.js .rv.in { opacity: 1; transform: none; }
+
+.toast {
+  position: fixed; left: 50%; bottom: 24px; z-index: 4000;
+  display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 12px;
+  background: #0b1540; border: 1px solid rgba(52,211,153,.35); color: #a7f3d0; font-size: 14px;
+  box-shadow: 0 16px 40px rgba(0,0,0,.5);
+  transform: translate(-50%, 16px); opacity: 0; pointer-events: none;
+  transition: transform 260ms var(--ease-out), opacity 200ms ease;
+}
+.toast.show { transform: translate(-50%, 0); opacity: 1; }
+.toast i { font-size: 18px; color: var(--ok); }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1320px) {
+  .art-layout { grid-template-columns: minmax(0, 720px) 280px; justify-content: center; }
+  .toc { display: none; }
+}
+@media (max-width: 1060px) {
+  .art-layout { grid-template-columns: minmax(0, 720px); }
+  .rail { position: static; max-height: none; overflow: visible; grid-template-columns: repeat(2, minmax(0, 1fr)); order: 2; }
+  .rail .rail-figs { display: none; }
+  .art-hero-grid { grid-template-columns: 1fr; gap: 10px; padding-bottom: 36px; }
+  .reentry { justify-self: center; max-width: 440px; order: -1; margin-top: -10px; }
+}
+@media (max-width: 860px) {
+  .main-nav, .header-right .btn-desktop { display: none; }
+  .menu-toggle { display: inline-flex; }
+}
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .subnav-list { padding: 0 20px; overflow-x: auto; scrollbar-width: none; }
+  .subnav-link { padding: 0 10px; font-size: 13.5px; }
+  .art-lede { font-size: 16.5px; }
+  .art p { font-size: 16px; }
+  .art h2 { font-size: 22px; margin-top: 52px; }
+  .kpis { grid-template-columns: 1fr; }
+  .kpi { display: flex; align-items: baseline; gap: 14px; }
+  .kpi span { margin: 0; }
+  .essentials { padding: 20px; }
+  .fig-stage { padding: 16px; }
+  .fig figcaption, .fig .cap { padding: 12px 16px 16px; }
+  .readouts { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .readout strong { font-size: 14px; }
+  .thermo { grid-template-columns: 1fr 56px; gap: 10px; }
+  .duo { grid-template-columns: 1fr; }
+  .eq { font-size: 14px; }
+  #trajSvg text { font-size: 22px; }
+  .bench-h { display: none !important; }
+  .bench-v { display: block !important; }
+  .duo-card svg text { font-size: 13px; }
+  .eq-parts { grid-template-columns: 1fr; }
+  .next { grid-template-columns: 1fr; }
+  .next li::before { display: none; }
+  .rail { grid-template-columns: 1fr; }
+  .related-grid { grid-template-columns: 1fr; }
+  .site-footer { margin-top: 72px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
+  .hero-in { opacity: 1; transform: none; }
+}
+
+/* impression / PDF : texte seul, figures conservées */
+@media print {
+  .site-header, .subnav, .mobile-panel, .progress, .toc, .rail, .related, .site-footer, .ctrl, .legend, .scrub, .parts, .skip-link { display: none !important; }
+  body { background: #fff; color: #111; }
+  .art-layout { display: block; padding: 0; }
+  .art p, .art h2, .art h3, .art-title, .art-lede { color: #111 !important; }
+  .fig, .table-wrap, .essentials, .abstract, .note { break-inside: avoid; }
+  .js .rv { opacity: 1; transform: none; }
+}
+
+/* =========================================================
+   ARTICLE 02 : PROPULSION IONIQUE
+   ========================================================= */
+.art-hero--ion::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 82% 45%, rgba(59,130,246,.2), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(249,115,22,.1), transparent 60%);
+}
+.thruster .glow { animation: glow 1.4s ease-in-out infinite alternate; }
+
+.seg { display: inline-flex; padding: 3px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-light); }
+.seg button { height: 30px; padding: 0 12px; border: 0; border-radius: 7px; background: none; color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out); }
+.seg button:active { transform: scale(.96); }
+.seg button[aria-pressed="true"] { background: var(--bg-raise); color: #fff; box-shadow: inset 0 0 0 1px var(--border); }
+@media (hover: hover) and (pointer: fine) { .seg button:hover { color: #fff; } }
+
+.lg.static { cursor: default; }
+#howSvg .zone { transition: opacity 240ms ease; }
+#howSvg.focus .zone { opacity: .22; }
+#howSvg.focus .zone.lit { opacity: 1; }
+
+tr.hi td { background: rgba(59,130,246,.07); }
+td.gain { color: var(--ok); }
+
+.multiples { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.multiples .chart { border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.35); padding: 8px 4px 0; }
+
+.wear { display: grid; grid-template-columns: minmax(0, 1fr) 170px; gap: 16px; align-items: center; }
+.discs { display: grid; gap: 12px; }
+.disc { display: grid; justify-items: center; gap: 4px; padding: 10px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.35); }
+.disc svg { width: 110px; height: 110px; }
+.disc span { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--text-soft); }
+.disc span i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.disc strong { font-family: var(--mono); font-size: 14px; font-weight: 500; color: var(--text-main); }
+.disc.over { border-color: rgba(248,113,113,.5); }
+.disc.over strong { color: var(--bad); }
+
+@media (max-width: 640px) {
+  .multiples { grid-template-columns: 1fr; }
+  .wear { grid-template-columns: 1fr; }
+  .discs { grid-template-columns: 1fr 1fr; }
+  .disc svg { width: 96px; height: 96px; }
+  #howSvg text { display: none; }
+  .readouts { grid-template-columns: 1fr; gap: 6px; }
+  .readout { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 8px 12px; }
+  .readout strong { margin: 0; white-space: nowrap; }
+  #orbitSvg text { font-size: 18px; }
+}
+#gridSvg, #orbitSvg, #howSvg { overflow: hidden; border-radius: 10px; }
+
+/* =========================================================
+   ARTICLE 03 : ASTROBIOLOGIE
+   ========================================================= */
+.art-hero--mars::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 78% 45%, rgba(234,88,12,.18), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(52,211,153,.12), transparent 60%);
+}
+.art-hero--mars .reentry svg { overflow: visible; }
+
+/* jauges Terre / Mars */
+.gauges { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 22px; }
+.gauge { display: grid; gap: 8px; padding: 14px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.4); }
+.gauge-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.gauge-top span { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--text-soft); }
+.gauge-top span i { font-size: 16px; color: var(--text-mute); }
+.gauge-top strong { font-family: var(--mono); font-size: 14.5px; font-weight: 500; color: var(--text-strong); white-space: nowrap; transition: color 200ms ease; }
+.gauge-bar { position: relative; height: 8px; border-radius: 8px; background: linear-gradient(90deg, rgba(52,211,153,.18), rgba(251,191,36,.18) 60%, rgba(248,113,113,.22)); }
+.gauge-fill { position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(90deg, #34d399, #fbbf24 60%, #f87171); transform-origin: left; transform: scaleX(var(--v, 0)); transition: transform 600ms var(--ease-out); clip-path: inset(0 round 8px); }
+.gauge-limit { position: absolute; top: -5px; bottom: -5px; width: 2px; border-radius: 2px; background: #fff; left: var(--l); }
+.gauge-foot { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; color: var(--text-mute); }
+.gauge.beyond .gauge-top strong { color: #fca5a5; }
+
+/* fiches espèces */
+.orgs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 26px 0 12px; }
+.org { position: relative; display: grid; grid-template-columns: 64px 1fr; gap: 14px; padding: 16px; border-radius: 16px; border: 1px solid var(--border); background: var(--bg-light); overflow: hidden; }
+.org::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--oc); }
+.org-pic { width: 64px; height: 64px; border-radius: 14px; background: radial-gradient(circle, color-mix(in srgb, var(--oc) 22%, transparent), rgba(2,6,23,.6)); }
+.org-kind { display: block; font-size: 12px; color: var(--text-mute); }
+.org h4 { margin: 2px 0 6px; font-size: 16px; font-weight: 500; color: var(--text-strong); }
+.art .org p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+.org-state { grid-column: 1 / -1; justify-self: start; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 500; color: var(--sc); background: color-mix(in srgb, var(--sc) 12%, transparent); border: 1px solid color-mix(in srgb, var(--sc) 28%, transparent); }
+.art .small-note { font-size: 14px; color: var(--text-mute); }
+
+/* journal des cultures */
+.dishes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.dish { display: grid; justify-items: center; gap: 6px; padding: 12px 8px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.4); }
+.dish svg { width: 100%; max-width: 132px; aspect-ratio: 1; }
+.dish svg circle.cell { transition: opacity 400ms ease, fill 400ms ease; }
+.dish span { font-size: 12.5px; color: var(--text-soft); text-align: center; }
+.dish strong { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--text-strong); }
+.event { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-items: baseline; margin-top: 14px; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-light); min-height: 78px; }
+.event time { font-family: var(--mono); font-size: 13px; color: var(--ec, var(--accent)); grid-row: span 2; }
+.event strong { font-size: 14.5px; font-weight: 500; color: var(--text-main); }
+.event span { font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.event.swap { animation: evIn 260ms var(--ease-out); }
+@keyframes evIn { from { opacity: 0; transform: translateY(4px); } }
+.scrub { position: relative; }
+.ticks { position: absolute; left: 0; right: 0; top: -6px; height: 6px; pointer-events: none; }
+
+/* comparaison microscope */
+.compare { position: relative; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; background: #000; cursor: ew-resize; touch-action: pan-y; user-select: none; }
+.compare canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+#micB { clip-path: inset(0 0 0 var(--p, 50%)); }
+.cmp-label { position: absolute; top: 12px; padding: 4px 10px; border-radius: 8px; font-family: var(--mono); font-size: 12.5px; color: #fff; background: rgba(0,0,0,.55); pointer-events: none; }
+.cmp-label.l { left: 12px; }
+.cmp-label.r { right: 12px; }
+.cmp-handle { position: absolute; top: 0; bottom: 0; left: var(--p, 50%); width: 2px; margin-left: -1px; background: #fff; pointer-events: none; }
+.cmp-handle i { position: absolute; top: 50%; left: 50%; width: 38px; height: 38px; margin: -19px 0 0 -19px; border-radius: 50%; display: grid; place-items: center; font-size: 18px; color: #050b1e; background: #fff; box-shadow: 0 6px 20px rgba(0,0,0,.5); transition: transform 160ms var(--ease-out); }
+.compare:active .cmp-handle i { transform: scale(.92); }
+.compare:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+#chamberSvg { overflow: hidden; border-radius: 10px; }
+
+@media (max-width: 640px) {
+  .gauges { grid-template-columns: 1fr; }
+  .orgs { grid-template-columns: 1fr; }
+  .dishes { grid-template-columns: 1fr 1fr; }
+  #chamberSvg text { font-size: 15px; }
+  #chamberSvg text.side { display: none; }
+  .compare { aspect-ratio: 4 / 3; }
+}
+
+/* =========================================================
+   ARTICLE 04 : PHYSIQUE QUANTIQUE
+   ========================================================= */
+.art-hero--q::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 78% 40%, rgba(168,85,247,.18), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(59,130,246,.12), transparent 60%);
+}
+.qlink svg { overflow: hidden; -webkit-mask-image: radial-gradient(ellipse 52% 52% at 60% 44%, #000 55%, transparent 100%); mask-image: radial-gradient(ellipse 52% 52% at 60% 44%, #000 55%, transparent 100%); }
+
+/* jeu de Bell */
+.bell { display: grid; grid-template-columns: 150px minmax(0, 1fr) 150px; gap: 16px; align-items: center; }
+.bell-side { display: grid; justify-items: center; gap: 8px; padding: 12px; border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.4); }
+.bell-who { font-size: 13px; color: var(--text-soft); }
+.dial { width: 96px; height: 96px; }
+.dial .needle { transition: transform 260ms var(--ease-out); transform-origin: 50px 50px; }
+.bell-angle { display: grid; gap: 6px; width: 100%; font-size: 12px; color: var(--text-mute); text-align: center; }
+.bell-angle output { font-family: var(--mono); color: var(--text-main); }
+.bell-angle input { width: 100%; accent-color: #a855f7; }
+.bell-mid { display: grid; gap: 14px; min-width: 0; }
+.bell-rows { display: grid; gap: 8px; padding: 14px; border-radius: 12px; background: rgba(2,6,23,.5); border: 1px solid var(--line); overflow: hidden; }
+.bell-row { display: flex; gap: 5px; justify-content: flex-end; height: 16px; }
+.bell-row i { flex: 0 0 16px; height: 16px; border-radius: 4px; border: 2px solid #c084fc; animation: pop 260ms var(--ease-out); }
+.bell-row i.on { background: #c084fc; }
+.bell-row i.diff { border-color: #f87171; }
+.bell-row i.diff.on { background: #f87171; }
+@keyframes pop { from { transform: scale(.6); opacity: 0; } }
+.bell-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.bell-stats div { padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg-light); }
+.bell-stats small { display: block; font-size: 12px; color: var(--text-mute); }
+.bell-stats strong { display: block; margin-top: 2px; font-family: var(--mono); font-size: 18px; font-weight: 500; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+
+/* pertes : gaufre de points */
+.waffle { position: relative; border-radius: 12px; overflow: hidden; background: #03050f; border: 1px solid var(--line); aspect-ratio: 2.2; }
+.waffle canvas { width: 100%; height: 100%; display: block; }
+
+#setupSvg [data-part] { transition: opacity 220ms ease; }
+#setupSvg.focus [data-part] { opacity: .18; }
+#setupSvg.focus [data-part].lit { opacity: 1; }
+#setupSvg, #bellGauge { overflow: visible; }
+
+@media (max-width: 760px) {
+  .bell { grid-template-columns: 1fr 1fr; }
+  .bell-mid { grid-column: 1 / -1; order: 3; }
+}
+@media (max-width: 640px) {
+  .waffle { aspect-ratio: 1.3; }
+  .dial { width: 80px; height: 80px; }
+  #setupSvg text { display: none; }
+}
+
+/* =========================================================
+   ARTICLE : BIOSIGNATURES MARTIENNES
+   ========================================================= */
+.art-hero--mars2::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 76% 48%, rgba(234,88,12,.16), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(52,211,153,.08), transparent 60%);
+}
+.marsart svg { overflow: visible; }
+.marsart .reentry-tag { z-index: 2; }
+.chart svg { display: block; width: 100%; }
+.pulse-m { animation: pm 2.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes pm { 0% { opacity: .9; transform: scale(1); } 100% { opacity: 0; transform: scale(2.6); } }
+
+/* Fig. 1 carte */
+.map { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+.map svg { display: block; width: 100%; }
+.map .mk { cursor: pointer; }
+.map .mk:focus-visible { outline: none; }
+.map .mk:focus-visible circle.core { stroke: #fff; stroke-width: 2.5; }
+.site-info { margin-top: 14px; display: grid; grid-template-columns: minmax(0, 1fr) 150px; gap: 14px; align-items: center; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--border); background: rgba(2,6,23,.45); }
+.site-info.swap { animation: evIn 260ms var(--ease-out); }
+@keyframes evIn { from { opacity: 0; transform: translateY(4px); } }
+.site-info small { display: block; font-family: var(--mono); font-size: 12px; color: var(--text-mute); }
+.site-info h4 { margin: 2px 0 6px; font-size: 17px; font-weight: 500; color: var(--text-strong); }
+.art .site-info p { margin: 0; font-size: 14.5px; line-height: 1.55; color: var(--text-soft); }
+.ipb-big { text-align: center; }
+.ipb-big strong { display: block; font-family: var(--mono); font-size: 30px; font-weight: 500; color: #fb923c; }
+.ipb-big span { font-size: 12px; color: var(--text-mute); }
+.ipb-bar { height: 6px; border-radius: 99px; background: #13204d; margin-top: 8px; overflow: hidden; }
+.ipb-bar i { display: block; height: 100%; border-radius: 99px; background: #fb923c; width: calc(var(--v) * 100%); transition: width 500ms var(--ease-out); }
+
+/* Fig. 2 classement */
+#critLegend { margin-bottom: 14px; }
+#critLegend .lg { cursor: default; }
+#critLegend .lg i { width: 10px; height: 10px; border-radius: 3px; }
+.rank { position: relative; }
+.rk { position: absolute; left: 0; right: 0; display: grid; grid-template-columns: 172px minmax(0, 1fr) 46px; gap: 12px; align-items: center; transition: transform 600ms var(--ease-out); }
+.rk-n { font-size: 14px; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rk-n b { display: inline-block; width: 20px; font-family: var(--mono); font-weight: 500; color: var(--text-mute); }
+.rk-bar { display: flex; height: 18px; border-radius: 5px; overflow: hidden; background: #0e1838; }
+.rk-bar i { display: block; height: 100%; transition: width 600ms var(--ease-out); box-shadow: inset -1px 0 0 #070f2b; }
+.rk-v { font-family: var(--mono); font-size: 13.5px; color: #fff; text-align: right; }
+.rk.top .rk-n { color: #fff; font-weight: 500; }
+
+/* photos */
+.fig.photo .photo-box { position: relative; background: #0a0f24; }
+.fig.photo .photo-box img { display: block; width: 100%; height: auto; }
+.fig.photo .photo-box svg { display: block; width: 100%; height: auto; overflow: hidden; }
+
+/* classes */
+.classes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0 8px; }
+.cls { display: grid; grid-template-columns: 34px 1fr; gap: 12px; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); border-top: 2px solid var(--cc); }
+.cls-l { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; font-family: var(--mono); font-size: 16px; font-weight: 500; color: #fff; background: color-mix(in srgb, var(--cc) 30%, transparent); border: 1px solid color-mix(in srgb, var(--cc) 60%, transparent); }
+.cls strong { display: block; font-size: 15px; font-weight: 500; color: var(--text-strong); margin-bottom: 4px; }
+.art .cls p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+
+/* Fig. 6 entonnoir */
+#funnel { display: block; width: 100%; margin-bottom: 14px; }
+.step-desc { margin-top: 12px; min-height: 96px; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--border); background: rgba(2,6,23,.45); }
+.step-desc h4 { margin: 0 0 6px; font-size: 16px; font-weight: 500; color: var(--text-strong); }
+.art .step-desc p { margin: 0; font-size: 14.5px; line-height: 1.6; color: var(--text-soft); }
+.step-desc.swap { animation: evIn 260ms var(--ease-out); }
+.fun-st { cursor: pointer; }
+
+/* Fig. 7 test en aveugle */
+.seg-wide { display: flex; flex-wrap: wrap; width: fit-content; max-width: 100%; margin-bottom: 16px; }
+.blind { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.art .bl-t { margin: 0 0 8px; font-size: 13.5px; color: var(--text-soft); }
+.bl-t small { font-family: var(--mono); color: var(--text-mute); margin-left: 6px; }
+.tiles { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; }
+.tile { position: relative; aspect-ratio: 1; border-radius: 8px; border: 1px solid var(--border); background: #0a1436; display: grid; place-items: center; transition: background-color 300ms ease, border-color 300ms ease, transform 300ms var(--ease-out); transition-delay: var(--dl, 0ms); }
+.tile i { font-size: 16px; opacity: 0; transition: opacity 200ms ease; transition-delay: var(--dl, 0ms); }
+.tile .dots { position: absolute; bottom: 4px; left: 0; right: 0; display: flex; justify-content: center; gap: 2px; }
+.tile .dots b { width: 4px; height: 4px; border-radius: 50%; background: #1b2555; }
+.tile .dots b.on { background: var(--dc); }
+.tile.tp { background: rgba(52,211,153,.16); border-color: rgba(52,211,153,.6); }
+.tile.tp i { opacity: 1; color: #34d399; }
+.tile.fp { background: rgba(248,113,113,.16); border-color: rgba(248,113,113,.7); }
+.tile.fp i { opacity: 1; color: #f87171; }
+.tile.fn { background: #0a1436; border-style: dashed; border-color: #475394; }
+.tile.tn { background: #0a1436; }
+.art .tiles-l { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 10px 0 0; font-size: 12.5px; color: var(--text-mute); }
+.tiles-l span { display: inline-flex; align-items: center; gap: 7px; }
+.tiles-l i { width: 12px; height: 12px; border-radius: 3px; border: 1px solid var(--border); }
+.tiles-l .t-tp { background: rgba(52,211,153,.3); border-color: #34d399; }
+.tiles-l .t-fn { border-style: dashed; border-color: #475394; }
+.tiles-l .t-fp { background: rgba(248,113,113,.3); border-color: #f87171; }
+.tiles-l .t-tn { background: #0a1436; }
+.readout.hot strong { color: var(--rc, #34d399); transition: color 240ms ease; }
+.cl { display: inline-grid; place-items: center; width: 20px; height: 20px; margin-right: 8px; border-radius: 6px; font-family: var(--mono); font-size: 12px; color: #fff; background: color-mix(in srgb, var(--cc) 35%, transparent); }
+
+/* échelle de confiance */
+.ladder { list-style: none; margin: 18px 0 24px; padding: 0; display: grid; gap: 8px; }
+.ladder li { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 12px 16px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.ladder li:nth-child(2) { margin-left: 18px; }
+.ladder li:nth-child(3) { margin-left: 36px; border-color: rgba(52,211,153,.4); background: rgba(52,211,153,.05); }
+.ld-n { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-family: var(--mono); font-size: 14px; color: #03130d; background: var(--lc); }
+.ladder strong { display: block; font-size: 15px; font-weight: 500; color: var(--text-strong); }
+.ladder span { display: block; font-size: 14px; line-height: 1.45; color: var(--text-soft); }
+.ladder em { font-style: normal; font-family: var(--mono); font-size: 12.5px; color: var(--lc); text-align: right; }
+
+@media (max-width: 760px) {
+  .classes, .blind { grid-template-columns: 1fr; }
+  .site-info { grid-template-columns: 1fr; }
+  .ipb-big { text-align: left; }
+  .rk { grid-template-columns: 96px minmax(0, 1fr) 40px; gap: 8px; }
+  .rk-n { font-size: 13px; }
+  .ladder li { grid-template-columns: 34px minmax(0, 1fr); }
+  .ladder li:nth-child(2), .ladder li:nth-child(3) { margin-left: 0; }
+  .ladder em { grid-column: 2; text-align: left; }
+}
+@media (prefers-reduced-motion: reduce) { .pulse-m { animation: none; } .rk, .tile, .tile i { transition: none; } }
+
+.tiles-l .t-dots { display: inline-flex; gap: 2px; }
+.tiles-l .t-dots b { width: 5px; height: 5px; border-radius: 50%; }
+.scat-list { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 4px; font-size: 13px; color: var(--text-soft); counter-reset: sc; }
+.scat-list li { counter-increment: sc; display: flex; align-items: center; }
+.scat-list li::before { content: counter(sc); width: 18px; font-family: var(--mono); color: var(--text-mute); }
+.step-desc h4 .cnt { margin-left: 6px; font-family: var(--mono); font-size: 12.5px; font-weight: 400; color: var(--text-mute); }
+@media (max-width: 760px) { #funnel text { display: none; } }
+
 </style>
+<script>document.documentElement.classList.add('js');</script>
 </head>
+
 <body>
 
-<div class="progress-bar" id="progressBar"></div>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
 
-<header>
-  <div class="header-inner">
+<!-- ===== HEADER ===== -->
+<header class="site-header" id="header">
+  <div class="container header-inner">
     <div class="header-left">
-      <a href="../index.html" class="logo-link"><img src="../logo.png" alt="IFRAS"></a>
-      <nav><ul class="main-nav">
-        <li><a href="../index.html">Accueil</a></li>
-        <li><a href="../recherche.html">Recherche</a></li>
-        <li><a href="../programmes.html">Programmes</a></li>
-        <li><a href="../publications.html">Publications</a></li>
-      </ul></nav>
+      <a href="../index.html" class="logo-link" aria-label="IFRAS, accueil">
+        <img src="../logo.png" alt="Logo IFRAS" width="44" height="44">
+      </a>
+      <nav aria-label="Navigation principale">
+        <ul class="main-nav">
+          <li><a href="../index.html">Accueil</a></li>
+          <li><a href="../recherche.html">Recherche</a></li>
+          <li><a href="../programmes.html">Programmes</a></li>
+          <li><a href="../publications.html" aria-current="page">Publications</a></li>
+        </ul>
+      </nav>
     </div>
-    <div class="header-right"><a href="../connexion.html" class="login-btn">Connexion</a></div>
+    <div class="header-right">
+      <a href="../connexion.html" class="btn btn-ghost btn-desktop">Connexion</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-panel" aria-label="Ouvrir le menu">
+        <i class="ph-light ph-list" aria-hidden="true"></i>
+      </button>
+    </div>
   </div>
 </header>
 
-<div class="sub-nav">
+<div class="mobile-panel" id="mobile-panel">
   <ul>
-    <li><a href="../publications-scientifiques.html" class="active">Publications scientifiques</a></li>
-    <li><a href="../publications-ifras.html">Publications IFRAS</a></li>
-    <li><a href="../evenements.html">Événements</a></li>
+    <li><a href="../index.html">Accueil <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../recherche.html">Recherche <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../programmes.html">Programmes <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../publications.html" aria-current="page">Publications <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
   </ul>
+  <a href="../connexion.html" class="btn btn-primary">Connexion</a>
 </div>
 
-<nav class="toc-sidebar">
-  <div class="toc-dot active" data-label="Résumé"        data-target="s0"></div>
-  <div class="toc-dot"        data-label="Contexte"      data-target="s1"></div>
-  <div class="toc-dot"        data-label="Sites cibles"  data-target="s2"></div>
-  <div class="toc-dot"        data-label="Biosignatures" data-target="s3"></div>
-  <div class="toc-dot"        data-label="Méthodes"      data-target="s4"></div>
-  <div class="toc-dot"        data-label="Résultats"     data-target="s5"></div>
-  <div class="toc-dot"        data-label="Discussion"    data-target="s6"></div>
-  <div class="toc-dot"        data-label="Références"    data-target="s7"></div>
+<!-- ===== SOUS-NAVIGATION (mêmes rubriques que publications.html) ===== -->
+<nav class="subnav" id="subnav" aria-label="Rubriques des publications">
+  <ul class="subnav-list">
+    <li><a class="subnav-link" href="../publications-scientifiques.html" aria-current="true" style="--c:var(--t-sci)"><i class="ph-light ph-article" aria-hidden="true"></i>Publications scientifiques</a></li>
+    <li><a class="subnav-link" href="../publications-ifras.html" style="--c:var(--t-ifras)"><i class="ph-light ph-book-open" aria-hidden="true"></i>Publications IFRAS</a></li>
+    <li><a class="subnav-link" href="../evenements.html" style="--c:var(--t-event)"><i class="ph-light ph-calendar-dots" aria-hidden="true"></i>Événements</a></li>
+  </ul>
 </nav>
 
-<div class="pub-wrapper">
+<div class="progress" aria-hidden="true"><span id="progress"></span></div>
 
-  <nav class="breadcrumb">
-    <a href="../publications.html">Publications</a>
-    <span>/</span>
-    <a href="../publications-scientifiques.html">Publications scientifiques</a>
-    <span>/</span>
-    DAI · 2026 · Astrobiologie martienne
+<main id="contenu">
+
+<!-- ===== EN-TÊTE DE L'ARTICLE ===== -->
+<header class="art-hero art-hero--mars2">
+  <div class="container art-hero-grid">
+    <div>
+      <ol class="crumbs hero-in" style="--i:0" aria-label="Fil d'Ariane">
+        <li><a href="../publications.html">Publications</a></li>
+        <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+        <li><a href="../publications-scientifiques.html">Publications scientifiques</a></li>
+        <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+        <li aria-current="page">Astrobiologie</li>
+      </ol>
+      <div class="badges hero-in" style="--i:1">
+        <span class="badge" style="--b:#34d399"><i class="ph-light ph-dna" aria-hidden="true"></i>Astrobiologie · DAI</span>
+        <span class="badge" style="--b:#60a5fa"><i class="ph-light ph-seal-check" aria-hidden="true"></i>Évalué par les pairs</span>
+        <span class="badge" style="--b:#34d399"><i class="ph-light ph-lock-simple-open" aria-hidden="true"></i>Accès libre</span>
+      </div>
+      <h1 class="art-title hero-in" style="--i:2">Chercher la vie sur Mars : où creuser, quoi mesurer, quand y croire</h1>
+      <p class="art-lede hero-in" style="--i:3">Nous classons six sites martiens selon leurs chances de conserver des traces de vie, puis testons en aveugle une méthode d'analyse sur 48 échantillons préparés à l'IFRAS. Verdict : un seul indice trompe souvent, trois indices concordants jamais.</p>
+      <ul class="authors hero-in" style="--i:4" aria-label="Auteurs">
+        <li class="author"><span class="av" style="--ah:150" aria-hidden="true">AG</span><span><strong>Antoine Girard</strong><small>Astrobiologie</small></span></li>
+        <li class="author"><span class="av" style="--ah:20" aria-hidden="true">NF</span><span><strong>Nadia Ferreira</strong><small>Géochimie organique</small></span></li>
+        <li class="author"><span class="av" style="--ah:110" aria-hidden="true">SG</span><span><strong>Solène Garnier</strong><small>Extrêmophiles (DSVT)</small></span></li>
+        <li class="author"><span class="av" style="--ah:230" aria-hidden="true">KW</span><span><strong>Kenji Watanabe</strong><small>Planétologie</small></span></li>
+        <li class="author"><span class="av" style="--ah:300" aria-hidden="true">LM</span><span><strong>Léa Marchetti</strong><small>Spectrométrie de masse</small></span></li>
+      </ul>
+      <div class="meta-line hero-in" style="--i:5">
+        <span><i class="ph-light ph-calendar-blank" aria-hidden="true"></i>Publié le 5 mai 2026</span>
+        <span><i class="ph-light ph-clock" aria-hidden="true"></i>9 min de lecture</span>
+        <span><i class="ph-light ph-hash" aria-hidden="true"></i><code>IFRAS-DAI-2026-007</code></span>
+      </div>
+    </div>
+
+    <!-- Illustration : Mars qui tourne et ses sites -->
+    <div class="reentry marsart hero-in" style="--i:3" aria-hidden="true">
+      <canvas id="marsStars"></canvas>
+      <svg viewBox="0 0 520 447" id="heroMars"></svg>
+      <span class="reentry-tag" style="right:2%;top:10%"><i style="background:#fb923c"></i> Sites classés <b>6</b></span>
+      <span class="reentry-tag" style="left:2%;bottom:10%"><i style="background:#34d399"></i> Faux positifs <b>0 / 24</b></span>
+    </div>
+  </div>
+</header>
+
+<div class="container art-layout">
+
+  <!-- Sommaire -->
+  <nav class="toc" aria-label="Sommaire">
+    <p class="toc-title">Sommaire</p>
+    <ol id="toc">
+      <li class="toc-ind" aria-hidden="true"></li>
+      <li><a href="#s-essentiel"><span>—</span>L'essentiel</a></li>
+      <li><a href="#s-intro"><span>1</span>Où creuser</a></li>
+      <li><a href="#s-classes"><span>2</span>Quoi mesurer</a></li>
+      <li><a href="#s-methodes"><span>3</span>La méthode</a></li>
+      <li><a href="#s-resultats"><span>4</span>Le test en aveugle</a></li>
+      <li><a href="#s-conclusion"><span>5</span>Quand y croire</a></li>
+    </ol>
+    <p class="toc-time"><i class="ph-light ph-hourglass-medium" aria-hidden="true"></i><span id="timeLeft">9 min restantes</span></p>
   </nav>
 
-  <!-- ===== EN-TÊTE ===== -->
-  <div id="s0">
-    <div class="meta-top">
-      <span class="badge badge-j">Astrobiology & Planetary Science · Vol. 26 (4)</span>
-      <span class="badge badge-d">DAI — Département d'Astrobiologie &amp; Investigation</span>
-      <span class="badge badge-o">Accès ouvert</span>
-      <span class="badge badge-dt">Soumis 03 jan. 2026 · Accepté 22 avr. 2026</span>
-    </div>
+  <!-- ===== ARTICLE ===== -->
+  <article class="art" id="article">
 
-    <h1 class="article-title">
-      Stratégies de détection in situ de biosignatures martiennes : de la géochimie de subsurface aux marqueurs moléculaires organiques — cadre méthodologique intégré et hiérarchisation des cibles
-    </h1>
-
-    <p class="article-subtitle">
-      En s'appuyant sur le cadre théorique unifié de l'article fondateur IFRAS-DAI-2023-006 et sur les résultats
-      expérimentaux de la campagne MARSLAB-IV (IFRAS-DSVT-2026-003), nous proposons une méthodologie hiérarchisée
-      pour la détection in situ de biosignatures martiennes, combinant analyse géochimique de subsurface,
-      spectrométrie de masse organique et imagerie multi-spectrale sur six sites prioritaires de la surface martienne.
-    </p>
-
-    <div class="authors-block">
-      <div class="author-entry">
-        <span class="author-name">Prof. Antoine Girard</span>
-        <span class="author-role">DAI · Astrobiologie théorique &amp; détection</span>
-      </div>
-      <div class="author-sep"></div>
-      <div class="author-entry">
-        <span class="author-name">Dr. Nadia Ferreira</span>
-        <span class="author-role">DAI · Géochimie organique martienne</span>
-      </div>
-      <div class="author-sep"></div>
-      <div class="author-entry">
-        <span class="author-name">Dr. Solène Garnier</span>
-        <span class="author-role">DSVT · Extrêmophiles (auteure associée)</span>
-      </div>
-      <div class="author-sep"></div>
-      <div class="author-entry">
-        <span class="author-name">Dr. Kenji Watanabe</span>
-        <span class="author-role">DAI / ISAS-JAXA · Planétologie</span>
-      </div>
-      <div class="author-sep"></div>
-      <div class="author-entry">
-        <span class="author-name">Léa Marchetti</span>
-        <span class="author-role">DAI · Doctorante, spectrométrie de masse</span>
-      </div>
-    </div>
-
-    <div class="cite-block">
-      <div class="cite-item"><span class="cite-label">DOI</span><span>10.1089/ast.2026.0047</span></div>
-      <span class="cite-sep">|</span>
-      <div class="cite-item"><span class="cite-label">Réf. interne</span><span>IFRAS-DAI-2026-007</span></div>
-      <span class="cite-sep">|</span>
-      <div class="cite-item"><span class="cite-label">Données</span><span>Zenodo : 10.5281/zenodo.15100382</span></div>
-      <span class="cite-sep">|</span>
-      <div class="cite-item"><span class="cite-label">Lié à</span><span>IFRAS-DAI-2023-006 · IFRAS-DSVT-2026-003</span></div>
-    </div>
-  </div>
-
-  <div class="art-divider"></div>
-
-  <!-- ===== ABSTRACT ===== -->
-  <div class="abstract-box">
-    <div class="abstract-label">Résumé — Abstract</div>
-    <p class="abstract-text">
-      La question de l'existence passée ou présente d'une vie microbienne sur Mars constitue l'un des enjeux
-      scientifiques majeurs de l'exploration spatiale du XXI<sup>e</sup> siècle. Si les travaux récents — notamment
-      les résultats MARSLAB-IV démontrant la capacité de certains microorganismes terrestres à croître dans des
-      conditions martiennes simulées — élargissent les limites théoriques de l'habitabilité, la détection
-      directe de biosignatures in situ reste un défi analytique considérable. Nous présentons ici un cadre
-      méthodologique intégré pour la hiérarchisation des cibles et la conception des protocoles analytiques
-      embarqués, articulé autour de quatre classes de biosignatures : (1) marqueurs moléculaires organiques
-      chiraux (acides aminés, lipides membranaires), (2) isotopes biofractionateurs du carbone et du soufre,
-      (3) minéraux d'origine potentiellement biogénique (carbonates laminés, sulfures de fer framboïdaux),
-      et (4) structures morphologiques sub-micrométriques. Appliqué à six sites martiens candidats, ce cadre
-      produit un indice de priorité biosignature (IPB) permettant de guider les missions futures d'exploration
-      de subsurface. Hellas Planitia Nord et Jezero Crater lacustrine facies obtiennent les scores IPB les
-      plus élevés (0,87 et 0,84 respectivement).
-    </p>
-    <div class="kw-wrap">
-      <span class="kw-lbl">Mots-clés :</span>
-      <span class="kw-tag">Biosignatures</span>
-      <span class="kw-tag">Mars subsurface</span>
-      <span class="kw-tag">Acides aminés chiraux</span>
-      <span class="kw-tag">Fractionation isotopique</span>
-      <span class="kw-tag">Jezero Crater</span>
-      <span class="kw-tag">Spectrométrie de masse</span>
-      <span class="kw-tag">IPB</span>
-      <span class="kw-tag">Habitabilité</span>
-    </div>
-  </div>
-
-  <!-- ===== 1. CONTEXTE ===== -->
-  <h2 class="section-heading" id="s1">1. Contexte scientifique et positionnement de l'étude</h2>
-
-  <p class="bt">
-    La recherche de vie sur Mars s'articule autour d'une tension fondamentale : d'un côté, une accumulation
-    de données orbitales et in situ attestant de la présence passée d'eau liquide, de molécules organiques
-    et d'environnements potentiellement habitables [1, 2] ; de l'autre, l'absence à ce jour de toute détection
-    directe et non ambiguë d'une biosignature martienne. Cette tension n'est pas un échec scientifique mais
-    le reflet d'un défi analytique : les biosignatures martiennes potentielles sont vraisemblablement situées
-    en subsurface, à des concentrations extrêmement faibles, dans des matrices géochimiquement complexes
-    dominées par des oxydants puissants (perchlorates, peroxyde d'hydrogène) qui dégradent activement
-    les molécules organiques en surface [3].
-  </p>
-
-  <div class="hl blue">
-    L'article fondateur IFRAS-DAI-2023-006 a établi le cadre théorique unifié pour la détection de la vie non
-    terrestre. Le présent travail en constitue la déclinaison opérationnelle appliquée à Mars, en intégrant
-    les contraintes instrumentales réelles des missions en cours (Perseverance, ExoMars Rosalind Franklin)
-    et futures (Mars Life Explorer, concept NASA 2030+).
-  </div>
-
-  <p class="bt">
-    La campagne MARSLAB-IV [4] a démontré que des microorganismes chimioautotrophes haloacidophiles peuvent
-    maintenir une croissance active sous l'ensemble des paramètres martiens combinés, y compris en présence
-    de perchlorates à 0,6 % w/w. Ce résultat a deux implications directes pour la présente étude : (a) la
-    vie martienne hypothétique pourrait être métaboliquement active à ce jour dans des niches de subsurface
-    protégées du rayonnement UV ; (b) les biosignatures les plus pertinentes ne sont pas nécessairement
-    celles d'une vie fossilisée mais potentiellement celles d'une chimie metaboliquement active contemporaine.
-  </p>
-
-  <!-- Photo placeholder 1 -->
-  <div class="photo-wrap">
-  <img src="../Assets/publication/cratere01.png" alt="Jezero Crater" style="width:100%;display:block;border-bottom:1px solid var(--border);">
-    <div class="photo-caption">
-      <strong>Figure 1 — Jezero Crater (Mars, 18,4°N 77,7°E)</strong>
-      Vue oblique du delta fluvial fossile de Jezero Crater, site d'atterrissage du rover Perseverance (NASA, 2021).
-      Les dépôts sédimentaires détritiques et carbonatés constituant le delta représentent l'un des environnements
-      de préservation de biosignatures les plus favorables de Mars. Échelle : le delta mesure environ 3,5 km de large.
-  </div>
-  </div>
-
-
-  <!-- ===== 2. SITES CIBLES ===== -->
-  <h2 class="section-heading blue" id="s2">2. Hiérarchisation des sites candidats — indice IPB</h2>
-
-  <p class="bt">
-    L'indice de priorité biosignature (IPB) est un score composite normalisé entre 0 et 1, calculé à partir
-    de sept critères indépendants pondérés : présence documentée d'eau liquide passée, potentiel hydrothermal
-    résiduel, protection contre les UV (profondeur de subsurface accessible), disponibilité de substrats
-    énergétiques, complexité géochimique favorable, accessibilité instrumentale et analogie avec des
-    environnements terrestres abritant de la vie extrêmophile.
-  </p>
-
-  <!-- Cartes sites martiens -->
-  <div class="site-grid">
-
-    <div class="site-card green">
-      <div class="site-type">Cratère lacustre · 18°N 78°E</div>
-      <div class="site-name">Jezero Crater<br><span style="font-weight:300;font-size:11px">Delta fluvial fossile</span></div>
-      <div class="site-desc">Ancien lac de 45 km de diamètre. Dépôts carbonatés et argileux préservés dans le delta. Site actif de Perseverance. Présence confirmée de matière organique [5].</div>
-      <div class="site-score">
-        <div class="score-bar-wrap"><div class="score-bar" style="width:84%;background:var(--accent)"></div></div>
-        <span class="score-val">IPB 0,84</span>
-      </div>
-    </div>
-
-    <div class="site-card yellow">
-      <div class="site-type">Bassin d'impact · 40°S 70°E</div>
-      <div class="site-name">Hellas Planitia Nord<br><span style="font-weight:300;font-size:11px">Subsurface hydrothermale</span></div>
-      <div class="site-desc">Plus grand bassin d'impact de Mars (2 300 km). Pression atmosphérique locale +89 Pa. Activité hydrothermale résiduelle probable en subsurface profonde [6].</div>
-      <div class="site-score">
-        <div class="score-bar-wrap"><div class="score-bar" style="width:87%;background:#facc15"></div></div>
-        <span class="score-val">IPB 0,87</span>
-      </div>
-    </div>
-
-    <div class="site-card blue">
-      <div class="site-type">Caldeira volcanique · 14°N 226°E</div>
-      <div class="site-name">Arsia Mons Caldera<br><span style="font-weight:300;font-size:11px">Glace sub-surfacique volcanique</span></div>
-      <div class="site-desc">Dépôts de glace de CO₂ et H₂O détectés en subsurface par SHARAD/MRO. Interface glace-roche potentiellement habitable. Analogue des lacs subglaciaires antarctiques [7].</div>
-      <div class="site-score">
-        <div class="score-bar-wrap"><div class="score-bar" style="width:71%;background:var(--accent2)"></div></div>
-        <span class="score-val">IPB 0,71</span>
-      </div>
-    </div>
-
-    <div class="site-card orange">
-      <div class="site-type">Vallée tectono-volcanique · 14°S 59°W</div>
-      <div class="site-name">Valles Marineris Est<br><span style="font-weight:300;font-size:11px">Évidences chlorures et sulfates</span></div>
-      <div class="site-desc">Dépôts de chlorures et sulfates évaporitiques dans les bassins fermés. Concentrations en sel compatibles avec la croissance de halophiles extrêmes. Stratification visible depuis l'orbite [8].</div>
-      <div class="site-score">
-        <div class="score-bar-wrap"><div class="score-bar" style="width:65%;background:var(--accent3)"></div></div>
-        <span class="score-val">IPB 0,65</span>
-      </div>
-    </div>
-
-    <div class="site-card red">
-      <div class="site-type">Plaine volcanique · 25°N 148°E</div>
-      <div class="site-name">Acidalia Planitia<br><span style="font-weight:300;font-size:11px">Pingos et perchelorates</span></div>
-      <div class="site-desc">Structures de type pingos suggérant des processus périglaciaires récents. Concentrations en perchlorates élevées (1,2 % w/w). Potentiel d'eau liquide saumâtre saisonnière en subsurface [9].</div>
-      <div class="site-score">
-        <div class="score-bar-wrap"><div class="score-bar" style="width:58%;background:#f87171"></div></div>
-        <span class="score-val">IPB 0,58</span>
-      </div>
-    </div>
-
-    <div class="site-card purple">
-      <div class="site-type">Pôle sud · 87°S 0°E</div>
-      <div class="site-name">Ultimi Scopuli<br><span style="font-weight:300;font-size:11px">Lac subglaciaire candidat</span></div>
-      <div class="site-desc">Signal radar MARSIS (Mars Express) interprété comme un lac liquide sub-glaciaire de 20 km de diamètre à 1,5 km de profondeur [10]. Point de controverse actif dans la communauté.</div>
-      <div class="site-score">
-        <div class="score-bar-wrap"><div class="score-bar" style="width:52%;background:#a78bfa"></div></div>
-        <span class="score-val">IPB 0,52 ⚠️</span>
-      </div>
-    </div>
-
-  </div>
-
-  <p class="bt" style="font-size:13px;color:var(--text-muted)">
-    ⚠️ Le score IPB d'Ultimi Scopuli est à considérer avec précaution : la nature liquide du signal MARSIS
-    est contestée par plusieurs équipes [11]. Des interprétations alternatives (argiles conductrices, sels hydratés)
-    ne peuvent être exclues à ce stade. Le site est maintenu dans la liste pour son potentiel théorique maximal.
-  </p>
-
-  <!-- ===== 3. CLASSES DE BIOSIGNATURES ===== -->
-  <h2 class="section-heading orange" id="s3">3. Les quatre classes de biosignatures martiennes prioritaires</h2>
-
-  <p class="bt">
-    Une biosignature est définie ici comme tout signal physique, chimique ou morphologique dont
-    l'origine biologique est la seule explication parcimonieuse, ou qui, en contexte abiotique martien,
-    présente une probabilité d'occurrence suffisamment faible pour justifier une investigation approfondie.
-    Quatre classes sont retenues, hiérarchisées par leur robustesse interprétative et leur faisabilité
-    analytique in situ.
-  </p>
-
-  <h3 class="sub">3.1 Classe A — Marqueurs moléculaires organiques chiraux</h3>
-
-  <p class="bt">
-    La vie telle que nous la connaissons utilise exclusivement des acides aminés L (lévogyres) et des
-    sucres D (dextrogyres). Un excès d'énantiomère L dans un mélange d'acides aminés extraits d'un
-    échantillon martien — en l'absence d'explication racémisation-diagénèse — constitue la biosignature
-    moléculaire la plus discriminante disponible. À titre de comparaison, les météorites carbonées
-    (Murchison, ALH 84001) présentent des mélanges racémiques ou un léger excès L d'origine abiotique
-    inférieur à 3 % [12].
-  </p>
-
-  <div class="hl">
-    Un excès d'acides aminés L supérieur à 10 % dans un échantillon de subsurface martienne représenterait
-    une biosignature de classe A avec un niveau de confiance que l'article fondateur IFRAS-DAI-2023-006
-    qualifie de « hautement improbable sans origine biologique ». Aucun mécanisme abiotique connu
-    ne produit un tel excès de manière reproductible dans les conditions martiennes.
-  </div>
-
-  <h3 class="sub">3.2 Classe B — Fractionation isotopique biologique</h3>
-
-  <p class="bt">
-    Les organismes vivants discriminent préférentiellement les isotopes légers lors des réactions
-    enzymatiques. Le carbone biologique s'appauvrit en ¹³C de 20 à 30 ‰ par rapport au substrat inorganique
-    (δ¹³C entre −20 ‰ et −40 ‰ VPDB). Sur Mars, le carbone inorganique atmosphérique présente un δ¹³C
-    de +2,5 ‰ [13]. Un appauvrissement δ¹³C inférieur à −15 ‰ dans de la matière organique extractible
-    de subsurface constituerait une biosignature de classe B robuste.
-  </p>
-
-  <h3 class="sub">3.3 Classe C — Minéraux biogéniques</h3>
-
-  <p class="bt">
-    Certains minéraux sont exclusivement ou préférentiellement produits par des organismes vivants :
-    carbonates finement laminés (stromatolites), sulfures de fer framboïdaux (FeS₂ de forme sphérique,
-    signature de sulfato-réducteurs), magnétite biogénique (chaînes de nanocristaux de Fe₃O₄).
-    Sur Terre, ces structures constituent la trace fossile la plus ancienne connue (3,5 Ga, Pilbara,
-    Australie). La controverse autour des magnétites d'ALH 84001 [14] illustre à la fois le potentiel
-    et la difficulté d'interprétation de cette classe.
-  </p>
-
-  <h3 class="sub">3.4 Classe D — Structures morphologiques sub-micrométriques</h3>
-
-  <p class="bt">
-    La détection de structures cylindriques ou sphéroïdes de 0,5–5 µm dans des matrices minérales
-    martiennes représente la biosignature la moins spécifique mais la plus facilement accessible par
-    microscopie embarquée. Elle ne constitue qu'un indicateur d'investigation (trigger) justifiant
-    le déploiement des analyses de classes A-C, et non une preuve en elle-même.
-  </p>
-
-  <!-- Tableau classes biosignatures -->
-  <div class="tbl-wrap">
-    <div class="tbl-head">Tableau 1 — Matrice de robustesse des biosignatures martiennes candidates</div>
-    <table>
-      <thead>
-        <tr>
-          <th>Classe</th>
-          <th>Biosignature</th>
-          <th>Spécificité biologique</th>
-          <th>Résistance à la dégradation</th>
-          <th>Faisabilité in situ</th>
-          <th>Statut Mars</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="tm">A</td>
-          <td>Excès énantiomère L (acides aminés)</td>
-          <td class="tg">Très haute</td>
-          <td class="ty">Modérée (racémisation)</td>
-          <td class="tg">Haute (GC-MS chiral)</td>
-          <td class="tr">Non détecté</td>
-        </tr>
-        <tr>
-          <td class="tm">A</td>
-          <td>Lipides membranaires homochiaux</td>
-          <td class="tg">Très haute</td>
-          <td class="tg">Haute (subsurface)</td>
-          <td class="ty">Modérée (pyrolyse MS)</td>
-          <td class="tr">Non détecté</td>
-        </tr>
-        <tr>
-          <td class="tm">B</td>
-          <td>δ¹³C &lt; −15 ‰ matière org.</td>
-          <td class="ty">Haute</td>
-          <td class="tg">Très haute</td>
-          <td class="tg">Haute (IRMS)</td>
-          <td class="ty">Ambigu (SAM/Curiosity)</td>
-        </tr>
-        <tr>
-          <td class="tm">B</td>
-          <td>δ³⁴S négatif (sulfures)</td>
-          <td class="ty">Haute</td>
-          <td class="tg">Très haute</td>
-          <td class="ty">Modérée</td>
-          <td class="tr">Non mesuré in situ</td>
-        </tr>
-        <tr>
-          <td class="tm">C</td>
-          <td>Magnétite biogénique (chaînes)</td>
-          <td class="ty">Modérée–haute</td>
-          <td class="tg">Très haute (fossile)</td>
-          <td class="ty">Modérée (TEM)</td>
-          <td class="ty">Contesté (ALH 84001)</td>
-        </tr>
-        <tr>
-          <td class="tm">C</td>
-          <td>Sulfures framboïdaux (FeS₂)</td>
-          <td class="ty">Modérée</td>
-          <td class="tg">Haute</td>
-          <td class="ty">Modérée</td>
-          <td class="tr">Non détecté</td>
-        </tr>
-        <tr>
-          <td class="tm">D</td>
-          <td>Structures morphologiques 0,5–5 µm</td>
-          <td class="tr">Faible (abiogène possible)</td>
-          <td class="tg">Haute (minéralisation)</td>
-          <td class="tg">Haute (SHERLOC/Raman)</td>
-          <td class="tb">Données en attente</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="tbl-note">
-      Spécificité biologique : capacité à discriminer une origine biologique d'une origine abiotique dans le contexte martien.
-      Faisabilité in situ : évaluée au regard des instruments disponibles sur Perseverance, ExoMars 2028 et concepts Mars Life Explorer.
-    </div>
-  </div>
-
-  <!-- ===== 4. MÉTHODES ===== -->
-  <h2 class="section-heading" id="s4">4. Pipeline analytique proposé</h2>
-
-  <p class="bt">
-    Le cadre méthodologique proposé s'organise en cinq étapes séquentielles, conçues pour optimiser
-    l'utilisation des ressources instrumentales embarquées tout en maximisant la valeur scientifique
-    de chaque analyse. La logique générale est celle d'un entonnoir analytique : des méthodes rapides
-    et peu consommatrices d'échantillon en amont, réservant les analyses les plus complexes aux
-    échantillons pré-sélectionnés.
-  </p>
-
-  <!-- Pipeline visuel -->
-  <div class="pipeline">
-    <div class="pipe-step">
-      <div class="pipe-num">ÉTAPE 01</div>
-      <div class="pipe-title">Reconnaissance orbito-surfacique</div>
-      <div class="pipe-desc">Imagerie multi-spectrale (CRISM/MRO), cartographie minéralogique, identification des zones à phyllosilicates et carbonates.</div>
-    </div>
-    <div class="pipe-step active">
-      <div class="pipe-num">ÉTAPE 02</div>
-      <div class="pipe-title">Forage &amp; prélèvement subsurface</div>
-      <div class="pipe-desc">Carottage à 1–2 m de profondeur (hors zone oxydée UV). Préservation cryogénique des carottes.</div>
-    </div>
-    <div class="pipe-step">
-      <div class="pipe-num">ÉTAPE 03</div>
-      <div class="pipe-title">Triage morphologique D</div>
-      <div class="pipe-desc">Microscopie Raman (SHERLOC) et imagerie WATSON. Sélection des zones d'intérêt morphologique.</div>
-    </div>
-    <div class="pipe-step">
-      <div class="pipe-num">ÉTAPE 04</div>
-      <div class="pipe-title">Analyse isotopique B</div>
-      <div class="pipe-desc">Mesure δ¹³C et δ³⁴S par spectrométrie de masse sur fractions organiques extraites.</div>
-    </div>
-    <div class="pipe-step active">
-      <div class="pipe-num">ÉTAPE 05</div>
-      <div class="pipe-title">Chiralité moléculaire A</div>
-      <div class="pipe-desc">GC-MS chiral sur acides aminés hydrolysés. Protocole dérivatisation TFAA/iPrOH à 60 °C, 60 min.</div>
-    </div>
-  </div>
-
-  <p class="bt">
-    Ce pipeline a été conçu en tenant compte des contraintes opérationnelles réelles des rovers
-    martiennes : consommation électrique limitée, fenêtres de communication réduites, nécessité
-    de décisions autonomes à bord. L'étape 03 (triage morphologique) est intentionnellement
-    positionnée avant les analyses géochimiques lourdes afin d'éviter la consommation irréversible
-    d'échantillons sans pré-sélection raisonnée.
-  </p>
-
-  <!-- ===== 5. RÉSULTATS ===== -->
-  <h2 class="section-heading orange" id="s5">5. Application aux données existantes et résultats préliminaires</h2>
-
-  <h3 class="sub">5.1 Réévaluation des données SAM/Curiosity sous le prisme IPB</h3>
-
-  <p class="bt">
-    L'instrument SAM (Sample Analysis at Mars) du rover Curiosity a détecté plusieurs molécules organiques
-    chlorées dans le régolithe de Gale Crater entre 2013 et 2022, dont du thiophène, du benzène chloré
-    et des alcanes ramifiés [15]. Ces détections ont été initialement interprétées comme des molécules
-    organiques endogènes martiennes (ou météoritiques) altérées par les perchlorates lors de la pyrolyse.
-    L'application de notre cadre IPB à ces données produit les observations suivantes.
-  </p>
-
-  <!-- Graphique radar / score IPB -->
-  <div class="chart-wrap">
-    <div class="chart-inner">
-      <div class="chart-top">
-        <span class="chart-ttl">Indice de priorité biosignature (IPB) — six sites candidats, décomposition par critère</span>
-        <div class="legend">
-          <div class="li"><div class="ld" style="background:#facc15"></div>Hellas Nord</div>
-          <div class="li"><div class="ld" style="background:#34d399"></div>Jezero</div>
-          <div class="li"><div class="ld" style="background:#60a5fa"></div>Arsia</div>
-          <div class="li"><div class="ld" style="background:#f97316"></div>Valles</div>
-          <div class="li"><div class="ld" style="background:#f87171"></div>Acidalia</div>
-          <div class="li"><div class="ld" style="background:#a78bfa"></div>Ultimi</div>
+    <section id="s-essentiel" aria-label="L'essentiel">
+      <div class="essentials rv">
+        <div class="essentials-head"><i class="ph-light ph-lightning" aria-hidden="true"></i> L'essentiel en 30 secondes</div>
+        <div class="kpis">
+          <div class="kpi"><strong>0,86</strong><span>indice de priorité du meilleur site, le nord du bassin d'Hellas, devant le cratère Jezero</span></div>
+          <div class="kpi"><strong data-count="42" data-suffix=" %">42<small> %</small></strong><span>de fausses alertes quand on se fie aux seules formes microscopiques</span></div>
+          <div class="kpi"><strong>0<small> / 24</small></strong><span>fausse alerte quand trois types d'indices concordent</span></div>
         </div>
+        <ul class="takeaways">
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>Les traces de vie éventuelles sont sous la surface : il faut forer, à 1 ou 2 mètres.</li>
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>Quatre familles d'indices existent ; la plus fiable est la « latéralité » des acides aminés.</li>
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>Aucun indice seul ne suffit : nous proposons la règle du triple verrou.</li>
+        </ul>
       </div>
 
-      <!-- Graphique barres groupées SVG -->
-      <svg viewBox="0 0 820 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
-        <!-- Axes -->
-        <line x1="100" y1="20" x2="100" y2="270" stroke="#1b2555" stroke-width="1"/>
-        <line x1="100" y1="270" x2="800" y2="270" stroke="#1b2555" stroke-width="1"/>
-        <!-- Grilles H -->
-        <line x1="100" y1="70"  x2="800" y2="70"  stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
-        <line x1="100" y1="120" x2="800" y2="120" stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
-        <line x1="100" y1="170" x2="800" y2="170" stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
-        <line x1="100" y1="220" x2="800" y2="220" stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
-        <!-- Labels Y -->
-        <text x="92" y="74"  fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">1,0</text>
-        <text x="92" y="124" fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">0,75</text>
-        <text x="92" y="174" fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">0,50</text>
-        <text x="92" y="224" fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">0,25</text>
+      <div class="abstract rv">
+        <span class="label">Résumé</span>
+        <p>La surface de Mars détruit activement les molécules organiques, mais son sous-sol pourrait avoir conservé des traces d'une vie passée, voire abriter une vie actuelle. Nous proposons une méthode en deux volets. D'abord, un indice de priorité biosignature (IPB), qui combine six critères pour classer les sites : le nord du bassin d'Hellas (0,86) et le cratère Jezero (0,85) arrivent en tête. Ensuite, une chaîne d'analyse en cinq étapes, qui recherche quatre classes d'indices : molécules à latéralité biologique, signature isotopique du carbone, minéraux d'origine biologique et microstructures. Testée en aveugle sur 48 échantillons de sol martien simulé préparés dans la chambre HADES-2, dont 24 contenant des restes microbiens et 24 leurres abiotiques, la méthode montre qu'un indice isolé produit de 4 à 42 % de fausses alertes, contre aucune lorsque trois classes concordent.</p>
+        <div class="kw" aria-label="Mots-clés"><span>Biosignatures</span><span>Mars</span><span>Chiralité</span><span>Isotopes du carbone</span><span>Test en aveugle</span></div>
+      </div>
+    </section>
 
-        <!-- Critères sur axe X -->
-        <text x="160" y="290" fill="#4a5280" font-size="9" text-anchor="middle" font-family="DM Mono,monospace">Eau passée</text>
-        <text x="270" y="290" fill="#4a5280" font-size="9" text-anchor="middle" font-family="DM Mono,monospace">Hydrothermal</text>
-        <text x="380" y="290" fill="#4a5280" font-size="9" text-anchor="middle" font-family="DM Mono,monospace">Protection UV</text>
-        <text x="490" y="290" fill="#4a5280" font-size="9" text-anchor="middle" font-family="DM Mono,monospace">Substrats</text>
-        <text x="600" y="290" fill="#4a5280" font-size="9" text-anchor="middle" font-family="DM Mono,monospace">Géochimie</text>
-        <text x="710" y="290" fill="#4a5280" font-size="9" text-anchor="middle" font-family="DM Mono,monospace">Accès inst.</text>
+    <!-- 1. OÙ CREUSER -->
+    <section id="s-intro">
+      <h2><span class="n">01</span>Où creuser ?</h2>
+      <p>Mars a eu des rivières, des lacs et des sources chaudes. Des molécules organiques ont déjà été repérées dans ses roches. Mais aucune trace de vie n'a été identifiée sans ambiguïté. En surface, le rayonnement ultraviolet et des sels très oxydants, les <button class="term" type="button" data-term="perchlorate">perchlorates</button>, détruisent les molécules organiques. Les traces de vie éventuelles se cachent donc en profondeur, en très faibles quantités.</p>
+      <p>Pour choisir où forer, nous avons défini un <button class="term" type="button" data-term="ipb">indice de priorité biosignature</button> (IPB), de 0 à 1. Il combine six critères notés pour chaque site : traces d'eau passée, activité hydrothermale, protection contre les UV, sources d'énergie chimique, richesse géochimique et accessibilité pour un rover.</p>
 
-        <!-- Groupe 1 : Eau passée (x~115–205) -->
-        <!-- Hellas 0.9 → y=270-(0.9*200)=90 h=180 -->
-        <rect x="110" y="90"  width="12" height="180" fill="#facc15" opacity=".85" rx="1"/>
-        <!-- Jezero 1.0 → y=70 h=200 -->
-        <rect x="124" y="70"  width="12" height="200" fill="#34d399" opacity=".85" rx="1"/>
-        <!-- Arsia 0.5 → y=170 h=100 -->
-        <rect x="138" y="170" width="12" height="100" fill="#60a5fa" opacity=".85" rx="1"/>
-        <!-- Valles 0.7 → y=130 h=140 -->
-        <rect x="152" y="130" width="12" height="140" fill="#f97316" opacity=".85" rx="1"/>
-        <!-- Acidalia 0.4 → y=190 h=80 -->
-        <rect x="166" y="190" width="12" height="80"  fill="#f87171" opacity=".85" rx="1"/>
-        <!-- Ultimi 0.3 → y=210 h=60 -->
-        <rect x="180" y="210" width="12" height="60"  fill="#a78bfa" opacity=".85" rx="1"/>
+      <figure class="fig rv" id="fig1">
+        <div class="fig-stage">
+          <div class="fig-head"><span class="fig-name">Les six sites candidats</span></div>
+          <div class="map" id="map"></div>
+          <div class="site-info" id="siteInfo" aria-live="polite"></div>
+        </div>
+        <figcaption><b>Figure 1</b>Carte simplifiée de Mars (projection plate, longitudes est) et emplacement des six sites étudiés. La taille des repères suit l'IPB. Choisissez un site pour afficher sa fiche.</figcaption>
+      </figure>
 
-        <!-- Groupe 2 : Hydrothermal -->
-        <rect x="220" y="100" width="12" height="170" fill="#facc15" opacity=".85" rx="1"/>
-        <rect x="234" y="150" width="12" height="120" fill="#34d399" opacity=".85" rx="1"/>
-        <rect x="248" y="120" width="12" height="150" fill="#60a5fa" opacity=".85" rx="1"/>
-        <rect x="262" y="170" width="12" height="100" fill="#f97316" opacity=".85" rx="1"/>
-        <rect x="276" y="200" width="12" height="70"  fill="#f87171" opacity=".85" rx="1"/>
-        <rect x="290" y="220" width="12" height="50"  fill="#a78bfa" opacity=".85" rx="1"/>
+      <figure class="fig rv" id="fig2">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">Classement selon la pondération choisie</span>
+            <div class="seg" role="group" aria-label="Pondération" id="wSeg">
+              <button type="button" data-w="0" aria-pressed="true">Référence</button>
+              <button type="button" data-w="1" aria-pressed="false">Accès</button>
+              <button type="button" data-w="2" aria-pressed="false">Profondeur</button>
+            </div>
+          </div>
+          <div class="legend" id="critLegend"></div>
+          <div class="rank" id="rank"></div>
+        </div>
+        <figcaption><b>Figure 2</b>IPB des six sites, décomposé selon la contribution de chaque critère. La pondération de référence privilégie l'eau passée (25 %) et l'activité hydrothermale (20 %). Les boutons « Accès » et « Profondeur » donnent 40 à 45 % du poids à ce critère. Changer de pondération réordonne le classement : Jezero passe en tête si l'on privilégie l'accessibilité ; si l'on privilégie la protection en profondeur, Arsia Mons se rapproche du duo de tête et le lac polaire supposé gagne deux places.</figcaption>
+      </figure>
 
-        <!-- Groupe 3 : Protection UV -->
-        <rect x="330" y="110" width="12" height="160" fill="#facc15" opacity=".85" rx="1"/>
-        <rect x="344" y="130" width="12" height="140" fill="#34d399" opacity=".85" rx="1"/>
-        <rect x="358" y="90"  width="12" height="180" fill="#60a5fa" opacity=".85" rx="1"/>
-        <rect x="372" y="160" width="12" height="110" fill="#f97316" opacity=".85" rx="1"/>
-        <rect x="386" y="150" width="12" height="120" fill="#f87171" opacity=".85" rx="1"/>
-        <rect x="400" y="80"  width="12" height="190" fill="#a78bfa" opacity=".85" rx="1"/>
+      <div class="note" style="--nc:#a78bfa">
+        <i class="ph-light ph-warning-circle" aria-hidden="true"></i>
+        <p><span class="nt">Un site à part</span>Sous la calotte sud, un écho radar a été interprété comme un lac d'eau salée de 20 km, à 1,5 km de profondeur. D'autres explications (argiles, sels hydratés) restent possibles. Nous gardons ce site pour son potentiel, mais son score est incertain.</p>
+      </div>
 
-        <!-- Groupe 4 : Substrats -->
-        <rect x="440" y="90"  width="12" height="180" fill="#facc15" opacity=".85" rx="1"/>
-        <rect x="454" y="110" width="12" height="160" fill="#34d399" opacity=".85" rx="1"/>
-        <rect x="468" y="150" width="12" height="120" fill="#60a5fa" opacity=".85" rx="1"/>
-        <rect x="482" y="130" width="12" height="140" fill="#f97316" opacity=".85" rx="1"/>
-        <rect x="496" y="170" width="12" height="100" fill="#f87171" opacity=".85" rx="1"/>
-        <rect x="510" y="190" width="12" height="80"  fill="#a78bfa" opacity=".85" rx="1"/>
+      <figure class="fig rv photo" id="fig3">
+        <div class="photo-box" data-fallback="delta"><img src="../Assets/publication/cratere01.png" alt="Delta fossile du cratère Jezero" loading="lazy"></div>
+        <figcaption><b>Figure 3</b>Le delta fossile du cratère Jezero (18,4° N, 77,7° E), vu en oblique. Il y a environ 3,5 milliards d'années, une rivière s'y jetait dans un lac de 45 km de diamètre. Ses dépôts d'argiles et de carbonates comptent parmi les meilleurs pièges à biosignatures de Mars.</figcaption>
+      </figure>
+    </section>
 
-        <!-- Groupe 5 : Géochimie -->
-        <rect x="550" y="100" width="12" height="170" fill="#facc15" opacity=".85" rx="1"/>
-        <rect x="564" y="120" width="12" height="150" fill="#34d399" opacity=".85" rx="1"/>
-        <rect x="578" y="160" width="12" height="110" fill="#60a5fa" opacity=".85" rx="1"/>
-        <rect x="592" y="140" width="12" height="130" fill="#f97316" opacity=".85" rx="1"/>
-        <rect x="606" y="120" width="12" height="150" fill="#f87171" opacity=".85" rx="1"/>
-        <rect x="620" y="200" width="12" height="70"  fill="#a78bfa" opacity=".85" rx="1"/>
+    <!-- 2. QUOI MESURER -->
+    <section id="s-classes">
+      <h2><span class="n">02</span>Quoi mesurer ?</h2>
+      <p>Une <button class="term" type="button" data-term="biosig">biosignature</button> est un indice que seule la vie explique simplement. Nous en retenons quatre classes, de la plus fiable à la moins spécifique.</p>
 
-        <!-- Groupe 6 : Accès inst. -->
-        <rect x="660" y="170" width="12" height="100" fill="#facc15" opacity=".85" rx="1"/>
-        <rect x="674" y="70"  width="12" height="200" fill="#34d399" opacity=".85" rx="1"/>
-        <rect x="688" y="190" width="12" height="80"  fill="#60a5fa" opacity=".85" rx="1"/>
-        <rect x="702" y="200" width="12" height="70"  fill="#f97316" opacity=".85" rx="1"/>
-        <rect x="716" y="210" width="12" height="60"  fill="#f87171" opacity=".85" rx="1"/>
-        <rect x="730" y="230" width="12" height="40"  fill="#a78bfa" opacity=".85" rx="1"/>
-      </svg>
+      <div class="classes rv">
+        <div class="cls" style="--cc:#e11d48"><span class="cls-l">A</span><div><strong>Latéralité des molécules</strong><p>Les acides aminés existent en deux versions, images l'une de l'autre dans un miroir, comme nos mains : L et D. La vie terrestre n'utilise que la forme L. Dans les météorites, on observe au mieux de faibles excès, sur quelques acides aminés rares. Un fort excès L sur la plupart des acides aminés serait un indice majeur de <button class="term" type="button" data-term="chiral">chiralité</button> biologique.</p></div></div>
+        <div class="cls" style="--cc:#3b82f6"><span class="cls-l">B</span><div><strong>Signature isotopique</strong><p>Les enzymes préfèrent le carbone 12, plus léger que le carbone 13. La matière organique d'origine biologique en est appauvrie de 20 à 30 ‰ par rapport au carbone de départ. Sur Mars, le CO₂ de l'air est au contraire riche en carbone 13 (δ¹³C ≈ +45 ‰) : un net appauvrissement se remarquerait.</p></div></div>
+        <div class="cls" style="--cc:#d97706"><span class="cls-l">C</span><div><strong>Minéraux biologiques</strong><p>Certains minéraux naissent surtout grâce aux microbes : carbonates finement feuilletés, petites sphères de pyrite en « <button class="term" type="button" data-term="framboide">framboises</button> », chaînes de cristaux de magnétite.</p></div></div>
+        <div class="cls" style="--cc:#059669"><span class="cls-l">D</span><div><strong>Microstructures</strong><p>Des formes de 0,5 à 5 µm, en bâtonnets ou en sphères, faciles à voir au microscope. Mais la chimie minérale peut produire les mêmes formes : c'est un signal d'alerte, pas une preuve.</p></div></div>
+      </div>
+
+      <figure class="fig rv" id="fig4">
+        <div class="fig-stage">
+          <div class="fig-head"><span class="fig-name">Fiabilité et facilité de mesure des biosignatures</span></div>
+          <div class="chart" id="scat"><div class="ctip" id="scatTip"></div></div>
+        </div>
+        <figcaption><b>Figure 4</b>Sept biosignatures placées selon leur spécificité biologique (peut-on exclure une origine non biologique ?) et leur facilité de mesure par un rover. La taille du disque indique leur résistance à la dégradation. Aucune ne se trouve dans le coin idéal, en haut à droite : d'où l'idée de les combiner.</figcaption>
+      </figure>
+
+      <figure class="fig rv photo" id="fig5">
+        <div class="photo-box" data-fallback="strom"><img src="../Assets/publication/fossile01.png" alt="Stromatolites fossiles" loading="lazy"></div>
+        <figcaption><b>Figure 5</b>Stromatolites fossiles vieux d'environ 3,48 milliards d'années, parmi les plus anciennes traces de vie connues sur Terre. Leurs lamelles bombées, construites couche après couche par des tapis de microbes, servent de référence pour la classe C dans les carbonates lacustres martiens.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 3. MÉTHODE -->
+    <section id="s-methodes">
+      <h2><span class="n">03</span>Une méthode en entonnoir</h2>
+      <p>Un rover dispose de peu d'énergie, de peu de temps de communication et de peu d'échantillon. Notre chaîne d'analyse fonctionne donc en entonnoir : des mesures rapides et non destructives d'abord, les analyses lourdes seulement pour les meilleurs candidats.</p>
+
+      <figure class="fig rv" id="fig6">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">Les cinq étapes de la chaîne d'analyse</span>
+            <button class="ctrl" type="button" id="funPlay"><i class="ph-light ph-pause" aria-hidden="true"></i><span>Pause</span></button>
+          </div>
+          <svg viewBox="0 0 640 220" id="funnel" aria-label="Entonnoir : 100 zones repérées, 20 carottes, 8 échantillons retenus, 4 analyses isotopiques, 2 analyses de chiralité"></svg>
+          <div class="parts" role="group" aria-label="Étapes" id="funBtns"></div>
+          <div class="step-desc" id="funDesc" aria-live="polite"></div>
+        </div>
+        <figcaption><b>Figure 6</b>Exemple pour 100 zones d'intérêt repérées depuis l'orbite. À chaque étape, seuls les meilleurs candidats passent à la suivante ; l'échantillon n'est consommé qu'aux deux dernières. Choisissez une étape pour la détailler.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 4. TEST EN AVEUGLE -->
+    <section id="s-resultats">
+      <h2><span class="n">04</span>Le test en aveugle</h2>
+      <p>Une méthode ne vaut que si elle sait dire non. Nous avons préparé 48 échantillons de sol martien simulé (basalte altéré, 0,6 % de perchlorates) dans la chambre HADES-2. Vingt-quatre contenaient des restes de microbes de la campagne MARSLAB-IV, tués puis vieillis par irradiation. Les vingt-quatre autres étaient des <strong>leurres</strong> : matière organique d'origine chimique, pseudo-fossiles minéraux, carbone appauvri par des réactions non biologiques. Les analystes ignoraient quel échantillon était lequel.</p>
+
+      <figure class="fig rv" id="fig7">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">48 échantillons, un verdict chacun</span>
+          </div>
+          <div class="seg seg-wide" role="group" aria-label="Critère de décision" id="blindSeg">
+            <button type="button" data-m="0" aria-pressed="false">D seul</button>
+            <button type="button" data-m="1" aria-pressed="false">C seul</button>
+            <button type="button" data-m="2" aria-pressed="false">B seul</button>
+            <button type="button" data-m="3" aria-pressed="false">A seul</button>
+            <button type="button" data-m="4" aria-pressed="false">2 classes</button>
+            <button type="button" data-m="5" aria-pressed="true">3 classes</button>
+          </div>
+          <div class="blind">
+            <div class="bl-g"><p class="bl-t">Avec restes microbiens <small>24</small></p><div class="tiles" id="tBio"></div></div>
+            <div class="bl-g"><p class="bl-t">Leurres non biologiques <small>24</small></p><div class="tiles" id="tAbio"></div></div>
+          </div>
+          <div class="readouts" aria-live="polite">
+            <div class="readout hot" style="--rc:#34d399"><small>Vies détectées</small><strong id="roSens">15 / 24</strong></div>
+            <div class="readout hot" id="roFpBox"><small>Fausses alertes</small><strong id="roFp">0 / 24</strong></div>
+            <div class="readout"><small>Fiabilité d'une alerte</small><strong id="roPpv">100 %</strong></div>
+          </div>
+          <p class="tiles-l"><span><i class="t-tp"></i>vie détectée</span><span><i class="t-fn"></i>vie manquée</span><span><i class="t-fp"></i>fausse alerte</span><span><i class="t-tn"></i>leurre écarté</span><span><span class="t-dots"><b style="background:#059669"></b><b style="background:#d97706"></b><b style="background:#3b82f6"></b><b style="background:#e11d48"></b></span>classes positives D, C, B, A</span></p>
+        </div>
+        <figcaption><b>Figure 7</b>Résultat de chaque échantillon selon la règle de décision choisie. Un indice seul détecte beaucoup de vie, mais se laisse aussi piéger par les leurres. Exiger trois classes concordantes supprime toutes les fausses alertes, au prix de 9 échantillons biologiques manqués.</figcaption>
+      </figure>
+
+      <div class="table-wrap rv">
+        <div class="table-cap"><b>Tableau 1</b>Performance de chaque règle de décision (24 échantillons biologiques, 24 leurres)</div>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Règle</th><th class="num">Vies détectées</th><th class="num">Fausses alertes</th><th>Principal piège</th></tr></thead>
+            <tbody>
+              <tr><td><span class="cl" style="--cc:#059669">D</span>Microstructures</td><td class="num">21 (88 %)</td><td class="num">10 (42 %)</td><td>Sphérules minérales</td></tr>
+              <tr><td><span class="cl" style="--cc:#d97706">C</span>Minéraux</td><td class="num">12 (50 %)</td><td class="num">5 (21 %)</td><td>Pyrite formée à chaud</td></tr>
+              <tr><td><span class="cl" style="--cc:#3b82f6">B</span>Isotopes</td><td class="num">19 (79 %)</td><td class="num">4 (17 %)</td><td>Chimie du CO₂ sous UV</td></tr>
+              <tr><td><span class="cl" style="--cc:#e11d48">A</span>Chiralité</td><td class="num">17 (71 %)</td><td class="num">1 (4 %)</td><td>Excès faible d'origine chimique</td></tr>
+              <tr><td>Deux classes ou plus</td><td class="num">22 (92 %)</td><td class="num">3 (13 %)</td><td>Leurres cumulant D et C</td></tr>
+              <tr class="hi"><td><strong>Trois classes ou plus</strong></td><td class="num">15 (63 %)</td><td class="num"><strong>0 (0 %)</strong></td><td>Aucun</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-note">Un échantillon est « positif » pour une classe lorsque le signal dépasse le seuil fixé avant le test. La chiralité (A) échoue surtout sur les restes les plus vieillis, dont les acides aminés se sont partiellement transformés en forme D.</div>
+      </div>
+    </section>
+
+    <!-- 5. QUAND Y CROIRE -->
+    <section id="s-conclusion">
+      <h2><span class="n">05</span>Quand y croire ?</h2>
+      <p>Aucun indice isolé ne suffit à annoncer une découverte. Nous proposons une échelle de confiance en trois niveaux, calibrée par ce test :</p>
+
+      <ol class="ladder rv">
+        <li style="--lc:#fbbf24"><span class="ld-n">1</span><div><strong>Détection</strong><span>Un indice, d'une seule classe. Justifie d'autres analyses.</span></div><em>42 % de fausses alertes au pire</em></li>
+        <li style="--lc:#60a5fa"><span class="ld-n">2</span><div><strong>Indication</strong><span>Deux classes concordantes sur le même échantillon.</span></div><em>13 % de fausses alertes</em></li>
+        <li style="--lc:#34d399"><span class="ld-n">3</span><div><strong>Confirmation</strong><span>Trois classes, dont A ou B, puis vérification sur Terre si possible.</span></div><em>0 fausse alerte sur 24</em></li>
+      </ol>
+
+      <div class="note" style="--nc:#fb923c">
+        <i class="ph-light ph-bug-beetle" aria-hidden="true"></i>
+        <p><span class="nt">Le paradoxe de la contamination</span>La campagne MARSLAB-IV a montré que des microbes terrestres comme <em>Ferroacidus ifrasensis</em> ou <em>Deinococcus radiodurans</em> peuvent croître en conditions martiennes simulées. S'ils voyageaient à bord d'un rover, ils produiraient exactement les indices recherchés. Plus nos microbes résistent, plus la stérilisation des engins doit être stricte.</p>
+      </div>
+
+      <p>Appliquée aux futures missions, cette méthode oriente vers le nord d'Hellas ou Jezero, un forage à 1–2 m, et une annonce seulement au niveau 3. Les prochaines étapes visent à améliorer la sensibilité de la chiralité sur les échantillons les plus anciens.</p>
+
+      <ol class="next" aria-label="Prochaines étapes">
+        <li class="now" style="--nc:var(--ok)"><time>Mai 2026</time><strong>Méthode validée</strong><span>48 échantillons, 0 fausse alerte au niveau 3.</span></li>
+        <li><time>2027</time><strong>Test sur 200 échantillons</strong><span>Avec des restes vieux de millions d'années.</span></li>
+        <li style="--nc:#34d399"><time>2029</time><strong>ARTEMIS-9</strong><span>Chaîne d'analyse embarquée, version prototype.</span></li>
+      </ol>
+    </section>
+
+  </article>
+
+  <!-- Colonne de droite -->
+  <aside class="rail" aria-label="Outils de l'article">
+    <div class="rail-card rail-figs">
+      <p class="rail-title">Figures</p>
+      <ul class="fig-list">
+        <li><a href="#fig1"><i class="ph-light ph-map-trifold" aria-hidden="true"></i>Carte des sites</a></li>
+        <li><a href="#fig2"><i class="ph-light ph-ranking" aria-hidden="true"></i>Classement IPB</a></li>
+        <li><a href="#fig4"><i class="ph-light ph-chart-scatter" aria-hidden="true"></i>Biosignatures</a></li>
+        <li><a href="#fig6"><i class="ph-light ph-funnel" aria-hidden="true"></i>Chaîne d'analyse</a></li>
+        <li><a href="#fig7"><i class="ph-light ph-squares-four" aria-hidden="true"></i>Test en aveugle</a></li>
+      </ul>
     </div>
-    <div class="chart-cap">
-      <strong>Figure 2 — Décomposition de l'IPB par critère et par site</strong>
-      Histogrammes groupés des scores par critère (axe X) pour les six sites candidats.
-      Jezero Crater (vert) domine sur l'accessibilité instrumentale (rover Perseverance actif) et l'eau passée.
-      Hellas Planitia Nord (jaune) obtient les meilleures notes sur le potentiel hydrothermal et les substrats énergétiques.
-      Ultimi Scopuli (violet) compense son faible score de faisabilité par d'excellentes notes de protection UV (profondeur de la glace).
-      Score global IPB = moyenne pondérée des six critères (pondération définie en section 4).
+    <div class="rail-card">
+      <p class="rail-title">Programme lié</p>
+      <a class="prog-link" href="../programmes-actifs.html#artemis9">
+        <span class="pi" style="color:#34d399;background:rgba(52,211,153,.12)"><i class="ph-light ph-planet" aria-hidden="true"></i></span>
+        <span><strong>ARTEMIS-9</strong><small>Mission habitée longue durée sur Mars</small></span>
+      </a>
     </div>
-  </div>
-
-  <h3 class="sub">5.2 Signal δ¹³C ambiguë de Gale Crater — réinterprétation</h3>
-
-  <p class="bt">
-    Les mesures de δ¹³C réalisées par SAM sur les éléments organiques volatilisés à basse température
-    (200–350 °C) dans Gale Crater montrent un appauvrissement de −22 ‰ à −70 ‰ VPDB sur certains
-    échantillons de la formation Blunts Point [16]. Ce signal, extrêmement appauvri pour un environnement
-    supposé abiotique, a été interprété par l'équipe SAM comme possiblement issu d'une interaction
-    photochimique UV avec le CO₂ atmosphérique martien ou d'une concentration de matière organique
-    météoritique. Notre cadre IPB classe ce signal comme une biosignature de classe B candidate nécessitant
-    une confirmation par analyse chirale (classe A), non disponible sur Curiosity.
-  </p>
-
-  <!-- Photo placeholder 2 -->
-  <div class="photo-wrap">
-  <img src="../Assets/publication/fossile01.png" alt="Stromatolites fossiles" style="width:100%;display:block;border-bottom:1px solid var(--border);">
-    <div class="photo-caption">
-      <strong>Figure 3 — Analogues terrestres de biosignatures de classe C</strong>
-      Stromatolites fossiles précambriens de la formation Dresser (Pilbara, Australie occidentale, ~3,48 Ga),
-      représentant les plus anciennes traces fossiles de vie connues sur Terre. Les laminations concentriques
-      produites par les biofilms microbiens constituent la référence morphologique pour la recherche de
-      structures équivalentes dans les carbonates lacustres de Jezero Crater.
-  </div>
-  </div>
-
-
-  <!-- ===== 6. DISCUSSION ===== -->
-  <h2 class="section-heading blue" id="s6">6. Discussion — limites, biais et perspectives</h2>
-
-  <h3 class="sub">6.1 Le problème de la contamination terrestre</h3>
-
-  <p class="bt">
-    Toute discussion sur la détection de biosignatures martiennes doit intégrer le risque de contamination
-    par des microorganismes terrestres introduits lors de la fabrication, du transport et de l'atterrissage
-    des sondes. Les résultats MARSLAB-IV [4] démontrent que <em>Ferroacidus ifrasensis</em> et
-    <em>Deinococcus radiodurans</em> peuvent non seulement survivre mais croître dans des conditions
-    martiennes simulées. Si ces organismes — ou leurs traces moléculaires — parvenaient à contaminer
-    un site d'analyse, ils produiraient précisément les biosignatures de classe A que nous cherchons
-    à détecter (acides aminés L, lipides homochiaux, δ¹³C appauvri).
-  </p>
-
-  <div class="hl orange">
-    Cette situation crée un paradoxe opérationnel : plus nos microorganismes terrestres sont capables
-    de survivre sur Mars, plus le risque que les biosignatures détectées soient d'origine terrestre est élevé.
-    L'indice IPB intègre ce biais via un facteur de décontamination fc, mais ce facteur reste imparfaitement
-    contrôlé pour les missions actuelles opérant à des niveaux DHMR inférieurs aux recommandations
-    MARSLAB-IV. Nous recommandons une révision urgente des standards COSPAR à la lumière de ces résultats.
-  </div>
-
-  <h3 class="sub">6.2 L'interprétation multi-signaux comme seule approche robuste</h3>
-
-  <p class="bt">
-    Aucune biosignature prise isolément ne peut constituer une preuve définitive de vie martienne.
-    La stratégie robuste exige la convergence d'au moins trois signaux indépendants de classes différentes,
-    sur le même échantillon de subsurface, en l'absence d'explication abiotique parcimonieuse. Ce seuil
-    d'interprétation — que nous proposons d'appeler « triple-lock biosignature » — s'inspire du critère
-    de confirmation utilisé en physique des particules (5σ) et dans la détection des ondes gravitationnelles.
-  </p>
-
-  <p class="bt">
-    À ce jour, aucun ensemble de données disponible ne satisfait ce critère pour Mars. Les signaux de
-    δ¹³C de SAM, les magnétites d'ALH 84001 et les détections organiques de Perseverance représentent
-    chacun un signal de classe unique, isolé, ne permettant pas d'atteindre le seuil de triple-lock.
-    La mission ExoMars 2028 (rover Rosalind Franklin), avec sa capacité de forage à 2 mètres et son
-    instrument MOMA (Mars Organic Molecule Analyser) équipé d'une colonne chirale, sera la première
-    capable de combiner les classes A et B sur un même échantillon.
-  </p>
-
-  <h3 class="sub">6.3 Vers un standard international de certification des biosignatures</h3>
-
-  <p class="bt">
-    Nous proposons que la communauté astrobiologique adopte formellement un protocole de certification
-    en trois niveaux — détection, indication, confirmation — analogue aux niveaux de preuve en médecine
-    clinique. Une « indication de biosignature » (niveau 2) serait définie comme la convergence de
-    deux signaux de classes différentes, ouvrant la voie à l'annonce publique et au déploiement
-    prioritaire de ressources analytiques supplémentaires. La « confirmation » (niveau 3) exigerait
-    le triple-lock et, idéalement, un retour d'échantillons permettant une analyse terrestre en laboratoire.
-  </p>
-
-  <div class="art-divider"></div>
-
-  <!-- RÉFÉRENCES -->
-  <div class="refs-sec" id="s7">
-    <div class="ref-ttl">Références bibliographiques</div>
-    <div class="ref-list">
-      <div class="ref-item"><b>Mustard J.F. et al.</b> — <em>Hydrated silicate minerals on Mars observed by the Mars Reconnaissance Orbiter CRISM instrument</em> — Nature, 2008</div>
-      <div class="ref-item"><b>Farley K.A. et al.</b> — <em>In Situ Radiometric and Exposure Age Dating of the Martian Surface</em> — Science, 2014</div>
-      <div class="ref-item"><b>Wadsworth J. &amp; Cockell C.S.</b> — <em>Perchlorates on Mars enhance the bacteriocidal effects of UV light</em> — Scientific Reports, 2017</div>
-      <div class="ref-item"><b>Garnier S., Prost M., Tanaka Y. et al.</b> — <em>Croissance et adaptation métabolique de microorganismes extrêmophiles en conditions martiennes simulées : résultats de la campagne MARSLAB-IV</em> — Astrobiology, 2026 [IFRAS-DSVT-2026-003]</div>
-      <div class="ref-item"><b>Farley K.A. et al. (Perseverance Science Team)</b> — <em>Aqueously altered igneous rocks sampled on the floor of Jezero crater, Mars</em> — Science, 2022</div>
-      <div class="ref-item"><b>Wordsworth R. et al.</b> — <em>Potential for cryovolcanism on Mars driven by pressurization of subsurface reservoirs</em> — Geophysical Research Letters, 2021</div>
-      <div class="ref-item"><b>Orosei R. et al.</b> — <em>Radar evidence of subglacial liquid water on Mars</em> — Science, 2018</div>
-      <div class="ref-item"><b>Osterloo M.M. et al.</b> — <em>Chloride-bearing materials in the southern highlands of Mars</em> — Science, 2008</div>
-      <div class="ref-item"><b>Stuurman C.M. et al.</b> — <em>SHARAD detection and characterization of subsurface water ice deposits in Utopia Planitia</em> — Geophysical Research Letters, 2016</div>
-      <div class="ref-item"><b>Orosei R. et al.</b> — <em>Radar evidence of subglacial liquid water on Mars — the MARSIS dataset revisited</em> — Nature Astronomy, 2022</div>
-      <div class="ref-item"><b>Smith I.B. et al.</b> — <em>A solid interpretation of bright radar reflectors under the Mars south polar ice</em> — Geophysical Research Letters, 2021</div>
-      <div class="ref-item"><b>Cronin J.R. &amp; Pizzarello S.</b> — <em>Enantiomeric excesses in meteoritic amino acids</em> — Science, 1997</div>
-      <div class="ref-item"><b>Niles P.B. et al.</b> — <em>Geochemistry of carbonates on Mars : Implications for climate history and nature of aqueous environments</em> — Space Science Reviews, 2013</div>
-      <div class="ref-item"><b>McKay D.S. et al.</b> — <em>Search for past life on Mars : Possible relic biogenic activity in Martian meteorite ALH84001</em> — Science, 1996</div>
-      <div class="ref-item"><b>Eigenbrode J.L. et al.</b> — <em>Organic matter preserved in 3-billion-year-old mudstones at Gale crater, Mars</em> — Science, 2018</div>
-      <div class="ref-item"><b>House C.H. et al.</b> — <em>Depleted carbon isotope compositions observed at Gale crater, Mars</em> — PNAS, 2022</div>
-    </div>
-  </div>
-
-  <div class="footnote">
-    <strong>Conflits d'intérêts :</strong> Aucun. Dr. K. Watanabe contribue à titre personnel et n'engage pas la position de l'ISAS-JAXA. —
-    <strong>Financement :</strong> ANR-24-EXOB-0008 « BIOSIGN-MARS » ; CNES programme Mars 2025–2028 ; soutien ESA CDF Study Mars Life Explorer. —
-    <strong>Lien avec publications associées :</strong> IFRAS-DAI-2023-006 (cadre théorique) ; IFRAS-DSVT-2026-003 (MARSLAB-IV). —
-    <strong>Données supplémentaires :</strong> Zenodo 10.5281/zenodo.15100382 — scripts de calcul IPB, données brutes SAM réévaluées, protocoles dérivatisation (CC-BY 4.0). —
-    <strong>Contributions :</strong> A.G. : direction, cadre IPB, rédaction ; N.F. : géochimie isotopique, données SAM ; S.G. : interface MARSLAB-IV, implications contamination ; K.W. : planétologie, sites candidats ; L.M. : spectrométrie de masse chirale, protocoles analytiques.
-  </div>
-
+  </aside>
 </div>
 
-<footer style="background:#020617;border-top:1px solid #1b2555;padding:32px 30px;text-align:center;font-size:12px;color:#6b7280;">
-  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale · Publications soumises à validation institutionnelle
+<!-- Articles liés -->
+<section class="container related" aria-labelledby="relTitle">
+  <h2 class="section-title" id="relTitle">À lire aussi</h2>
+  <div class="related-grid">
+    <a class="rel" href="publications_scientifiques_03.html" style="--c:#34d399">
+      <div class="rel-img"><img src="../Assets/publication/mars01.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Astrobiologie</small><strong>Des microbes qui se multiplient en conditions martiennes simulées</strong></div>
+    </a>
+    <a class="rel" href="publications_scientifiques_05.html" style="--c:#67e8f9">
+      <div class="rel-img"><img src="../Assets/publication/exoplanete01.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Astrophysique</small><strong>Une super-Terre au cœur de la zone habitable d'une étoile orange</strong></div>
+    </a>
+    <a class="rel" href="publications_scientifiques_06.html" style="--c:#38bdf8">
+      <div class="rel-img"><img src="../Assets/publication/poisson01.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Océans profonds</small><strong>Le poisson-vipère des abysses tire sa lumière de ses repas</strong></div>
+    </a>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© IFRAS, Institut Français de Recherche Aéronautique et Spatiale</span>
+    <span>Publications soumises à validation institutionnelle</span>
+  </div>
 </footer>
 
+<div class="toast" id="toast" role="status"><i class="ph-light ph-check-circle" aria-hidden="true"></i><span></span></div>
+<div class="tip" id="tip" role="tooltip"></div>
 <script>
-window.addEventListener('scroll',()=>{
-  const d=document.documentElement;
-  document.getElementById('progressBar').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%';
-});
-const secs=['s0','s1','s2','s3','s4','s5','s6','s7'];
-const dots=document.querySelectorAll('.toc-dot');
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      const i=secs.indexOf(e.target.id);
-      if(i>=0){dots.forEach(d=>d.classList.remove('active'));dots[i]&&dots[i].classList.add('active');}
-    }
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const $ = (id) => document.getElementById(id);
+  const NS = 'http://www.w3.org/2000/svg';
+  const fmt = (n, d = 0) => n.toLocaleString('fr-FR', { minimumFractionDigits: d, maximumFractionDigits: d });
+  const svgEl = (tag, attrs = {}, parent) => {
+    const el = document.createElementNS(NS, tag);
+    for (const k in attrs) el.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(el);
+    return el;
+  };
+  /* lance une fonction quand l'élément devient visible (une seule fois) */
+  const onceVisible = (el, fn, margin = '0px 0px -15% 0px') => {
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { io.disconnect(); fn(); } }, { rootMargin: margin });
+    io.observe(el);
+  };
+  /* boucle d'animation suspendue hors écran et onglet masqué */
+  const loopWhileVisible = (el, frame) => {
+    let raf = 0, visible = false;
+    const tick = (t) => { frame(t); raf = requestAnimationFrame(tick); };
+    const sync = () => { cancelAnimationFrame(raf); if (visible && !document.hidden) raf = requestAnimationFrame(tick); };
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; sync(); }).observe(el);
+    document.addEventListener('visibilitychange', sync);
+  };
+
+  /* ---------- Menu mobile ---------- */
+  const toggle = document.querySelector('.menu-toggle');
+  const panel = $('mobile-panel');
+  const setMenu = (open) => {
+    panel.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    toggle.querySelector('i').className = open ? 'ph-light ph-x' : 'ph-light ph-list';
+  };
+  toggle.addEventListener('click', () => setMenu(!panel.classList.contains('is-open')));
+  document.addEventListener('click', (e) => { if (panel.classList.contains('is-open') && !panel.contains(e.target) && !toggle.contains(e.target)) setMenu(false); });
+
+  /* ---------- Apparition au défilement ---------- */
+  const rvIO = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (e.isIntersecting) { e.target.classList.add('in'); rvIO.unobserve(e.target); }
+  }), { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.rv').forEach((el) => rvIO.observe(el));
+
+  /* ---------- Toast ---------- */
+  let toastT;
+  const toast = (msg) => { const t = $('toast'); t.querySelector('span').textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2600); };
+
+  /* ---------- Progression de lecture + sommaire ---------- */
+  const article = $('article');
+  const tocLinks = [...document.querySelectorAll('#toc a')];
+  const sections = tocLinks.map((a) => document.querySelector(a.getAttribute('href')));
+  const ind = document.querySelector('.toc-ind');
+  const WORDS = article.innerText.split(/\s+/).length;
+  let ticking = false;
+  function onScroll() {
+    ticking = false;
+    const r = article.getBoundingClientRect();
+    const total = r.height - window.innerHeight * 0.6;
+    const p = Math.min(1, Math.max(0, -r.top / total));
+    $('progress').style.transform = `scaleX(${p})`;
+    const left = Math.max(0, Math.ceil((WORDS / 220) * (1 - p)));
+    $('timeLeft').textContent = p >= 0.98 ? 'Lecture terminée' : `${left || 1} min restante${left > 1 ? 's' : ''}`;
+    let cur = 0;
+    sections.forEach((s, i) => { if (s && s.getBoundingClientRect().top < window.innerHeight * 0.35) cur = i; });
+    tocLinks.forEach((a, i) => a.classList.toggle('on', i === cur));
+    const a = tocLinks[cur];
+    if (a && ind) { ind.style.transform = `translateY(${a.parentElement.offsetTop}px)`; ind.style.height = a.offsetHeight + 'px'; }
+  }
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  /* ---------- Chiffres clés animés ---------- */
+  document.querySelectorAll('[data-count]').forEach((el) => {
+    const target = Number(el.dataset.count), suffix = el.dataset.suffix || '';
+    const paint = (v) => { el.innerHTML = `${fmt(v)}<small>${suffix}</small>`; };
+    if (reduceMotion) return;
+    paint(0);
+    onceVisible(el, () => {
+      const t0 = performance.now(), dur = 1100;
+      const step = (t) => { const k = Math.min(1, (t - t0) / dur); paint(Math.round(target * (1 - Math.pow(1 - k, 4)))); if (k < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    });
   });
-},{rootMargin:'-20% 0px -70% 0px'});
-secs.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
-dots.forEach((d,i)=>{d.addEventListener('click',()=>{const el=document.getElementById(secs[i]);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});});});
+
+  /* ---------- Infobulles : termes expliqués ---------- */
+  const TERMS = {
+    perchlorate: ['Perchlorates', "Sels riches en oxygène, présents dans le sol martien à environ 0,5 %. Activés par les UV ou chauffés, ils détruisent les molécules organiques."],
+    ipb: ['Indice de priorité biosignature', "Note de 0 à 1 calculée pour chaque site : moyenne pondérée de six critères notés par l'équipe. Plus elle est haute, plus le site mérite un forage."],
+    biosig: ['Biosignature', "Indice (molécule, rapport d'isotopes, minéral, forme) dont la vie est l'explication la plus simple. Une biosignature n'est pas une preuve à elle seule."],
+    chiral: ['Chiralité', "Propriété d'une molécule qui n'est pas superposable à son image dans un miroir, comme une main gauche et une main droite. La chimie seule produit les deux formes en quantités presque égales."],
+    framboide: ['Pyrite framboïdale', "Petites sphères de sulfure de fer formées de milliers de micro-cristaux, comme une framboise. Souvent produites par des bactéries qui « respirent » les sulfates."]
+  };
+  const tip = $('tip');
+  let tipOpenAt = 0, hideT = null, tipOwner = null;
+  function showTip(el) {
+    clearTimeout(hideT);
+    const t = TERMS[el.dataset.term];
+    tip.innerHTML = `<b>${t[0]}</b>${t[1]}`;
+    tip.classList.toggle('instant', Date.now() - tipOpenAt < 400 && tip.classList.contains('show'));
+    const r = el.getBoundingClientRect();
+    tip.style.left = '0px'; tip.style.top = '0px';
+    tip.classList.add('show');
+    const w = tip.offsetWidth, h = tip.offsetHeight;
+    let x = r.left + r.width / 2 - w / 2 + window.scrollX;
+    x = Math.max(16 + window.scrollX, Math.min(x, window.scrollX + document.documentElement.clientWidth - w - 16));
+    let y = r.top + window.scrollY - h - 10, below = false;
+    if (r.top - h - 10 < 130) { y = r.bottom + window.scrollY + 10; below = true; }
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+    tip.style.transformOrigin = `${r.left + r.width / 2 + window.scrollX - x}px ${below ? '0%' : '100%'}`;
+    tipOpenAt = Date.now(); tipOwner = el;
+    el.setAttribute('aria-describedby', 'tip');
+  }
+  function hideTip(delay = 80) {
+    clearTimeout(hideT);
+    hideT = setTimeout(() => { tip.classList.remove('show'); if (tipOwner) tipOwner.removeAttribute('aria-describedby'); tipOwner = null; tipOpenAt = Date.now(); }, delay);
+  }
+  document.querySelectorAll('.term').forEach((el) => {
+    if (canHover) { el.addEventListener('mouseenter', () => showTip(el)); el.addEventListener('mouseleave', () => hideTip()); }
+    el.addEventListener('focus', () => showTip(el));
+    el.addEventListener('blur', () => hideTip(0));
+    el.addEventListener('click', () => { if (!canHover) (tipOwner === el && tip.classList.contains('show')) ? hideTip(0) : showTip(el); });
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { hideTip(0); setMenu(false); } });
+  window.addEventListener('scroll', () => { if (!canHover && tip.classList.contains('show')) hideTip(0); }, { passive: true });
+
+  /* petite infobulle de graphique, placée à côté d'un point */
+  const placeTip = (tipEl, box, svg, W, H, px, py) => {
+    const r = svg.getBoundingClientRect(), bx = box.getBoundingClientRect();
+    const sx = px / W * r.width + (r.left - bx.left), sy = py / H * r.height + (r.top - bx.top);
+    tipEl.classList.add('show');
+    tipEl.style.left = (sx + 14 + tipEl.offsetWidth > bx.width ? sx - 14 - tipEl.offsetWidth : sx + 14) + 'px';
+    tipEl.style.top = Math.max(0, Math.min(bx.height - tipEl.offsetHeight, sy - tipEl.offsetHeight / 2)) + 'px';
+  };
+  const BLUE = '#3b82f6', ORANGE = '#ea580c';
+
+    /* ---------- aide : repère de graphique ---------- */
+  const rng = (seed) => { let s = seed; return () => (s = (s * 16807) % 2147483647) / 2147483647; };
+  function frame(box, o) {
+    const W = Math.round(Math.max(o.minW || 300, Math.min(o.maxW || 680, box.clientWidth))), H = o.H || (W < 520 ? 280 : 300);
+    const m = Object.assign({ l: 50, r: 16, t: 16, b: 40 }, o.m || {});
+    const [x0, x1] = o.x, [y0, y1] = o.y;
+    const x = (v) => m.l + (v - x0) / (x1 - x0) * (W - m.l - m.r);
+    const y = (v) => H - m.b - (v - y0) / (y1 - y0) * (H - m.t - m.b);
+    const svg = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': o.aria || '' });
+    box.prepend(svg);
+    (o.yt || []).forEach((v) => svgEl('line', { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: '#13204d' }, svg));
+    (o.xt || []).forEach((v) => svgEl('line', { x1: x(v), x2: x(v), y1: m.t, y2: H - m.b, stroke: '#13204d' }, svg));
+    if (o.xl) svgEl('text', { x: W - m.r, y: H - 10, 'text-anchor': 'end', fill: '#aab3d6', 'font-size': 12 }, svg).textContent = o.xl;
+    if (o.yl) svgEl('text', { x: m.l - 10, y: m.t + 4, 'text-anchor': 'end', fill: '#aab3d6', 'font-size': 12, transform: `rotate(-90 ${m.l - 10} ${m.t + 4})` }, svg).textContent = o.yl;
+    const hit = () => svgEl('rect', { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, class: 'hit' }, svg);
+    return { svg, W, H, m, x, y, hit };
+  }
+  const NBSP = ' ', MARS = '#fb923c';
+  const CRIT = [['Eau passée', '#3b82f6'], ['Hydrothermal', '#059669'], ['Protection UV', '#d97706'], ['Énergie chimique', '#e11d48'], ['Géochimie', '#8b5cf6'], ['Accessibilité', '#0891b2']];
+  const WEIGHTS = [[0.25, 0.20, 0.15, 0.15, 0.10, 0.15], [0.20, 0.15, 0.10, 0.10, 0.05, 0.40], [0.15, 0.15, 0.45, 0.10, 0.05, 0.10]];
+  const SITES = [
+    { n: 'Hellas Nord', type: 'Bassin d\'impact', c: '36° S · 68° E', lat: -36, lon: 68, s: [0.95, 0.95, 0.80, 0.90, 0.85, 0.60], d: 'Le plus grand bassin d\'impact de Mars (2 300 km). Au fond, la pression atteint le double de la moyenne martienne, ce qui permet à l\'eau liquide d\'exister brièvement. Une activité hydrothermale ancienne y est probable.' },
+    { n: 'Jezero', type: 'Cratère lacustre', c: '18° N · 78° E', lat: 18.4, lon: 77.7, s: [1.0, 0.60, 0.75, 0.85, 0.90, 1.0], d: 'Ancien lac de 45 km alimenté par une rivière. Son delta a accumulé argiles et carbonates, d\'excellents pièges à matière organique. Terrain plat et bien connu : le plus accessible.' },
+    { n: 'Arsia Mons', type: 'Volcan', c: '8° S · 240° E', lat: -8.3, lon: -120, s: [0.55, 0.85, 0.90, 0.60, 0.55, 0.40], d: 'Volcan géant dont les flancs ont porté des glaciers. La rencontre du magma et de la glace a pu créer des sources chaudes, protégées sous la surface.' },
+    { n: 'Valles Marineris Est', type: 'Canyon', c: '10° S · 312° E', lat: -10, lon: -48, s: [0.75, 0.50, 0.60, 0.70, 0.70, 0.40], d: 'Le plus grand canyon du système solaire. Ses dépôts de sulfates en couches témoignent d\'eaux salées et acides, compatibles avec des microbes qui aiment le sel.' },
+    { n: 'Acidalia Planitia', type: 'Plaine du nord', c: '47° N · 338° E', lat: 46.7, lon: -22, s: [0.50, 0.40, 0.65, 0.55, 0.75, 0.45], d: 'Des centaines de petits dômes, peut-être des volcans de boue, ont pu remonter des sédiments profonds. Les perchlorates y sont abondants.' },
+    { n: 'Lac polaire sud', type: 'Sous la calotte sud', c: '81° S · 193° E', lat: -81, lon: -167, s: [0.40, 0.30, 0.95, 0.40, 0.35, 0.15], d: 'Un écho radar suggère un lac d\'eau très salée sous 1,5 km de glace. Protection parfaite, mais existence débattue et accès extrêmement difficile.', warn: true }
+  ];
+  const ipb = (s, w = WEIGHTS[0]) => s.reduce((a, v, i) => a + v * w[i], 0);
+  /* grands traits de la surface martienne (longitude est, latitude, rayon en degrés, teinte) */
+  const FEAT = [
+    [70, 10, 12, 'd'], [70, -42, 20, 'l'], [-134, 18, 7, 'l'], [-120, -8, 4, 'l'], [-113, 1, 4, 'l'], [-104, 11, 4, 'l'],
+    [-22, 47, 16, 'd'], [110, 45, 20, 'd'], [-5, -2, 9, 'd'], [20, -20, 14, 'd'], [150, -15, 12, 'd'], [-60, 20, 10, 'd'], [40, 25, 8, 'l'], [-170, 30, 14, 'd']
+  ];
+  for (let lo = -105; lo <= -40; lo += 6) FEAT.push([lo, -8 - (lo + 70) * 0.03, 2.4, 'v']);
+  const featCol = { d: 'rgba(55,18,8,.55)', l: 'rgba(255,214,170,.22)', v: 'rgba(40,12,6,.8)' };
+
+  /* ---------- En-tête : Mars qui tourne ---------- */
+  (function hero() {
+    const s = $('heroMars'); if (!s) return;
+    const cv = $('marsStars'), ctx = cv.getContext('2d');
+    let w, h, stars = [];
+    const size = () => {
+      const r = cv.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 2);
+      w = r.width; h = r.height; cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      stars = Array.from({ length: 70 }, () => ({ x: Math.random() * w, y: Math.random() * h, r: Math.random() * 1.1 + 0.2, p: Math.random() * 6 }));
+    };
+    size(); new ResizeObserver(size).observe(cv);
+    const CX = 270, CY = 224, R = 150, TILT = 0.25;
+    const defs = svgEl('defs', {}, s);
+    const base = svgEl('radialGradient', { id: 'marsBase', cx: 0.4, cy: 0.38, r: 0.75 }, defs);
+    svgEl('stop', { offset: 0, 'stop-color': '#ea7a3c' }, base); svgEl('stop', { offset: 0.6, 'stop-color': '#b4461c' }, base); svgEl('stop', { offset: 1, 'stop-color': '#5a1f0c' }, base);
+    const shade = svgEl('radialGradient', { id: 'marsShade', cx: 0.35, cy: 0.35, r: 0.8 }, defs);
+    svgEl('stop', { offset: 0.55, 'stop-color': '#000', 'stop-opacity': 0 }, shade); svgEl('stop', { offset: 1, 'stop-color': '#020617', 'stop-opacity': 0.85 }, shade);
+    const glow = svgEl('radialGradient', { id: 'marsGlow' }, defs);
+    svgEl('stop', { offset: 0.6, 'stop-color': '#fb923c', 'stop-opacity': 0.25 }, glow); svgEl('stop', { offset: 1, 'stop-color': '#fb923c', 'stop-opacity': 0 }, glow);
+    const cp = svgEl('clipPath', { id: 'marsClip' }, defs); svgEl('circle', { cx: CX, cy: CY, r: R }, cp);
+    svgEl('circle', { cx: CX, cy: CY, r: R + 40, fill: 'url(#marsGlow)' }, s);
+    svgEl('circle', { cx: CX, cy: CY, r: R, fill: 'url(#marsBase)' }, s);
+    const surf = svgEl('g', { 'clip-path': 'url(#marsClip)' }, s);
+    const fe = FEAT.map((f) => ({ f, el: svgEl('ellipse', { fill: featCol[f[3]] }, surf) }));
+    svgEl('ellipse', { cx: CX, cy: CY - R * 0.93, rx: R * 0.42, ry: R * 0.12, fill: 'rgba(255,255,255,.7)' }, surf);
+    const mks = SITES.map((st, i) => {
+      const g = svgEl('g', {}, surf);
+      svgEl('circle', { r: 7, fill: 'none', stroke: i < 2 ? '#34d399' : '#fde68a', 'stroke-width': 1.5, class: reduceMotion ? '' : 'pulse-m', style: `animation-delay:${(-i * 0.4).toFixed(1)}s` }, g);
+      svgEl('circle', { r: 3.5, fill: i < 2 ? '#34d399' : '#fde68a' }, g);
+      return { st, g };
+    });
+    svgEl('circle', { cx: CX, cy: CY, r: R, fill: 'url(#marsShade)' }, s);
+    const proj = (lon, lat, lon0) => {
+      const L = (lon - lon0) * Math.PI / 180, P = lat * Math.PI / 180;
+      const x = Math.cos(P) * Math.sin(L), y0 = Math.sin(P), z0 = Math.cos(P) * Math.cos(L);
+      const y = y0 * Math.cos(TILT) - z0 * Math.sin(TILT), z = y0 * Math.sin(TILT) + z0 * Math.cos(TILT);
+      return { x: CX + x * R, y: CY - y * R, z, k: Math.max(0.05, z) };
+    };
+    let lon0 = 40, a = 0;
+    const draw = () => {
+      lon0 = (lon0 + 0.12) % 360; a += 0.01;
+      fe.forEach(({ f, el }) => {
+        const p = proj(f[0], f[1], lon0), r = f[2] * Math.PI / 180 * R;
+        if (p.z < -0.1) { el.setAttribute('opacity', 0); return; }
+        el.setAttribute('opacity', 1);
+        el.setAttribute('cx', p.x.toFixed(1)); el.setAttribute('cy', p.y.toFixed(1));
+        el.setAttribute('rx', (r * Math.sqrt(p.k)).toFixed(1)); el.setAttribute('ry', (r * (0.6 + 0.4 * p.k)).toFixed(1));
+      });
+      mks.forEach(({ st, g }) => {
+        const p = proj(st.lon, st.lat, lon0);
+        g.setAttribute('transform', `translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})`);
+        g.setAttribute('opacity', p.z > 0.05 ? 1 : 0);
+      });
+      ctx.clearRect(0, 0, w, h);
+      for (const t of stars) { ctx.fillStyle = `rgba(226,232,240,${0.2 + 0.2 * Math.sin(a * 3 + t.p)})`; ctx.beginPath(); ctx.arc(t.x, t.y, t.r, 0, Math.PI * 2); ctx.fill(); }
+    };
+    draw();
+    if (!reduceMotion) loopWhileVisible(s, draw);
+  })();
+
+  /* ---------- Figure 1 : carte des sites ---------- */
+  (function map() {
+    const box = $('map'), info = $('siteInfo');
+    const W = 720, H = 360, X = (lon) => (lon + 180) / 360 * W, Y = (lat) => (90 - lat) / 180 * H;
+    const s = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Carte de Mars avec six sites candidats' }, box);
+    const defs = svgEl('defs', {}, s);
+    const g0 = svgEl('linearGradient', { id: 'mapG', x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
+    svgEl('stop', { offset: 0, 'stop-color': '#6b2a12' }, g0); svgEl('stop', { offset: 0.5, 'stop-color': '#8a3a17' }, g0); svgEl('stop', { offset: 1, 'stop-color': '#5c2410' }, g0);
+    svgEl('rect', { width: W, height: H, fill: 'url(#mapG)' }, s);
+    /* plaines du nord, plus basses */
+    let d = `M0 0 H${W} V${Y(30)}`;
+    for (let lon = 180; lon >= -180; lon -= 15) d += ` L${X(lon)} ${Y(22 + 10 * Math.sin(lon / 25))}`;
+    svgEl('path', { d: d + ' Z', fill: 'rgba(40,14,8,.35)' }, s);
+    FEAT.forEach(([lon, lat, r, t]) => svgEl('ellipse', { cx: X(lon), cy: Y(lat), rx: r * 2, ry: r * 2 * (t === 'v' ? 0.7 : 1), fill: featCol[t] }, s));
+    svgEl('rect', { width: W, height: Y(78), fill: 'rgba(255,255,255,.55)' }, s);
+    svgEl('rect', { y: Y(-80), width: W, height: H - Y(-80), fill: 'rgba(255,255,255,.5)' }, s);
+    for (let lon = -150; lon <= 150; lon += 30) svgEl('line', { x1: X(lon), x2: X(lon), y1: 0, y2: H, stroke: 'rgba(255,255,255,.08)' }, s);
+    for (let lat = -60; lat <= 60; lat += 30) svgEl('line', { x1: 0, x2: W, y1: Y(lat), y2: Y(lat), stroke: 'rgba(255,255,255,.08)' }, s);
+    svgEl('line', { x1: 0, x2: W, y1: Y(0), y2: Y(0), stroke: 'rgba(255,255,255,.18)', 'stroke-dasharray': '4 6' }, s);
+    const order = SITES.map((st, i) => i).sort((a, b) => ipb(SITES[b].s) - ipb(SITES[a].s));
+    const rankOf = (i) => order.indexOf(i) + 1;
+    const narrow = () => box.clientWidth < 500;
+    const labels = [];
+    const mk = SITES.map((st, i) => {
+      const v = ipb(st.s), x = X(st.lon), y = Y(st.lat), r = 8 + 10 * v;
+      const g = svgEl('g', { class: 'mk', tabindex: 0, role: 'button', 'aria-label': `${st.n}, IPB ${fmt(v, 2)}` }, s);
+      svgEl('circle', { cx: x, cy: y, r: r + 4, fill: 'none', stroke: '#fde68a', 'stroke-width': 1.5, class: reduceMotion ? '' : 'pulse-m', style: `animation-delay:${(-i * 0.4).toFixed(1)}s` }, g);
+      svgEl('circle', { cx: x, cy: y, r, fill: 'rgba(2,6,23,.75)', stroke: '#fde68a', 'stroke-width': 1.5, class: 'core' }, g);
+      svgEl('text', { x, y: y + 6, 'text-anchor': 'middle', fill: '#fff', 'font-size': 17, class: 'mono' }, g).textContent = rankOf(i);
+      const right = x < W - 170;
+      const lb = svgEl('text', { x: right ? x + r + 8 : x - r - 8, y: y + 5, 'text-anchor': right ? 'start' : 'end', fill: '#fff', 'font-size': 15, 'font-weight': 500, style: 'paint-order:stroke;stroke:#2a0f06;stroke-width:4px' }, g);
+      lb.textContent = st.n; labels.push(lb);
+      return g;
+    });
+    const setL = () => labels.forEach((l) => { l.style.display = narrow() ? 'none' : ''; });
+    setL(); new ResizeObserver(setL).observe(box);
+    let cur = -1;
+    const show = (i) => {
+      if (i === cur) return; cur = i;
+      const st = SITES[i], v = ipb(st.s);
+      mk.forEach((g, k) => g.querySelector('circle.core').setAttribute('stroke', k === i ? '#34d399' : '#fde68a'));
+      info.innerHTML = `<div><small>${st.type} · ${st.c}</small><h4>${rankOf(i)}. ${st.n}${st.warn ? ' <span class="verdict-pill" style="--vc:#a78bfa">incertain</span>' : ''}</h4><p>${st.d}</p></div><div class="ipb-big"><strong>${fmt(v, 2)}</strong><span>IPB</span><div class="ipb-bar" style="--v:${v.toFixed(3)}"><i></i></div></div>`;
+      info.classList.remove('swap'); void info.offsetWidth; info.classList.add('swap');
+    };
+    mk.forEach((g, i) => { g.addEventListener('click', () => show(i)); g.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(i); } }); });
+    show(order[0]);
+  })();
+
+  /* ---------- Figure 2 : classement pondéré ---------- */
+  (function rank() {
+    const box = $('rank'), leg = $('critLegend');
+    leg.innerHTML = CRIT.map(([n, c]) => `<span class="lg" style="--lc:${c}"><i></i>${n}</span>`).join('');
+    const ROW = 42;
+    box.style.height = SITES.length * ROW + 'px';
+    const rows = SITES.map((st) => {
+      const el = document.createElement('div'); el.className = 'rk';
+      el.innerHTML = `<span class="rk-n"><b></b>${st.n}</span><span class="rk-bar">${CRIT.map(([n, c]) => `<i style="background:${c}" title="${n}"></i>`).join('')}</span><span class="rk-v"></span>`;
+      box.appendChild(el);
+      return el;
+    });
+    const set = (wi, animate) => {
+      const w = WEIGHTS[wi];
+      const vals = SITES.map((st) => ipb(st.s, w));
+      const order = vals.map((v, i) => i).sort((a, b) => vals[b] - vals[a]);
+      rows.forEach((el, i) => {
+        const r = order.indexOf(i);
+        el.style.transform = `translateY(${r * ROW}px)`;
+        el.classList.toggle('top', r === 0);
+        el.querySelector('b').textContent = r + 1;
+        el.querySelector('.rk-v').textContent = fmt(vals[i], 2);
+        [...el.querySelectorAll('.rk-bar i')].forEach((seg, k) => { seg.style.width = (animate ? SITES[i].s[k] * w[k] * 100 : 0) + '%'; });
+      });
+      document.querySelectorAll('#wSeg [data-w]').forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.w) === wi)));
+    };
+    let wi = 0;
+    set(0, reduceMotion);
+    if (!reduceMotion) onceVisible(box, () => set(wi, true), '0px 0px -20% 0px');
+    document.querySelectorAll('#wSeg [data-w]').forEach((b) => b.addEventListener('click', () => { wi = Number(b.dataset.w); set(wi, true); }));
+  })();
+
+  /* ---------- Photos : illustration de secours si l'image manque ---------- */
+  (function photos() {
+    const draw = (kind) => {
+      const s = svgEl('svg', { viewBox: '0 0 800 360', role: 'img', 'aria-label': kind === 'delta' ? 'Illustration du delta fossile' : 'Illustration de stromatolites en coupe' });
+      const defs = svgEl('defs', {}, s);
+      const g = svgEl('linearGradient', { id: 'ph' + kind, x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
+      if (kind === 'delta') {
+        svgEl('stop', { offset: 0, 'stop-color': '#a0461d' }, g); svgEl('stop', { offset: 1, 'stop-color': '#4a1c0b' }, g);
+        svgEl('rect', { width: 800, height: 360, fill: `url(#ph${kind})` }, s);
+        svgEl('ellipse', { cx: 470, cy: 250, rx: 420, ry: 170, fill: 'rgba(40,14,6,.35)', stroke: 'rgba(255,200,160,.25)', 'stroke-width': 6 }, s);
+        const r = rng(9);
+        for (let k = 0; k < 26; k++) {
+          const a = -0.25 + k * 0.045, len = 170 + r() * 90;
+          svgEl('path', { d: `M110 70 Q${110 + Math.cos(a) * len * 0.5} ${70 + Math.sin(a + 0.6) * len * 0.5} ${110 + Math.cos(a) * len} ${70 + Math.sin(a + 0.9) * len}`, fill: 'none', stroke: k % 3 ? 'rgba(255,214,170,.28)' : 'rgba(90,40,20,.55)', 'stroke-width': 3 + r() * 5, 'stroke-linecap': 'round' }, s);
+        }
+        svgEl('path', { d: 'M0 40 Q60 55 110 70', fill: 'none', stroke: 'rgba(60,20,8,.7)', 'stroke-width': 10 }, s);
+      } else {
+        svgEl('stop', { offset: 0, 'stop-color': '#7a5a3a' }, g); svgEl('stop', { offset: 1, 'stop-color': '#3a2616' }, g);
+        svgEl('rect', { width: 800, height: 360, fill: `url(#ph${kind})` }, s);
+        [[180, 150], [420, 190], [650, 130]].forEach(([cx, wd]) => {
+          for (let k = 0; k < 22; k++) {
+            const y = 340 - k * 11, hh = 20 + k * 4.2;
+            svgEl('path', { d: `M${cx - wd / 2 - k * 1.5} ${y} Q${cx} ${y - hh} ${cx + wd / 2 + k * 1.5} ${y}`, fill: 'none', stroke: k % 2 ? 'rgba(245,222,190,.55)' : 'rgba(60,35,18,.7)', 'stroke-width': 4 }, s);
+          }
+        });
+      }
+      svgEl('text', { x: 784, y: 346, 'text-anchor': 'end', fill: 'rgba(255,255,255,.6)', 'font-size': 13 }, s).textContent = 'Illustration';
+      return s;
+    };
+    document.querySelectorAll('.photo-box').forEach((b) => {
+      const img = b.querySelector('img');
+      const fb = () => { if (b.querySelector('svg')) return; img.remove(); b.appendChild(draw(b.dataset.fallback)); };
+      img.addEventListener('error', fb);
+      if (img.complete && !img.naturalWidth) fb();
+    });
+  })();
+
+  /* ---------- Figure 4 : spécificité et faisabilité ---------- */
+  (function scatter() {
+    const box = $('scat'), tipEl = $('scatTip');
+    const CC = { A: '#e11d48', B: '#3b82f6', C: '#d97706', D: '#059669' };
+    const P = [
+      ['A', 'Excès L des acides aminés', 'Excès L', 0.95, 0.65, 0.5], ['A', 'Lipides à latéralité unique', 'Lipides', 0.90, 0.45, 0.8],
+      ['B', 'Carbone appauvri en ¹³C', 'Carbone ¹³C', 0.75, 0.75, 0.95], ['B', 'Soufre appauvri en ³⁴S', 'Soufre ³⁴S', 0.70, 0.45, 0.95],
+      ['C', 'Magnétite en chaînes', 'Magnétite', 0.60, 0.30, 0.95], ['C', 'Pyrite en framboises', 'Pyrite', 0.45, 0.45, 0.8],
+      ['D', 'Microstructures 0,5–5 µm', 'Microstructures', 0.20, 0.90, 0.8]
+    ];
+    const narrow = box.clientWidth < 520;
+    const F = frame(box, { x: [0, 1], y: [0, 1], xt: [0.25, 0.5, 0.75], yt: [0.25, 0.5, 0.75], xl: 'Facilité de mesure →', yl: 'Spécificité biologique →', H: narrow ? 320 : 340, m: { l: 30, b: 30, t: 14, r: 14 }, aria: 'Nuage de points : les biosignatures les plus spécifiques sont les plus difficiles à mesurer' });
+    svgEl('rect', { x: F.x(0.7), y: F.y(1), width: F.x(1) - F.x(0.7), height: F.y(0.7) - F.y(1), fill: 'rgba(52,211,153,.07)', stroke: 'rgba(52,211,153,.35)', 'stroke-dasharray': '4 4' }, F.svg);
+    if (!narrow) svgEl('text', { x: F.x(0.985), y: F.y(0.975) + 10, 'text-anchor': 'end', fill: '#6ee7b7', 'font-size': 12 }, F.svg).textContent = 'zone idéale';
+    if (narrow) {
+      const ul = document.createElement('ol'); ul.className = 'scat-list';
+      ul.innerHTML = P.map(([c, n]) => `<li style="--cc:${CC[c]}"><span class="cl">${c}</span>${n}</li>`).join('');
+      box.after(ul);
+    }
+    const dots = P.map(([c, n, sh, sp, fe, re]) => {
+      const x = F.x(fe), y = F.y(sp), r = 7 + re * 12;
+      const g = svgEl('g', { class: 'dot' }, F.svg);
+      const ci = svgEl('circle', { cx: x, cy: y, r, fill: CC[c], 'fill-opacity': 0.3, stroke: CC[c], 'stroke-width': 2 }, g);
+      svgEl('text', { x, y: y + 4.5, 'text-anchor': 'middle', fill: '#fff', 'font-size': 12, 'font-weight': 600, class: 'mono' }, g).textContent = narrow ? P.findIndex((q) => q[1] === n) + 1 : c;
+      if (!narrow) {
+        const right = fe < 0.8;
+        svgEl('text', { x: right ? x + r + 6 : x - r - 6, y: y + 4, 'text-anchor': right ? 'start' : 'end', fill: '#e6e6e6', 'font-size': narrow ? 11 : 12.5 }, g).textContent = sh;
+      }
+      return { ci, x, y, r, c, n, sp, fe, re };
+    });
+    const q = (v) => (v >= 0.85 ? 'très élevée' : v >= 0.65 ? 'élevée' : v >= 0.45 ? 'moyenne' : 'faible');
+    const hit = F.hit();
+    hit.addEventListener('pointermove', (e) => {
+      const rr = F.svg.getBoundingClientRect(), px = (e.clientX - rr.left) / rr.width * F.W, py = (e.clientY - rr.top) / rr.height * F.H;
+      let b = dots[0], bd = Infinity; dots.forEach((d) => { const dd = (d.x - px) ** 2 + (d.y - py) ** 2; if (dd < bd) { bd = dd; b = d; } });
+      dots.forEach((d) => d.ci.setAttribute('fill-opacity', d === b ? 0.6 : 0.3));
+      tipEl.innerHTML = `<b>Classe ${b.c} · ${b.n}</b><div><span>Spécificité</span><em>${q(b.sp)}</em></div><div><span>Facilité de mesure</span><em>${q(b.fe)}</em></div><div><span>Résistance</span><em>${q(b.re)}</em></div>`;
+      placeTip(tipEl, box, F.svg, F.W, F.H, b.x, b.y);
+    });
+    hit.addEventListener('pointerleave', () => { tipEl.classList.remove('show'); dots.forEach((d) => d.ci.setAttribute('fill-opacity', 0.3)); });
+    if (reduceMotion) box.classList.add('drawn'); else onceVisible(box, () => box.classList.add('drawn'), '0px 0px -25% 0px');
+  })();
+
+  /* ---------- Figure 6 : entonnoir ---------- */
+  (function funnel() {
+    const s = $('funnel'), desc = $('funDesc'), bw = $('funBtns');
+    const ST = [
+      ['Repérage orbital', '100 zones', 100, 'Des images prises depuis l\'orbite, en plusieurs couleurs, repèrent les zones riches en argiles et en carbonates, où l\'eau a longtemps séjourné.'],
+      ['Forage', '20 carottes', 20, 'Une foreuse prélève des carottes à 1–2 m de profondeur, sous la couche détruite par les UV. Elles sont gardées au froid pour préserver les molécules.'],
+      ['Tri au microscope', '8 retenues', 8, 'Un microscope et un spectromètre Raman, qui ne consomment pas l\'échantillon, cherchent microstructures et minéraux (classes D et C).'],
+      ['Isotopes', '4 analysées', 4, 'Un spectromètre de masse mesure le rapport carbone 13 / carbone 12 de la matière organique extraite (classe B).'],
+      ['Chiralité', '2 analysées', 2, 'Un chromatographe à colonne chirale sépare les formes L et D des acides aminés : l\'analyse la plus décisive (classe A), et la plus gourmande en échantillon.']
+    ];
+    const COL = ['#94a3b8', '#fb923c', '#059669', '#3b82f6', '#e11d48'];
+    const HS = [170, 124, 88, 62, 44], CY = 100, CW = 128;
+    const cx = (i) => 64 + i * CW;
+    const halfAt = (x) => { const f = Math.max(0, Math.min(4, (x - 64) / CW)), i = Math.floor(f), t = f - i; return (HS[i] + ((HS[Math.min(4, i + 1)] || HS[i]) - HS[i]) * t) / 2 - 6; };
+    let d = `M${cx(0) - 58} ${CY - HS[0] / 2}`;
+    ST.forEach((_, i) => { d += ` L${cx(i) + 58} ${CY - HS[i] / 2}`; if (i < 4) d += ` L${cx(i + 1) - 58} ${CY - HS[i + 1] / 2}`; });
+    for (let i = 4; i >= 0; i--) { d += ` L${cx(i) + 58} ${CY + HS[i] / 2}`; d += ` L${cx(i) - 58} ${CY + HS[i] / 2}`; if (i > 0) d += ` L${cx(i - 1) + 58} ${CY + HS[i - 1] / 2}`; }
+    svgEl('path', { d: d + ' Z', fill: 'rgba(79,107,237,.06)', stroke: '#1b2555' }, s);
+    const cols = ST.map((st, i) => {
+      const g = svgEl('g', { class: 'fun-st', 'data-k': i }, s);
+      svgEl('rect', { x: cx(i) - 58, y: CY - HS[i] / 2, width: 116, height: HS[i], rx: 10, fill: 'rgba(2,6,23,.35)', stroke: COL[i], 'stroke-opacity': 0.45, class: 'fs-r' }, g);
+      svgEl('text', { x: cx(i), y: 206, 'text-anchor': 'middle', fill: '#e6e6e6', 'font-size': 13, class: 'mono' }, g).textContent = st[1];
+      return g;
+    });
+    const parts = [];
+    const r = rng(5);
+    const pg = svgEl('g', {}, s);
+    for (let k = 0; k < 40; k++) parts.push({ x: 6 + r() * 600, v: 0.6 + r() * 0.3, y: (r() - 0.5), alive: true, drop: 0, el: svgEl('circle', { r: 3, fill: '#fde68a' }, pg) });
+    const keep = [0.2, 0.4, 0.5, 0.5];
+    bw.innerHTML = ST.map((st, i) => `<button class="part" type="button" data-k="${i}" aria-pressed="false" style="--pc:${COL[i]}"><i></i>${i + 1} · ${st[0]}</button>`).join('');
+    const btns = [...bw.querySelectorAll('.part')];
+    let cur = -1, user = false;
+    const set = (k) => {
+      if (k === cur) return; cur = k;
+      btns.forEach((b, i) => b.setAttribute('aria-pressed', String(i === k)));
+      cols.forEach((g, i) => { const rc = g.querySelector('.fs-r'); rc.setAttribute('stroke-opacity', i === k ? 1 : 0.45); rc.setAttribute('stroke-width', i === k ? 2 : 1); });
+      desc.innerHTML = `<h4><span style="color:${COL[k]}">${k + 1}</span> ${ST[k][0]} <small class="cnt">${ST[k][1]}</small></h4><p>${ST[k][3]}</p>`;
+      desc.classList.remove('swap'); void desc.offsetWidth; desc.classList.add('swap');
+    };
+    btns.forEach((b, i) => b.addEventListener('click', () => { user = true; set(i); }));
+    cols.forEach((g, i) => g.addEventListener('click', () => { user = true; set(i); }));
+    set(0);
+    let playing = !reduceMotion, last = 0, acc = 0;
+    const btn = $('funPlay');
+    const setBtn = () => { btn.querySelector('i').className = playing ? 'ph-light ph-pause' : 'ph-light ph-play'; btn.querySelector('span').textContent = playing ? 'Pause' : 'Lancer'; };
+    btn.addEventListener('click', () => { playing = !playing; setBtn(); });
+    setBtn();
+    const step = (dt) => {
+      parts.forEach((p) => {
+        const before = Math.floor((p.x - 64 - 58) / CW);
+        p.x += dt * 60 * p.v;
+        const after = Math.floor((p.x - 64 - 58) / CW);
+        if (p.alive && after > before && before >= 0 && before < 4 && r() > keep[before]) p.alive = false;
+        if (!p.alive) p.drop += dt * 60;
+        if (p.x > 632 || p.drop > 40) { p.x = 6; p.alive = true; p.drop = 0; p.y = r() - 0.5; }
+        const y = CY + p.y * 2 * halfAt(p.x) + p.drop;
+        p.el.setAttribute('cx', p.x.toFixed(1)); p.el.setAttribute('cy', y.toFixed(1));
+        p.el.setAttribute('fill', p.alive ? '#fde68a' : '#f87171');
+        p.el.setAttribute('opacity', p.alive ? 0.9 : Math.max(0, 0.8 - p.drop / 40));
+      });
+    };
+    step(0);
+    loopWhileVisible($('fig6'), (now) => {
+      const dt = last ? Math.min(0.05, (now - last) / 1000) : 0; last = now;
+      if (playing) step(dt);
+      if (!user) { acc += dt; if (acc > 4) { acc = 0; set((cur + 1) % 5); } }
+    });
+  })();
+
+  /* ---------- Figure 7 : test en aveugle ---------- */
+  (function blind() {
+    const BIO = ['1111', '1010', '1000', '1111', '1011', '1010', '1111', '1011', '1001', '1001', '1111', '0010', '1101', '1001', '1010', '1011', '1011', '1111', '1111', '1111', '0110', '1110', '1111', '0111'];
+    const ABIO = ['0000', '1000', '1000', '0000', '0000', '1100', '1000', '0000', '1000', '1000', '0000', '1010', '0100', '0100', '0001', '0000', '0010', '0010', '1000', '0000', '0100', '0100', '1000', '1010'];
+    const DC = ['#059669', '#d97706', '#3b82f6', '#e11d48'];
+    const mkTiles = (id, arr, bio) => {
+      const box = $(id);
+      box.innerHTML = arr.map((f, i) => `<div class="tile" style="--dl:${i * 14}ms" title="Échantillon ${bio ? 'B' : 'L'}${i + 1}"><i class="ph-light ${bio ? 'ph-check' : 'ph-warning'}" aria-hidden="true"></i><span class="dots">${[...f].map((c, k) => `<b class="${c === '1' ? 'on' : ''}" style="--dc:${DC[k]}"></b>`).join('')}</span></div>`).join('');
+      return [...box.children].map((el, i) => ({ el, f: arr[i] }));
+    };
+    const tb = mkTiles('tBio', BIO, true), ta = mkTiles('tAbio', ABIO, false);
+    const pos = (f, m) => (m < 4 ? f[m] === '1' : [...f].filter((c) => c === '1').length >= (m === 4 ? 2 : 3));
+    const set = (m) => {
+      document.querySelectorAll('#blindSeg [data-m]').forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.m) === m)));
+      let tp = 0, fp = 0;
+      tb.forEach((t) => { const p = pos(t.f, m); if (p) tp++; t.el.className = 'tile ' + (p ? 'tp' : 'fn'); });
+      ta.forEach((t) => { const p = pos(t.f, m); if (p) fp++; t.el.className = 'tile ' + (p ? 'fp' : 'tn'); });
+      $('roSens').textContent = `${tp} / 24`;
+      $('roFp').textContent = `${fp} / 24`;
+      $('roFpBox').style.setProperty('--rc', fp ? '#f87171' : '#34d399');
+      $('roPpv').textContent = tp + fp ? Math.round(tp / (tp + fp) * 100) + NBSP + '%' : '—';
+    };
+    document.querySelectorAll('#blindSeg [data-m]').forEach((b) => b.addEventListener('click', () => set(Number(b.dataset.m))));
+    set(5);
+    if (!reduceMotion) onceVisible($('fig7'), () => { set(0); setTimeout(() => set(5), 1400); }, '0px 0px -30% 0px');
+  })();
+
+  /* images des articles liés introuvables : on garde le fond coloré */
+  document.querySelectorAll('.rel-img img').forEach((img) => img.addEventListener('error', () => img.remove()));
+})();
 </script>
 </body>
 </html>
