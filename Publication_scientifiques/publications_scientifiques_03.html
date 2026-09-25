@@ -2,885 +2,1691 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>MARS-BIO · Survie et croissance microbienne en analogues martiens — IFRAS DSVT</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Des microbes qui se multiplient en conditions martiennes simulées | Publications IFRAS</title>
+<meta name="description" content="Trois espèces extrêmophiles continuent de croître pendant 560 jours sous le profil martien complet, dans la chambre HADES-2 de l'IFRAS.">
+<meta name="theme-color" content="#050b1e">
+<link rel="icon" type="image/png" sizes="1000x1000" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+
 <style>
+/* =========================================================
+   TOKENS (identiques aux autres pages)
+   ========================================================= */
 :root {
-  --bg-main:#050b1e; --bg-dark:#020617; --bg-light:#070f2b;
-  --border:#1b2555; --border-sub:#0e1535;
-  --accent:#34d399; --accent2:#4f6bed; --accent3:#f97316;
-  --text-main:#e6e6e6; --text-soft:#aab3d6; --text-muted:#4a5280;
-  --mono:"DM Mono",monospace;
+  --bg-main: #050b1e;
+  --bg-dark: #020617;
+  --bg-light: #070f2b;
+  --bg-raise: #0a1436;
+  --accent: #4f6bed;
+  --accent-hover: #3d5adb;
+  --accent-soft: rgba(79,107,237,.14);
+  --accent-line: rgba(79,107,237,.38);
+  --text-main: #e6e6e6;
+  --text-strong: #f5f7ff;
+  --text-soft: #aab3d6;
+  --text-mute: #8891b8;
+  --border: #1b2555;
+
+  /* Une couleur par type de contenu */
+  --t-sci: #60a5fa;
+  --t-ifras: #34d399;
+  --t-event: #f97316;
+  /* Types de publications IFRAS */
+  --t-lettre: #60a5fa;
+  --t-rapport: #34d399;
+  --t-hs: #f97316;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --header-h: 68px;
+  --subnav-h: 48px;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:"DM Sans",sans-serif;background:var(--bg-main);color:var(--text-main);line-height:1.7;}
-::-webkit-scrollbar{width:4px;} ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
-header{position:fixed;top:0;width:100%;z-index:1000;background:rgba(5,11,30,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
-.header-inner{max-width:1300px;margin:auto;padding:12px 30px;display:flex;align-items:center;justify-content:space-between;}
-.header-left{display:flex;align-items:center;gap:40px;}
-.logo-link img{height:60px;}
-.main-nav{list-style:none;display:flex;gap:32px;}
-.main-nav a{text-decoration:none;color:var(--text-soft);font-size:14px;letter-spacing:.05em;}
-.main-nav a:hover{color:white;}
-.login-btn{padding:8px 18px;border-radius:6px;border:1px solid var(--accent2);color:white;text-decoration:none;font-size:13px;}
-.login-btn:hover{background:var(--accent2);}
-.sub-nav{margin-top:84px;background:var(--bg-light);border-bottom:1px solid var(--border);}
-.sub-nav ul{max-width:1300px;margin:0 auto;padding:0 30px;list-style:none;display:flex;justify-content:space-between;}
-.sub-nav li{padding:14px 0;}
-.sub-nav a{color:var(--text-soft);text-decoration:none;font-size:14px;letter-spacing:.06em;}
-.sub-nav a:hover{color:white;}
-.sub-nav a.active{color:white;border-bottom:2px solid var(--accent2);padding-bottom:12px;}
-.pub-wrapper{max-width:900px;margin:0 auto;padding:52px 30px 100px;}
-.breadcrumb{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--text-muted);letter-spacing:.06em;margin-bottom:36px;font-family:var(--mono);}
-.breadcrumb a{color:var(--text-muted);text-decoration:none;}
-.breadcrumb a:hover{color:var(--accent);}
-.breadcrumb span{opacity:.4;}
-/* META BADGES */
-.meta-top{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
-.badge{font-size:10.5px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;font-weight:500;}
-.badge-j{background:rgba(52,211,153,.1);color:var(--accent);border:1px solid rgba(52,211,153,.25);}
-.badge-d{background:rgba(79,107,237,.1);color:var(--accent2);border:1px solid rgba(79,107,237,.2);}
-.badge-o{background:rgba(52,211,153,.07);color:var(--accent);border:1px solid rgba(52,211,153,.15);}
-.badge-dt{background:rgba(255,255,255,.04);color:var(--text-muted);border:1px solid rgba(255,255,255,.08);}
-/* TITRE */
-.article-title{font-family:"DM Sans",sans-serif;font-size:clamp(18px,2.4vw,23px);font-weight:400;color:var(--text-main);line-height:1.5;letter-spacing:0;margin-bottom:18px;}
-.article-subtitle{font-size:15px;color:var(--text-soft);font-weight:300;line-height:1.65;margin-bottom:28px;font-style:italic;border-left:2px solid var(--accent);padding-left:16px;}
-.authors-block{background:var(--bg-light);border:1px solid var(--border);border-radius:10px;padding:16px 20px;display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;margin-bottom:28px;}
-.author-entry{display:flex;flex-direction:column;gap:2px;}
-.author-name{font-size:13.5px;font-weight:600;color:white;}
-.author-role{font-size:11px;color:var(--text-muted);letter-spacing:.04em;}
-.author-sep{width:1px;background:var(--border);align-self:stretch;}
-.cite-block{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:12px 16px;background:rgba(0,0,0,.25);border:1px solid var(--border-sub);border-radius:8px;}
-.cite-item{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;color:var(--text-muted);}
-.cite-label{color:var(--accent);font-weight:500;}
-.cite-sep{color:var(--border);}
-.art-divider{height:1px;background:linear-gradient(90deg,var(--accent) 0%,transparent 60%);margin:40px 0;opacity:.3;}
-/* ABSTRACT */
-.abstract-box{background:rgba(52,211,153,.04);border:1px solid rgba(52,211,153,.14);border-radius:12px;padding:28px 32px;margin-bottom:44px;}
-.abstract-label{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;font-weight:500;}
-.abstract-text{font-size:14.5px;line-height:1.85;color:var(--text-soft);font-weight:300;}
-.kw-wrap{margin-top:16px;display:flex;flex-wrap:wrap;gap:7px;align-items:center;}
-.kw-lbl{font-size:11px;color:var(--text-muted);font-family:var(--mono);letter-spacing:.08em;}
-.kw-tag{font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--text-soft);}
-/* SECTIONS */
-.section-heading{font-family:"Syne",sans-serif;font-size:18px;font-weight:700;color:white;margin:44px 0 16px;display:flex;align-items:center;gap:12px;}
-.section-heading::before{content:'';display:block;width:4px;height:18px;background:var(--accent);border-radius:2px;flex-shrink:0;}
-.section-heading.blue::before{background:var(--accent2);}
-.section-heading.orange::before{background:var(--accent3);}
-.sub{font-family:"Syne",sans-serif;font-weight:700;color:var(--text-soft);margin:28px 0 10px;letter-spacing:.04em;text-transform:uppercase;font-size:11.5px;}
-p.bt{font-size:14.5px;color:var(--text-soft);line-height:1.85;font-weight:300;margin-bottom:16px;}
 
-/* ===== ENCADRÉ "CONDITIONS MARTIENNES" — grille environnementale ===== */
-.env-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:32px 0;}
-.env-item{background:var(--bg-light);padding:18px 16px 14px;display:flex;flex-direction:column;gap:5px;}
-.env-param{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);}
-.env-mars{font-size:17px;font-family:var(--mono);font-weight:500;color:#fb923c;line-height:1.1;}
-.env-earth{font-size:12px;font-family:var(--mono);color:var(--text-muted);}
-.env-sim{font-size:11px;color:var(--accent);margin-top:3px;}
-.env-arrow{color:var(--text-muted);font-size:10px;margin:0 3px;}
+*, *::before, *::after { box-sizing: border-box; }
 
-/* ===== CARTES ORGANISMES ===== */
-.orga-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0;}
-.orga-card{background:var(--bg-light);border:1px solid var(--border);border-radius:12px;padding:20px 22px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;}
-.orga-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
-.orga-card.green::before{background:var(--accent);}
-.orga-card.orange::before{background:var(--accent3);}
-.orga-card.blue::before{background:var(--accent2);}
-.orga-card.yellow::before{background:#facc15;}
-.orga-name{font-family:"Syne",sans-serif;font-weight:700;font-size:14px;color:white;line-height:1.2;}
-.orga-class{font-size:11px;font-family:var(--mono);color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase;}
-.orga-desc{font-size:13px;color:var(--text-soft);font-weight:300;line-height:1.6;}
-.orga-tags{display:flex;flex-wrap:wrap;gap:6px;}
-.orga-tag{font-size:10.5px;padding:2px 8px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:var(--text-muted);font-family:var(--mono);}
-.orga-result{display:flex;align-items:center;gap:8px;margin-top:4px;}
-.orga-result-val{font-family:var(--mono);font-size:13px;font-weight:500;}
-.orga-result-val.survived{color:var(--accent);}
-.orga-result-val.partial{color:#facc15;}
-.orga-result-val.adapted{color:#60a5fa;}
-.orga-result-lbl{font-size:11.5px;color:var(--text-muted);}
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 20px); }
 
-/* ===== GRAPHIQUE CROISSANCE ===== */
-.chart-wrap{margin:36px 0;background:var(--bg-light);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
-.chart-inner{padding:28px 24px 16px;background:rgba(0,0,0,.15);border-bottom:1px solid var(--border-sub);}
-.chart-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:8px;}
-.chart-ttl{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);max-width:500px;line-height:1.5;}
-.legend{display:flex;gap:14px;flex-wrap:wrap;}
-.li{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);}
-.ld{width:8px;height:8px;border-radius:2px;}
-.chart-cap{padding:12px 20px;font-size:12.5px;color:var(--text-muted);line-height:1.6;}
-.chart-cap strong{font-weight:600;color:var(--text-soft);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
-
-/* ===== TABLEAU RÉSULTATS ===== */
-.tbl-wrap{margin:36px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);}
-.tbl-head{background:rgba(52,211,153,.08);padding:12px 20px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--border);}
-table{width:100%;border-collapse:collapse;font-size:13px;}
-thead th{background:rgba(0,0,0,.3);padding:11px 16px;text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--border-sub);font-weight:500;}
-tbody tr{border-bottom:1px solid var(--border-sub);transition:background .15s;}
-tbody tr:last-child{border-bottom:none;}
-tbody tr:hover{background:rgba(255,255,255,.025);}
-tbody td{padding:10px 16px;color:var(--text-soft);vertical-align:middle;font-weight:300;}
-.tm{font-family:var(--mono);font-size:12.5px;color:var(--text-main);}
-.tg{font-family:var(--mono);font-size:12.5px;color:var(--accent);}
-.ty{font-family:var(--mono);font-size:12.5px;color:#facc15;}
-.to{font-family:var(--mono);font-size:12.5px;color:var(--accent3);}
-.tr{font-family:var(--mono);font-size:12.5px;color:#f87171;}
-.tbl-note{padding:10px 20px;font-size:11.5px;color:var(--text-muted);background:rgba(0,0,0,.2);font-style:italic;border-top:1px solid var(--border-sub);}
-
-/* ===== HIGHLIGHT ===== */
-.hl{border-left:3px solid var(--accent);background:rgba(52,211,153,.04);border-radius:0 8px 8px 0;padding:16px 20px;margin:24px 0;font-size:14px;color:var(--text-soft);font-style:italic;line-height:1.75;}
-.hl.blue{border-color:var(--accent2);background:rgba(79,107,237,.05);}
-.hl.orange{border-color:var(--accent3);background:rgba(249,115,22,.04);}
-
-/* ===== FIGURE ===== */
-.fig-wrap{margin:36px 0;background:var(--bg-light);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
-.fig-ph{height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(52,211,153,.06),rgba(52,211,153,.01));border-bottom:1px solid var(--border);gap:10px;}
-.fig-icon{font-size:36px;opacity:.22;}
-.fig-desc{font-size:11.5px;font-family:var(--mono);color:var(--text-muted);letter-spacing:.06em;}
-.fig-sub{font-size:11px;color:var(--text-muted);text-align:center;max-width:420px;line-height:1.55;}
-.fig-cap{padding:14px 20px;font-size:12.5px;color:var(--text-muted);line-height:1.6;}
-.fig-cap strong{font-weight:600;color:var(--text-soft);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
-
-/* ===== TIMELINE (résultats jour par jour) ===== */
-.timeline{margin:32px 0;display:flex;flex-direction:column;gap:0;}
-.tl-item{display:flex;gap:0;position:relative;}
-.tl-item:not(:last-child)::after{content:'';position:absolute;left:47px;top:36px;bottom:-2px;width:1px;background:var(--border-sub);}
-.tl-day{width:96px;flex-shrink:0;padding:12px 16px 12px 0;text-align:right;}
-.tl-day-num{font-family:var(--mono);font-size:13px;color:var(--accent);font-weight:500;}
-.tl-day-lbl{font-size:10px;color:var(--text-muted);font-family:var(--mono);letter-spacing:.08em;}
-.tl-dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--border);background:var(--bg-main);margin-top:16px;flex-shrink:0;position:relative;z-index:1;}
-.tl-dot.active{background:var(--accent);border-color:var(--accent);}
-.tl-dot.partial{background:#facc15;border-color:#facc15;}
-.tl-dot.fail{background:#f87171;border-color:#f87171;}
-.tl-content{padding:10px 0 18px 18px;flex:1;}
-.tl-event{font-size:13.5px;color:var(--text-main);font-weight:500;margin-bottom:4px;}
-.tl-detail{font-size:13px;color:var(--text-muted);font-weight:300;line-height:1.6;}
-
-/* REFS */
-.refs-sec{margin-top:60px;padding-top:32px;border-top:1px solid var(--border);}
-.ref-ttl{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:20px;}
-.ref-list{counter-reset:ref;display:flex;flex-direction:column;gap:6px;}
-.ref-item{
-  counter-increment:ref;
-  display:flex;
-  align-items:baseline;
-  gap:12px;
-  font-size:13px;
-  line-height:1.55;
-  color:var(--text-muted);
-  padding:9px 14px;
-  border-radius:6px;
-  background:rgba(0,0,0,.15);
-  border:1px solid var(--border-sub);
+body {
+  margin: 0;
+  font-family: "DM Sans", "Segoe UI", system-ui, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
-.ref-item::before{
-  content:'[' counter(ref) ']';
-  font-family:var(--mono);font-size:11px;
-  color:var(--accent);
-  flex-shrink:0;
-  min-width:26px;
-}
-.ref-item b{color:var(--text-soft);font-weight:500;}
-.ref-item em{color:var(--text-muted);}
-.footnote{margin-top:48px;padding:20px 24px;background:rgba(0,0,0,.25);border:1px solid var(--border-sub);border-radius:10px;font-size:11.5px;color:var(--text-muted);line-height:1.7;}
-.footnote strong{color:var(--text-soft);}
 
-/* PROGRESS / TOC */
-.progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent),#6ee7b7);z-index:9999;width:0%;transition:width .1s linear;}
-.toc-sidebar{position:fixed;right:32px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:100;}
-.toc-dot{width:6px;height:6px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s,transform .2s;position:relative;}
-.toc-dot:hover,.toc-dot.active{background:var(--accent);transform:scale(1.5);}
-.toc-dot::after{content:attr(data-label);position:absolute;right:14px;top:50%;transform:translateY(-50%);background:var(--bg-light);border:1px solid var(--border);border-radius:5px;padding:3px 8px;font-size:10.5px;color:var(--text-soft);white-space:nowrap;font-family:var(--mono);letter-spacing:.04em;opacity:0;pointer-events:none;transition:opacity .2s;}
-.toc-dot:hover::after{opacity:1;}
-@media(max-width:1100px){.toc-sidebar{display:none;}}
-@media(max-width:640px){.orga-grid{grid-template-columns:1fr;}.env-grid{grid-template-columns:repeat(2,1fr);}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+[hidden] { display: none !important; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.skip-link {
+  position: absolute; left: 16px; top: -48px;
+  padding: 10px 16px;
+  background: var(--accent); color: #fff;
+  border-radius: var(--radius-sm);
+  z-index: 3000; text-decoration: none;
+  transition: top 160ms var(--ease-out);
+}
+.skip-link:focus { top: 12px; }
+
+.container { max-width: 1300px; margin: 0 auto; padding: 0 30px; }
+
+/* =========================================================
+   BOUTONS
+   ========================================================= */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 22px;
+  border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 500;
+  text-decoration: none; white-space: nowrap;
+  border: 1px solid transparent;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.btn:active { transform: scale(0.97); }
+.btn i { font-size: 16px; transition: transform 200ms var(--ease-out); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-ghost { border-color: var(--accent-line); color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-ghost:hover { background: var(--accent-soft); border-color: var(--accent); }
+  .btn:hover i { transform: translateX(3px); }
+}
+
+.text-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--text-soft);
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.text-link i { transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .text-link:hover { color: #fff; }
+  .text-link:hover i { transform: translateX(3px); }
+}
+
+/* =========================================================
+   HEADER (opaque)
+   ========================================================= */
+.site-header {
+  position: fixed; inset: 0 0 auto 0;
+  z-index: 2000;
+  height: var(--header-h);
+  background: rgba(5,11,30,.88);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.header-left { display: flex; align-items: center; gap: 44px; }
+.logo-link { display: flex; align-items: center; }
+.logo-link img { height: 44px; width: auto; }
+
+.main-nav { list-style: none; display: flex; gap: 6px; margin: 0; padding: 0; }
+.main-nav a {
+  position: relative; display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--text-soft);
+  font-size: 14px; letter-spacing: .02em;
+  border-radius: 6px;
+  transition: color 160ms ease;
+}
+.main-nav a::after {
+  content: ""; position: absolute;
+  left: 12px; right: 12px; bottom: 2px; height: 1px;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 200ms var(--ease-out);
+}
+.main-nav a[aria-current="page"] { color: #fff; }
+.main-nav a[aria-current="page"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .main-nav a:hover { color: #fff; }
+  .main-nav a:hover::after { transform: scaleX(1); }
+}
+
+.header-right { display: flex; align-items: center; gap: 10px; }
+.header-right .btn { padding: 9px 18px; font-size: 13px; }
+
+.menu-toggle {
+  display: none;
+  width: 42px; height: 42px;
+  align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: #fff; font-size: 20px; cursor: pointer;
+  transition: transform 160ms var(--ease-out);
+}
+.menu-toggle:active { transform: scale(0.95); }
+
+.mobile-panel {
+  position: fixed; top: var(--header-h); left: 12px; right: 12px;
+  z-index: 1999;
+  padding: 10px;
+  background: rgba(7,15,43,.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(2,6,23,.6);
+  transform-origin: top right;
+  opacity: 0; transform: scale(0.96) translateY(-6px);
+  pointer-events: none; visibility: hidden;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s linear 220ms;
+}
+.mobile-panel.is-open {
+  opacity: 1; transform: none; pointer-events: auto; visibility: visible;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s;
+}
+.mobile-panel ul { list-style: none; margin: 0; padding: 0; }
+.mobile-panel a {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px; color: var(--text-main);
+  text-decoration: none; font-size: 16px; border-radius: 10px;
+}
+.mobile-panel a[aria-current="page"] { background: var(--accent-soft); color: #fff; }
+.mobile-panel .btn { width: 100%; justify-content: center; margin-top: 8px; }
+
+/* =========================================================
+   SOUS-NAVIGATION (ancres + section visible)
+   ========================================================= */
+.subnav {
+  position: sticky;
+  top: var(--header-h);
+  margin-top: var(--header-h);
+  z-index: 1500;
+  height: var(--subnav-h);
+  background: rgba(8,18,53,.94);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.subnav-list {
+  height: 100%;
+  list-style: none; margin: 0 auto; padding: 0 30px;
+  max-width: 1300px;
+  display: flex; align-items: stretch; justify-content: space-between;
+}
+.subnav-list li { display: flex; }
+.subnav-link {
+  position: relative;
+  display: flex; align-items: center; gap: 9px;
+  padding: 0 14px;
+  color: var(--text-soft);
+  text-decoration: none;
+  font-size: 14px; font-weight: 500;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.subnav-link i { font-size: 17px; color: var(--c); }
+.subnav-link::after {
+  content: ""; position: absolute;
+  left: 14px; right: 14px; bottom: -1px; height: 2px;
+  background: var(--c);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+.subnav-link[aria-current="true"] { color: #fff; }
+.subnav-link[aria-current="true"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .subnav-link:hover { color: #fff; }
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.site-footer {
+  margin-top: 100px;
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border);
+  padding: 36px 0;
+  font-size: 13px; color: var(--text-mute);
+}
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+/* =========================================================
+   ARTICLE
+   ========================================================= */
+:root {
+  --mono: "DM Mono", ui-monospace, Menlo, Consolas, monospace;
+  --c10: #3b82f6;   /* CMC-10Z */
+  --c20: #059669;   /* CMC-20Z */
+  --c30: #ea580c;   /* CMC-30Z */
+  --hot: #f97316;
+  --ok: #34d399;
+  --warn: #fbbf24;
+  --bad: #f87171;
+  --surface: #070f2b;
+  --line: #13204d;
+}
+html { scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 24px); }
+
+/* barre de lecture sous la sous-navigation */
+.progress {
+  position: fixed; left: 0; right: 0; top: calc(var(--header-h) + var(--subnav-h)); z-index: 1400;
+  height: 2px; background: transparent; pointer-events: none;
+}
+.progress span { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, var(--accent), #fb7185); transform-origin: left; transform: scaleX(0); }
+
+/* ----- En-tête de l'article ----- */
+.art-hero { position: relative; overflow: hidden; isolation: isolate; border-bottom: 1px solid var(--border); }
+.art-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(ellipse 45% 70% at 78% 45%, rgba(249,115,22,.16), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(79,107,237,.14), transparent 60%);
+}
+.art-hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 48px; align-items: center; padding: 48px 0 56px; }
+.crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 26px; padding: 0; list-style: none; font-size: 13px; color: var(--text-mute); }
+.crumbs a { color: var(--text-soft); text-decoration: none; transition: color 160ms ease; }
+.crumbs i { font-size: 11px; opacity: .6; }
+@media (hover: hover) and (pointer: fine) { .crumbs a:hover { color: #fff; } }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 11px; border-radius: 999px; font-size: 12.5px; font-weight: 500;
+  color: var(--b, var(--text-soft));
+  background: color-mix(in srgb, var(--b, var(--text-soft)) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--b, var(--text-soft)) 28%, transparent);
+}
+.badge i { font-size: 14px; }
+.art-title {
+  margin: 0 0 18px; font-family: "Syne", sans-serif; font-weight: 700;
+  font-size: clamp(30px, 3.6vw, 48px); line-height: 1.08; letter-spacing: -0.025em; color: var(--text-strong);
+  text-wrap: balance;
+}
+.art-lede { margin: 0 0 28px; max-width: 60ch; font-size: 18px; line-height: 1.6; color: var(--text-soft); font-weight: 300; }
+.authors { display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 0 0 22px; padding: 0; list-style: none; }
+.author { display: flex; align-items: center; gap: 10px; }
+.author .av { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-family: "Syne", sans-serif; font-size: 12px; font-weight: 700; color: #fff; background: linear-gradient(135deg, hsl(var(--ah) 55% 38%), hsl(var(--ah) 70% 60%)); }
+.author strong { display: block; font-size: 14px; font-weight: 500; color: var(--text-main); }
+.author small { display: block; font-size: 12.5px; color: var(--text-mute); }
+.meta-line { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 13px; color: var(--text-mute); }
+.meta-line span { display: inline-flex; align-items: center; gap: 7px; }
+.meta-line i { font-size: 15px; color: var(--text-soft); }
+.meta-line code { font-family: var(--mono); font-size: 12.5px; color: var(--text-soft); }
+
+.hero-in { opacity: 0; transform: translateY(12px); animation: heroIn 700ms var(--ease-out) forwards; animation-delay: calc(80ms + var(--i, 0) * 90ms); }
+@keyframes heroIn { to { opacity: 1; transform: none; } }
+
+/* illustration : capsule en rentrée */
+.reentry { position: relative; aspect-ratio: 1 / 0.86; max-width: 520px; justify-self: end; width: 100%; }
+.reentry canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.reentry svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.reentry .shock { animation: shock 2.4s var(--ease-in-out) infinite alternate; transform-origin: 62% 50%; }
+@keyframes shock { from { opacity: .75; transform: scale(.985); } to { opacity: 1; transform: scale(1.015); } }
+.reentry .glow { animation: glow 1.6s ease-in-out infinite alternate; }
+@keyframes glow { from { opacity: .55; } to { opacity: .95; } }
+.reentry-tag {
+  position: absolute; display: flex; align-items: center; gap: 8px;
+  padding: 6px 10px; border-radius: 8px; font-family: var(--mono); font-size: 12px; color: var(--text-soft);
+  background: rgba(2,6,23,.7); border: 1px solid var(--border); backdrop-filter: blur(6px);
+}
+.reentry-tag b { color: #fff; font-weight: 500; }
+.reentry-tag i { width: 7px; height: 7px; border-radius: 50%; background: var(--hot); }
+
+/* ----- Mise en page 3 colonnes ----- */
+.art-layout {
+  display: grid; grid-template-columns: 220px minmax(0, 720px) 280px; justify-content: space-between; gap: 48px;
+  padding-top: 48px;
+}
+.toc, .rail { position: sticky; top: calc(var(--header-h) + var(--subnav-h) + 28px); align-self: start; }
+.toc-title, .rail-title { margin: 0 0 14px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.toc ol { position: relative; list-style: none; margin: 0; padding: 0 0 0 14px; border-left: 1px solid var(--border); }
+.toc-ind { list-style: none; position: absolute; left: -1px; top: 0; width: 2px; height: 34px; background: var(--accent); border-radius: 2px; transition: transform 300ms var(--ease-out), height 300ms var(--ease-out); }
+.toc a {
+  display: flex; gap: 10px; padding: 7px 0; font-size: 14px; line-height: 1.35;
+  color: var(--text-mute); text-decoration: none; transition: color 160ms ease;
+}
+.toc a span { font-family: var(--mono); font-size: 12px; padding-top: 1px; color: inherit; opacity: .8; min-width: 16px; }
+.toc a.on { color: #fff; }
+@media (hover: hover) and (pointer: fine) { .toc a:hover { color: var(--text-main); } }
+.toc-time { display: flex; align-items: center; gap: 8px; margin-top: 18px; font-size: 13px; color: var(--text-mute); }
+.toc-time i { font-size: 15px; }
+
+/* ----- Colonne de droite ----- */
+.rail { display: grid; gap: 16px; max-height: calc(100vh - var(--header-h) - var(--subnav-h) - 44px); overflow-y: auto; scrollbar-width: none; overscroll-behavior: contain; }
+.rail::-webkit-scrollbar { display: none; }
+.rail-card { padding: 18px; border-radius: var(--radius); background: var(--bg-light); border: 1px solid var(--border); }
+.cite-text { margin: 0 0 14px; font-size: 13px; line-height: 1.6; color: var(--text-soft); }
+.cite-text em { color: var(--text-main); }
+.rail-actions { display: grid; gap: 8px; }
+.rbtn {
+  display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 40px; border-radius: 10px;
+  border: 1px solid var(--border); background: transparent; color: var(--text-main); font: inherit; font-size: 13.5px; cursor: pointer; text-decoration: none;
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out);
+}
+.rbtn i { font-size: 16px; }
+.rbtn:active { transform: scale(.97); }
+.rbtn.done { border-color: color-mix(in srgb, var(--ok) 45%, transparent); color: var(--ok); }
+@media (hover: hover) and (pointer: fine) { .rbtn:hover { border-color: var(--accent); background: var(--accent-soft); } }
+.fig-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.fig-list a { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: center; padding: 7px 8px; margin: 0 -8px; border-radius: 8px; font-size: 13.5px; color: var(--text-soft); text-decoration: none; transition: background-color 120ms ease, color 120ms ease; }
+.fig-list i { font-size: 17px; color: var(--accent); }
+@media (hover: hover) and (pointer: fine) { .fig-list a:hover { background: var(--bg-raise); color: #fff; } }
+.prog-link { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.prog-link .pi { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; font-size: 19px; color: var(--hot); background: rgba(249,115,22,.12); flex-shrink: 0; }
+.prog-link strong { display: block; font-size: 14px; font-weight: 500; }
+.prog-link small { display: block; font-size: 12.5px; color: var(--text-mute); }
+
+/* ----- Corps de texte ----- */
+.art { min-width: 0; counter-reset: fig; }
+.art p { margin: 0 0 18px; font-size: 17px; line-height: 1.75; color: #c3cae6; font-weight: 300; }
+.art p strong { color: var(--text-main); font-weight: 500; }
+.art h2 {
+  display: flex; align-items: baseline; gap: 14px;
+  margin: 64px 0 18px; font-family: "Syne", sans-serif; font-size: 26px; font-weight: 700; letter-spacing: -0.01em; color: var(--text-strong);
+}
+.art h2 .n { font-family: var(--mono); font-size: 14px; font-weight: 400; color: var(--accent); }
+.art h3 { margin: 34px 0 12px; font-size: 18px; font-weight: 500; color: var(--text-main); }
+sub, sup { line-height: 0; }
+
+/* L'essentiel */
+.essentials { padding: 26px; border-radius: 18px; background: linear-gradient(160deg, var(--bg-raise), var(--bg-light)); border: 1px solid var(--border); }
+.essentials-head { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; }
+.essentials-head i { font-size: 17px; color: var(--hot); }
+.kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 22px; }
+.kpi { padding: 16px; border-radius: 14px; background: rgba(2,6,23,.45); border: 1px solid var(--line); }
+.kpi strong { display: block; font-family: "Syne", sans-serif; font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -0.02em; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.kpi strong small { font-size: .55em; font-weight: 700; margin-left: 2px; color: var(--text-soft); }
+.kpi span { display: block; margin-top: 8px; font-size: 13.5px; line-height: 1.4; color: var(--text-soft); }
+.takeaways { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.takeaways li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 15.5px; line-height: 1.55; color: var(--text-main); }
+.takeaways i { font-size: 18px; color: var(--ok); margin-top: 2px; }
+
+/* Résumé */
+.abstract { margin-top: 28px; padding: 24px 26px; border-radius: 16px; border: 1px solid var(--border); background: rgba(79,107,237,.05); }
+.abstract .label { display: block; margin-bottom: 10px; font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+.abstract p { font-size: 15.5px !important; margin: 0 !important; }
+.kw { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+.kw span { padding: 3px 10px; border-radius: 999px; font-size: 12.5px; color: var(--text-soft); border: 1px solid var(--border); }
+
+/* Termes expliqués (infobulle) */
+.term {
+  position: relative; display: inline; padding: 0; border: 0; background: none; font: inherit; color: var(--text-main); cursor: help;
+  text-decoration: underline dotted color-mix(in srgb, var(--accent) 80%, transparent); text-decoration-thickness: 1.5px; text-underline-offset: 4px;
+}
+.tip {
+  position: absolute; z-index: 1600; width: min(300px, calc(100vw - 32px));
+  padding: 12px 14px; border-radius: 12px;
+  background: #0b1540; border: 1px solid var(--accent-line); box-shadow: 0 18px 50px rgba(0,0,0,.5);
+  font-size: 13.5px; line-height: 1.55; color: var(--text-soft); font-weight: 400;
+  opacity: 0; transform: scale(.97) translateY(4px); pointer-events: none;
+  transition: opacity 140ms ease, transform 160ms var(--ease-out);
+}
+.tip.show { opacity: 1; transform: none; }
+.tip.instant { transition: none; }
+.tip b { display: block; margin-bottom: 3px; color: #fff; font-weight: 500; font-size: 14px; }
+.cite { font-family: var(--mono); font-size: .78em; color: var(--accent); text-decoration: none; vertical-align: .15em; padding: 0 1px; border: 0; background: none; cursor: pointer; }
+
+/* Encadrés */
+.note { display: grid; grid-template-columns: 26px 1fr; gap: 12px; margin: 26px 0; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.note i { font-size: 22px; color: var(--nc, var(--accent)); }
+.note p { margin: 0 !important; font-size: 15.5px !important; color: var(--text-main) !important; }
+.note .nt { display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--nc, var(--accent)); font-weight: 500; }
+
+/* ----- Figures ----- */
+.fig { margin: 34px 0; border-radius: 18px; border: 1px solid var(--border); background: var(--surface); overflow: hidden; counter-increment: fig; scroll-margin-top: calc(var(--header-h) + var(--subnav-h) + 24px); }
+.fig-stage { position: relative; padding: 22px; background: radial-gradient(ellipse at 50% 0%, rgba(79,107,237,.06), transparent 70%); }
+.fig-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin-bottom: 16px; }
+.fig-name { font-size: 14.5px; font-weight: 500; color: var(--text-main); }
+.fig figcaption, .fig .cap { padding: 14px 22px 18px; border-top: 1px solid var(--line); font-size: 14px; line-height: 1.6; color: var(--text-soft); }
+.fig figcaption b, .fig .cap b { font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-right: 8px; }
+.fig svg { display: block; width: 100%; height: auto; overflow: visible; }
+.fig text { font-family: "DM Sans", sans-serif; }
+.fig .mono, .fig text.mono { font-family: var(--mono); }
+.ctrl { display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 12px; border-radius: 9px; border: 1px solid var(--border); background: var(--bg-light); color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out); }
+.ctrl i { font-size: 15px; }
+.ctrl:active { transform: scale(.96); }
+@media (hover: hover) and (pointer: fine) { .ctrl:hover { color: #fff; border-color: var(--accent); } }
+
+/* Fig. 1 trajectoire */
+.readouts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+.readout { padding: 10px 12px; border-radius: 10px; background: rgba(2,6,23,.5); border: 1px solid var(--line); }
+.readout small { display: block; font-size: 12px; color: var(--text-mute); }
+.readout strong { display: block; margin-top: 2px; font-family: var(--mono); font-size: 17px; font-weight: 500; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.readout.hot strong { color: var(--rc, var(--text-strong)); }
+.scrub { display: flex; align-items: center; gap: 12px; margin-top: 14px; }
+.scrub input { flex: 1; accent-color: var(--hot); }
+.scrub output { min-width: 52px; text-align: right; font-family: var(--mono); font-size: 13px; color: var(--text-soft); }
+
+/* Fig. 2 microstructure */
+.parts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.part { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease; }
+.part i { width: 10px; height: 10px; border-radius: 3px; background: var(--pc); }
+.part[aria-pressed="true"] { color: #fff; border-color: var(--pc); background: color-mix(in srgb, var(--pc) 14%, transparent); }
+.art .part-desc { margin: 12px 0 0; min-height: 44px; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+.part-desc b { color: #fff; font-weight: 500; }
+.micro [data-part] { transition: opacity 220ms ease; }
+.micro.focus [data-part] { opacity: .16; }
+.micro.focus [data-part].lit { opacity: 1; }
+
+/* Fig. 3 banc d'essai */
+.bench-v { display: none !important; }
+.flow { stroke-dasharray: 6 10; animation: flow 900ms linear infinite; }
+@keyframes flow { to { stroke-dashoffset: -32; } }
+.flame { animation: glow 900ms ease-in-out infinite alternate; }
+
+/* Tableau */
+.table-wrap { margin: 30px 0; border-radius: 16px; border: 1px solid var(--border); overflow: hidden; background: var(--surface); }
+.table-cap { padding: 14px 20px; font-size: 14px; color: var(--text-soft); border-bottom: 1px solid var(--line); }
+.table-cap b { font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-right: 8px; }
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { padding: 11px 12px; text-align: left; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; background: rgba(2,6,23,.4); border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 11px 12px; color: var(--text-soft); border-bottom: 1px solid var(--line); white-space: nowrap; font-variant-numeric: tabular-nums; }
+tr:last-child td { border-bottom: 0; }
+td:last-child, th:last-child { white-space: normal; }
+td:first-child, th:first-child { padding-left: 18px; }
+td.num { font-family: var(--mono); font-size: 13.5px; color: var(--text-main); }
+th.num, td.num { text-align: right; }
+tbody tr { transition: background-color 120ms ease; }
+@media (hover: hover) and (pointer: fine) { tbody tr:hover { background: rgba(79,107,237,.06); } }
+.mat { display: inline-flex; align-items: center; gap: 8px; color: var(--text-main); }
+.mat i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.state { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--sc); }
+.state i { font-size: 15px; }
+.table-note { padding: 12px 20px; font-size: 13px; color: var(--text-mute); border-top: 1px solid var(--line); background: rgba(2,6,23,.3); }
+
+/* Fig. 4 graphique */
+.legend { display: flex; flex-wrap: wrap; gap: 6px; }
+.lg { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-main); font: inherit; font-size: 13px; cursor: pointer; transition: opacity 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out); }
+.lg:active { transform: scale(.96); }
+.lg i { width: 14px; height: 3px; border-radius: 2px; background: var(--lc); }
+.lg[aria-pressed="false"] { opacity: .45; }
+.lg[aria-pressed="false"] i { background: transparent; border: 1px solid var(--lc); height: 5px; }
+.chart { position: relative; }
+.chart .series { transition: opacity 220ms ease; }
+.chart .series.off { opacity: 0; }
+.chart .draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); }
+.chart.drawn .draw { transition: stroke-dashoffset 1400ms var(--ease-in-out); stroke-dashoffset: 0; }
+.chart .dot { opacity: 0; transition: opacity 300ms ease 1100ms; }
+.chart.drawn .dot { opacity: 1; }
+.hit { fill: transparent; cursor: crosshair; }
+.xhair { opacity: 0; transition: opacity 120ms ease; pointer-events: none; }
+.xhair.show { opacity: 1; }
+.ctip {
+  position: absolute; z-index: 5; pointer-events: none; min-width: 170px;
+  padding: 10px 12px; border-radius: 10px; background: #0b1540; border: 1px solid var(--accent-line);
+  box-shadow: 0 14px 40px rgba(0,0,0,.5); font-size: 13px; color: var(--text-soft);
+  opacity: 0; transform: translateY(4px); transition: opacity 120ms ease, transform 140ms var(--ease-out);
+}
+.ctip.show { opacity: 1; transform: none; }
+.ctip b { display: block; margin-bottom: 6px; color: #fff; font-weight: 500; font-family: var(--mono); }
+.ctip div { display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+.ctip div span { display: inline-flex; align-items: center; gap: 7px; }
+.ctip div span i { width: 8px; height: 8px; border-radius: 50%; background: var(--lc); }
+.ctip div em { font-style: normal; font-family: var(--mono); color: var(--text-main); }
+.data-toggle { margin-top: 12px; }
+.data-table { margin-top: 12px; border-radius: 12px; border: 1px solid var(--line); overflow-x: auto; }
+.data-table[hidden] { display: none; }
+
+/* Fig. 5 carte thermique */
+.thermo { display: grid; grid-template-columns: minmax(0, 1fr) 70px; gap: 18px; align-items: stretch; }
+.thermo-plate { position: relative; aspect-ratio: 1; max-width: 420px; width: 100%; justify-self: center; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); cursor: crosshair; }
+.thermo-plate canvas { width: 100%; height: 100%; display: block; }
+.probe { position: absolute; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.5); pointer-events: none; opacity: 0; transition: opacity 120ms ease; }
+.probe.show { opacity: 1; }
+.probe-read { position: absolute; left: 12px; top: 12px; padding: 6px 10px; border-radius: 8px; background: rgba(2,6,23,.78); font-family: var(--mono); font-size: 13px; color: #fff; pointer-events: none; }
+.scale { display: grid; grid-template-columns: 14px 1fr; gap: 8px; align-self: center; height: min(100%, 420px); aspect-ratio: auto; }
+.scale-bar { display: block; width: 14px; height: 100%; border-radius: 6px; }
+.scale-labels { display: flex; flex-direction: column; justify-content: space-between; font-family: var(--mono); font-size: 12px; color: var(--text-soft); }
+
+/* Fig. 6 couche protectrice */
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.duo-card { border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.4); overflow: hidden; }
+.duo-card h4 { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0; padding: 12px 14px; font-size: 14px; font-weight: 500; color: var(--text-main); border-bottom: 1px solid var(--line); }
+.duo-card h4 span { display: inline-flex; align-items: center; gap: 8px; }
+.duo-card h4 i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.duo-card svg { aspect-ratio: 1.25; }
+.duo-stats { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
+.duo-stats div { padding: 10px 14px; }
+.duo-stats div + div { border-left: 1px solid var(--line); }
+.duo-stats small { display: block; font-size: 12px; color: var(--text-mute); }
+.duo-stats strong { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--text-main); font-variant-numeric: tabular-nums; }
+.verdict { font-size: 12px; font-weight: 500; padding: 2px 8px; border-radius: 999px; color: var(--vc); background: color-mix(in srgb, var(--vc) 14%, transparent); transition: color 200ms ease, background-color 200ms ease; }
+
+/* Équation */
+.eq { margin: 26px 0; padding: 22px; border-radius: 14px; background: rgba(2,6,23,.5); border: 1px solid var(--border); text-align: center; font-family: var(--mono); font-size: 17px; color: #d5dcfb; overflow-x: auto; white-space: nowrap; }
+.eq-parts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: -12px 0 26px; }
+.eq-part { padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-light); font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.eq-part b { display: block; margin-bottom: 2px; font-family: var(--mono); font-weight: 500; color: #fff; }
+
+/* Suite du programme */
+.next { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.next li { position: relative; padding: 16px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.next li::before { content: ""; position: absolute; top: 20px; right: -13px; width: 13px; height: 1px; background: var(--border); }
+.next li:last-child::before { display: none; }
+.next time { font-family: var(--mono); font-size: 12.5px; color: var(--nc, var(--accent)); }
+.next strong { display: block; margin: 6px 0 4px; font-size: 15px; font-weight: 500; color: var(--text-main); }
+.next span { font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.next li.now { border-color: color-mix(in srgb, var(--ok) 45%, var(--border)); }
+
+/* Références */
+.refs { list-style: none; margin: 0; padding: 0; counter-reset: r; display: grid; gap: 4px; }
+.refs li { counter-increment: r; position: relative; display: block; padding: 10px 12px 10px 54px; margin: 0 -12px; border-radius: 10px; font-size: 14px; line-height: 1.6; color: var(--text-soft); transition: background-color 600ms ease; scroll-margin-top: calc(var(--header-h) + var(--subnav-h) + 40px); }
+.refs li::before { content: "[" counter(r) "]"; position: absolute; left: 12px; top: 11px; font-family: var(--mono); font-size: 13px; color: var(--accent); }
+.refs li.flash { background: rgba(79,107,237,.16); transition: none; }
+.refs em { color: var(--text-main); }
+.decl { margin-top: 28px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.35); display: grid; gap: 8px; font-size: 13.5px; line-height: 1.6; color: var(--text-mute); }
+.decl strong { color: var(--text-soft); font-weight: 500; }
+
+/* Articles liés */
+.related { margin-top: 72px; padding-top: 40px; border-top: 1px solid var(--border); }
+.related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
+.rel { display: flex; flex-direction: column; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); background: var(--bg-light); text-decoration: none; transition: border-color 200ms ease, transform 220ms var(--ease-out); }
+.rel-img { aspect-ratio: 16 / 9; overflow: hidden; background: linear-gradient(135deg, color-mix(in srgb, var(--c) 30%, var(--bg-raise)), var(--bg-light)); }
+.rel-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 500ms var(--ease-out); }
+.rel-body { padding: 16px; }
+.rel-body small { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--text-soft); }
+.rel-body small::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c); }
+.rel-body strong { display: block; margin-top: 6px; font-size: 16px; font-weight: 500; line-height: 1.4; color: var(--text-main); }
+.rel:active { transform: scale(.98); }
+@media (hover: hover) and (pointer: fine) {
+  .rel:hover { border-color: color-mix(in srgb, var(--c) 55%, var(--border)); transform: translateY(-3px); }
+  .rel:hover .rel-img img { transform: scale(1.04); }
+}
+.section-title { margin: 0; font-family: "Syne", sans-serif; font-size: 22px; font-weight: 700; color: var(--text-strong); }
+
+/* apparition des figures */
+.js .rv { opacity: 0; transform: translateY(16px); transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
+.js .rv.in { opacity: 1; transform: none; }
+
+.toast {
+  position: fixed; left: 50%; bottom: 24px; z-index: 4000;
+  display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 12px;
+  background: #0b1540; border: 1px solid rgba(52,211,153,.35); color: #a7f3d0; font-size: 14px;
+  box-shadow: 0 16px 40px rgba(0,0,0,.5);
+  transform: translate(-50%, 16px); opacity: 0; pointer-events: none;
+  transition: transform 260ms var(--ease-out), opacity 200ms ease;
+}
+.toast.show { transform: translate(-50%, 0); opacity: 1; }
+.toast i { font-size: 18px; color: var(--ok); }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1320px) {
+  .art-layout { grid-template-columns: minmax(0, 720px) 280px; justify-content: center; }
+  .toc { display: none; }
+}
+@media (max-width: 1060px) {
+  .art-layout { grid-template-columns: minmax(0, 720px); }
+  .rail { position: static; max-height: none; overflow: visible; grid-template-columns: repeat(2, minmax(0, 1fr)); order: 2; }
+  .rail .rail-figs { display: none; }
+  .art-hero-grid { grid-template-columns: 1fr; gap: 10px; padding-bottom: 36px; }
+  .reentry { justify-self: center; max-width: 440px; order: -1; margin-top: -10px; }
+}
+@media (max-width: 860px) {
+  .main-nav, .header-right .btn-desktop { display: none; }
+  .menu-toggle { display: inline-flex; }
+}
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .subnav-list { padding: 0 20px; overflow-x: auto; scrollbar-width: none; }
+  .subnav-link { padding: 0 10px; font-size: 13.5px; }
+  .art-lede { font-size: 16.5px; }
+  .art p { font-size: 16px; }
+  .art h2 { font-size: 22px; margin-top: 52px; }
+  .kpis { grid-template-columns: 1fr; }
+  .kpi { display: flex; align-items: baseline; gap: 14px; }
+  .kpi span { margin: 0; }
+  .essentials { padding: 20px; }
+  .fig-stage { padding: 16px; }
+  .fig figcaption, .fig .cap { padding: 12px 16px 16px; }
+  .readouts { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .readout strong { font-size: 14px; }
+  .thermo { grid-template-columns: 1fr 56px; gap: 10px; }
+  .duo { grid-template-columns: 1fr; }
+  .eq { font-size: 14px; }
+  #trajSvg text { font-size: 22px; }
+  .bench-h { display: none !important; }
+  .bench-v { display: block !important; }
+  .duo-card svg text { font-size: 13px; }
+  .eq-parts { grid-template-columns: 1fr; }
+  .next { grid-template-columns: 1fr; }
+  .next li::before { display: none; }
+  .rail { grid-template-columns: 1fr; }
+  .related-grid { grid-template-columns: 1fr; }
+  .site-footer { margin-top: 72px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
+  .hero-in { opacity: 1; transform: none; }
+}
+
+/* impression / PDF : texte seul, figures conservées */
+@media print {
+  .site-header, .subnav, .mobile-panel, .progress, .toc, .rail, .related, .site-footer, .ctrl, .legend, .scrub, .parts, .skip-link { display: none !important; }
+  body { background: #fff; color: #111; }
+  .art-layout { display: block; padding: 0; }
+  .art p, .art h2, .art h3, .art-title, .art-lede { color: #111 !important; }
+  .fig, .table-wrap, .essentials, .abstract, .note { break-inside: avoid; }
+  .js .rv { opacity: 1; transform: none; }
+}
+
+/* =========================================================
+   ARTICLE 02 : PROPULSION IONIQUE
+   ========================================================= */
+.art-hero--ion::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 82% 45%, rgba(59,130,246,.2), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(249,115,22,.1), transparent 60%);
+}
+.thruster .glow { animation: glow 1.4s ease-in-out infinite alternate; }
+
+.seg { display: inline-flex; padding: 3px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-light); }
+.seg button { height: 30px; padding: 0 12px; border: 0; border-radius: 7px; background: none; color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out); }
+.seg button:active { transform: scale(.96); }
+.seg button[aria-pressed="true"] { background: var(--bg-raise); color: #fff; box-shadow: inset 0 0 0 1px var(--border); }
+@media (hover: hover) and (pointer: fine) { .seg button:hover { color: #fff; } }
+
+.lg.static { cursor: default; }
+#howSvg .zone { transition: opacity 240ms ease; }
+#howSvg.focus .zone { opacity: .22; }
+#howSvg.focus .zone.lit { opacity: 1; }
+
+tr.hi td { background: rgba(59,130,246,.07); }
+td.gain { color: var(--ok); }
+
+.multiples { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.multiples .chart { border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.35); padding: 8px 4px 0; }
+
+.wear { display: grid; grid-template-columns: minmax(0, 1fr) 170px; gap: 16px; align-items: center; }
+.discs { display: grid; gap: 12px; }
+.disc { display: grid; justify-items: center; gap: 4px; padding: 10px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.35); }
+.disc svg { width: 110px; height: 110px; }
+.disc span { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--text-soft); }
+.disc span i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.disc strong { font-family: var(--mono); font-size: 14px; font-weight: 500; color: var(--text-main); }
+.disc.over { border-color: rgba(248,113,113,.5); }
+.disc.over strong { color: var(--bad); }
+
+@media (max-width: 640px) {
+  .multiples { grid-template-columns: 1fr; }
+  .wear { grid-template-columns: 1fr; }
+  .discs { grid-template-columns: 1fr 1fr; }
+  .disc svg { width: 96px; height: 96px; }
+  #howSvg text { display: none; }
+  .readouts { grid-template-columns: 1fr; gap: 6px; }
+  .readout { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 8px 12px; }
+  .readout strong { margin: 0; white-space: nowrap; }
+  #orbitSvg text { font-size: 18px; }
+}
+#gridSvg, #orbitSvg, #howSvg { overflow: hidden; border-radius: 10px; }
+
+/* =========================================================
+   ARTICLE 03 : ASTROBIOLOGIE
+   ========================================================= */
+.art-hero--mars::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 78% 45%, rgba(234,88,12,.18), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(52,211,153,.12), transparent 60%);
+}
+.art-hero--mars .reentry svg { overflow: visible; }
+
+/* jauges Terre / Mars */
+.gauges { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 22px; }
+.gauge { display: grid; gap: 8px; padding: 14px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.4); }
+.gauge-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.gauge-top span { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--text-soft); }
+.gauge-top span i { font-size: 16px; color: var(--text-mute); }
+.gauge-top strong { font-family: var(--mono); font-size: 14.5px; font-weight: 500; color: var(--text-strong); white-space: nowrap; transition: color 200ms ease; }
+.gauge-bar { position: relative; height: 8px; border-radius: 8px; background: linear-gradient(90deg, rgba(52,211,153,.18), rgba(251,191,36,.18) 60%, rgba(248,113,113,.22)); }
+.gauge-fill { position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(90deg, #34d399, #fbbf24 60%, #f87171); transform-origin: left; transform: scaleX(var(--v, 0)); transition: transform 600ms var(--ease-out); clip-path: inset(0 round 8px); }
+.gauge-limit { position: absolute; top: -5px; bottom: -5px; width: 2px; border-radius: 2px; background: #fff; left: var(--l); }
+.gauge-foot { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; color: var(--text-mute); }
+.gauge.beyond .gauge-top strong { color: #fca5a5; }
+
+/* fiches espèces */
+.orgs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 26px 0 12px; }
+.org { position: relative; display: grid; grid-template-columns: 64px 1fr; gap: 14px; padding: 16px; border-radius: 16px; border: 1px solid var(--border); background: var(--bg-light); overflow: hidden; }
+.org::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--oc); }
+.org-pic { width: 64px; height: 64px; border-radius: 14px; background: radial-gradient(circle, color-mix(in srgb, var(--oc) 22%, transparent), rgba(2,6,23,.6)); }
+.org-kind { display: block; font-size: 12px; color: var(--text-mute); }
+.org h4 { margin: 2px 0 6px; font-size: 16px; font-weight: 500; color: var(--text-strong); }
+.art .org p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+.org-state { grid-column: 1 / -1; justify-self: start; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 500; color: var(--sc); background: color-mix(in srgb, var(--sc) 12%, transparent); border: 1px solid color-mix(in srgb, var(--sc) 28%, transparent); }
+.art .small-note { font-size: 14px; color: var(--text-mute); }
+
+/* journal des cultures */
+.dishes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.dish { display: grid; justify-items: center; gap: 6px; padding: 12px 8px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.4); }
+.dish svg { width: 100%; max-width: 132px; aspect-ratio: 1; }
+.dish svg circle.cell { transition: opacity 400ms ease, fill 400ms ease; }
+.dish span { font-size: 12.5px; color: var(--text-soft); text-align: center; }
+.dish strong { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--text-strong); }
+.event { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-items: baseline; margin-top: 14px; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-light); min-height: 78px; }
+.event time { font-family: var(--mono); font-size: 13px; color: var(--ec, var(--accent)); grid-row: span 2; }
+.event strong { font-size: 14.5px; font-weight: 500; color: var(--text-main); }
+.event span { font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.event.swap { animation: evIn 260ms var(--ease-out); }
+@keyframes evIn { from { opacity: 0; transform: translateY(4px); } }
+.scrub { position: relative; }
+.ticks { position: absolute; left: 0; right: 0; top: -6px; height: 6px; pointer-events: none; }
+
+/* comparaison microscope */
+.compare { position: relative; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; background: #000; cursor: ew-resize; touch-action: pan-y; user-select: none; }
+.compare canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+#micB { clip-path: inset(0 0 0 var(--p, 50%)); }
+.cmp-label { position: absolute; top: 12px; padding: 4px 10px; border-radius: 8px; font-family: var(--mono); font-size: 12.5px; color: #fff; background: rgba(0,0,0,.55); pointer-events: none; }
+.cmp-label.l { left: 12px; }
+.cmp-label.r { right: 12px; }
+.cmp-handle { position: absolute; top: 0; bottom: 0; left: var(--p, 50%); width: 2px; margin-left: -1px; background: #fff; pointer-events: none; }
+.cmp-handle i { position: absolute; top: 50%; left: 50%; width: 38px; height: 38px; margin: -19px 0 0 -19px; border-radius: 50%; display: grid; place-items: center; font-size: 18px; color: #050b1e; background: #fff; box-shadow: 0 6px 20px rgba(0,0,0,.5); transition: transform 160ms var(--ease-out); }
+.compare:active .cmp-handle i { transform: scale(.92); }
+.compare:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+#chamberSvg { overflow: hidden; border-radius: 10px; }
+
+@media (max-width: 640px) {
+  .gauges { grid-template-columns: 1fr; }
+  .orgs { grid-template-columns: 1fr; }
+  .dishes { grid-template-columns: 1fr 1fr; }
+  #chamberSvg text { font-size: 15px; }
+  #chamberSvg text.side { display: none; }
+  .compare { aspect-ratio: 4 / 3; }
+}
+
 </style>
+<script>document.documentElement.classList.add('js');</script>
 </head>
+
 <body>
 
-<div class="progress-bar" id="progressBar"></div>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
 
-<header>
-  <div class="header-inner">
+<!-- ===== HEADER ===== -->
+<header class="site-header" id="header">
+  <div class="container header-inner">
     <div class="header-left">
-      <a href="../index.html" class="logo-link"><img src="../logo.png" alt="IFRAS"></a>
-      <nav><ul class="main-nav">
-        <li><a href="../index.html">Accueil</a></li>
-        <li><a href="../recherche.html">Recherche</a></li>
-        <li><a href="../programmes.html">Programmes</a></li>
-        <li><a href="../publications.html">Publications</a></li>
-      </ul></nav>
+      <a href="../index.html" class="logo-link" aria-label="IFRAS, accueil">
+        <img src="../logo.png" alt="Logo IFRAS" width="44" height="44">
+      </a>
+      <nav aria-label="Navigation principale">
+        <ul class="main-nav">
+          <li><a href="../index.html">Accueil</a></li>
+          <li><a href="../recherche.html">Recherche</a></li>
+          <li><a href="../programmes.html">Programmes</a></li>
+          <li><a href="../publications.html" aria-current="page">Publications</a></li>
+        </ul>
+      </nav>
     </div>
-    <div class="header-right"><a href="../connexion.html" class="login-btn">Connexion</a></div>
+    <div class="header-right">
+      <a href="../connexion.html" class="btn btn-ghost btn-desktop">Connexion</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-panel" aria-label="Ouvrir le menu">
+        <i class="ph-light ph-list" aria-hidden="true"></i>
+      </button>
+    </div>
   </div>
 </header>
 
-<div class="sub-nav">
+<div class="mobile-panel" id="mobile-panel">
   <ul>
-    <li><a href="../publications-scientifiques.html" class="active">Publications scientifiques</a></li>
-    <li><a href="../publications-ifras.html">Publications IFRAS</a></li>
-    <li><a href="../evenements.html">Événements</a></li>
+    <li><a href="../index.html">Accueil <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../recherche.html">Recherche <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../programmes.html">Programmes <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../publications.html" aria-current="page">Publications <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
   </ul>
+  <a href="../connexion.html" class="btn btn-primary">Connexion</a>
 </div>
 
-<nav class="toc-sidebar">
-  <div class="toc-dot active" data-label="Résumé"       data-target="s0"></div>
-  <div class="toc-dot"        data-label="Conditions"   data-target="s1"></div>
-  <div class="toc-dot"        data-label="Organismes"   data-target="s2"></div>
-  <div class="toc-dot"        data-label="Protocole"    data-target="s3"></div>
-  <div class="toc-dot"        data-label="Résultats"    data-target="s4"></div>
-  <div class="toc-dot"        data-label="Discussion"   data-target="s5"></div>
-  <div class="toc-dot"        data-label="Références"   data-target="s6"></div>
+<!-- ===== SOUS-NAVIGATION (mêmes rubriques que publications.html) ===== -->
+<nav class="subnav" id="subnav" aria-label="Rubriques des publications">
+  <ul class="subnav-list">
+    <li><a class="subnav-link" href="../publications-scientifiques.html" aria-current="true" style="--c:var(--t-sci)"><i class="ph-light ph-article" aria-hidden="true"></i>Publications scientifiques</a></li>
+    <li><a class="subnav-link" href="../publications-ifras.html" style="--c:var(--t-ifras)"><i class="ph-light ph-book-open" aria-hidden="true"></i>Publications IFRAS</a></li>
+    <li><a class="subnav-link" href="../evenements.html" style="--c:var(--t-event)"><i class="ph-light ph-calendar-dots" aria-hidden="true"></i>Événements</a></li>
+  </ul>
 </nav>
 
-<div class="pub-wrapper">
+<div class="progress" aria-hidden="true"><span id="progress"></span></div>
 
-  <nav class="breadcrumb">
-    <a href="../publications.html">Publications</a>
-    <span>/</span>
-    <a href="../publications-scientifiques.html">Publications scientifiques</a>
-    <span>/</span>
-    DSVT · 2026 · Astrobiologie
+<main id="contenu">
+
+<!-- ===== EN-TÊTE DE L'ARTICLE ===== -->
+<header class="art-hero art-hero--mars">
+  <div class="container art-hero-grid">
+    <div>
+      <ol class="crumbs hero-in" style="--i:0" aria-label="Fil d'Ariane">
+        <li><a href="../publications.html">Publications</a></li>
+        <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+        <li><a href="../publications-scientifiques.html">Publications scientifiques</a></li>
+        <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+        <li aria-current="page">Astrobiologie</li>
+      </ol>
+      <div class="badges hero-in" style="--i:1">
+        <span class="badge" style="--b:#34d399"><i class="ph-light ph-dna" aria-hidden="true"></i>Astrobiologie · DSVT</span>
+        <span class="badge" style="--b:#60a5fa"><i class="ph-light ph-seal-check" aria-hidden="true"></i>Évalué par les pairs</span>
+        <span class="badge" style="--b:#2dd4bf"><i class="ph-light ph-lock-simple-open" aria-hidden="true"></i>Accès libre</span>
+      </div>
+      <h1 class="art-title hero-in" style="--i:2">Des microbes qui se multiplient en conditions martiennes simulées</h1>
+      <p class="art-lede hero-in" style="--i:3">Pendant 560 jours, sept espèces extrêmophiles ont vécu dans une chambre qui reproduit la surface de Mars. Trois d'entre elles ne se sont pas contentées de survivre : elles ont grandi, et l'une, découverte par l'IFRAS, a même commencé à s'adapter.</p>
+      <ul class="authors hero-in" style="--i:4" aria-label="Auteurs">
+        <li class="author"><span class="av" style="--ah:160" aria-hidden="true">SG</span><span><strong>Solène Garnier</strong><small>Responsable de l'étude</small></span></li>
+        <li class="author"><span class="av" style="--ah:210" aria-hidden="true">MP</span><span><strong>Matthieu Prost</strong><small>Physiologie microbienne</small></span></li>
+        <li class="author"><span class="av" style="--ah:20" aria-hidden="true">YT</span><span><strong>Yuki Tanaka</strong><small>Géochimie planétaire</small></span></li>
+        <li class="author"><span class="av" style="--ah:280" aria-hidden="true">IA</span><span><strong>Ibrahim Al-Rashid</strong><small>Doctorant, génomique</small></span></li>
+        <li class="author"><span class="av" style="--ah:330" aria-hidden="true">CN</span><span><strong>Claire Novak</strong><small>Planétologie</small></span></li>
+      </ul>
+      <div class="meta-line hero-in" style="--i:5">
+        <span><i class="ph-light ph-calendar-blank" aria-hidden="true"></i>Publié le 12 février 2026</span>
+        <span><i class="ph-light ph-clock" aria-hidden="true"></i>9 min de lecture</span>
+        <span><i class="ph-light ph-hash" aria-hidden="true"></i><code>IFRAS-DSVT-2026-003</code></span>
+      </div>
+    </div>
+
+    <!-- Illustration : Mars et microbes -->
+    <div class="reentry mars hero-in" style="--i:3" aria-hidden="true">
+      <canvas id="dust"></canvas>
+      <svg viewBox="0 0 520 447">
+        <defs>
+          <radialGradient id="planet" cx=".38" cy=".35" r=".75"><stop offset="0" stop-color="#f59e0b"/><stop offset=".45" stop-color="#c2410c"/><stop offset="1" stop-color="#431407"/></radialGradient>
+          <radialGradient id="atm" cx=".5" cy=".5" r=".5"><stop offset=".86" stop-color="#fb923c" stop-opacity="0"/><stop offset=".95" stop-color="#fb923c" stop-opacity=".35"/><stop offset="1" stop-color="#fb923c" stop-opacity="0"/></radialGradient>
+          <radialGradient id="lens" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#022c22"/><stop offset=".92" stop-color="#022c22"/><stop offset="1" stop-color="#34d399" stop-opacity=".6"/></radialGradient>
+          <clipPath id="lensClip"><circle cx="352" cy="286" r="96"/></clipPath>
+        </defs>
+        <circle cx="236" cy="200" r="178" fill="url(#atm)"/>
+        <circle cx="236" cy="200" r="160" fill="url(#planet)"/>
+        <g fill="#7c2d12" opacity=".55">
+          <ellipse cx="190" cy="150" rx="46" ry="16" transform="rotate(-18 190 150)"/>
+          <ellipse cx="280" cy="240" rx="60" ry="14" transform="rotate(12 280 240)"/>
+          <ellipse cx="150" cy="262" rx="22" ry="12"/>
+          <circle cx="300" cy="120" r="10"/>
+        </g>
+        <path d="M76 200 A160 160 0 0 0 396 200" fill="none" stroke="#000" stroke-opacity=".25" stroke-width="60" transform="rotate(35 236 200)"/>
+        <!-- loupe de microscope -->
+        <line x1="420" y1="354" x2="478" y2="420" stroke="#1b2555" stroke-width="16" stroke-linecap="round"/>
+        <circle cx="352" cy="286" r="100" fill="#0a1436" stroke="#34d399" stroke-width="3"/>
+        <circle cx="352" cy="286" r="96" fill="url(#lens)"/>
+        <g clip-path="url(#lensClip)" id="lensCells"></g>
+      </svg>
+      <span class="reentry-tag" style="left:0;top:8%"><i style="background:#fb923c"></i> Pression <b>600 Pa</b></span>
+      <span class="reentry-tag" style="left:4%;bottom:10%">Nuit <b>−63 °C</b></span>
+    </div>
+  </div>
+</header>
+
+<div class="container art-layout">
+
+  <!-- Sommaire -->
+  <nav class="toc" aria-label="Sommaire">
+    <p class="toc-title">Sommaire</p>
+    <ol id="toc">
+      <li class="toc-ind" aria-hidden="true"></li>
+      <li><a href="#s-essentiel"><span>—</span>L'essentiel</a></li>
+      <li><a href="#s-intro"><span>1</span>Mars, presque inhabitable</a></li>
+      <li><a href="#s-methodes"><span>2</span>L'expérience</a></li>
+      <li><a href="#s-resultats"><span>3</span>Résultats</a></li>
+      <li><a href="#s-discussion"><span>4</span>Discussion</a></li>
+      <li><a href="#s-conclusion"><span>5</span>Conclusion</a></li>
+    </ol>
+    <p class="toc-time"><i class="ph-light ph-hourglass-medium" aria-hidden="true"></i><span id="timeLeft">9 min restantes</span></p>
   </nav>
 
-  <!-- EN-TÊTE -->
-  <div id="s0">
-    <div class="meta-top">
-      <span class="badge badge-j">Astrobiology · Vol. 26 (2)</span>
-      <span class="badge badge-d">DSVT — Dir. des Sciences du Vivant et des Technologies</span>
-      <span class="badge badge-o">Accès ouvert</span>
-      <span class="badge badge-dt">Soumis 14 oct. 2025 · Accepté 03 fév. 2026</span>
-    </div>
+  <!-- ===== ARTICLE ===== -->
+  <article class="art" id="article">
 
-    <h1 class="article-title">
-      Croissance et adaptation métabolique de microorganismes extrêmophiles en conditions martiennes simulées : résultats de la campagne MARSLAB-IV (560 jours, enceinte HADES-2)
-    </h1>
-
-    <p class="article-subtitle">
-      Trois espèces — <em>Deinococcus radiodurans</em>, <em>Chroococcidiopsis thermalis</em> et une souche
-      haloacidophile inédite (<em>Ferroacidus ifrasensis</em> nov. sp.) — ont maintenu une activité 
-      métabolique mesurable pendant 560 jours continus sous pression de CO₂ de 600 Pa, 
-      UV martiens, cycles thermiques −63 °C / +20 °C et régolithe perchlorate simulé.
-    </p>
-
-    <div class="authors-block">
-      <div class="author-entry">
-        <span class="author-name">Dr. Solène Garnier</span>
-        <span class="author-role">DSVT · Astrobiologie & Extrêmophiles</span>
-      </div>
-      <div class="author-sep"></div>
-      <div class="author-entry">
-        <span class="author-name">Dr. Matthieu Prost</span>
-        <span class="author-role">DSVT · Physiologie microbienne</span>
-      </div>
-      <div class="author-sep"></div>
-      <div class="author-entry">
-        <span class="author-name">Prof. Yuki Tanaka</span>
-        <span class="author-role">DSVT / JAXA — Géochimie planétaire</span>
-      </div>
-      <div class="author-sep"></div>
-      <div class="author-entry">
-        <span class="author-name">Ibrahim Al-Rashid</span>
-        <span class="author-role">DSVT · Doctorant, métabolomique</span>
-      </div>
-      <div class="author-sep"></div>
-      <div class="author-entry">
-        <span class="author-name">Dr. Claire Novak</span>
-        <span class="author-role">ESA / ESTEC — Planétologie</span>
-      </div>
-    </div>
-
-    <div class="cite-block">
-      <div class="cite-item"><span class="cite-label">DOI</span><span>10.1089/ast.2025.0218</span></div>
-      <span class="cite-sep">|</span>
-      <div class="cite-item"><span class="cite-label">Réf. interne</span><span>IFRAS-DSVT-2026-003</span></div>
-      <span class="cite-sep">|</span>
-      <div class="cite-item"><span class="cite-label">Données</span><span>Zenodo : 10.5281/zenodo.14882041</span></div>
-    </div>
-  </div>
-
-  <div class="art-divider"></div>
-
-  <!-- ABSTRACT -->
-  <div class="abstract-box">
-    <div class="abstract-label">Résumé — Abstract</div>
-    <p class="abstract-text">
-      Nous rapportons la première démonstration expérimentale de croissance microbienne active 
-      — et non de simple survie — dans un environnement reproduisant simultanément 
-      six paramètres de la surface martienne : pression de CO₂ (600 Pa), flux UV-C/UV-B 
-      équivalents à la surface de Mars, cycles thermiques quotidiens (−63 °C / +20 °C), 
-      teneur en perchlorates du régolithe (0,6 % w/w MgClO₄), teneur en sel (NaCl 8 % w/v) 
-      et taux d'humidité relative de 2 %. Sur les sept espèces testées, trois ont 
-      maintenu une croissance nette mesurée par spectrométrie de masse isotopique (¹³C-acétate) 
-      et fluorescence DAPI pendant 560 jours dans l'enceinte HADES-2. La souche
-      <em>Ferroacidus ifrasensis</em> nov. sp., isolée de sources hydrothermales acides des Açores, 
-      présente la résistance la plus large avec un doublement cellulaire toutes les 72 heures 
-      dans les conditions les plus sévères. Ces résultats élargissent significativement les 
-      limites connues de l'habitabilité microbienne et ont des implications directes pour 
-      la politique de protection planétaire des missions martiennes.
-    </p>
-    <div class="kw-wrap">
-      <span class="kw-lbl">Mots-clés :</span>
-      <span class="kw-tag">Astrobiologie</span>
-      <span class="kw-tag">Mars analogue</span>
-      <span class="kw-tag">Extrêmophiles</span>
-      <span class="kw-tag"><em>Deinococcus radiodurans</em></span>
-      <span class="kw-tag"><em>Chroococcidiopsis</em></span>
-      <span class="kw-tag">Perchlorates</span>
-      <span class="kw-tag">Protection planétaire</span>
-      <span class="kw-tag">HADES-2</span>
-    </div>
-  </div>
-
-  <!-- ===== 1. CONDITIONS MARTIENNES ===== -->
-  <h2 class="section-heading" id="s1">1. Pourquoi Mars est (presque) inhabitable — et pourquoi « presque »</h2>
-
-  <p class="bt">
-    La surface de Mars cumule des conditions hostiles à la vie telle que nous la connaissons :
-    une pression atmosphérique 160 fois inférieure à celle de la Terre, une composition
-    essentiellement carbonique, des températures extrêmes, un flux ultraviolet non filtré
-    et la présence de perchlorates fortement oxydants dans le régolithe [1, 2]. Pourtant,
-    aucun de ces facteurs pris isolément ne dépasse les limites connues pour les microorganismes
-    extrêmophiles terrestres. C'est leur combinaison simultanée et prolongée qui n'avait jamais
-    été testée à ce jour dans une enceinte de laboratoire reproduisant l'intégralité du profil
-    martien.
-  </p>
-
-  <!-- Grille conditions martiennes / simulées — pièce centrale de la section 1 -->
-  <div class="env-grid">
-    <div class="env-item">
-      <div class="env-param">Pression totale</div>
-      <div class="env-mars">600 Pa</div>
-      <div class="env-earth">↑ Terre : 101 325 Pa</div>
-      <div class="env-sim">✓ Simulé dans HADES-2</div>
-    </div>
-    <div class="env-item">
-      <div class="env-param">Composition atmosphère</div>
-      <div class="env-mars">95 % CO₂</div>
-      <div class="env-earth">↑ Terre : 78 % N₂ / 21 % O₂</div>
-      <div class="env-sim">✓ Mélange injecté continu</div>
-    </div>
-    <div class="env-item">
-      <div class="env-param">Température (cycle/jour)</div>
-      <div class="env-mars">−63 °C → +20 °C</div>
-      <div class="env-earth">↑ Terre : +15 °C moy.</div>
-      <div class="env-sim">✓ Rampe 2 °C·min⁻¹ programmée</div>
-    </div>
-    <div class="env-item">
-      <div class="env-param">Flux UV (200–400 nm)</div>
-      <div class="env-mars">50 W·m⁻²</div>
-      <div class="env-earth">↑ Terre : ~3 W·m⁻² (UV-A/B)</div>
-      <div class="env-sim">✓ Lampe Xe + filtres calibrés</div>
-    </div>
-    <div class="env-item">
-      <div class="env-param">Perchlorates régolithe</div>
-      <div class="env-mars">0,6 % w/w MgClO₄</div>
-      <div class="env-earth">↑ Terre : traces (< 0,001 %)</div>
-      <div class="env-sim">✓ JSC Mars-1A + MgClO₄ pur</div>
-    </div>
-    <div class="env-item">
-      <div class="env-param">Humidité relative</div>
-      <div class="env-mars">< 2 %</div>
-      <div class="env-earth">↑ Terre : ~50–80 %</div>
-      <div class="env-sim">✓ Contrôle hygromètre ±0,3 %</div>
-    </div>
-  </div>
-
-  <p class="bt">
-    L'enceinte HADES-2 (Hostile Atmosphere & Desiccation Experimental Simulator, génération 2),
-    développée par la DSVT entre 2021 et 2023, est la première installation capable de maintenir
-    simultanément ces six paramètres de façon stable sur plus d'un an. Son volume utile de 
-    180 litres accueille jusqu'à 48 coupoles de culture indépendantes, chacune instrumentée
-    pour mesure en continu la pression partielle de CO₂ produit (capteur NDIR, seuil 0,1 ppm),
-    la fluorescence cellulaire et la température locale.
-  </p>
-
-  <!-- ===== 2. LES ORGANISMES TESTÉS ===== -->
-  <h2 class="section-heading blue" id="s2">2. Les sept espèces candidates</h2>
-
-  <p class="bt">
-    La sélection des espèces candidates repose sur la base de données MASE (Mars Analogues
-    for Space Exploration) et sur les résultats de la campagne MARSLAB-III (2022, 180 jours) [3].
-    Sept espèces ont été retenues selon trois critères : tolérance documentée à au moins
-    deux des six paramètres martiens, appartenance à des phylums différents (diversité
-    phylogénétique), et disponibilité de souches de collection bien caractérisées ou
-    d'isolats de terrain récents.
-  </p>
-
-  <!-- Cartes organismes — structure unique à cette publication -->
-  <div class="orga-grid">
-    <div class="orga-card green">
-      <div class="orga-class">Firmicutes · Bactérie</div>
-      <div class="orga-name">Deinococcus radiodurans<br><span style="font-weight:300;font-size:12px">R1 (ATCC 13939)</span></div>
-      <div class="orga-desc">
-        Référence mondiale de la résistance aux radiations ionisantes (jusqu'à 1,5 MGy)
-        et aux UV. Capable de réparer son ADN fragmenté en quelques heures grâce à
-        un système de recombinaison homologue exceptionnel [4].
-        Testée ici pour la première fois sous régolithe perchlorate martien.
-      </div>
-      <div class="orga-tags">
-        <span class="orga-tag">Radio-résistante</span>
-        <span class="orga-tag">Dessiccation</span>
-        <span class="orga-tag">−15 °C min</span>
-      </div>
-      <div class="orga-result">
-        <span class="orga-result-val survived">● Croissance active</span>
-        <span class="orga-result-lbl">jusqu'à J+560</span>
-      </div>
-    </div>
-
-    <div class="orga-card blue">
-      <div class="orga-class">Cyanobactérie</div>
-      <div class="orga-name">Chroococcidiopsis thermalis<br><span style="font-weight:300;font-size:12px">CCMEE 029</span></div>
-      <div class="orga-desc">
-        Cyanobactérie unicellulaire considérée comme l'organisme photosynthétique le
-        plus résistant au monde. Isolée de roches cryptoendolithiques dans le désert
-        de Negev. Capable de photosynthèse sous flux lumineux 1 000× inférieur au
-        plein soleil terrestre [5].
-      </div>
-      <div class="orga-tags">
-        <span class="orga-tag">Photosynthèse extrême</span>
-        <span class="orga-tag">Endolithique</span>
-        <span class="orga-tag">UV-tolérant</span>
-      </div>
-      <div class="orga-result">
-        <span class="orga-result-val survived">● Croissance active</span>
-        <span class="orga-result-lbl">jusqu'à J+560 (ralentie à partir J+420)</span>
-      </div>
-    </div>
-
-    <div class="orga-card yellow">
-      <div class="orga-class">Archée haloacidophile · Nouvelle espèce</div>
-      <div class="orga-name">Ferroacidus ifrasensis<br><span style="font-weight:300;font-size:12px">nov. sp. — Isolat AZO-2023-F7</span></div>
-      <div class="orga-desc">
-        Souche inédite isolée de sources hydrothermales acides de l'île de Faial (Açores)
-        en 2023 par l'équipe DSVT. Croît à pH 0,8–2,2, 55–72 °C, en présence de
-        Fe³⁺ comme accepteur d'électrons terminal. Sa tolérance aux perchlorates
-        était inconnue avant cette étude.
-      </div>
-      <div class="orga-tags">
-        <span class="orga-tag">pH 0,8–2,2</span>
-        <span class="orga-tag">Thermophile</span>
-        <span class="orga-tag">Chimioautotrophe</span>
-        <span class="orga-tag">Nouvelle espèce ★</span>
-      </div>
-      <div class="orga-result">
-        <span class="orga-result-val survived">● Croissance active</span>
-        <span class="orga-result-lbl">doublement toutes 72 h — meilleure performance</span>
-      </div>
-    </div>
-
-    <div class="orga-card orange">
-      <div class="orga-class">Bactérie halophile</div>
-      <div class="orga-name">Halobacterium salinarum<br><span style="font-weight:300;font-size:12px">NRC-1 (ATCC 700922)</span></div>
-      <div class="orga-desc">
-        Archée halophile extrême (NaCl optimal 4,3 M), bien documentée pour sa
-        résistance aux UV et aux radiations. Ses photorécepteurs (bactériorhodopsine)
-        lui permettent une production d'énergie indépendante de l'oxygène [6].
-        Sensible aux températures < −20 °C.
-      </div>
-      <div class="orga-tags">
-        <span class="orga-tag">NaCl 4,3 M opt.</span>
-        <span class="orga-tag">Bactériorhodopsine</span>
-        <span class="orga-tag">UV-résistant</span>
-      </div>
-      <div class="orga-result">
-        <span class="orga-result-val partial">◐ Survie partielle</span>
-        <span class="orga-result-lbl">arrêt croissance J+148, sporulation</span>
-      </div>
-    </div>
-  </div>
-
-  <p class="bt" style="font-size:13px;color:var(--text-muted)">
-    Les trois autres espèces testées — <em>Sulfolobus acidocaldarius</em>, <em>Psychrobacter arcticus</em>
-    et <em>Bacillus subtilis</em> 168 — n'ont pas maintenu de croissance active au-delà de J+30 dans
-    les conditions de pleine simulation. Leurs données (survie résiduelle, déclin métabolique)
-    sont publiées en données supplémentaires (Zenodo 10.5281/zenodo.14882041).
-  </p>
-
-  <!-- ===== 3. PROTOCOLE ===== -->
-  <h2 class="section-heading" id="s3">3. Protocole expérimental</h2>
-
-  <p class="bt">
-    Chaque espèce est cultivée en triplicat dans des coupoles de 500 mL contenant le régolithe
-    simulé JSC Mars-1A enrichi en MgClO₄ (0,6 % w/w) et en NaCl (8 % w/v), humidifié
-    à 2 % HR. Les coupoles sont exposées au flux UV calibré par photodiode de référence
-    (incertitude ±3 %) 12 heures sur 24, en synchronie avec le cycle thermique.
-    La croissance est mesurée par trois méthodes indépendantes et complémentaires.
-  </p>
-
-  <div class="tbl-wrap">
-    <div class="tbl-head">Tableau 1 — Méthodes de mesure de la croissance et fréquence d'acquisition</div>
-    <table>
-      <thead>
-        <tr>
-          <th>Méthode</th>
-          <th>Paramètre mesuré</th>
-          <th>Fréquence</th>
-          <th>Seuil de détection</th>
-          <th>Indépendance UV</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Spectrométrie de masse isotopique (¹³C-acétate)</td>
-          <td class="tm">Fixation carbone active</td>
-          <td class="tm">Hebdomadaire</td>
-          <td class="tg">0,01 fmol·cell⁻¹·h⁻¹</td>
-          <td class="tg">Oui</td>
-        </tr>
-        <tr>
-          <td>Fluorescence DAPI / SYBR Green I</td>
-          <td class="tm">Comptage cellulaire direct</td>
-          <td class="tm">Bi-hebdomadaire</td>
-          <td class="tg">10² cells·mL⁻¹</td>
-          <td class="tg">Oui (filtres)</td>
-        </tr>
-        <tr>
-          <td>Capteur NDIR CO₂ produit</td>
-          <td class="tm">Respiration / photosynthèse</td>
-          <td class="tm">Continu (1 min)</td>
-          <td class="tg">0,1 ppm CO₂</td>
-          <td class="tg">Oui</td>
-        </tr>
-        <tr>
-          <td>ATP-luciférase (bioluminescence)</td>
-          <td class="tm">Activité métabolique globale</td>
-          <td class="tm">Mensuelle</td>
-          <td class="ty">10 amol ATP</td>
-          <td class="ty">Partielle</td>
-        </tr>
-        <tr>
-          <td>Séquençage ARNr 16S / 18S</td>
-          <td class="tm">Diversité et intégrité génomique</td>
-          <td class="tm">J0, J90, J280, J560</td>
-          <td class="tg">1 cellule (PCR)</td>
-          <td class="tg">Oui</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="tbl-note">
-      La redondance des méthodes est intentionnelle : elle permet d'exclure les artefacts liés au flux UV 
-      intense (photolyse de certains fluorophores) et aux interférences chimiques des perchlorates sur l'ATP-luciférase.
-      Toutes les mesures sont réalisées en chambre stérile sous atmosphère N₂ pour éviter la recontamination.
-    </div>
-  </div>
-
-  <!-- ===== 4. RÉSULTATS ===== -->
-  <h2 class="section-heading orange" id="s4">4. Résultats</h2>
-
-  <p class="bt">
-    La figure 1 présente les courbes de croissance cellulaire (densité normalisée à J0 = 1,0)
-    sur 560 jours pour les trois espèces positives et <em>H. salinarum</em> (contrôle partiel).
-    Les données sont la moyenne des triplicats ; les barres d'erreur (±1 ET) sont visibles
-    uniquement aux points de mesure bihebdomadaires pour la lisibilité.
-  </p>
-
-  <!-- Graphique croissance — pièce centrale des résultats -->
-  <div class="chart-wrap">
-    <div class="chart-inner">
-      <div class="chart-top">
-        <span class="chart-ttl">Densité cellulaire normalisée (N/N₀) sur 560 jours — conditions martiennes complètes (HADES-2)</span>
-        <div class="legend">
-          <div class="li"><div class="ld" style="background:#facc15"></div><em>F. ifrasensis</em></div>
-          <div class="li"><div class="ld" style="background:#34d399"></div><em>D. radiodurans</em></div>
-          <div class="li"><div class="ld" style="background:#60a5fa"></div><em>C. thermalis</em></div>
-          <div class="li"><div class="ld" style="background:#f87171;opacity:.6"></div><em>H. salinarum</em> (déclin)</div>
+    <section id="s-essentiel" aria-label="L'essentiel">
+      <div class="essentials rv">
+        <div class="essentials-head"><i class="ph-light ph-lightning" aria-hidden="true"></i> L'essentiel en 30 secondes</div>
+        <div class="kpis">
+          <div class="kpi"><strong data-count="560" data-suffix=" j">560<small> j</small></strong><span>sous le profil martien complet, sans interruption</span></div>
+          <div class="kpi"><strong data-count="3" data-suffix=" / 7">3<small> / 7</small></strong><span>espèces ont continué à se multiplier</span></div>
+          <div class="kpi"><strong>7,2<small> ×</small></strong><span>plus de cellules à la fin pour la nouvelle espèce IFRAS</span></div>
         </div>
+        <ul class="takeaways">
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>La chambre HADES-2 reproduit en même temps six contraintes de la surface martienne, pendant plus d'un an et demi.</li>
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>Trois espèces y ont prouvé une vraie croissance, mesurée par trois méthodes indépendantes.</li>
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>Ces résultats plaident pour une stérilisation encore plus stricte des engins envoyés sur Mars.</li>
+        </ul>
       </div>
-      <svg viewBox="0 0 820 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
-        <defs>
-          <linearGradient id="gf" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#facc15" stop-opacity=".15"/>
-            <stop offset="1" stop-color="#facc15" stop-opacity="0"/>
-          </linearGradient>
-          <linearGradient id="gd" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#34d399" stop-opacity=".12"/>
-            <stop offset="1" stop-color="#34d399" stop-opacity="0"/>
-          </linearGradient>
-        </defs>
-        <!-- Axes -->
-        <line x1="65" y1="15" x2="65"  y2="250" stroke="#1b2555" stroke-width="1"/>
-        <line x1="65" y1="250" x2="800" y2="250" stroke="#1b2555" stroke-width="1"/>
-        <!-- Grilles H -->
-        <line x1="65" y1="50"  x2="800" y2="50"  stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
-        <line x1="65" y1="100" x2="800" y2="100" stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
-        <line x1="65" y1="150" x2="800" y2="150" stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
-        <line x1="65" y1="200" x2="800" y2="200" stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
-        <!-- Labels Y -->
-        <text x="55" y="54"  fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">8×</text>
-        <text x="55" y="104" fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">5×</text>
-        <text x="55" y="154" fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">3×</text>
-        <text x="55" y="204" fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">1×</text>
-        <!-- Labels X -->
-        <text x="65"  y="268" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">J0</text>
-        <text x="179" y="268" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">J90</text>
-        <text x="293" y="268" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">J180</text>
-        <text x="407" y="268" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">J280</text>
-        <text x="545" y="268" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">J400</text>
-        <text x="800" y="268" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">J560</text>
-        <!-- Ligne N/N0=1 de référence -->
-        <line x1="65" y1="200" x2="800" y2="200" stroke="#ffffff" stroke-width="1" stroke-dasharray="2,6" opacity=".12"/>
-        <!-- F. ifrasensis — meilleure croissance -->
-        <polyline points="65,200 179,182 293,162 407,120 545,80 800,52" fill="none" stroke="#facc15" stroke-width="2.5"/>
-        <polygon  points="65,200 179,182 293,162 407,120 545,80 800,52 800,250 65,250" fill="url(#gf)"/>
-        <circle cx="65"  cy="200" r="4" fill="#facc15"/>
-        <circle cx="179" cy="182" r="4" fill="#facc15"/>
-        <circle cx="293" cy="162" r="4" fill="#facc15"/>
-        <circle cx="407" cy="120" r="4" fill="#facc15"/>
-        <circle cx="545" cy="80"  r="4" fill="#facc15"/>
-        <circle cx="800" cy="52"  r="5" fill="#facc15" stroke="rgba(250,204,21,.35)" stroke-width="8"/>
-        <text x="806" y="54" fill="#facc15" font-size="10" font-family="DM Mono,monospace">×7,2</text>
-        <!-- D. radiodurans -->
-        <polyline points="65,200 179,188 293,174 407,152 545,132 800,110" fill="none" stroke="#34d399" stroke-width="2.2"/>
-        <polygon  points="65,200 179,188 293,174 407,152 545,132 800,110 800,250 65,250" fill="url(#gd)"/>
-        <circle cx="179" cy="188" r="3.5" fill="#34d399"/>
-        <circle cx="293" cy="174" r="3.5" fill="#34d399"/>
-        <circle cx="407" cy="152" r="3.5" fill="#34d399"/>
-        <circle cx="545" cy="132" r="3.5" fill="#34d399"/>
-        <circle cx="800" cy="110" r="3.5" fill="#34d399"/>
-        <text x="806" y="113" fill="#34d399" font-size="10" font-family="DM Mono,monospace">×3,8</text>
-        <!-- C. thermalis — ralentit après J420 -->
-        <polyline points="65,200 179,190 293,178 407,162 545,148 680,138 800,145" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="5,3"/>
-        <circle cx="179" cy="190" r="3.5" fill="#60a5fa"/>
-        <circle cx="293" cy="178" r="3.5" fill="#60a5fa"/>
-        <circle cx="407" cy="162" r="3.5" fill="#60a5fa"/>
-        <circle cx="545" cy="148" r="3.5" fill="#60a5fa"/>
-        <circle cx="800" cy="145" r="3.5" fill="#60a5fa"/>
-        <text x="806" y="148" fill="#60a5fa" font-size="10" font-family="DM Mono,monospace">×3,2</text>
-        <!-- H. salinarum — déclin -->
-        <polyline points="65,200 179,205 293,215 407,235 450,248" fill="none" stroke="#f87171" stroke-width="1.8" stroke-dasharray="3,4" opacity=".6"/>
-        <circle cx="179" cy="205" r="3" fill="#f87171" opacity=".6"/>
-        <circle cx="293" cy="215" r="3" fill="#f87171" opacity=".6"/>
-        <circle cx="407" cy="235" r="3" fill="#f87171" opacity=".6"/>
-        <!-- Annotation J148 déclin -->
-        <line x1="407" y1="130" x2="407" y2="248" stroke="#f87171" stroke-width="1" stroke-dasharray="3,3" opacity=".4"/>
-        <text x="410" y="128" fill="#f87171" font-size="9" font-family="DM Mono,monospace" opacity=".6">J148 : arrêt H.sal.</text>
-        <!-- Annotation J420 ralentissement C.th -->
-        <line x1="680" y1="60" x2="680" y2="250" stroke="#60a5fa" stroke-width="1" stroke-dasharray="2,4" opacity=".3"/>
-        <text x="684" y="58" fill="#60a5fa" font-size="9" font-family="DM Mono,monospace" opacity=".5">J420</text>
-      </svg>
-    </div>
-    <div class="chart-cap">
-      <strong>Figure 1</strong>
-      Densité cellulaire normalisée (N/N₀, J0 = 1,0) sur 560 jours en conditions martiennes complètes (HADES-2).
-      <em>F. ifrasensis</em> (jaune) atteint un facteur ×7,2 à J560.
-      <em>D. radiodurans</em> (vert) et <em>C. thermalis</em> (bleu, pointillé) maintiennent une croissance positive.
-      <em>H. salinarum</em> (rouge, translucide) montre un déclin progressif et cesse toute activité à J148.
-      Barres d'erreur ±1 ET (triplicats) ; visibles aux points de mesure bi-hebdomadaires.
-      Axe Y : échelle linéaire, N/N₀ = 1 correspond à la densité cellulaire initiale.
-    </div>
-  </div>
 
-  <!-- Timeline des événements clés — structure originale à cette pub -->
-  <h3 class="sub">Chronologie des observations majeures</h3>
-
-  <div class="timeline">
-    <div class="tl-item">
-      <div class="tl-day"><div class="tl-day-num">J0</div><div class="tl-day-lbl">Démarrage</div></div>
-      <div class="tl-dot active"></div>
-      <div class="tl-content">
-        <div class="tl-event">Inoculation des 7 espèces — enceinte HADES-2 mise en conditions</div>
-        <div class="tl-detail">Toutes les espèces présentent une activité ¹³C-acétate mesurable à J0. 
-        Densité cellulaire initiale normalisée à 1,0 × 10⁶ cells·mL⁻¹ pour toutes les souches.</div>
+      <div class="abstract rv">
+        <span class="label">Résumé</span>
+        <p>Nous rapportons la première croissance microbienne active, et non une simple survie, dans un environnement reproduisant simultanément six paramètres de la surface martienne : atmosphère de CO₂ à 600 Pa, rayonnement ultraviolet, cycles thermiques de −63 °C à +20 °C, régolithe riche en perchlorates, sel et très faible humidité. Sur sept espèces extrêmophiles cultivées 560 jours dans la chambre HADES-2 du programme ATLAS, trois ont maintenu une croissance nette, confirmée par marquage isotopique, comptage cellulaire et mesure du CO₂. La nouvelle espèce <em>Ferroacidus ifrasensis</em> a multiplié sa population par 7,2 et présente des mutations dans ses gènes de réparation de l'ADN, signe d'une adaptation en cours.</p>
+        <div class="kw" aria-label="Mots-clés"><span>Astrobiologie</span><span>Mars</span><span>Extrêmophiles</span><span>Perchlorates</span><span>Protection planétaire</span></div>
       </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-day"><div class="tl-day-num">J14</div><div class="tl-day-lbl">Semaine 2</div></div>
-      <div class="tl-dot active"></div>
-      <div class="tl-content">
-        <div class="tl-event">Perte des 3 espèces sensibles — signal résiduel uniquement</div>
-        <div class="tl-detail"><em>S. acidocaldarius</em>, <em>P. arcticus</em> et <em>B. subtilis</em> 168 
-        chutent sous le seuil de détection DAPI (< 10² cells·mL⁻¹). Pas de signal ¹³C-acétate. 
-        Confirmation par PCR 16S à J30.</div>
+    </section>
+
+    <!-- 1. INTRODUCTION -->
+    <section id="s-intro">
+      <h2><span class="n">01</span>Mars, presque inhabitable</h2>
+      <p>La surface de Mars cumule les obstacles à la vie : un air 170 fois moins dense que sur Terre et fait de CO₂, un froid intense, des ultraviolets que rien ne filtre, et un sol chargé de <button class="term" type="button" data-term="perchlorate">perchlorates</button>, des sels très oxydants. Pourtant, aucune de ces contraintes, prise seule, ne dépasse ce que supportent certains <button class="term" type="button" data-term="extremophile">extrêmophiles</button> terrestres. Leur combinaison, en revanche, n'avait jamais été testée sur une longue durée.</p>
+
+      <figure class="fig rv" id="fig1">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">Six contraintes, sur Terre et sur Mars</span>
+            <div class="seg" role="group" aria-label="Planète">
+              <button type="button" data-p="terre" aria-pressed="false">Terre</button>
+              <button type="button" data-p="mars" aria-pressed="true">Mars</button>
+            </div>
+          </div>
+          <div class="gauges" id="gauges"></div>
+        </div>
+        <figcaption><b>Figure 1</b>Chaque jauge situe une contrainte entre un environnement confortable (à gauche) et la limite connue de la vie terrestre (trait vertical). Sur Mars, toutes les jauges s'approchent de cette limite en même temps. HADES-2 reproduit les six valeurs martiennes.</figcaption>
+      </figure>
+
+      <p>Paradoxalement, les perchlorates peuvent aussi aider. En absorbant la moindre trace d'humidité, ils forment des <button class="term" type="button" data-term="saumure">saumures</button> qui restent liquides à des températures bien plus basses que l'eau pure. Or l'eau liquide est la condition première de toute vie active.</p>
+
+      <figure class="fig rv" id="fig2">
+        <div class="fig-stage">
+          <div class="fig-head"><span class="fig-name">Quand l'eau reste-t-elle liquide au cours d'une journée martienne ?</span></div>
+          <div class="chart" id="brine"><div class="ctip" id="brineTip"></div></div>
+        </div>
+        <figcaption><b>Figure 2</b>Température au cours d'une journée simulée (courbe) comparée au point de congélation de l'eau pure, d'une saumure salée et d'une saumure de perchlorate (lignes horizontales). L'eau pure n'est liquide que 8 heures par jour ; la saumure de perchlorate le reste environ 20 heures.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 2. L'EXPÉRIENCE -->
+    <section id="s-methodes">
+      <h2><span class="n">02</span>L'expérience</h2>
+      <h3>La chambre HADES-2</h3>
+      <p>Développée par le DSVT entre 2021 et 2023 pour le programme ATLAS, la chambre HADES-2 est la première capable de maintenir les six paramètres martiens de façon stable pendant plus d'un an. Ses 180 litres accueillent 48 coupelles de culture, chacune équipée de capteurs de CO₂, de fluorescence et de température.</p>
+
+      <figure class="fig rv" id="fig3">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">Une journée martienne dans HADES-2, en accéléré</span>
+            <button class="ctrl" type="button" id="dayPlay"><i class="ph-light ph-pause" aria-hidden="true"></i><span>Pause</span></button>
+          </div>
+          <svg viewBox="0 0 680 290" id="chamberSvg" role="img" aria-label="Coupe de la chambre HADES-2 : lampe ultraviolette, injection de CO2, plateau refroidi et coupelles de culture, avec un cycle jour-nuit animé"></svg>
+          <div class="readouts">
+            <div class="readout"><small>Heure martienne</small><strong id="dHour">12 h 00</strong></div>
+            <div class="readout"><small>Température</small><strong id="dTemp">+20 °C</strong></div>
+            <div class="readout"><small>Lampe ultraviolette</small><strong id="dUv">Allumée</strong></div>
+          </div>
+        </div>
+        <figcaption><b>Figure 3</b>Coupe schématique de la chambre. Chaque cycle de 24 heures enchaîne 12 heures d'ultraviolets et une descente à −63 °C pendant la nuit. L'atmosphère de CO₂ est renouvelée en continu à 600 Pa.</figcaption>
+      </figure>
+
+      <h3>Sept espèces candidates</h3>
+      <p>Les espèces ont été choisies pour leur résistance connue à au moins deux des six contraintes, et pour leur diversité. Chacune a été cultivée en trois exemplaires dans un sol martien reconstitué, enrichi en perchlorate de magnésium (0,6 %) et en sel (8 %).</p>
+
+      <div class="orgs rv">
+        <article class="org" style="--oc:#d97706">
+          <svg class="org-pic" viewBox="0 0 80 80" aria-hidden="true"><g fill="#d97706" opacity=".9"><rect x="16" y="22" width="28" height="11" rx="5.5" transform="rotate(-20 30 27)"/><rect x="38" y="44" width="28" height="11" rx="5.5" transform="rotate(25 52 49)"/><rect x="14" y="50" width="22" height="10" rx="5"/></g></svg>
+          <div><span class="org-kind">Archée acidophile · nouvelle espèce IFRAS</span><h4><em>Ferroacidus ifrasensis</em></h4><p>Découverte en 2023 par le DSVT dans des saumures acides et froides d'une grotte volcanique des Açores. Elle respire le fer et tolère un pH proche de 1.</p></div>
+          <span class="org-state" style="--sc:var(--ok)"><i class="ph-light ph-trend-up" aria-hidden="true"></i>Croissance ×7,2</span>
+        </article>
+        <article class="org" style="--oc:#059669">
+          <svg class="org-pic" viewBox="0 0 80 80" aria-hidden="true"><g fill="#059669" opacity=".9"><circle cx="30" cy="30" r="10"/><circle cx="50" cy="30" r="10"/><circle cx="30" cy="50" r="10"/><circle cx="50" cy="50" r="10"/></g></svg>
+          <div><span class="org-kind">Bactérie · groupées par quatre</span><h4><em>Deinococcus radiodurans</em></h4><p>Championne de la résistance aux rayonnements : elle recolle son ADN brisé en quelques heures. Jamais testée auparavant dans un sol perchloraté.</p></div>
+          <span class="org-state" style="--sc:var(--ok)"><i class="ph-light ph-trend-up" aria-hidden="true"></i>Croissance ×3,8</span>
+        </article>
+        <article class="org" style="--oc:#3b82f6">
+          <svg class="org-pic" viewBox="0 0 80 80" aria-hidden="true"><g fill="#3b82f6" opacity=".9"><circle cx="26" cy="28" r="9"/><circle cx="44" cy="24" r="8"/><circle cx="56" cy="40" r="9"/><circle cx="36" cy="46" r="10"/><circle cx="24" cy="60" r="7"/><circle cx="50" cy="60" r="8"/></g></svg>
+          <div><span class="org-kind">Cyanobactérie · photosynthèse</span><h4><em>Chroococcidiopsis thermalis</em></h4><p>Vit à l'intérieur des roches des déserts et fait de la photosynthèse avec mille fois moins de lumière que le plein soleil.</p></div>
+          <span class="org-state" style="--sc:var(--warn)"><i class="ph-light ph-trend-up" aria-hidden="true"></i>×3,2, ralentit</span>
+        </article>
+        <article class="org" style="--oc:#e11d48">
+          <svg class="org-pic" viewBox="0 0 80 80" aria-hidden="true"><g fill="#e11d48" opacity=".9"><rect x="14" y="26" width="30" height="16" rx="3" transform="rotate(-12 29 34)"/><rect x="40" y="42" width="28" height="15" rx="3" transform="rotate(18 54 49)"/></g></svg>
+          <div><span class="org-kind">Archée halophile · aime le sel</span><h4><em>Halobacterium salinarum</em></h4><p>Vit dans des eaux dix fois plus salées que la mer et tire son énergie de la lumière. Supporte mal le grand froid.</p></div>
+          <span class="org-state" style="--sc:var(--bad)"><i class="ph-light ph-moon" aria-hidden="true"></i>Dormance à J148</span>
+        </article>
       </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-day"><div class="tl-day-num">J90</div><div class="tl-day-lbl">3 mois</div></div>
-      <div class="tl-dot active"></div>
-      <div class="tl-content">
-        <div class="tl-event">Première divergence entre les espèces positives — <em>F. ifrasensis</em> en tête</div>
-        <div class="tl-detail"><em>F. ifrasensis</em> montre déjà un facteur ×1,4 à J90.
-        Séquençage ARNr 16S confirme l'intégrité génomique des trois souches actives. 
-        Aucune contamination croisée détectée.</div>
+      <p class="small-note">Trois autres espèces (<em>Sulfolobus acidocaldarius</em>, <em>Psychrobacter arcticus</em> et <em>Bacillus subtilis</em>) ont cessé toute activité en moins de 30 jours.</p>
+
+      <div class="table-wrap rv">
+        <div class="table-cap"><b>Tableau 1</b>Comment distinguer la croissance de la simple survie</div>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Méthode</th><th>Ce qu'elle prouve</th><th>Fréquence</th></tr></thead>
+            <tbody>
+              <tr><td><span class="mat" style="--mc:#34d399"><i></i>Carbone marqué</span></td><td>Les cellules fabriquent de la matière</td><td>1 fois / sem.</td></tr>
+              <tr><td><span class="mat" style="--mc:#60a5fa"><i></i>Comptage au microscope</span></td><td>Les cellules se divisent</td><td>2 fois / sem.</td></tr>
+              <tr><td><span class="mat" style="--mc:#fbbf24"><i></i>Capteur de CO₂</span></td><td>Elles respirent ou font de la photosynthèse</td><td>En continu</td></tr>
+              <tr><td><span class="mat" style="--mc:#c084fc"><i></i>Lecture du génome</span></td><td>Leur ADN reste intact, ou change</td><td>4 fois</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-note">Les trois premières méthodes sont indépendantes : une croissance n'est retenue que si toutes la confirment.</div>
       </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-day"><div class="tl-day-num">J148</div><div class="tl-day-lbl">5 mois</div></div>
-      <div class="tl-dot partial"></div>
-      <div class="tl-content">
-        <div class="tl-event"><em>H. salinarum</em> — arrêt de croissance et entrée en sporulation</div>
-        <div class="tl-detail">Le signal ATP-luciférase chute de 94 % en 72 heures. 
-        Observation microscopique de vésicules de gaz caractéristiques de la dormance chez les Halobactériaceae.
-        La souche est maintenue dans l'enceinte pour suivi de la survie résiduelle.</div>
+    </section>
+
+    <!-- 3. RÉSULTATS -->
+    <section id="s-resultats">
+      <h2><span class="n">03</span>Résultats</h2>
+      <h3>Trois espèces en croissance</h3>
+      <p>Au bout de 560 jours, <em>F. ifrasensis</em> compte <strong>7,2 fois plus de cellules</strong> qu'au départ, soit un doublement tous les six mois environ. <em>D. radiodurans</em> suit avec un facteur 3,8. <em>C. thermalis</em> progresse aussi, mais plafonne à partir du 420<sup>e</sup> jour. <em>H. salinarum</em> décline puis entre en dormance.</p>
+
+      <figure class="fig rv" id="fig4">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">Nombre de cellules par rapport au départ (N/N₀)</span>
+            <div class="legend" role="group" aria-label="Afficher ou masquer une espèce">
+              <button class="lg" type="button" data-s="0" aria-pressed="true" style="--lc:#d97706"><i></i><em>F. ifrasensis</em></button>
+              <button class="lg" type="button" data-s="1" aria-pressed="true" style="--lc:#059669"><i></i><em>D. radiodurans</em></button>
+              <button class="lg" type="button" data-s="2" aria-pressed="true" style="--lc:#3b82f6"><i></i><em>C. thermalis</em></button>
+              <button class="lg" type="button" data-s="3" aria-pressed="true" style="--lc:#e11d48"><i></i><em>H. salinarum</em></button>
+            </div>
+          </div>
+          <div class="chart" id="growth"><div class="ctip" id="growthTip"></div></div>
+        </div>
+        <figcaption><b>Figure 4</b>Évolution de la population de chaque espèce (moyenne de 3 cultures), la valeur 1 correspondant au départ. Au-dessus de la ligne pointillée, la population grandit ; en dessous, elle diminue.</figcaption>
+      </figure>
+
+      <h3>Le journal de l'expérience</h3>
+      <p>Faites défiler les 560 jours pour suivre l'évolution des quatre cultures et les événements marquants.</p>
+
+      <figure class="fig rv" id="fig5">
+        <div class="fig-stage">
+          <div class="dishes" id="dishes"></div>
+          <div class="event" id="event" aria-live="polite"></div>
+          <div class="scrub">
+            <button class="ctrl" type="button" id="dishPlay"><i class="ph-light ph-play" aria-hidden="true"></i><span>Lancer</span></button>
+            <input type="range" id="dishRange" min="0" max="560" value="0" aria-label="Jour de l'expérience">
+            <output id="dishT" for="dishRange">J0</output>
+          </div>
+        </div>
+        <figcaption><b>Figure 5</b>Représentation des quatre cultures au fil de l'expérience : chaque point figure environ 150 000 cellules par millilitre. Les repères du curseur signalent les événements clés.</figcaption>
+      </figure>
+
+      <h3>Au microscope</h3>
+      <p>Les images en fluorescence confirment la croissance de <em>F. ifrasensis</em> : les cellules sont bien plus nombreuses à la fin, isolées et de forme normale. Elles ne se sont pas agglomérées, signe d'une croissance saine plutôt que d'une réaction de défense.</p>
+
+      <figure class="fig rv" id="fig6">
+        <div class="fig-stage">
+          <div class="compare" id="compare" tabindex="0" role="slider" aria-label="Comparer le jour 0 et le jour 560" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+            <canvas id="micA"></canvas>
+            <canvas id="micB"></canvas>
+            <span class="cmp-label l">J0</span>
+            <span class="cmp-label r">J560</span>
+            <span class="cmp-handle" id="cmpHandle"><i class="ph-light ph-arrows-left-right" aria-hidden="true"></i></span>
+          </div>
+        </div>
+        <figcaption><b>Figure 6</b>Reconstitution de la microscopie à fluorescence de <em>F. ifrasensis</em> (grossissement ×1 000) : ADN en bleu, membranes en vert. Faites glisser la poignée pour comparer le jour 0 et le jour 560. Les cellules mesurent 1 à 2 µm.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 4. DISCUSSION -->
+    <section id="s-discussion">
+      <h2><span class="n">04</span>Discussion</h2>
+      <h3>Survivre ou grandir</h3>
+      <p>On savait déjà que des spores peuvent survivre à certaines conditions martiennes. La nouveauté est ici de montrer, avec trois méthodes indépendantes, que des cellules fabriquent de la matière, se divisent et respirent sous les six contraintes réunies. Dans ces conditions, <em>F. ifrasensis</em> grandit plus de 300 fois plus lentement qu'en laboratoire, mais sa croissance est bien réelle et régulière.</p>
+
+      <div class="note" style="--nc:#34d399">
+        <i class="ph-light ph-dna" aria-hidden="true"></i>
+        <p><span class="nt">Une évolution en direct</span>Au 280<sup>e</sup> jour, le génome de <em>F. ifrasensis</em> présentait 14 <button class="term" type="button" data-term="mutation">mutations</button>, dont 4 dans les gènes qui réparent l'ADN abîmé par les ultraviolets. C'est la première observation d'une adaptation génétique en conditions martiennes simulées.</p>
       </div>
+
+      <p>Le plafonnement de <em>C. thermalis</em> après le 420<sup>e</sup> jour montre qu'un organisme très résistant aux UV finit malgré tout par saturer ses défenses : sa photosynthèse ne compense plus les dégâts. Ce seuil dépend sans doute des nutriments disponibles, et sera étudié lors de la prochaine campagne.</p>
+
+      <h3>Conséquences pour les missions vers Mars</h3>
+      <p>Si des microbes terrestres peuvent croître sur Mars, un engin mal stérilisé pourrait y introduire une vie qui fausserait la recherche de vie martienne. Nos résultats plaident pour stériliser à la chaleur sèche (125 °C pendant 5 heures, ou plus) tout équipement destiné à forer le sol, et pour tester aussi les microbes acidophiles, peu étudiés jusqu'ici.</p>
+    </section>
+
+    <!-- 5. CONCLUSION -->
+    <section id="s-conclusion">
+      <h2><span class="n">05</span>Conclusion</h2>
+      <p>La campagne MARSLAB-IV montre que la vie terrestre peut non seulement survivre, mais croître et s'adapter sous le profil martien complet. Les cultures sont maintenues en vie pour la suite du programme ATLAS.</p>
+      <ol class="next" aria-label="Prochaines étapes">
+        <li class="now" style="--nc:var(--ok)"><time>Févr. 2026</time><strong>Fin de MARSLAB-IV</strong><span>560 jours, trois espèces en croissance.</span></li>
+        <li><time>2026</time><strong>Étude des mutations</strong><span>Vérifier si elles donnent un avantage aux cellules.</span></li>
+        <li style="--nc:#2dd4bf"><time>2027</time><strong>MARSLAB-V</strong><span>840 jours, avec un cycle de saisons martiennes.</span></li>
+      </ol>
+    </section>
+
+  </article>
+
+  <!-- Colonne de droite -->
+  <aside class="rail" aria-label="Outils de l'article">
+    <div class="rail-card rail-figs">
+      <p class="rail-title">Figures</p>
+      <ul class="fig-list">
+        <li><a href="#fig1"><i class="ph-light ph-gauge" aria-hidden="true"></i>Terre contre Mars</a></li>
+        <li><a href="#fig2"><i class="ph-light ph-drop" aria-hidden="true"></i>Eau liquide et saumures</a></li>
+        <li><a href="#fig3"><i class="ph-light ph-sun-horizon" aria-hidden="true"></i>La chambre HADES-2</a></li>
+        <li><a href="#fig4"><i class="ph-light ph-chart-line-up" aria-hidden="true"></i>Courbes de croissance</a></li>
+        <li><a href="#fig5"><i class="ph-light ph-circles-four" aria-hidden="true"></i>Journal des cultures</a></li>
+        <li><a href="#fig6"><i class="ph-light ph-microscope" aria-hidden="true"></i>Au microscope</a></li>
+      </ul>
     </div>
-    <div class="tl-item">
-      <div class="tl-day"><div class="tl-day-num">J280</div><div class="tl-day-lbl">9 mois</div></div>
-      <div class="tl-dot active"></div>
-      <div class="tl-content">
-        <div class="tl-event">Deuxième séquençage — première détection d'adaptations génomiques chez <em>F. ifrasensis</em></div>
-        <div class="tl-detail">Comparaison J0 vs J280 par séquençage Illumina Nova Seq 6000 : 
-        14 SNP identifiés, dont 4 dans des gènes impliqués dans la réparation des dommages 
-        à l'ADN par UV (uvrABC operon). Interprétation : pression de sélection active 
-        par le flux UV martien.</div>
-      </div>
+    <div class="rail-card">
+      <p class="rail-title">Programme lié</p>
+      <a class="prog-link" href="../programmes-actifs.html#atlas">
+        <span class="pi" style="color:#2dd4bf;background:rgba(45,212,191,.12)"><i class="ph-light ph-globe-hemisphere-west" aria-hidden="true"></i></span>
+        <span><strong>ATLAS</strong><small>Simulation d'environnements extraterrestres</small></span>
+      </a>
     </div>
-    <div class="tl-item">
-      <div class="tl-day"><div class="tl-day-num">J420</div><div class="tl-day-lbl">14 mois</div></div>
-      <div class="tl-dot partial"></div>
-      <div class="tl-content">
-        <div class="tl-event"><em>C. thermalis</em> — ralentissement photosynthétique détecté</div>
-        <div class="tl-detail">Le signal CO₂ net (photosynthèse − respiration) passe en dessous de 
-        0 deux jours sur sept à partir de J420, suggérant que la productivité photosynthétique 
-        n'excède plus les pertes respiratoires sous flux UV intense. La population reste 
-        viable (DAPI positif) mais ne croît plus nettement.</div>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-day"><div class="tl-day-num">J560</div><div class="tl-day-lbl">Fin essai</div></div>
-      <div class="tl-dot active"></div>
-      <div class="tl-content">
-        <div class="tl-event">Fin de la campagne MARSLAB-IV — bilan positif pour 3 espèces</div>
-        <div class="tl-detail"><em>F. ifrasensis</em> ×7,2, <em>D. radiodurans</em> ×3,8, <em>C. thermalis</em> ×3,2 (en décélération).
-        Les cultures sont maintenues vivantes pour la campagne MARSLAB-V (2027, 840 jours prévus).</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Figure microscopie -->
-  <div class="fig-wrap">
-    <div class="fig-ph">
-      <span class="fig-icon">🔬</span>
-      <span class="fig-desc">Fig. 2 — Microscopie à fluorescence DAPI de F. ifrasensis à J560 (attendue)</span>
-      <span class="fig-sub">
-        Comparaison J0 (gauche) et J560 (droite) — coloration DAPI (noyaux bleus) + SYBR Green I (membranes vertes).<br>
-        Grossissement × 1 000. Densité cellulaire mesurée : 7,2 × 10⁶ cells·mL⁻¹ à J560.<br>
-        IFRAS DSVT — Plateforme imagerie cellulaire, jan. 2026.
-      </span>
-    </div>
-    <div class="fig-cap">
-      <strong>Figure 2</strong>
-      Microscopie à fluorescence de <em>F. ifrasensis</em> nov. sp. à J0 (gauche) et J560 (droite), 
-      double marquage DAPI / SYBR Green I, grossissement × 1 000 (objectif à immersion).
-      À J560, la densité cellulaire est 7,2 fois supérieure à J0.
-      La morphologie cellulaire (bacilles courts, 0,8–1,2 µm × 1,5–2,2 µm) est conservée, 
-      sans formation de biofilm ni aggrégats, ce qui indique une croissance planctonique 
-      active plutôt qu'une réponse de stress communautaire.
-    </div>
-  </div>
-
-  <!-- ===== 5. DISCUSSION ===== -->
-  <h2 class="section-heading blue" id="s5">5. Discussion et implications</h2>
-
-  <h3 class="sub">5.1 Ce que signifie « croissance » dans ce contexte</h3>
-
-  <p class="bt">
-    Il est important de distinguer survie passive et croissance active. De nombreuses études
-    antérieures ont démontré que des spores bactériennes peuvent survivre à des paramètres
-    martiens isolés sur de longues durées [7, 8]. La nouveauté de nos résultats tient à la
-    démonstration, par trois méthodes indépendantes, d'une fixation de carbone active (signal
-    ¹³C-acétate positif), d'une division cellulaire (augmentation DAPI) et d'une 
-    productivité métabolique nette (ATP-luciférase), et ce simultanément sous les six
-    paramètres martiens combinés.
-  </p>
-
-  <div class="hl">
-    La croissance de <em>F. ifrasensis</em> (doublement toutes 72 h) dans ces conditions 
-    est particulièrement remarquable : son taux de croissance en conditions martiennes 
-    représente environ 18 % de son taux optimal en laboratoire (doublement toutes 13 h à 
-    pH 1,5, 62 °C, Fe³⁺ 10 mM). Ce rapport est comparable au ratio observé chez 
-    <em>D. radiodurans</em> sous irradiation maximale [4].
-  </div>
-
-  <h3 class="sub">5.2 Adaptations observées et évolution en temps réel</h3>
-
-  <p class="bt">
-    Les 14 SNP identifiés chez <em>F. ifrasensis</em> entre J0 et J280 constituent, 
-    à notre connaissance, la première observation directe d'adaptation génomique 
-    sous conditions martiennes simulées complètes. Quatre SNP localisés dans 
-    l'opéron <em>uvrABC</em> — impliqué dans la réparation par excision de nucléotides (NER) 
-    des lésions UV — suggèrent une pression de sélection directe exercée par le flux 
-    UV-C martien. Des études de mutagenèse dirigée sont en cours pour confirmer 
-    l'avantage sélectif conféré par ces variants.
-  </p>
-
-  <p class="bt">
-    Le ralentissement observé chez <em>C. thermalis</em> après J420 soulève une question 
-    d'ordre pratique pour les modèles d'habitabilité : même les organismes les plus 
-    résistants aux UV peuvent atteindre un seuil de saturation des mécanismes de réparation 
-    sous flux UV-C intense et continu. Ce seuil n'est pas une limite absolue mais une 
-    limite contextuelle dépendant de la disponibilité des substrats carbonés et azotés.
-  </p>
-
-  <h3 class="sub">5.3 Implications pour la protection planétaire</h3>
-
-  <div class="hl orange">
-    Ces résultats ont des conséquences directes pour la politique de protection planétaire
-    des missions martiennes (COSPAR catégories IV et V). La démonstration que des 
-    microorganismes terrestres peuvent non seulement survivre mais croître sous des 
-    conditions martiennes réalistes renforce l'exigence de stérilisation des équipements
-    de surface au niveau DHMR (Dry Heat Microbial Reduction, 125 °C / 5 h) ou supérieur,
-    en particulier pour les engins équipés de systèmes de forage ou d'analyse de sub-surface [9].
-  </div>
-
-  <p class="bt">
-    Nous recommandons que la prochaine révision des politiques COSPAR (prévue 2027) 
-    intègre explicitement les espèces chimioautotrophes haloacidophiles — largement 
-    absentes des travaux antérieurs qui se concentraient sur les espores de 
-    <em>Bacillus</em> — dans les protocoles d'évaluation de risque de contamination avant vol.
-  </p>
-
-  <div class="art-divider"></div>
-
-  <!-- RÉFÉRENCES -->
-  <div class="refs-sec" id="s6">
-    <div class="ref-ttl">Références bibliographiques</div>
-    <div class="ref-list">
-      <div class="ref-item"><b>Grotzinger J.P. et al.</b> — <em>A habitable fluvio-lacustrine environment at Yellowknife Bay, Gale Crater, Mars</em> — 2014</div>
-      <div class="ref-item"><b>Hecht M.H. et al.</b> — <em>Detection of perchlorate and the soluble chemistry of martian soil at the Phoenix lander site</em> — 2009</div>
-      <div class="ref-item"><b>Selbmann L. et al.</b> — <em>Resistance of Antarctic black fungi and cryptoendolithic communities to simulated space and Martian conditions</em> — 2015</div>
-      <div class="ref-item"><b>Mattimore V. & Battista J.R.</b> — <em>Radioresistance of Deinococcus radiodurans : functions necessary to survive ionizing radiation are also necessary to survive prolonged desiccation</em> — 1996</div>
-      <div class="ref-item"><b>Billi D. et al.</b> — <em>Dried biofilms of desert strains of Chroococcidiopsis survived 2 years of exposure to low Earth orbit in the EXPOSE-R2 experiment</em> — 2019</div>
-      <div class="ref-item"><b>Rothschild L.J. & Mancinelli R.L.</b> — <em>Life in extreme environments</em> — 2001</div>
-      <div class="ref-item"><b>Nicholson W.L. et al.</b> — <em>Resistance of Bacillus endospores to extreme terrestrial and extraterrestrial environments</em> — 2000</div>
-      <div class="ref-item"><b>Verseux C. et al.</b> — <em>Sustainable life support on Mars — the potential roles of microorganisms</em> — 2016</div>
-      <div class="ref-item"><b>COSPAR</b> — <em>COSPAR Policy on Planetary Protection</em> — 2020</div>
-    </div>
-  </div>
-
-  <div class="footnote">
-    <strong>Conflits d'intérêts :</strong> Aucun. Dr. C. Novak contribue à titre personnel et n'engage pas la position de l'ESA. —
-    <strong>Financement :</strong> ANR-22-ASTR-0031 « EXTREMARS » ; soutien CNES programme astrobiologie 2024. —
-    <strong>Dépôt souche :</strong> <em>Ferroacidus ifrasensis</em> nov. sp. déposée à la Deutsche Sammlung von Mikroorganismen (DSM 118504) et à la Collection de l'Institut Pasteur (CIP 111.23). —
-    <strong>Données brutes :</strong> Zenodo 10.5281/zenodo.14882041 (licences CC-BY 4.0). —
-    <strong>Contributions :</strong> S.G. : direction, conception MARSLAB-IV, analyses métabolomiques ; M.P. : physiologie, DAPI, ATP ; Y.T. : géochimie régolithe simulé ; I.A.-R. : séquençage, bioinformatique ; C.N. : interprétation protection planétaire.
-  </div>
-
+  </aside>
 </div>
 
-<footer style="background:#020617;border-top:1px solid #1b2555;padding:32px 30px;text-align:center;font-size:12px;color:#6b7280;">
-  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale · Publications soumises à validation institutionnelle
+<!-- Articles liés -->
+<section class="container related" aria-labelledby="relTitle">
+  <h2 class="section-title" id="relTitle">À lire aussi</h2>
+  <div class="related-grid">
+    <a class="rel" href="publications_scientifiques_01.html" style="--c:#fb7185">
+      <div class="rel-img"><img src="../Assets/accueil/alaune01.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Matériaux</small><strong>Un bouclier céramique qui résiste à 2 250 °C pour la rentrée atmosphérique</strong></div>
+    </a>
+    <a class="rel" href="publications_scientifiques_02.html" style="--c:#f97316">
+      <div class="rel-img"><img src="../Assets/accueil/alaune02.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Propulsion</small><strong>NK-125 : un propulseur ionique à grilles tri-étages validé à haute puissance</strong></div>
+    </a>
+    <a class="rel" href="publications_scientifiques_04.html" style="--c:#c084fc">
+      <div class="rel-img"><img src="../Assets/publication/quantique01.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Physique quantique</small><strong>L'intrication quantique préservée sur une liaison Terre–satellite simulée</strong></div>
+    </a>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© IFRAS, Institut Français de Recherche Aéronautique et Spatiale</span>
+    <span>Publications soumises à validation institutionnelle</span>
+  </div>
 </footer>
 
+<div class="toast" id="toast" role="status"><i class="ph-light ph-check-circle" aria-hidden="true"></i><span></span></div>
+<div class="tip" id="tip" role="tooltip"></div>
 <script>
-window.addEventListener('scroll',()=>{
-  const d=document.documentElement;
-  document.getElementById('progressBar').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%';
-});
-const secs=['s0','s1','s2','s3','s4','s5','s6'];
-const dots=document.querySelectorAll('.toc-dot');
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      const i=secs.indexOf(e.target.id);
-      if(i>=0){dots.forEach(d=>d.classList.remove('active'));dots[i]&&dots[i].classList.add('active');}
-    }
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const $ = (id) => document.getElementById(id);
+  const NS = 'http://www.w3.org/2000/svg';
+  const fmt = (n, d = 0) => n.toLocaleString('fr-FR', { minimumFractionDigits: d, maximumFractionDigits: d });
+  const svgEl = (tag, attrs = {}, parent) => {
+    const el = document.createElementNS(NS, tag);
+    for (const k in attrs) el.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(el);
+    return el;
+  };
+  /* lance une fonction quand l'élément devient visible (une seule fois) */
+  const onceVisible = (el, fn, margin = '0px 0px -15% 0px') => {
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { io.disconnect(); fn(); } }, { rootMargin: margin });
+    io.observe(el);
+  };
+  /* boucle d'animation suspendue hors écran et onglet masqué */
+  const loopWhileVisible = (el, frame) => {
+    let raf = 0, visible = false;
+    const tick = (t) => { frame(t); raf = requestAnimationFrame(tick); };
+    const sync = () => { cancelAnimationFrame(raf); if (visible && !document.hidden) raf = requestAnimationFrame(tick); };
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; sync(); }).observe(el);
+    document.addEventListener('visibilitychange', sync);
+  };
+
+  /* ---------- Menu mobile ---------- */
+  const toggle = document.querySelector('.menu-toggle');
+  const panel = $('mobile-panel');
+  const setMenu = (open) => {
+    panel.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    toggle.querySelector('i').className = open ? 'ph-light ph-x' : 'ph-light ph-list';
+  };
+  toggle.addEventListener('click', () => setMenu(!panel.classList.contains('is-open')));
+  document.addEventListener('click', (e) => { if (panel.classList.contains('is-open') && !panel.contains(e.target) && !toggle.contains(e.target)) setMenu(false); });
+
+  /* ---------- Apparition au défilement ---------- */
+  const rvIO = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (e.isIntersecting) { e.target.classList.add('in'); rvIO.unobserve(e.target); }
+  }), { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.rv').forEach((el) => rvIO.observe(el));
+
+  /* ---------- Toast ---------- */
+  let toastT;
+  const toast = (msg) => { const t = $('toast'); t.querySelector('span').textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2600); };
+
+  /* ---------- Progression de lecture + sommaire ---------- */
+  const article = $('article');
+  const tocLinks = [...document.querySelectorAll('#toc a')];
+  const sections = tocLinks.map((a) => document.querySelector(a.getAttribute('href')));
+  const ind = document.querySelector('.toc-ind');
+  const WORDS = article.innerText.split(/\s+/).length;
+  let ticking = false;
+  function onScroll() {
+    ticking = false;
+    const r = article.getBoundingClientRect();
+    const total = r.height - window.innerHeight * 0.6;
+    const p = Math.min(1, Math.max(0, -r.top / total));
+    $('progress').style.transform = `scaleX(${p})`;
+    const left = Math.max(0, Math.ceil((WORDS / 220) * (1 - p)));
+    $('timeLeft').textContent = p >= 0.98 ? 'Lecture terminée' : `${left || 1} min restante${left > 1 ? 's' : ''}`;
+    let cur = 0;
+    sections.forEach((s, i) => { if (s && s.getBoundingClientRect().top < window.innerHeight * 0.35) cur = i; });
+    tocLinks.forEach((a, i) => a.classList.toggle('on', i === cur));
+    const a = tocLinks[cur];
+    if (a && ind) { ind.style.transform = `translateY(${a.parentElement.offsetTop}px)`; ind.style.height = a.offsetHeight + 'px'; }
+  }
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  /* ---------- Chiffres clés animés ---------- */
+  document.querySelectorAll('[data-count]').forEach((el) => {
+    const target = Number(el.dataset.count), suffix = el.dataset.suffix || '';
+    const paint = (v) => { el.innerHTML = `${fmt(v)}<small>${suffix}</small>`; };
+    if (reduceMotion) return;
+    paint(0);
+    onceVisible(el, () => {
+      const t0 = performance.now(), dur = 1100;
+      const step = (t) => { const k = Math.min(1, (t - t0) / dur); paint(Math.round(target * (1 - Math.pow(1 - k, 4)))); if (k < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    });
   });
-},{rootMargin:'-20% 0px -70% 0px'});
-secs.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
-dots.forEach((d,i)=>{d.addEventListener('click',()=>{const el=document.getElementById(secs[i]);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});});});
+
+  /* ---------- Infobulles : termes expliqués ---------- */
+  const TERMS = {
+    perchlorate: ['Perchlorates', "Sels contenant du chlore et beaucoup d'oxygène, découverts dans le sol martien. Très oxydants, ils abîment les cellules, mais retiennent aussi l'eau."],
+    extremophile: ['Extrêmophile', "Organisme qui prospère là où la plupart des êtres vivants meurent : froid, acide, sel, radiations ou absence d'air."],
+    saumure: ['Saumure', "Eau très chargée en sels. Plus elle est salée, plus elle gèle bas : une saumure de perchlorate reste liquide jusqu'à environ −57 °C."],
+    mutation: ['Mutation', "Petite modification de l'ADN. Si elle aide la cellule à survivre, elle se répand dans la population : c'est le moteur de l'évolution."]
+  };
+  const tip = $('tip');
+  let tipOpenAt = 0, hideT = null, tipOwner = null;
+  function showTip(el) {
+    clearTimeout(hideT);
+    const t = TERMS[el.dataset.term];
+    tip.innerHTML = `<b>${t[0]}</b>${t[1]}`;
+    tip.classList.toggle('instant', Date.now() - tipOpenAt < 400 && tip.classList.contains('show'));
+    const r = el.getBoundingClientRect();
+    tip.style.left = '0px'; tip.style.top = '0px';
+    tip.classList.add('show');
+    const w = tip.offsetWidth, h = tip.offsetHeight;
+    let x = r.left + r.width / 2 - w / 2 + window.scrollX;
+    x = Math.max(16 + window.scrollX, Math.min(x, window.scrollX + document.documentElement.clientWidth - w - 16));
+    let y = r.top + window.scrollY - h - 10, below = false;
+    if (r.top - h - 10 < 130) { y = r.bottom + window.scrollY + 10; below = true; }
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+    tip.style.transformOrigin = `${r.left + r.width / 2 + window.scrollX - x}px ${below ? '0%' : '100%'}`;
+    tipOpenAt = Date.now(); tipOwner = el;
+    el.setAttribute('aria-describedby', 'tip');
+  }
+  function hideTip(delay = 80) {
+    clearTimeout(hideT);
+    hideT = setTimeout(() => { tip.classList.remove('show'); if (tipOwner) tipOwner.removeAttribute('aria-describedby'); tipOwner = null; tipOpenAt = Date.now(); }, delay);
+  }
+  document.querySelectorAll('.term').forEach((el) => {
+    if (canHover) { el.addEventListener('mouseenter', () => showTip(el)); el.addEventListener('mouseleave', () => hideTip()); }
+    el.addEventListener('focus', () => showTip(el));
+    el.addEventListener('blur', () => hideTip(0));
+    el.addEventListener('click', () => { if (!canHover) (tipOwner === el && tip.classList.contains('show')) ? hideTip(0) : showTip(el); });
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { hideTip(0); setMenu(false); } });
+  window.addEventListener('scroll', () => { if (!canHover && tip.classList.contains('show')) hideTip(0); }, { passive: true });
+
+  /* petite infobulle de graphique, placée à côté d'un point */
+  const placeTip = (tipEl, box, svg, W, H, px, py) => {
+    const r = svg.getBoundingClientRect(), bx = box.getBoundingClientRect();
+    const sx = px / W * r.width + (r.left - bx.left), sy = py / H * r.height + (r.top - bx.top);
+    tipEl.classList.add('show');
+    tipEl.style.left = (sx + 14 + tipEl.offsetWidth > bx.width ? sx - 14 - tipEl.offsetWidth : sx + 14) + 'px';
+    tipEl.style.top = Math.max(0, Math.min(bx.height - tipEl.offsetHeight, sy - tipEl.offsetHeight / 2)) + 'px';
+  };
+  const BLUE = '#3b82f6', ORANGE = '#ea580c';
+
+  const SP = [
+    { name: 'F. ifrasensis', color: '#d97706', pts: [[0, 1], [90, 1.4], [180, 2.0], [280, 3.6], [400, 5.5], [560, 7.2]] },
+    { name: 'D. radiodurans', color: '#059669', pts: [[0, 1], [90, 1.2], [180, 1.6], [280, 2.3], [400, 2.9], [560, 3.8]] },
+    { name: 'C. thermalis', color: '#3b82f6', pts: [[0, 1], [90, 1.15], [180, 1.5], [280, 2.0], [400, 2.7], [420, 3.0], [560, 3.2]] },
+    { name: 'H. salinarum', color: '#e11d48', pts: [[0, 1], [90, 0.9], [148, 0.7], [280, 0.4], [400, 0.25], [560, 0.2]], dashed: true }
+  ];
+  const valAt = (s, d) => {
+    const p = s.pts;
+    for (let i = 1; i < p.length; i++) if (d <= p[i][0]) { const [a, va] = p[i - 1], [b, vb] = p[i]; return va + (vb - va) * (d - a) / (b - a); }
+    return p[p.length - 1][1];
+  };
+
+  /* ---------- En-tête : poussière martienne + cellules dans la loupe ---------- */
+  (function hero() {
+    const cv = $('dust'); if (!cv) return;
+    const ctx = cv.getContext('2d');
+    let w, h, dust = [];
+    const size = () => {
+      const r = cv.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 2);
+      w = r.width; h = r.height; cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      dust = Array.from({ length: 60 }, () => ({ x: Math.random() * w, y: Math.random() * h, v: .15 + Math.random() * .5, r: Math.random() * 1.4 + .3, a: Math.random() * .5 + .1 }));
+    };
+    const g = $('lensCells'), cells = [];
+    for (let i = 0; i < 16; i++) {
+      const el = svgEl('rect', { width: 18, height: 7, rx: 3.5, fill: i % 3 ? '#34d399' : '#60a5fa', opacity: .85 }, g);
+      cells.push({ el, x: 352 + (Math.random() - .5) * 150, y: 286 + (Math.random() - .5) * 150, a: Math.random() * 180, va: (Math.random() - .5) * .4, vx: (Math.random() - .5) * .25, vy: (Math.random() - .5) * .25 });
+    }
+    const frame = () => {
+      ctx.clearRect(0, 0, w, h);
+      for (const p of dust) {
+        p.x += p.v; p.y += Math.sin(p.x / 40) * .15;
+        if (p.x > w + 4) { p.x = -4; p.y = Math.random() * h; }
+        ctx.fillStyle = `rgba(251,146,60,${p.a})`;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+      }
+      for (const c of cells) {
+        c.x += c.vx; c.y += c.vy; c.a += c.va;
+        if (Math.hypot(c.x - 352, c.y - 286) > 80) { c.vx *= -1; c.vy *= -1; }
+        c.el.setAttribute('transform', `translate(${(c.x - 9).toFixed(1)} ${(c.y - 3.5).toFixed(1)}) rotate(${c.a.toFixed(1)} 9 3.5)`);
+      }
+    };
+    size(); new ResizeObserver(size).observe(cv);
+    frame();
+    if (!reduceMotion) loopWhileVisible(cv, frame);
+  })();
+
+  /* ---------- Figure 1 : jauges Terre / Mars ---------- */
+  (function gauges() {
+    const G = [
+      { icon: 'ph-gauge', name: 'Pression', terre: '1 013 hPa', mars: '6 hPa', t: .06, m: .86, l: .8, lim: 'limite connue : ≈ 7 hPa' },
+      { icon: 'ph-thermometer-cold', name: 'Température de nuit', terre: '+10 °C', mars: '−63 °C', t: .1, m: .9, l: .62, lim: 'croissance jusqu\'à −20 °C' },
+      { icon: 'ph-sun', name: 'Ultraviolets', terre: '3 W/m²', mars: '50 W/m²', t: .08, m: .8, l: .86, lim: 'limite : ≈ 60 W/m²' },
+      { icon: 'ph-drop', name: 'Humidité de l\'air', terre: '60 %', mars: '< 2 %', t: .12, m: .92, l: .78, lim: 'limite : ≈ 5 %' },
+      { icon: 'ph-flask', name: 'Perchlorates dans le sol', terre: 'traces', mars: '0,6 %', t: .03, m: .72, l: .82, lim: 'toxique au-delà de ≈ 1 %' },
+      { icon: 'ph-wind', name: 'Oxygène', terre: '21 %', mars: '0,13 %', t: .05, m: .7, l: .98, lim: 'inutile aux microbes anaérobies' }
+    ];
+    const box = $('gauges');
+    box.innerHTML = G.map((g, i) => `
+      <div class="gauge" data-i="${i}">
+        <div class="gauge-top"><span><i class="ph-light ${g.icon}" aria-hidden="true"></i>${g.name}</span><strong></strong></div>
+        <div class="gauge-bar" aria-hidden="true"><span class="gauge-fill"></span><span class="gauge-limit" style="--l:${g.l * 100}%"></span></div>
+        <div class="gauge-foot"><span>confortable</span><span>${g.lim}</span></div>
+      </div>`).join('');
+    const set = (p) => {
+      box.querySelectorAll('.gauge').forEach((el, i) => {
+        const g = G[i], v = p === 'mars' ? g.m : g.t;
+        el.querySelector('.gauge-fill').style.setProperty('--v', v);
+        el.querySelector('strong').textContent = p === 'mars' ? g.mars : g.terre;
+        el.classList.toggle('beyond', v > g.l);
+      });
+      document.querySelectorAll('#fig1 [data-p]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.p === p)));
+    };
+    document.querySelectorAll('#fig1 [data-p]').forEach((b) => b.addEventListener('click', () => set(b.dataset.p)));
+    set('terre');
+    /* passage Terre → Mars quand la figure apparaît */
+    if (reduceMotion) set('mars'); else onceVisible($('fig1'), () => setTimeout(() => set('mars'), 350), '0px 0px -25% 0px');
+  })();
+
+  /* ---------- Figure 2 : eau liquide et saumures ---------- */
+  const tempAt = (hr) => -21.5 + 41.5 * Math.cos((hr - 14) / 24 * Math.PI * 2);
+  (function brine() {
+    const box = $('brine'), tipEl = $('brineTip');
+    const W = Math.round(Math.max(330, Math.min(680, box.clientWidth))), H = 290, m = { l: 48, r: W < 520 ? 12 : 150, t: 16, b: 40 };
+    const x = (hr) => m.l + hr / 24 * (W - m.l - m.r);
+    const y = (t) => H - m.b - (t + 70) / 100 * (H - m.t - m.b);
+    const LINES = [
+      { t: 0, name: 'Eau pure', c: '#60a5fa' },
+      { t: -21, name: 'Saumure salée', c: '#34d399' },
+      { t: -57, name: 'Saumure de perchlorate', c: '#fbbf24' }
+    ];
+    const hoursAbove = (t0) => { let n = 0; for (let i = 0; i < 2400; i++) if (tempAt(i / 100) > t0) n++; return n / 100; };
+    const svg = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': "Température d'une journée martienne comparée aux points de congélation" });
+    box.prepend(svg);
+    /* fond nuit / jour */
+    svgEl('rect', { x: x(6), y: m.t, width: x(18) - x(6), height: H - m.t - m.b, fill: 'rgba(251,191,36,.05)' }, svg);
+    [-60, -40, -20, 0, 20].forEach((t) => {
+      svgEl('line', { x1: m.l, x2: W - m.r, y1: y(t), y2: y(t), stroke: '#13204d' }, svg);
+      svgEl('text', { x: m.l - 6, y: y(t) + 4, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 11, class: 'mono' }, svg).textContent = (t > 0 ? '+' : '') + t;
+    });
+    [0, 6, 12, 18, 24].forEach((hr) => svgEl('text', { x: x(hr), y: H - m.b + 18, 'text-anchor': 'middle', fill: '#8891b8', 'font-size': 11, class: 'mono' }, svg).textContent = hr + ' h');
+    svgEl('text', { x: m.l + 4, y: m.t + 12, fill: '#8891b8', 'font-size': 11 }, svg).textContent = 'Température (°C)';
+    LINES.forEach((L, i) => {
+      svgEl('line', { x1: m.l, x2: W - m.r, y1: y(L.t), y2: y(L.t), stroke: L.c, 'stroke-dasharray': '6 5', 'stroke-width': 1.4 }, svg);
+      const hrs = hoursAbove(L.t);
+      if (W >= 520) {
+        svgEl('text', { x: W - m.r + 10, y: y(L.t) - 2, fill: '#e6e6e6', 'font-size': 12 }, svg).textContent = L.name;
+        svgEl('text', { x: W - m.r + 10, y: y(L.t) + 13, fill: '#8891b8', 'font-size': 11.5, class: 'mono' }, svg).textContent = `liquide ${fmt(hrs)} h/j`;
+      } else {
+        svgEl('text', { x: m.l + 6, y: y(L.t) - 5, fill: L.c, 'font-size': 11 }, svg).textContent = `${L.name} · ${fmt(hrs)} h`;
+      }
+    });
+    const pts = []; for (let i = 0; i <= 96; i++) pts.push(`${i ? 'L' : 'M'}${x(i / 4).toFixed(1)} ${y(tempAt(i / 4)).toFixed(1)}`);
+    const curve = svgEl('path', { d: pts.join(' '), fill: 'none', stroke: '#fb923c', 'stroke-width': 2.4, 'stroke-linecap': 'round', class: 'draw' }, svg);
+    curve.style.setProperty('--len', Math.ceil(curve.getTotalLength()));
+    const xh = svgEl('line', { y1: m.t, y2: H - m.b, stroke: '#aab3d6', class: 'xhair' }, svg);
+    const dot = svgEl('circle', { r: 5, fill: '#fb923c', stroke: '#070f2b', 'stroke-width': 2, class: 'xhair' }, svg);
+    const hit = svgEl('rect', { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, class: 'hit' }, svg);
+    const move = (e) => {
+      const r = svg.getBoundingClientRect();
+      const hr = Math.max(0, Math.min(24, ((e.clientX - r.left) / r.width * W - m.l) / (W - m.l - m.r) * 24));
+      const t = tempAt(hr);
+      [xh, dot].forEach((el) => el.classList.add('show'));
+      xh.setAttribute('x1', x(hr)); xh.setAttribute('x2', x(hr)); dot.setAttribute('cx', x(hr)); dot.setAttribute('cy', y(t));
+      const hh = Math.floor(hr), mm = Math.round((hr - hh) * 60 / 10) * 10;
+      tipEl.innerHTML = `<b>${hh} h ${String(mm % 60).padStart(2, '0')} · ${t > 0 ? '+' : ''}${fmt(t)} °C</b>` +
+        LINES.map((L) => `<div><span style="--lc:${L.c}"><i></i>${L.name}</span><em>${t > L.t ? 'liquide' : 'gelée'}</em></div>`).join('');
+      placeTip(tipEl, box, svg, W, H, x(hr), y(t));
+    };
+    hit.addEventListener('pointermove', move); hit.addEventListener('pointerdown', move);
+    hit.addEventListener('pointerleave', () => { [xh, dot].forEach((el) => el.classList.remove('show')); tipEl.classList.remove('show'); });
+    if (reduceMotion) box.classList.add('drawn'); else onceVisible(box, () => box.classList.add('drawn'), '0px 0px -25% 0px');
+  })();
+
+  /* ---------- Figure 3 : la chambre HADES-2 ---------- */
+  (function chamber() {
+    const svg = $('chamberSvg'), W = 680, H = 290;
+    const sky = svgEl('rect', { x: 0, y: 0, width: W, height: H, fill: '#050b1e' }, svg);
+    /* chambre */
+    svgEl('rect', { x: 100, y: 40, width: 400, height: 200, rx: 18, fill: 'rgba(124,45,18,.12)', stroke: '#2a3a7a', 'stroke-width': 1.5 }, svg);
+    const tint = svgEl('rect', { x: 101, y: 41, width: 398, height: 198, rx: 17, fill: '#fbbf24', opacity: 0 }, svg);
+    /* lampe UV + rayons */
+    svgEl('rect', { x: 210, y: 30, width: 180, height: 18, rx: 6, fill: '#1e1b4b', stroke: '#8b5cf6' }, svg);
+    const rays = svgEl('g', { stroke: '#a78bfa', 'stroke-width': 2, 'stroke-dasharray': '4 6', opacity: 0 }, svg);
+    for (let i = 0; i < 7; i++) svgEl('line', { x1: 222 + i * 26, y1: 50, x2: 180 + i * 40, y2: 188 }, rays);
+    svgEl('text', { x: 300, y: 20, 'text-anchor': 'middle', fill: '#c4b5fd', 'font-size': 12 }, svg).textContent = 'Lampe ultraviolette';
+    /* entrée de CO2 */
+    svgEl('path', { d: 'M12 110 H 100', stroke: '#2a3a7a', 'stroke-width': 10, fill: 'none', 'stroke-linecap': 'round' }, svg);
+    svgEl('path', { d: 'M12 110 H 98', stroke: '#fb923c', 'stroke-width': 2, fill: 'none', class: 'flow' }, svg);
+    svgEl('text', { x: 12, y: 96, fill: '#fdba74', 'font-size': 12 }, svg).textContent = 'CO₂ · 600 Pa';
+    /* plateau refroidi */
+    const plate = svgEl('rect', { x: 125, y: 206, width: 350, height: 16, rx: 5, fill: '#1e3a8a' }, svg);
+    svgEl('text', { x: 300, y: 262, 'text-anchor': 'middle', fill: '#93c5fd', 'font-size': 12 }, svg).textContent = 'Plateau refroidi (jusqu\'à −63 °C)';
+    /* coupelles de culture */
+    const cols = ['#d97706', '#059669', '#3b82f6', '#e11d48', '#d97706', '#059669'];
+    cols.forEach((c, i) => {
+      const cx = 160 + i * 56;
+      svgEl('path', { d: `M${cx - 22} 206 A22 22 0 0 1 ${cx + 22} 206 Z`, fill: 'rgba(255,255,255,.04)', stroke: '#475394' }, svg);
+      svgEl('rect', { x: cx - 18, y: 198, width: 36, height: 8, rx: 2, fill: '#7c2d12' }, svg);
+      for (let k = 0; k < 4; k++) svgEl('circle', { cx: cx - 12 + k * 8, cy: 196 - (k % 2) * 3, r: 2.2, fill: c }, svg);
+    });
+    svgEl('text', { class: 'side', x: 516, y: 196, fill: '#aab3d6', 'font-size': 12 }, svg).textContent = '48 coupelles';
+    svgEl('text', { class: 'side', x: 516, y: 212, fill: '#8891b8', 'font-size': 11.5 }, svg).textContent = 'sol martien reconstitué';
+    /* capteurs */
+    svgEl('rect', { x: 474, y: 70, width: 14, height: 30, rx: 4, fill: '#0a1436', stroke: '#34d399' }, svg);
+    svgEl('text', { class: 'side', x: 516, y: 82, fill: '#a7f3d0', 'font-size': 12 }, svg).textContent = 'Capteurs de CO₂,';
+    svgEl('text', { class: 'side', x: 516, y: 98, fill: '#a7f3d0', 'font-size': 12 }, svg).textContent = 'lumière, température';
+    /* thermomètre */
+    const thermo = svgEl('rect', { x: 110, y: 120, width: 8, height: 0, rx: 4, fill: '#fb923c' }, svg);
+    svgEl('rect', { x: 109, y: 60, width: 10, height: 140, rx: 5, fill: 'none', stroke: '#475394' }, svg);
+    const crop = () => svg.setAttribute('viewBox', svg.clientWidth < 500 ? '0 0 510 290' : `0 0 ${W} ${H}`);
+    crop(); window.addEventListener('resize', crop);
+    let hr = 12, playing = !reduceMotion, last = 0;
+    const render = () => {
+      const t = tempAt(hr), uv = hr >= 6 && hr < 18;
+      const k = (t + 63) / 83;
+      thermo.setAttribute('y', 60 + 140 * (1 - k)); thermo.setAttribute('height', 140 * k);
+      thermo.setAttribute('fill', t > 0 ? '#fb923c' : '#60a5fa');
+      rays.setAttribute('opacity', uv ? 0.9 : 0);
+      tint.setAttribute('opacity', uv ? 0.05 + 0.05 * Math.sin((hr - 6) / 12 * Math.PI) : 0);
+      plate.setAttribute('fill', t < -30 ? '#60a5fa' : '#1e3a8a');
+      sky.setAttribute('fill', uv ? '#07102e' : '#030817');
+      const hh = Math.floor(hr), mm = Math.floor((hr - hh) * 6) * 10;
+      $('dHour').textContent = `${String(hh).padStart(2, '0')} h ${String(mm).padStart(2, '0')}`;
+      $('dTemp').textContent = `${t > 0 ? '+' : ''}${fmt(t)} °C`;
+      $('dUv').textContent = uv ? 'Allumée' : 'Éteinte';
+    };
+    const btn = $('dayPlay');
+    const setBtn = () => { btn.querySelector('i').className = playing ? 'ph-light ph-pause' : 'ph-light ph-play'; btn.querySelector('span').textContent = playing ? 'Pause' : 'Lancer'; };
+    btn.addEventListener('click', () => { playing = !playing; last = performance.now(); setBtn(); });
+    setBtn(); render();
+    if (!reduceMotion) loopWhileVisible(svg, (now) => {
+      if (!last) last = now;
+      if (playing) { hr = (hr + (now - last) / 1000 * 2) % 24; render(); }   /* 12 s par journée */
+      last = now;
+    });
+  })();
+
+  /* ---------- Figure 4 : courbes de croissance ---------- */
+  (function growth() {
+    const box = $('growth'), tipEl = $('growthTip');
+    const W = Math.round(Math.max(330, Math.min(680, box.clientWidth))), H = W < 520 ? 290 : 320, m = { l: 40, r: W < 520 ? 44 : 100, t: 16, b: 40 };
+    const x = (d) => m.l + d / 560 * (W - m.l - m.r);
+    const y = (v) => H - m.b - v / 8 * (H - m.t - m.b);
+    const svg = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Courbes de croissance des quatre espèces sur 560 jours' });
+    box.prepend(svg);
+    [0, 2, 4, 6, 8].forEach((v) => {
+      svgEl('line', { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: '#13204d' }, svg);
+      svgEl('text', { x: m.l - 6, y: y(v) + 4, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 11, class: 'mono' }, svg).textContent = v + '×';
+    });
+    [0, 140, 280, 420, 560].forEach((d) => svgEl('text', { x: x(d), y: H - m.b + 18, 'text-anchor': 'middle', fill: '#8891b8', 'font-size': 11, class: 'mono' }, svg).textContent = 'J' + d);
+    svgEl('line', { x1: m.l, x2: W - m.r, y1: y(1), y2: y(1), stroke: '#aab3d6', 'stroke-dasharray': '3 5' }, svg);
+    svgEl('text', { x: m.l + 6, y: y(1) + 16, fill: '#aab3d6', 'font-size': 11 }, svg).textContent = 'population de départ';
+    [[148, 'J148 · dormance'], [420, 'J420 · plafond']].forEach(([d, l]) => {
+      svgEl('line', { x1: x(d), x2: x(d), y1: m.t + 16, y2: H - m.b, stroke: '#475394', 'stroke-dasharray': '2 4' }, svg);
+      svgEl('text', { x: x(d) + 5, y: m.t + 12, fill: '#8891b8', 'font-size': 11 }, svg).textContent = l;
+    });
+    const groups = SP.map((s) => {
+      const g = svgEl('g', { class: 'series' }, svg);
+      const p = svgEl('path', { d: s.pts.map(([d, v], i) => `${i ? 'L' : 'M'}${x(d).toFixed(1)} ${y(v).toFixed(1)}`).join(' '), fill: 'none', stroke: s.color, 'stroke-width': 2.2, 'stroke-linejoin': 'round', 'stroke-dasharray': s.dashed ? '6 4' : '', class: s.dashed ? '' : 'draw' }, g);
+      if (!s.dashed) p.style.setProperty('--len', Math.ceil(p.getTotalLength()));
+      s.pts.forEach(([d, v]) => svgEl('circle', { cx: x(d), cy: y(v), r: 4, fill: s.color, stroke: '#070f2b', 'stroke-width': 2, class: 'dot' }, g));
+      const [ld, lv] = s.pts[s.pts.length - 1];
+      svgEl('text', { x: x(ld) + 8, y: y(lv) + 4, fill: '#e6e6e6', 'font-size': 12, class: 'dot mono' }, g).textContent = '×' + fmt(lv, 1);
+      if (W >= 520) svgEl('text', { x: x(ld) + 46, y: y(lv) + 4, fill: '#8891b8', 'font-size': 11.5, class: 'dot' }, g).textContent = s.name.split(' ')[1];
+      return g;
+    });
+    const xh = svgEl('line', { y1: m.t, y2: H - m.b, stroke: '#aab3d6', class: 'xhair' }, svg);
+    const hit = svgEl('rect', { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, class: 'hit' }, svg);
+    const move = (e) => {
+      const r = svg.getBoundingClientRect();
+      const d = Math.round(Math.max(0, Math.min(560, ((e.clientX - r.left) / r.width * W - m.l) / (W - m.l - m.r) * 560)) / 10) * 10;
+      xh.classList.add('show'); xh.setAttribute('x1', x(d)); xh.setAttribute('x2', x(d));
+      tipEl.innerHTML = `<b>Jour ${d}</b>` + SP.map((s, k) => groups[k].classList.contains('off') ? '' : `<div><span style="--lc:${s.color}"><i></i><em style="font-family:inherit;color:inherit">${s.name}</em></span><em>×${fmt(valAt(s, d), 1)}</em></div>`).join('');
+      placeTip(tipEl, box, svg, W, H, x(d), m.t + 40);
+    };
+    hit.addEventListener('pointermove', move); hit.addEventListener('pointerdown', move);
+    hit.addEventListener('pointerleave', () => { xh.classList.remove('show'); tipEl.classList.remove('show'); });
+    document.querySelectorAll('#fig4 .lg').forEach((b) => b.addEventListener('click', () => {
+      const on = b.getAttribute('aria-pressed') !== 'true';
+      b.setAttribute('aria-pressed', String(on));
+      groups[Number(b.dataset.s)].classList.toggle('off', !on);
+    }));
+    if (reduceMotion) box.classList.add('drawn'); else onceVisible(box, () => box.classList.add('drawn'), '0px 0px -25% 0px');
+  })();
+
+  /* ---------- Figure 5 : journal des cultures ---------- */
+  (function dishes() {
+    const EVENTS = [
+      [0, 'J0', 'Mise en route', 'Les sept espèces sont déposées dans HADES-2, à un million de cellules par millilitre.', '#34d399'],
+      [14, 'J14', 'Trois espèces perdues', "Sulfolobus, Psychrobacter et Bacillus passent sous le seuil de détection.", '#f87171'],
+      [90, 'J90', 'Les courbes se séparent', "F. ifrasensis prend la tête. Le génome des trois espèces actives est intact.", '#34d399'],
+      [148, 'J148', 'H. salinarum s\'endort', "Son activité chute de 94 % en 72 heures : elle entre en dormance.", '#fbbf24'],
+      [280, 'J280', 'Premières mutations', "14 mutations chez F. ifrasensis, dont 4 dans les gènes de réparation de l'ADN.", '#c084fc'],
+      [420, 'J420', 'C. thermalis plafonne', "Sa photosynthèse ne compense plus les dégâts des ultraviolets.", '#fbbf24'],
+      [560, 'J560', 'Fin de la campagne', "Bilan : ×7,2, ×3,8 et ×3,2. Les cultures sont conservées pour la suite.", '#34d399']
+    ];
+    const box = $('dishes');
+    const rng = (() => { let s = 7; return () => (s = (s * 16807) % 2147483647) / 2147483647; })();
+    const dishes = SP.map((s) => {
+      const d = document.createElement('div'); d.className = 'dish';
+      const sv = svgEl('svg', { viewBox: '0 0 120 120', 'aria-hidden': 'true' });
+      svgEl('circle', { cx: 60, cy: 60, r: 56, fill: 'rgba(124,45,18,.18)', stroke: '#475394', 'stroke-width': 2 }, sv);
+      svgEl('circle', { cx: 60, cy: 60, r: 50, fill: 'none', stroke: 'rgba(255,255,255,.05)' }, sv);
+      const dots = [];
+      for (let i = 0; i < 52; i++) {
+        const a = rng() * Math.PI * 2, r = Math.sqrt(rng()) * 46;
+        dots.push(svgEl('circle', { class: 'cell', cx: (60 + Math.cos(a) * r).toFixed(1), cy: (60 + Math.sin(a) * r).toFixed(1), r: 2.6, fill: s.color, opacity: 0 }, sv));
+      }
+      d.appendChild(sv);
+      d.insertAdjacentHTML('beforeend', `<span><em>${s.name}</em></span><strong>×1,0</strong>`);
+      box.appendChild(d);
+      return { s, dots, label: d.querySelector('strong') };
+    });
+    const ev = $('event'), range = $('dishRange'), btn = $('dishPlay');
+    /* repères des événements sur le curseur */
+    const ticks = document.createElement('div'); ticks.className = 'ticks';
+    range.parentElement.insertBefore(ticks, range);
+    let curEv = -1;
+    const render = (day) => {
+      dishes.forEach(({ s, dots, label }) => {
+        const v = valAt(s, day), n = Math.round(v * 6.67);
+        const asleep = s.name.startsWith('H.') && day >= 148;
+        dots.forEach((c, i) => { c.setAttribute('opacity', i < n ? (asleep ? .45 : .95) : 0); c.setAttribute('fill', asleep ? '#64748b' : s.color); });
+        label.textContent = '×' + fmt(v, 1);
+      });
+      let k = 0; EVENTS.forEach((e, i) => { if (day >= e[0]) k = i; });
+      if (k !== curEv) {
+        curEv = k; const e = EVENTS[k];
+        ev.style.setProperty('--ec', e[4]);
+        ev.innerHTML = `<time>${e[1]}</time><strong>${e[2]}</strong><span>${e[3]}</span>`;
+        ev.classList.remove('swap'); void ev.offsetWidth; ev.classList.add('swap');
+      }
+      $('dishT').textContent = 'J' + Math.round(day);
+      range.value = day;
+    };
+    let day = 0, playing = false, last = 0;
+    const setBtn = () => { btn.querySelector('i').className = playing ? 'ph-light ph-pause' : 'ph-light ph-play'; btn.querySelector('span').textContent = playing ? 'Pause' : (day >= 560 ? 'Rejouer' : 'Lancer'); };
+    const tick = (now) => { if (!playing) return; day = Math.min(560, day + (now - last) / 1000 * 50); last = now; render(day); if (day < 560) requestAnimationFrame(tick); else { playing = false; setBtn(); } };
+    const play = () => { if (day >= 560) day = 0; playing = true; last = performance.now(); setBtn(); requestAnimationFrame(tick); };
+    btn.addEventListener('click', () => { if (playing) { playing = false; setBtn(); } else play(); });
+    range.addEventListener('input', () => { playing = false; setBtn(); day = Number(range.value); render(day); });
+    render(0);
+    if (!reduceMotion) onceVisible($('fig5'), play, '0px 0px -30% 0px'); else render(560);
+  })();
+
+  /* ---------- Figure 6 : comparaison au microscope ---------- */
+  (function microscope() {
+    const box = $('compare'), A = $('micA'), B = $('micB');
+    const draw = (cv, n, seed) => {
+      const r = cv.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 2);
+      cv.width = r.width * dpr; cv.height = r.height * dpr;
+      const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      let s = seed; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+      ctx.fillStyle = '#01030a'; ctx.fillRect(0, 0, r.width, r.height);
+      /* bruit de fond du capteur */
+      for (let i = 0; i < 500; i++) { ctx.fillStyle = `rgba(52,211,153,${rnd() * .06})`; ctx.fillRect(rnd() * r.width, rnd() * r.height, 1.5, 1.5); }
+      const L = Math.max(14, r.width / 38), T = L * 0.42;
+      for (let i = 0; i < n; i++) {
+        const x = rnd() * r.width, y = rnd() * r.height, a = rnd() * Math.PI, len = L * (0.8 + rnd() * 0.5);
+        ctx.save(); ctx.translate(x, y); ctx.rotate(a);
+        ctx.shadowColor = 'rgba(52,211,153,.7)'; ctx.shadowBlur = 8;
+        ctx.strokeStyle = 'rgba(110,231,183,.9)'; ctx.lineWidth = 1.6;
+        ctx.beginPath(); ctx.roundRect(-len / 2, -T / 2, len, T, T / 2); ctx.stroke();
+        ctx.shadowColor = 'rgba(96,165,250,.9)'; ctx.shadowBlur = 10;
+        ctx.fillStyle = 'rgba(147,197,253,.85)';
+        ctx.beginPath(); ctx.ellipse(0, 0, len * 0.28, T * 0.22, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.restore();
+      }
+      /* barre d'échelle */
+      ctx.fillStyle = '#fff'; ctx.fillRect(r.width - 70, r.height - 18, 50, 3);
+      ctx.font = '11px "DM Mono", monospace'; ctx.fillText('5 µm', r.width - 60, r.height - 24);
+    };
+    const paint = () => { if (!A.getContext('2d').roundRect) return; draw(A, 24, 11); draw(B, 172, 29); };
+    paint(); new ResizeObserver(paint).observe(box);
+    let p = 50;
+    const set = (v) => { p = Math.max(0, Math.min(100, v)); box.style.setProperty('--p', p + '%'); box.setAttribute('aria-valuenow', Math.round(p)); };
+    const fromEvent = (e) => { const r = box.getBoundingClientRect(); set((e.clientX - r.left) / r.width * 100); };
+    let drag = false;
+    box.addEventListener('pointerdown', (e) => { drag = true; box.setPointerCapture(e.pointerId); fromEvent(e); });
+    box.addEventListener('pointermove', (e) => { if (drag) fromEvent(e); });
+    box.addEventListener('pointerup', () => { drag = false; });
+    box.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') { set(p - 5); e.preventDefault(); } if (e.key === 'ArrowRight') { set(p + 5); e.preventDefault(); } });
+    set(50);
+    /* petit mouvement d'invitation à l'apparition */
+    if (!reduceMotion) onceVisible(box, () => {
+      const t0 = performance.now();
+      const step = (t) => { const k = Math.min(1, (t - t0) / 1400); set(50 + Math.sin(k * Math.PI * 2) * 18 * (1 - k)); if (k < 1 && !drag) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    }, '0px 0px -30% 0px');
+  })();
+
+  /* images des articles liés introuvables : on garde le fond coloré */
+  document.querySelectorAll('.rel-img img').forEach((img) => img.addEventListener('error', () => img.remove()));
+})();
 </script>
 </body>
 </html>
