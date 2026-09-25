@@ -2,1138 +2,1371 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
-<title>Publications scientifiques — IFRAS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<title>Publications scientifiques | IFRAS</title>
+<meta name="description" content="Les articles scientifiques des chercheurs de l'IFRAS, évalués par les pairs : astrobiologie, propulsion, matériaux, physique quantique et plus encore.">
+<meta name="theme-color" content="#050b1e">
+<link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
 
 <style>
-
+/* =========================================================
+   TOKENS (identiques aux autres pages)
+   ========================================================= */
 :root {
   --bg-main: #050b1e;
   --bg-dark: #020617;
   --bg-light: #070f2b;
-  --border: #1b2555;
+  --bg-raise: #0a1436;
   --accent: #4f6bed;
+  --accent-hover: #3d5adb;
+  --accent-soft: rgba(79,107,237,.14);
+  --accent-line: rgba(79,107,237,.38);
   --text-main: #e6e6e6;
+  --text-strong: #f5f7ff;
   --text-soft: #aab3d6;
+  --text-mute: #8891b8;
+  --border: #1b2555;
+
+  /* Une couleur par type de contenu */
+  --t-sci: #60a5fa;
+  --t-ifras: #34d399;
+  --t-event: #f97316;
+  /* Types de publications IFRAS */
+  --t-lettre: #60a5fa;
+  --t-rapport: #34d399;
+  --t-hs: #f97316;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --header-h: 68px;
+  --subnav-h: 48px;
 }
 
-* { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 20px); }
 
 body {
   margin: 0;
-  font-family: "DM Sans", "Segoe UI", sans-serif;
+  font-family: "DM Sans", "Segoe UI", system-ui, sans-serif;
   background: var(--bg-main);
   color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* ===== HEADER ===== */
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+[hidden] { display: none !important; }
 
-header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-  background: rgba(5,11,30,.85);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
-}
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
-.header-inner {
-  max-width: 1300px;
-  margin: auto;
-  padding: 12px 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-}
-
-.logo-link img { height: 60px; cursor: pointer; }
-
-.main-nav {
-  list-style: none;
-  display: flex;
-  gap: 32px;
-  margin: 0; padding: 0;
-}
-
-.main-nav a {
-  text-decoration: none;
-  color: var(--text-soft);
-  font-size: 14px;
-  letter-spacing: .05em;
-}
-
-.main-nav a:hover { color: white; }
-
-.header-right .login-btn {
-  padding: 8px 18px;
-  border-radius: 6px;
-  border: 1px solid var(--accent);
-  color: white;
-  text-decoration: none;
-  font-size: 13px;
-}
-
-.header-right .login-btn:hover { background: var(--accent); }
-
-/* ===== SOUS BANDEAU ===== */
-
-.sub-nav {
-  margin-top: 84px;
-  background: var(--bg-light);
-  border-bottom: 1px solid var(--border);
-}
-
-.sub-nav ul {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 0 30px;
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-}
-
-.sub-nav li { padding: 14px 0; }
-
-.sub-nav a {
-  color: var(--text-soft);
-  text-decoration: none;
-  font-size: 14px;
-  letter-spacing: .06em;
-}
-
-.sub-nav a:hover { color: white; }
-.sub-nav a.active { color: white; border-bottom: 2px solid var(--accent); padding-bottom: 12px; }
-
-/* ===== INTRO SECTION ===== */
-
-.intro-section {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 60px 30px 50px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  align-items: center;
-  border-bottom: 1px solid var(--border);
-}
-
-.intro-left {}
-
-.intro-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 11px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 500;
-  margin-bottom: 16px;
-}
-
-.intro-eyebrow::before {
-  content: '';
-  display: block;
-  width: 24px; height: 1px;
-  background: var(--accent);
-}
-
-.intro-left h1 {
-  font-family: "Syne", sans-serif;
-  font-size: clamp(28px, 3.5vw, 44px);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
-  margin: 0 0 20px;
-  color: white;
-}
-
-.intro-left p {
-  font-size: 15px;
-  color: var(--text-soft);
-  line-height: 1.75;
-  font-weight: 300;
-  margin: 0;
-}
-
-.intro-right {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.intro-stat {
-  background: var(--bg-light);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.intro-stat-value {
-  font-family: "Syne", sans-serif;
-  font-size: 30px;
-  font-weight: 800;
-  color: white;
-  letter-spacing: -0.04em;
-  line-height: 1;
-}
-
-.intro-stat-label {
-  font-size: 12px;
-  color: var(--text-soft);
-  font-weight: 300;
-  line-height: 1.4;
-}
-
-.intro-stat-bar {
-  width: 24px; height: 2px;
-  background: var(--accent);
-  margin-top: 4px;
-}
-
-/* ===== FILTRES ===== */
-
-.filters-bar {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 28px 30px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  border-bottom: 1px solid var(--border);
-}
-
-/* ===== FILTRES & RECHERCHE ===== */
-
-.filters-bar {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 22px 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  border-bottom: 1px solid var(--border);
-}
-
-/* Barre de recherche */
-.search-box {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--bg-light);
-  border: 1px solid var(--border);
-  border-radius: 10px;
+.skip-link {
+  position: absolute; left: 16px; top: -48px;
   padding: 10px 16px;
-  transition: border-color .2s;
+  background: var(--accent); color: #fff;
+  border-radius: var(--radius-sm);
+  z-index: 3000; text-decoration: none;
+  transition: top 160ms var(--ease-out);
+}
+.skip-link:focus { top: 12px; }
+
+.container { max-width: 1300px; margin: 0 auto; padding: 0 30px; }
+
+/* =========================================================
+   BOUTONS
+   ========================================================= */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 22px;
+  border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 500;
+  text-decoration: none; white-space: nowrap;
+  border: 1px solid transparent;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.btn:active { transform: scale(0.97); }
+.btn i { font-size: 16px; transition: transform 200ms var(--ease-out); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-ghost { border-color: var(--accent-line); color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-ghost:hover { background: var(--accent-soft); border-color: var(--accent); }
+  .btn:hover i { transform: translateX(3px); }
 }
 
-.search-box:focus-within {
-  border-color: rgba(79,107,237,.5);
-}
-
-.search-icon { font-size: 14px; opacity: .5; flex-shrink: 0; }
-
-.search-box input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: var(--text-main);
-  font-family: "DM Sans", sans-serif;
+.text-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--text-soft);
   font-size: 14px;
-  font-weight: 300;
-}
-
-.search-box input::placeholder { color: rgba(170,179,214,.45); }
-
-.search-clear {
-  background: transparent;
-  border: none;
-  color: var(--text-soft);
-  cursor: pointer;
-  font-size: 13px;
-  padding: 2px 4px;
-  display: none;
-  align-items: center;
-  transition: color .2s;
-}
-
-.search-clear:hover { color: white; }
-
-/* Ligne filtres + tri */
-.filters-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.filter-label {
-  font-size: 11px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--text-soft);
-  font-weight: 500;
-  flex-shrink: 0;
-}
-
-.filter-group {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  flex: 1;
-}
-
-.filter-btn {
-  padding: 6px 14px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text-soft);
-  font-size: 12px;
-  cursor: pointer;
-  font-family: "DM Sans", sans-serif;
-  transition: .2s;
+  text-decoration: none;
   white-space: nowrap;
+  transition: color 160ms ease;
+}
+.text-link i { transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .text-link:hover { color: #fff; }
+  .text-link:hover i { transform: translateX(3px); }
 }
 
-.filter-btn:hover,
-.filter-btn.active {
-  background: rgba(79,107,237,.12);
-  border-color: rgba(79,107,237,.35);
-  color: white;
-}
-
-/* Select tri */
-.sort-box {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: auto;
-  flex-shrink: 0;
-}
-
-.sort-box select {
-  background: var(--bg-light);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  color: var(--text-soft);
-  font-family: "DM Sans", sans-serif;
-  font-size: 12px;
-  padding: 6px 12px;
-  cursor: pointer;
-  outline: none;
-  transition: border-color .2s;
-}
-
-.sort-box select:focus { border-color: rgba(79,107,237,.4); color: white; }
-
-/* Barre de résultats */
-.results-bar {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 14px 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+/* =========================================================
+   HEADER (opaque)
+   ========================================================= */
+.site-header {
+  position: fixed; inset: 0 0 auto 0;
+  z-index: 2000;
+  height: var(--header-h);
+  background: rgba(5,11,30,.88);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
   border-bottom: 1px solid var(--border);
 }
+.header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.header-left { display: flex; align-items: center; gap: 44px; }
+.logo-link { display: flex; align-items: center; }
+.logo-link img { height: 44px; width: auto; }
 
-#results-count {
-  font-size: 13px;
+.main-nav { list-style: none; display: flex; gap: 6px; margin: 0; padding: 0; }
+.main-nav a {
+  position: relative; display: block;
+  padding: 8px 12px;
+  text-decoration: none;
   color: var(--text-soft);
-  font-weight: 300;
+  font-size: 14px; letter-spacing: .02em;
+  border-radius: 6px;
+  transition: color 160ms ease;
+}
+.main-nav a::after {
+  content: ""; position: absolute;
+  left: 12px; right: 12px; bottom: 2px; height: 1px;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 200ms var(--ease-out);
+}
+.main-nav a[aria-current="page"] { color: #fff; }
+.main-nav a[aria-current="page"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .main-nav a:hover { color: #fff; }
+  .main-nav a:hover::after { transform: scaleX(1); }
 }
 
-.reset-btn {
+.header-right { display: flex; align-items: center; gap: 10px; }
+.header-right .btn { padding: 9px 18px; font-size: 13px; }
+
+.menu-toggle {
   display: none;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  color: var(--accent);
+  width: 42px; height: 42px;
+  align-items: center; justify-content: center;
   background: transparent;
-  border: 1px solid rgba(79,107,237,.25);
-  border-radius: 20px;
-  padding: 5px 14px;
-  cursor: pointer;
-  font-family: "DM Sans", sans-serif;
-  transition: .2s;
-}
-
-.reset-btn:hover { background: rgba(79,107,237,.1); color: white; }
-
-/* ===== NOTICE ARCHIVES ===== */
-
-.archive-notice {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 0 30px 80px;
-}
-
-.archive-notice-inner {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  background: rgba(79,107,237,.05);
-  border: 1px solid rgba(79,107,237,.15);
-  border-radius: 12px;
-  padding: 22px 28px;
-}
-
-.archive-icon {
-  font-size: 28px;
-  flex-shrink: 0;
-  opacity: .7;
-}
-
-.archive-text {
-  flex: 1;
-}
-
-.archive-text strong {
-  display: block;
-  font-size: 14px;
-  font-weight: 600;
-  color: white;
-  margin-bottom: 4px;
-}
-
-.archive-text p {
-  font-size: 13px;
-  color: var(--text-soft);
-  line-height: 1.6;
-  margin: 0;
-  font-weight: 300;
-}
-
-.archive-text a {
-  color: var(--accent);
-  text-decoration: none;
-}
-
-.archive-text a:hover { text-decoration: underline; }
-
-.archive-cta {
-  flex-shrink: 0;
-  padding: 9px 18px;
-  border-radius: 8px;
-  border: 1px solid rgba(79,107,237,.3);
-  color: white;
-  text-decoration: none;
-  font-size: 12px;
-  font-weight: 500;
-  transition: .2s;
-  white-space: nowrap;
-}
-
-.archive-cta:hover { background: rgba(79,107,237,.15); }
-
-/* ===== LISTE DES PUBLICATIONS ===== */
-
-.pub-list {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 50px 30px 60px;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-/* ===== CARTE PUBLICATION ===== */
-
-.pub-card {
-  display: grid;
-  grid-template-columns: 340px 1fr;
-  gap: 0;
-  border-bottom: 1px solid var(--border);
-  padding: 40px 0;
-  text-decoration: none;
-  color: inherit;
-  transition: background .25s;
-  position: relative;
-}
-
-.pub-card:first-child { border-top: 1px solid var(--border); }
-
-.pub-card:hover { background: rgba(79,107,237,.03); }
-
-.pub-card:hover .pub-img img { transform: scale(1.04); }
-
-.pub-card:hover .pub-read-more { color: white; gap: 10px; }
-
-/* Image */
-.pub-img {
-  width: 340px;
-  height: 220px;
-  border-radius: 10px;
-  overflow: hidden;
-  flex-shrink: 0;
   border: 1px solid var(--border);
-  background: var(--bg-light);
+  border-radius: var(--radius-sm);
+  color: #fff; font-size: 20px; cursor: pointer;
+  transition: transform 160ms var(--ease-out);
 }
+.menu-toggle:active { transform: scale(0.95); }
 
-.pub-img img {
-  width: 100%;
+.mobile-panel {
+  position: fixed; top: var(--header-h); left: 12px; right: 12px;
+  z-index: 1999;
+  padding: 10px;
+  background: rgba(7,15,43,.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(2,6,23,.6);
+  transform-origin: top right;
+  opacity: 0; transform: scale(0.96) translateY(-6px);
+  pointer-events: none; visibility: hidden;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s linear 220ms;
+}
+.mobile-panel.is-open {
+  opacity: 1; transform: none; pointer-events: auto; visibility: visible;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s;
+}
+.mobile-panel ul { list-style: none; margin: 0; padding: 0; }
+.mobile-panel a {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px; color: var(--text-main);
+  text-decoration: none; font-size: 16px; border-radius: 10px;
+}
+.mobile-panel a[aria-current="page"] { background: var(--accent-soft); color: #fff; }
+.mobile-panel .btn { width: 100%; justify-content: center; margin-top: 8px; }
+
+/* =========================================================
+   SOUS-NAVIGATION (ancres + section visible)
+   ========================================================= */
+.subnav {
+  position: sticky;
+  top: var(--header-h);
+  margin-top: var(--header-h);
+  z-index: 1500;
+  height: var(--subnav-h);
+  background: rgba(8,18,53,.94);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.subnav-list {
   height: 100%;
-  object-fit: cover;
-  transition: transform .45s ease;
+  list-style: none; margin: 0 auto; padding: 0 30px;
+  max-width: 1300px;
+  display: flex; align-items: stretch; justify-content: space-between;
 }
-
-/* Contenu */
-.pub-body {
-  padding: 4px 0 4px 44px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.pub-top {}
-
-.pub-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  margin-bottom: 16px;
-}
-
-.pub-tag {
-  font-size: 11px;
-  padding: 3px 10px;
-  border-radius: 20px;
-  background: rgba(79,107,237,.08);
-  border: 1px solid rgba(79,107,237,.2);
-  color: var(--accent);
-  letter-spacing: .04em;
-}
-
-.pub-tag--secondary {
-  background: rgba(255,255,255,.03);
-  border-color: rgba(255,255,255,.08);
+.subnav-list li { display: flex; }
+.subnav-link {
+  position: relative;
+  display: flex; align-items: center; gap: 9px;
+  padding: 0 14px;
   color: var(--text-soft);
+  text-decoration: none;
+  font-size: 14px; font-weight: 500;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.subnav-link i { font-size: 17px; color: var(--c); }
+.subnav-link::after {
+  content: ""; position: absolute;
+  left: 14px; right: 14px; bottom: -1px; height: 2px;
+  background: var(--c);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+.subnav-link[aria-current="true"] { color: #fff; }
+.subnav-link[aria-current="true"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .subnav-link:hover { color: #fff; }
 }
 
-.pub-meta {
-  font-size: 12px;
-  color: var(--text-soft);
-  letter-spacing: .08em;
-  margin-bottom: 12px;
-  display: flex;
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero {
+  position: relative;
+  padding: 80px 0 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+/* réseau de connaissances animé (canvas) */
+.network {
+  position: absolute; inset: 0; z-index: -2;
+  width: 100%; height: 100%;
+  opacity: 0;
+  transition: opacity 1200ms ease;
+}
+.network.is-ready { opacity: 1; }
+.hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(ellipse 55% 60% at 25% 40%, rgba(5,11,30,.85) 0%, transparent 70%),
+    linear-gradient(180deg, transparent 70%, var(--bg-main) 100%);
+  pointer-events: none;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
   align-items: center;
-  gap: 10px;
 }
 
-.pub-meta-sep {
-  width: 3px; height: 3px;
-  border-radius: 50%;
-  background: rgba(170,179,214,.4);
+.kicker {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--accent); font-weight: 500;
+  margin-bottom: 22px;
 }
+.kicker::before { content: ""; width: 24px; height: 1px; background: currentColor; }
 
-.pub-body h2 {
+.hero h1 {
   font-family: "Syne", sans-serif;
-  font-size: 20px;
+  font-size: clamp(44px, 6.2vw, 84px);
   font-weight: 700;
-  color: white;
-  margin: 0 0 14px;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--text-strong);
+  margin: 0 0 28px;
 }
+.hero h1 .line { display: block; overflow: hidden; padding-bottom: .14em; margin-bottom: -.14em; }
+.hero h1 .line > span {
+  display: block;
+  transform: translateY(105%);
+  animation: lineUp 900ms var(--ease-out) forwards;
+  animation-delay: calc(120ms + var(--i, 0) * 110ms);
+}
+.hero h1 .line--soft { color: #8fa2ff; font-weight: 600; }
+@keyframes lineUp { to { transform: none; } }
 
-.pub-body p {
-  font-size: 14px;
+.hero-desc {
+  max-width: 46ch;
   color: var(--text-soft);
-  line-height: 1.75;
-  font-weight: 300;
+  font-size: 17px; line-height: 1.7;
   margin: 0;
-}
-
-.pub-bottom {
-  margin-top: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.pub-authors {
-  font-size: 12px;
-  color: rgba(170,179,214,.55);
-  font-style: italic;
   font-weight: 300;
 }
 
-.pub-read-more {
+.hero-in {
+  opacity: 0;
+  animation: heroIn 700ms var(--ease-out) forwards;
+  animation-delay: calc(100ms + var(--i, 0) * 80ms);
+}
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(14px); filter: blur(4px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+/* ----- Panneau de recherche ----- */
+.finder-panel {
+  position: relative;
+  padding: 26px;
+  border-radius: 20px;
+  background: rgba(7,15,43,.72);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  box-shadow: 0 30px 80px rgba(2,6,23,.55), inset 0 1px 0 rgba(255,255,255,.04);
+}
+.finder-panel h2 {
+  font-family: "Syne", sans-serif;
+  font-size: 18px; font-weight: 700; color: #fff;
+  margin: 0 0 14px;
+}
+
+.finder-field { position: relative; }
+.finder-field > i {
+  position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+  font-size: 19px; color: var(--text-mute); pointer-events: none;
+}
+.finder-field input {
+  width: 100%; height: 50px;
+  padding: 0 44px;
+  background: rgba(2,6,23,.6);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: #fff; font: inherit; font-size: 15px;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+.finder-field input::placeholder { color: var(--text-mute); }
+.finder-field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(79,107,237,.2); }
+.finder-field input::-webkit-search-cancel-button { display: none; }
+.finder-clear {
+  position: absolute; right: 9px; top: 50%; transform: translateY(-50%);
+  width: 32px; height: 32px;
+  display: grid; place-items: center;
+  border: 0; border-radius: 8px;
+  background: transparent; color: var(--text-soft);
+  font-size: 16px; cursor: pointer;
+  opacity: 0; pointer-events: none;
+  transition: opacity 120ms ease;
+}
+.finder-panel.has-value .finder-clear { opacity: 1; pointer-events: auto; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; }
+.chip {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-soft);
+  font: inherit; font-size: 13px;
+  cursor: pointer;
+  transition: color 120ms ease, border-color 120ms ease, background-color 120ms ease, transform 160ms var(--ease-out);
+}
+.chip:active { transform: scale(0.96); }
+.chip[aria-pressed="true"] { color: #fff; border-color: var(--accent); background: var(--accent-soft); }
+@media (hover: hover) and (pointer: fine) {
+  .chip:hover { color: #fff; border-color: var(--accent-line); }
+}
+
+.finder-result {
+  min-height: 22px;
+  margin-top: 14px;
+  font-size: 13.5px; color: var(--text-soft);
+}
+.finder-result a { color: #9fb0ff; text-decoration: none; }
+.finder-result a:hover { text-decoration: underline; }
+mark {
+  background: color-mix(in srgb, var(--accent) 35%, transparent);
+  color: #fff;
+  border-radius: 3px;
+  padding: 0 2px;
+}
+.segmented {
+  position: relative;
   display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  color: var(--accent);
-  font-weight: 500;
-  transition: gap .2s, color .2s;
+  padding: 4px;
+  border-radius: 12px;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
 }
-
-/* Badge "Nouveau" */
-.pub-badge-new {
-  position: absolute;
-  top: 40px;
-  right: 0;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  padding: 4px 10px;
-  border-radius: 4px;
-  background: rgba(52,211,153,.12);
-  border: 1px solid rgba(52,211,153,.3);
-  color: #34d399;
+.segmented-indicator {
+  position: absolute; top: 4px; bottom: 4px; left: 0;
+  width: var(--w, 0px);
+  transform: translateX(var(--x, 4px));
+  border-radius: 9px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+  transition: transform 260ms var(--ease-out), width 260ms var(--ease-out);
+  pointer-events: none;
 }
-
-/* ===== FOOTER ===== */
-
-footer {
+.segmented button {
+  position: relative; z-index: 1;
+  padding: 8px 14px;
+  border: 0; background: transparent;
+  color: var(--text-soft);
+  font: inherit; font-size: 13.5px; font-weight: 500;
+  border-radius: 9px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.segmented button[aria-pressed="true"] { color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .segmented button:hover { color: #fff; }
+}
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.site-footer {
+  margin-top: 100px;
   background: var(--bg-dark);
   border-top: 1px solid var(--border);
-  padding: 40px 30px;
+  padding: 36px 0;
+  font-size: 13px; color: var(--text-mute);
+}
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+/* =========================================================
+   APPARITION AU DÉFILEMENT
+   ========================================================= */
+.js .reveal {
+  opacity: 0; transform: translateY(16px);
+  transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 60ms);
+}
+.js .reveal.is-visible { opacity: 1; transform: none; }
+.js .sci-card.reveal.is-visible,
+.js .ifras-card.reveal.is-visible,
+.js .event-card.reveal.is-visible {
+  transition: border-color 200ms ease, transform 200ms var(--ease-out), box-shadow 200ms ease, background-color 200ms ease, opacity 700ms var(--ease-out);
+  transition-delay: 0ms;
+}
+/* carte qui réapparaît après un filtre */
+.pop-in { animation: popIn 260ms var(--ease-out); }
+@keyframes popIn { from { opacity: 0; transform: scale(.98); } to { opacity: 1; transform: none; } }
+
+/* =========================================================
+   SPÉCIFIQUE : PUBLICATIONS SCIENTIFIQUES
+   ========================================================= */
+.hero { padding: 64px 0 80px; }
+.hero h1 .line--soft { color: #93c5fd; }
+.hero-desc { margin-bottom: 28px; }
+
+.breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  margin: 0 0 26px; padding: 0; list-style: none;
+  font-size: 13px; color: var(--text-mute);
+}
+.breadcrumb a { color: var(--text-soft); text-decoration: none; transition: color 160ms ease; }
+.breadcrumb i { font-size: 11px; }
+@media (hover: hover) and (pointer: fine) { .breadcrumb a:hover { color: #fff; } }
+
+.peer {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 13.5px; color: var(--text-soft);
+}
+.peer i { font-size: 18px; color: var(--t-sci); }
+
+/* raccourci clavier dans le champ */
+.kbd {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  min-width: 24px; height: 24px; padding: 0 7px;
+  display: grid; place-items: center;
+  font: 500 12px/1 "DM Sans", sans-serif;
+  color: var(--text-mute);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: rgba(255,255,255,.03);
+  pointer-events: none;
+  transition: opacity 120ms ease;
+}
+.finder-panel.has-value .kbd, .finder-field input:focus ~ .kbd { opacity: 0; }
+
+/* puces de domaine : pastille de couleur + compteur */
+.chip { display: inline-flex; align-items: center; gap: 8px; }
+.chip::before {
+  content: ""; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--c, var(--accent));
+}
+.chip[data-domain="tous"]::before { display: none; }
+.chip small { font-size: 11.5px; color: var(--text-mute); font-variant-numeric: tabular-nums; }
+.chip[aria-pressed="true"] {
+  border-color: color-mix(in srgb, var(--c, var(--accent)) 60%, transparent);
+  background: color-mix(in srgb, var(--c, var(--accent)) 14%, transparent);
+}
+.chip[aria-pressed="true"] small { color: var(--text-soft); }
+.chip:disabled { opacity: .35; cursor: default; }
+
+/* surlignage sans espace parasite dans les mots */
+mark { padding: 0; border-radius: 2px; box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 35%, transparent); }
+.finder-result .hint { color: var(--text-mute); }
+.finder-result .hint kbd { font: 500 11.5px/1 "DM Sans", sans-serif; padding: 2px 6px; border: 1px solid var(--border); border-radius: 5px; color: var(--text-soft); }
+
+/* =========================================================
+   BARRE D'OUTILS DE LA LISTE
+   ========================================================= */
+.toolbar {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  flex-wrap: wrap;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border);
+}
+.count { font-size: 14px; color: var(--text-soft); }
+.count strong { color: #fff; font-weight: 500; }
+.count .active-domain { color: var(--c); }
+.toolbar-right { display: flex; align-items: center; gap: 12px; }
+.reset {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 12px;
+  border: 1px solid var(--border); border-radius: 999px;
+  background: transparent; color: var(--text-soft);
+  font: inherit; font-size: 13px; cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease, opacity 160ms ease, transform 160ms var(--ease-out);
+}
+.reset:active { transform: scale(.96); }
+.reset[hidden] { display: none !important; }
+@media (hover: hover) and (pointer: fine) { .reset:hover { color: #fff; border-color: var(--accent-line); } }
+
+/* =========================================================
+   LISTE PAR ANNÉE
+   ========================================================= */
+.pub-list { padding: 10px 0 20px; }
+.year-group {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 30px;
+  border-bottom: 1px solid var(--border);
+}
+.year-group:last-child { border-bottom: 0; }
+.year-label {
+  position: sticky;
+  top: calc(var(--header-h) + var(--subnav-h) + 28px);
+  align-self: start;
+  padding: 34px 0;
+  font-family: "Syne", sans-serif;
+  font-size: 34px; font-weight: 800; letter-spacing: -0.04em; line-height: 1;
+  color: transparent;
+  background: linear-gradient(180deg, #e5e7eb, rgba(143,162,255,.35));
+  -webkit-background-clip: text; background-clip: text;
+  white-space: nowrap;
+}
+.year-label small {
+  display: block; margin-top: 8px;
+  font-family: "DM Sans", sans-serif; font-size: 12.5px; font-weight: 400; letter-spacing: 0;
+  color: var(--text-mute); -webkit-text-fill-color: var(--text-mute);
+}
+.year-items { min-width: 0; }
+
+.pub-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 32px;
+  padding: 30px 0;
+  text-decoration: none; color: inherit;
+  border-top: 1px solid rgba(27,37,85,.6);
+}
+.year-items > .pub-card:first-child { border-top: 0; }
+.pub-card::before {
+  content: ""; position: absolute; left: -16px; top: 30px; bottom: 30px; width: 2px;
+  border-radius: 2px;
+  background: var(--c);
+  transform: scaleY(0); transform-origin: top;
+  transition: transform 260ms var(--ease-out);
+}
+
+.pub-img {
+  position: relative;
+  aspect-ratio: 16 / 11;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(ellipse 80% 100% at 100% 0%, color-mix(in srgb, var(--c) 28%, transparent), transparent 70%),
+    var(--bg-light);
+}
+.pub-img img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 600ms var(--ease-out), filter 400ms ease;
+  filter: saturate(.9);
+}
+.pub-img::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(5,11,30,.55));
+  pointer-events: none;
+}
+
+.pub-body { display: flex; flex-direction: column; min-width: 0; }
+.pub-top { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.domain {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 12.5px; font-weight: 500;
+  padding: 4px 10px 4px 9px; border-radius: 999px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c) 26%, transparent);
+}
+.domain::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.code {
+  font-family: "Syne", sans-serif;
+  font-size: 11.5px; font-weight: 700; letter-spacing: .08em;
+  padding: 4px 9px; border-radius: 6px;
+  color: var(--text-soft);
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.09);
+}
+.pub-date { margin-left: auto; font-size: 13px; color: var(--text-mute); white-space: nowrap; }
+.new {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 500; color: #34d399;
+}
+.new::before {
+  content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor;
+  box-shadow: 0 0 0 3px rgba(52,211,153,.18);
+}
+
+.pub-title {
+  font-family: "Syne", sans-serif;
+  font-size: 20px; font-weight: 700; line-height: 1.3;
+  color: #fff; margin: 0 0 10px;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.pub-excerpt { margin: 0; font-size: 14.5px; line-height: 1.7; color: var(--text-soft); font-weight: 300; max-width: 68ch; }
+.pub-bottom {
+  margin-top: auto; padding-top: 18px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.pub-authors { font-size: 13px; color: var(--text-mute); }
+.pub-read {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 13.5px; font-weight: 500; color: #9fb0ff;
+  white-space: nowrap;
+}
+.pub-read i { transition: transform 200ms var(--ease-out); }
+
+.pub-card:active { transform: scale(.995); }
+@media (hover: hover) and (pointer: fine) {
+  .pub-card:hover::before { transform: scaleY(1); }
+  .pub-card:hover .pub-img img { transform: scale(1.05); filter: saturate(1.05); }
+  .pub-card:hover .pub-read { color: #fff; }
+  .pub-card:hover .pub-read i { transform: translateX(4px); }
+}
+.pub-card:focus-visible { outline-offset: 6px; }
+
+.list-empty {
+  margin: 30px 0;
+  padding: 40px 26px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
   text-align: center;
-  font-size: 12px;
-  color: #6b7280;
+  color: var(--text-soft); font-size: 15px;
+}
+.list-empty i { display: block; font-size: 30px; color: var(--text-mute); margin-bottom: 10px; }
+.list-empty button {
+  margin-top: 14px;
+  background: none; border: 0; padding: 0;
+  font: inherit; color: #9fb0ff; cursor: pointer;
 }
 
-/* ===== ANIMATIONS ===== */
+/* =========================================================
+   BANDEAU ARCHIVES
+   ========================================================= */
+.cta-band {
+  margin: 60px 0 0;
+  padding: 44px 48px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background:
+    radial-gradient(ellipse 50% 90% at 100% 0%, rgba(96,165,250,.16), transparent 60%),
+    var(--bg-light);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 28px;
+  align-items: center;
+}
+.cta-icon {
+  width: 56px; height: 56px; border-radius: 14px;
+  display: grid; place-items: center;
+  font-size: 26px; color: var(--t-sci);
+  background: rgba(96,165,250,.1);
+  border: 1px solid rgba(96,165,250,.25);
+}
+.cta-band h2 { font-family: "Syne", sans-serif; font-size: clamp(20px, 2vw, 26px); font-weight: 700; color: #fff; margin: 0 0 8px; letter-spacing: -0.02em; }
+.cta-band p { margin: 0; color: var(--text-soft); font-size: 15px; line-height: 1.6; font-weight: 300; max-width: 60ch; }
+.cta-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: translateY(0); }
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1100px) {
+  .pub-card { grid-template-columns: 220px 1fr; gap: 24px; }
+  .year-group { grid-template-columns: 100px 1fr; gap: 20px; }
+}
+@media (max-width: 960px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+  .subnav-list { justify-content: flex-start; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+  .subnav-list::-webkit-scrollbar { display: none; }
+  .year-group { grid-template-columns: 1fr; gap: 0; }
+  .year-label {
+    position: sticky; z-index: 5;
+    top: calc(var(--header-h) + var(--subnav-h));
+    padding: 12px 0; margin: 0 -20px; padding-left: 20px;
+    font-size: 22px;
+    background: none;
+    -webkit-background-clip: border-box; background-clip: border-box;
+    color: #fff;
+    background-color: rgba(5,11,30,.92);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    display: flex; align-items: baseline; gap: 10px;
+  }
+  .year-label small { display: inline; margin: 0; }
+  .pub-card::before { display: none; }
+  .cta-band { grid-template-columns: 1fr; padding: 32px; }
+}
+@media (max-width: 860px) {
+  .main-nav, .header-right .btn-desktop { display: none; }
+  .menu-toggle { display: inline-flex; }
+}
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .subnav-list { padding: 0 20px; }
+  .subnav-link { padding: 0 10px; font-size: 13.5px; }
+  .hero { padding: 40px 0 56px; }
+  .hero-desc { font-size: 16px; }
+  .finder-panel { padding: 20px; }
+  .kbd { display: none; }
+  .chips {
+    flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+    margin-left: -20px; margin-right: -20px; padding: 0 20px 2px;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+  }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip { white-space: nowrap; }
+  .pub-card { grid-template-columns: 1fr; gap: 16px; padding: 24px 0; }
+  .pub-title { font-size: 18px; }
+  .pub-bottom { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .toolbar { position: static; }
+  .cta-band { padding: 26px 22px; border-radius: var(--radius); }
+  .cta-actions .btn { flex: 1 1 100%; justify-content: center; }
+  .site-footer { margin-top: 72px; }
 }
 
-.pub-card { animation: fadeUp .5s ease both; }
-.pub-card:nth-child(1) { animation-delay: .04s; }
-.pub-card:nth-child(2) { animation-delay: .08s; }
-.pub-card:nth-child(3) { animation-delay: .12s; }
-.pub-card:nth-child(4) { animation-delay: .16s; }
-.pub-card:nth-child(5) { animation-delay: .20s; }
-.pub-card:nth-child(6) { animation-delay: .24s; }
-.pub-card:nth-child(7) { animation-delay: .28s; }
-.pub-card:nth-child(8) { animation-delay: .32s; }
-.pub-card:nth-child(9) { animation-delay: .36s; }
-.pub-card:nth-child(10) { animation-delay: .36s; }
-
+/* =========================================================
+   MOUVEMENT RÉDUIT
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-in { animation: fadeOnly 300ms ease forwards; }
+  .hero h1 .line > span { animation: none; transform: none; }
+  .js .reveal { transform: none; transition: opacity 300ms ease; transition-delay: 0ms; }
+  .pop-in { animation: none; }
+  .segmented-indicator { transition: none; }
+  .pub-img img, .pub-card::before { transition: none; }
+}
+@keyframes fadeOnly { to { opacity: 1; } }
 </style>
+
+<script>document.documentElement.classList.add('js');</script>
 </head>
+
 
 <body>
 
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+
 <!-- ===== HEADER ===== -->
-<header>
-  <div class="header-inner">
+<header class="site-header" id="header">
+  <div class="container header-inner">
     <div class="header-left">
-      <a href="index.html" class="logo-link"><img src="logo.png" alt="Logo IFRAS"></a>
-      <nav>
+      <a href="index.html" class="logo-link" aria-label="IFRAS, accueil">
+        <img src="logo.png" alt="Logo IFRAS" width="44" height="44">
+      </a>
+      <nav aria-label="Navigation principale">
         <ul class="main-nav">
           <li><a href="index.html">Accueil</a></li>
           <li><a href="recherche.html">Recherche</a></li>
           <li><a href="programmes.html">Programmes</a></li>
-          <li><a href="publications.html">Publications</a></li>
+          <li><a href="publications.html" aria-current="page">Publications</a></li>
         </ul>
       </nav>
     </div>
     <div class="header-right">
-      <a href="connexion.html" class="login-btn">Connexion</a>
+      <a href="connexion.html" class="btn btn-ghost btn-desktop">Connexion</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-panel" aria-label="Ouvrir le menu">
+        <i class="ph-light ph-list" aria-hidden="true"></i>
+      </button>
     </div>
   </div>
 </header>
 
-<!-- ===== SOUS BANDEAU ===== -->
-<div class="sub-nav">
+<div class="mobile-panel" id="mobile-panel">
   <ul>
-    <li><a href="publications-scientifiques.html" class="active">Publications scientifiques</a></li>
-    <li><a href="publications-ifras.html">Publications IFRAS</a></li>
-    <li><a href="evenements.html">Événements</a></li>
+    <li><a href="index.html">Accueil <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="recherche.html">Recherche <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="programmes.html">Programmes <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="publications.html" aria-current="page">Publications <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
   </ul>
+  <a href="connexion.html" class="btn btn-primary">Connexion</a>
 </div>
 
-<!-- ===== INTRO ===== -->
-<div class="intro-section">
-  <div class="intro-left">
-    <div class="intro-eyebrow">Base documentaire</div>
-    <h1>Publications<br>scientifiques</h1>
-    <p>
-      Cette page répertorie l'ensemble des articles scientifiques produits par les chercheurs de l'IFRAS
-      et publiés dans des revues internationales à comité de lecture. Les travaux couvrent les domaines
-      de la biologie spatiale, de la physique, de la propulsion, de l'intelligence artificielle embarquée
-      et des sciences des matériaux. Les publications sont classées de la plus récente à la plus ancienne.
-    </p>
-  </div>
-  <div class="intro-right">
-    <div class="intro-stat">
-      <div class="intro-stat-value">+1 240</div>
-      <div class="intro-stat-label">Articles publiés depuis 1962</div>
-      <div class="intro-stat-bar"></div>
-    </div>
-    <div class="intro-stat">
-      <div class="intro-stat-value">38</div>
-      <div class="intro-stat-label">Revues partenaires internationales</div>
-      <div class="intro-stat-bar"></div>
-    </div>
-    <div class="intro-stat">
-      <div class="intro-stat-value">94</div>
-      <div class="intro-stat-label">Articles publiés en 2025</div>
-      <div class="intro-stat-bar"></div>
-    </div>
-    <div class="intro-stat">
-      <div class="intro-stat-value">9</div>
-      <div class="intro-stat-label">Départements contributeurs</div>
-      <div class="intro-stat-bar"></div>
-    </div>
-  </div>
-</div>
+<!-- ===== SOUS-NAVIGATION (mêmes rubriques que publications.html) ===== -->
+<nav class="subnav" id="subnav" aria-label="Rubriques des publications">
+  <ul class="subnav-list">
+    <li><a class="subnav-link" href="publications-scientifiques.html" aria-current="true" style="--c:var(--t-sci)"><i class="ph-light ph-article" aria-hidden="true"></i>Publications scientifiques</a></li>
+    <li><a class="subnav-link" href="publications-ifras.html" style="--c:var(--t-ifras)"><i class="ph-light ph-book-open" aria-hidden="true"></i>Publications IFRAS</a></li>
+    <li><a class="subnav-link" href="evenements.html" style="--c:var(--t-event)"><i class="ph-light ph-calendar-dots" aria-hidden="true"></i>Événements</a></li>
+  </ul>
+</nav>
 
-<!-- ===== FILTRES & RECHERCHE ===== -->
-<div class="filters-bar">
+<main id="contenu">
 
-  <div class="search-box">
-    <span class="search-icon">🔍</span>
-    <input type="text" id="search-input" placeholder="Rechercher par titre, auteur, domaine, mot-clé…">
-    <button class="search-clear" id="search-clear" title="Effacer">✕</button>
-  </div>
+<!-- ===== HERO ===== -->
+<section class="hero" aria-labelledby="hero-title">
+  <canvas class="network" id="network" aria-hidden="true"></canvas>
+  <div class="container">
+    <div class="hero-grid">
 
-  <div class="filters-right">
-    <span class="filter-label">Domaine :</span>
-    <div class="filter-group" id="filter-group">
-      <button class="filter-btn active" data-filter="tous">Tous</button>
-      <button class="filter-btn" data-filter="Biologie spatiale">Biologie spatiale</button>
-      <button class="filter-btn" data-filter="Propulsion">Propulsion</button>
-      <button class="filter-btn" data-filter="IA embarquée">IA embarquée</button>
-      <button class="filter-btn" data-filter="Matériaux">Matériaux</button>
-      <button class="filter-btn" data-filter="Astrophysique">Astrophysique</button>
-      <button class="filter-btn" data-filter="Physique quantique">Physique quantique</button>
-    </div>
+      <div class="hero-left">
+        <ol class="breadcrumb hero-in" style="--i:0" aria-label="Fil d'Ariane">
+          <li><a href="publications.html">Publications</a></li>
+          <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+          <li aria-current="page">Scientifiques</li>
+        </ol>
+        <h1 id="hero-title"><span class="line"><span style="--i:0">Publications</span></span><span class="line line--soft"><span style="--i:1">scientifiques</span></span></h1>
+        <p class="hero-desc hero-in" style="--i:2">Les articles de nos chercheurs, de la biologie spatiale à la propulsion, parus dans des revues internationales. Du plus récent au plus ancien.</p>
+        <div class="peer hero-in" style="--i:3"><i class="ph-light ph-seal-check" aria-hidden="true"></i> Tous les articles sont évalués par les pairs</div>
+      </div>
 
-    <div class="sort-box">
-      <span class="filter-label">Trier :</span>
-      <select id="sort-select">
-        <option value="recent">Plus récent d'abord</option>
-        <option value="ancien">Plus ancien d'abord</option>
-      </select>
-    </div>
-  </div>
-
-</div>
-
-<div class="results-bar" id="results-bar">
-  <span id="results-count">10 publications</span>
-  <button class="reset-btn" id="reset-btn">Réinitialiser les filtres</button>
-</div>
-
-<!-- ===== LISTE DES PUBLICATIONS ===== -->
-<div class="pub-list" id="pub-list">
-  
-<!-- 1 — Mars 2026 — DSMR — CMC Rentrée atmosphérique -->
-<a class="pub-card" href="Publication_scientifiques/publications_scientifiques_01.html">
-  <div class="pub-img">
-    <img src="Assets/accueil/alaune01.png" alt="Composites à matrice céramique SiC/SiC-ZrB₂">
-  </div>
-  <div class="pub-body">
-    <div class="pub-top">
-      <div class="pub-tags">
-        <span class="pub-tag">Matériaux &amp; Structures</span>
-        <span class="pub-tag pub-tag--secondary">DSMR</span>
-        <span class="pub-tag pub-tag--secondary">Advanced Aerospace Materials</span>
-      </div>
-      <div class="pub-meta">
-        <span>Mars 2026</span>
-        <span class="pub-meta-sep"></span>
-        <span>Département DSMR</span>
-      </div>
-      <h2>Comportement thermomécanique de composites à matrice céramique SiC/SiC-ZrB₂ pour systèmes de protection thermique de rentrée atmosphérique</h2>
-      <p>Caractérisation expérimentale et modélisation multi-échelle de panneaux CMC exposés à des flux thermiques supérieurs à 2 000 °C sur l'arc plasma VULCAIN-III. La formulation CMC-20Z démontre une rétention de résistance de 89 % à 2 100 °C, ouvrant la voie à une certification pour la mission RETOUR-I en 2028.</p>
-    </div>
-    <div class="pub-bottom">
-      <span class="pub-authors">Morvant I., Benzara K., Vandenberghe L., Marchand T.</span>
-      <span class="pub-read-more">Lire la publication →</span>
-    </div>
-  </div>
-</a>
-
-<!-- 2 — Janvier 2026 — DPET — NK-125 -->
-<a class="pub-card" href="Publication_scientifiques/publications_scientifiques_02.html">
-  <span class="pub-badge-new">Nouveau</span>
-  <div class="pub-img">
-    <img src="Assets/accueil/alaune02.png" alt="Propulseur ionique NK-125">
-  </div>
-  <div class="pub-body">
-    <div class="pub-top">
-      <div class="pub-tags">
-        <span class="pub-tag">Propulsion</span>
-        <span class="pub-tag pub-tag--secondary">DPET</span>
-        <span class="pub-tag pub-tag--secondary">Acta Astronautica</span>
-      </div>
-      <div class="pub-meta">
-        <span>Janvier 2026</span>
-        <span class="pub-meta-sep"></span>
-        <span>Département DPET</span>
-      </div>
-      <h2>NK-125 : validation expérimentale d'un propulseur ionique à grilles tri-étages — impulsion spécifique de 9 620 s à 125 kW</h2>
-      <p>Campagne TORCH-IV : poussée de 542 mN, rendement anodique 78,4 % et durée de vie qualifiée 12 000 h. Performance sans précédent pour la classe 100+ kW, ouvrant la voie à la mission PROMETHEUS-2 Terre–Jupiter.</p>
-    </div>
-    <div class="pub-bottom">
-      <span class="pub-authors">Roux F., Schreiber A., Almeida R., Leroux C.</span>
-      <span class="pub-read-more">Lire la publication →</span>
-    </div>
-  </div>
-</a>
-  
-<!-- 3 — Février 2026 — DSVT — Bactéries Mars -->
-<a class="pub-card" href="Publication_scientifiques/publications_scientifiques_03.html">
-  <span class="pub-badge-new">Nouveau</span>
-  <div class="pub-img">
-    <img src="Assets/publication/mars01.png" alt="Microorganismes en conditions martiennes simulées">
-  </div>
-  <div class="pub-body">
-    <div class="pub-top">
-      <div class="pub-tags">
-        <span class="pub-tag">Astrobiologie</span>
-        <span class="pub-tag pub-tag--secondary">DSVT</span>
-        <span class="pub-tag pub-tag--secondary">Astrobiology Journal</span>
-      </div>
-      <div class="pub-meta">
-        <span>Février 2026</span>
-        <span class="pub-meta-sep"></span>
-        <span>Département DSVT</span>
-      </div>
-      <h2>Croissance microbienne active en conditions martiennes simulées — 560 jours dans l'enceinte HADES-2</h2>
-      <p>Trois espèces extrêmophiles, dont une archée inédite (<em>Ferroacidus ifrasensis</em> nov. sp.), maintiennent une croissance mesurable pendant 560 jours sous pression CO₂, UV martiens, cycles −63 °C / +20 °C et régolithe perchlorate. Première démonstration de croissance active — et non de simple survie — sous l'intégralité du profil martien combiné.</p>
-    </div>
-    <div class="pub-bottom">
-      <span class="pub-authors">Garnier S., Prost M., Tanaka Y., Al-Rashid I., Novak C.</span>
-      <span class="pub-read-more">Lire la publication →</span>
-    </div>
-  </div>
-</a>
-
-<!-- 4 — Décembre 2025 — DSTI — Quantique HERMES -->
-<a class="pub-card" href="Publication_scientifiques/publications_scientifiques_04.html">
-  <div class="pub-img">
-    <img src="Assets/publication/quantique01.png" alt="Intrication quantique HERMES">
-  </div>
-  <div class="pub-body">
-    <div class="pub-top">
-      <div class="pub-tags">
-        <span class="pub-tag">Physique quantique</span>
-        <span class="pub-tag pub-tag--secondary">HERMES</span>
-        <span class="pub-tag pub-tag--secondary">Physical Review Letters</span>
-      </div>
-      <div class="pub-meta">
-        <span>Décembre 2025</span>
-        <span class="pub-meta-sep"></span>
-        <span>Département DSTI</span>
-      </div>
-      <h2>Fidélité de 97,3 % pour un protocole d'intrication quantique sur canal bruité simulant une liaison Terre–satellite à 40 000 km</h2>
-      <p>Démonstration expérimentale d'une distribution de paires de photons intriqués avec une fidélité record à ce niveau de pertes (34,2 dB). Le paramètre CHSH mesuré (S = 2,81) dépasse la borne classique de 18σ, validant le modèle théorique du programme HERMES pour un futur satellite répéteur géostationnaire.</p>
-    </div>
-    <div class="pub-bottom">
-      <span class="pub-authors">Lefebvre P., Martin N., Tissot V., Brandt I.</span>
-      <span class="pub-read-more">Lire la publication →</span>
-    </div>
-  </div>
-</a>
-
-  <!-- 5 — Novembre 2025 — DAI — Exoplanète TOI-7832 b -->
-<a class="pub-card" href="Publication_scientifiques/publications_scientifiques_05.html">
-  <div class="pub-img">
-    <img src="Assets/publication/exoplanete01.png" alt="Super-Terre TOI-7832 b">
-  </div>
-  <div class="pub-body">
-    <div class="pub-top">
-      <div class="pub-tags">
-        <span class="pub-tag">Astronomie</span>
-        <span class="pub-tag pub-tag--secondary">DAI</span>
-        <span class="pub-tag pub-tag--secondary">ApJ Letters</span>
-      </div>
-      <div class="pub-meta">
-        <span>Novembre 2025</span>
-        <span class="pub-meta-sep"></span>
-        <span>Département DAI</span>
-      </div>
-      <h2>TOI-7832 b : confirmation d'une super-Terre de 1,87 R⊕ au centre de la zone habitable d'une naine K à 41 pc</h2>
-      <p>Découverte par TESS, confirmée par ESPRESSO/VLT (62 mesures, K = 1,84 m·s⁻¹) et caractérisée par JWST/NIRSpec. La planète reçoit 94 % du flux solaire terrestre. Première exclusion d'un ciel plat à 3,2σ pour une super-Terre en zone habitable — signal atmosphérique record de sa catégorie.</p>
-    </div>
-    <div class="pub-bottom">
-      <span class="pub-authors">Fontaine É., Cassini H., Lehmann A., Marek S.</span>
-      <span class="pub-read-more">Lire la publication →</span>
-    </div>
-  </div>
-</a>
-
-  <!-- 6 — Avril 2025 — DSVT — Poisson abyssal µCT -->
-<a class="pub-card" href="Publication_scientifiques/publications_scientifiques_06.html">
-  <div class="pub-img">
-    <img src="Assets/publication/poisson01.png" alt="Photophores Chauliodus sloani µCT">
-  </div>
-  <div class="pub-body">
-    <div class="pub-top">
-      <div class="pub-tags">
-        <span class="pub-tag">Biologie des profondeurs</span>
-        <span class="pub-tag pub-tag--secondary">DSVT</span>
-        <span class="pub-tag pub-tag--secondary">Deep-Sea Research I</span>
-      </div>
-      <div class="pub-meta">
-        <span>Avril 2025</span>
-        <span class="pub-meta-sep"></span>
-        <span>Département DSVT</span>
-      </div>
-      <h2>Distribution topographique des photophores chez <em>Chauliodus sloani</em> — cartographie µCT synchrotron in vivo à 800 bar</h2>
-      <p>Première cartographie in vivo des organes bioluminescents d'un poisson-vipère des abysses par microtomographie à rayons X sous haute pression. Administré par voie orale, un analogue deutéré de coelentérazine révèle un gradient ventral/dorsal inédit de ×3,8 — clé de voûte de la fonction de contre-illumination de l'espèce.</p>
-    </div>
-    <div class="pub-bottom">
-      <span class="pub-authors">Bernard L., Lejeune N., Vasseur C., Mori K.</span>
-      <span class="pub-read-more">Lire la publication →</span>
-    </div>
-  </div>
-</a>
-  <!-- 8 — Août 2024 -->
-  <a class="pub-card" href="Articles/article04.html">
-    <div class="pub-img">
-      <img src="Assets/publication/puce01.png" alt="IA embarquée">
-    </div>
-    <div class="pub-body">
-      <div class="pub-top">
-        <div class="pub-tags">
-          <span class="pub-tag">IA embarquée</span>
-          <span class="pub-tag pub-tag--secondary">Systèmes autonomes</span>
-          <span class="pub-tag pub-tag--secondary">AI & Robotics</span>
+      <div class="finder-panel hero-in" style="--i:3" id="finder">
+        <h2>Trouver un article</h2>
+        <div class="finder-field">
+          <i class="ph-light ph-magnifying-glass" aria-hidden="true"></i>
+          <input id="finder-input" type="search" placeholder="Titre, auteur, programme, mot-clé…" autocomplete="off" aria-describedby="finder-result" aria-controls="pub-list">
+          <button class="finder-clear" type="button" aria-label="Effacer la recherche"><i class="ph-light ph-x" aria-hidden="true"></i></button>
+          <kbd class="kbd" aria-hidden="true">/</kbd>
         </div>
-        <div class="pub-meta">
-          <span>Août 2024</span>
-          <span class="pub-meta-sep"></span>
-          <span>Département DSTI</span>
-        </div>
-        <h2>Limites décisionnelles des systèmes autonomes en situation ambiguë et données contradictoires</h2>
-        <p>Cette publication explore les comportements émergents d'architectures IA confrontées à des données contradictoires en conditions dégradées. Elle identifie trois régimes de défaillance décisionnelle et propose un cadre formel de détection précoce applicable aux systèmes embarqués spatiaux.</p>
+        <ul class="chips" aria-label="Filtrer par domaine">
+          <li><button class="chip" type="button" aria-pressed="true" data-domain="tous">Tous <small></small></button></li>
+          <li><button class="chip" type="button" aria-pressed="false" data-domain="Astrobiologie" style="--c:#34d399">Astrobiologie <small></small></button></li>
+          <li><button class="chip" type="button" aria-pressed="false" data-domain="Astrophysique" style="--c:#67e8f9">Astrophysique <small></small></button></li>
+          <li><button class="chip" type="button" aria-pressed="false" data-domain="Propulsion" style="--c:#f97316">Propulsion <small></small></button></li>
+          <li><button class="chip" type="button" aria-pressed="false" data-domain="Matériaux" style="--c:#fb7185">Matériaux <small></small></button></li>
+          <li><button class="chip" type="button" aria-pressed="false" data-domain="Physique quantique" style="--c:#c084fc">Physique quantique <small></small></button></li>
+          <li><button class="chip" type="button" aria-pressed="false" data-domain="IA embarquée" style="--c:#818cf8">IA embarquée <small></small></button></li>
+          <li><button class="chip" type="button" aria-pressed="false" data-domain="Océans profonds" style="--c:#38bdf8">Océans profonds <small></small></button></li>
+        </ul>
+        <div class="finder-result" id="finder-result" aria-live="polite"></div>
       </div>
-      <div class="pub-bottom">
-        <span class="pub-authors">Lefebvre P., Dubois M., Renaud Y. et al.</span>
-        <span class="pub-read-more">Lire la publication →</span>
-      </div>
-    </div>
-  </a>
 
-  <!-- 9 — Jan 2024 -->
-  <a class="pub-card" href="Publication_scientifiques/publications_scientifiques_07.html">
-    <div class="pub-img">
-      <img src="Assets/publication/scientifique01.png" alt="Résilience microbienne">
     </div>
-    <div class="pub-body">
-      <div class="pub-top">
-        <div class="pub-tags">
-          <span class="pub-tag">Biologie spatiale</span>
-          <span class="pub-tag pub-tag--secondary">Astrobiologie</span>
-          <span class="pub-tag pub-tag--secondary">Microbiology Letters</span>
-        </div>
-        <div class="pub-meta">
-          <span>Janvier 2024</span>
-          <span class="pub-meta-sep"></span>
-          <span>Département DSVT</span>
-        </div>
-        <h2>Résilience microbienne en conditions extrêmes simulées représentatives de la surface martienne</h2>
-        <p>Étude des capacités d'adaptation de souches bactériennes et fongiques soumises aux irradiations UV, aux pressions et aux températures représentatives de la surface de Mars. Trois souches présentent une résistance inattendue qui ouvre des perspectives en astrobiologie.</p>
-      </div>
-      <div class="pub-bottom">
-        <span class="pub-authors">Dupont A., Garnier É., Roux F. et al.</span>
-        <span class="pub-read-more">Lire la publication →</span>
-      </div>
-    </div>
-  </a>
-
-  <!-- 10 — Mai 2023 -->
-  <a class="pub-card" href="Publication_scientifiques/publications_scientifiques_08.html">
-    <div class="pub-img">
-      <img src="Assets/publication/univers01.png" alt="Vie non terrestre">
-    </div>
-    <div class="pub-body">
-      <div class="pub-top">
-        <div class="pub-tags">
-          <span class="pub-tag">Astrophysique</span>
-          <span class="pub-tag pub-tag--secondary">Recherche fondamentale</span>
-          <span class="pub-tag pub-tag--secondary">Origins of Life</span>
-        </div>
-        <div class="pub-meta">
-          <span>Mai 2023</span>
-          <span class="pub-meta-sep"></span>
-          <span>Département DAI</span>
-        </div>
-        <h2>Cadres théoriques pour l'étude et la détection de la vie non terrestre — une approche unifiée</h2>
-        <p>Article fondateur posant les bases conceptuelles et méthodologiques des recherches exobiologiques menées à l'IFRAS. Il propose un cadre unifié intégrant biosignatures chimiques, signatures spectroscopiques et indicateurs thermodynamiques pour la détection de vie extraterrestre.</p>
-      </div>
-      <div class="pub-bottom">
-        <span class="pub-authors">Girard A., Martin N., Rousseau J-L. et al.</span>
-        <span class="pub-read-more">Lire la publication →</span>
-      </div>
-    </div>
-  </a>
-
-</div>
-
-<!-- ===== AVIS ARCHIVES ===== -->
-<div class="archive-notice">
-  <div class="archive-notice-inner">
-    <div class="archive-icon">🗂</div>
-    <div class="archive-text">
-      <strong>Publications antérieures à 2023</strong>
-      <p>Pour des raisons de capacité de stockage, seules les publications récentes sont accessibles directement sur ce site. L'ensemble du catalogue scientifique de l'IFRAS depuis 1962 est consultable sur demande auprès du <a href="mailto:archives@ifras.fr">Service Archives &amp; Documentation</a>.</p>
-    </div>
-    <a href="mailto:archives@ifras.fr" class="archive-cta">Contacter les archives →</a>
   </div>
-</div>
+</section>
 
-<footer>
-  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale<br>
-  Publications soumises à validation institutionnelle
+<!-- ===== LISTE ===== -->
+<section id="liste" aria-label="Liste des publications">
+  <div class="container">
+    <div class="toolbar">
+      <p class="count" id="count" aria-live="polite"></p>
+      <div class="toolbar-right">
+        <button class="reset" id="reset" type="button" hidden><i class="ph-light ph-arrow-counter-clockwise" aria-hidden="true"></i> Réinitialiser</button>
+        <div class="segmented" id="segmented" role="group" aria-label="Trier">
+          <span class="segmented-indicator" aria-hidden="true"></span>
+          <button type="button" aria-pressed="true" data-order="recent">Plus récentes</button>
+          <button type="button" aria-pressed="false" data-order="ancien">Plus anciennes</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="pub-list" id="pub-list">
+      <a class="pub-card" href="Publication_scientifiques/publications_scientifiques_01.html" data-date="2026-03" data-domain="Matériaux" style="--c:#fb7185">
+        <div class="pub-img"><img src="Assets/accueil/alaune01.png" alt="Panneau composite céramique après essai thermique" loading="eager" width="520" height="358"></div>
+        <div class="pub-body">
+          <div class="pub-top">
+            <span class="domain">Matériaux</span>
+            <span class="code" title="Structures, Matériaux et Résistance">DSMR</span>
+            
+            <time class="pub-date" datetime="2026-03">Mars 2026</time>
+          </div>
+          <h2 class="pub-title">Composites céramiques pour boucliers thermiques de rentrée atmosphérique</h2>
+          <p class="pub-excerpt">Des panneaux exposés à plus de 2 000 °C conservent l'essentiel de leur résistance : une formulation candidate pour la future mission de retour RETOUR-I.</p>
+          <div class="pub-bottom">
+            <span class="pub-authors">Morvant I., Benzara K., Vandenberghe L., Marchand T.</span>
+            <span class="pub-read">Lire la publication <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span>
+          </div>
+        </div>
+      </a>
+      <a class="pub-card" href="Publication_scientifiques/publications_scientifiques_02.html" data-date="2026-01" data-domain="Propulsion" style="--c:#f97316">
+        <div class="pub-img"><img src="Assets/accueil/alaune02.png" alt="Propulseur ionique NK-125 sur banc d&#x27;essai" loading="eager" width="520" height="358"></div>
+        <div class="pub-body">
+          <div class="pub-top">
+            <span class="domain">Propulsion</span>
+            <span class="code" title="Physique Énergétique et Thermique">DPET</span>
+            <span class="code">PROMETHEUS</span>
+            <time class="pub-date" datetime="2026-01">Janvier 2026</time>
+          </div>
+          <h2 class="pub-title">NK-125 : un propulseur ionique à grilles tri-étages validé à haute puissance</h2>
+          <p class="pub-excerpt">La campagne d'essais TORCH-IV établit une impulsion spécifique et une durée de vie inédites pour cette classe de moteur. Un jalon vers PROMETHEUS-2.</p>
+          <div class="pub-bottom">
+            <span class="pub-authors">Roux F., Schreiber A., Almeida R., Leroux C.</span>
+            <span class="pub-read">Lire la publication <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span>
+          </div>
+        </div>
+      </a>
+      <a class="pub-card" href="Publication_scientifiques/publications_scientifiques_03.html" data-date="2026-02" data-domain="Astrobiologie" style="--c:#34d399">
+        <div class="pub-img"><img src="Assets/publication/mars01.png" alt="Micro-organismes en conditions martiennes simulées" loading="lazy" width="520" height="358"></div>
+        <div class="pub-body">
+          <div class="pub-top">
+            <span class="domain">Astrobiologie</span>
+            <span class="code" title="Sciences du Vivant et de la Terre">DSVT</span>
+            <span class="code">ATLAS</span>
+            <time class="pub-date" datetime="2026-02">Février 2026</time>
+          </div>
+          <h2 class="pub-title">Des microbes qui se multiplient en conditions martiennes simulées</h2>
+          <p class="pub-excerpt">Trois espèces extrêmophiles, dont une archée inédite, continuent de croître pendant plus d'un an et demi sous le profil martien complet : froid, UV, CO₂ et régolithe salé. De la croissance, et pas seulement de la survie.</p>
+          <div class="pub-bottom">
+            <span class="pub-authors">Garnier S., Prost M., Tanaka Y., Al-Rashid I., Novak C.</span>
+            <span class="pub-read">Lire la publication <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span>
+          </div>
+        </div>
+      </a>
+      <a class="pub-card" href="Publication_scientifiques/publications_scientifiques_04.html" data-date="2025-12" data-domain="Physique quantique" style="--c:#c084fc">
+        <div class="pub-img"><img src="Assets/publication/quantique01.png" alt="Montage optique de photons intriqués" loading="lazy" width="520" height="358"></div>
+        <div class="pub-body">
+          <div class="pub-top">
+            <span class="domain">Physique quantique</span>
+            <span class="code" title="Simulation et Traitement de l'Information">DSTI</span>
+            <span class="code">HERMES</span>
+            <time class="pub-date" datetime="2025-12">Décembre 2025</time>
+          </div>
+          <h2 class="pub-title">L'intrication quantique préservée sur une liaison Terre–satellite simulée</h2>
+          <p class="pub-excerpt">Des paires de photons intriqués distribuées avec une fidélité record malgré des pertes extrêmes. Le modèle du programme HERMES tient ses promesses.</p>
+          <div class="pub-bottom">
+            <span class="pub-authors">Lefebvre P., Martin N., Tissot V., Brandt I.</span>
+            <span class="pub-read">Lire la publication <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span>
+          </div>
+        </div>
+      </a>
+      <a class="pub-card" href="Publication_scientifiques/publications_scientifiques_05.html" data-date="2025-11" data-domain="Astrophysique" style="--c:#67e8f9">
+        <div class="pub-img"><img src="Assets/publication/exoplanete01.png" alt="Vue d&#x27;artiste d&#x27;une super-Terre" loading="lazy" width="520" height="358"></div>
+        <div class="pub-body">
+          <div class="pub-top">
+            <span class="domain">Astrophysique</span>
+            <span class="code" title="Astrophysique et Instrumentation">DAI</span>
+            <span class="code">ORION-3</span>
+            <time class="pub-date" datetime="2025-11">Novembre 2025</time>
+          </div>
+          <h2 class="pub-title">Une super-Terre au cœur de la zone habitable d'une étoile orange</h2>
+          <p class="pub-excerpt">Confirmée par vitesses radiales puis observée en spectroscopie de transit, la planète reçoit presque autant de lumière que la Terre, et son atmosphère laisse déjà un signal mesurable.</p>
+          <div class="pub-bottom">
+            <span class="pub-authors">Fontaine É., Castel H., Lehmann A., Marek S.</span>
+            <span class="pub-read">Lire la publication <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span>
+          </div>
+        </div>
+      </a>
+      <a class="pub-card" href="Publication_scientifiques/publications_scientifiques_06.html" data-date="2025-04" data-domain="Océans profonds" style="--c:#38bdf8">
+        <div class="pub-img"><img src="Assets/publication/poisson01.png" alt="Poisson-vipère des abysses en microtomographie" loading="lazy" width="520" height="358"></div>
+        <div class="pub-body">
+          <div class="pub-top">
+            <span class="domain">Océans profonds</span>
+            <span class="code" title="Sciences du Vivant et de la Terre">DSVT</span>
+            
+            <time class="pub-date" datetime="2025-04">Avril 2025</time>
+          </div>
+          <h2 class="pub-title">Cartographie in vivo des organes lumineux d'un poisson des abysses</h2>
+          <p class="pub-excerpt">Une microtomographie sous très haute pression révèle la répartition des photophores du poisson-vipère <em>Chauliodus sloani</em>, clé de son camouflage par contre-illumination.</p>
+          <div class="pub-bottom">
+            <span class="pub-authors">Bernard L., Lejeune N., Vasseur C., Mori K.</span>
+            <span class="pub-read">Lire la publication <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span>
+          </div>
+        </div>
+      </a>
+      <a class="pub-card" href="Articles/article04.html" data-date="2024-08" data-domain="IA embarquée" style="--c:#818cf8">
+        <div class="pub-img"><img src="Assets/publication/puce01.png" alt="Puce de calcul embarquée" loading="lazy" width="520" height="358"></div>
+        <div class="pub-body">
+          <div class="pub-top">
+            <span class="domain">IA embarquée</span>
+            <span class="code" title="Simulation et Traitement de l'Information">DSTI</span>
+            <span class="code">LYNX</span>
+            <time class="pub-date" datetime="2024-08">Août 2024</time>
+          </div>
+          <h2 class="pub-title">Limites décisionnelles des systèmes autonomes en situation ambiguë</h2>
+          <p class="pub-excerpt">Face à des données contradictoires, trois régimes de défaillance émergent. L'article propose un cadre de détection précoce pour les systèmes spatiaux embarqués.</p>
+          <div class="pub-bottom">
+            <span class="pub-authors">Lefebvre P., Dubois M., Renaud Y. et al.</span>
+            <span class="pub-read">Lire la publication <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span>
+          </div>
+        </div>
+      </a>
+      <a class="pub-card" href="Publication_scientifiques/publications_scientifiques_07.html" data-date="2024-01" data-domain="Astrobiologie" style="--c:#34d399">
+        <div class="pub-img"><img src="Assets/publication/scientifique01.png" alt="Cultures microbiennes en laboratoire" loading="lazy" width="520" height="358"></div>
+        <div class="pub-body">
+          <div class="pub-top">
+            <span class="domain">Astrobiologie</span>
+            <span class="code" title="Sciences du Vivant et de la Terre">DSVT</span>
+            
+            <time class="pub-date" datetime="2024-01">Janvier 2024</time>
+          </div>
+          <h2 class="pub-title">Résilience microbienne en conditions extrêmes simulées</h2>
+          <p class="pub-excerpt">Bactéries et champignons soumis aux UV, aux pressions et aux températures de la surface martienne : trois souches résistent bien au-delà des attentes.</p>
+          <div class="pub-bottom">
+            <span class="pub-authors">Dupont A., Garnier É., Roux F. et al.</span>
+            <span class="pub-read">Lire la publication <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span>
+          </div>
+        </div>
+      </a>
+      <a class="pub-card" href="Publication_scientifiques/publications_scientifiques_08.html" data-date="2023-05" data-domain="Astrophysique" style="--c:#67e8f9">
+        <div class="pub-img"><img src="Assets/publication/univers01.png" alt="Champ d&#x27;étoiles et nébuleuse" loading="lazy" width="520" height="358"></div>
+        <div class="pub-body">
+          <div class="pub-top">
+            <span class="domain">Astrophysique</span>
+            <span class="code" title="Astrophysique et Instrumentation">DAI</span>
+            
+            <time class="pub-date" datetime="2023-05">Mai 2023</time>
+          </div>
+          <h2 class="pub-title">Détecter la vie ailleurs : un cadre théorique unifié</h2>
+          <p class="pub-excerpt">L'article fondateur des recherches exobiologiques de l'IFRAS réunit biosignatures chimiques, spectrales et thermodynamiques dans une même approche.</p>
+          <div class="pub-bottom">
+            <span class="pub-authors">Girard A., Martin N., Rousseau J-L. et al.</span>
+            <span class="pub-read">Lire la publication <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="list-empty" id="list-empty" hidden>
+      <i class="ph-light ph-magnifying-glass" aria-hidden="true"></i>
+      Aucun article ne correspond à votre recherche.<br>
+      <button type="button">Réinitialiser les filtres</button>
+    </div>
+
+    <div class="cta-band reveal">
+      <span class="cta-icon" aria-hidden="true"><i class="ph-light ph-archive"></i></span>
+      <div>
+        <h2>Publications antérieures à 2023</h2>
+        <p>Seuls les articles récents sont consultables en ligne. Le catalogue complet de l'institut est disponible sur demande auprès du service Archives &amp; Documentation.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="mailto:archives@ifras.fr" class="btn btn-primary">Contacter les archives <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
+        <a href="publications-ifras.html" class="btn btn-ghost">Publications IFRAS</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© IFRAS, Institut Français de Recherche Aéronautique et Spatiale</span>
+    <span>Publications soumises à validation institutionnelle</span>
+  </div>
 </footer>
 
 <script>
-// ─── Données des publications (ordre chronologique décroissant) ───────────────
-const pubCards = Array.from(document.querySelectorAll('.pub-card'));
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-// On attache les métadonnées directement depuis le DOM
-pubCards.forEach(card => {
-  // Date : lire le premier <span> de .pub-meta
-  const metaSpan = card.querySelector('.pub-meta span');
-  card.dataset.dateStr = metaSpan ? metaSpan.textContent.trim() : '';
-
-  // Catégorie principale : premier .pub-tag (sans pub-tag--secondary)
-  const mainTag = card.querySelector('.pub-tag:not(.pub-tag--secondary)');
-  card.dataset.category = mainTag ? mainTag.textContent.trim() : '';
-
-  // Texte complet pour la recherche (titre + auteurs + description + tags)
-  card.dataset.searchText = card.textContent.toLowerCase();
-});
-
-// Convertit "Janvier 2026" → timestamp pour le tri
-function parseDate(str) {
-  const months = {
-    'janvier':1,'février':2,'mars':3,'avril':4,'mai':5,'juin':6,
-    'juillet':7,'août':8,'septembre':9,'octobre':10,'novembre':11,'décembre':12
+  /* ---------- Menu mobile ---------- */
+  const toggle = document.querySelector('.menu-toggle');
+  const panel = document.getElementById('mobile-panel');
+  const icon = toggle.querySelector('i');
+  const setMenu = (open) => {
+    panel.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    icon.className = open ? 'ph-light ph-x' : 'ph-light ph-list';
   };
-  const parts = str.toLowerCase().split(' ');
-  if (parts.length < 2) return 0;
-  const m = months[parts[0]] || 0;
-  const y = parseInt(parts[1]) || 0;
-  return y * 100 + m;
-}
+  toggle.addEventListener('click', () => setMenu(!panel.classList.contains('is-open')));
+  document.addEventListener('click', (e) => {
+    if (panel.classList.contains('is-open') && !panel.contains(e.target) && !toggle.contains(e.target)) setMenu(false);
+  });
+  window.addEventListener('pageshow', () => setMenu(false));
 
-const list = document.getElementById('pub-list');
-const searchInput = document.getElementById('search-input');
-const searchClear = document.getElementById('search-clear');
-const sortSelect = document.getElementById('sort-select');
-const filterBtns = document.querySelectorAll('.filter-btn');
-const resultsCount = document.getElementById('results-count');
-const resetBtn = document.getElementById('reset-btn');
+  /* ---------- Apparition au défilement ---------- */
+  const revealIO = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      revealIO.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach((el) => revealIO.observe(el));
 
-let activeFilter = 'tous';
-let searchQuery = '';
-let sortOrder = 'recent';
+  /* ---------- Données des cartes ---------- */
+  const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  const list = document.getElementById('pub-list');
+  const today = new Date();
 
-function applyAll() {
-  let visible = 0;
-
-  // Trier
-  const sorted = [...pubCards].sort((a, b) => {
-    const da = parseDate(a.dataset.dateStr);
-    const db = parseDate(b.dataset.dateStr);
-    return sortOrder === 'recent' ? db - da : da - db;
+  const cards = [...list.querySelectorAll('.pub-card')].map((el) => {
+    const [y, m] = el.dataset.date.split('-').map(Number);
+    /* pastille « Nouveau » calculée selon la date du jour (moins de 8 mois) */
+    const age = (today.getFullYear() - y) * 12 + (today.getMonth() + 1 - m);
+    if (age >= 0 && age <= 8) {
+      const n = document.createElement('span');
+      n.className = 'new'; n.textContent = 'Nouveau';
+      el.querySelector('.pub-top').appendChild(n);
+    }
+    const hl = [...el.querySelectorAll('.pub-title, .pub-excerpt')];
+    return {
+      el, y, key: y * 100 + m,
+      domain: el.dataset.domain,
+      text: norm(el.textContent),
+      hl: hl.map((node) => ({ node, html: node.innerHTML }))
+    };
   });
 
-  // Réordonner dans le DOM
-  sorted.forEach(card => list.appendChild(card));
+  /* ---------- Surlignage des mots recherchés (insensible aux accents) ---------- */
+  const highlight = (entry, q) => {
+    entry.hl.forEach(({ node, html }) => {
+      node.innerHTML = html;
+      if (!q) return;
+      const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
+      const texts = [];
+      while (walker.nextNode()) texts.push(walker.currentNode);
+      texts.forEach((t) => {
+        const raw = t.nodeValue;
+        const flat = [...raw].map((c) => norm(c)[0] || c).join('');
+        const i = flat.indexOf(q);
+        if (i < 0) return;
+        const mark = document.createElement('mark');
+        const after = t.splitText(i);
+        after.splitText(q.length);
+        mark.textContent = after.nodeValue;
+        after.replaceWith(mark);
+      });
+    });
+  };
 
-  // Filtrer
-  sorted.forEach(card => {
-    const matchCat = activeFilter === 'tous' ||
-      card.dataset.category.toLowerCase() === activeFilter.toLowerCase();
-    const matchSearch = searchQuery === '' ||
-      card.dataset.searchText.includes(searchQuery);
+  /* ---------- État + rendu groupé par année ---------- */
+  const input = document.getElementById('finder-input');
+  const finder = document.getElementById('finder');
+  const result = document.getElementById('finder-result');
+  const chips = [...document.querySelectorAll('.chip')];
+  const count = document.getElementById('count');
+  const reset = document.getElementById('reset');
+  const empty = document.getElementById('list-empty');
+  const state = { q: '', domain: 'tous', order: 'recent' };
 
-    if (matchCat && matchSearch) {
-      card.style.display = '';
-      visible++;
-    } else {
-      card.style.display = 'none';
+  /* compteurs par domaine */
+  chips.forEach((chip) => {
+    const d = chip.dataset.domain;
+    const n = d === 'tous' ? cards.length : cards.filter((c) => c.domain === d).length;
+    chip.querySelector('small').textContent = n;
+  });
+
+  const render = () => {
+    const q = norm(state.q.trim());
+    finder.classList.toggle('has-value', q.length > 0);
+    const visible = cards
+      .filter((c) => (state.domain === 'tous' || c.domain === state.domain) && (!q || c.text.includes(q)))
+      .sort((a, b) => state.order === 'recent' ? b.key - a.key : a.key - b.key);
+
+    /* reconstruction des groupes : les cartes existantes sont simplement déplacées */
+    const prev = new Set(cards.filter((c) => c.el.isConnected && c.el.closest('.year-group')).map((c) => c.el));
+    list.querySelectorAll('.year-group').forEach((g) => g.remove());
+    const groups = new Map();
+    visible.forEach((c) => {
+      if (!groups.has(c.y)) groups.set(c.y, []);
+      groups.get(c.y).push(c);
+    });
+    groups.forEach((items, y) => {
+      const g = document.createElement('section');
+      g.className = 'year-group';
+      g.setAttribute('aria-label', `Publications ${y}`);
+      g.innerHTML = `<div class="year-label">${y}<small>${items.length} article${items.length > 1 ? 's' : ''}</small></div><div class="year-items"></div>`;
+      const box = g.lastElementChild;
+      items.forEach((c) => {
+        highlight(c, q);
+        box.appendChild(c.el);
+        if (!prev.has(c.el) && !reduceMotion) { c.el.classList.remove('pop-in'); void c.el.offsetWidth; c.el.classList.add('pop-in'); }
+      });
+      list.appendChild(g);
+    });
+    cards.filter((c) => !visible.includes(c)).forEach((c) => c.el.remove());
+
+    empty.hidden = visible.length > 0;
+    const chip = chips.find((c) => c.dataset.domain === state.domain);
+    const label = state.domain === 'tous' ? '' : ` en <span class="active-domain" style="--c:${chip.style.getPropertyValue('--c')}">${chip.dataset.domain}</span>`;
+    count.innerHTML = `<strong>${visible.length}</strong> publication${visible.length > 1 ? 's' : ''}${label}`;
+    reset.hidden = !q && state.domain === 'tous';
+
+    result.innerHTML = q
+      ? (visible.length ? `${visible.length} résultat${visible.length > 1 ? 's' : ''}. <a href="#liste">Voir la liste</a>` : 'Aucun résultat. Essayez un autre mot-clé.')
+      : (canHover ? '<span class="hint">Astuce : appuyez sur <kbd>/</kbd> pour chercher depuis n’importe où.</span>' : '');
+  };
+
+  input.addEventListener('input', () => { state.q = input.value; render(); });
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') document.getElementById('liste').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+    if (e.key === 'Escape' && input.value) { e.stopPropagation(); input.value = ''; state.q = ''; render(); }
+  });
+  finder.querySelector('.finder-clear').addEventListener('click', () => { input.value = ''; state.q = ''; render(); input.focus(); });
+
+  /* « / » place le curseur dans la recherche, comme sur la plupart des bases documentaires */
+  document.addEventListener('keydown', (e) => {
+    if (e.key === '/' && !/input|textarea|select/i.test(document.activeElement.tagName)) {
+      e.preventDefault(); input.focus();
     }
   });
 
-  // Mettre à jour le compteur
-  resultsCount.textContent = visible === 0
-    ? 'Aucun résultat'
-    : `${visible} publication${visible > 1 ? 's' : ''}`;
+  chips.forEach((chip) => chip.addEventListener('click', () => {
+    state.domain = chip.dataset.domain;
+    chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+    render();
+  }));
 
-  // Afficher/masquer le bouton reset
-  resetBtn.style.display =
-    (activeFilter !== 'tous' || searchQuery !== '') ? 'inline-flex' : 'none';
+  const doReset = () => {
+    state.q = ''; state.domain = 'tous'; input.value = '';
+    chips.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.domain === 'tous')));
+    render();
+  };
+  reset.addEventListener('click', doReset);
+  empty.querySelector('button').addEventListener('click', doReset);
 
-  // Afficher/masquer le ✕ de recherche
-  searchClear.style.display = searchQuery !== '' ? 'flex' : 'none';
+  /* ---------- Tri : contrôle segmenté (même composant que publications.html) ---------- */
+  const seg = document.getElementById('segmented');
+  const indicator = seg.querySelector('.segmented-indicator');
+  const segBtns = [...seg.querySelectorAll('button')];
+  const moveIndicator = (btn) => {
+    seg.style.setProperty('--x', `${btn.offsetLeft}px`);
+    seg.style.setProperty('--w', `${btn.offsetWidth}px`);
+  };
+  segBtns.forEach((btn) => btn.addEventListener('click', () => {
+    state.order = btn.dataset.order;
+    segBtns.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+    moveIndicator(btn);
+    render();
+  }));
+  const initIndicator = () => moveIndicator(seg.querySelector('[aria-pressed="true"]'));
+  initIndicator();
+  window.addEventListener('resize', initIndicator);
+  document.fonts?.ready.then(initIndicator);
 
-  // Remettre la bordure du haut sur le premier visible
-  document.querySelectorAll('.pub-card').forEach(c => c.style.borderTop = '');
-  const firstVisible = sorted.find(c => c.style.display !== 'none');
-  if (firstVisible) firstVisible.style.borderTop = '1px solid var(--border)';
-}
+  render();
 
-// ─── Filtres par catégorie ────────────────────────────────────────────────────
-filterBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    filterBtns.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeFilter = btn.dataset.filter;
-    applyAll();
+  /* ---------- Réseau de citations (fond du hero) ----------
+     Même réseau que publications.html, coloré par domaine ;
+     de temps en temps une « citation » circule d'un nœud à l'autre. */
+  const canvas = document.getElementById('network');
+  const ctx = canvas.getContext('2d');
+  const hero = document.querySelector('.hero');
+  const COLORS = chips.filter((c) => c.dataset.domain !== 'tous').map((c) => c.style.getPropertyValue('--c').trim());
+  let nodes = [], pulses = [], w = 0, h = 0, running = false, raf = 0, last = 0, spawn = 0;
+  const pointer = { x: -9999, y: -9999 };
+  const LINK = 130;
+
+  const build = () => {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = hero.clientWidth; h = hero.clientHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const n = Math.min(90, Math.round((w * h) / 16000));
+    nodes = Array.from({ length: n }, () => ({
+      x: Math.random() * w, y: Math.random() * h,
+      vx: (Math.random() - .5) * .018, vy: (Math.random() - .5) * .018,
+      r: Math.random() * 1.4 + .8,
+      c: Math.random() < .3 ? COLORS[Math.floor(Math.random() * COLORS.length)] : '#aab3d6'
+    }));
+    pulses = [];
+  };
+
+  const draw = () => {
+    ctx.clearRect(0, 0, w, h);
+    ctx.lineWidth = 1;
+    for (let i = 0; i < nodes.length; i++) {
+      const a = nodes[i];
+      for (let j = i + 1; j < nodes.length; j++) {
+        const b = nodes[j];
+        const d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < LINK) {
+          ctx.globalAlpha = (1 - d / LINK) * .22;
+          ctx.strokeStyle = '#4f6bed';
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+        }
+      }
+      const pd = Math.hypot(a.x - pointer.x, a.y - pointer.y);
+      if (pd < LINK * 1.4) {
+        ctx.globalAlpha = (1 - pd / (LINK * 1.4)) * .45;
+        ctx.strokeStyle = '#8fa2ff';
+        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(pointer.x, pointer.y); ctx.stroke();
+      }
+    }
+    /* citations en transit */
+    pulses.forEach((p) => {
+      const x = p.a.x + (p.b.x - p.a.x) * p.t, y = p.a.y + (p.b.y - p.a.y) * p.t;
+      const g = ctx.createRadialGradient(x, y, 0, x, y, 8);
+      g.addColorStop(0, p.c); g.addColorStop(1, 'transparent');
+      ctx.globalAlpha = Math.sin(Math.PI * p.t);
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, 8, 0, Math.PI * 2); ctx.fill();
+    });
+    for (const n of nodes) {
+      ctx.globalAlpha = n.c === '#aab3d6' ? .55 : .9;
+      ctx.fillStyle = n.c;
+      ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  };
+
+  const newPulse = () => {
+    const colored = nodes.filter((n) => n.c !== '#aab3d6');
+    const a = colored[Math.floor(Math.random() * colored.length)];
+    if (!a) return;
+    const b = nodes.filter((n) => n !== a && Math.hypot(n.x - a.x, n.y - a.y) < LINK)[0];
+    if (b) pulses.push({ a, b, t: 0, c: a.c, v: .0007 + Math.random() * .0005 });
+  };
+
+  const loop = (t) => {
+    const dt = Math.min(64, t - (last || t)); last = t;
+    for (const n of nodes) {
+      n.x += n.vx * dt; n.y += n.vy * dt;
+      if (n.x < -20) n.x = w + 20; else if (n.x > w + 20) n.x = -20;
+      if (n.y < -20) n.y = h + 20; else if (n.y > h + 20) n.y = -20;
+    }
+    spawn += dt;
+    if (spawn > 420 && pulses.length < 6) { spawn = 0; newPulse(); }
+    pulses.forEach((p) => { p.t += p.v * dt; });
+    pulses = pulses.filter((p) => p.t < 1);
+    draw();
+    if (running) raf = requestAnimationFrame(loop);
+  };
+  const start = () => { if (running || reduceMotion) return; running = true; last = 0; raf = requestAnimationFrame(loop); };
+  const stop = () => { running = false; cancelAnimationFrame(raf); };
+
+  build(); draw(); canvas.classList.add('is-ready');
+
+  hero.addEventListener('pointermove', (e) => {
+    if (e.pointerType !== 'mouse') return;
+    const r = canvas.getBoundingClientRect();
+    pointer.x = e.clientX - r.left; pointer.y = e.clientY - r.top;
+    if (reduceMotion) draw();
   });
-});
+  hero.addEventListener('pointerleave', () => { pointer.x = pointer.y = -9999; if (reduceMotion) draw(); });
 
-// ─── Recherche ────────────────────────────────────────────────────────────────
-searchInput.addEventListener('input', () => {
-  searchQuery = searchInput.value.toLowerCase().trim();
-  applyAll();
-});
-
-searchClear.addEventListener('click', () => {
-  searchInput.value = '';
-  searchQuery = '';
-  applyAll();
-  searchInput.focus();
-});
-
-// ─── Tri ─────────────────────────────────────────────────────────────────────
-sortSelect.addEventListener('change', () => {
-  sortOrder = sortSelect.value;
-  applyAll();
-});
-
-// ─── Reset ────────────────────────────────────────────────────────────────────
-resetBtn.addEventListener('click', () => {
-  activeFilter = 'tous';
-  searchQuery = '';
-  sortOrder = 'recent';
-  searchInput.value = '';
-  sortSelect.value = 'recent';
-  filterBtns.forEach(b => b.classList.remove('active'));
-  document.querySelector('[data-filter="tous"]').classList.add('active');
-  applyAll();
-});
-
-// Init
-applyAll();
+  let heroVisible = true;
+  new IntersectionObserver(([entry]) => {
+    heroVisible = entry.isIntersecting;
+    heroVisible && !document.hidden ? start() : stop();
+  }).observe(hero);
+  document.addEventListener('visibilitychange', () => { document.hidden ? stop() : heroVisible && start(); });
+  let resizeTimer = 0;
+  window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => { build(); draw(); }, 150); });
+})();
 </script>
 
 </body>
