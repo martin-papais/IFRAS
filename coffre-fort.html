@@ -2,16 +2,25 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
-<title>IFRAS — Coffre-fort sécurisé</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<title>Coffre-fort | Espace IFRAS</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#050b1e">
+<link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
 
 <style>
+/* =========================================================
+   THÈME : tout découle de --hue et --sat (réglables par l'utilisateur)
+   ========================================================= */
 :root {
-  --hue: 228; --sat: 65%;
+  --hue: 228;
+  --sat: 65%;
+
   --bg-dark:    hsl(var(--hue), var(--sat), 4%);
   --bg-main:    hsl(var(--hue), var(--sat), 7%);
   --bg-light:   hsl(var(--hue), var(--sat), 10%);
@@ -22,482 +31,1012 @@
   --accent:     hsl(var(--hue), 70%, 60%);
   --accent-dim: hsl(var(--hue), 60%, 45%);
   --text-main:  hsl(var(--hue), 20%, 88%);
-  --text-soft:  hsl(var(--hue), 20%, 62%);
-  --text-muted: hsl(var(--hue), 15%, 40%);
+  --text-soft:  hsl(var(--hue), 20%, 66%);
+  --text-muted: hsl(var(--hue), 15%, 48%);
   --unread-dot: hsl(var(--hue), 80%, 65%);
-  --header-h: 84px; --subnav-h: 48px;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: "DM Sans", sans-serif; background: var(--bg-dark); color: var(--text-main); min-height: 100vh; }
-::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  --danger: #fb7185;
+  --ok: #34d399;
 
-/* ===== HEADER ===== */
-header { position: fixed; top: 0; width: 100%; z-index: 1000; height: var(--header-h); background: hsl(var(--hue), var(--sat), 5%); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); display: flex; align-items: center; }
-.header-inner { width: 100%; padding: 0 28px; display: flex; align-items: center; justify-content: space-between; }
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --header-h: 68px;
+  --subnav-h: 48px;
+  --status-h: 30px;
+  --sidebar-w: 232px;
+  --list-w: 360px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: "DM Sans", "Segoe UI", system-ui, sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+}
+button { font: inherit; color: inherit; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+kbd {
+  display: inline-grid; place-items: center;
+  min-width: 20px; height: 20px; padding: 0 5px;
+  font: 500 11px/1 "DM Sans", sans-serif; color: var(--text-soft);
+  border: 1px solid var(--border); border-radius: 5px;
+  background: var(--bg-light);
+}
+
+/* =========================================================
+   HEADER (même structure que le site public)
+   ========================================================= */
+.site-header {
+  position: fixed; inset: 0 0 auto 0; z-index: 2000;
+  height: var(--header-h);
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  padding: 0 24px;
+  background: hsl(var(--hue), var(--sat), 5%);
+  border-bottom: 1px solid var(--border);
+}
 .header-left { display: flex; align-items: center; gap: 40px; }
-.logo-link img { height: 54px; }
-.main-nav { list-style: none; display: flex; gap: 28px; }
-.main-nav a { text-decoration: none; color: var(--text-soft); font-size: 13.5px; letter-spacing: .05em; transition: color .2s; }
-.main-nav a:hover { color: var(--text-main); }
+.logo-link img { height: 44px; width: auto; display: block; }
+.main-nav { list-style: none; display: flex; gap: 4px; margin: 0; padding: 0; }
+.main-nav a {
+  display: block; padding: 8px 12px;
+  color: var(--text-soft); text-decoration: none;
+  font-size: 14px; letter-spacing: .02em; border-radius: 6px;
+  transition: color 160ms ease;
+}
+@media (hover: hover) and (pointer: fine) { .main-nav a:hover { color: var(--text-main); } }
+
 .header-right { display: flex; align-items: center; gap: 10px; }
-.user-chip { display: flex; align-items: center; gap: 9px; padding: 5px 12px 5px 6px; background: var(--bg-light); border: 1px solid var(--border); border-radius: 20px; font-size: 12.5px; color: var(--text-soft); }
-.user-avatar { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-dim), var(--accent)); display: flex; align-items: center; justify-content: center; font-family: "Syne", sans-serif; font-weight: 700; font-size: 10px; color: white; }
-.icon-btn { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-light); color: var(--text-soft); cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center; transition: background .15s, color .15s, border-color .15s; }
-.icon-btn:hover { background: var(--bg-hover); color: var(--text-main); border-color: var(--accent); }
+.secure {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 12.5px; color: var(--text-soft);
+  padding: 6px 11px; border-radius: 999px;
+  border: 1px solid var(--border-sub);
+}
+.secure i { color: var(--ok); font-size: 15px; }
 
-/* Settings */
-.settings-wrapper { position: relative; }
-.settings-panel { display: none; position: absolute; right: 0; top: calc(100% + 8px); width: 260px; background: var(--bg-light); border: 1px solid var(--border); border-radius: 12px; padding: 16px; z-index: 2000; box-shadow: 0 20px 60px rgba(0,0,0,.5); animation: panelIn .15s ease; }
-@keyframes panelIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
-.settings-panel.active { display: block; }
-.panel-title { font-family: "Syne", sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border-sub); }
-.theme-section { margin-bottom: 16px; }
-.theme-label { font-size: 11px; color: var(--text-soft); margin-bottom: 8px; font-weight: 400; letter-spacing: .04em; }
-.hue-wrap { position: relative; height: 20px; border-radius: 10px; overflow: hidden; cursor: pointer; background: linear-gradient(90deg, hsl(0,65%,55%), hsl(30,65%,55%), hsl(60,65%,55%), hsl(90,65%,55%), hsl(120,65%,55%), hsl(150,65%,55%), hsl(180,65%,55%), hsl(210,65%,55%), hsl(240,65%,55%), hsl(270,65%,55%), hsl(300,65%,55%), hsl(330,65%,55%), hsl(360,65%,55%)); margin-bottom: 10px; }
-.hue-thumb { position: absolute; top: 50%; transform: translate(-50%,-50%); width: 18px; height: 18px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 6px rgba(0,0,0,.4); pointer-events: none; transition: left .1s; }
-.sat-wrap { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
-.sat-label { font-size: 11px; color: var(--text-muted); width: 24px; }
-input[type=range].sat-range { flex: 1; height: 4px; border-radius: 4px; outline: none; border: none; cursor: pointer; -webkit-appearance: none; appearance: none; background: linear-gradient(90deg, hsl(var(--hue),0%,55%), hsl(var(--hue),100%,55%)); }
-input[type=range].sat-range::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); border: 2px solid white; box-shadow: 0 1px 4px rgba(0,0,0,.3); cursor: pointer; }
-.swatches { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 14px; }
-.swatch { width: 24px; height: 24px; border-radius: 6px; cursor: pointer; border: 2px solid transparent; transition: transform .15s, border-color .15s; }
-.swatch:hover { transform: scale(1.15); } .swatch.active { border-color: white; }
-.panel-divider { height: 1px; background: var(--border-sub); margin: 14px 0; }
-.logout-btn { padding: 7px 14px; border-radius: 7px; border: 1px solid var(--border); background: transparent; color: var(--text-soft); cursor: pointer; font-size: 12.5px; font-family: "DM Sans", sans-serif; transition: background .15s, color .15s, border-color .15s; display: flex; align-items: center; gap: 6px; }
-.logout-btn:hover { background: rgba(251,113,133,.1); color: #fb7185; border-color: rgba(251,113,133,.3); }
-.hex-wrap { display: flex; align-items: center; gap: 8px; margin-top: 6px; margin-bottom: 4px; width: 100%; }
-.hex-preview { width: 24px; height: 24px; border-radius: 5px; flex-shrink: 0; border: 1px solid var(--border); transition: background .15s; }
-.hex-input { flex: 1 1 auto; min-width: 0; width: 100%; background: var(--bg-dark); border: 1px solid var(--border-sub); border-radius: 6px; padding: 5px 8px; color: var(--text-main); font-size: 12px; font-family: "DM Sans", sans-serif; outline: none; transition: border-color .2s; letter-spacing: .06em; }
-.hex-input:focus { border-color: var(--accent); } .hex-input.invalid { border-color: rgba(251,113,133,.5); color: #fca5a5; }
-.hex-apply-btn { flex-shrink: 0; padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-hover); color: var(--text-soft); font-size: 11px; cursor: pointer; font-family: "DM Sans", sans-serif; transition: background .15s, color .15s; white-space: nowrap; }
-.hex-apply-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+.user-chip {
+  display: flex; align-items: center; gap: 9px;
+  padding: 4px 12px 4px 4px;
+  background: var(--bg-light); border: 1px solid var(--border);
+  border-radius: 999px; font-size: 13px; color: var(--text-main);
+}
+.avatar {
+  --ah: var(--hue);
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  display: grid; place-items: center;
+  background: linear-gradient(135deg, hsl(var(--ah), 55%, 42%), hsl(var(--ah), 70%, 62%));
+  font-family: "Syne", sans-serif; font-weight: 700; font-size: 11px; color: #fff;
+  letter-spacing: .02em;
+}
 
-/* ===== SOUS-BANDEAU ===== */
-.sub-nav { position: fixed; top: var(--header-h); width: 100%; z-index: 900; height: var(--subnav-h); background: hsl(var(--hue), var(--sat), 6%); border-bottom: 1px solid var(--border-sub); display: flex; align-items: center; }
-.sub-nav-inner { padding: 0 28px; display: flex; gap: 4px; }
-.sub-tab { padding: 6px 16px; border-radius: 7px; font-size: 13px; color: var(--text-soft); text-decoration: none; letter-spacing: .04em; display: flex; align-items: center; gap: 7px; transition: background .15s, color .15s; position: relative; }
-.sub-tab:hover { background: var(--bg-hover); color: var(--text-main); }
-.sub-tab.active { background: var(--bg-light); color: var(--text-main); font-weight: 500; }
-.sub-tab.active::after { content: ''; position: absolute; bottom: -1px; left: 16px; right: 16px; height: 2px; background: var(--accent); border-radius: 2px 2px 0 0; }
-.tab-icon { font-size: 13px; opacity: .7; }
+.icon-btn {
+  width: 38px; height: 38px; border-radius: 10px;
+  display: grid; place-items: center;
+  border: 1px solid var(--border); background: var(--bg-light);
+  color: var(--text-soft); font-size: 18px; cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease, transform 160ms var(--ease-out);
+}
+.icon-btn:active { transform: scale(.95); }
+.icon-btn[aria-expanded="true"] { color: var(--text-main); border-color: var(--accent); }
+.icon-btn[aria-expanded="true"] i { transform: rotate(60deg); }
+.icon-btn i { transition: transform 300ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) { .icon-btn:hover { color: var(--text-main); border-color: var(--accent); } }
 
-/* ===== PAGE ===== */
-.page-content { padding-top: calc(var(--header-h) + var(--subnav-h) + 32px); padding-bottom: 60px; max-width: 1000px; margin: 0 auto; padding-left: 28px; padding-right: 28px; }
-
-/* ===== VAULT HERO ===== */
-.vault-hero {
-  background: var(--bg-card);
+/* ----- Panneau de réglages ----- */
+.settings { position: relative; }
+.settings-panel {
+  position: absolute; right: 0; top: calc(100% + 10px); z-index: 2100;
+  width: 290px; padding: 16px;
+  background: var(--bg-light);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  overflow: hidden;
-  margin-bottom: 24px;
-  position: relative;
-  animation: fadeUp .3s ease both;
+  border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.55);
+  transform-origin: top right;
+  opacity: 0; transform: scale(.96) translateY(-4px);
+  visibility: hidden; pointer-events: none;
+  transition: opacity 160ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s linear 200ms;
 }
-.vault-banner {
-  height: 90px;
-  background: linear-gradient(135deg, hsl(var(--hue),var(--sat),10%), hsl(var(--hue),70%,16%), hsl(calc(var(--hue) - 20),60%,12%));
-  position: relative; overflow: hidden;
-  display: flex; align-items: center; padding: 0 28px; gap: 16px;
+.settings-panel.is-open {
+  opacity: 1; transform: none; visibility: visible; pointer-events: auto;
+  transition: opacity 160ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s;
 }
-.vault-banner::before {
-  content: ''; position: absolute; inset: 0;
-  background: repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255,255,255,.02) 40px, rgba(255,255,255,.02) 41px),
-              repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(255,255,255,.02) 40px, rgba(255,255,255,.02) 41px);
+.panel-title {
+  font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--text-muted); font-weight: 500;
+  margin: 0 0 12px;
 }
-.vault-banner-icon { font-size: 32px; position: relative; z-index: 1; }
-.vault-banner-text { position: relative; z-index: 1; }
-.vault-banner-title { font-family: "Syne", sans-serif; font-size: 18px; font-weight: 800; color: var(--text-main); letter-spacing: .02em; }
-.vault-banner-sub { font-size: 12px; color: var(--text-soft); font-weight: 300; margin-top: 2px; }
-.vault-clearance-chip {
-  margin-left: auto; position: relative; z-index: 1;
-  padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700;
-  letter-spacing: .08em; text-transform: uppercase;
+.theme-label { font-size: 12.5px; color: var(--text-soft); margin: 0 0 8px; }
+.swatches { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+.swatch {
+  width: 24px; height: 24px; border-radius: 7px; padding: 0;
+  border: 2px solid transparent; cursor: pointer;
+  transition: transform 160ms var(--ease-out), border-color 160ms ease;
 }
-.vault-clearance-chip.niveau-1 { background: rgba(74,222,128,.15); color: #4ade80; border: 1px solid rgba(74,222,128,.3); }
-.vault-clearance-chip.niveau-2 { background: rgba(251,191,36,.15); color: #fbbf24; border: 1px solid rgba(251,191,36,.3); }
-.vault-clearance-chip.niveau-3 { background: rgba(248,113,113,.15); color: #f87171; border: 1px solid rgba(248,113,113,.3); }
-.vault-clearance-chip.niveau-4 { background: rgba(167,139,250,.15); color: #a78bfa; border: 1px solid rgba(167,139,250,.3); }
+.swatch:active { transform: scale(.9); }
+.swatch.active { border-color: #fff; box-shadow: 0 0 0 2px var(--bg-light); }
+@media (hover: hover) and (pointer: fine) { .swatch:hover { transform: scale(1.12); } }
 
-/* ===== VAULT TABS ===== */
-.vault-tabs {
-  display: flex; border-bottom: 1px solid var(--border-sub);
-  background: var(--bg-card);
+.hue-wrap {
+  position: relative; height: 18px; border-radius: 9px; cursor: pointer; margin-bottom: 12px;
+  touch-action: none;
+  background: linear-gradient(90deg, hsl(0,65%,55%), hsl(60,65%,55%), hsl(120,65%,55%), hsl(180,65%,55%), hsl(240,65%,55%), hsl(300,65%,55%), hsl(360,65%,55%));
 }
-.vault-tab {
-  flex: 1; padding: 14px 20px; cursor: pointer;
+.hue-thumb {
+  position: absolute; top: 50%; left: 0;
+  width: 18px; height: 18px; border-radius: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,.45);
+  background: hsl(var(--hue), 65%, 55%);
+  pointer-events: none;
+}
+.sat-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.sat-label { font-size: 12px; color: var(--text-muted); width: 26px; }
+input[type=range].sat-range {
+  flex: 1; height: 4px; border-radius: 4px; cursor: pointer;
+  -webkit-appearance: none; appearance: none;
+  background: linear-gradient(90deg, hsl(var(--hue),0%,55%), hsl(var(--hue),100%,55%));
+}
+input[type=range].sat-range::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--accent); border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.35);
+}
+input[type=range].sat-range::-moz-range-thumb {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--accent); border: 2px solid #fff;
+}
+.hex-wrap { display: flex; align-items: center; gap: 8px; }
+.hex-preview { width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0; border: 1px solid var(--border); }
+.hex-input {
+  flex: 1 1 auto; min-width: 0; height: 30px;
+  background: var(--bg-dark); border: 1px solid var(--border-sub);
+  border-radius: 8px; padding: 0 10px; color: var(--text-main);
+  font-size: 13px; letter-spacing: .06em; outline: none;
+  transition: border-color 160ms ease;
+}
+.hex-input:focus { border-color: var(--accent); }
+.hex-input.invalid { border-color: rgba(251,113,133,.6); color: #fca5a5; animation: shake 300ms var(--ease-out); }
+@keyframes shake { 25% { transform: translateX(-3px); } 75% { transform: translateX(3px); } }
+.hex-apply {
+  height: 30px; padding: 0 12px; border-radius: 8px; flex-shrink: 0;
+  border: 1px solid var(--border); background: var(--bg-hover);
+  color: var(--text-soft); font-size: 12.5px; cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out);
+}
+.hex-apply:active { transform: scale(.96); }
+@media (hover: hover) and (pointer: fine) { .hex-apply:hover { background: var(--accent); border-color: var(--accent); color: #fff; } }
+
+.panel-divider { height: 1px; background: var(--border-sub); margin: 16px 0; }
+.panel-item {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 8px 8px; margin: 0 -8px; border-radius: 8px;
+  font-size: 13.5px; color: var(--text-soft); cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+.panel-item i { font-size: 16px; margin-right: 8px; vertical-align: -3px; }
+@media (hover: hover) and (pointer: fine) { .panel-item:hover { background: var(--bg-hover); color: var(--text-main); } }
+.toggle { position: relative; width: 34px; height: 20px; flex-shrink: 0; }
+.toggle input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.toggle-track { position: absolute; inset: 0; border-radius: 10px; background: var(--border); transition: background-color 200ms ease; pointer-events: none; }
+.toggle-thumb {
+  position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%;
+  background: #fff; pointer-events: none;
+  transition: transform 220ms var(--ease-out);
+}
+.toggle input:checked ~ .toggle-track { background: var(--accent); }
+.toggle input:checked ~ .toggle-thumb { transform: translateX(14px); }
+.toggle input:focus-visible ~ .toggle-track { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.logout {
+  width: 100%; height: 38px; border-radius: 10px;
   display: flex; align-items: center; justify-content: center; gap: 8px;
-  font-size: 13px; color: var(--text-soft); font-weight: 400;
-  border-bottom: 2px solid transparent; transition: color .15s, border-color .15s, background .15s;
-  margin-bottom: -1px;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text-soft); font-size: 13.5px; cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
 }
-.vault-tab:hover { background: var(--bg-hover); color: var(--text-main); }
-.vault-tab.active { color: var(--text-main); font-weight: 500; border-bottom-color: var(--accent); }
-.vault-tab-icon { font-size: 14px; }
-
-/* ===== SEARCH ===== */
-.vault-search-wrap {
-  padding: 20px 0 0;
-  animation: fadeUp .3s .05s ease both;
-}
-.vault-search-inner {
-  display: flex; gap: 10px; align-items: center;
-}
-.vault-search-field {
-  flex: 1; position: relative;
-}
-.vault-search-icon {
-  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-  font-size: 14px; color: var(--text-muted); pointer-events: none;
-}
-.vault-search-input {
-  width: 100%; padding: 11px 14px 11px 40px;
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 10px; color: var(--text-main);
-  font-size: 13.5px; font-family: "DM Sans", sans-serif; outline: none;
-  transition: border-color .2s, box-shadow .2s;
-}
-.vault-search-input::placeholder { color: var(--text-muted); }
-.vault-search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px hsl(var(--hue),70%,60%,.1); }
-.vault-search-btn {
-  padding: 11px 22px; background: var(--accent); border: none; border-radius: 10px;
-  color: white; font-size: 13px; font-weight: 500; font-family: "DM Sans", sans-serif;
-  cursor: pointer; display: flex; align-items: center; gap: 7px;
-  transition: opacity .15s, transform .15s; white-space: nowrap;
-}
-.vault-search-btn:hover { opacity: .88; transform: translateY(-1px); }
-
-/* ===== RESULTS ===== */
-.vault-results {
-  margin-top: 20px;
-  display: flex; flex-direction: column; gap: 10px;
-  min-height: 80px;
-  animation: fadeUp .3s .1s ease both;
+.logout:active { transform: scale(.98); }
+@media (hover: hover) and (pointer: fine) {
+  .logout:hover { background: rgba(251,113,133,.1); color: var(--danger); border-color: rgba(251,113,133,.35); }
 }
 
-/* Empty / error states */
-.vault-state {
-  padding: 40px 20px; text-align: center;
-  color: var(--text-muted); font-size: 13px; font-weight: 300;
+/* =========================================================
+   SOUS-BANDEAU DE L'ESPACE PRIVÉ
+   ========================================================= */
+.subnav {
+  position: fixed; top: var(--header-h); left: 0; right: 0; z-index: 1500;
+  height: var(--subnav-h);
+  background: hsl(var(--hue), var(--sat), 6%);
+  border-bottom: 1px solid var(--border-sub);
 }
-.vault-state-icon { font-size: 36px; margin-bottom: 10px; opacity: .4; }
-.vault-state-title { font-size: 14px; color: var(--text-soft); margin-bottom: 4px; font-weight: 500; }
+.subnav-list {
+  height: 100%; margin: 0; padding: 0 16px; list-style: none;
+  display: flex; align-items: stretch; gap: 2px;
+  overflow-x: auto; scrollbar-width: none;
+}
+.subnav-list::-webkit-scrollbar { display: none; }
+.subnav-list li { display: flex; }
+.sub-tab {
+  position: relative;
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 14px;
+  color: var(--text-soft); text-decoration: none;
+  font-size: 14px; white-space: nowrap;
+  transition: color 160ms ease;
+}
+.sub-tab i { font-size: 17px; }
+.sub-tab::after {
+  content: ""; position: absolute; left: 14px; right: 14px; bottom: -1px; height: 2px;
+  background: var(--accent); border-radius: 2px;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+.sub-tab[aria-current="page"] { color: var(--text-main); font-weight: 500; }
+.sub-tab[aria-current="page"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) { .sub-tab:hover { color: var(--text-main); } }
+.tab-badge {
+  min-width: 18px; height: 18px; padding: 0 5px;
+  display: inline-grid; place-items: center;
+  border-radius: 999px; background: var(--accent); color: #fff;
+  font-size: 11px; font-weight: 500; font-variant-numeric: tabular-nums;
+}
+.tab-badge[hidden] { display: none; }
 
-.vault-state.forbidden .vault-state-icon { opacity: .6; }
-.vault-state.forbidden .vault-state-title { color: #f87171; }
+/* =========================================================
+   BARRE D'ÉTAT (bas de l'écran)
+   ========================================================= */
+.statusbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 1500;
+  height: var(--status-h);
+  display: flex; align-items: center; gap: 22px;
+  padding: 0 16px;
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border-sub);
+  font-size: 12px; color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.statusbar span { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.statusbar i { font-size: 14px; }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 20%, transparent); }
+.statusbar .push { margin-left: auto; }
+.statusbar .warn { color: #facc15; }
 
-/* File card */
-.file-card {
+/* =========================================================
+   TOAST
+   ========================================================= */
+.toast {
+  position: fixed; left: 50%; bottom: calc(var(--status-h) + 18px); z-index: 4000;
+  display: flex; align-items: center; gap: 10px;
+  max-width: calc(100vw - 32px);
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: hsl(var(--hue), 30%, 12%);
+  border: 1px solid rgba(251,113,133,.35);
+  color: #fecdd3; font-size: 14px;
+  box-shadow: 0 16px 40px rgba(0,0,0,.5);
+  transform: translate(-50%, 16px); opacity: 0; pointer-events: none;
+  transition: transform 260ms var(--ease-out), opacity 200ms ease;
+}
+.toast i { font-size: 18px; color: var(--danger); flex-shrink: 0; }
+.toast.show { transform: translate(-50%, 0); opacity: 1; }
+
+
+/* =========================================================
+   PAGE COFFRE-FORT
+   ========================================================= */
+.page {
+  padding: calc(var(--header-h) + var(--subnav-h) + 28px) 28px calc(var(--status-h) + 48px);
+  max-width: 1560px; margin: 0 auto;
+  display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px;
+  align-items: start;
+}
+.main { min-width: 0; }
+
+/* ----- Bandeau du coffre ----- */
+.vault-hero {
+  position: relative; overflow: hidden; isolation: isolate;
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 24px;
+  padding: 28px 30px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(ellipse 60% 120% at 0% 50%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
+    var(--bg-card);
+  animation: fadeUp 500ms var(--ease-out) both;
+}
+/* quadrillage discret */
+.vault-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--text-main) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--text-main) 5%, transparent) 1px, transparent 1px);
+  background-size: 36px 36px;
+  -webkit-mask-image: linear-gradient(90deg, #000, transparent 70%);
+          mask-image: linear-gradient(90deg, #000, transparent 70%);
+}
+/* cadran de coffre animé */
+.dial { width: 92px; height: 92px; position: relative; flex-shrink: 0; }
+.dial svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.dial .ring-outer { transform-origin: 50% 50%; animation: dialSpin 28s linear infinite; }
+.dial .ring-inner { transform-origin: 50% 50%; animation: dialSpin 16s linear infinite reverse; }
+.dial.is-busy .ring-outer { animation-duration: 2.4s; }
+.dial.is-busy .ring-inner { animation-duration: 1.6s; }
+@keyframes dialSpin { to { transform: rotate(360deg); } }
+.dial i {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  font-size: 30px; color: var(--accent);
+}
+
+.vault-title { margin: 0 0 6px; font-family: "Syne", sans-serif; font-size: clamp(26px, 2.6vw, 34px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; }
+.vault-sub { margin: 0; font-size: 14.5px; color: var(--text-soft); font-weight: 300; max-width: 52ch; line-height: 1.6; }
+
+.clearance {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 8px 14px 8px 10px; border-radius: 999px;
+  font-size: 13px; font-weight: 500;
+  color: var(--lvl, var(--text-soft));
+  background: color-mix(in srgb, var(--lvl, var(--text-soft)) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--lvl, var(--text-soft)) 30%, transparent);
+  white-space: nowrap;
+}
+.clearance i { font-size: 17px; }
+
+/* ----- Onglets Public / Personnel ----- */
+.vault-switch {
+  position: relative;
+  display: grid; grid-template-columns: 1fr 1fr;
+  margin: 18px 0 0; padding: 5px;
+  border-radius: 14px;
   background: var(--bg-card);
   border: 1px solid var(--border);
+  animation: fadeUp 500ms var(--ease-out) 60ms both;
+}
+.switch-indicator {
+  position: absolute; top: 5px; bottom: 5px; left: 5px;
+  width: calc(50% - 5px);
   border-radius: 10px;
-  padding: 14px 18px;
-  display: flex; align-items: center; gap: 14px;
-  transition: border-color .15s, background .15s;
-  animation: fadeUp .2s ease both;
+  background: var(--bg-hover);
+  border: 1px solid var(--border);
+  transition: transform 300ms var(--ease-out);
 }
-.file-card:hover { border-color: var(--accent); background: var(--bg-light); }
-
-.file-type-badge {
-  width: 42px; height: 42px; border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px; flex-shrink: 0;
-  background: var(--bg-hover); border: 1px solid var(--border-sub);
+.vault-switch[data-vault="private"] .switch-indicator { transform: translateX(100%); }
+.vault-tab {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 12px 16px;
+  border: 0; background: transparent; cursor: pointer;
+  color: var(--text-soft); font-size: 14.5px;
+  transition: color 160ms ease;
 }
+.vault-tab i { font-size: 19px; }
+.vault-tab small { display: block; font-size: 12px; color: var(--text-muted); font-weight: 400; }
+.vault-tab span { text-align: left; line-height: 1.25; }
+.vault-tab[aria-selected="true"] { color: var(--text-main); font-weight: 500; }
+.vault-tab[aria-selected="true"] i { color: var(--accent); }
+@media (hover: hover) and (pointer: fine) { .vault-tab:hover { color: var(--text-main); } }
 
-.file-meta { flex: 1; min-width: 0; }
-.file-name { font-size: 14px; font-weight: 500; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 3px; }
-.file-info-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.file-tag {
-  font-size: 10.5px; padding: 2px 8px; border-radius: 10px;
-  font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+/* ----- Recherche ----- */
+.search-card {
+  margin-top: 18px;
+  padding: 20px;
+  border-radius: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  animation: fadeUp 500ms var(--ease-out) 120ms both;
 }
-.file-tag.public { background: rgba(79,107,237,.15); color: var(--accent); border: 1px solid rgba(79,107,237,.25); }
-.file-tag.private { background: rgba(52,211,153,.1); color: #34d399; border: 1px solid rgba(52,211,153,.2); }
-.file-tag.lvl-1 { background: rgba(74,222,128,.1); color: #4ade80; border: 1px solid rgba(74,222,128,.2); }
-.file-tag.lvl-2 { background: rgba(251,191,36,.1); color: #fbbf24; border: 1px solid rgba(251,191,36,.2); }
-.file-tag.lvl-3 { background: rgba(248,113,113,.1); color: #f87171; border: 1px solid rgba(248,113,113,.2); }
-.file-tag.lvl-4 { background: rgba(167,139,250,.1); color: #a78bfa; border: 1px solid rgba(167,139,250,.2); }
-.file-date { font-size: 11.5px; color: var(--text-muted); }
-.file-desc { font-size: 12px; color: var(--text-soft); font-weight: 300; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.search-row { display: flex; gap: 10px; }
+.search-field { position: relative; flex: 1; }
+.search-field > i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 19px; color: var(--text-muted); pointer-events: none; }
+.search-field input {
+  width: 100%; height: 50px; padding: 0 44px 0 44px;
+  border-radius: 12px; border: 1px solid var(--border);
+  background: var(--bg-dark); color: var(--text-main);
+  font-size: 15px; outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+.search-field input::placeholder { color: var(--text-muted); }
+.search-field input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent); }
+.search-field input::-webkit-search-cancel-button { display: none; }
+.search-field kbd { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); transition: opacity 120ms ease; }
+.search-field input:focus ~ kbd { opacity: 0; }
+.search-btn {
+  height: 50px; padding: 0 22px; border: 0; border-radius: 12px; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--accent); color: #fff; font-size: 14.5px; font-weight: 500;
+  box-shadow: 0 10px 26px -10px var(--accent);
+  transition: transform 160ms var(--ease-out), filter 160ms ease;
+  white-space: nowrap;
+}
+.search-btn i { font-size: 18px; }
+.search-btn:active { transform: scale(.97); }
+.search-btn:disabled { cursor: progress; filter: saturate(.6); }
+.search-btn.is-busy i { animation: spin 900ms linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (hover: hover) and (pointer: fine) { .search-btn:hover { filter: brightness(1.08); } }
 
-.file-actions { display: flex; gap: 8px; flex-shrink: 0; }
-.file-dl-btn {
-  padding: 7px 14px; border-radius: 7px;
+.search-hint { display: flex; align-items: center; gap: 8px; margin: 12px 2px 0; font-size: 13px; color: var(--text-muted); }
+.search-hint i { font-size: 16px; }
+.recent { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 12px; }
+.recent[hidden] { display: none; }
+.recent-label { font-size: 12.5px; color: var(--text-muted); margin-right: 4px; }
+.recent button {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 11px; border-radius: 999px;
+  border: 1px solid var(--border-sub); background: transparent;
+  color: var(--text-soft); font-size: 13px; cursor: pointer;
+  transition: color 120ms ease, border-color 120ms ease, transform 160ms var(--ease-out);
+}
+.recent button i { font-size: 13px; color: var(--text-muted); }
+.recent button:active { transform: scale(.96); }
+@media (hover: hover) and (pointer: fine) { .recent button:hover { color: var(--text-main); border-color: var(--accent); } }
+
+/* ----- Résultats ----- */
+.results { margin-top: 18px; display: flex; flex-direction: column; gap: 10px; min-height: 120px; }
+.results-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 2px 4px 4px; font-size: 13.5px; color: var(--text-soft); }
+.results-head strong { color: var(--text-main); font-weight: 500; }
+
+.file {
+  display: grid; grid-template-columns: 46px 1fr auto; align-items: center; gap: 16px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  transition: border-color 160ms ease, transform 200ms var(--ease-out);
+  animation: fadeUp 420ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 50ms);
+}
+@media (hover: hover) and (pointer: fine) { .file:hover { border-color: color-mix(in srgb, var(--ft) 55%, var(--border)); transform: translateY(-1px); } }
+.file-icon {
+  width: 46px; height: 46px; border-radius: 12px;
+  display: grid; place-items: center; font-size: 22px;
+  color: var(--ft);
+  background: color-mix(in srgb, var(--ft) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ft) 25%, transparent);
+}
+.file-meta { min-width: 0; }
+.file-name { font-size: 15px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.file-info { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; margin-top: 5px; font-size: 12.5px; color: var(--text-muted); }
+.file-info span { display: inline-flex; align-items: center; gap: 5px; }
+.file-desc { margin-top: 5px; font-size: 13.5px; color: var(--text-soft); font-weight: 300; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tag {
+  padding: 2px 9px; border-radius: 999px;
+  font-size: 11.5px; font-weight: 500;
+  color: var(--t); background: color-mix(in srgb, var(--t) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--t) 28%, transparent);
+}
+.file-actions { display: flex; gap: 8px; }
+.fbtn {
+  display: inline-flex; align-items: center; gap: 7px;
+  height: 36px; padding: 0 13px; border-radius: 10px;
   border: 1px solid var(--border); background: transparent;
-  color: var(--text-soft); font-size: 12px; font-family: "DM Sans", sans-serif;
-  cursor: pointer; display: flex; align-items: center; gap: 5px;
-  text-decoration: none; transition: background .15s, color .15s, border-color .15s;
+  color: var(--text-soft); font-size: 13.5px; text-decoration: none; cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease, transform 160ms var(--ease-out);
+  white-space: nowrap;
 }
-.file-dl-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
-
-/* ===== TOAST ===== */
-.toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(20px); background: hsl(var(--hue), 30%, 14%); border: 1px solid rgba(251,113,133,.3); color: #fca5a5; font-size: 13px; padding: 10px 20px; border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,.5); z-index: 9999; opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; white-space: nowrap; }
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-@keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
-
-/* ===== CORRECTIFS MODE BLANC ===== */
-html.theme-light .vault-banner {
-  background: linear-gradient(135deg, hsl(220,20%,97%), hsl(228,45%,90%), hsl(208,35%,93%));
+.fbtn i { font-size: 16px; }
+.fbtn:active { transform: scale(.96); }
+.fbtn--primary { color: #fff; background: var(--accent); border-color: var(--accent); }
+.fbtn.is-busy i { animation: spin 900ms linear infinite; }
+.fbtn:disabled { cursor: progress; opacity: .8; }
+@media (hover: hover) and (pointer: fine) {
+  .fbtn:hover { color: var(--text-main); border-color: var(--accent); }
+  .fbtn--primary:hover { color: #fff; filter: brightness(1.08); }
 }
-html.theme-light .vault-banner::before {
-  background: repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(0,0,0,.04) 40px, rgba(0,0,0,.04) 41px),
-              repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(0,0,0,.04) 40px, rgba(0,0,0,.04) 41px);
+.pending { font-size: 13px; color: var(--text-muted); display: inline-flex; align-items: center; gap: 6px; }
+.pending i { animation: spin 900ms linear infinite; }
+
+/* document hors habilitation */
+.forbidden {
+  position: relative; overflow: hidden;
+  display: grid; grid-template-columns: 46px 1fr; align-items: center; gap: 16px;
+  padding: 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(248,113,113,.3);
+  background:
+    repeating-linear-gradient(135deg, transparent 0 12px, rgba(248,113,113,.04) 12px 13px),
+    color-mix(in srgb, #f87171 5%, var(--bg-card));
+  animation: fadeUp 420ms var(--ease-out) both;
 }
-/* Lisibilité des pastilles sur fond clair */
-html.theme-light .vault-clearance-chip.niveau-1, html.theme-light .file-tag.lvl-1 { color: #15803d; }
-html.theme-light .vault-clearance-chip.niveau-2, html.theme-light .file-tag.lvl-2 { color: #b45309; }
-html.theme-light .vault-clearance-chip.niveau-3, html.theme-light .file-tag.lvl-3 { color: #dc2626; }
-html.theme-light .vault-clearance-chip.niveau-4, html.theme-light .file-tag.lvl-4 { color: #7c3aed; }
-html.theme-light .file-tag.private { color: #059669; }
-html.theme-light .vault-state.forbidden .vault-state-title { color: #dc2626; }
+.forbidden .file-icon { --ft: #f87171; }
+.forbidden strong { display: block; font-size: 15px; font-weight: 500; color: #fca5a5; margin-bottom: 3px; }
+.forbidden p { margin: 0; font-size: 13.5px; color: var(--text-soft); line-height: 1.55; }
+
+/* états : attente, vide, erreur */
+.state { padding: 44px 20px; text-align: center; color: var(--text-muted); font-size: 14px; animation: fadeUp 400ms var(--ease-out) both; }
+.state i { display: block; font-size: 36px; margin-bottom: 12px; color: var(--text-muted); }
+.state strong { display: block; font-size: 15.5px; color: var(--text-soft); font-weight: 500; margin-bottom: 4px; }
+.state.is-error strong { color: #fca5a5; }
+
+.scan {
+  position: relative; overflow: hidden;
+  height: 76px; border-radius: 14px;
+  background: var(--bg-card); border: 1px solid var(--border);
+}
+.scan::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 14%, transparent), transparent);
+  transform: translateX(-100%);
+  animation: scan 1200ms var(--ease-in-out) infinite;
+}
+@keyframes scan { to { transform: translateX(100%); } }
+
+/* ----- Colonne latérale ----- */
+.aside { display: flex; flex-direction: column; gap: 16px; position: sticky; top: calc(var(--header-h) + var(--subnav-h) + 28px); }
+.card {
+  padding: 20px;
+  border-radius: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  animation: fadeUp 500ms var(--ease-out) 180ms both;
+}
+.card h2 { margin: 0 0 14px; font-size: 12.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); font-weight: 500; }
+
+.ladder { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column-reverse; gap: 8px; }
+.rung {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px; border-radius: 10px;
+  border: 1px solid var(--border-sub);
+  font-size: 14px; color: var(--text-muted);
+  transition: background-color 300ms ease, border-color 300ms ease, color 300ms ease;
+}
+.rung i { font-size: 17px; }
+.rung .rung-bar { flex: 1; height: 4px; border-radius: 4px; background: var(--border-sub); overflow: hidden; }
+.rung .rung-bar::after { content: ""; display: block; height: 100%; width: 100%; background: var(--c); transform: scaleX(0); transform-origin: left; transition: transform 700ms var(--ease-out); transition-delay: calc(var(--k) * 120ms + 200ms); }
+.rung.granted { color: var(--text-main); border-color: color-mix(in srgb, var(--c) 30%, transparent); }
+.rung.granted i { color: var(--c); }
+.rung.granted .rung-bar::after { transform: scaleX(1); }
+.rung.current { background: color-mix(in srgb, var(--c) 10%, transparent); }
+.ladder-note { margin: 14px 0 0; font-size: 13px; color: var(--text-soft); line-height: 1.55; }
+
+.facts { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.facts li { display: flex; gap: 12px; font-size: 13.5px; color: var(--text-soft); line-height: 1.5; }
+.facts i { font-size: 18px; color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+.facts strong { color: var(--text-main); font-weight: 500; }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* ----- Mode blanc : lisibilité des pastilles ----- */
+html.theme-light .clearance, html.theme-light .tag { filter: brightness(.7) saturate(1.3); }
+html.theme-light .forbidden strong { color: #dc2626; }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1100px) {
+  .main-nav { display: none; }
+  .secure { display: none; }
+  .page { grid-template-columns: 1fr; }
+  .aside { position: static; display: grid; grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 720px) {
+  :root { --header-h: 60px; }
+  .site-header { padding: 0 14px; }
+  .logo-link img { height: 36px; }
+  #userLabel { display: none; }
+  .user-chip { padding: 3px; }
+  .page { padding-left: 16px; padding-right: 16px; }
+  .vault-hero { grid-template-columns: auto 1fr; padding: 22px 20px; gap: 16px; }
+  .dial { width: 64px; height: 64px; }
+  .dial i { font-size: 22px; }
+  .clearance { grid-column: 1 / -1; justify-self: start; }
+  .vault-tab small { display: none; }
+  .search-row { flex-direction: column; }
+  .search-btn { justify-content: center; }
+  .search-field kbd { display: none; }
+  .file { grid-template-columns: 42px 1fr; }
+  .file-actions { grid-column: 1 / -1; }
+  .fbtn { flex: 1; justify-content: center; }
+  .aside { grid-template-columns: 1fr; }
+  .statusbar .hide-sm { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
+}
 </style>
 </head>
+
 <body>
 
 <!-- ===== HEADER ===== -->
-<header>
-  <div class="header-inner">
-    <div class="header-left">
-      <a href="index.html" class="logo-link"><img src="logo.png" alt="IFRAS"></a>
-      <nav><ul class="main-nav">
+<header class="site-header">
+  <div class="header-left">
+    <a href="index.html" class="logo-link" aria-label="IFRAS, accueil"><img src="logo.png" alt="Logo IFRAS" width="44" height="44"></a>
+    <nav aria-label="Navigation principale">
+      <ul class="main-nav">
         <li><a href="index.html">Accueil</a></li>
         <li><a href="recherche.html">Recherche</a></li>
         <li><a href="programmes.html">Programmes</a></li>
         <li><a href="publications.html">Publications</a></li>
-      </ul></nav>
+      </ul>
+    </nav>
+  </div>
+  <div class="header-right">
+    <span class="secure"><i class="ph-light ph-shield-check" aria-hidden="true"></i> Espace sécurisé</span>
+    <div class="user-chip" title="Compte connecté">
+      <span class="avatar" id="userAvatar">?</span>
+      <span id="userLabel">…</span>
     </div>
-    <div class="header-right">
-      <div class="user-chip" id="userChip">
-        <div class="user-avatar" id="userAvatar">?</div>
-        <span id="userLabel" style="font-size:12px">—</span>
-      </div>
-      <div class="settings-wrapper">
-        <button class="icon-btn" onclick="toggleSettings()" title="Paramètres">⚙</button>
-        <div class="settings-panel" id="settingsPanel">
-          <div class="panel-title">Apparence</div>
-          <div class="theme-section">
-            <div class="theme-label">Couleur principale</div>
-            <div class="swatches" id="swatches"></div>
-            <div class="theme-label" style="margin-top:6px;">Personnalisée</div>
-            <div class="hue-wrap" id="hueWrap"><div class="hue-thumb" id="hueThumb"></div></div>
-            <div class="sat-wrap">
-              <span class="sat-label">Sat.</span>
-              <input type="range" class="sat-range" id="satRange" min="20" max="90" value="65">
-            </div>
-            <div class="theme-label" style="margin-top:4px;">Code HEX</div>
-            <div class="hex-wrap">
-              <div class="hex-preview" id="hexPreview"></div>
-              <input type="text" class="hex-input" id="hexInput" placeholder="#4f6bed" maxlength="7">
-              <button class="hex-apply-btn" onclick="applyHex()">Appliquer</button>
-            </div>
-          </div>
-          <div class="panel-divider"></div>
-          <button class="logout-btn" onclick="logout()" style="width:100%;justify-content:center;">
-            <span>↩</span> Déconnexion
-          </button>
+
+    <div class="settings">
+      <button class="icon-btn" id="settingsBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="settingsPanel" aria-label="Paramètres">
+        <i class="ph-light ph-gear-six" aria-hidden="true"></i>
+      </button>
+
+      <div class="settings-panel" id="settingsPanel" role="dialog" aria-label="Paramètres">
+        <p class="panel-title">Apparence</p>
+        <p class="theme-label">Couleur principale</p>
+        <div class="swatches" id="swatches"></div>
+
+        <p class="theme-label">Teinte personnalisée</p>
+        <div class="hue-wrap" id="hueWrap" role="slider" tabindex="0" aria-label="Teinte" aria-valuemin="0" aria-valuemax="360" aria-valuenow="228">
+          <span class="hue-thumb" id="hueThumb"></span>
         </div>
+        <div class="sat-wrap">
+          <span class="sat-label">Sat.</span>
+          <input type="range" class="sat-range" id="satRange" min="20" max="90" value="65" aria-label="Saturation">
+        </div>
+
+        <p class="theme-label">Code HEX</p>
+        <div class="hex-wrap">
+          <span class="hex-preview" id="hexPreview"></span>
+          <input type="text" class="hex-input" id="hexInput" placeholder="#4f6bed" maxlength="7" spellcheck="false" autocomplete="off" aria-label="Couleur au format HEX">
+          <button class="hex-apply" id="hexApply" type="button">Appliquer</button>
+        </div>
+
+        <div class="panel-divider"></div>
+        <button class="logout" id="logoutBtn" type="button"><i class="ph-light ph-sign-out" aria-hidden="true"></i> Déconnexion</button>
       </div>
     </div>
   </div>
 </header>
 
 <!-- ===== SOUS-BANDEAU ===== -->
-<nav class="sub-nav">
-  <div class="sub-nav-inner">
-    <a href="messagerie.html" class="sub-tab"><span class="tab-icon">✉</span> Messagerie</a>
-    <a href="coffre-fort.html" class="sub-tab active"><span class="tab-icon">🔐</span> Coffre-fort</a>
-    <a href="profil.html" class="sub-tab"><span class="tab-icon">👤</span> Profil</a>
-    <a href="tableau-de-bord.html" class="sub-tab"><span class="tab-icon">📊</span> Tableau de bord</a>
-    <a href="annuaire.html" class="sub-tab"><span class="tab-icon">📋</span> Annuaire</a>
-    <a href="boutique.html"class="sub-tab"><span class="tab-icon">🛍</span> Boutique</a>
-  </div>
+<nav class="subnav" aria-label="Espace personnel">
+  <ul class="subnav-list">
+    <li><a href="messagerie.html" class="sub-tab"><i class="ph-light ph-envelope-simple" aria-hidden="true"></i> Messagerie</a></li>
+    <li><a href="coffre-fort.html" class="sub-tab" aria-current="page"><i class="ph-light ph-vault" aria-hidden="true"></i> Coffre-fort</a></li>
+    <li><a href="profil.html" class="sub-tab"><i class="ph-light ph-user-circle" aria-hidden="true"></i> Profil</a></li>
+    <li><a href="tableau-de-bord.html" class="sub-tab"><i class="ph-light ph-squares-four" aria-hidden="true"></i> Tableau de bord</a></li>
+    <li><a href="annuaire.html" class="sub-tab"><i class="ph-light ph-address-book" aria-hidden="true"></i> Annuaire</a></li>
+    <li><a href="boutique.html" class="sub-tab"><i class="ph-light ph-storefront" aria-hidden="true"></i> Boutique</a></li>
+  </ul>
 </nav>
 
 <!-- ===== CONTENU ===== -->
-<div class="page-content">
+<div class="page">
 
-  <!-- Hero -->
-  <div class="vault-hero">
-    <div class="vault-banner">
-      <div class="vault-banner-icon">🔐</div>
-      <div class="vault-banner-text">
-        <div class="vault-banner-title">Coffre-fort IFRAS</div>
-        <div class="vault-banner-sub">Archive sécurisée — accès contrôlé par habilitation</div>
-      </div>
-      <div class="vault-clearance-chip" id="userClearanceChip">—</div>
-    </div>
+  <main class="main" id="contenu">
 
-    <!-- Onglets Public / Privé -->
-    <div class="vault-tabs">
-      <div class="vault-tab active" id="tabPublic" onclick="switchVault('public')">
-        <span class="vault-tab-icon">🌐</span> Archive publique
+    <!-- Bandeau du coffre -->
+    <section class="vault-hero" aria-labelledby="vault-title">
+      <div class="dial" id="dial" aria-hidden="true">
+        <svg viewBox="0 0 100 100">
+          <g class="ring-outer">
+            <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-opacity=".18" stroke-width="1"/>
+            <circle cx="50" cy="50" r="46" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-dasharray="2 7.63" stroke-linecap="round"/>
+            <circle cx="50" cy="4" r="2.6" fill="var(--accent)"/>
+          </g>
+          <g class="ring-inner">
+            <circle cx="50" cy="50" r="34" fill="none" stroke="currentColor" stroke-opacity=".12" stroke-width="6" stroke-dasharray="20 8"/>
+          </g>
+          <circle cx="50" cy="50" r="24" fill="var(--bg-dark)" stroke="var(--border)"/>
+        </svg>
+        <i class="ph-light ph-vault"></i>
       </div>
-      <div class="vault-tab" id="tabPrivate" onclick="switchVault('private')">
-        <span class="vault-tab-icon">🔒</span> Coffre personnel
+      <div>
+        <h1 class="vault-title" id="vault-title">Coffre-fort</h1>
+        <p class="vault-sub">Archive partagée selon votre habilitation et coffre personnel réservé à votre compte.</p>
       </div>
-    </div>
-  </div>
+      <span class="clearance" id="userClearanceChip"><i class="ph-light ph-identification-badge" aria-hidden="true"></i> <span>Vérification…</span></span>
+    </section>
 
-  <!-- Recherche -->
-  <div class="vault-search-wrap">
-    <div class="vault-search-inner">
-      <div class="vault-search-field">
-        <span class="vault-search-icon">🔍</span>
-        <input type="text" class="vault-search-input" id="searchInput"
-          placeholder="Rechercher par nom, programme, mot-clé…"
-          onkeydown="if(event.key==='Enter') doSearch()">
-      </div>
-      <button class="vault-search-btn" onclick="doSearch()">
-        <span>↗</span> Rechercher
+    <!-- Public / Personnel -->
+    <div class="vault-switch" id="vaultSwitch" data-vault="public" role="tablist" aria-label="Choix du coffre">
+      <span class="switch-indicator" aria-hidden="true"></span>
+      <button class="vault-tab" type="button" role="tab" id="tabPublic" aria-selected="true" aria-controls="vaultResults" data-vault="public">
+        <i class="ph-light ph-globe-hemisphere-west" aria-hidden="true"></i>
+        <span>Archive publique<small>Partagée selon l'habilitation</small></span>
+      </button>
+      <button class="vault-tab" type="button" role="tab" id="tabPrivate" aria-selected="false" aria-controls="vaultResults" data-vault="private">
+        <i class="ph-light ph-lock-key" aria-hidden="true"></i>
+        <span>Coffre personnel<small>Visible par vous seul</small></span>
       </button>
     </div>
-  </div>
 
-  <!-- Résultats -->
-  <div class="vault-results" id="vaultResults">
-    <div class="vault-state">
-      <div class="vault-state-icon">📂</div>
-      <div class="vault-state-title">Entrez un terme de recherche</div>
-      <div>Les résultats s'afficheront ici selon votre habilitation</div>
-    </div>
-  </div>
+    <!-- Recherche -->
+    <section class="search-card" aria-label="Recherche">
+      <form class="search-row" id="searchForm" autocomplete="off">
+        <div class="search-field">
+          <i class="ph-light ph-magnifying-glass" aria-hidden="true"></i>
+          <input type="search" id="searchInput" placeholder="Nom du fichier, programme ou mot-clé…" aria-describedby="searchHint">
+          <kbd aria-hidden="true">/</kbd>
+        </div>
+        <button class="search-btn" id="searchBtn" type="submit"><i class="ph-light ph-key" aria-hidden="true"></i> Déverrouiller</button>
+      </form>
+      <p class="search-hint" id="searchHint"><i class="ph-light ph-info" aria-hidden="true"></i> Saisissez le nom exact d'un fichier, d'un programme ou d'un mot-clé.</p>
+      <div class="recent" id="recent" hidden></div>
+    </section>
+
+    <!-- Résultats -->
+    <section class="results" id="vaultResults" aria-live="polite" aria-label="Résultats"></section>
+  </main>
+
+  <!-- Colonne latérale -->
+  <aside class="aside" aria-label="Informations d'accès">
+    <section class="card">
+      <h2>Votre habilitation</h2>
+      <ol class="ladder" id="ladder">
+        <li class="rung" style="--c:#4ade80;--k:0" data-level="1"><i class="ph-light ph-lock-simple-open" aria-hidden="true"></i> Niveau 1 <span class="rung-bar" aria-hidden="true"></span></li>
+        <li class="rung" style="--c:#fbbf24;--k:1" data-level="2"><i class="ph-light ph-lock-simple" aria-hidden="true"></i> Niveau 2 <span class="rung-bar" aria-hidden="true"></span></li>
+        <li class="rung" style="--c:#f87171;--k:2" data-level="3"><i class="ph-light ph-lock-key" aria-hidden="true"></i> Niveau 3 <span class="rung-bar" aria-hidden="true"></span></li>
+        <li class="rung" style="--c:#a78bfa;--k:3" data-level="4"><i class="ph-light ph-shield-star" aria-hidden="true"></i> Niveau 4 <span class="rung-bar" aria-hidden="true"></span></li>
+      </ol>
+      <p class="ladder-note" id="ladderNote">Chargement de votre profil…</p>
+    </section>
+
+    <section class="card">
+      <h2>Bon à savoir</h2>
+      <ul class="facts">
+        <li><i class="ph-light ph-link-simple" aria-hidden="true"></i><span>Les liens d'accès aux fichiers sont <strong>temporaires</strong> et expirent après 10 minutes.</span></li>
+        <li><i class="ph-light ph-user-focus" aria-hidden="true"></i><span>Votre <strong>coffre personnel</strong> n'est visible que par votre compte.</span></li>
+        <li><i class="ph-light ph-fingerprint" aria-hidden="true"></i><span>Chaque consultation est <strong>journalisée</strong> par le service de sécurité.</span></li>
+      </ul>
+    </section>
+  </aside>
 
 </div>
 
-<div class="toast" id="toast"></div>
+<!-- ===== BARRE D'ÉTAT ===== -->
+<footer class="statusbar" aria-label="État de la session">
+  <span><span class="status-dot" aria-hidden="true"></span> Connecté</span>
+  <span class="hide-sm"><i class="ph-light ph-lock-simple" aria-hidden="true"></i> Chiffrement IFRAS actif</span>
+  <span class="hide-sm" id="vaultLabel"><i class="ph-light ph-globe-hemisphere-west" aria-hidden="true"></i> Archive publique</span>
+  <span class="push" id="idleLabel"><i class="ph-light ph-timer" aria-hidden="true"></i> Déconnexion auto dans 10:00</span>
+</footer>
+
+<div class="toast" id="toast" role="status"><i class="ph-light ph-warning-circle" aria-hidden="true"></i><span></span></div>
 
 <script>
 /* ============================================================
-   SUPABASE
+   SUPABASE (inchangé)
    ============================================================ */
 const _sb = supabase.createClient(
   "https://fqijbltymdeudnlitcrs.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZxaWpibHR5bWRldWRubGl0Y3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzOTQ2NDQsImV4cCI6MjA4NTk3MDY0NH0.HZA0VxkaRTGLRTBA0Vz51mJjw8Xuj8f__yzaQKpGfbE"
 );
 
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
 /* ============================================================
-   THEME SYSTEM
+   THÈME (même logique que l'original : presets, teinte, saturation, HEX)
    ============================================================ */
 const PRESETS = [
-  { label:'Bleu IFRAS', h:228, s:65 }, { label:'Indigo', h:248, s:60 },
-  { label:'Violet', h:270, s:55 },     { label:'Cyan', h:195, s:65 },
-  { label:'Vert', h:152, s:55 },       { label:'Emeraude', h:168, s:60 },
-  { label:'Ambre', h:38, s:75 },       { label:'Rouge', h:355, s:60 },
-  { label:'Rose', h:330, s:60 },
-  { label:'Noir', h:228, s:10, special:'dark' },
-  { label:'Blanc', h:228, s:10, special:'light' },
+  { label: 'Bleu IFRAS', h: 228, s: 65 },
+  { label: 'Indigo',     h: 248, s: 60 },
+  { label: 'Violet',     h: 270, s: 55 },
+  { label: 'Cyan',       h: 195, s: 65 },
+  { label: 'Vert',       h: 152, s: 55 },
+  { label: 'Émeraude',   h: 168, s: 60 },
+  { label: 'Ambre',      h: 38,  s: 75 },
+  { label: 'Rouge',      h: 355, s: 60 },
+  { label: 'Rose',       h: 330, s: 60 },
+  { label: 'Noir',       h: 228, s: 10, special: 'dark' },
+  { label: 'Blanc',      h: 228, s: 10, special: 'light' },
 ];
-let currentH=228, currentS=65, currentSpecial=null;
+const THEME_VARS = ['--bg-dark', '--bg-main', '--bg-light', '--bg-hover', '--bg-card', '--border', '--border-sub', '--accent', '--accent-dim', '--text-main', '--text-soft', '--text-muted', '--unread-dot'];
+const SPECIAL = {
+  dark:  { header: 'hsl(0,0%,4%)', sub: 'hsl(0,0%,5%)', vars: ['hsl(0,0%,3%)', 'hsl(0,0%,6%)', 'hsl(0,0%,9%)', 'hsl(0,0%,13%)', 'hsl(0,0%,7%)', 'hsl(0,0%,18%)', 'hsl(0,0%,12%)', 'hsl(228,65%,60%)', 'hsl(228,55%,45%)', 'hsl(0,0%,90%)', 'hsl(0,0%,62%)', 'hsl(0,0%,44%)', 'hsl(228,70%,65%)'] },
+  light: { header: 'hsl(220,20%,95%)', sub: 'hsl(220,20%,94%)', vars: ['hsl(220,20%,96%)', 'hsl(220,20%,98%)', 'hsl(220,15%,93%)', 'hsl(220,15%,89%)', 'hsl(0,0%,100%)', 'hsl(220,15%,82%)', 'hsl(220,15%,88%)', 'hsl(228,65%,55%)', 'hsl(228,55%,40%)', 'hsl(220,25%,15%)', 'hsl(220,15%,38%)', 'hsl(220,10%,52%)', 'hsl(228,70%,55%)'] }
+};
 
-function applyTheme(h,s,special) {
-  currentH=h; currentS=s; currentSpecial=special||null;
-  const root=document.documentElement;
+let currentH = 228, currentS = 65, currentSpecial = null;
+
+function setVisual(h, s, special) {
+  const root = document.documentElement;
+  const header = document.querySelector('.site-header');
+  const sub = document.querySelector('.subnav');
   root.classList.toggle('theme-light', special === 'light');
-  if (special==='dark') {
-    root.style.setProperty('--hue',228); root.style.setProperty('--sat','8%');
-    root.style.setProperty('--bg-dark','hsl(0,0%,3%)'); root.style.setProperty('--bg-main','hsl(0,0%,6%)');
-    root.style.setProperty('--bg-light','hsl(0,0%,9%)'); root.style.setProperty('--bg-hover','hsl(0,0%,13%)');
-    root.style.setProperty('--bg-card','hsl(0,0%,7%)');
-    root.style.setProperty('--border','hsl(0,0%,18%)'); root.style.setProperty('--border-sub','hsl(0,0%,12%)');
-    root.style.setProperty('--accent','hsl(228,65%,60%)'); root.style.setProperty('--accent-dim','hsl(228,55%,45%)');
-    root.style.setProperty('--text-main','hsl(0,0%,90%)'); root.style.setProperty('--text-soft','hsl(0,0%,60%)');
-    root.style.setProperty('--text-muted','hsl(0,0%,38%)');
-    document.querySelector('header').style.background='hsl(0,0%,4%)';
-    document.querySelector('.sub-nav').style.background='hsl(0,0%,5%)';
-  } else if (special==='light') {
-    root.style.setProperty('--hue',228); root.style.setProperty('--sat','8%');
-    root.style.setProperty('--bg-dark','hsl(220,20%,96%)'); root.style.setProperty('--bg-main','hsl(220,20%,98%)');
-    root.style.setProperty('--bg-light','hsl(220,15%,93%)'); root.style.setProperty('--bg-hover','hsl(220,15%,89%)');
-    root.style.setProperty('--bg-card','hsl(0,0%,100%)');
-    root.style.setProperty('--border','hsl(220,15%,82%)'); root.style.setProperty('--border-sub','hsl(220,15%,88%)');
-    root.style.setProperty('--accent','hsl(228,65%,55%)'); root.style.setProperty('--accent-dim','hsl(228,55%,40%)');
-    root.style.setProperty('--text-main','hsl(220,25%,15%)'); root.style.setProperty('--text-soft','hsl(220,15%,40%)');
-    root.style.setProperty('--text-muted','hsl(220,10%,60%)');
-    document.querySelector('header').style.background='hsl(220,20%,95%)';
-    document.querySelector('.sub-nav').style.background='hsl(220,20%,94%)';
+  if (special && SPECIAL[special]) {
+    const cfg = SPECIAL[special];
+    root.style.setProperty('--hue', 228);
+    root.style.setProperty('--sat', '8%');
+    THEME_VARS.forEach((v, i) => root.style.setProperty(v, cfg.vars[i]));
+    header.style.background = cfg.header;
+    sub.style.background = cfg.sub;
+    document.querySelector('meta[name="theme-color"]').content = cfg.header;
   } else {
-    document.querySelector('header').style.background='';
-    document.querySelector('.sub-nav').style.background='';
-    ['--bg-dark','--bg-main','--bg-light','--bg-hover','--bg-card','--border','--border-sub','--accent','--accent-dim','--text-main','--text-soft','--text-muted','--unread-dot'].forEach(p=>root.style.removeProperty(p));
-    root.style.setProperty('--hue',h); root.style.setProperty('--sat',s+'%');
+    THEME_VARS.forEach((v) => root.style.removeProperty(v));
+    header.style.background = ''; sub.style.background = '';
+    root.style.setProperty('--hue', h);
+    root.style.setProperty('--sat', s + '%');
   }
-  document.getElementById('satRange').style.background=`linear-gradient(90deg,hsl(${h},0%,55%),hsl(${h},100%,55%))`;
-  document.getElementById('satRange').value=s;
-  updateHueThumb(h); updateSwatches(h,s,special); updateHexPreview();
-  const hi=document.getElementById('hexInput');
-  if (hi) { hi.value=''; hi.classList.remove('invalid'); }
-  sessionStorage.setItem('ifras_theme',JSON.stringify({h,s,special:special||null}));
+  $('satRange').value = s;
+  updateHueThumb(h);
+  updateSwatches(h, s, special);
+  $('hexPreview').style.background = `hsl(${h},${s}%,55%)`;
 }
-function updateHueThumb(h){document.getElementById('hueThumb').style.left=(h/360*100)+'%';}
-function updateSwatches(h,s,special){
-  document.querySelectorAll('.swatch').forEach(sw=>{
-    const m=special?sw.dataset.special===special:parseInt(sw.dataset.h)===h&&parseInt(sw.dataset.s)===s&&!sw.dataset.special;
-    sw.classList.toggle('active',m);
+
+function applyTheme(h, s, special) {
+  currentH = h; currentS = s; currentSpecial = special || null;
+  setVisual(h, s, special);
+  /* on vide le champ HEX (plus de valeur manuelle) puis on ré-affiche le message ouvert */
+  const hexInp = $('hexInput');
+  if (hexInp) { hexInp.value = ''; hexInp.classList.remove('invalid'); }
+  try { sessionStorage.setItem('ifras_theme', JSON.stringify({ h, s, special: special || null })); } catch (e) {}
+}
+
+
+function updateHueThumb(h) {
+  $('hueThumb').style.left = (h / 360 * 100) + '%';
+  $('hueWrap').setAttribute('aria-valuenow', h);
+}
+function updateSwatches(h, s, special) {
+  document.querySelectorAll('.swatch').forEach((sw) => {
+    const match = special
+      ? sw.dataset.special === special
+      : Number(sw.dataset.h) === h && Number(sw.dataset.s) === s && !sw.dataset.special;
+    sw.classList.toggle('active', match);
+    sw.setAttribute('aria-pressed', String(match));
   });
 }
-function updateHexPreview(){const p=document.getElementById('hexPreview');if(p)p.style.background=`hsl(${currentH},${currentS}%,55%)`;}
-function normalizeHex(hex){if(!hex||typeof hex!=='string')return null;hex=hex.trim().toLowerCase();if(/^#[0-9a-f]{3}$/.test(hex))return'#'+hex[1]+hex[1]+hex[2]+hex[2]+hex[3]+hex[3];if(/^#[0-9a-f]{6}$/.test(hex))return hex;return null;}
-function applyHex(){
-  const val=document.getElementById('hexInput').value.trim(),inp=document.getElementById('hexInput');
-  if(!val.startsWith('#')||(val.length!==4&&val.length!==7)){inp.classList.add('invalid');return;}
-  inp.classList.remove('invalid');
-  const norm=normalizeHex(val);if(!norm)return;
-  let hex=norm.slice(1);
-  const r=parseInt(hex.slice(0,2),16)/255,g=parseInt(hex.slice(2,4),16)/255,b=parseInt(hex.slice(4,6),16)/255;
-  const max=Math.max(r,g,b),min=Math.min(r,g,b);let hh=0,ss=0,ll=(max+min)/2;
-  if(max!==min){const d=max-min;ss=ll>.5?d/(2-max-min):d/(max+min);switch(max){case r:hh=((g-b)/d+(g<b?6:0))/6;break;case g:hh=((b-r)/d+2)/6;break;case b:hh=((r-g)/d+4)/6;break;}}
-  applyTheme(Math.round(hh*360),Math.round(ss*100));
+
+function normalizeHex(hex) {
+  if (!hex || typeof hex !== 'string') return null;
+  hex = hex.trim().toLowerCase();
+  if (/^#[0-9a-f]{3}$/.test(hex)) return '#' + hex[1] + hex[1] + hex[2] + hex[2] + hex[3] + hex[3];
+  if (/^#[0-9a-f]{6}$/.test(hex)) return hex;
+  return null;
 }
-(function buildSwatches(){
-  const wrap=document.getElementById('swatches');
-  PRESETS.forEach(p=>{
-    const sw=document.createElement('div');sw.className='swatch';sw.dataset.h=p.h;sw.dataset.s=p.s;
-    if(p.special)sw.dataset.special=p.special;sw.title=p.label;
-    if(p.special==='dark')sw.style.background='#111';
-    else if(p.special==='light'){sw.style.background='#eee';sw.style.border='2px solid #ccc';}
-    else sw.style.background=`hsl(${p.h},${p.s}%,55%)`;
-    if(p.h===228&&!p.special)sw.classList.add('active');
-    sw.addEventListener('click',()=>applyTheme(p.h,p.s,p.special));
+function colorsMatch(a, b) {
+  const na = normalizeHex(a), nb = normalizeHex(b);
+  return na && nb && na === nb;
+}
+
+function applyHex() {
+  const inp = $('hexInput');
+  const val = inp.value.trim();
+  const norm = normalizeHex(val);
+  if (!norm) {
+    inp.classList.remove('invalid'); void inp.offsetWidth; inp.classList.add('invalid');
+    return;
+  }
+  inp.classList.remove('invalid');
+  /* conversion en teinte / saturation */
+  const hex = norm.slice(1);
+  const r = parseInt(hex.slice(0, 2), 16) / 255, g = parseInt(hex.slice(2, 4), 16) / 255, b = parseInt(hex.slice(4, 6), 16) / 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  let hh = 0, ss = 0; const ll = (max + min) / 2;
+  if (max !== min) {
+    const d = max - min;
+    ss = ll > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: hh = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+      case g: hh = ((b - r) / d + 2) / 6; break;
+      case b: hh = ((r - g) / d + 4) / 6; break;
+    }
+  }
+  applyTheme(Math.round(hh * 360), Math.round(ss * 100), null);
+}
+
+(function buildSwatches() {
+  const wrap = $('swatches');
+  PRESETS.forEach((p) => {
+    const sw = document.createElement('button');
+    sw.type = 'button';
+    sw.className = 'swatch';
+    sw.dataset.h = p.h; sw.dataset.s = p.s;
+    if (p.special) sw.dataset.special = p.special;
+    sw.title = p.label;
+    sw.setAttribute('aria-label', p.label);
+    sw.style.background = p.special === 'dark' ? '#111' : p.special === 'light' ? '#eee' : `hsl(${p.h},${p.s}%,55%)`;
+    if (p.h === 228 && !p.special) sw.classList.add('active');
+    sw.addEventListener('click', () => applyTheme(p.h, p.s, p.special));
     wrap.appendChild(sw);
   });
-  updateHexPreview();
+  $('hexPreview').style.background = `hsl(${currentH},${currentS}%,55%)`;
 })();
-(function initHueBar(){
-  const wrap=document.getElementById('hueWrap');let dragging=false;
-  function sfe(e){const rect=wrap.getBoundingClientRect();const x=Math.max(0,Math.min(e.clientX-rect.left,rect.width));applyTheme(Math.round(x/rect.width*360),currentS,null);}
-  wrap.addEventListener('mousedown',e=>{dragging=true;sfe(e);});
-  document.addEventListener('mousemove',e=>{if(dragging)sfe(e);});
-  document.addEventListener('mouseup',()=>{dragging=false;});
+
+/* barre de teinte : souris, doigt et clavier */
+(function initHueBar() {
+  const wrap = $('hueWrap');
+  let dragging = false;
+  const setFrom = (e) => {
+    const rect = wrap.getBoundingClientRect();
+    const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+    applyTheme(Math.round(x / rect.width * 360), currentS, null);
+  };
+  wrap.addEventListener('pointerdown', (e) => { dragging = true; wrap.setPointerCapture(e.pointerId); setFrom(e); });
+  wrap.addEventListener('pointermove', (e) => { if (dragging) setFrom(e); });
+  wrap.addEventListener('pointerup', () => { dragging = false; });
+  wrap.addEventListener('keydown', (e) => {
+    const step = e.shiftKey ? 20 : 5;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { e.preventDefault(); applyTheme((currentH + step) % 360, currentS, null); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { e.preventDefault(); applyTheme((currentH - step + 360) % 360, currentS, null); }
+  });
   updateHueThumb(currentH);
 })();
-document.getElementById('satRange').addEventListener('input',function(){applyTheme(currentH,parseInt(this.value),null);});
-function toggleSettings(){document.getElementById('settingsPanel').classList.toggle('active');}
-document.addEventListener('click',e=>{const w=document.querySelector('.settings-wrapper');if(!w.contains(e.target))document.getElementById('settingsPanel').classList.remove('active');});
+$('satRange').addEventListener('input', function () { applyTheme(currentH, parseInt(this.value, 10), null); });
+$('hexApply').addEventListener('click', applyHex);
+$('hexInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') applyHex(); });
+$('hexInput').addEventListener('input', function () {
+  const n = normalizeHex(this.value);
+  if (n) $('hexPreview').style.background = n;
+  this.classList.remove('invalid');
+});
 
 /* ============================================================
-   AUTH
+   PANNEAU DE RÉGLAGES
    ============================================================ */
-async function logout(){sessionStorage.removeItem('ifras_theme');await _sb.auth.signOut();window.location.href='connexion.html';}
-_sb.auth.onAuthStateChange(ev=>{if(ev==='SIGNED_OUT')window.location.href='connexion.html';});
-let inactivityTimer=null;
-function resetInactivityTimer(){clearTimeout(inactivityTimer);inactivityTimer=setTimeout(logout,10*60*1000);}
-['mousemove','mousedown','keydown','touchstart','scroll','click'].forEach(e=>document.addEventListener(e,resetInactivityTimer,{passive:true}));
-resetInactivityTimer();
-
-let toastTimer=null;
-function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),3500);}
-function initials(email){const p=email.split('@')[0].split('.');return(p[0][0]+(p[1]?p[1][0]:'')).toUpperCase();}
+const settingsBtn = $('settingsBtn'), settingsPanel = $('settingsPanel');
+const setSettings = (open) => {
+  settingsPanel.classList.toggle('is-open', open);
+  settingsBtn.setAttribute('aria-expanded', String(open));
+};
+settingsBtn.addEventListener('click', () => setSettings(!settingsPanel.classList.contains('is-open')));
+document.addEventListener('click', (e) => { if (!e.target.closest('.settings')) setSettings(false); });
 
 /* ============================================================
-   STATE
+   TOAST
+   ============================================================ */
+let toastTimer = null;
+function showToast(msg) {
+  const t = $('toast');
+  t.querySelector('span').textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+/* ============================================================
+   AUTH (inchangé) + décompte d'inactivité visible
+   ============================================================ */
+async function logout() {
+  try { sessionStorage.removeItem('ifras_theme'); } catch (e) {}
+  await _sb.auth.signOut();
+  window.location.href = 'connexion.html';
+}
+$('logoutBtn').addEventListener('click', logout);
+_sb.auth.onAuthStateChange((ev) => { if (ev === 'SIGNED_OUT') window.location.href = 'connexion.html'; });
+
+const IDLE_MS = 10 * 60 * 1000;
+let idleDeadline = Date.now() + IDLE_MS, inactivityTimer = null;
+function resetInactivityTimer() {
+  idleDeadline = Date.now() + IDLE_MS;
+  clearTimeout(inactivityTimer);
+  inactivityTimer = setTimeout(logout, IDLE_MS);
+}
+['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll', 'click'].forEach((e) =>
+  document.addEventListener(e, resetInactivityTimer, { passive: true, capture: true }));
+resetInactivityTimer();
+setInterval(() => {
+  const left = Math.max(0, idleDeadline - Date.now());
+  const el = $('idleLabel');
+  el.innerHTML = `<i class="ph-light ph-timer" aria-hidden="true"></i> Déconnexion auto dans ${Math.floor(left / 60000)}:${String(Math.floor(left / 1000) % 60).padStart(2, '0')}`;
+  el.classList.toggle('warn', left < 60000);
+}, 1000);
+
+function initials(email) {
+  const p = String(email || '?').split('@')[0].split(/[._-]/);
+  return ((p[0] || '?')[0] + (p[1] ? p[1][0] : '')).toUpperCase();
+}
+function hueOf(str) { let h = 0; for (const c of String(str)) h = (h * 31 + c.charCodeAt(0)) % 360; return h; }
+
+/* ============================================================
+   ÉTAT
    ============================================================ */
 let currentVault = 'public';
 let userClearanceLevel = 0; // 1-4
 let userClearanceRaw = '';
 let currentUserId = '';
 let currentUserEmail = '';
+const LEVEL_COLORS = ['', '#4ade80', '#fbbf24', '#f87171', '#a78bfa'];
 
 function getClearanceLevel(raw) {
   if (!raw) return 0;
@@ -508,147 +1047,161 @@ function getClearanceLevel(raw) {
   return 0;
 }
 
-function clearanceClass(level) {
-  return ['','niveau-1','niveau-2','niveau-3','niveau-4'][level] || '';
-}
-
-function fileTypeIcon(filename) {
-  if (!filename) return '📄';
-  const ext = filename.split('.').pop().toLowerCase();
-  const icons = { pdf:'📕', png:'🖼', jpg:'🖼', jpeg:'🖼', gif:'🖼', webp:'🖼', svg:'🖼',
-    doc:'📝', docx:'📝', xls:'📊', xlsx:'📊', ppt:'📋', pptx:'📋',
-    zip:'🗜', rar:'🗜', mp4:'🎬', mp3:'🎵', txt:'📃', csv:'📊', json:'⚙' };
-  return icons[ext] || '📄';
+/* type de fichier : icône + couleur */
+function fileType(filename) {
+  const ext = String(filename || '').split('.').pop().toLowerCase();
+  const map = {
+    pdf: ['ph-file-pdf', '#f87171'], doc: ['ph-file-doc', '#60a5fa'], docx: ['ph-file-doc', '#60a5fa'],
+    xls: ['ph-file-xls', '#34d399'], xlsx: ['ph-file-xls', '#34d399'], csv: ['ph-file-csv', '#34d399'],
+    ppt: ['ph-file-ppt', '#fb923c'], pptx: ['ph-file-ppt', '#fb923c'],
+    png: ['ph-file-image', '#c084fc'], jpg: ['ph-file-image', '#c084fc'], jpeg: ['ph-file-image', '#c084fc'], gif: ['ph-file-image', '#c084fc'], webp: ['ph-file-image', '#c084fc'], svg: ['ph-file-svg', '#c084fc'],
+    zip: ['ph-file-zip', '#facc15'], rar: ['ph-file-zip', '#facc15'],
+    mp4: ['ph-file-video', '#f472b6'], mp3: ['ph-file-audio', '#f472b6'],
+    txt: ['ph-file-text', '#aab3d6'], json: ['ph-file-code', '#67e8f9']
+  };
+  return map[ext] || ['ph-file', '#aab3d6'];
 }
 
 function formatDate(iso) {
   if (!iso) return '—';
-  return new Date(iso).toLocaleDateString('fr-FR', { day:'2-digit', month:'short', year:'numeric' });
+  return new Date(iso).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
 }
 
 /* ============================================================
-   VAULT SWITCH
+   CHOIX DU COFFRE
    ============================================================ */
+const PLACEHOLDER = { public: "Nom du fichier, programme ou mot-clé…", private: 'Nom du fichier ou mot-clé…' };
 function switchVault(vault) {
+  if (vault === currentVault) return;
   currentVault = vault;
-  document.getElementById('tabPublic').classList.toggle('active', vault === 'public');
-  document.getElementById('tabPrivate').classList.toggle('active', vault === 'private');
-  document.getElementById('searchInput').value = '';
-  document.getElementById('searchInput').placeholder = vault === 'public'
-    ? 'Rechercher par nom, programme, mot-clé…'
-    : 'Rechercher dans votre coffre personnel…';
+  $('vaultSwitch').dataset.vault = vault;
+  $('tabPublic').setAttribute('aria-selected', String(vault === 'public'));
+  $('tabPrivate').setAttribute('aria-selected', String(vault === 'private'));
+  $('searchInput').value = '';
+  $('searchInput').placeholder = PLACEHOLDER[vault];
+  $('vaultLabel').innerHTML = vault === 'public'
+    ? '<i class="ph-light ph-globe-hemisphere-west" aria-hidden="true"></i> Archive publique'
+    : '<i class="ph-light ph-lock-key" aria-hidden="true"></i> Coffre personnel';
+  renderRecent();
   showIdle();
+  $('searchInput').focus();
 }
+document.querySelectorAll('.vault-tab').forEach((t) => t.addEventListener('click', () => switchVault(t.dataset.vault)));
+/* flèches gauche/droite entre les deux onglets */
+$('vaultSwitch').addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+    const next = currentVault === 'public' ? 'private' : 'public';
+    switchVault(next);
+    $(next === 'public' ? 'tabPublic' : 'tabPrivate').focus();
+  }
+});
 
 function showIdle() {
-  document.getElementById('vaultResults').innerHTML = `
-    <div class="vault-state">
-      <div class="vault-state-icon">📂</div>
-      <div class="vault-state-title">Entrez un terme de recherche</div>
-      <div>Les résultats s'afficheront ici selon votre habilitation</div>
-    </div>`;
+  $('vaultResults').innerHTML = currentVault === 'public'
+    ? `<div class="state"><i class="ph-light ph-folder-simple-lock" aria-hidden="true"></i><strong>L'archive est verrouillée</strong>Recherchez un document : seuls ceux compatibles avec votre habilitation s'ouvriront.</div>`
+    : `<div class="state"><i class="ph-light ph-lock-key" aria-hidden="true"></i><strong>Votre coffre personnel</strong>Recherchez un de vos documents par son nom ou un mot-clé.</div>`;
+}
+
+/* recherches récentes, par coffre, le temps de la session */
+function getRecent() { try { return JSON.parse(sessionStorage.getItem('ifras_vault_recent_' + currentVault) || '[]'); } catch (e) { return []; } }
+function pushRecent(term) {
+  const list = [term, ...getRecent().filter((t) => t.toLowerCase() !== term.toLowerCase())].slice(0, 5);
+  try { sessionStorage.setItem('ifras_vault_recent_' + currentVault, JSON.stringify(list)); } catch (e) {}
+  renderRecent();
+}
+function renderRecent() {
+  const box = $('recent'), list = getRecent();
+  box.hidden = !list.length;
+  box.innerHTML = list.length ? '<span class="recent-label">Récemment :</span>' : '';
+  list.forEach((t) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.innerHTML = `<i class="ph-light ph-clock-counter-clockwise" aria-hidden="true"></i>${esc(t)}`;
+    b.addEventListener('click', () => { $('searchInput').value = t; doSearch(); });
+    box.appendChild(b);
+  });
 }
 
 /* ============================================================
-   SEARCH
+   RECHERCHE
    ============================================================ */
+let searching = false;
 async function doSearch() {
-  const term = document.getElementById('searchInput').value.trim();
-  if (!term) return;
+  const term = $('searchInput').value.trim();
+  if (!term) { $('searchInput').focus(); return; }
+  if (searching) return;
+  searching = true;
 
-  const box = document.getElementById('vaultResults');
-  box.innerHTML = `<div class="vault-state"><div class="vault-state-icon" style="animation:spin 1s linear infinite">⟳</div><div>Recherche en cours…</div></div>`;
+  const box = $('vaultResults'), btn = $('searchBtn');
+  btn.disabled = true; btn.classList.add('is-busy');
+  btn.innerHTML = '<i class="ph-light ph-circle-notch" aria-hidden="true"></i> Vérification…';
+  $('dial').classList.add('is-busy');
+  box.innerHTML = '<div class="scan"></div><div class="scan" style="opacity:.6"></div>';
 
-  if (currentVault === 'public') {
-    await searchPublic(term, box);
-  } else {
-    await searchPrivate(term, box);
+  try {
+    if (currentVault === 'public') await searchPublic(term, box);
+    else await searchPrivate(term, box);
+    /* on ne mémorise que les recherches qui ont trouvé quelque chose */
+    if (box.querySelector('.file, .forbidden')) pushRecent(term);
+  } finally {
+    searching = false;
+    btn.disabled = false; btn.classList.remove('is-busy');
+    btn.innerHTML = '<i class="ph-light ph-key" aria-hidden="true"></i> Déverrouiller';
+    $('dial').classList.remove('is-busy');
   }
 }
+$('searchForm').addEventListener('submit', (e) => { e.preventDefault(); doSearch(); });
 
-/* ---- MATCHING PAR MOT ENTIER ---- */
+/* ---- correspondance par mot entier (logique d'origine) ---- */
 function matchesTerm(f, term) {
   const t = term.trim().toLowerCase();
-
-  // 1. Nom de fichier exact (avec ou sans extension)
   const nameWithoutExt = (f.filename || '').replace(/\.[^.]+$/, '').toLowerCase();
-  const nameFull       = (f.filename || '').toLowerCase();
+  const nameFull = (f.filename || '').toLowerCase();
   if (nameWithoutExt === t || nameFull === t) return true;
-
-  // 2. Mot-clé exact (séparés par virgule ou espace)
-  const keywords = (f.keywords || '').toLowerCase().split(/[,\s]+/).map(k => k.trim()).filter(Boolean);
-  if (keywords.some(k => k === t)) return true;
-
-  // 3. Programme exact
+  const keywords = (f.keywords || '').toLowerCase().split(/[,\s]+/).map((k) => k.trim()).filter(Boolean);
+  if (keywords.some((k) => k === t)) return true;
   if ((f.program || '').toLowerCase() === t) return true;
-
   return false;
 }
 
-/* ---- COFFRE PUBLIC ---- */
+const serverError = () => `<div class="state is-error"><i class="ph-light ph-warning-octagon" aria-hidden="true"></i><strong>Erreur serveur</strong>Le coffre n'a pas pu être interrogé. Réessayez dans un instant.</div>`;
+const notFound = (term, where) => `<div class="state"><i class="ph-light ph-file-dashed" aria-hidden="true"></i><strong>Aucun document trouvé</strong>Rien ne correspond exactement à « ${esc(term)} » dans ${where}.</div>`;
+const resultsHead = (n) => `<div class="results-head"><span><strong>${n}</strong> document${n > 1 ? 's' : ''} accessible${n > 1 ? 's' : ''}</span></div>`;
+
+/* ---- ARCHIVE PUBLIQUE ---- */
 async function searchPublic(term, box) {
-  // Chercher tous les fichiers correspondant au terme (sans filtre clearance côté serveur)
   const { data, error } = await _sb
     .from('vault_public')
     .select('*')
     .or(`filename.ilike.%${term}%,keywords.ilike.%${term}%,program.ilike.%${term}%`)
     .order('created_at', { ascending: false });
 
-  if (error) { box.innerHTML = `<div class="vault-state"><div class="vault-state-icon">⚠</div><div class="vault-state-title">Erreur serveur</div></div>`; return; }
+  if (error) { box.innerHTML = serverError(); return; }
 
-  // Filtrer côté client : matching par mot entier uniquement
-  const matched = (data || []).filter(f => matchesTerm(f, term));
+  const matched = (data || []).filter((f) => matchesTerm(f, term));
+  if (!matched.length) { box.innerHTML = notFound(term, "l'archive publique"); return; }
 
-  if (matched.length === 0) {
-    box.innerHTML = `
-      <div class="vault-state">
-        <div class="vault-state-icon">🔍</div>
-        <div class="vault-state-title">Aucun document trouvé</div>
-        <div>Le fichier « ${term} » n'existe pas dans l'archive publique</div>
+  const accessible = matched.filter((f) => getClearanceLevel(f.clearance_required) <= userClearanceLevel);
+  const forbidden = matched.filter((f) => getClearanceLevel(f.clearance_required) > userClearanceLevel);
+
+  box.innerHTML = accessible.length ? resultsHead(accessible.length) : '';
+  accessible.forEach((f, i) => box.appendChild(buildFileCard(f, 'public', i)));
+
+  if (forbidden.length) {
+    const need = Math.max(...forbidden.map((f) => getClearanceLevel(f.clearance_required)));
+    const fb = document.createElement('div');
+    fb.className = 'forbidden';
+    fb.innerHTML = `
+      <span class="file-icon" aria-hidden="true"><i class="ph-light ph-lock-key"></i></span>
+      <div>
+        <strong>${accessible.length ? `${forbidden.length} document${forbidden.length > 1 ? 's' : ''} hors habilitation` : 'Habilitation insuffisante'}</strong>
+        <p>${accessible.length ? 'Votre' : 'Ce document existe, mais votre'} niveau (${esc(userClearanceRaw || 'aucun')}) ne permet pas de consulter ${forbidden.length === 1 ? 'ce document' : 'ces documents'}. Niveau requis : ${need}.</p>
       </div>`;
-    return;
-  }
-
-  // Séparer accessibles et interdits (sur les résultats filtrés)
-  const data_filtered = matched;
-  // Remplacer data par data_filtered pour la suite
-  Object.defineProperty(window, '_vaultFiltered', { value: data_filtered, writable: true, configurable: true });
-
-  // Séparer accessibles et interdits
-  const results = window._vaultFiltered || [];
-  const accessible = results.filter(f => getClearanceLevel(f.clearance_required) <= userClearanceLevel);
-  const forbidden  = results.filter(f => getClearanceLevel(f.clearance_required) > userClearanceLevel);
-
-  box.innerHTML = '';
-
-  if (accessible.length > 0) {
-    accessible.forEach(f => box.appendChild(buildFileCard(f, 'public')));
-  }
-
-  if (forbidden.length > 0) {
-    const fbDiv = document.createElement('div');
-    fbDiv.className = 'vault-state forbidden';
-    fbDiv.innerHTML = `
-      <div class="vault-state-icon">🚫</div>
-      <div class="vault-state-title">${forbidden.length} document(s) hors habilitation</div>
-      <div>Votre niveau d'accès (${userClearanceRaw || '—'}) ne permet pas de consulter ${forbidden.length === 1 ? 'ce document' : 'ces documents'}.</div>`;
-    box.appendChild(fbDiv);
-  }
-
-  if (accessible.length === 0 && forbidden.length > 0) {
-    // Rien d'accessible — remplacer le contenu par juste le message forbidden
-    box.innerHTML = '';
-    const fbDiv = document.createElement('div');
-    fbDiv.className = 'vault-state forbidden';
-    fbDiv.innerHTML = `
-      <div class="vault-state-icon">🚫</div>
-      <div class="vault-state-title">Habilitation insuffisante</div>
-      <div>Ce document existe mais votre niveau d'accès (${userClearanceRaw || '—'}) ne vous autorise pas à le consulter.</div>`;
-    box.appendChild(fbDiv);
+    box.appendChild(fb);
   }
 }
 
-/* ---- COFFRE PRIVÉ ---- */
+/* ---- COFFRE PERSONNEL ---- */
 async function searchPrivate(term, box) {
   const { data, error } = await _sb
     .from('vault_private')
@@ -657,25 +1210,15 @@ async function searchPrivate(term, box) {
     .or(`filename.ilike.%${term}%,keywords.ilike.%${term}%`)
     .order('created_at', { ascending: false });
 
-  if (error) { box.innerHTML = `<div class="vault-state"><div class="vault-state-icon">⚠</div><div class="vault-state-title">Erreur serveur</div></div>`; return; }
+  if (error) { box.innerHTML = serverError(); return; }
+  const matched = (data || []).filter((f) => matchesTerm(f, term));
+  if (!matched.length) { box.innerHTML = notFound(term, 'votre coffre personnel'); return; }
 
-  const matched = (data || []).filter(f => matchesTerm(f, term));
-
-  if (matched.length === 0) {
-    box.innerHTML = `
-      <div class="vault-state">
-        <div class="vault-state-icon">🔍</div>
-        <div class="vault-state-title">Aucun document trouvé</div>
-        <div>Aucun fichier ne correspond à « ${term} » dans votre coffre personnel</div>
-      </div>`;
-    return;
-  }
-
-  box.innerHTML = '';
-  matched.forEach(f => box.appendChild(buildFileCard(f, 'private')));
+  box.innerHTML = resultsHead(matched.length);
+  matched.forEach((f, i) => box.appendChild(buildFileCard(f, 'private', i)));
 }
 
-/* ---- SIGNED URL ---- */
+/* ---- URL SIGNÉE (inchangé) ---- */
 async function getSignedUrl(fileUrl) {
   if (!fileUrl) return null;
   if (fileUrl.startsWith('http')) return fileUrl;
@@ -687,81 +1230,95 @@ async function getSignedUrl(fileUrl) {
   return data.signedUrl;
 }
 
-/* ---- FORCE DOWNLOAD via blob ---- */
-async function forceDownload(url, filename) {
-  const btn = event.currentTarget;
+/* ---- TÉLÉCHARGEMENT FORCÉ via blob ---- */
+async function forceDownload(btn, url, filename) {
   const orig = btn.innerHTML;
-  btn.innerHTML = '⏳ …'; btn.disabled = true;
+  btn.innerHTML = '<i class="ph-light ph-circle-notch" aria-hidden="true"></i> Téléchargement…';
+  btn.classList.add('is-busy'); btn.disabled = true;
   try {
     const resp = await fetch(url);
     if (!resp.ok) throw new Error();
-    const blob = await resp.blob();
-    const blobUrl = URL.createObjectURL(blob);
+    const blobUrl = URL.createObjectURL(await resp.blob());
     const a = document.createElement('a');
     a.href = blobUrl; a.download = filename;
-    document.body.appendChild(a); a.click();
-    document.body.removeChild(a);
+    document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
-  } catch(e) {
-    showToast('⚠ Échec du téléchargement');
+    btn.innerHTML = '<i class="ph-light ph-check" aria-hidden="true"></i> Téléchargé';
+    setTimeout(() => { btn.innerHTML = orig; }, 1800);
+  } catch (e) {
+    btn.innerHTML = orig;
+    showToast('Échec du téléchargement');
   } finally {
-    btn.innerHTML = orig; btn.disabled = false;
+    btn.classList.remove('is-busy'); btn.disabled = false;
   }
 }
 
-/* ---- BUILD FILE CARD ---- */
-function buildFileCard(f, type) {
-  const card = document.createElement('div');
-  card.className = 'file-card';
-
+/* ---- CARTE FICHIER ---- */
+function buildFileCard(f, type, i = 0) {
+  const card = document.createElement('article');
+  card.className = 'file';
+  const [icon, color] = fileType(f.filename);
+  card.style.setProperty('--ft', color);
+  card.style.setProperty('--i', i);
   const lvl = getClearanceLevel(f.clearance_required);
-  const lvlClass = type === 'public' ? `lvl-${lvl}` : 'private';
 
-  // Boutons en état "chargement" au départ
   card.innerHTML = `
-    <div class="file-type-badge">${fileTypeIcon(f.filename)}</div>
+    <span class="file-icon" aria-hidden="true"><i class="ph-light ${icon}"></i></span>
     <div class="file-meta">
-      <div class="file-name">${f.filename || '—'}</div>
-      <div class="file-info-row">
-        <span class="file-tag ${type === 'public' ? 'public' : 'private'}">${type === 'public' ? 'Archive' : 'Privé'}</span>
-        ${type === 'public' && f.clearance_required ? `<span class="file-tag ${lvlClass}">${f.clearance_required}</span>` : ''}
-        ${f.program ? `<span style="font-size:11.5px;color:var(--text-muted)">${f.program}</span>` : ''}
-        <span class="file-date">${formatDate(f.created_at)}</span>
+      <div class="file-name" title="${esc(f.filename)}">${esc(f.filename || '—')}</div>
+      <div class="file-info">
+        ${type === 'public'
+          ? `<span class="tag" style="--t:var(--accent)">Archive</span>${f.clearance_required ? `<span class="tag" style="--t:${LEVEL_COLORS[lvl] || 'var(--text-soft)'}">${esc(f.clearance_required)}</span>` : ''}`
+          : `<span class="tag" style="--t:#34d399"><i class="ph-light ph-lock-key" aria-hidden="true"></i> Privé</span>`}
+        ${f.program ? `<span><i class="ph-light ph-rocket-launch" aria-hidden="true"></i>${esc(f.program)}</span>` : ''}
+        <span><i class="ph-light ph-calendar-blank" aria-hidden="true"></i>${esc(formatDate(f.created_at))}</span>
       </div>
-      ${f.description ? `<div class="file-desc">${f.description}</div>` : ''}
+      ${f.description ? `<div class="file-desc">${esc(f.description)}</div>` : ''}
     </div>
-    <div class="file-actions" id="actions-${f.id}">
-      <span style="font-size:12px;color:var(--text-muted)">…</span>
-    </div>`;
+    <div class="file-actions"><span class="pending"><i class="ph-light ph-circle-notch" aria-hidden="true"></i> Sécurisation du lien…</span></div>`;
 
-  // Générer l'URL signée de manière asynchrone
-  getSignedUrl(f.file_url).then(url => {
-    const actionsDiv = card.querySelector(`#actions-${f.id}`);
-    if (!url) {
-      actionsDiv.innerHTML = `<span style="font-size:11px;color:#f87171">URL indisponible</span>`;
-      return;
-    }
-    // Nom du fichier pour le téléchargement
-    const fname = f.filename || 'document';
-    const safeFname = fname.replace(/'/g, "\\'");
-    actionsDiv.innerHTML = `
-      <a class="file-dl-btn" href="${url}" target="_blank" rel="noopener" title="Ouvrir dans le navigateur">
-        👁 Ouvrir
-      </a>
-      <button class="file-dl-btn" onclick="forceDownload('${url}', '${safeFname}')" title="Télécharger">
-        ↓ Télécharger
-      </button>`;
+  getSignedUrl(f.file_url).then((url) => {
+    const actions = card.querySelector('.file-actions');
+    if (!url) { actions.innerHTML = '<span class="pending" style="color:#f87171"><i class="ph-light ph-link-break" style="animation:none" aria-hidden="true"></i> Lien indisponible</span>'; return; }
+    actions.innerHTML = `
+      <a class="fbtn" href="${esc(url)}" target="_blank" rel="noopener"><i class="ph-light ph-eye" aria-hidden="true"></i> Ouvrir</a>
+      <button class="fbtn fbtn--primary" type="button"><i class="ph-light ph-download-simple" aria-hidden="true"></i> Télécharger</button>`;
+    actions.querySelector('button').addEventListener('click', (e) => forceDownload(e.currentTarget, url, f.filename || 'document'));
   });
-
   return card;
 }
 
 /* ============================================================
-   BOOT
+   CLAVIER : « / » pour rechercher
    ============================================================ */
-(function restoreTheme(){
-  try{const s=sessionStorage.getItem('ifras_theme');if(s){const{h,s:sat,special}=JSON.parse(s);applyTheme(h,sat,special);}}catch(e){}
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') setSettings(false);
+  if (e.key === '/' && !/input|textarea|select/i.test(document.activeElement.tagName)) { e.preventDefault(); $('searchInput').focus(); }
+});
+
+/* ============================================================
+   DÉMARRAGE
+   ============================================================ */
+(function restoreTheme() {
+  try {
+    const saved = sessionStorage.getItem('ifras_theme');
+    if (saved) { const { h, s, special } = JSON.parse(saved); applyTheme(h, s, special); }
+  } catch (e) {}
 })();
+
+function renderClearance() {
+  const chip = $('userClearanceChip');
+  chip.style.setProperty('--lvl', LEVEL_COLORS[userClearanceLevel] || 'var(--text-soft)');
+  chip.innerHTML = `<i class="ph-light ${userClearanceLevel ? 'ph-shield-check' : 'ph-shield-slash'}" aria-hidden="true"></i> <span>${esc(userClearanceRaw || 'Non habilité')}</span>`;
+  document.querySelectorAll('.rung').forEach((r) => {
+    const l = Number(r.dataset.level);
+    r.classList.toggle('granted', l <= userClearanceLevel);
+    r.classList.toggle('current', l === userClearanceLevel);
+  });
+  $('ladderNote').textContent = userClearanceLevel
+    ? (userClearanceLevel < 4 ? `Vous accédez aux documents jusqu'au niveau ${userClearanceLevel}. Les niveaux supérieurs restent verrouillés.` : 'Vous accédez à tous les niveaux de l’archive.')
+    : 'Aucune habilitation : seul votre coffre personnel est accessible.';
+}
 
 async function init() {
   const { data: { session } } = await _sb.auth.getSession();
@@ -770,24 +1327,23 @@ async function init() {
   const user = session.user;
   currentUserId = user.id;
   currentUserEmail = user.email;
+  $('userAvatar').textContent = initials(user.email);
+  $('userAvatar').style.setProperty('--ah', hueOf(user.email));
+  $('userLabel').textContent = user.email.split('@')[0];
 
-  document.getElementById('userAvatar').textContent = initials(user.email);
-  document.getElementById('userLabel').textContent  = user.email.split('@')[0];
-
-  // Charger le clearance depuis profiles
+  /* habilitation depuis la table profiles */
   const { data: profile } = await _sb.from('profiles').select('clearance').eq('id', user.id).single();
   if (profile) {
-    userClearanceRaw   = profile.clearance || '';
+    userClearanceRaw = profile.clearance || '';
     userClearanceLevel = getClearanceLevel(userClearanceRaw);
   }
-
-  // Afficher le chip clearance
-  const chip = document.getElementById('userClearanceChip');
-  chip.textContent = userClearanceRaw || 'Non habilité';
-  chip.className   = 'vault-clearance-chip ' + clearanceClass(userClearanceLevel);
+  renderClearance();
 }
 
+showIdle();
+renderRecent();
 init();
 </script>
+
 </body>
 </html>
