@@ -431,7 +431,7 @@ input[type=range].sat-range::-moz-range-thumb {
 
 /* ----- Lecture ----- */
 .reader { position: relative; min-width: 0; overflow-y: auto; background: var(--bg-main); display: flex; flex-direction: column; }
-.reader-inner { max-width: 900px; width: 100%; margin: 0; padding: 22px 28px 40px; }
+.reader-inner { width: 100%; margin: 0; padding: 22px 32px 40px; }
 .reader-inner.enter { animation: readerIn 280ms var(--ease-out); }
 @keyframes readerIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
@@ -694,12 +694,6 @@ input[type=range].sat-range::-moz-range-thumb {
         <li><button class="folder" type="button" data-folder="trash"><i class="ph-light ph-trash" aria-hidden="true"></i> Corbeille <span class="folder-count" id="cnt-trash"></span></button></li>
       </ul>
     </section>
-
-    <div class="shortcuts" aria-label="Raccourcis clavier">
-      <div><span>Rechercher</span><kbd>/</kbd></div>
-      <div><span>Message suivant</span><span><kbd>↓</kbd> <kbd>J</kbd></span></div>
-      <div><span>Message précédent</span><span><kbd>↑</kbd> <kbd>K</kbd></span></div>
-    </div>
   </aside>
 
   <section class="list-pane" aria-labelledby="listTitle">
