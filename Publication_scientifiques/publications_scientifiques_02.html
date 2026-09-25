@@ -2,571 +2,1728 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>NK-125 · Propulseur ionique haute performance — IFRAS DPET</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>NK-125 : un propulseur ionique validé à 125 kW | Publications IFRAS</title>
+<meta name="description" content="Le propulseur ionique NK-125 atteint 9 620 s d'impulsion spécifique à 125 kW et valide 12 000 heures d'endurance grâce à ses trois grilles en carbure de silicium.">
+<meta name="theme-color" content="#050b1e">
+<link rel="icon" type="image/png" sizes="1000x1000" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+
 <style>
+/* =========================================================
+   TOKENS (identiques aux autres pages)
+   ========================================================= */
 :root {
-  --bg-main:#050b1e;--bg-dark:#020617;--bg-light:#070f2b;
-  --border:#1b2555;--border-sub:#0e1535;
-  --accent:#f97316;--accent2:#4f6bed;--accent3:#34d399;
-  --text-main:#e6e6e6;--text-soft:#aab3d6;--text-muted:#4a5280;
-  --mono:"DM Mono",monospace;
+  --bg-main: #050b1e;
+  --bg-dark: #020617;
+  --bg-light: #070f2b;
+  --bg-raise: #0a1436;
+  --accent: #4f6bed;
+  --accent-hover: #3d5adb;
+  --accent-soft: rgba(79,107,237,.14);
+  --accent-line: rgba(79,107,237,.38);
+  --text-main: #e6e6e6;
+  --text-strong: #f5f7ff;
+  --text-soft: #aab3d6;
+  --text-mute: #8891b8;
+  --border: #1b2555;
+
+  /* Une couleur par type de contenu */
+  --t-sci: #60a5fa;
+  --t-ifras: #34d399;
+  --t-event: #f97316;
+  /* Types de publications IFRAS */
+  --t-lettre: #60a5fa;
+  --t-rapport: #34d399;
+  --t-hs: #f97316;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --header-h: 68px;
+  --subnav-h: 48px;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:"DM Sans",sans-serif;background:var(--bg-main);color:var(--text-main);line-height:1.7;}
-::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
-header{position:fixed;top:0;width:100%;z-index:1000;background:rgba(5,11,30,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
-.header-inner{max-width:1300px;margin:auto;padding:12px 30px;display:flex;align-items:center;justify-content:space-between;}
-.header-left{display:flex;align-items:center;gap:40px;}
-.logo-link img{height:60px;}
-.main-nav{list-style:none;display:flex;gap:32px;}
-.main-nav a{text-decoration:none;color:var(--text-soft);font-size:14px;letter-spacing:.05em;}
-.main-nav a:hover{color:white;}
-.login-btn{padding:8px 18px;border-radius:6px;border:1px solid var(--accent2);color:white;text-decoration:none;font-size:13px;}
-.login-btn:hover{background:var(--accent2);}
-.sub-nav{margin-top:84px;background:var(--bg-light);border-bottom:1px solid var(--border);}
-.sub-nav ul{max-width:1300px;margin:0 auto;padding:0 30px;list-style:none;display:flex;justify-content:space-between;}
-.sub-nav li{padding:14px 0;}
-.sub-nav a{color:var(--text-soft);text-decoration:none;font-size:14px;letter-spacing:.06em;}
-.sub-nav a:hover{color:white;}
-.sub-nav a.active{color:white;border-bottom:2px solid var(--accent2);padding-bottom:12px;}
-.pub-wrapper{max-width:900px;margin:0 auto;padding:52px 30px 100px;}
-.breadcrumb{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--text-muted);letter-spacing:.06em;margin-bottom:36px;font-family:var(--mono);}
-.breadcrumb a{color:var(--text-muted);text-decoration:none;}
-.breadcrumb a:hover{color:var(--accent);}
-.breadcrumb span{opacity:.4;}
-.article-meta-top{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
-.meta-badge{font-size:10.5px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;font-weight:500;}
-.meta-badge--journal{background:rgba(249,115,22,.12);color:var(--accent);border:1px solid rgba(249,115,22,.25);}
-.meta-badge--dept{background:rgba(79,107,237,.1);color:var(--accent2);border:1px solid rgba(79,107,237,.2);}
-.meta-badge--open{background:rgba(52,211,153,.08);color:var(--accent3);border:1px solid rgba(52,211,153,.18);}
-.meta-badge--date{background:rgba(255,255,255,.04);color:var(--text-muted);border:1px solid rgba(255,255,255,.08);}
-.article-title{font-family:"DM Sans",sans-serif;font-size:clamp(18px,2.4vw,23px);font-weight:400;color:var(--text-main);line-height:1.5;letter-spacing:0;margin-bottom:18px;}
-.article-subtitle{font-size:15px;color:var(--text-soft);font-weight:300;line-height:1.65;margin-bottom:28px;font-style:italic;border-left:2px solid var(--accent);padding-left:16px;}
-.authors-block{background:var(--bg-light);border:1px solid var(--border);border-radius:10px;padding:16px 20px;display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;margin-bottom:28px;}
-.author-entry{display:flex;flex-direction:column;gap:2px;}
-.author-name{font-size:13.5px;font-weight:600;color:white;}
-.author-role{font-size:11px;color:var(--text-muted);letter-spacing:.04em;}
-.author-sep{width:1px;background:var(--border);align-self:stretch;}
-.cite-block{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:12px 16px;background:rgba(0,0,0,.25);border:1px solid var(--border-sub);border-radius:8px;}
-.cite-item{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;color:var(--text-muted);}
-.cite-label{color:var(--accent);font-weight:500;}
-.cite-sep{color:var(--border);}
-.art-divider{height:1px;background:linear-gradient(90deg,var(--accent) 0%,transparent 60%);margin:40px 0;opacity:.3;}
-.abstract-box{background:rgba(249,115,22,.04);border:1px solid rgba(249,115,22,.14);border-radius:12px;padding:28px 32px;margin-bottom:44px;}
-.abstract-label{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;font-weight:500;}
-.abstract-text{font-size:14.5px;line-height:1.8;color:var(--text-soft);font-weight:300;}
-.kw-wrap{margin-top:16px;display:flex;flex-wrap:wrap;gap:7px;align-items:center;}
-.kw-label{font-size:11px;color:var(--text-muted);font-family:var(--mono);letter-spacing:.08em;}
-.kw-tag{font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--text-soft);}
-.section-heading{font-family:"Syne",sans-serif;font-size:18px;font-weight:700;color:white;margin:44px 0 16px;display:flex;align-items:center;gap:12px;}
-.section-heading::before{content:'';display:block;width:4px;height:18px;background:var(--accent);border-radius:2px;flex-shrink:0;}
-.section-heading.blue::before{background:var(--accent2);}
-.section-heading.green::before{background:var(--accent3);}
-.subsection{font-family:"Syne",sans-serif;font-weight:700;color:var(--text-soft);margin:28px 0 10px;letter-spacing:.04em;text-transform:uppercase;font-size:11.5px;}
-p.bt{font-size:14.5px;color:var(--text-soft);line-height:1.85;font-weight:300;margin-bottom:16px;}
 
-/* SCORECARD */
-.scorecard{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:32px 0;}
-.sc-item{background:var(--bg-light);padding:22px 16px;display:flex;flex-direction:column;gap:6px;}
-.sc-val{font-family:var(--mono);font-size:28px;font-weight:500;line-height:1;letter-spacing:-0.02em;}
-.sc-val.o{color:var(--accent);}
-.sc-val.g{color:var(--accent3);}
-.sc-val.b{color:#60a5fa;}
-.sc-val.y{color:#facc15;}
-.sc-unit{font-size:10px;font-family:var(--mono);color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-top:2px;}
-.sc-label{font-size:12px;color:var(--text-soft);font-weight:300;line-height:1.35;}
+*, *::before, *::after { box-sizing: border-box; }
 
-/* TABLEAU */
-.tbl-wrap{margin:36px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);}
-.tbl-head{background:rgba(249,115,22,.08);padding:12px 20px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--border);}
-table{width:100%;border-collapse:collapse;font-size:13px;}
-thead th{background:rgba(0,0,0,.3);padding:11px 16px;text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--border-sub);font-weight:500;}
-tbody tr{border-bottom:1px solid var(--border-sub);transition:background .15s;}
-tbody tr:last-child{border-bottom:none;}
-tbody tr:hover{background:rgba(255,255,255,.025);}
-tbody td{padding:10px 16px;color:var(--text-soft);vertical-align:middle;font-weight:300;}
-.tm{font-family:var(--mono);font-size:12.5px;color:var(--text-main);}
-.tg{font-family:var(--mono);font-size:12.5px;color:var(--accent3);}
-.to{font-family:var(--mono);font-size:12.5px;color:var(--accent);}
-.ty{font-family:var(--mono);font-size:12.5px;color:#facc15;font-weight:600;}
-.tr-hi{background:rgba(249,115,22,.04);}
-.tbl-note{padding:10px 20px;font-size:11.5px;color:var(--text-muted);background:rgba(0,0,0,.2);font-style:italic;border-top:1px solid var(--border-sub);}
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 20px); }
 
-/* GRAPHIQUE */
-.chart-wrap{margin:36px 0;background:var(--bg-light);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
-.chart-inner{padding:28px 24px 16px;background:rgba(0,0,0,.15);border-bottom:1px solid var(--border-sub);}
-.chart-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:8px;}
-.chart-ttl{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);}
-.legend{display:flex;gap:14px;flex-wrap:wrap;}
-.li{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);}
-.ld{width:8px;height:8px;border-radius:2px;}
-.chart-cap{padding:12px 20px;font-size:12.5px;color:var(--text-muted);line-height:1.6;}
-.chart-cap strong{font-weight:600;color:var(--text-soft);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
+body {
+  margin: 0;
+  font-family: "DM Sans", "Segoe UI", system-ui, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
 
-/* DEUX COLONNES texte+équation */
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:28px 0;align-items:start;}
-.eq{background:rgba(0,0,0,.3);border:1px solid var(--border-sub);border-radius:8px;padding:16px 50px 16px 20px;font-family:var(--mono);font-size:13.5px;color:#c8d0f5;letter-spacing:.04em;position:relative;line-height:1.7;}
-.eq-lbl{position:absolute;right:12px;bottom:10px;font-size:10px;color:var(--text-muted);}
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+[hidden] { display: none !important; }
 
-/* PHOTO */
-.fig-wrap{margin:36px 0;background:var(--bg-light);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
-.fig-ph{height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(249,115,22,.07),rgba(249,115,22,.02));border-bottom:1px solid var(--border);gap:10px;}
-.fig-icon{font-size:32px;opacity:.25;}
-.fig-desc{font-size:11.5px;font-family:var(--mono);color:var(--text-muted);letter-spacing:.06em;}
-.fig-sub{font-size:11px;color:var(--text-muted);text-align:center;max-width:400px;line-height:1.5;}
-.fig-cap{padding:14px 20px;font-size:12.5px;color:var(--text-muted);line-height:1.6;}
-.fig-cap strong{font-weight:600;color:var(--text-soft);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
-.hl{border-left:3px solid var(--accent);background:rgba(249,115,22,.04);border-radius:0 8px 8px 0;padding:16px 20px;margin:24px 0;font-size:14px;color:var(--text-soft);font-style:italic;line-height:1.75;}
-.hl.green{border-color:var(--accent3);background:rgba(52,211,153,.04);}
-.hl.blue{border-color:var(--accent2);background:rgba(79,107,237,.05);}
+.skip-link {
+  position: absolute; left: 16px; top: -48px;
+  padding: 10px 16px;
+  background: var(--accent); color: #fff;
+  border-radius: var(--radius-sm);
+  z-index: 3000; text-decoration: none;
+  transition: top 160ms var(--ease-out);
+}
+.skip-link:focus { top: 12px; }
 
-.refs-sec{margin-top:60px;padding-top:32px;border-top:1px solid var(--border);}
-.ref-ttl{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:20px;}
-.ref-list{counter-reset:ref;display:flex;flex-direction:column;gap:10px;}
-.ref-item{display:flex;gap:14px;font-size:12.5px;color:var(--text-muted);line-height:1.6;counter-increment:ref;}
-.ref-item::before{content:'[' counter(ref) ']';font-family:var(--mono);font-size:11px;color:var(--accent);flex-shrink:0;padding-top:2px;min-width:28px;}
-.ref-item a{color:var(--accent2);text-decoration:none;}
-.ref-item a:hover{text-decoration:underline;}
-.footnote{margin-top:48px;padding:20px 24px;background:rgba(0,0,0,.25);border:1px solid var(--border-sub);border-radius:10px;font-size:11.5px;color:var(--text-muted);line-height:1.7;}
-.footnote strong{color:var(--text-soft);}
-.progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent),#fb923c);z-index:9999;width:0%;transition:width .1s linear;}
-.toc-sidebar{position:fixed;right:32px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:100;}
-.toc-dot{width:6px;height:6px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s,transform .2s;position:relative;}
-.toc-dot:hover,.toc-dot.active{background:var(--accent);transform:scale(1.5);}
-.toc-dot::after{content:attr(data-label);position:absolute;right:14px;top:50%;transform:translateY(-50%);background:var(--bg-light);border:1px solid var(--border);border-radius:5px;padding:3px 8px;font-size:10.5px;color:var(--text-soft);white-space:nowrap;font-family:var(--mono);letter-spacing:.04em;opacity:0;pointer-events:none;transition:opacity .2s;}
-.toc-dot:hover::after{opacity:1;}
-@media(max-width:1100px){.toc-sidebar{display:none;}}
-@media(max-width:680px){.scorecard{grid-template-columns:repeat(2,1fr);}.two-col{grid-template-columns:1fr;}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+.container { max-width: 1300px; margin: 0 auto; padding: 0 30px; }
+
+/* =========================================================
+   BOUTONS
+   ========================================================= */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 22px;
+  border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 500;
+  text-decoration: none; white-space: nowrap;
+  border: 1px solid transparent;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.btn:active { transform: scale(0.97); }
+.btn i { font-size: 16px; transition: transform 200ms var(--ease-out); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-ghost { border-color: var(--accent-line); color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-ghost:hover { background: var(--accent-soft); border-color: var(--accent); }
+  .btn:hover i { transform: translateX(3px); }
+}
+
+.text-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--text-soft);
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.text-link i { transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .text-link:hover { color: #fff; }
+  .text-link:hover i { transform: translateX(3px); }
+}
+
+/* =========================================================
+   HEADER (opaque)
+   ========================================================= */
+.site-header {
+  position: fixed; inset: 0 0 auto 0;
+  z-index: 2000;
+  height: var(--header-h);
+  background: rgba(5,11,30,.88);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.header-left { display: flex; align-items: center; gap: 44px; }
+.logo-link { display: flex; align-items: center; }
+.logo-link img { height: 44px; width: auto; }
+
+.main-nav { list-style: none; display: flex; gap: 6px; margin: 0; padding: 0; }
+.main-nav a {
+  position: relative; display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--text-soft);
+  font-size: 14px; letter-spacing: .02em;
+  border-radius: 6px;
+  transition: color 160ms ease;
+}
+.main-nav a::after {
+  content: ""; position: absolute;
+  left: 12px; right: 12px; bottom: 2px; height: 1px;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 200ms var(--ease-out);
+}
+.main-nav a[aria-current="page"] { color: #fff; }
+.main-nav a[aria-current="page"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .main-nav a:hover { color: #fff; }
+  .main-nav a:hover::after { transform: scaleX(1); }
+}
+
+.header-right { display: flex; align-items: center; gap: 10px; }
+.header-right .btn { padding: 9px 18px; font-size: 13px; }
+
+.menu-toggle {
+  display: none;
+  width: 42px; height: 42px;
+  align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: #fff; font-size: 20px; cursor: pointer;
+  transition: transform 160ms var(--ease-out);
+}
+.menu-toggle:active { transform: scale(0.95); }
+
+.mobile-panel {
+  position: fixed; top: var(--header-h); left: 12px; right: 12px;
+  z-index: 1999;
+  padding: 10px;
+  background: rgba(7,15,43,.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(2,6,23,.6);
+  transform-origin: top right;
+  opacity: 0; transform: scale(0.96) translateY(-6px);
+  pointer-events: none; visibility: hidden;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s linear 220ms;
+}
+.mobile-panel.is-open {
+  opacity: 1; transform: none; pointer-events: auto; visibility: visible;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s;
+}
+.mobile-panel ul { list-style: none; margin: 0; padding: 0; }
+.mobile-panel a {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px; color: var(--text-main);
+  text-decoration: none; font-size: 16px; border-radius: 10px;
+}
+.mobile-panel a[aria-current="page"] { background: var(--accent-soft); color: #fff; }
+.mobile-panel .btn { width: 100%; justify-content: center; margin-top: 8px; }
+
+/* =========================================================
+   SOUS-NAVIGATION (ancres + section visible)
+   ========================================================= */
+.subnav {
+  position: sticky;
+  top: var(--header-h);
+  margin-top: var(--header-h);
+  z-index: 1500;
+  height: var(--subnav-h);
+  background: rgba(8,18,53,.94);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.subnav-list {
+  height: 100%;
+  list-style: none; margin: 0 auto; padding: 0 30px;
+  max-width: 1300px;
+  display: flex; align-items: stretch; justify-content: space-between;
+}
+.subnav-list li { display: flex; }
+.subnav-link {
+  position: relative;
+  display: flex; align-items: center; gap: 9px;
+  padding: 0 14px;
+  color: var(--text-soft);
+  text-decoration: none;
+  font-size: 14px; font-weight: 500;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.subnav-link i { font-size: 17px; color: var(--c); }
+.subnav-link::after {
+  content: ""; position: absolute;
+  left: 14px; right: 14px; bottom: -1px; height: 2px;
+  background: var(--c);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+.subnav-link[aria-current="true"] { color: #fff; }
+.subnav-link[aria-current="true"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .subnav-link:hover { color: #fff; }
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.site-footer {
+  margin-top: 100px;
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border);
+  padding: 36px 0;
+  font-size: 13px; color: var(--text-mute);
+}
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+/* =========================================================
+   ARTICLE
+   ========================================================= */
+:root {
+  --mono: "DM Mono", ui-monospace, Menlo, Consolas, monospace;
+  --c10: #3b82f6;   /* CMC-10Z */
+  --c20: #059669;   /* CMC-20Z */
+  --c30: #ea580c;   /* CMC-30Z */
+  --hot: #f97316;
+  --ok: #34d399;
+  --warn: #fbbf24;
+  --bad: #f87171;
+  --surface: #070f2b;
+  --line: #13204d;
+}
+html { scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 24px); }
+
+/* barre de lecture sous la sous-navigation */
+.progress {
+  position: fixed; left: 0; right: 0; top: calc(var(--header-h) + var(--subnav-h)); z-index: 1400;
+  height: 2px; background: transparent; pointer-events: none;
+}
+.progress span { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, var(--accent), #fb7185); transform-origin: left; transform: scaleX(0); }
+
+/* ----- En-tête de l'article ----- */
+.art-hero { position: relative; overflow: hidden; isolation: isolate; border-bottom: 1px solid var(--border); }
+.art-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(ellipse 45% 70% at 78% 45%, rgba(249,115,22,.16), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(79,107,237,.14), transparent 60%);
+}
+.art-hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 48px; align-items: center; padding: 48px 0 56px; }
+.crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 26px; padding: 0; list-style: none; font-size: 13px; color: var(--text-mute); }
+.crumbs a { color: var(--text-soft); text-decoration: none; transition: color 160ms ease; }
+.crumbs i { font-size: 11px; opacity: .6; }
+@media (hover: hover) and (pointer: fine) { .crumbs a:hover { color: #fff; } }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 11px; border-radius: 999px; font-size: 12.5px; font-weight: 500;
+  color: var(--b, var(--text-soft));
+  background: color-mix(in srgb, var(--b, var(--text-soft)) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--b, var(--text-soft)) 28%, transparent);
+}
+.badge i { font-size: 14px; }
+.art-title {
+  margin: 0 0 18px; font-family: "Syne", sans-serif; font-weight: 700;
+  font-size: clamp(30px, 3.6vw, 48px); line-height: 1.08; letter-spacing: -0.025em; color: var(--text-strong);
+  text-wrap: balance;
+}
+.art-lede { margin: 0 0 28px; max-width: 60ch; font-size: 18px; line-height: 1.6; color: var(--text-soft); font-weight: 300; }
+.authors { display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 0 0 22px; padding: 0; list-style: none; }
+.author { display: flex; align-items: center; gap: 10px; }
+.author .av { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-family: "Syne", sans-serif; font-size: 12px; font-weight: 700; color: #fff; background: linear-gradient(135deg, hsl(var(--ah) 55% 38%), hsl(var(--ah) 70% 60%)); }
+.author strong { display: block; font-size: 14px; font-weight: 500; color: var(--text-main); }
+.author small { display: block; font-size: 12.5px; color: var(--text-mute); }
+.meta-line { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 13px; color: var(--text-mute); }
+.meta-line span { display: inline-flex; align-items: center; gap: 7px; }
+.meta-line i { font-size: 15px; color: var(--text-soft); }
+.meta-line code { font-family: var(--mono); font-size: 12.5px; color: var(--text-soft); }
+
+.hero-in { opacity: 0; transform: translateY(12px); animation: heroIn 700ms var(--ease-out) forwards; animation-delay: calc(80ms + var(--i, 0) * 90ms); }
+@keyframes heroIn { to { opacity: 1; transform: none; } }
+
+/* illustration : capsule en rentrée */
+.reentry { position: relative; aspect-ratio: 1 / 0.86; max-width: 520px; justify-self: end; width: 100%; }
+.reentry canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.reentry svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.reentry .shock { animation: shock 2.4s var(--ease-in-out) infinite alternate; transform-origin: 62% 50%; }
+@keyframes shock { from { opacity: .75; transform: scale(.985); } to { opacity: 1; transform: scale(1.015); } }
+.reentry .glow { animation: glow 1.6s ease-in-out infinite alternate; }
+@keyframes glow { from { opacity: .55; } to { opacity: .95; } }
+.reentry-tag {
+  position: absolute; display: flex; align-items: center; gap: 8px;
+  padding: 6px 10px; border-radius: 8px; font-family: var(--mono); font-size: 12px; color: var(--text-soft);
+  background: rgba(2,6,23,.7); border: 1px solid var(--border); backdrop-filter: blur(6px);
+}
+.reentry-tag b { color: #fff; font-weight: 500; }
+.reentry-tag i { width: 7px; height: 7px; border-radius: 50%; background: var(--hot); }
+
+/* ----- Mise en page 3 colonnes ----- */
+.art-layout {
+  display: grid; grid-template-columns: 220px minmax(0, 720px) 280px; justify-content: space-between; gap: 48px;
+  padding-top: 48px;
+}
+.toc, .rail { position: sticky; top: calc(var(--header-h) + var(--subnav-h) + 28px); align-self: start; }
+.toc-title, .rail-title { margin: 0 0 14px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.toc ol { position: relative; list-style: none; margin: 0; padding: 0 0 0 14px; border-left: 1px solid var(--border); }
+.toc-ind { list-style: none; position: absolute; left: -1px; top: 0; width: 2px; height: 34px; background: var(--accent); border-radius: 2px; transition: transform 300ms var(--ease-out), height 300ms var(--ease-out); }
+.toc a {
+  display: flex; gap: 10px; padding: 7px 0; font-size: 14px; line-height: 1.35;
+  color: var(--text-mute); text-decoration: none; transition: color 160ms ease;
+}
+.toc a span { font-family: var(--mono); font-size: 12px; padding-top: 1px; color: inherit; opacity: .8; min-width: 16px; }
+.toc a.on { color: #fff; }
+@media (hover: hover) and (pointer: fine) { .toc a:hover { color: var(--text-main); } }
+.toc-time { display: flex; align-items: center; gap: 8px; margin-top: 18px; font-size: 13px; color: var(--text-mute); }
+.toc-time i { font-size: 15px; }
+
+/* ----- Colonne de droite ----- */
+.rail { display: grid; gap: 16px; max-height: calc(100vh - var(--header-h) - var(--subnav-h) - 44px); overflow-y: auto; scrollbar-width: none; overscroll-behavior: contain; }
+.rail::-webkit-scrollbar { display: none; }
+.rail-card { padding: 18px; border-radius: var(--radius); background: var(--bg-light); border: 1px solid var(--border); }
+.cite-text { margin: 0 0 14px; font-size: 13px; line-height: 1.6; color: var(--text-soft); }
+.cite-text em { color: var(--text-main); }
+.rail-actions { display: grid; gap: 8px; }
+.rbtn {
+  display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 40px; border-radius: 10px;
+  border: 1px solid var(--border); background: transparent; color: var(--text-main); font: inherit; font-size: 13.5px; cursor: pointer; text-decoration: none;
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out);
+}
+.rbtn i { font-size: 16px; }
+.rbtn:active { transform: scale(.97); }
+.rbtn.done { border-color: color-mix(in srgb, var(--ok) 45%, transparent); color: var(--ok); }
+@media (hover: hover) and (pointer: fine) { .rbtn:hover { border-color: var(--accent); background: var(--accent-soft); } }
+.fig-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.fig-list a { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: center; padding: 7px 8px; margin: 0 -8px; border-radius: 8px; font-size: 13.5px; color: var(--text-soft); text-decoration: none; transition: background-color 120ms ease, color 120ms ease; }
+.fig-list i { font-size: 17px; color: var(--accent); }
+@media (hover: hover) and (pointer: fine) { .fig-list a:hover { background: var(--bg-raise); color: #fff; } }
+.prog-link { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.prog-link .pi { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; font-size: 19px; color: var(--hot); background: rgba(249,115,22,.12); flex-shrink: 0; }
+.prog-link strong { display: block; font-size: 14px; font-weight: 500; }
+.prog-link small { display: block; font-size: 12.5px; color: var(--text-mute); }
+
+/* ----- Corps de texte ----- */
+.art { min-width: 0; counter-reset: fig; }
+.art p { margin: 0 0 18px; font-size: 17px; line-height: 1.75; color: #c3cae6; font-weight: 300; }
+.art p strong { color: var(--text-main); font-weight: 500; }
+.art h2 {
+  display: flex; align-items: baseline; gap: 14px;
+  margin: 64px 0 18px; font-family: "Syne", sans-serif; font-size: 26px; font-weight: 700; letter-spacing: -0.01em; color: var(--text-strong);
+}
+.art h2 .n { font-family: var(--mono); font-size: 14px; font-weight: 400; color: var(--accent); }
+.art h3 { margin: 34px 0 12px; font-size: 18px; font-weight: 500; color: var(--text-main); }
+sub, sup { line-height: 0; }
+
+/* L'essentiel */
+.essentials { padding: 26px; border-radius: 18px; background: linear-gradient(160deg, var(--bg-raise), var(--bg-light)); border: 1px solid var(--border); }
+.essentials-head { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; }
+.essentials-head i { font-size: 17px; color: var(--hot); }
+.kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 22px; }
+.kpi { padding: 16px; border-radius: 14px; background: rgba(2,6,23,.45); border: 1px solid var(--line); }
+.kpi strong { display: block; font-family: "Syne", sans-serif; font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -0.02em; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.kpi strong small { font-size: .55em; font-weight: 700; margin-left: 2px; color: var(--text-soft); }
+.kpi span { display: block; margin-top: 8px; font-size: 13.5px; line-height: 1.4; color: var(--text-soft); }
+.takeaways { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.takeaways li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 15.5px; line-height: 1.55; color: var(--text-main); }
+.takeaways i { font-size: 18px; color: var(--ok); margin-top: 2px; }
+
+/* Résumé */
+.abstract { margin-top: 28px; padding: 24px 26px; border-radius: 16px; border: 1px solid var(--border); background: rgba(79,107,237,.05); }
+.abstract .label { display: block; margin-bottom: 10px; font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+.abstract p { font-size: 15.5px !important; margin: 0 !important; }
+.kw { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+.kw span { padding: 3px 10px; border-radius: 999px; font-size: 12.5px; color: var(--text-soft); border: 1px solid var(--border); }
+
+/* Termes expliqués (infobulle) */
+.term {
+  position: relative; display: inline; padding: 0; border: 0; background: none; font: inherit; color: var(--text-main); cursor: help;
+  text-decoration: underline dotted color-mix(in srgb, var(--accent) 80%, transparent); text-decoration-thickness: 1.5px; text-underline-offset: 4px;
+}
+.tip {
+  position: absolute; z-index: 1600; width: min(300px, calc(100vw - 32px));
+  padding: 12px 14px; border-radius: 12px;
+  background: #0b1540; border: 1px solid var(--accent-line); box-shadow: 0 18px 50px rgba(0,0,0,.5);
+  font-size: 13.5px; line-height: 1.55; color: var(--text-soft); font-weight: 400;
+  opacity: 0; transform: scale(.97) translateY(4px); pointer-events: none;
+  transition: opacity 140ms ease, transform 160ms var(--ease-out);
+}
+.tip.show { opacity: 1; transform: none; }
+.tip.instant { transition: none; }
+.tip b { display: block; margin-bottom: 3px; color: #fff; font-weight: 500; font-size: 14px; }
+.cite { font-family: var(--mono); font-size: .78em; color: var(--accent); text-decoration: none; vertical-align: .15em; padding: 0 1px; border: 0; background: none; cursor: pointer; }
+
+/* Encadrés */
+.note { display: grid; grid-template-columns: 26px 1fr; gap: 12px; margin: 26px 0; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.note i { font-size: 22px; color: var(--nc, var(--accent)); }
+.note p { margin: 0 !important; font-size: 15.5px !important; color: var(--text-main) !important; }
+.note .nt { display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--nc, var(--accent)); font-weight: 500; }
+
+/* ----- Figures ----- */
+.fig { margin: 34px 0; border-radius: 18px; border: 1px solid var(--border); background: var(--surface); overflow: hidden; counter-increment: fig; scroll-margin-top: calc(var(--header-h) + var(--subnav-h) + 24px); }
+.fig-stage { position: relative; padding: 22px; background: radial-gradient(ellipse at 50% 0%, rgba(79,107,237,.06), transparent 70%); }
+.fig-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin-bottom: 16px; }
+.fig-name { font-size: 14.5px; font-weight: 500; color: var(--text-main); }
+.fig figcaption, .fig .cap { padding: 14px 22px 18px; border-top: 1px solid var(--line); font-size: 14px; line-height: 1.6; color: var(--text-soft); }
+.fig figcaption b, .fig .cap b { font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-right: 8px; }
+.fig svg { display: block; width: 100%; height: auto; overflow: visible; }
+.fig text { font-family: "DM Sans", sans-serif; }
+.fig .mono, .fig text.mono { font-family: var(--mono); }
+.ctrl { display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 12px; border-radius: 9px; border: 1px solid var(--border); background: var(--bg-light); color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out); }
+.ctrl i { font-size: 15px; }
+.ctrl:active { transform: scale(.96); }
+@media (hover: hover) and (pointer: fine) { .ctrl:hover { color: #fff; border-color: var(--accent); } }
+
+/* Fig. 1 trajectoire */
+.readouts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+.readout { padding: 10px 12px; border-radius: 10px; background: rgba(2,6,23,.5); border: 1px solid var(--line); }
+.readout small { display: block; font-size: 12px; color: var(--text-mute); }
+.readout strong { display: block; margin-top: 2px; font-family: var(--mono); font-size: 17px; font-weight: 500; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.readout.hot strong { color: var(--rc, var(--text-strong)); }
+.scrub { display: flex; align-items: center; gap: 12px; margin-top: 14px; }
+.scrub input { flex: 1; accent-color: var(--hot); }
+.scrub output { min-width: 52px; text-align: right; font-family: var(--mono); font-size: 13px; color: var(--text-soft); }
+
+/* Fig. 2 microstructure */
+.parts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.part { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease; }
+.part i { width: 10px; height: 10px; border-radius: 3px; background: var(--pc); }
+.part[aria-pressed="true"] { color: #fff; border-color: var(--pc); background: color-mix(in srgb, var(--pc) 14%, transparent); }
+.art .part-desc { margin: 12px 0 0; min-height: 44px; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+.part-desc b { color: #fff; font-weight: 500; }
+.micro [data-part] { transition: opacity 220ms ease; }
+.micro.focus [data-part] { opacity: .16; }
+.micro.focus [data-part].lit { opacity: 1; }
+
+/* Fig. 3 banc d'essai */
+.bench-v { display: none !important; }
+.flow { stroke-dasharray: 6 10; animation: flow 900ms linear infinite; }
+@keyframes flow { to { stroke-dashoffset: -32; } }
+.flame { animation: glow 900ms ease-in-out infinite alternate; }
+
+/* Tableau */
+.table-wrap { margin: 30px 0; border-radius: 16px; border: 1px solid var(--border); overflow: hidden; background: var(--surface); }
+.table-cap { padding: 14px 20px; font-size: 14px; color: var(--text-soft); border-bottom: 1px solid var(--line); }
+.table-cap b { font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-right: 8px; }
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { padding: 11px 12px; text-align: left; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; background: rgba(2,6,23,.4); border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 11px 12px; color: var(--text-soft); border-bottom: 1px solid var(--line); white-space: nowrap; font-variant-numeric: tabular-nums; }
+tr:last-child td { border-bottom: 0; }
+td:last-child, th:last-child { white-space: normal; }
+td:first-child, th:first-child { padding-left: 18px; }
+td.num { font-family: var(--mono); font-size: 13.5px; color: var(--text-main); }
+th.num, td.num { text-align: right; }
+tbody tr { transition: background-color 120ms ease; }
+@media (hover: hover) and (pointer: fine) { tbody tr:hover { background: rgba(79,107,237,.06); } }
+.mat { display: inline-flex; align-items: center; gap: 8px; color: var(--text-main); }
+.mat i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.state { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--sc); }
+.state i { font-size: 15px; }
+.table-note { padding: 12px 20px; font-size: 13px; color: var(--text-mute); border-top: 1px solid var(--line); background: rgba(2,6,23,.3); }
+
+/* Fig. 4 graphique */
+.legend { display: flex; flex-wrap: wrap; gap: 6px; }
+.lg { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-main); font: inherit; font-size: 13px; cursor: pointer; transition: opacity 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out); }
+.lg:active { transform: scale(.96); }
+.lg i { width: 14px; height: 3px; border-radius: 2px; background: var(--lc); }
+.lg[aria-pressed="false"] { opacity: .45; }
+.lg[aria-pressed="false"] i { background: transparent; border: 1px solid var(--lc); height: 5px; }
+.chart { position: relative; }
+.chart .series { transition: opacity 220ms ease; }
+.chart .series.off { opacity: 0; }
+.chart .draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); }
+.chart.drawn .draw { transition: stroke-dashoffset 1400ms var(--ease-in-out); stroke-dashoffset: 0; }
+.chart .dot { opacity: 0; transition: opacity 300ms ease 1100ms; }
+.chart.drawn .dot { opacity: 1; }
+.hit { fill: transparent; cursor: crosshair; }
+.xhair { opacity: 0; transition: opacity 120ms ease; pointer-events: none; }
+.xhair.show { opacity: 1; }
+.ctip {
+  position: absolute; z-index: 5; pointer-events: none; min-width: 170px;
+  padding: 10px 12px; border-radius: 10px; background: #0b1540; border: 1px solid var(--accent-line);
+  box-shadow: 0 14px 40px rgba(0,0,0,.5); font-size: 13px; color: var(--text-soft);
+  opacity: 0; transform: translateY(4px); transition: opacity 120ms ease, transform 140ms var(--ease-out);
+}
+.ctip.show { opacity: 1; transform: none; }
+.ctip b { display: block; margin-bottom: 6px; color: #fff; font-weight: 500; font-family: var(--mono); }
+.ctip div { display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+.ctip div span { display: inline-flex; align-items: center; gap: 7px; }
+.ctip div span i { width: 8px; height: 8px; border-radius: 50%; background: var(--lc); }
+.ctip div em { font-style: normal; font-family: var(--mono); color: var(--text-main); }
+.data-toggle { margin-top: 12px; }
+.data-table { margin-top: 12px; border-radius: 12px; border: 1px solid var(--line); overflow-x: auto; }
+.data-table[hidden] { display: none; }
+
+/* Fig. 5 carte thermique */
+.thermo { display: grid; grid-template-columns: minmax(0, 1fr) 70px; gap: 18px; align-items: stretch; }
+.thermo-plate { position: relative; aspect-ratio: 1; max-width: 420px; width: 100%; justify-self: center; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); cursor: crosshair; }
+.thermo-plate canvas { width: 100%; height: 100%; display: block; }
+.probe { position: absolute; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.5); pointer-events: none; opacity: 0; transition: opacity 120ms ease; }
+.probe.show { opacity: 1; }
+.probe-read { position: absolute; left: 12px; top: 12px; padding: 6px 10px; border-radius: 8px; background: rgba(2,6,23,.78); font-family: var(--mono); font-size: 13px; color: #fff; pointer-events: none; }
+.scale { display: grid; grid-template-columns: 14px 1fr; gap: 8px; align-self: center; height: min(100%, 420px); aspect-ratio: auto; }
+.scale-bar { display: block; width: 14px; height: 100%; border-radius: 6px; }
+.scale-labels { display: flex; flex-direction: column; justify-content: space-between; font-family: var(--mono); font-size: 12px; color: var(--text-soft); }
+
+/* Fig. 6 couche protectrice */
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.duo-card { border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.4); overflow: hidden; }
+.duo-card h4 { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0; padding: 12px 14px; font-size: 14px; font-weight: 500; color: var(--text-main); border-bottom: 1px solid var(--line); }
+.duo-card h4 span { display: inline-flex; align-items: center; gap: 8px; }
+.duo-card h4 i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.duo-card svg { aspect-ratio: 1.25; }
+.duo-stats { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
+.duo-stats div { padding: 10px 14px; }
+.duo-stats div + div { border-left: 1px solid var(--line); }
+.duo-stats small { display: block; font-size: 12px; color: var(--text-mute); }
+.duo-stats strong { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--text-main); font-variant-numeric: tabular-nums; }
+.verdict { font-size: 12px; font-weight: 500; padding: 2px 8px; border-radius: 999px; color: var(--vc); background: color-mix(in srgb, var(--vc) 14%, transparent); transition: color 200ms ease, background-color 200ms ease; }
+
+/* Équation */
+.eq { margin: 26px 0; padding: 22px; border-radius: 14px; background: rgba(2,6,23,.5); border: 1px solid var(--border); text-align: center; font-family: var(--mono); font-size: 17px; color: #d5dcfb; overflow-x: auto; white-space: nowrap; }
+.eq-parts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: -12px 0 26px; }
+.eq-part { padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-light); font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.eq-part b { display: block; margin-bottom: 2px; font-family: var(--mono); font-weight: 500; color: #fff; }
+
+/* Suite du programme */
+.next { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.next li { position: relative; padding: 16px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.next li::before { content: ""; position: absolute; top: 20px; right: -13px; width: 13px; height: 1px; background: var(--border); }
+.next li:last-child::before { display: none; }
+.next time { font-family: var(--mono); font-size: 12.5px; color: var(--nc, var(--accent)); }
+.next strong { display: block; margin: 6px 0 4px; font-size: 15px; font-weight: 500; color: var(--text-main); }
+.next span { font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.next li.now { border-color: color-mix(in srgb, var(--ok) 45%, var(--border)); }
+
+/* Références */
+.refs { list-style: none; margin: 0; padding: 0; counter-reset: r; display: grid; gap: 4px; }
+.refs li { counter-increment: r; position: relative; display: block; padding: 10px 12px 10px 54px; margin: 0 -12px; border-radius: 10px; font-size: 14px; line-height: 1.6; color: var(--text-soft); transition: background-color 600ms ease; scroll-margin-top: calc(var(--header-h) + var(--subnav-h) + 40px); }
+.refs li::before { content: "[" counter(r) "]"; position: absolute; left: 12px; top: 11px; font-family: var(--mono); font-size: 13px; color: var(--accent); }
+.refs li.flash { background: rgba(79,107,237,.16); transition: none; }
+.refs em { color: var(--text-main); }
+.decl { margin-top: 28px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.35); display: grid; gap: 8px; font-size: 13.5px; line-height: 1.6; color: var(--text-mute); }
+.decl strong { color: var(--text-soft); font-weight: 500; }
+
+/* Articles liés */
+.related { margin-top: 72px; padding-top: 40px; border-top: 1px solid var(--border); }
+.related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
+.rel { display: flex; flex-direction: column; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); background: var(--bg-light); text-decoration: none; transition: border-color 200ms ease, transform 220ms var(--ease-out); }
+.rel-img { aspect-ratio: 16 / 9; overflow: hidden; background: linear-gradient(135deg, color-mix(in srgb, var(--c) 30%, var(--bg-raise)), var(--bg-light)); }
+.rel-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 500ms var(--ease-out); }
+.rel-body { padding: 16px; }
+.rel-body small { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--text-soft); }
+.rel-body small::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c); }
+.rel-body strong { display: block; margin-top: 6px; font-size: 16px; font-weight: 500; line-height: 1.4; color: var(--text-main); }
+.rel:active { transform: scale(.98); }
+@media (hover: hover) and (pointer: fine) {
+  .rel:hover { border-color: color-mix(in srgb, var(--c) 55%, var(--border)); transform: translateY(-3px); }
+  .rel:hover .rel-img img { transform: scale(1.04); }
+}
+.section-title { margin: 0; font-family: "Syne", sans-serif; font-size: 22px; font-weight: 700; color: var(--text-strong); }
+
+/* apparition des figures */
+.js .rv { opacity: 0; transform: translateY(16px); transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
+.js .rv.in { opacity: 1; transform: none; }
+
+.toast {
+  position: fixed; left: 50%; bottom: 24px; z-index: 4000;
+  display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 12px;
+  background: #0b1540; border: 1px solid rgba(52,211,153,.35); color: #a7f3d0; font-size: 14px;
+  box-shadow: 0 16px 40px rgba(0,0,0,.5);
+  transform: translate(-50%, 16px); opacity: 0; pointer-events: none;
+  transition: transform 260ms var(--ease-out), opacity 200ms ease;
+}
+.toast.show { transform: translate(-50%, 0); opacity: 1; }
+.toast i { font-size: 18px; color: var(--ok); }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1320px) {
+  .art-layout { grid-template-columns: minmax(0, 720px) 280px; justify-content: center; }
+  .toc { display: none; }
+}
+@media (max-width: 1060px) {
+  .art-layout { grid-template-columns: minmax(0, 720px); }
+  .rail { position: static; max-height: none; overflow: visible; grid-template-columns: repeat(2, minmax(0, 1fr)); order: 2; }
+  .rail .rail-figs { display: none; }
+  .art-hero-grid { grid-template-columns: 1fr; gap: 10px; padding-bottom: 36px; }
+  .reentry { justify-self: center; max-width: 440px; order: -1; margin-top: -10px; }
+}
+@media (max-width: 860px) {
+  .main-nav, .header-right .btn-desktop { display: none; }
+  .menu-toggle { display: inline-flex; }
+}
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .subnav-list { padding: 0 20px; overflow-x: auto; scrollbar-width: none; }
+  .subnav-link { padding: 0 10px; font-size: 13.5px; }
+  .art-lede { font-size: 16.5px; }
+  .art p { font-size: 16px; }
+  .art h2 { font-size: 22px; margin-top: 52px; }
+  .kpis { grid-template-columns: 1fr; }
+  .kpi { display: flex; align-items: baseline; gap: 14px; }
+  .kpi span { margin: 0; }
+  .essentials { padding: 20px; }
+  .fig-stage { padding: 16px; }
+  .fig figcaption, .fig .cap { padding: 12px 16px 16px; }
+  .readouts { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .readout strong { font-size: 14px; }
+  .thermo { grid-template-columns: 1fr 56px; gap: 10px; }
+  .duo { grid-template-columns: 1fr; }
+  .eq { font-size: 14px; }
+  #trajSvg text { font-size: 22px; }
+  .bench-h { display: none !important; }
+  .bench-v { display: block !important; }
+  .duo-card svg text { font-size: 13px; }
+  .eq-parts { grid-template-columns: 1fr; }
+  .next { grid-template-columns: 1fr; }
+  .next li::before { display: none; }
+  .rail { grid-template-columns: 1fr; }
+  .related-grid { grid-template-columns: 1fr; }
+  .site-footer { margin-top: 72px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
+  .hero-in { opacity: 1; transform: none; }
+}
+
+/* impression / PDF : texte seul, figures conservées */
+@media print {
+  .site-header, .subnav, .mobile-panel, .progress, .toc, .rail, .related, .site-footer, .ctrl, .legend, .scrub, .parts, .skip-link { display: none !important; }
+  body { background: #fff; color: #111; }
+  .art-layout { display: block; padding: 0; }
+  .art p, .art h2, .art h3, .art-title, .art-lede { color: #111 !important; }
+  .fig, .table-wrap, .essentials, .abstract, .note { break-inside: avoid; }
+  .js .rv { opacity: 1; transform: none; }
+}
+
+/* =========================================================
+   ARTICLE 02 : PROPULSION IONIQUE
+   ========================================================= */
+.art-hero--ion::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 82% 45%, rgba(59,130,246,.2), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(249,115,22,.1), transparent 60%);
+}
+.thruster .glow { animation: glow 1.4s ease-in-out infinite alternate; }
+
+.seg { display: inline-flex; padding: 3px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-light); }
+.seg button { height: 30px; padding: 0 12px; border: 0; border-radius: 7px; background: none; color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out); }
+.seg button:active { transform: scale(.96); }
+.seg button[aria-pressed="true"] { background: var(--bg-raise); color: #fff; box-shadow: inset 0 0 0 1px var(--border); }
+@media (hover: hover) and (pointer: fine) { .seg button:hover { color: #fff; } }
+
+.lg.static { cursor: default; }
+#howSvg .zone { transition: opacity 240ms ease; }
+#howSvg.focus .zone { opacity: .22; }
+#howSvg.focus .zone.lit { opacity: 1; }
+
+tr.hi td { background: rgba(59,130,246,.07); }
+td.gain { color: var(--ok); }
+
+.multiples { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.multiples .chart { border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.35); padding: 8px 4px 0; }
+
+.wear { display: grid; grid-template-columns: minmax(0, 1fr) 170px; gap: 16px; align-items: center; }
+.discs { display: grid; gap: 12px; }
+.disc { display: grid; justify-items: center; gap: 4px; padding: 10px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.35); }
+.disc svg { width: 110px; height: 110px; }
+.disc span { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--text-soft); }
+.disc span i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.disc strong { font-family: var(--mono); font-size: 14px; font-weight: 500; color: var(--text-main); }
+.disc.over { border-color: rgba(248,113,113,.5); }
+.disc.over strong { color: var(--bad); }
+
+@media (max-width: 640px) {
+  .multiples { grid-template-columns: 1fr; }
+  .wear { grid-template-columns: 1fr; }
+  .discs { grid-template-columns: 1fr 1fr; }
+  .disc svg { width: 96px; height: 96px; }
+  #howSvg text { display: none; }
+  .readouts { grid-template-columns: 1fr; gap: 6px; }
+  .readout { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 8px 12px; }
+  .readout strong { margin: 0; white-space: nowrap; }
+  #orbitSvg text { font-size: 18px; }
+}
+#gridSvg, #orbitSvg, #howSvg { overflow: hidden; border-radius: 10px; }
+
 </style>
+<script>document.documentElement.classList.add('js');</script>
 </head>
+
 <body>
 
-<div class="progress-bar" id="progressBar"></div>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
 
-<header>
-  <div class="header-inner">
+<!-- ===== HEADER ===== -->
+<header class="site-header" id="header">
+  <div class="container header-inner">
     <div class="header-left">
-      <a href="../index.html" class="logo-link"><img src="../logo.png" alt="IFRAS"></a>
-      <nav><ul class="main-nav">
-        <li><a href="../index.html">Accueil</a></li>
-        <li><a href="../recherche.html">Recherche</a></li>
-        <li><a href="../programmes.html">Programmes</a></li>
-        <li><a href="../publications.html">Publications</a></li>
-      </ul></nav>
+      <a href="../index.html" class="logo-link" aria-label="IFRAS, accueil">
+        <img src="../logo.png" alt="Logo IFRAS" width="44" height="44">
+      </a>
+      <nav aria-label="Navigation principale">
+        <ul class="main-nav">
+          <li><a href="../index.html">Accueil</a></li>
+          <li><a href="../recherche.html">Recherche</a></li>
+          <li><a href="../programmes.html">Programmes</a></li>
+          <li><a href="../publications.html" aria-current="page">Publications</a></li>
+        </ul>
+      </nav>
     </div>
-    <div class="header-right"><a href="../connexion.html" class="login-btn">Connexion</a></div>
+    <div class="header-right">
+      <a href="../connexion.html" class="btn btn-ghost btn-desktop">Connexion</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-panel" aria-label="Ouvrir le menu">
+        <i class="ph-light ph-list" aria-hidden="true"></i>
+      </button>
+    </div>
   </div>
 </header>
 
-<div class="sub-nav">
+<div class="mobile-panel" id="mobile-panel">
   <ul>
-    <li><a href="../publications-scientifiques.html" class="active">Publications scientifiques</a></li>
-    <li><a href="../publications-ifras.html">Publications IFRAS</a></li>
-    <li><a href="../evenements.html">Événements</a></li>
+    <li><a href="../index.html">Accueil <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../recherche.html">Recherche <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../programmes.html">Programmes <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../publications.html" aria-current="page">Publications <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
   </ul>
+  <a href="../connexion.html" class="btn btn-primary">Connexion</a>
 </div>
 
-<nav class="toc-sidebar">
-  <div class="toc-dot active" data-label="Résumé"      data-target="s0"></div>
-  <div class="toc-dot"        data-label="Résultats"   data-target="s1"></div>
-  <div class="toc-dot"        data-label="Contexte"    data-target="s2"></div>
-  <div class="toc-dot"        data-label="Architecture" data-target="s3"></div>
-  <div class="toc-dot"        data-label="Durée vie"   data-target="s4"></div>
-  <div class="toc-dot"        data-label="Mission"     data-target="s5"></div>
-  <div class="toc-dot"        data-label="Références"  data-target="s6"></div>
+<!-- ===== SOUS-NAVIGATION (mêmes rubriques que publications.html) ===== -->
+<nav class="subnav" id="subnav" aria-label="Rubriques des publications">
+  <ul class="subnav-list">
+    <li><a class="subnav-link" href="../publications-scientifiques.html" aria-current="true" style="--c:var(--t-sci)"><i class="ph-light ph-article" aria-hidden="true"></i>Publications scientifiques</a></li>
+    <li><a class="subnav-link" href="../publications-ifras.html" style="--c:var(--t-ifras)"><i class="ph-light ph-book-open" aria-hidden="true"></i>Publications IFRAS</a></li>
+    <li><a class="subnav-link" href="../evenements.html" style="--c:var(--t-event)"><i class="ph-light ph-calendar-dots" aria-hidden="true"></i>Événements</a></li>
+  </ul>
 </nav>
 
-<div class="pub-wrapper">
+<div class="progress" aria-hidden="true"><span id="progress"></span></div>
 
-  <nav class="breadcrumb">
-    <a href="../publications.html">Publications</a>
-    <span>/</span>
-    <a href="../publications-scientifiques.html">Publications scientifiques</a>
-    <span>/</span>
-    DPET · 2026 · Propulsion électrique
+<main id="contenu">
+
+<!-- ===== EN-TÊTE DE L'ARTICLE ===== -->
+<header class="art-hero art-hero--ion">
+  <div class="container art-hero-grid">
+    <div>
+      <ol class="crumbs hero-in" style="--i:0" aria-label="Fil d'Ariane">
+        <li><a href="../publications.html">Publications</a></li>
+        <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+        <li><a href="../publications-scientifiques.html">Publications scientifiques</a></li>
+        <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+        <li aria-current="page">Propulsion</li>
+      </ol>
+      <div class="badges hero-in" style="--i:1">
+        <span class="badge" style="--b:#f97316"><i class="ph-light ph-rocket-launch" aria-hidden="true"></i>Propulsion · DPET</span>
+        <span class="badge" style="--b:#60a5fa"><i class="ph-light ph-seal-check" aria-hidden="true"></i>Évalué par les pairs</span>
+        <span class="badge" style="--b:#34d399"><i class="ph-light ph-lock-simple-open" aria-hidden="true"></i>Accès libre</span>
+      </div>
+      <h1 class="art-title hero-in" style="--i:2">NK-125 : un propulseur ionique à grilles tri-étages validé à haute puissance</h1>
+      <p class="art-lede hero-in" style="--i:3">Il pousse à peine plus fort que le poids d'un smartphone, mais pendant des années et avec dix fois moins de carburant qu'une fusée. La campagne TORCH-IV montre que le NK-125 tient 12 000 heures à 125 kW, un jalon pour le programme PROMETHEUS.</p>
+      <ul class="authors hero-in" style="--i:4" aria-label="Auteurs">
+        <li class="author"><span class="av" style="--ah:24" aria-hidden="true">FR</span><span><strong>François Roux</strong><small>Responsable du programme NK</small></span></li>
+        <li class="author"><span class="av" style="--ah:210" aria-hidden="true">AS</span><span><strong>Anika Schreiber</strong><small>Physique des plasmas</small></span></li>
+        <li class="author"><span class="av" style="--ah:150" aria-hidden="true">RA</span><span><strong>Ricardo Almeida</strong><small>Thermique et rendements</small></span></li>
+        <li class="author"><span class="av" style="--ah:300" aria-hidden="true">CL</span><span><strong>Camille Leroux</strong><small>Doctorante, simulation</small></span></li>
+      </ul>
+      <div class="meta-line hero-in" style="--i:5">
+        <span><i class="ph-light ph-calendar-blank" aria-hidden="true"></i>Publié le 21 janvier 2026</span>
+        <span><i class="ph-light ph-clock" aria-hidden="true"></i>8 min de lecture</span>
+        <span><i class="ph-light ph-hash" aria-hidden="true"></i><code>IFRAS-DPET-2026-007</code></span>
+      </div>
+    </div>
+
+    <!-- Illustration : propulseur en fonctionnement -->
+    <div class="reentry thruster hero-in" style="--i:3" aria-hidden="true">
+      <canvas id="plume"></canvas>
+      <svg viewBox="0 0 520 447">
+        <defs>
+          <linearGradient id="body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1e2a60"/><stop offset=".5" stop-color="#0f1a45"/><stop offset="1" stop-color="#0a1233"/></linearGradient>
+          <radialGradient id="face" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="#93c5fd" stop-opacity=".9"/><stop offset=".6" stop-color="#3b82f6" stop-opacity=".55"/><stop offset="1" stop-color="#1d4ed8" stop-opacity=".2"/></radialGradient>
+          <filter id="b10" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="10"/></filter>
+          <pattern id="holes" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="4.5" cy="4.5" r="2.3" fill="#e0f2fe"/></pattern>
+        </defs>
+        <!-- corps du propulseur -->
+        <rect x="40" y="138" width="170" height="172" rx="16" fill="url(#body)" stroke="#2a3a7a" stroke-width="1.5"/>
+        <g stroke="#2a3a7a" stroke-width="1"><path d="M84 138 v172 M128 138 v172 M172 138 v172"/></g>
+        <rect x="18" y="196" width="26" height="56" rx="5" fill="#0a1233" stroke="#2a3a7a"/>
+        <!-- face des grilles -->
+        <ellipse class="glow" cx="214" cy="224" rx="30" ry="92" fill="#3b82f6" filter="url(#b10)" opacity=".7"/>
+        <ellipse cx="214" cy="224" rx="18" ry="86" fill="url(#face)" stroke="#60a5fa" stroke-width="2"/>
+        <ellipse cx="214" cy="224" rx="14" ry="80" fill="url(#holes)" opacity=".55"/>
+        <!-- neutraliseur -->
+        <rect x="196" y="318" width="44" height="18" rx="5" fill="#0f1a45" stroke="#2a3a7a"/>
+        <circle cx="244" cy="327" r="4" fill="#a5f3fc" class="glow"/>
+      </svg>
+      <span class="reentry-tag" style="right:2%;top:10%"><i style="background:#60a5fa"></i> Ions éjectés à <b>94 km/s</b></span>
+      <span class="reentry-tag" style="left:4%;bottom:12%">Poussée <b>1,9 N</b></span>
+    </div>
+  </div>
+</header>
+
+<div class="container art-layout">
+
+  <!-- Sommaire -->
+  <nav class="toc" aria-label="Sommaire">
+    <p class="toc-title">Sommaire</p>
+    <ol id="toc">
+      <li class="toc-ind" aria-hidden="true"></li>
+      <li><a href="#s-essentiel"><span>—</span>L'essentiel</a></li>
+      <li><a href="#s-intro"><span>1</span>Introduction</a></li>
+      <li><a href="#s-methodes"><span>2</span>Le NK-125</a></li>
+      <li><a href="#s-resultats"><span>3</span>Résultats</a></li>
+      <li><a href="#s-mission"><span>4</span>Vers Jupiter</a></li>
+      <li><a href="#s-conclusion"><span>5</span>Conclusion</a></li>
+    </ol>
+    <p class="toc-time"><i class="ph-light ph-hourglass-medium" aria-hidden="true"></i><span id="timeLeft">8 min restantes</span></p>
   </nav>
 
-  <!-- EN-TÊTE -->
-  <div id="s0">
-    <div class="article-meta-top">
-      <span class="meta-badge meta-badge--journal">Acta Astronautica · Vol. 224</span>
-      <span class="meta-badge meta-badge--dept">DPET — Dir. de la Propulsion et de l'Énergie Thermique</span>
-      <span class="meta-badge meta-badge--open">Accès ouvert</span>
-      <span class="meta-badge meta-badge--date">Soumis 08 nov. 2025 · Accepté 21 jan. 2026</span>
-    </div>
+  <!-- ===== ARTICLE ===== -->
+  <article class="art" id="article">
 
-    <h1 class="article-title">
-      NK-125 : conception et validation expérimentale d'un propulseur ionique à grilles SiC-f tri-étages opérant à 125 kW — impulsion spécifique de 9 620 s et rendement anodique de 78,4 %
-    </h1>
-
-    <p class="article-subtitle">
-      Campagne d'essais TORCH-IV (oct. 2024 – jan. 2026), chambre à vide HELIOS-6, IFRAS Toulouse.
-      Première démonstration publique complète des performances du NK-125 dans des conditions représentatives d'une mission de transfert Terre–Mars.
-    </p>
-
-    <div class="authors-block">
-      <div class="author-entry"><span class="author-name">Dr. François Roux</span><span class="author-role">DPET · Chef de programme NK</span></div>
-      <div class="author-sep"></div>
-      <div class="author-entry"><span class="author-name">Dr. Anika Schreiber</span><span class="author-role">DPET · Physique des plasmas</span></div>
-      <div class="author-sep"></div>
-      <div class="author-entry"><span class="author-name">Prof. Ricardo Almeida</span><span class="author-role">DPET · Thermique & Rendements</span></div>
-      <div class="author-sep"></div>
-      <div class="author-entry"><span class="author-name">Camille Leroux</span><span class="author-role">DPET · Doctorante, simulations PIC</span></div>
-    </div>
-
-    <div class="cite-block">
-      <div class="cite-item"><span class="cite-label">DOI</span><span>10.1016/j.actaastro.2026.01.0082</span></div>
-      <span class="cite-sep">|</span>
-      <div class="cite-item"><span class="cite-label">Réf. interne</span><span>IFRAS-DPET-2026-007</span></div>
-      <span class="cite-sep">|</span>
-      <div class="cite-item"><span class="cite-label">Pages</span><span>22 pp. · 7 fig. · 3 tabl.</span></div>
-    </div>
-  </div>
-
-  <div class="art-divider"></div>
-
-  <!-- ABSTRACT -->
-  <div class="abstract-box">
-    <div class="abstract-label">Résumé — Abstract</div>
-    <p class="abstract-text">
-      Nous présentons les résultats de la campagne TORCH-IV sur le NK-125, propulseur ionique à grilles de
-      125 kW développé par la DPET de l'IFRAS. Le propulseur atteint une impulsion spécifique de 9 620 ± 85 s —
-      valeur sans précédent pour la classe 100+ kW — grâce à un système de trois grilles en carbure de silicium
-      fritté (SiC-f) et une tension d'accélération de 8 400 V. Rendement anodique : 78,4 ± 1,2 %. Durée de vie
-      qualifiée : 12 000 heures en test accéléré. Ces résultats positionnent le NK-125 comme candidat principal
-      pour la propulsion du module de transfert PROMETHEUS-2 (Terre–Jupiter, lancement 2031).
-    </p>
-    <div class="kw-wrap">
-      <span class="kw-label">Mots-clés :</span>
-      <span class="kw-tag">Propulsion ionique</span>
-      <span class="kw-tag">NK-125</span>
-      <span class="kw-tag">I<sub>sp</sub> 9 620 s</span>
-      <span class="kw-tag">Grilles SiC-f</span>
-      <span class="kw-tag">Rendement anodique</span>
-      <span class="kw-tag">PROMETHEUS-2</span>
-    </div>
-  </div>
-
-  <!-- ===== 1. LES RÉSULTATS D'ABORD ===== -->
-  <h2 class="section-heading" id="s1">1. Résultats — vue synthétique</h2>
-
-  <p class="bt">
-    Contrairement à la pratique habituelle, nous présentons les chiffres clés en ouverture
-    afin de donner au lecteur le cadre interprétatif avant l'analyse. Les valeurs ci-dessous
-    sont toutes issues d'essais à pleine puissance nominale (125 kW, xénon, 4 × 10⁻⁶ mbar).
-  </p>
-
-  <!-- SCORECARD — structure centrale, rien avant -->
-  <div class="scorecard">
-    <div class="sc-item">
-      <div class="sc-val o">9 620</div>
-      <div class="sc-unit">secondes</div>
-      <div class="sc-label">Impulsion spécifique I<sub>sp</sub> — record classe 100+ kW</div>
-    </div>
-    <div class="sc-item">
-      <div class="sc-val g">78,4 %</div>
-      <div class="sc-unit">rendement</div>
-      <div class="sc-label">Rendement anodique η<sub>a</sub> à 110 kW (optimum)</div>
-    </div>
-    <div class="sc-item">
-      <div class="sc-val b">542</div>
-      <div class="sc-unit">millinewtons</div>
-      <div class="sc-label">Poussée nominale à 125 kW</div>
-    </div>
-    <div class="sc-item">
-      <div class="sc-val y">12 000</div>
-      <div class="sc-unit">heures</div>
-      <div class="sc-label">Durée de vie qualifiée en test accéléré ×3,2</div>
-    </div>
-  </div>
-
-  <!-- TABLEAU COMPARATIF — dès la section 1, avant tout graphique -->
-  <div class="tbl-wrap">
-    <div class="tbl-head">Tableau 1 — Positionnement du NK-125 dans l'état de l'art des propulseurs ioniques</div>
-    <table>
-      <thead>
-        <tr>
-          <th>Propulseur</th><th>Organisme</th><th>Année</th>
-          <th>Puissance (kW)</th><th>I<sub>sp</sub> (s)</th>
-          <th>η<sub>a</sub> (%)</th><th>Statut</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>NSTAR</td><td>NASA / JPL</td><td class="tm">1998</td><td class="tm">2,3</td><td class="tm">3 100</td><td class="tm">61</td><td>Vol (Dawn, 2007)</td></tr>
-        <tr><td>NEXT-C</td><td>NASA / GRC</td><td class="tm">2007</td><td class="tm">7</td><td class="tm">4 190</td><td class="tm">71</td><td>Vol (Lucy, 2021)</td></tr>
-        <tr><td>RIT-22</td><td>ESA / Astrium</td><td class="tm">2005</td><td class="tm">5</td><td class="tm">4 350</td><td class="tm">65</td><td>Vol (Alphasat)</td></tr>
-        <tr><td>µ10</td><td>JAXA / ISAS</td><td class="tm">2003</td><td class="tm">0,35</td><td class="tm">10 000</td><td class="tm">58</td><td>Vol (Hayabusa)</td></tr>
-        <tr><td>HiPEP</td><td>NASA / GRC</td><td class="tm">2003</td><td class="tm">25</td><td class="tm">9 620</td><td class="tm">80</td><td>Démonstrateur — non qualifié</td></tr>
-        <tr><td>NK-40</td><td>IFRAS DPET</td><td class="tm">2021</td><td class="tm">40</td><td class="tm">6 800</td><td class="tm">72</td><td>Qualifié IFRAS</td></tr>
-        <tr><td>NK-85</td><td>IFRAS DPET</td><td class="tm">2023</td><td class="tm">85</td><td class="tm">8 100</td><td class="tm">76</td><td>Qualifié IFRAS</td></tr>
-        <tr class="tr-hi">
-          <td><strong>NK-125 ★</strong></td><td><strong>IFRAS DPET</strong></td><td class="ty">2026</td>
-          <td class="ty">125</td><td class="ty">9 620</td><td class="to">78,4</td>
-          <td><strong>Campagne TORCH-IV</strong></td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="tbl-note">
-      ★ Premier propulseur à réunir simultanément I<sub>sp</sub> ≥ 9 600 s, P ≥ 100 kW et qualification durée de vie ≥ 12 000 h.
-      HiPEP (2003) atteignait la même I<sub>sp</sub> à 25 kW mais n'a jamais été qualifié pour le vol. Sources : [1–5].
-    </div>
-  </div>
-
-  <!-- Graphique BARRES HORIZONTALES — sputtering comparatif -->
-  <p class="bt">
-    La performance en durée de vie est directement corrélée au taux de pulvérisation cathodique
-    du matériau de grille. La figure ci-dessous situe le SiC-f face aux quatre matériaux candidats
-    identifiés lors des études préliminaires (2020–2022).
-  </p>
-
-  <div class="chart-wrap">
-    <div class="chart-inner">
-      <div class="chart-top">
-        <span class="chart-ttl">Taux de pulvérisation cathodique (atomes/ion Xe⁺ à 8 keV) — matériaux de grilles</span>
-        <div class="legend">
-          <div class="li"><div class="ld" style="background:#f97316"></div>SiC-f (NK-125)</div>
-          <div class="li"><div class="ld" style="background:#60a5fa"></div>Graphite PyC</div>
-          <div class="li"><div class="ld" style="background:#c084fc"></div>Carbone-Carbone</div>
-          <div class="li"><div class="ld" style="background:#9ca3af"></div>Molybdène</div>
+    <section id="s-essentiel" aria-label="L'essentiel">
+      <div class="essentials rv">
+        <div class="essentials-head"><i class="ph-light ph-lightning" aria-hidden="true"></i> L'essentiel en 30 secondes</div>
+        <div class="kpis">
+          <div class="kpi"><strong data-count="9620" data-suffix=" s">9 620<small> s</small></strong><span>d'impulsion spécifique : un record pour cette puissance</span></div>
+          <div class="kpi"><strong data-count="72" data-suffix=" %">72<small> %</small></strong><span>de l'électricité transformée en poussée</span></div>
+          <div class="kpi"><strong data-count="12000" data-suffix=" h">12 000<small> h</small></strong><span>de fonctionnement validées, soit 16 mois sans arrêt</span></div>
         </div>
+        <ul class="takeaways">
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>Le NK-125 accélère des atomes de xénon électrisés à 94 km/s grâce à trois grilles en carbure de silicium.</li>
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>La troisième grille divise par quatre l'usure du moteur, qui dépasse les 12 000 heures de fonctionnement.</li>
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>Quatre NK-125 suffiraient à envoyer le module PROMETHEUS-2 vers Jupiter en 22 mois.</li>
+        </ul>
       </div>
-      <svg viewBox="0 0 800 190" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
-        <!-- Axe vertical + grille -->
-        <line x1="200" y1="10" x2="200" y2="168" stroke="#1b2555" stroke-width="1"/>
-        <line x1="200" y1="168" x2="785" y2="168" stroke="#1b2555" stroke-width="1"/>
-        <line x1="310" y1="10" x2="310" y2="162" stroke="#0e1535" stroke-dasharray="3,3" stroke-width="1"/>
-        <line x1="450" y1="10" x2="450" y2="162" stroke="#0e1535" stroke-dasharray="3,3" stroke-width="1"/>
-        <line x1="590" y1="10" x2="590" y2="162" stroke="#0e1535" stroke-dasharray="3,3" stroke-width="1"/>
-        <line x1="730" y1="10" x2="730" y2="162" stroke="#0e1535" stroke-dasharray="3,3" stroke-width="1"/>
-        <text x="310" y="182" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">0.04</text>
-        <text x="450" y="182" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">0.08</text>
-        <text x="590" y="182" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">0.12</text>
-        <text x="730" y="182" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">0.16</text>
-        <text x="197" y="7"   fill="#4a5280" font-size="9"  text-anchor="end"    font-family="DM Mono,monospace">atomes/ion →</text>
-        <!-- Molybdène 0.157 → 557px max=0.17 échelle 3500px par unité -->
-        <text x="192" y="36"  fill="#9ca3af" font-size="12" text-anchor="end" font-family="DM Sans,sans-serif">Molybdène</text>
-        <rect x="201" y="20" width="531" height="22" rx="3" fill="#9ca3af" opacity=".7"/>
-        <text x="740" y="36" fill="#9ca3af" font-size="11" font-family="DM Mono,monospace">0.157</text>
-        <!-- C/C 0.072 → 243px -->
-        <text x="192" y="76"  fill="#c084fc" font-size="12" text-anchor="end" font-family="DM Sans,sans-serif">Carbone-Carbone</text>
-        <rect x="201" y="60" width="243" height="22" rx="3" fill="#c084fc" opacity=".6"/>
-        <text x="453" y="76" fill="#c084fc" font-size="11" font-family="DM Mono,monospace">0.072</text>
-        <!-- PyC 0.055 → 186px -->
-        <text x="192" y="116" fill="#60a5fa" font-size="12" text-anchor="end" font-family="DM Sans,sans-serif">Graphite PyC</text>
-        <rect x="201" y="100" width="186" height="22" rx="3" fill="#60a5fa" opacity=".6"/>
-        <text x="395" y="116" fill="#60a5fa" font-size="11" font-family="DM Mono,monospace">0.055</text>
-        <!-- SiC-f 0.041 → 139px -->
-        <text x="192" y="156" fill="#f97316" font-size="12" text-anchor="end" font-family="DM Sans,sans-serif" font-weight="500">SiC-f NK-125</text>
-        <rect x="201" y="140" width="139" height="22" rx="3" fill="#f97316"/>
-        <text x="348" y="156" fill="#f97316" font-size="11" font-family="DM Mono,monospace" font-weight="500">0.041 ★</text>
-      </svg>
+
+      <div class="abstract rv">
+        <span class="label">Résumé</span>
+        <p>Nous présentons les résultats de la campagne d'essais TORCH-IV (octobre 2024 à janvier 2026) du NK-125, propulseur ionique à grilles de 125 kW développé par le DPET. Grâce à trois grilles en carbure de silicium fritté et une tension d'accélération de 6 400 V, il atteint une impulsion spécifique de 9 620 ± 85 s et un rendement global de 72 ± 1,5 %. Un essai d'endurance accéléré valide 12 000 heures de fonctionnement : les grilles n'ont perdu que 8 % de leur épaisseur. Ces performances font du NK-125 le candidat principal du module de transfert PROMETHEUS-2 (Terre–Jupiter, lancement 2031).</p>
+        <div class="kw" aria-label="Mots-clés"><span>Propulsion ionique</span><span>Xénon</span><span>Grilles en SiC</span><span>Endurance</span><span>PROMETHEUS</span></div>
+      </div>
+    </section>
+
+    <!-- 1. INTRODUCTION -->
+    <section id="s-intro">
+      <h2><span class="n">01</span>Introduction</h2>
+      <p>Une fusée classique brûle son carburant en quelques minutes pour produire une poussée énorme. Un propulseur ionique fait l'inverse : il éjecte très peu de matière, mais <strong>beaucoup plus vite</strong>. Il utilise l'électricité des panneaux solaires ou d'un générateur pour arracher des électrons à des atomes de <button class="term" type="button" data-term="xenon">xénon</button>, puis accélère les <button class="term" type="button" data-term="ion">ions</button> obtenus avec une forte tension électrique.</p>
+
+      <figure class="fig rv" id="fig1">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">Comment fonctionne un propulseur ionique</span>
+          </div>
+          <svg viewBox="0 0 680 300" id="howSvg" role="img" aria-label="Schéma animé : les atomes de xénon sont ionisés dans la chambre, accélérés par les grilles puis neutralisés à la sortie">
+            <defs>
+              <radialGradient id="chamberG" cx=".3" cy=".5" r=".8"><stop offset="0" stop-color="#1e2a60"/><stop offset="1" stop-color="#0a1233"/></radialGradient>
+            </defs>
+            <rect x="0" y="0" width="680" height="300" rx="10" fill="#050b1e"/>
+            <!-- chambre -->
+            <g class="zone" data-step="1">
+              <rect x="40" y="50" width="250" height="200" rx="18" fill="url(#chamberG)" stroke="#2a3a7a" stroke-width="1.5"/>
+              <g fill="#c084fc" opacity=".55"><rect x="60" y="44" width="30" height="10" rx="3"/><rect x="140" y="44" width="30" height="10" rx="3"/><rect x="220" y="44" width="30" height="10" rx="3"/><rect x="60" y="246" width="30" height="10" rx="3"/><rect x="140" y="246" width="30" height="10" rx="3"/><rect x="220" y="246" width="30" height="10" rx="3"/></g>
+              <rect x="22" y="132" width="34" height="36" rx="6" fill="#0a1233" stroke="#34d399"/>
+              <text x="165" y="30" fill="#aab3d6" font-size="13" text-anchor="middle">① Chambre d'ionisation</text>
+              <text x="39" y="190" fill="#a7f3d0" font-size="11" text-anchor="middle">cathode</text>
+            </g>
+            <!-- grilles -->
+            <g class="zone" data-step="2">
+              <g fill="#60a5fa">
+                <rect x="296" y="50" width="6" height="200" rx="2"/>
+                <rect x="312" y="50" width="6" height="200" rx="2"/>
+                <rect x="328" y="50" width="6" height="200" rx="2" opacity=".75"/>
+              </g>
+              <text x="316" y="30" fill="#aab3d6" font-size="13" text-anchor="middle">② Trois grilles</text>
+              <text x="316" y="276" fill="#93c5fd" font-size="12" text-anchor="middle" class="mono">6 400 V</text>
+            </g>
+            <!-- neutraliseur -->
+            <g class="zone" data-step="3">
+              <rect x="350" y="248" width="46" height="20" rx="5" fill="#0a1233" stroke="#22d3ee"/>
+              <text x="406" y="263" fill="#aab3d6" font-size="13">③ Neutraliseur</text>
+            </g>
+            <defs><linearGradient id="beamG" x1="0" x2="1"><stop offset="0" stop-color="#3b82f6" stop-opacity=".28"/><stop offset="1" stop-color="#3b82f6" stop-opacity="0"/></linearGradient></defs>
+            <path d="M334 70 L 680 30 L 680 270 L 334 230 Z" fill="url(#beamG)"/>
+            <g id="howParts"></g>
+            <text x="600" y="150" fill="#93c5fd" font-size="13" text-anchor="middle">Faisceau</text>
+            <text x="600" y="168" fill="#8891b8" font-size="12" text-anchor="middle" class="mono">94 km/s →</text>
+          </svg>
+          <div class="parts" role="group" aria-label="Étapes du fonctionnement">
+            <button class="part" type="button" data-step="1" aria-pressed="false" style="--pc:#c084fc"><i></i>1. Ioniser</button>
+            <button class="part" type="button" data-step="2" aria-pressed="false" style="--pc:#60a5fa"><i></i>2. Accélérer</button>
+            <button class="part" type="button" data-step="3" aria-pressed="false" style="--pc:#22d3ee"><i></i>3. Neutraliser</button>
+          </div>
+          <p class="part-desc" id="stepDesc" aria-live="polite">Sélectionnez une étape pour la détailler.</p>
+        </div>
+        <figcaption><b>Figure 1</b>Principe du NK-125. Des électrons (cyan) heurtent les atomes de xénon (gris) et les transforment en ions (bleus). Les grilles, soumises à 6 400 V, les propulsent hors du moteur. Le neutraliseur réinjecte des électrons dans le faisceau pour que le vaisseau reste électriquement neutre.</figcaption>
+      </figure>
+
+      <p>Cette vitesse d'éjection se mesure par l'<button class="term" type="button" data-term="isp">impulsion spécifique</button>. Plus elle est élevée, moins il faut de carburant pour atteindre une vitesse donnée. La poussée est minuscule, mais elle s'accumule jour après jour : sur un long voyage, la tortue finit par distancer le lièvre.</p>
+
+      <figure class="fig rv" id="fig2">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">Vitesse gagnée avec 3,4 tonnes de carburant</span>
+            <div class="legend" aria-hidden="true">
+              <span class="lg static" style="--lc:#3b82f6"><i></i>NK-125 (ionique)</span>
+              <span class="lg static" style="--lc:#ea580c"><i></i>Moteur chimique</span>
+            </div>
+          </div>
+          <div class="chart" id="race"><div class="ctip" id="raceTip"></div></div>
+        </div>
+        <figcaption><b>Figure 2</b>Gain de vitesse d'un module de 15 t emportant 3,4 t de carburant. Le moteur chimique (impulsion spécifique de 450 s) consomme tout en quelques minutes et plafonne à 1,2 km/s. Le NK-125 pousse pendant 16 mois et atteint 24,6 km/s, soit vingt fois plus.</figcaption>
+      </figure>
+
+      <p>Monter en puissance reste difficile : au-delà de 100 kW, les grilles chauffent et s'usent vite sous le bombardement des ions. Le programme NK s'y attaque depuis 2019, par étapes : NK-40 en 2021, NK-85 en 2023, puis le NK-125.</p>
+    </section>
+
+    <!-- 2. LE NK-125 -->
+    <section id="s-methodes">
+      <h2><span class="n">02</span>Le NK-125 et la campagne d'essais</h2>
+      <h3>Trois grilles plutôt que deux</h3>
+      <p>La chambre cylindrique (32 cm de diamètre) est alimentée en xénon, ionisé par une <button class="term" type="button" data-term="cathode">cathode creuse</button> et confiné par des aimants. À la sortie, trois grilles percées de milliers de trous accélèrent les ions. La nouveauté est la <strong>troisième grille</strong> : elle protège la deuxième des ions lents qui reviennent la frapper et l'usent.</p>
+
+      <figure class="fig rv" id="fig3">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">Vue en coupe d'un trou des grilles</span>
+            <div class="seg" role="group" aria-label="Nombre de grilles">
+              <button type="button" data-g="2" aria-pressed="false">2 grilles</button>
+              <button type="button" data-g="3" aria-pressed="true">3 grilles</button>
+            </div>
+          </div>
+          <svg viewBox="0 0 680 260" id="gridSvg" role="img" aria-label="Coupe d'un trou de grille : les ions rapides traversent, quelques ions lents reviennent frapper la grille d'accélération, sauf si une troisième grille les arrête"></svg>
+          <div class="readouts">
+            <div class="readout"><small>Ions qui frappent la grille</small><strong id="gHit">0,18 %</strong></div>
+            <div class="readout"><small>Usure de la grille</small><strong id="gWear">÷ 4</strong></div>
+            <div class="readout"><small>Durée de vie estimée</small><strong id="gLife">&gt; 12 000 h</strong></div>
+          </div>
+        </div>
+        <figcaption><b>Figure 3</b>Schéma d'un trou des grilles, vu en coupe. Les ions rapides (bleus) traversent. Quelques collisions dans le faisceau créent des ions lents (rouges) qui reviennent frapper la grille d'accélération. La troisième grille les repousse : la part d'ions qui frappent passe de 0,82 % à 0,18 %.</figcaption>
+      </figure>
+
+      <h3>La campagne TORCH-IV</h3>
+      <p>Les essais ont eu lieu dans la chambre à vide HÉLIOS-6 de l'IFRAS, où la pression est un milliard de fois plus faible que sur Terre. Performances et usure ont été mesurées de 40 à 125 kW, puis le moteur a fonctionné 12 000 heures en <button class="term" type="button" data-term="accelere">régime accéléré</button>. L'usure des grilles était contrôlée toutes les 500 heures, au laser et par pesée.</p>
+
+      <div class="table-wrap rv">
+        <div class="table-cap"><b>Tableau 1</b>Trois générations de propulseurs NK</div>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Modèle</th><th class="num">Année</th><th class="num">Puissance</th><th class="num">Impulsion spécifique</th><th class="num">Rendement</th><th>Statut</th></tr></thead>
+            <tbody>
+              <tr><td><span class="mat" style="--mc:#64748b"><i></i>NK-40</span></td><td class="num">2021</td><td class="num">40 kW</td><td class="num">6 800 s</td><td class="num">64 %</td><td><span class="state" style="--sc:var(--ok)"><i class="ph-light ph-check-circle" aria-hidden="true"></i>Qualifié</span></td></tr>
+              <tr><td><span class="mat" style="--mc:#ea580c"><i></i>NK-85</span></td><td class="num">2023</td><td class="num">85 kW</td><td class="num">8 100 s</td><td class="num">70 %</td><td><span class="state" style="--sc:var(--ok)"><i class="ph-light ph-check-circle" aria-hidden="true"></i>Qualifié</span></td></tr>
+              <tr class="hi"><td><span class="mat" style="--mc:#3b82f6"><i></i><strong>NK-125</strong></span></td><td class="num">2026</td><td class="num">125 kW</td><td class="num">9 620 s</td><td class="num">72 %</td><td><span class="state" style="--sc:#60a5fa"><i class="ph-light ph-flask" aria-hidden="true"></i>Endurance validée</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-note">En cinq ans, la puissance a triplé et l'impulsion spécifique a gagné 40 %.</div>
+      </div>
+    </section>
+
+    <!-- 3. RÉSULTATS -->
+    <section id="s-resultats">
+      <h2><span class="n">03</span>Résultats</h2>
+      <h3>Des performances qui montent avec la puissance</h3>
+      <p>Plus on fournit de puissance, plus on peut appliquer une tension élevée, et plus les ions sortent vite. L'impulsion spécifique grimpe ainsi jusqu'à <strong>9 620 s à 125 kW</strong>. Le rendement, lui, culmine à 74 % vers 110 kW, puis baisse légèrement : à pleine puissance, un peu plus d'énergie part en chaleur dans les grilles.</p>
+
+      <figure class="fig rv" id="fig4">
+        <div class="fig-stage">
+          <div class="fig-head"><span class="fig-name">Performances mesurées selon la puissance électrique</span></div>
+          <div class="multiples">
+            <div class="chart" id="mIsp"><div class="ctip" id="mIspTip"></div></div>
+            <div class="chart" id="mEff"><div class="ctip" id="mEffTip"></div></div>
+          </div>
+        </div>
+        <figcaption><b>Figure 4</b>Impulsion spécifique (à gauche) et rendement global (à droite) mesurés à six niveaux de puissance, en moyenne sur 3 essais. Le calcul théorique à 6 400 V donne 9 890 s ; l'écart de 2,7 % vient de la légère divergence du faisceau et d'une petite part d'ions doublement chargés.</figcaption>
+      </figure>
+
+      <div class="eq" role="math" aria-label="I s p égale un sur g zéro fois racine de deux e V sur m">I<sub>sp</sub> = (1/g₀) · √(2·e·V / m<sub>Xe</sub>)</div>
+      <div class="eq-parts">
+        <div class="eq-part"><b>V</b>Tension entre les grilles : 6 400 V.</div>
+        <div class="eq-part"><b>m<sub>Xe</sub></b>Masse d'un ion xénon : lourd, donc beaucoup de poussée par ion.</div>
+        <div class="eq-part"><b>g₀</b>Gravité terrestre (9,81 m/s²), qui convertit la vitesse en secondes.</div>
+      </div>
+
+      <h3>12 000 heures d'endurance</h3>
+      <p>C'est le résultat clé de la campagne. Après l'équivalent de 12 000 heures, la grille d'accélération n'a perdu que <strong>120 µm</strong> sur 1,5 mm d'épaisseur, soit 8 %. Aucun trou percé, aucune fissure. Ces 12 000 heures couvrent largement les 16 mois de poussée d'une mission vers Jupiter. Une grille en molybdène, le métal habituel, aurait perdu environ 460 µm et dépassé la limite de fin de vie (30 % d'usure).</p>
+
+      <figure class="fig rv" id="fig5">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">Usure de la grille au fil des heures</span>
+            <button class="ctrl" type="button" id="wearPlay"><i class="ph-light ph-play" aria-hidden="true"></i><span>Lancer</span></button>
+          </div>
+          <div class="wear">
+            <div class="chart" id="wearChart"></div>
+            <div class="discs">
+              <div class="disc" style="--mc:#3b82f6"><svg viewBox="0 0 160 160" id="discSic" aria-hidden="true"></svg><span><i></i>SiC (NK-125)</span><strong id="dSic">0 µm</strong></div>
+              <div class="disc" style="--mc:#ea580c"><svg viewBox="0 0 160 160" id="discMo" aria-hidden="true"></svg><span><i></i>Molybdène</span><strong id="dMo">0 µm</strong></div>
+            </div>
+          </div>
+          <div class="scrub">
+            <input type="range" id="wearRange" min="0" max="12000" value="0" step="100" aria-label="Heures de fonctionnement">
+            <output id="wearT" for="wearRange">0 h</output>
+          </div>
+        </div>
+        <figcaption><b>Figure 5</b>Épaisseur perdue par la grille d'accélération (mesures toutes les 500 h) comparée à une grille en molybdène, calculée pour les mêmes conditions. À droite, un agrandissement des trous de la grille : ils s'élargissent à mesure que le métal s'use. La ligne pointillée marque la limite de fin de vie (450 µm).</figcaption>
+      </figure>
+
+      <div class="note" style="--nc:#60a5fa">
+        <i class="ph-light ph-lightbulb" aria-hidden="true"></i>
+        <p><span class="nt">Pourquoi le carbure de silicium ?</span>Sous le bombardement des ions, il perd presque quatre fois moins d'atomes que le molybdène. Il résiste aussi mieux à la chaleur et se déforme moins, ce qui garde les trous des trois grilles parfaitement alignés.</p>
+      </div>
+    </section>
+
+    <!-- 4. MISSION -->
+    <section id="s-mission">
+      <h2><span class="n">04</span>Application : vers Jupiter</h2>
+      <p>Le module robotisé PROMETHEUS-2 (15 tonnes au départ) doit gagner 24,6 km/s pour rejoindre Jupiter. La <button class="term" type="button" data-term="tsiolkovski">formule de Tsiolkovski</button> relie cette vitesse au carburant nécessaire :</p>
+
+      <div class="eq" role="math" aria-label="delta V égale I s p fois g zéro fois logarithme de m zéro sur m f">ΔV = I<sub>sp</sub> · g₀ · ln(m<sub>départ</sub> / m<sub>arrivée</sub>)</div>
+      <p>Avec quatre NK-125, il ne faut que 3,4 t de xénon au lieu de 4,0 t avec des NK-85. Et comme la poussée totale est plus forte, le module accélère plus vite : le voyage passe de 26 à 22 mois.</p>
+
+      <figure class="fig rv" id="fig6">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">Trajet Terre–Jupiter en spirale</span>
+            <div class="seg" role="group" aria-label="Propulseur">
+              <button type="button" data-m="85" aria-pressed="false">4 × NK-85</button>
+              <button type="button" data-m="125" aria-pressed="true">4 × NK-125</button>
+            </div>
+          </div>
+          <svg viewBox="0 0 680 360" id="orbitSvg" role="img" aria-label="Animation du trajet en spirale entre l'orbite de la Terre et celle de Jupiter"></svg>
+          <div class="readouts">
+            <div class="readout"><small>Temps écoulé</small><strong id="oT">0 mois</strong></div>
+            <div class="readout"><small>Distance au Soleil</small><strong id="oR">1,0 UA</strong></div>
+            <div class="readout"><small>Xénon consommé</small><strong id="oX">0 kg</strong></div>
+          </div>
+          <div class="scrub">
+            <button class="ctrl" type="button" id="orbitPlay"><i class="ph-light ph-play" aria-hidden="true"></i><span>Lancer</span></button>
+            <input type="range" id="orbitRange" min="0" max="1000" value="0" aria-label="Avancement du trajet">
+          </div>
+        </div>
+        <figcaption><b>Figure 6</b>Trajectoire simulée de PROMETHEUS-2 (distances à l'échelle, une unité astronomique valant la distance Terre–Soleil). Les moteurs poussent en continu pendant la phase en spirale, puis le module termine en vol libre. Changez de propulseur pour comparer la durée du voyage.</figcaption>
+      </figure>
+
+      <div class="table-wrap rv">
+        <div class="table-cap"><b>Tableau 2</b>Ce que change le NK-125 pour PROMETHEUS-2</div>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Paramètre</th><th class="num">4 × NK-85</th><th class="num">4 × NK-125</th><th class="num">Gain</th></tr></thead>
+            <tbody>
+              <tr><td>Puissance électrique</td><td class="num">340 kW</td><td class="num">500 kW</td><td class="num gain">+47 %</td></tr>
+              <tr><td>Poussée totale</td><td class="num">6,0 N</td><td class="num">7,6 N</td><td class="num gain">+27 %</td></tr>
+              <tr><td>Xénon nécessaire</td><td class="num">4,0 t</td><td class="num">3,4 t</td><td class="num gain">−15 %</td></tr>
+              <tr><td>Durée de poussée</td><td class="num">20 mois</td><td class="num">16 mois</td><td class="num gain">−4 mois</td></tr>
+              <tr><td>Durée totale du voyage</td><td class="num">26 mois</td><td class="num">22 mois</td><td class="num gain">−15 %</td></tr>
+              <tr><td>Masse livrée à Jupiter</td><td class="num">11,0 t</td><td class="num">11,6 t</td><td class="num gain">+0,6 t</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-note">Simulation de trajectoire IFRAS, module de 15 t, ΔV de 24,6 km/s, 6 mois de vol libre en fin de trajet.</div>
+      </div>
+    </section>
+
+    <!-- 5. CONCLUSION -->
+    <section id="s-conclusion">
+      <h2><span class="n">05</span>Conclusion</h2>
+      <p>Le NK-125 est le premier propulseur ionique de l'IFRAS à réunir une impulsion spécifique supérieure à 9 600 s, une puissance de 125 kW et une endurance de 12 000 heures. La troisième grille en carbure de silicium est la clé de cette longévité. Les prochaines étapes visent le vol.</p>
+
+      <ol class="next" aria-label="Prochaines étapes">
+        <li class="now" style="--nc:var(--ok)"><time>Janv. 2026</time><strong>Endurance validée</strong><span>Fin de la campagne TORCH-IV à HÉLIOS-6.</span></li>
+        <li><time>2028</time><strong>Démonstrateur IONOS-1</strong><span>Premier NK-125 testé en orbite terrestre.</span></li>
+        <li style="--nc:var(--hot)"><time>2031</time><strong>PROMETHEUS-2</strong><span>Départ du module de transfert vers Jupiter.</span></li>
+      </ol>
+    </section>
+
+  </article>
+
+  <!-- Colonne de droite -->
+  <aside class="rail" aria-label="Outils de l'article">
+    <div class="rail-card rail-figs">
+      <p class="rail-title">Figures</p>
+      <ul class="fig-list">
+        <li><a href="#fig1"><i class="ph-light ph-atom" aria-hidden="true"></i>Principe de fonctionnement</a></li>
+        <li><a href="#fig2"><i class="ph-light ph-chart-line-up" aria-hidden="true"></i>Ionique contre chimique</a></li>
+        <li><a href="#fig3"><i class="ph-light ph-circles-three" aria-hidden="true"></i>Les trois grilles</a></li>
+        <li><a href="#fig4"><i class="ph-light ph-chart-line" aria-hidden="true"></i>Performances</a></li>
+        <li><a href="#fig5"><i class="ph-light ph-hourglass" aria-hidden="true"></i>Usure des grilles</a></li>
+        <li><a href="#fig6"><i class="ph-light ph-planet" aria-hidden="true"></i>Trajet vers Jupiter</a></li>
+      </ul>
     </div>
-    <div class="chart-cap">
-      <strong>Figure 1</strong>
-      Taux de pulvérisation cathodique mesuré à 8 keV Xe⁺ pour les quatre matériaux candidats aux grilles.
-      Le SiC-f présente la valeur la plus faible — 3,8 fois inférieure au molybdène —
-      ce qui se traduit directement par la durée de vie qualifiée de 12 000 h.
-      Données Mo, C/C, PyC compilées depuis [4, 5] ; valeur SiC-f : essai IFRAS-DSMR SPUTTER-2024-12.
+    <div class="rail-card">
+      <p class="rail-title">Programme lié</p>
+      <a class="prog-link" href="../programmes-actifs.html#prometheus">
+        <span class="pi"><i class="ph-light ph-rocket-launch" aria-hidden="true"></i></span>
+        <span><strong>PROMETHEUS</strong><small>Propulsion ionique · phase II</small></span>
+      </a>
     </div>
-  </div>
-
-  <!-- ===== 2. CONTEXTE ===== -->
-  <h2 class="section-heading blue" id="s2">2. Contexte — programme NK et verrous technologiques</h2>
-
-  <p class="bt">
-    Les propulseurs ioniques à grilles offrent les impulsions spécifiques les plus élevées parmi tous
-    les systèmes de propulsion spatiale opérationnels [1]. La mission Dawn (NASA, 2007) et la sonde
-    Hayabusa (JAXA, 2003) ont ancré cette technologie dans l'exploration du système solaire [2, 3].
-    Mais la montée en puissance vers la classe 100 kW — nécessaire aux missions habitées ou de remorquage
-    orbital de grande masse — ouvre trois verrous : dissipation thermique des grilles, homogénéité plasma
-    sur grande surface, et érosion accélérée [4].
-  </p>
-
-  <p class="bt">
-    Le programme NK répond à ces verrous depuis 2019 par itérations : NK-40 (2021, 40 kW, 6 800 s),
-    NK-85 (2023, 85 kW, 8 100 s), puis le NK-125. L'architecture à trois grilles SiC-f est protégée
-    par le brevet FR-2024-DPET-019.
-  </p>
-
-  <div class="hl blue">
-    Le HiPEP de la NASA (2003) atteignait déjà 9 620 s mais à seulement 25 kW, sans qualification de
-    durée de vie [4]. Le NK-125 est le premier propulseur à réunir cette impulsion spécifique,
-    une puissance de 125 kW et une qualification de 12 000 heures.
-  </div>
-
-  <!-- ===== 3. ARCHITECTURE ===== -->
-  <h2 class="section-heading" id="s3">3. Architecture et base physique</h2>
-
-  <p class="bt">
-    La chambre de décharge cylindrique (∅ 320 mm × 480 mm, molybdène/PyC CVD) est ionisée par
-    cathode creuse centrale à xénon (0,4–2,2 mg·s⁻¹), confinée par anneau magnétique cusped-field NdFeB.
-    L'I<sub>sp</sub> théorique se déduit directement de la tension d'accélération nette :
-  </p>
-
-  <!-- Deux colonnes : physique + équation — ici les équations arrivent naturellement dans le texte -->
-  <div class="two-col">
-    <p class="bt" style="margin:0">
-      Avec V<sub>screen</sub> = 8 640 V et |V<sub>accel</sub>| = 240 V, la tension nette est
-      V<sub>net</sub> = 8 400 V. Pour le xénon (m<sub>i</sub> = 131,3 u), l'équation (1) prédit
-      une I<sub>sp</sub> théorique de 9 870 s. L'écart mesuré (−2,5 %) est attribué à la
-      dispersion en énergie du faisceau (FWHM = 48 eV), à la divergence angulaire (14,2°) et
-      aux ions Xe²⁺ (fraction molaire 3,8 %).
-    </p>
-    <div class="eq">
-      I<sub>sp</sub> = (1 / g₀) · √(2eV<sub>net</sub> / m<sub>i</sub>)
-      <div class="eq-lbl">(Éq. 1)</div>
-    </div>
-  </div>
-
-  <div class="two-col">
-    <p class="bt" style="margin:0">
-      La troisième grille de décélération réduit le courant d'interception sur la grille
-      d'accélération de 0,82 % à 0,18 %, prolongeant sa durée de vie d'un facteur ~4.
-      L'ajustement empirique de la campagne TORCH-IV donne α = 0,024, β = 3,14
-      (régression sur 12 points de mesure). Ce résultat confirme les prédictions
-      PIC du code ISAT-Plasma v4.1 [6].
-    </p>
-    <div class="eq">
-      J<sub>int</sub> / J<sub>beam</sub> = α · exp(−β · V<sub>dec</sub> / V<sub>acc</sub>)
-      <div class="eq-lbl">(Éq. 2)</div>
-    </div>
-  </div>
-
-  <!-- ===== 4. DURÉE DE VIE ===== -->
-  <h2 class="section-heading green" id="s4">4. Qualification durée de vie</h2>
-
-  <p class="bt">
-    Les 12 000 heures de qualification sont conduites en régime accéléré (facteur ×3,2 sur le flux
-    de bombardement ionique) dans la chambre HELIOS-6. La perte d'épaisseur sur la grille
-    d'accélération est suivie par profilométrie laser (résolution axiale 0,1 µm) et pesée
-    en salle blanche toutes les 500 heures équivalentes.
-  </p>
-
-  <div class="hl green">
-    Bilan à 12 000 h équivalentes : perte d'épaisseur maximale de 120 µm (8 % de l'épaisseur
-    initiale de 1,5 mm). Aucune perforation, aucun délaminage fibre/matrice. Le critère de
-    fin de vie (perte de 30 %) n'est pas atteint. Une grille en molybdène dans les mêmes
-    conditions aurait perdu ~460 µm.
-  </div>
-
-  <!-- UNIQUE PHOTO — placée ici, pas ailleurs -->
-  <div class="fig-wrap">
-    <div class="fig-ph">
-      <span class="fig-icon">🔩</span>
-      <span class="fig-desc">Fig. 2 — Grille d'accélération SiC-f après 12 000 h (attendue)</span>
-      <span class="fig-sub">
-        Photographie en lumière rasante de la grille d'accélération (80 × 80 cm) après test accéléré.<br>
-        Érosion maximale mesurée : 120 ± 8 µm. Surface active uniforme, pas de délaminage visible.
-      </span>
-    </div>
-    <div class="fig-cap">
-      <strong>Figure 2</strong>
-      Grille d'accélération SiC-f en lumière rasante après 12 000 heures de test accéléré (TORCH-IV, jan. 2026).
-      La profilométrie laser (résolution 0,1 µm) confirme une érosion uniforme et l'absence de point chaud.
-      L'intégrité de la structure fibre/matrice est vérifiée par microscopie électronique à balayage
-      sur 6 zones prélèvées en périphérie et au centre de la grille.
-    </div>
-  </div>
-
-  <!-- ===== 5. IMPLICATIONS MISSION ===== -->
-  <h2 class="section-heading blue" id="s5">5. Application — mission PROMETHEUS-2</h2>
-
-  <p class="bt">
-    Avec quatre NK-125 embarqués (500 kW total) et une fraction de propergol de 62 %,
-    l'équation de Tsiolkovsky (Éq. 3) donne un ΔV disponible de 24 600 m·s⁻¹ pour
-    le module de transfert orbital de PROMETHEUS-2 (Terre–Jupiter, lancement 2031).
-  </p>
-
-  <div class="eq" style="margin:24px 0;text-align:center;padding:18px 20px;">
-    ΔV = I<sub>sp</sub> · g₀ · ln(m₀ / m<sub>f</sub>) = 9 620 × 9,81 × ln(1 / 0,38) ≈ 24 600 m·s⁻¹
-    <div class="eq-lbl">(Éq. 3)</div>
-  </div>
-
-  <p class="bt">
-    Ce ΔV réduit la durée de transit Terre–Jupiter de 24 mois (NK-85) à 14 mois,
-    soit −42 %. Cette compression de la durée d'exposition aux rayonnements galactiques et aux
-    ceintures de Van Allen réduit la dose cumulée reçue par l'équipage d'un facteur estimé à 1,7
-    par les modèles NOAA-SEP [7].
-  </p>
-
-  <!-- Tableau mission — le seul autre tableau, en fin de publication -->
-  <div class="tbl-wrap">
-    <div class="tbl-head">Tableau 2 — Impact des performances NK-125 sur le profil de mission PROMETHEUS-2</div>
-    <table>
-      <thead>
-        <tr>
-          <th>Paramètre</th>
-          <th>Avec NK-85 (2023)</th>
-          <th>Avec NK-125 (2026)</th>
-          <th>Gain</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Puissance totale embarquée</td><td class="tm">340 kW (4×85)</td><td class="tg">500 kW (4×125)</td><td class="to">+47 %</td></tr>
-        <tr><td>ΔV disponible</td><td class="tm">16 800 m·s⁻¹</td><td class="tg">24 600 m·s⁻¹</td><td class="to">+46 %</td></tr>
-        <tr><td>Durée de transit Terre–Jupiter</td><td class="tm">24 mois</td><td class="tg">14 mois</td><td class="to">−42 %</td></tr>
-        <tr><td>Dose rayonnements équipage</td><td class="tm">Référence</td><td class="tg">÷ 1,7</td><td class="to">−41 %</td></tr>
-        <tr><td>Fraction de propergol</td><td class="tm">70 %</td><td class="tg">62 %</td><td class="to">−8 pts</td></tr>
-        <tr><td>Masse utile restante (300 t initial)</td><td class="tm">90 t</td><td class="ty">114 t</td><td class="to">+27 %</td></tr>
-      </tbody>
-    </table>
-    <div class="tbl-note">
-      Simulation de trajectoire : code GMAT v2025.1 (NASA GSFC), profil de poussée variable optimisé par contrôle impulsionnel.
-      Hypothèse propergol : xénon pur 99,9 %. Dose rayonnements : modèle NOAA-SEP, orbite de transfert 0,97–5,2 UA [7].
-    </div>
-  </div>
-
-  <div class="hl">
-    La DPET et le CNES ont signé en février 2026 un accord de co-développement pour l'intégration
-    d'une unité de vol NK-125 dans le démonstrateur orbital IONOS-1 (lancement T2 2028).
-    La qualification vol sera conduite à HELIOS-6 en 2027.
-  </div>
-
-  <div class="art-divider"></div>
-
-  <!-- RÉFÉRENCES -->
-  <div class="refs-sec" id="s6">
-    <div class="ref-ttl">Références bibliographiques</div>
-    <div class="ref-list">
-      <div class="ref-item">Kaufman, H.R. (1961). An ion rocket with an electron-bombardment ion source. <em>NASA Technical Note</em> D-585. Lewis Research Center, Cleveland, OH.</div>
-      <div class="ref-item">Rayman, M.D. et al. (2006). Dawn: A mission in development for exploration of main belt asteroids Vesta and Ceres. <em>Acta Astronautica</em>, 58(11), 605–616. <a href="#">doi:10.1016/j.actaastro.2005.01.021</a></div>
-      <div class="ref-item">Kuninaka, H. et al. (2007). Asteroid rendez-vous of Hayabusa explorer using microwave discharge ion engines. <em>New Journal of Physics</em>, 9, 312. <a href="#">doi:10.1088/1367-2630/9/9/312</a></div>
-      <div class="ref-item">Goebel, D.M. & Katz, I. (2008). <em>Fundamentals of Electric Propulsion: Ion and Hall Thrusters</em>. Wiley-JPL Space Science & Technology Series. ISBN 978-0-470-42927-3.</div>
-      <div class="ref-item">Polk, J.E. et al. (2006). An overview of the results from an 11,000 hour wear test of the NSTAR ion thruster. <em>AIAA 2006-2446</em>, 42nd Joint Propulsion Conference, Sacramento.</div>
-      <div class="ref-item">Roux, F., Leroux, C. & Almeida, R. (2024). Simulation PIC multi-espèces du système de grilles tri-étages SiC-f du NK-125. <em>Journal of Electric Propulsion</em>, 3(1), 14. <a href="#">doi:10.1007/s44205-024-00054-7</a></div>
-      <div class="ref-item">Cucinotta, F.A. & Durante, M. (2006). Cancer risk from exposure to galactic cosmic rays. <em>The Lancet Oncology</em>, 7(5), 431–435. <a href="#">doi:10.1016/S1470-2045(06)70695-7</a></div>
-    </div>
-  </div>
-
-  <div class="footnote">
-    <strong>Conflits d'intérêts :</strong> Aucun. —
-    <strong>Financement :</strong> Programme NK (IFRAS DPET-2019-PROP) et ANR-21-ASTR-0054 « IONHIGH ». —
-    <strong>Brevet :</strong> FR-2024-DPET-019 (déposé 14 mars 2024, instruction PCT en cours). —
-    <strong>Contributions :</strong> F.R. : direction, campagne essais ; A.S. : diagnostics plasma, RPA ; R.A. : bilan thermique ; C.L. : simulations PIC.
-  </div>
-
+  </aside>
 </div>
 
-<footer style="background:#020617;border-top:1px solid #1b2555;padding:32px 30px;text-align:center;font-size:12px;color:#6b7280;">
-  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale · Publications soumises à validation institutionnelle
+<!-- Articles liés -->
+<section class="container related" aria-labelledby="relTitle">
+  <h2 class="section-title" id="relTitle">À lire aussi</h2>
+  <div class="related-grid">
+    <a class="rel" href="publications_scientifiques_01.html" style="--c:#fb7185">
+      <div class="rel-img"><img src="../Assets/accueil/alaune01.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Matériaux</small><strong>Un bouclier céramique qui résiste à 2 250 °C pour la rentrée atmosphérique</strong></div>
+    </a>
+    <a class="rel" href="publications_scientifiques_03.html" style="--c:#34d399">
+      <div class="rel-img"><img src="../Assets/publication/mars01.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Astrobiologie</small><strong>Des microbes qui se multiplient en conditions martiennes simulées</strong></div>
+    </a>
+    <a class="rel" href="publications_scientifiques_04.html" style="--c:#c084fc">
+      <div class="rel-img"><img src="../Assets/publication/quantique01.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Physique quantique</small><strong>L'intrication quantique préservée sur une liaison Terre–satellite simulée</strong></div>
+    </a>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© IFRAS, Institut Français de Recherche Aéronautique et Spatiale</span>
+    <span>Publications soumises à validation institutionnelle</span>
+  </div>
 </footer>
 
+<div class="toast" id="toast" role="status"><i class="ph-light ph-check-circle" aria-hidden="true"></i><span></span></div>
+<div class="tip" id="tip" role="tooltip"></div>
 <script>
-window.addEventListener('scroll',()=>{
-  const d=document.documentElement;
-  document.getElementById('progressBar').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%';
-});
-const secs=['s0','s1','s2','s3','s4','s5','s6'];
-const dots=document.querySelectorAll('.toc-dot');
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){const i=secs.indexOf(e.target.id);if(i>=0){dots.forEach(d=>d.classList.remove('active'));dots[i]&&dots[i].classList.add('active');}}});
-},{rootMargin:'-20% 0px -70% 0px'});
-secs.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
-dots.forEach((d,i)=>{d.addEventListener('click',()=>{const el=document.getElementById(secs[i]);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});});});
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const $ = (id) => document.getElementById(id);
+  const NS = 'http://www.w3.org/2000/svg';
+  const fmt = (n, d = 0) => n.toLocaleString('fr-FR', { minimumFractionDigits: d, maximumFractionDigits: d });
+  const svgEl = (tag, attrs = {}, parent) => {
+    const el = document.createElementNS(NS, tag);
+    for (const k in attrs) el.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(el);
+    return el;
+  };
+  /* lance une fonction quand l'élément devient visible (une seule fois) */
+  const onceVisible = (el, fn, margin = '0px 0px -15% 0px') => {
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { io.disconnect(); fn(); } }, { rootMargin: margin });
+    io.observe(el);
+  };
+  /* boucle d'animation suspendue hors écran et onglet masqué */
+  const loopWhileVisible = (el, frame) => {
+    let raf = 0, visible = false;
+    const tick = (t) => { frame(t); raf = requestAnimationFrame(tick); };
+    const sync = () => { cancelAnimationFrame(raf); if (visible && !document.hidden) raf = requestAnimationFrame(tick); };
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; sync(); }).observe(el);
+    document.addEventListener('visibilitychange', sync);
+  };
+
+  /* ---------- Menu mobile ---------- */
+  const toggle = document.querySelector('.menu-toggle');
+  const panel = $('mobile-panel');
+  const setMenu = (open) => {
+    panel.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    toggle.querySelector('i').className = open ? 'ph-light ph-x' : 'ph-light ph-list';
+  };
+  toggle.addEventListener('click', () => setMenu(!panel.classList.contains('is-open')));
+  document.addEventListener('click', (e) => { if (panel.classList.contains('is-open') && !panel.contains(e.target) && !toggle.contains(e.target)) setMenu(false); });
+
+  /* ---------- Apparition au défilement ---------- */
+  const rvIO = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (e.isIntersecting) { e.target.classList.add('in'); rvIO.unobserve(e.target); }
+  }), { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.rv').forEach((el) => rvIO.observe(el));
+
+  /* ---------- Toast ---------- */
+  let toastT;
+  const toast = (msg) => { const t = $('toast'); t.querySelector('span').textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2600); };
+
+  /* ---------- Progression de lecture + sommaire ---------- */
+  const article = $('article');
+  const tocLinks = [...document.querySelectorAll('#toc a')];
+  const sections = tocLinks.map((a) => document.querySelector(a.getAttribute('href')));
+  const ind = document.querySelector('.toc-ind');
+  const WORDS = article.innerText.split(/\s+/).length;
+  let ticking = false;
+  function onScroll() {
+    ticking = false;
+    const r = article.getBoundingClientRect();
+    const total = r.height - window.innerHeight * 0.6;
+    const p = Math.min(1, Math.max(0, -r.top / total));
+    $('progress').style.transform = `scaleX(${p})`;
+    const left = Math.max(0, Math.ceil((WORDS / 220) * (1 - p)));
+    $('timeLeft').textContent = p >= 0.98 ? 'Lecture terminée' : `${left || 1} min restante${left > 1 ? 's' : ''}`;
+    let cur = 0;
+    sections.forEach((s, i) => { if (s && s.getBoundingClientRect().top < window.innerHeight * 0.35) cur = i; });
+    tocLinks.forEach((a, i) => a.classList.toggle('on', i === cur));
+    const a = tocLinks[cur];
+    if (a && ind) { ind.style.transform = `translateY(${a.parentElement.offsetTop}px)`; ind.style.height = a.offsetHeight + 'px'; }
+  }
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  /* ---------- Chiffres clés animés ---------- */
+  document.querySelectorAll('[data-count]').forEach((el) => {
+    const target = Number(el.dataset.count), suffix = el.dataset.suffix || '';
+    const paint = (v) => { el.innerHTML = `${fmt(v)}<small>${suffix}</small>`; };
+    if (reduceMotion) return;
+    paint(0);
+    onceVisible(el, () => {
+      const t0 = performance.now(), dur = 1100;
+      const step = (t) => { const k = Math.min(1, (t - t0) / dur); paint(Math.round(target * (1 - Math.pow(1 - k, 4)))); if (k < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    });
+  });
+
+  /* ---------- Infobulles : termes expliqués ---------- */
+  const TERMS = {
+    xenon: ['Xénon', "Gaz rare, lourd et non toxique présent en infime quantité dans l'air. Ses atomes sont faciles à ioniser et lourds : chaque ion éjecté pousse davantage."],
+    ion: ['Ion', "Atome qui a perdu un ou plusieurs électrons. Il porte alors une charge électrique positive et peut être accéléré par une tension."],
+    isp: ['Impulsion spécifique', "Mesure de l'efficacité d'un moteur, exprimée en secondes. Elle est proportionnelle à la vitesse d'éjection : 9 620 s correspondent à 94 km/s, contre environ 4,4 km/s pour un bon moteur chimique."],
+    cathode: ['Cathode creuse', "Petit tube chauffé qui émet un flot d'électrons. Ces électrons heurtent les atomes de xénon et leur arrachent des électrons."],
+    accelere: ['Régime accéléré', "On augmente volontairement le bombardement des grilles (ici 3,2 fois) pour reproduire en moins de temps l'usure d'un fonctionnement normal."],
+    tsiolkovski: ['Formule de Tsiolkovski', "Équation établie en 1903 : le gain de vitesse d'une fusée dépend de la vitesse d'éjection et du rapport entre la masse au départ et la masse à l'arrivée."]
+  };
+  const tip = $('tip');
+  let tipOpenAt = 0, hideT = null, tipOwner = null;
+  function showTip(el) {
+    clearTimeout(hideT);
+    const t = TERMS[el.dataset.term];
+    tip.innerHTML = `<b>${t[0]}</b>${t[1]}`;
+    tip.classList.toggle('instant', Date.now() - tipOpenAt < 400 && tip.classList.contains('show'));
+    const r = el.getBoundingClientRect();
+    tip.style.left = '0px'; tip.style.top = '0px';
+    tip.classList.add('show');
+    const w = tip.offsetWidth, h = tip.offsetHeight;
+    let x = r.left + r.width / 2 - w / 2 + window.scrollX;
+    x = Math.max(16 + window.scrollX, Math.min(x, window.scrollX + document.documentElement.clientWidth - w - 16));
+    let y = r.top + window.scrollY - h - 10, below = false;
+    if (r.top - h - 10 < 130) { y = r.bottom + window.scrollY + 10; below = true; }
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+    tip.style.transformOrigin = `${r.left + r.width / 2 + window.scrollX - x}px ${below ? '0%' : '100%'}`;
+    tipOpenAt = Date.now(); tipOwner = el;
+    el.setAttribute('aria-describedby', 'tip');
+  }
+  function hideTip(delay = 80) {
+    clearTimeout(hideT);
+    hideT = setTimeout(() => { tip.classList.remove('show'); if (tipOwner) tipOwner.removeAttribute('aria-describedby'); tipOwner = null; tipOpenAt = Date.now(); }, delay);
+  }
+  document.querySelectorAll('.term').forEach((el) => {
+    if (canHover) { el.addEventListener('mouseenter', () => showTip(el)); el.addEventListener('mouseleave', () => hideTip()); }
+    el.addEventListener('focus', () => showTip(el));
+    el.addEventListener('blur', () => hideTip(0));
+    el.addEventListener('click', () => { if (!canHover) (tipOwner === el && tip.classList.contains('show')) ? hideTip(0) : showTip(el); });
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { hideTip(0); setMenu(false); } });
+  window.addEventListener('scroll', () => { if (!canHover && tip.classList.contains('show')) hideTip(0); }, { passive: true });
+
+  /* petite infobulle de graphique, placée à côté d'un point */
+  const placeTip = (tipEl, box, svg, W, H, px, py) => {
+    const r = svg.getBoundingClientRect(), bx = box.getBoundingClientRect();
+    const sx = px / W * r.width + (r.left - bx.left), sy = py / H * r.height + (r.top - bx.top);
+    tipEl.classList.add('show');
+    tipEl.style.left = (sx + 14 + tipEl.offsetWidth > bx.width ? sx - 14 - tipEl.offsetWidth : sx + 14) + 'px';
+    tipEl.style.top = Math.max(0, Math.min(bx.height - tipEl.offsetHeight, sy - tipEl.offsetHeight / 2)) + 'px';
+  };
+  const BLUE = '#3b82f6', ORANGE = '#ea580c';
+
+  /* ---------- En-tête : faisceau d'ions ---------- */
+  (function plume() {
+    const cv = $('plume'); if (!cv) return;
+    const ctx = cv.getContext('2d');
+    let w, h, ions = [], els = [];
+    const size = () => {
+      const r = cv.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 2);
+      w = r.width; h = r.height; cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ions = Array.from({ length: 120 }, () => spawn(true));
+      els = Array.from({ length: 16 }, () => spawnE(true));
+    };
+    const fx = () => w * 0.43, cy = () => h * 0.5, half = () => h * 0.18;
+    const spawn = (anywhere) => {
+      const off = (Math.random() * 2 - 1);
+      return { x: fx() + (anywhere ? Math.random() * w * 0.6 : 0), off, y0: cy() + off * half(), v: 3 + Math.random() * 2.5, r: 0.8 + Math.random() * 1.2 };
+    };
+    const spawnE = (anywhere) => ({ t: anywhere ? Math.random() : 0, v: 0.006 + Math.random() * 0.006, j: Math.random() * 10 - 5 });
+    const frame = () => {
+      ctx.clearRect(0, 0, w, h);
+      const g = ctx.createLinearGradient(fx(), 0, w, 0);
+      g.addColorStop(0, 'rgba(96,165,250,.28)'); g.addColorStop(1, 'rgba(96,165,250,0)');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.moveTo(fx(), cy() - half()); ctx.lineTo(w, cy() - half() * 2.1); ctx.lineTo(w, cy() + half() * 2.1); ctx.lineTo(fx(), cy() + half()); ctx.closePath(); ctx.fill();
+      for (const p of ions) {
+        p.x += p.v;
+        const k = (p.x - fx()) / (w - fx());
+        if (k > 1) Object.assign(p, spawn(false));
+        const y = p.y0 + p.off * half() * 1.1 * k;
+        ctx.fillStyle = `rgba(191,219,254,${0.9 * (1 - k)})`;
+        ctx.beginPath(); ctx.arc(p.x, y, p.r, 0, Math.PI * 2); ctx.fill();
+      }
+      /* électrons du neutraliseur qui rejoignent le faisceau */
+      for (const e of els) {
+        e.t += e.v; if (e.t > 1) Object.assign(e, spawnE(false));
+        const x0 = w * 0.47, y0 = h * 0.73, x1 = w * 0.72, y1 = cy() + e.j;
+        const x = x0 + (x1 - x0) * e.t, y = y0 + (y1 - y0) * Math.sin(e.t * Math.PI / 2);
+        ctx.fillStyle = `rgba(165,243,252,${0.8 * (1 - e.t)})`;
+        ctx.beginPath(); ctx.arc(x, y, 1.2, 0, Math.PI * 2); ctx.fill();
+      }
+    };
+    size(); new ResizeObserver(size).observe(cv);
+    if (reduceMotion) { frame(); return; }
+    loopWhileVisible(cv, frame);
+  })();
+
+  /* ---------- Figure 1 : principe ---------- */
+  (function how() {
+    const svg = $('howSvg'), g = $('howParts');
+    const DESC = {
+      1: "<b>Ioniser.</b> Des électrons émis par la cathode percutent les atomes de xénon et leur arrachent un électron : ils deviennent des ions. Des aimants gardent les électrons dans la chambre plus longtemps.",
+      2: "<b>Accélérer.</b> Les trois grilles, séparées d'un millimètre, créent une différence de 6 400 V. Les ions sont aspirés à travers leurs trous et jaillissent à 94 km/s.",
+      3: "<b>Neutraliser.</b> Sans lui, le vaisseau se chargerait négativement et rappellerait les ions. Le neutraliseur émet autant d'électrons qu'il sort d'ions."
+    };
+    const btns = [...document.querySelectorAll('#fig1 .part')];
+    let pinned = null;
+    const focus = (s) => {
+      svg.classList.toggle('focus', !!s);
+      svg.querySelectorAll('.zone').forEach((z) => z.classList.toggle('lit', z.dataset.step === s));
+      btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.step === s)));
+      $('stepDesc').innerHTML = s ? DESC[s] : 'Sélectionnez une étape pour la détailler.';
+    };
+    btns.forEach((b) => {
+      if (canHover) { b.addEventListener('mouseenter', () => focus(b.dataset.step)); b.addEventListener('mouseleave', () => focus(pinned)); }
+      b.addEventListener('click', () => { pinned = pinned === b.dataset.step ? null : b.dataset.step; focus(pinned); });
+    });
+    const rnd = (a, b) => a + Math.random() * (b - a);
+    const atoms = Array.from({ length: 34 }, () => {
+      const el = svgEl('circle', { r: 3.4 }, g);
+      return { el, x: rnd(70, 270), y: rnd(70, 230), vx: rnd(-.4, .4), vy: rnd(-.4, .4), ion: false, fast: false };
+    });
+    const elec = Array.from({ length: 10 }, () => ({ el: svgEl('circle', { r: 1.8, fill: '#67e8f9' }, g), x: 56, y: 150, vx: rnd(1, 2.4), vy: rnd(-1.2, 1.2) }));
+    const neut = Array.from({ length: 7 }, () => ({ el: svgEl('circle', { r: 1.8, fill: '#67e8f9' }, g), t: Math.random(), v: rnd(.006, .012), j: rnd(-30, 30) }));
+    const flashes = [];
+    const step = () => {
+      for (const a of atoms) {
+        if (!a.ion) {
+          a.x += a.vx; a.y += a.vy;
+          if (a.x < 64 || a.x > 280) a.vx *= -1;
+          if (a.y < 66 || a.y > 234) a.vy *= -1;
+          if (Math.random() < 0.018) { a.ion = true; a.vx = rnd(1.6, 2.6); a.vy *= .3; flashes.push({ x: a.x, y: a.y, life: 1, el: svgEl('circle', { cx: a.x, cy: a.y, r: 4, fill: 'none', stroke: '#c084fc' }, g) }); }
+        } else {
+          if (a.x > 292) { a.fast = true; a.vx = Math.min(a.vx + 0.8, 5.5); a.vy += (150 - a.y) * 0.0008; }
+          a.x += a.vx; a.y += a.vy;
+          if (a.y < 66 || a.y > 234) a.vy *= -1;
+          if (a.x > 690) Object.assign(a, { x: rnd(70, 110), y: rnd(80, 220), vx: rnd(-.4, .4), vy: rnd(-.4, .4), ion: false, fast: false });
+        }
+        a.el.setAttribute('cx', a.x.toFixed(1)); a.el.setAttribute('cy', a.y.toFixed(1));
+        a.el.setAttribute('fill', a.ion ? '#60a5fa' : '#94a3b8');
+        a.el.setAttribute('r', a.fast ? 2.6 : 3.4);
+      }
+      for (const e of elec) {
+        e.x += e.vx; e.y += e.vy;
+        if (e.x > 285 || e.y < 60 || e.y > 240) Object.assign(e, { x: 56, y: 150, vx: rnd(1, 2.4), vy: rnd(-1.2, 1.2) });
+        e.el.setAttribute('cx', e.x.toFixed(1)); e.el.setAttribute('cy', e.y.toFixed(1));
+      }
+      for (const n of neut) {
+        n.t += n.v; if (n.t > 1) { n.t = 0; n.j = rnd(-30, 30); }
+        const x = 396 + (560 - 396) * n.t, y = 258 + (150 + n.j - 258) * Math.sin(n.t * Math.PI / 2);
+        n.el.setAttribute('cx', x.toFixed(1)); n.el.setAttribute('cy', y.toFixed(1)); n.el.setAttribute('opacity', 1 - n.t);
+      }
+      for (let i = flashes.length - 1; i >= 0; i--) {
+        const f = flashes[i]; f.life -= 0.05;
+        f.el.setAttribute('r', 4 + (1 - f.life) * 10); f.el.setAttribute('opacity', Math.max(0, f.life));
+        if (f.life <= 0) { f.el.remove(); flashes.splice(i, 1); }
+      }
+    };
+    step();
+    if (!reduceMotion) loopWhileVisible(svg, step);
+  })();
+
+  /* ---------- Figure 2 : ionique contre chimique ---------- */
+  (function race() {
+    const box = $('race'), tipEl = $('raceTip');
+    const W = Math.round(Math.max(330, Math.min(680, box.clientWidth))), H = W < 520 ? 280 : 300, m = { l: 44, r: 58, t: 14, b: 40 };
+    const M0 = 15000, PROP = 3440, VI = 94370, VC = 4414;
+    const THRUST_MONTHS = PROP / (7.6 / VI) / (30.44 * 86400);
+    const dvIon = (mo) => VI * Math.log(M0 / (M0 - Math.min(PROP, 7.6 / VI * mo * 30.44 * 86400))) / 1000;
+    const dvChem = (mo) => mo <= 0 ? 0 : VC * Math.log(M0 / (M0 - PROP)) / 1000;
+    const x = (mo) => m.l + mo / 20 * (W - m.l - m.r);
+    const y = (v) => H - m.b - v / 26 * (H - m.t - m.b);
+    const svg = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Courbes de vitesse gagnée : le moteur chimique plafonne à 1,2 km/s, le propulseur ionique atteint 24,6 km/s en 16 mois' });
+    box.prepend(svg);
+    [0, 5, 10, 15, 20, 25].forEach((v) => {
+      svgEl('line', { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: '#13204d' }, svg);
+      svgEl('text', { x: m.l - 8, y: y(v) + 4, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 12, class: 'mono' }, svg).textContent = v;
+    });
+    [0, 4, 8, 12, 16, 20].forEach((mo) => { svgEl('text', { x: x(mo), y: H - m.b + 20, 'text-anchor': 'middle', fill: '#8891b8', 'font-size': 12, class: 'mono' }, svg).textContent = mo; });
+    svgEl('text', { x: W - m.r, y: H - 4, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 12 }, svg).textContent = 'Mois après le départ';
+    svgEl('text', { x: m.l + 6, y: m.t + 12, fill: '#8891b8', 'font-size': 12 }, svg).textContent = 'Vitesse gagnée (km/s)';
+    /* fin de poussée */
+    svgEl('line', { x1: x(THRUST_MONTHS), x2: x(THRUST_MONTHS), y1: m.t + 18, y2: H - m.b, stroke: '#aab3d6', 'stroke-dasharray': '4 5' }, svg);
+    svgEl('text', { x: x(THRUST_MONTHS) - 6, y: y(3), 'text-anchor': 'end', fill: '#aab3d6', 'font-size': 11.5 }, svg).textContent = 'fin de la poussée';
+    const pts = []; for (let mo = 0; mo <= 20; mo += 0.25) pts.push([mo, dvIon(mo)]);
+    const ion = svgEl('path', { d: pts.map(([a, b], i) => `${i ? 'L' : 'M'}${x(a).toFixed(1)} ${y(b).toFixed(1)}`).join(' '), fill: 'none', stroke: BLUE, 'stroke-width': 2.2, 'stroke-linecap': 'round', class: 'draw' }, svg);
+    ion.style.setProperty('--len', Math.ceil(ion.getTotalLength()));
+    const chem = svgEl('path', { d: `M${x(0)} ${y(0)} L${x(0.05)} ${y(dvChem(1))} L${x(20)} ${y(dvChem(1))}`, fill: 'none', stroke: ORANGE, 'stroke-width': 2.2, 'stroke-linecap': 'round', class: 'draw' }, svg);
+    chem.style.setProperty('--len', Math.ceil(chem.getTotalLength()));
+    svgEl('text', { x: W - m.r + 8, y: y(dvIon(20)) + 4, fill: '#e6e6e6', 'font-size': 12, class: 'dot' }, svg).textContent = '24,6';
+    svgEl('text', { x: W - m.r + 8, y: y(dvChem(1)) + 4, fill: '#e6e6e6', 'font-size': 12, class: 'dot' }, svg).textContent = '1,2';
+    const xh = svgEl('line', { y1: m.t, y2: H - m.b, stroke: '#aab3d6', class: 'xhair' }, svg);
+    const dI = svgEl('circle', { r: 5, fill: BLUE, stroke: '#070f2b', 'stroke-width': 2, class: 'xhair' }, svg);
+    const dC = svgEl('circle', { r: 5, fill: ORANGE, stroke: '#070f2b', 'stroke-width': 2, class: 'xhair' }, svg);
+    const hit = svgEl('rect', { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, class: 'hit' }, svg);
+    const move = (e) => {
+      const r = svg.getBoundingClientRect();
+      const mo = Math.max(0, Math.min(20, ((e.clientX - r.left) / r.width * W - m.l) / (W - m.l - m.r) * 20));
+      const vi = dvIon(mo), vc = dvChem(mo);
+      [xh, dI, dC].forEach((el) => el.classList.add('show'));
+      xh.setAttribute('x1', x(mo)); xh.setAttribute('x2', x(mo));
+      dI.setAttribute('cx', x(mo)); dI.setAttribute('cy', y(vi)); dC.setAttribute('cx', x(mo)); dC.setAttribute('cy', y(vc));
+      tipEl.innerHTML = `<b>${fmt(mo, 1)} mois</b><div><span style="--lc:${BLUE}"><i></i>NK-125</span><em>${fmt(vi, 1)} km/s</em></div><div><span style="--lc:${ORANGE}"><i></i>Chimique</span><em>${fmt(vc, 1)} km/s</em></div>`;
+      placeTip(tipEl, box, svg, W, H, x(mo), y(vi));
+    };
+    hit.addEventListener('pointermove', move); hit.addEventListener('pointerdown', move);
+    hit.addEventListener('pointerleave', () => { [xh, dI, dC].forEach((el) => el.classList.remove('show')); tipEl.classList.remove('show'); });
+    if (reduceMotion) box.classList.add('drawn'); else onceVisible(box, () => box.classList.add('drawn'), '0px 0px -25% 0px');
+  })();
+
+  /* ---------- Figure 3 : les grilles ---------- */
+  (function grids() {
+    const svg = $('gridSvg');
+    const W = 680, H = 260, CY = 130;
+    svgEl('rect', { x: 0, y: 0, width: W, height: H, rx: 10, fill: '#050b1e' }, svg);
+    svgEl('rect', { x: 0, y: 0, width: 207, height: H, fill: 'rgba(192,132,252,.08)' }, svg);
+    svgEl('text', { x: 16, y: 24, fill: '#c4b5fd', 'font-size': 12.5 }, svg).textContent = 'Plasma (chambre)';
+    svgEl('text', { x: W - 16, y: 24, 'text-anchor': 'end', fill: '#93c5fd', 'font-size': 12.5 }, svg).textContent = 'Faisceau →';
+    /* grilles : barre haute + barre basse autour du trou */
+    const GRIDS = [
+      { x: 214, w: 10, gap: 34, c: '#60a5fa', name: 'écran', v: '+6 640 V', top: false },
+      { x: 284, w: 14, gap: 20, c: '#3b82f6', name: 'accélération', v: '−240 V', top: true },
+      { x: 360, w: 10, gap: 30, c: '#1d4ed8', name: 'décélération', v: '0 V', top: false }
+    ];
+    const gEls = GRIDS.map((gd, i) => {
+      const g = svgEl('g', {}, svg);
+      svgEl('rect', { x: gd.x, y: 40, width: gd.w, height: CY - gd.gap - 40, rx: 2, fill: gd.c }, g);
+      svgEl('rect', { x: gd.x, y: CY + gd.gap, width: gd.w, height: H - 40 - CY - gd.gap, rx: 2, fill: gd.c }, g);
+      svgEl('text', { x: gd.x + gd.w / 2, y: gd.top ? 20 : H - 22, 'text-anchor': 'middle', fill: '#aab3d6', 'font-size': 11.5 }, g).textContent = gd.name;
+      svgEl('text', { x: gd.x + gd.w / 2, y: gd.top ? 34 : H - 8, 'text-anchor': 'middle', fill: '#8891b8', 'font-size': 11, class: 'mono' }, g).textContent = gd.v;
+      if (i === 2) g.style.transition = 'opacity 260ms ease';
+      return g;
+    });
+    const layer = svgEl('g', {}, svg);
+    let three = true;
+    const rnd = (a, b) => a + Math.random() * (b - a);
+    const fast = Array.from({ length: 24 }, () => ({ el: svgEl('circle', { r: 2.6, fill: '#93c5fd' }, layer), x: rnd(0, W), y0: rnd(CY - 60, CY + 60), v: 0 }));
+    const slow = Array.from({ length: 8 }, () => ({ el: svgEl('circle', { r: 3.2, fill: '#f87171' }, layer), alive: false, wait: rnd(0, 60) }));
+    const sparks = [];
+    const spawnSlow = (s) => { Object.assign(s, { alive: true, x: rnd(390, 600), y: rnd(CY - 12, CY + 12), vx: -rnd(1.2, 1.8), blocked: three && Math.random() > 0.22, dead: 0 }); s.ty = s.y < CY ? CY - 26 : CY + 26; s.el.setAttribute('opacity', 1); };
+    const step = () => {
+      for (const p of fast) {
+        const k = Math.max(0, Math.min(1, (p.x - 150) / 150));
+        p.x += 1.2 + k * 7;
+        const y = p.y0 + (CY - p.y0) * k * 0.85 + (p.x > 300 ? (p.y0 - CY) * 0.08 * (p.x - 300) / 380 : 0);
+        if (p.x > W + 10) { p.x = rnd(-20, 40); p.y0 = rnd(CY - 70, CY + 70); }
+        p.el.setAttribute('cx', p.x.toFixed(1)); p.el.setAttribute('cy', y.toFixed(1));
+      }
+      for (const s of slow) {
+        if (!s.alive) { if (--s.wait < 0) spawnSlow(s); s.el.setAttribute('opacity', 0); continue; }
+        if (s.dead) { s.dead -= 0.05; s.x += 1.2; s.el.setAttribute('opacity', Math.max(0, s.dead)); if (s.dead <= 0) { s.alive = false; s.wait = rnd(20, 90); } }
+        else {
+          s.x += s.vx;
+          const k = Math.max(0, Math.min(1, (420 - s.x) / 110));
+          s.y += (s.ty - s.y) * 0.02 * k * 3;
+          if (s.blocked && s.x < 376) { s.dead = 1; }
+          else if (s.x < 300) {
+            sparks.push({ x: 300, y: s.y, life: 1, el: svgEl('circle', { cx: 300, cy: s.y, r: 3, fill: 'none', stroke: '#fbbf24', 'stroke-width': 2 }, layer) });
+            s.alive = false; s.wait = rnd(20, 90);
+          }
+        }
+        s.el.setAttribute('cx', s.x.toFixed(1)); s.el.setAttribute('cy', s.y.toFixed(1));
+      }
+      for (let i = sparks.length - 1; i >= 0; i--) {
+        const f = sparks[i]; f.life -= 0.04;
+        f.el.setAttribute('r', 3 + (1 - f.life) * 9); f.el.setAttribute('opacity', Math.max(0, f.life));
+        if (f.life <= 0) { f.el.remove(); sparks.splice(i, 1); }
+      }
+    };
+    const set = (n) => {
+      three = n === 3;
+      gEls[2].style.opacity = three ? 1 : 0;
+      document.querySelectorAll('#fig3 [data-g]').forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.g) === n)));
+      $('gHit').textContent = three ? '0,18 %' : '0,82 %';
+      $('gWear').textContent = three ? '÷ 4,6' : 'référence';
+      $('gLife').textContent = three ? '> 12 000 h' : '≈ 2 600 h';
+      slow.forEach((s) => { if (s.alive && !s.dead) s.blocked = three && Math.random() > 0.22; });
+    };
+    document.querySelectorAll('#fig3 [data-g]').forEach((b) => b.addEventListener('click', () => set(Number(b.dataset.g))));
+    /* sur petit écran, on recadre sur les grilles pour garder un texte lisible */
+    const crop = () => svg.setAttribute('viewBox', svg.clientWidth < 500 ? '150 0 330 260' : `0 0 ${W} ${H}`);
+    crop(); window.addEventListener('resize', crop);
+    set(3); step();
+    if (!reduceMotion) loopWhileVisible(svg, step);
+  })();
+
+  /* ---------- Figure 4 : petits multiples ---------- */
+  (function perf() {
+    const P = [40, 60, 80, 100, 110, 125];
+    const SETS = [
+      { box: 'mIsp', tip: 'mIspTip', v: [7900, 8500, 8950, 9300, 9450, 9620], lo: 7500, hi: 10000, ticks: [7500, 8000, 8500, 9000, 9500, 10000], title: 'Impulsion spécifique (s)', f: (v) => `${fmt(v)} s` },
+      { box: 'mEff', tip: 'mEffTip', v: [64, 68, 71, 73.5, 74, 72], lo: 60, hi: 76, ticks: [60, 64, 68, 72, 76], title: 'Rendement global (%)', f: (v) => `${fmt(v, 1)} %` }
+    ];
+    const charts = SETS.map((s) => {
+      const box = $(s.box), tipEl = $(s.tip);
+      const W = Math.round(Math.max(300, Math.min(340, box.clientWidth))), H = 250, m = { l: 50, r: 16, t: 30, b: 36 };
+      const x = (p) => m.l + (p - 40) / 85 * (W - m.l - m.r);
+      const y = (v) => H - m.b - (v - s.lo) / (s.hi - s.lo) * (H - m.t - m.b);
+      const svg = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': s.title + ' selon la puissance' });
+      box.prepend(svg);
+      svgEl('text', { x: 10, y: 18, fill: '#e6e6e6', 'font-size': 13 }, svg).textContent = s.title;
+      s.ticks.forEach((v) => {
+        svgEl('line', { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: '#13204d' }, svg);
+        svgEl('text', { x: m.l - 6, y: y(v) + 4, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 11, class: 'mono' }, svg).textContent = fmt(v);
+      });
+      [40, 60, 80, 100, 125].forEach((p) => svgEl('text', { x: x(p), y: H - m.b + 18, 'text-anchor': 'middle', fill: '#8891b8', 'font-size': 11, class: 'mono' }, svg).textContent = p);
+      svgEl('text', { x: W - m.r, y: H - 3, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 11 }, svg).textContent = 'Puissance (kW)';
+      const path = svgEl('path', { d: s.v.map((v, i) => `${i ? 'L' : 'M'}${x(P[i]).toFixed(1)} ${y(v).toFixed(1)}`).join(' '), fill: 'none', stroke: BLUE, 'stroke-width': 2, 'stroke-linejoin': 'round', class: 'draw' }, svg);
+      path.style.setProperty('--len', Math.ceil(path.getTotalLength()));
+      const dots = s.v.map((v, i) => svgEl('circle', { cx: x(P[i]), cy: y(v), r: i === 5 ? 5.5 : 4, fill: i === 5 ? '#fff' : BLUE, stroke: BLUE, 'stroke-width': 2, class: 'dot' }, svg));
+      const xh = svgEl('line', { y1: m.t, y2: H - m.b, stroke: '#aab3d6', class: 'xhair' }, svg);
+      const hit = svgEl('rect', { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, class: 'hit' }, svg);
+      if (reduceMotion) box.classList.add('drawn'); else onceVisible(box, () => box.classList.add('drawn'), '0px 0px -25% 0px');
+      return { s, box, tipEl, svg, W, H, x, y, xh, hit, dots };
+    });
+    /* survol partagé : les deux graphiques montrent la même puissance */
+    const show = (i) => charts.forEach((c) => {
+      c.xh.classList.add('show'); c.xh.setAttribute('x1', c.x(P[i])); c.xh.setAttribute('x2', c.x(P[i]));
+      c.dots.forEach((d, k) => d.setAttribute('r', k === i ? 6.5 : (k === 5 ? 5.5 : 4)));
+      c.tipEl.innerHTML = `<b>${P[i]} kW</b><div><span>${c.s.title.split(' (')[0]}</span><em>${c.s.f(c.s.v[i])}</em></div>`;
+      placeTip(c.tipEl, c.box, c.svg, c.W, c.H, c.x(P[i]), c.y(c.s.v[i]));
+    });
+    const hide = () => charts.forEach((c) => { c.xh.classList.remove('show'); c.tipEl.classList.remove('show'); c.dots.forEach((d, k) => d.setAttribute('r', k === 5 ? 5.5 : 4)); });
+    charts.forEach((c) => {
+      const move = (e) => {
+        const r = c.svg.getBoundingClientRect(), px = (e.clientX - r.left) / r.width * c.W;
+        let i = 0; P.forEach((p, k) => { if (Math.abs(c.x(p) - px) < Math.abs(c.x(P[i]) - px)) i = k; });
+        show(i);
+      };
+      c.hit.addEventListener('pointermove', move); c.hit.addEventListener('pointerdown', move); c.hit.addEventListener('pointerleave', hide);
+    });
+  })();
+
+  /* ---------- Figure 5 : usure des grilles ---------- */
+  (function wear() {
+    const box = $('wearChart');
+    const W = Math.round(Math.max(320, Math.min(500, box.clientWidth))), H = 260, m = { l: 46, r: 14, t: 30, b: 38 };
+    const sic = (h) => 120 * Math.pow(h / 12000, 0.95), mo = (h) => 460 * h / 12000;
+    const x = (h) => m.l + h / 12000 * (W - m.l - m.r);
+    const y = (v) => H - m.b - v / 500 * (H - m.t - m.b);
+    const svg = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': "Épaisseur perdue : 120 µm pour le carbure de silicium contre 460 µm pour le molybdène après 12 000 heures" });
+    box.prepend(svg);
+    [0, 100, 200, 300, 400, 500].forEach((v) => {
+      svgEl('line', { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: '#13204d' }, svg);
+      svgEl('text', { x: m.l - 6, y: y(v) + 4, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 11, class: 'mono' }, svg).textContent = v;
+    });
+    [0, 3000, 6000, 9000, 12000].forEach((h) => svgEl('text', { x: x(h), y: H - m.b + 18, 'text-anchor': h === 12000 ? 'end' : 'middle', fill: '#8891b8', 'font-size': 11, class: 'mono' }, svg).textContent = fmt(h));
+    svgEl('text', { x: 6, y: 14, fill: '#8891b8', 'font-size': 11 }, svg).textContent = 'Épaisseur perdue (µm)';
+    svgEl('line', { x1: m.l, x2: W - m.r, y1: y(450), y2: y(450), stroke: '#f87171', 'stroke-dasharray': '6 5', opacity: .8 }, svg);
+    svgEl('text', { x: m.l + 6, y: y(450) - 6, fill: '#fca5a5', 'font-size': 11 }, svg).textContent = 'Fin de vie (30 %)';
+    svgEl('path', { d: `M${x(0)} ${y(0)} L${x(12000)} ${y(460)}`, fill: 'none', stroke: ORANGE, 'stroke-width': 2, 'stroke-dasharray': '6 4' }, svg);
+    const sp = []; for (let h = 0; h <= 12000; h += 250) sp.push(`${h ? 'L' : 'M'}${x(h).toFixed(1)} ${y(sic(h)).toFixed(1)}`);
+    svgEl('path', { d: sp.join(' '), fill: 'none', stroke: BLUE, 'stroke-width': 2 }, svg);
+    for (let h = 500; h <= 12000; h += 500) svgEl('circle', { cx: x(h), cy: y(sic(h) + Math.sin(h) * 3), r: 3, fill: BLUE, stroke: '#070f2b', 'stroke-width': 1.5 }, svg);
+    svgEl('text', { x: x(12000) - 4, y: y(460) + 16, 'text-anchor': 'end', fill: '#e6e6e6', 'font-size': 11.5 }, svg).textContent = 'Molybdène';
+    svgEl('text', { x: x(12000) - 4, y: y(120) - 10, 'text-anchor': 'end', fill: '#e6e6e6', 'font-size': 11.5 }, svg).textContent = 'SiC';
+    const mk = svgEl('line', { y1: m.t, y2: H - m.b, stroke: '#fff', 'stroke-width': 1.2, opacity: .7 }, svg);
+    /* disques : trous hexagonaux qui s'élargissent */
+    const disc = (id) => {
+      const s = $(id), holes = [];
+      const cp = svgEl('clipPath', { id: id + 'Clip' }, svgEl('defs', {}, s));
+      svgEl('circle', { cx: 80, cy: 80, r: 74 }, cp);
+      svgEl('circle', { cx: 80, cy: 80, r: 76, fill: 'none', stroke: '#2a3a7a', 'stroke-width': 2 }, s);
+      const g = svgEl('g', { 'clip-path': `url(#${id}Clip)` }, s);
+      svgEl('rect', { x: 0, y: 0, width: 160, height: 160, fill: id === 'discSic' ? '#1e3a8a' : '#7c2d12' }, g);
+      for (let r = 0; r < 10; r++) for (let c = 0; c < 10; c++) holes.push(svgEl('circle', { cx: 4 + c * 18 + (r % 2) * 9, cy: 4 + r * 15.6, r: 5, fill: '#020617' }, g));
+      return holes;
+    };
+    const hS = disc('discSic'), hM = disc('discMo');
+    const range = $('wearRange'), btn = $('wearPlay');
+    const render = (h) => {
+      const a = sic(h), b = mo(h);
+      mk.setAttribute('x1', x(h)); mk.setAttribute('x2', x(h));
+      hS.forEach((c) => c.setAttribute('r', (5 + a * 0.0085).toFixed(2)));
+      hM.forEach((c) => c.setAttribute('r', (5 + b * 0.0085).toFixed(2)));
+      $('dSic').textContent = `${fmt(a)} µm`; $('dMo').textContent = `${fmt(b)} µm`;
+      $('dMo').parentElement.classList.toggle('over', b >= 450);
+      $('wearT').textContent = `${fmt(h)} h`; range.value = h;
+    };
+    let h = 0, playing = false, last = 0;
+    const setBtn = () => { btn.querySelector('i').className = playing ? 'ph-light ph-pause' : 'ph-light ph-play'; btn.querySelector('span').textContent = playing ? 'Pause' : (h >= 12000 ? 'Rejouer' : 'Lancer'); };
+    const tick = (now) => { if (!playing) return; h = Math.min(12000, h + (now - last) * 2); last = now; render(h); if (h < 12000) requestAnimationFrame(tick); else { playing = false; setBtn(); } };
+    const play = () => { if (h >= 12000) h = 0; playing = true; last = performance.now(); setBtn(); requestAnimationFrame(tick); };
+    btn.addEventListener('click', () => { if (playing) { playing = false; setBtn(); } else play(); });
+    range.addEventListener('input', () => { playing = false; setBtn(); h = Number(range.value); render(h); });
+    render(0);
+    if (!reduceMotion) onceVisible($('fig5'), play, '0px 0px -30% 0px'); else render(12000);
+  })();
+
+  /* ---------- Figure 6 : trajet vers Jupiter ---------- */
+  (function orbit() {
+    const svg = $('orbitSvg'), W = 680, H = 360, CX = 340, CY = 180, AU = 31.5;
+    const MODES = { 85: { total: 26, thrust: 20, xenon: 4000 }, 125: { total: 22, thrust: 16, xenon: 3440 } };
+    let mode = MODES[125];
+    const TURNS = 2.3, PHI = TURNS * Math.PI * 2, R_END = 5.2;
+    /* spirale : rayon 1 → 5,2 UA ; la poussée couvre la majeure partie, le vol libre la fin */
+    const rAt = (u) => 1 + (R_END - 1) * (u < 0.8 ? Math.pow(u / 0.8, 1.35) * 0.9 : 0.9 + 0.1 * (u - 0.8) / 0.2);
+    const pos = (u) => { const a = u * PHI, r = rAt(u); return [CX + Math.cos(a) * r * AU, CY - Math.sin(a) * r * AU * 0.62, r]; };
+    const defs = svgEl('defs', {}, svg);
+    const sg = svgEl('radialGradient', { id: 'sunG' }, defs);
+    svgEl('stop', { offset: 0, 'stop-color': '#fde68a' }, sg); svgEl('stop', { offset: .4, 'stop-color': '#f97316', 'stop-opacity': .6 }, sg); svgEl('stop', { offset: 1, 'stop-color': '#f97316', 'stop-opacity': 0 }, sg);
+    svgEl('rect', { x: 0, y: 0, width: W, height: H, rx: 10, fill: '#030817' }, svg);
+    for (let i = 0; i < 70; i++) svgEl('circle', { cx: Math.random() * W, cy: Math.random() * H, r: Math.random() * 0.9 + 0.2, fill: '#fff', opacity: Math.random() * 0.5 + 0.1 }, svg);
+    svgEl('ellipse', { cx: CX, cy: CY, rx: AU, ry: AU * 0.62, fill: 'none', stroke: '#1e3a8a', 'stroke-dasharray': '2 4' }, svg);
+    svgEl('ellipse', { cx: CX, cy: CY, rx: R_END * AU, ry: R_END * AU * 0.62, fill: 'none', stroke: '#7c2d12', 'stroke-dasharray': '2 5' }, svg);
+    svgEl('circle', { cx: CX, cy: CY, r: 18, fill: 'url(#sunG)' }, svg);
+    svgEl('circle', { cx: CX, cy: CY, r: 5, fill: '#fde68a' }, svg);
+    const ptsA = [], ptsB = [];
+    for (let i = 0; i <= 400; i++) { const u = i / 400, [px, py] = pos(u); (u <= 0.8 ? ptsA : ptsB).push(`${px.toFixed(1)} ${py.toFixed(1)}`); }
+    ptsB.unshift(ptsA[ptsA.length - 1]);
+    svgEl('path', { d: 'M' + ptsA.concat(ptsB).join(' L'), fill: 'none', stroke: '#1b2555', 'stroke-width': 1.5 }, svg);
+    const trail = svgEl('path', { fill: 'none', stroke: '#60a5fa', 'stroke-width': 2, 'stroke-linecap': 'round' }, svg);
+    const coast = svgEl('path', { fill: 'none', stroke: '#60a5fa', 'stroke-width': 2, 'stroke-dasharray': '5 5' }, svg);
+    const earth = svgEl('circle', { r: 5, fill: '#60a5fa' }, svg);
+    const jup = svgEl('circle', { r: 9, fill: '#d97706' }, svg);
+    const craft = svgEl('circle', { r: 4.5, fill: '#fff' }, svg);
+    const halo = svgEl('circle', { r: 11, fill: 'none', stroke: '#93c5fd', 'stroke-width': 1.5 }, svg);
+    const lE = svgEl('text', { fill: '#93c5fd', 'font-size': 12 }, svg); lE.textContent = 'Terre';
+    const lJ = svgEl('text', { fill: '#fdba74', 'font-size': 12 }, svg); lJ.textContent = 'Jupiter';
+    svgEl('text', { x: 14, y: H - 14, fill: '#8891b8', 'font-size': 11.5 }, svg).textContent = '— poussée   - - vol libre';
+    const range = $('orbitRange'), btn = $('orbitPlay');
+    const render = (u) => {
+      const t = u * mode.total, [px, py, r] = pos(u);
+      const A = [], B = [], n = Math.round(u * 400);
+      for (let i = 0; i <= n; i++) { const [a, b] = pos(i / 400), p = `${a.toFixed(1)} ${b.toFixed(1)}`; const cut = Math.round(mode.thrust / mode.total * 400); if (i <= cut) A.push(p); if (i >= cut) B.push(p); }
+      trail.setAttribute('d', A.length ? 'M' + A.join(' L') : '');
+      coast.setAttribute('d', B.length > 1 ? 'M' + B.join(' L') : '');
+      craft.setAttribute('cx', px); craft.setAttribute('cy', py);
+      halo.setAttribute('cx', px); halo.setAttribute('cy', py);
+      halo.setAttribute('opacity', t <= mode.thrust ? 0.9 : 0);
+      const ae = Math.PI * 2 * t / 12;
+      const ex = CX + Math.cos(ae) * AU, ey = CY - Math.sin(ae) * AU * 0.62;
+      earth.setAttribute('cx', ex); earth.setAttribute('cy', ey);
+      lE.setAttribute('x', ex + 8); lE.setAttribute('y', ey - 8);
+      const aj = PHI - Math.PI * 2 * (mode.total - t) / 142;
+      const jx = CX + Math.cos(aj) * R_END * AU, jy = CY - Math.sin(aj) * R_END * AU * 0.62;
+      jup.setAttribute('cx', jx); jup.setAttribute('cy', jy);
+      lJ.setAttribute('x', jx + 12); lJ.setAttribute('y', jy + 4);
+      $('oT').textContent = `${fmt(t)} mois`;
+      $('oR').textContent = `${fmt(r, 1)} UA`;
+      $('oX').textContent = `${fmt(Math.round(Math.min(1, t / mode.thrust) * mode.xenon / 10) * 10)} kg`;
+      range.value = Math.round(u * 1000);
+    };
+    let u = 0, playing = false, last = 0;
+    const setBtn = () => { btn.querySelector('i').className = playing ? 'ph-light ph-pause' : 'ph-light ph-play'; btn.querySelector('span').textContent = playing ? 'Pause' : (u >= 1 ? 'Rejouer' : 'Lancer'); };
+    /* même vitesse de lecture : 1 mois = 0,35 s, le trajet NK-85 dure donc plus longtemps à l'écran */
+    const tick = (now) => { if (!playing) return; u = Math.min(1, u + (now - last) / (mode.total * 350)); last = now; render(u); if (u < 1) requestAnimationFrame(tick); else { playing = false; setBtn(); } };
+    const play = () => { if (u >= 1) u = 0; playing = true; last = performance.now(); setBtn(); requestAnimationFrame(tick); };
+    btn.addEventListener('click', () => { if (playing) { playing = false; setBtn(); } else play(); });
+    range.addEventListener('input', () => { playing = false; setBtn(); u = Number(range.value) / 1000; render(u); });
+    document.querySelectorAll('#fig6 [data-m]').forEach((b) => b.addEventListener('click', () => {
+      mode = MODES[b.dataset.m];
+      document.querySelectorAll('#fig6 [data-m]').forEach((o) => o.setAttribute('aria-pressed', String(o === b)));
+      trail.setAttribute('stroke', b.dataset.m === '125' ? '#60a5fa' : '#fb923c'); coast.setAttribute('stroke', b.dataset.m === '125' ? '#60a5fa' : '#fb923c');
+      halo.setAttribute('stroke', b.dataset.m === '125' ? '#93c5fd' : '#fdba74');
+      u = 0; render(0); if (!reduceMotion) play();
+    }));
+    render(0);
+    if (!reduceMotion) onceVisible($('fig6'), play, '0px 0px -30% 0px'); else render(1);
+  })();
+
+  /* images des articles liés introuvables : on garde le fond coloré */
+  document.querySelectorAll('.rel-img img').forEach((img) => img.addEventListener('error', () => img.remove()));
+})();
 </script>
 </body>
 </html>
