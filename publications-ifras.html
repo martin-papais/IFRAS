@@ -2,904 +2,1323 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
-<title>Publications IFRAS — IFRAS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<title>Publications IFRAS | IFRAS</title>
+<meta name="description" content="Lettres de la Direction scientifique, rapports annuels, hors-séries et documents de cadrage édités par l'IFRAS.">
+<meta name="theme-color" content="#050b1e">
+<link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
 
 <style>
-
+/* =========================================================
+   TOKENS (identiques aux autres pages)
+   ========================================================= */
 :root {
   --bg-main: #050b1e;
   --bg-dark: #020617;
   --bg-light: #070f2b;
-  --border: #1b2555;
+  --bg-raise: #0a1436;
   --accent: #4f6bed;
+  --accent-hover: #3d5adb;
+  --accent-soft: rgba(79,107,237,.14);
+  --accent-line: rgba(79,107,237,.38);
   --text-main: #e6e6e6;
+  --text-strong: #f5f7ff;
   --text-soft: #aab3d6;
+  --text-mute: #8891b8;
+  --border: #1b2555;
+
+  /* Une couleur par type de contenu */
+  --t-sci: #60a5fa;
+  --t-ifras: #34d399;
+  --t-event: #f97316;
+  /* Types de publications IFRAS */
+  --t-lettre: #60a5fa;
+  --t-rapport: #34d399;
+  --t-hs: #f97316;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --header-h: 68px;
+  --subnav-h: 48px;
 }
 
-* { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 20px); }
 
 body {
   margin: 0;
-  font-family: "DM Sans", "Segoe UI", sans-serif;
+  font-family: "DM Sans", "Segoe UI", system-ui, sans-serif;
   background: var(--bg-main);
   color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* ===== HEADER ===== */
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+[hidden] { display: none !important; }
 
-header {
-  position: fixed;
-  top: 0; width: 100%;
-  z-index: 1000;
-  background: rgba(5,11,30,.85);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.skip-link {
+  position: absolute; left: 16px; top: -48px;
+  padding: 10px 16px;
+  background: var(--accent); color: #fff;
+  border-radius: var(--radius-sm);
+  z-index: 3000; text-decoration: none;
+  transition: top 160ms var(--ease-out);
 }
+.skip-link:focus { top: 12px; }
 
-.header-inner {
-  max-width: 1300px; margin: auto;
-  padding: 12px 30px;
-  display: flex; align-items: center; justify-content: space-between;
-}
+.container { max-width: 1300px; margin: 0 auto; padding: 0 30px; }
 
-.header-left { display: flex; align-items: center; gap: 40px; }
-.logo-link img { height: 60px; cursor: pointer; }
-
-.main-nav {
-  list-style: none; display: flex; gap: 32px; margin: 0; padding: 0;
-}
-
-.main-nav a {
-  text-decoration: none; color: var(--text-soft);
-  font-size: 14px; letter-spacing: .05em;
-}
-
-.main-nav a:hover { color: white; }
-
-.header-right .login-btn {
-  padding: 8px 18px; border-radius: 6px;
-  border: 1px solid var(--accent); color: white;
-  text-decoration: none; font-size: 13px;
-}
-
-.header-right .login-btn:hover { background: var(--accent); }
-
-/* ===== SOUS BANDEAU ===== */
-
-.sub-nav {
-  margin-top: 84px;
-  background: var(--bg-light);
-  border-bottom: 1px solid var(--border);
-}
-
-.sub-nav ul {
-  max-width: 1300px; margin: 0 auto;
-  padding: 0 30px; list-style: none;
-  display: flex; justify-content: space-between;
-}
-
-.sub-nav li { padding: 14px 0; }
-
-.sub-nav a {
-  color: var(--text-soft); text-decoration: none;
-  font-size: 14px; letter-spacing: .06em;
-}
-
-.sub-nav a:hover { color: white; }
-.sub-nav a.active {
-  color: white;
-  border-bottom: 2px solid var(--accent);
-  padding-bottom: 12px;
-}
-
-/* ===== INTRO ===== */
-
-.intro-section {
-  max-width: 1300px; margin: 0 auto;
-  padding: 60px 30px 50px;
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 60px; align-items: center;
-  border-bottom: 1px solid var(--border);
-}
-
-.intro-eyebrow {
+/* =========================================================
+   BOUTONS
+   ========================================================= */
+.btn {
   display: inline-flex; align-items: center; gap: 10px;
-  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
-  color: var(--accent); font-weight: 500; margin-bottom: 16px;
+  padding: 13px 22px;
+  border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 500;
+  text-decoration: none; white-space: nowrap;
+  border: 1px solid transparent;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.btn:active { transform: scale(0.97); }
+.btn i { font-size: 16px; transition: transform 200ms var(--ease-out); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-ghost { border-color: var(--accent-line); color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-ghost:hover { background: var(--accent-soft); border-color: var(--accent); }
+  .btn:hover i { transform: translateX(3px); }
 }
 
-.intro-eyebrow::before {
-  content: ''; display: block;
-  width: 24px; height: 1px; background: var(--accent);
+.text-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--text-soft);
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.text-link i { transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .text-link:hover { color: #fff; }
+  .text-link:hover i { transform: translateX(3px); }
 }
 
-.intro-left h1 {
-  font-family: "Syne", sans-serif;
-  font-size: clamp(28px, 3.5vw, 44px);
-  font-weight: 800; letter-spacing: -0.03em;
-  line-height: 1.05; margin: 0 0 20px; color: white;
-}
-
-.intro-left p {
-  font-size: 15px; color: var(--text-soft);
-  line-height: 1.75; font-weight: 300; margin: 0;
-}
-
-.intro-right {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-}
-
-.intro-stat {
-  background: var(--bg-light); border: 1px solid var(--border);
-  border-radius: 12px; padding: 20px;
-  display: flex; flex-direction: column; gap: 5px;
-}
-
-.intro-stat-value {
-  font-family: "Syne", sans-serif; font-size: 30px;
-  font-weight: 800; color: white;
-  letter-spacing: -0.04em; line-height: 1;
-}
-
-.intro-stat-label {
-  font-size: 12px; color: var(--text-soft);
-  font-weight: 300; line-height: 1.4;
-}
-
-.intro-stat-bar { width: 24px; height: 2px; background: var(--accent); margin-top: 4px; }
-
-/* ===== FILTRES ===== */
-
-.filters-bar {
-  max-width: 1300px; margin: 0 auto;
-  padding: 22px 30px;
-  display: flex; flex-direction: column; gap: 16px;
+/* =========================================================
+   HEADER (opaque)
+   ========================================================= */
+.site-header {
+  position: fixed; inset: 0 0 auto 0;
+  z-index: 2000;
+  height: var(--header-h);
+  background: rgba(5,11,30,.88);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
   border-bottom: 1px solid var(--border);
 }
+.header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.header-left { display: flex; align-items: center; gap: 44px; }
+.logo-link { display: flex; align-items: center; }
+.logo-link img { height: 44px; width: auto; }
 
-.search-box {
-  display: flex; align-items: center; gap: 10px;
-  background: var(--bg-light); border: 1px solid var(--border);
-  border-radius: 10px; padding: 10px 16px; transition: border-color .2s;
+.main-nav { list-style: none; display: flex; gap: 6px; margin: 0; padding: 0; }
+.main-nav a {
+  position: relative; display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--text-soft);
+  font-size: 14px; letter-spacing: .02em;
+  border-radius: 6px;
+  transition: color 160ms ease;
 }
-
-.search-box:focus-within { border-color: rgba(79,107,237,.5); }
-.search-icon { font-size: 14px; opacity: .5; flex-shrink: 0; }
-
-.search-box input {
-  flex: 1; background: transparent; border: none; outline: none;
-  color: var(--text-main); font-family: "DM Sans", sans-serif;
-  font-size: 14px; font-weight: 300;
-}
-
-.search-box input::placeholder { color: rgba(170,179,214,.45); }
-
-.search-clear {
-  background: transparent; border: none; color: var(--text-soft);
-  cursor: pointer; font-size: 13px; padding: 2px 4px;
-  display: none; align-items: center; transition: color .2s;
-}
-
-.search-clear:hover { color: white; }
-
-.filters-right {
-  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-}
-
-.filter-label {
-  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--text-soft); font-weight: 500; flex-shrink: 0;
-}
-
-.filter-group { display: flex; gap: 8px; flex-wrap: wrap; flex: 1; }
-
-.filter-btn {
-  padding: 6px 14px; border-radius: 20px;
-  border: 1px solid var(--border); background: transparent;
-  color: var(--text-soft); font-size: 12px; cursor: pointer;
-  font-family: "DM Sans", sans-serif; transition: .2s; white-space: nowrap;
-}
-
-.filter-btn:hover,
-.filter-btn.active {
-  background: rgba(79,107,237,.12);
-  border-color: rgba(79,107,237,.35);
-  color: white;
-}
-
-.sort-box {
-  display: flex; align-items: center; gap: 8px;
-  margin-left: auto; flex-shrink: 0;
-}
-
-.sort-box select {
-  background: var(--bg-light); border: 1px solid var(--border);
-  border-radius: 8px; color: var(--text-soft);
-  font-family: "DM Sans", sans-serif; font-size: 12px;
-  padding: 6px 12px; cursor: pointer; outline: none; transition: border-color .2s;
-}
-
-.sort-box select:focus { border-color: rgba(79,107,237,.4); color: white; }
-
-.results-bar {
-  max-width: 1300px; margin: 0 auto; padding: 14px 30px;
-  display: flex; align-items: center; justify-content: space-between;
-  border-bottom: 1px solid var(--border);
-}
-
-#results-count { font-size: 13px; color: var(--text-soft); font-weight: 300; }
-
-.reset-btn {
-  display: none; align-items: center; gap: 6px;
-  font-size: 12px; color: var(--accent);
-  background: transparent; border: 1px solid rgba(79,107,237,.25);
-  border-radius: 20px; padding: 5px 14px; cursor: pointer;
-  font-family: "DM Sans", sans-serif; transition: .2s;
-}
-
-.reset-btn:hover { background: rgba(79,107,237,.1); color: white; }
-
-/* ===== GRILLE ===== */
-
-.pub-list {
-  max-width: 1300px; margin: 0 auto;
-  padding: 50px 30px 60px;
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 20px; align-items: start;
-}
-
-/* ===== CARTE ===== */
-
-.pub-card {
-  background: var(--bg-light); border: 1px solid var(--border);
-  border-radius: 14px; overflow: hidden;
-  text-decoration: none; color: inherit;
-  display: flex; flex-direction: column;
-  transition: border-color .3s, transform .3s, box-shadow .3s;
-  position: relative;
-  animation: fadeUp .5s ease both;
-}
-
-.pub-card:hover {
-  border-color: rgba(79,107,237,.35);
-  transform: translateY(-4px);
-  box-shadow: 0 18px 48px rgba(0,0,10,.5);
-}
-
-.pub-card::after {
-  content: ''; position: absolute;
-  top: 0; left: 0; right: 0; height: 2px;
-  background: var(--card-accent, var(--accent));
+.main-nav a::after {
+  content: ""; position: absolute;
+  left: 12px; right: 12px; bottom: 2px; height: 1px;
+  background: var(--accent);
   transform: scaleX(0); transform-origin: left;
-  transition: transform .35s ease;
+  transition: transform 200ms var(--ease-out);
+}
+.main-nav a[aria-current="page"] { color: #fff; }
+.main-nav a[aria-current="page"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .main-nav a:hover { color: #fff; }
+  .main-nav a:hover::after { transform: scaleX(1); }
 }
 
-.pub-card:hover::after { transform: scaleX(1); }
+.header-right { display: flex; align-items: center; gap: 10px; }
+.header-right .btn { padding: 9px 18px; font-size: 13px; }
 
-.pub-cover {
-  height: 130px; display: flex;
+.menu-toggle {
+  display: none;
+  width: 42px; height: 42px;
   align-items: center; justify-content: center;
-  position: relative; overflow: hidden; flex-shrink: 0;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: #fff; font-size: 20px; cursor: pointer;
+  transition: transform 160ms var(--ease-out);
+}
+.menu-toggle:active { transform: scale(0.95); }
+
+.mobile-panel {
+  position: fixed; top: var(--header-h); left: 12px; right: 12px;
+  z-index: 1999;
+  padding: 10px;
+  background: rgba(7,15,43,.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(2,6,23,.6);
+  transform-origin: top right;
+  opacity: 0; transform: scale(0.96) translateY(-6px);
+  pointer-events: none; visibility: hidden;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s linear 220ms;
+}
+.mobile-panel.is-open {
+  opacity: 1; transform: none; pointer-events: auto; visibility: visible;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s;
+}
+.mobile-panel ul { list-style: none; margin: 0; padding: 0; }
+.mobile-panel a {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px; color: var(--text-main);
+  text-decoration: none; font-size: 16px; border-radius: 10px;
+}
+.mobile-panel a[aria-current="page"] { background: var(--accent-soft); color: #fff; }
+.mobile-panel .btn { width: 100%; justify-content: center; margin-top: 8px; }
+
+/* =========================================================
+   SOUS-NAVIGATION (ancres + section visible)
+   ========================================================= */
+.subnav {
+  position: sticky;
+  top: var(--header-h);
+  margin-top: var(--header-h);
+  z-index: 1500;
+  height: var(--subnav-h);
+  background: rgba(8,18,53,.94);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.subnav-list {
+  height: 100%;
+  list-style: none; margin: 0 auto; padding: 0 30px;
+  max-width: 1300px;
+  display: flex; align-items: stretch; justify-content: space-between;
+}
+.subnav-list li { display: flex; }
+.subnav-link {
+  position: relative;
+  display: flex; align-items: center; gap: 9px;
+  padding: 0 14px;
+  color: var(--text-soft);
+  text-decoration: none;
+  font-size: 14px; font-weight: 500;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.subnav-link i { font-size: 17px; color: var(--c); }
+.subnav-link::after {
+  content: ""; position: absolute;
+  left: 14px; right: 14px; bottom: -1px; height: 2px;
+  background: var(--c);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+.subnav-link[aria-current="true"] { color: #fff; }
+.subnav-link[aria-current="true"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .subnav-link:hover { color: #fff; }
 }
 
-.pub-cover-num {
-  font-family: "Syne", sans-serif; font-size: 56px;
-  font-weight: 800; line-height: 1;
-  opacity: .16; letter-spacing: -0.06em;
-  position: relative; z-index: 1; color: white;
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero {
+  position: relative;
+  padding: 80px 0 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+/* réseau de connaissances animé (canvas) */
+.network {
+  position: absolute; inset: 0; z-index: -2;
+  width: 100%; height: 100%;
+  opacity: 0;
+  transition: opacity 1200ms ease;
+}
+.network.is-ready { opacity: 1; }
+.hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(ellipse 55% 60% at 25% 40%, rgba(5,11,30,.85) 0%, transparent 70%),
+    linear-gradient(180deg, transparent 70%, var(--bg-main) 100%);
+  pointer-events: none;
 }
 
-.pub-cover-sublabel {
-  position: absolute; bottom: 14px; left: 0; right: 0;
-  text-align: center; font-size: 9px;
-  letter-spacing: .22em; text-transform: uppercase;
-  opacity: .4; color: white; z-index: 1;
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+  align-items: center;
 }
 
-.pub-body {
-  padding: 20px 22px 22px;
-  display: flex; flex-direction: column; gap: 8px; flex: 1;
+.kicker {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--accent); font-weight: 500;
+  margin-bottom: 22px;
+}
+.kicker::before { content: ""; width: 24px; height: 1px; background: currentColor; }
+
+.hero h1 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(44px, 6.2vw, 84px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--text-strong);
+  margin: 0 0 28px;
+}
+.hero h1 .line { display: block; overflow: hidden; padding-bottom: .14em; margin-bottom: -.14em; }
+.hero h1 .line > span {
+  display: block;
+  transform: translateY(105%);
+  animation: lineUp 900ms var(--ease-out) forwards;
+  animation-delay: calc(120ms + var(--i, 0) * 110ms);
+}
+.hero h1 .line--soft { color: #8fa2ff; font-weight: 600; }
+@keyframes lineUp { to { transform: none; } }
+
+.hero-desc {
+  max-width: 46ch;
+  color: var(--text-soft);
+  font-size: 17px; line-height: 1.7;
+  margin: 0;
+  font-weight: 300;
 }
 
-.pub-type-row {
-  display: flex; align-items: center;
-  justify-content: space-between; gap: 10px;
+.hero-in {
+  opacity: 0;
+  animation: heroIn 700ms var(--ease-out) forwards;
+  animation-delay: calc(100ms + var(--i, 0) * 80ms);
+}
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(14px); filter: blur(4px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+/* ----- Panneau de recherche ----- */
+.finder-panel {
+  position: relative;
+  padding: 26px;
+  border-radius: 20px;
+  background: rgba(7,15,43,.72);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  box-shadow: 0 30px 80px rgba(2,6,23,.55), inset 0 1px 0 rgba(255,255,255,.04);
+}
+.finder-panel h2 {
+  font-family: "Syne", sans-serif;
+  font-size: 18px; font-weight: 700; color: #fff;
+  margin: 0 0 14px;
 }
 
-.pub-type-tag {
-  font-size: 10px; letter-spacing: .12em;
-  text-transform: uppercase; font-weight: 600;
-  padding: 3px 10px; border-radius: 20px;
+.finder-field { position: relative; }
+.finder-field > i {
+  position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+  font-size: 19px; color: var(--text-mute); pointer-events: none;
+}
+.finder-field input {
+  width: 100%; height: 50px;
+  padding: 0 44px;
+  background: rgba(2,6,23,.6);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: #fff; font: inherit; font-size: 15px;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+.finder-field input::placeholder { color: var(--text-mute); }
+.finder-field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(79,107,237,.2); }
+.finder-field input::-webkit-search-cancel-button { display: none; }
+.finder-clear {
+  position: absolute; right: 9px; top: 50%; transform: translateY(-50%);
+  width: 32px; height: 32px;
+  display: grid; place-items: center;
+  border: 0; border-radius: 8px;
+  background: transparent; color: var(--text-soft);
+  font-size: 16px; cursor: pointer;
+  opacity: 0; pointer-events: none;
+  transition: opacity 120ms ease;
+}
+.finder-panel.has-value .finder-clear { opacity: 1; pointer-events: auto; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; }
+.chip {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-soft);
+  font: inherit; font-size: 13px;
+  cursor: pointer;
+  transition: color 120ms ease, border-color 120ms ease, background-color 120ms ease, transform 160ms var(--ease-out);
+}
+.chip:active { transform: scale(0.96); }
+.chip[aria-pressed="true"] { color: #fff; border-color: var(--accent); background: var(--accent-soft); }
+@media (hover: hover) and (pointer: fine) {
+  .chip:hover { color: #fff; border-color: var(--accent-line); }
 }
 
-.pub-date { font-size: 11px; color: var(--text-soft); font-weight: 300; }
-
-.pub-title {
-  font-family: "Syne", sans-serif; font-size: 15px;
-  font-weight: 700; color: white; line-height: 1.3; margin: 4px 0 0;
+.finder-result {
+  min-height: 22px;
+  margin-top: 14px;
+  font-size: 13.5px; color: var(--text-soft);
+}
+.finder-result a { color: #9fb0ff; text-decoration: none; }
+.finder-result a:hover { text-decoration: underline; }
+mark {
+  background: color-mix(in srgb, var(--accent) 35%, transparent);
+  color: #fff;
+  border-radius: 3px;
+  padding: 0 2px;
+}
+.segmented {
+  position: relative;
+  display: inline-flex;
+  padding: 4px;
+  border-radius: 12px;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+}
+.segmented-indicator {
+  position: absolute; top: 4px; bottom: 4px; left: 0;
+  width: var(--w, 0px);
+  transform: translateX(var(--x, 4px));
+  border-radius: 9px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+  transition: transform 260ms var(--ease-out), width 260ms var(--ease-out);
+  pointer-events: none;
+}
+.segmented button {
+  position: relative; z-index: 1;
+  padding: 8px 14px;
+  border: 0; background: transparent;
+  color: var(--text-soft);
+  font: inherit; font-size: 13.5px; font-weight: 500;
+  border-radius: 9px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.segmented button[aria-pressed="true"] { color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .segmented button:hover { color: #fff; }
 }
 
-.pub-desc {
-  font-size: 13px; color: var(--text-soft);
-  line-height: 1.65; font-weight: 300; flex: 1;
+.ifras-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
 }
 
-.pub-footer {
-  margin-top: 14px; padding-top: 14px;
-  border-top: 1px solid rgba(255,255,255,.06);
+.ifras-card {
+  position: relative;
+  display: flex; flex-direction: column;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  text-decoration: none; color: inherit;
+  transition: border-color 200ms ease, transform 200ms var(--ease-out), box-shadow 200ms ease;
+}
+.ifras-card:active { transform: scale(0.99); }
+@media (hover: hover) and (pointer: fine) {
+  .ifras-card:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--c) 40%, transparent);
+    box-shadow: 0 18px 44px rgba(2,6,23,.55);
+  }
+  .ifras-card:hover .cover-rings { transform: scale(1.06) rotate(8deg); }
+  .ifras-card:hover .ifras-cta i { transform: translateX(3px); }
+}
+
+/* Couverture générée en CSS, une couleur par type */
+.cover {
+  position: relative;
+  height: 150px;
+  overflow: hidden;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  padding: 18px 20px;
+  background:
+    radial-gradient(ellipse 80% 120% at 100% 0%, color-mix(in srgb, var(--c) 30%, transparent), transparent 65%),
+    linear-gradient(135deg, color-mix(in srgb, var(--c) 10%, #0a1330), #060c24);
+  border-bottom: 1px solid color-mix(in srgb, var(--c) 20%, transparent);
+}
+.cover-rings {
+  position: absolute; right: -60px; top: -60px;
+  width: 220px; height: 220px; border-radius: 50%;
+  background: repeating-radial-gradient(circle, transparent 0 18px, color-mix(in srgb, var(--c) 22%, transparent) 18px 19px);
+  opacity: .7;
+  transition: transform 600ms var(--ease-out);
+}
+.cover-num {
+  position: relative;
+  font-family: "Syne", sans-serif;
+  font-size: 46px; font-weight: 800; line-height: .9;
+  letter-spacing: -0.04em;
+  color: #fff;
+}
+.cover-type {
+  position: relative;
+  font-size: 12px; font-weight: 500;
+  color: var(--c);
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(2,6,23,.55);
+  border: 1px solid color-mix(in srgb, var(--c) 30%, transparent);
+}
+
+.ifras-body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.ifras-date { font-size: 13px; color: var(--text-mute); }
+.ifras-title { font-family: "Syne", sans-serif; font-size: 17px; font-weight: 700; color: #fff; line-height: 1.3; margin: 0; }
+.ifras-desc { font-size: 14px; color: var(--text-soft); line-height: 1.6; font-weight: 300; margin: 0; flex: 1; }
+.ifras-cta {
   display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  margin-top: 8px; padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-size: 13.5px; color: #9fb0ff;
+}
+.ifras-cta span:first-child { display: inline-flex; align-items: center; gap: 8px; }
+.ifras-cta i { transition: transform 200ms var(--ease-out); }
+.ifras-cta small { font-size: 12.5px; color: var(--text-mute); }
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.site-footer {
+  margin-top: 100px;
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border);
+  padding: 36px 0;
+  font-size: 13px; color: var(--text-mute);
+}
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+/* =========================================================
+   APPARITION AU DÉFILEMENT
+   ========================================================= */
+.js .reveal {
+  opacity: 0; transform: translateY(16px);
+  transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 60ms);
+}
+.js .reveal.is-visible { opacity: 1; transform: none; }
+.js .sci-card.reveal.is-visible,
+.js .ifras-card.reveal.is-visible,
+.js .event-card.reveal.is-visible {
+  transition: border-color 200ms ease, transform 200ms var(--ease-out), box-shadow 200ms ease, background-color 200ms ease, opacity 700ms var(--ease-out);
+  transition-delay: 0ms;
+}
+/* carte qui réapparaît après un filtre */
+.pop-in { animation: popIn 260ms var(--ease-out); }
+@keyframes popIn { from { opacity: 0; transform: scale(.98); } to { opacity: 1; transform: none; } }
+
+/* =========================================================
+   SPÉCIFIQUE : PUBLICATIONS IFRAS
+   ========================================================= */
+.hero { padding: 64px 0 80px; }
+.hero h1 .line--soft { color: #6ee7b7; }
+.hero-desc { margin-bottom: 28px; }
+.hero-grid > * { min-width: 0; }
+
+.breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  margin: 0 0 26px; padding: 0; list-style: none;
+  font-size: 13px; color: var(--text-mute);
+}
+.breadcrumb a { color: var(--text-soft); text-decoration: none; transition: color 160ms ease; }
+.breadcrumb i { font-size: 11px; }
+@media (hover: hover) and (pointer: fine) { .breadcrumb a:hover { color: #fff; } }
+
+.peer {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 13.5px; color: var(--text-soft);
+}
+.peer i { font-size: 18px; color: var(--t-ifras); }
+
+/* raccourci clavier dans le champ */
+.kbd {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  min-width: 24px; height: 24px; padding: 0 7px;
+  display: grid; place-items: center;
+  font: 500 12px/1 "DM Sans", sans-serif;
+  color: var(--text-mute);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: rgba(255,255,255,.03);
+  pointer-events: none;
+  transition: opacity 120ms ease;
+}
+.finder-panel.has-value .kbd, .finder-field input:focus ~ .kbd { opacity: 0; }
+
+/* puces de domaine : pastille de couleur + compteur */
+.chip { display: inline-flex; align-items: center; gap: 8px; }
+.chip::before {
+  content: ""; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--c, var(--accent));
+}
+.chip[data-domain="tous"]::before { display: none; }
+.chip small { font-size: 11.5px; color: var(--text-mute); font-variant-numeric: tabular-nums; }
+.chip[aria-pressed="true"] {
+  border-color: color-mix(in srgb, var(--c, var(--accent)) 60%, transparent);
+  background: color-mix(in srgb, var(--c, var(--accent)) 14%, transparent);
+}
+.chip[aria-pressed="true"] small { color: var(--text-soft); }
+.chip:disabled { opacity: .35; cursor: default; }
+
+/* surlignage sans espace parasite dans les mots */
+mark { padding: 0; border-radius: 2px; box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 35%, transparent); }
+.finder-result .hint { color: var(--text-mute); }
+.finder-result .hint kbd { font: 500 11.5px/1 "DM Sans", sans-serif; padding: 2px 6px; border: 1px solid var(--border); border-radius: 5px; color: var(--text-soft); }
+
+/* =========================================================
+   BARRE D'OUTILS DE LA LISTE
+   ========================================================= */
+.toolbar {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  flex-wrap: wrap;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border);
+}
+.count { font-size: 14px; color: var(--text-soft); }
+.count strong { color: #fff; font-weight: 500; }
+.count .active-domain { color: var(--c); }
+.toolbar-right { display: flex; align-items: center; gap: 12px; }
+.reset {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 12px;
+  border: 1px solid var(--border); border-radius: 999px;
+  background: transparent; color: var(--text-soft);
+  font: inherit; font-size: 13px; cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease, opacity 160ms ease, transform 160ms var(--ease-out);
+}
+.reset:active { transform: scale(.96); }
+.reset[hidden] { display: none !important; }
+@media (hover: hover) and (pointer: fine) { .reset:hover { color: #fff; border-color: var(--accent-line); } }
+
+
+/* =========================================================
+   GRILLE DE DOCUMENTS (mêmes cartes que publications.html)
+   ========================================================= */
+.ifras-grid { padding: 30px 0 10px; }
+.ifras-card.is-new .cover-type::after { content: none; }
+.ifras-date { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.new {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 500; color: #34d399;
+}
+.new::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 3px rgba(52,211,153,.18); }
+.ifras-cta small { display: inline-flex; align-items: center; gap: 5px; }
+
+/* Document à accès restreint : hachures + cadenas */
+.ifras-card.is-restricted .cover::after {
+  content: ""; position: absolute; inset: 0;
+  background: repeating-linear-gradient(135deg, transparent 0 10px, rgba(250,204,21,.05) 10px 11px);
+  pointer-events: none;
+}
+.lock {
+  position: absolute; top: 14px; left: 16px; z-index: 1;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 500;
+  padding: 4px 10px 4px 8px; border-radius: 999px;
+  color: #facc15;
+  background: rgba(2,6,23,.6);
+  border: 1px solid rgba(250,204,21,.3);
+}
+.ifras-card.is-restricted .ifras-cta { color: #facc15; }
+
+.footer-inner span:last-child { display: inline-flex; align-items: center; gap: 6px; }
+
+/* Dernier numéro mis en avant : la carte s'élargit */
+.ifras-card.is-featured {
+  grid-column: span 2;
+  flex-direction: row;
+}
+.ifras-card.is-featured .cover {
+  width: 46%; height: auto; min-height: 280px;
+  flex-direction: column; align-items: flex-start; justify-content: flex-end; gap: 12px;
+  border-bottom: 0;
+  border-right: 1px solid color-mix(in srgb, var(--c) 20%, transparent);
+  padding: 26px;
+}
+.ifras-card.is-featured .cover-num { font-size: 88px; }
+.ifras-card.is-featured .cover-rings { width: 360px; height: 360px; right: -110px; top: -110px; }
+.ifras-card.is-featured .ifras-body { padding: 30px 30px 26px; justify-content: center; }
+.ifras-card.is-featured .ifras-title { font-size: clamp(22px, 2.2vw, 28px); letter-spacing: -0.02em; }
+.ifras-card.is-featured .ifras-desc { font-size: 15.5px; flex: 0; }
+.featured-flag {
+  display: none;
+  align-items: center; gap: 8px;
+  font-size: 12.5px; font-weight: 500; color: var(--c);
+}
+.ifras-card.is-featured .featured-flag { display: inline-flex; }
+
+/* Feuilles flottantes (fond du hero) */
+.sheets {
+  position: absolute; inset: 0; z-index: -2;
+  width: 100%; height: 100%;
+  opacity: 0;
+  transition: opacity 1200ms ease;
+}
+.sheets.is-ready { opacity: 1; }
+.hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(ellipse 55% 60% at 25% 40%, rgba(5,11,30,.85) 0%, transparent 70%),
+    linear-gradient(180deg, transparent 70%, var(--bg-main) 100%);
+  pointer-events: none;
 }
 
-.pub-pages { font-size: 11px; color: rgba(170,179,214,.4); font-weight: 300; }
 
-.pub-dl-btn {
-  display: inline-flex; align-items: center; gap: 5px;
-  font-size: 12px; color: var(--card-accent, var(--accent));
-  font-weight: 500; transition: gap .2s;
+.list-empty {
+  margin: 30px 0;
+  padding: 40px 26px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+  color: var(--text-soft); font-size: 15px;
+}
+.list-empty i { display: block; font-size: 30px; color: var(--text-mute); margin-bottom: 10px; }
+.list-empty button {
+  margin-top: 14px;
+  background: none; border: 0; padding: 0;
+  font: inherit; color: #9fb0ff; cursor: pointer;
 }
 
-.pub-card:hover .pub-dl-btn { gap: 9px; }
+/* =========================================================
+   BANDEAU ARCHIVES
+   ========================================================= */
+.cta-band {
+  margin: 60px 0 0;
+  padding: 44px 48px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background:
+    radial-gradient(ellipse 50% 90% at 100% 0%, rgba(52,211,153,.14), transparent 60%),
+    var(--bg-light);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 28px;
+  align-items: center;
+}
+.cta-icon {
+  width: 56px; height: 56px; border-radius: 14px;
+  display: grid; place-items: center;
+  font-size: 26px; color: var(--t-ifras);
+  background: rgba(52,211,153,.1);
+  border: 1px solid rgba(52,211,153,.25);
+}
+.cta-band h2 { font-family: "Syne", sans-serif; font-size: clamp(20px, 2vw, 26px); font-weight: 700; color: #fff; margin: 0 0 8px; letter-spacing: -0.02em; }
+.cta-band p { margin: 0; color: var(--text-soft); font-size: 15px; line-height: 1.6; font-weight: 300; max-width: 60ch; }
+.cta-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
-.pub-badge-new {
-  position: absolute; top: 12px; right: 12px;
-  font-size: 10px; font-weight: 700; letter-spacing: .12em;
-  text-transform: uppercase; padding: 3px 9px; border-radius: 4px;
-  background: rgba(52,211,153,.12); border: 1px solid rgba(52,211,153,.3);
-  color: #34d399; z-index: 2;
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1100px) {
+  .ifras-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 960px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+  .subnav-list { justify-content: flex-start; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+  .subnav-list::-webkit-scrollbar { display: none; }
+  .cta-band { grid-template-columns: 1fr; padding: 32px; }
+}
+@media (max-width: 860px) {
+  .main-nav, .header-right .btn-desktop { display: none; }
+  .menu-toggle { display: inline-flex; }
+}
+@media (max-width: 720px) {
+  .ifras-card.is-featured { flex-direction: column; }
+  .ifras-card.is-featured .cover { width: 100%; min-height: 180px; border-right: 0; border-bottom: 1px solid color-mix(in srgb, var(--c) 20%, transparent); }
+  .ifras-card.is-featured .cover-num { font-size: 64px; }
+}
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .subnav-list { padding: 0 20px; }
+  .subnav-link { padding: 0 10px; font-size: 13.5px; }
+  .hero { padding: 40px 0 56px; }
+  .hero-desc { font-size: 16px; }
+  .finder-panel { padding: 20px; }
+  .kbd { display: none; }
+  .chips {
+    flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+    margin-left: -20px; margin-right: -20px; padding: 0 20px 2px;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+  }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip { white-space: nowrap; }
+  .ifras-grid { grid-template-columns: 1fr; }
+  .ifras-card.is-featured { grid-column: auto; }
+  .cta-band { padding: 26px 22px; border-radius: var(--radius); }
+  .cta-actions .btn { flex: 1 1 100%; justify-content: center; }
+  .site-footer { margin-top: 72px; }
 }
 
-.pub-badge-restricted {
-  position: absolute; top: 12px; right: 12px;
-  font-size: 10px; font-weight: 700; letter-spacing: .12em;
-  text-transform: uppercase; padding: 3px 9px; border-radius: 4px;
-  background: rgba(250,204,21,.08); border: 1px solid rgba(250,204,21,.25);
-  color: #facc15; z-index: 2;
+/* =========================================================
+   MOUVEMENT RÉDUIT
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-in { animation: fadeOnly 300ms ease forwards; }
+  .hero h1 .line > span { animation: none; transform: none; }
+  .js .reveal { transform: none; transition: opacity 300ms ease; transition-delay: 0ms; }
+  .pop-in { animation: none; }
+  .segmented-indicator, .cover-rings { transition: none; }
 }
-
-/* ===== NOTICE ARCHIVES ===== */
-
-.archive-notice {
-  max-width: 1300px; margin: 0 auto; padding: 0 30px 80px;
-}
-
-.archive-notice-inner {
-  display: flex; align-items: center; gap: 20px;
-  background: rgba(79,107,237,.05);
-  border: 1px solid rgba(79,107,237,.15);
-  border-radius: 12px; padding: 22px 28px;
-}
-
-.archive-icon { font-size: 28px; flex-shrink: 0; opacity: .7; }
-.archive-text { flex: 1; }
-
-.archive-text strong {
-  display: block; font-size: 14px; font-weight: 600;
-  color: white; margin-bottom: 4px;
-}
-
-.archive-text p {
-  font-size: 13px; color: var(--text-soft);
-  line-height: 1.6; margin: 0; font-weight: 300;
-}
-
-.archive-text a { color: var(--accent); text-decoration: none; }
-.archive-text a:hover { text-decoration: underline; }
-
-.archive-cta {
-  flex-shrink: 0; padding: 9px 18px; border-radius: 8px;
-  border: 1px solid rgba(79,107,237,.3); color: white;
-  text-decoration: none; font-size: 12px; font-weight: 500;
-  transition: .2s; white-space: nowrap;
-}
-
-.archive-cta:hover { background: rgba(79,107,237,.15); }
-
-/* ===== FOOTER ===== */
-
-footer {
-  background: var(--bg-dark); border-top: 1px solid var(--border);
-  padding: 40px 30px; text-align: center;
-  font-size: 12px; color: #6b7280;
-}
-
-/* ===== ANIMATIONS ===== */
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.pub-card:nth-child(1)  { animation-delay: .04s; }
-.pub-card:nth-child(2)  { animation-delay: .08s; }
-.pub-card:nth-child(3)  { animation-delay: .12s; }
-.pub-card:nth-child(4)  { animation-delay: .16s; }
-.pub-card:nth-child(5)  { animation-delay: .20s; }
-.pub-card:nth-child(6)  { animation-delay: .24s; }
-.pub-card:nth-child(7)  { animation-delay: .28s; }
-.pub-card:nth-child(8)  { animation-delay: .32s; }
-.pub-card:nth-child(9)  { animation-delay: .36s; }
-.pub-card:nth-child(10) { animation-delay: .40s; }
-.pub-card:nth-child(11) { animation-delay: .44s; }
-.pub-card:nth-child(12) { animation-delay: .48s; }
-
-.no-results {
-  grid-column: 1 / 4; text-align: center;
-  padding: 60px 0; color: var(--text-soft);
-  font-size: 14px; font-weight: 300; display: none;
-}
-
-.no-results strong {
-  display: block; font-family: "Syne", sans-serif;
-  font-size: 18px; color: white; margin-bottom: 8px;
-}
-
+@keyframes fadeOnly { to { opacity: 1; } }
 </style>
+
+<script>document.documentElement.classList.add('js');</script>
 </head>
+
 
 <body>
 
-<header>
-  <div class="header-inner">
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header" id="header">
+  <div class="container header-inner">
     <div class="header-left">
-      <a href="index.html" class="logo-link"><img src="logo.png" alt="Logo IFRAS"></a>
-      <nav>
+      <a href="index.html" class="logo-link" aria-label="IFRAS, accueil">
+        <img src="logo.png" alt="Logo IFRAS" width="44" height="44">
+      </a>
+      <nav aria-label="Navigation principale">
         <ul class="main-nav">
           <li><a href="index.html">Accueil</a></li>
           <li><a href="recherche.html">Recherche</a></li>
           <li><a href="programmes.html">Programmes</a></li>
-          <li><a href="publications.html">Publications</a></li>
+          <li><a href="publications.html" aria-current="page">Publications</a></li>
         </ul>
       </nav>
     </div>
     <div class="header-right">
-      <a href="connexion.html" class="login-btn">Connexion</a>
+      <a href="connexion.html" class="btn btn-ghost btn-desktop">Connexion</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-panel" aria-label="Ouvrir le menu">
+        <i class="ph-light ph-list" aria-hidden="true"></i>
+      </button>
     </div>
   </div>
 </header>
 
-<div class="sub-nav">
+<div class="mobile-panel" id="mobile-panel">
   <ul>
-    <li><a href="publications-scientifiques.html">Publications scientifiques</a></li>
-    <li><a href="publications-IFRAS.html" class="active">Publications IFRAS</a></li>
-    <li><a href="evenements.html">Événements</a></li>
+    <li><a href="index.html">Accueil <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="recherche.html">Recherche <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="programmes.html">Programmes <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="publications.html" aria-current="page">Publications <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
   </ul>
+  <a href="connexion.html" class="btn btn-primary">Connexion</a>
 </div>
 
-<!-- INTRO -->
-<div class="intro-section">
-  <div class="intro-left">
-    <div class="intro-eyebrow">Documentation institutionnelle</div>
-    <h1>Publications<br>IFRAS</h1>
-    <p>Cette page répertorie l'ensemble des publications institutionnelles produites et éditées directement par l'IFRAS : rapports annuels, lettres trimestrielles de la direction scientifique, hors-séries thématiques, notes de cadrage, chiffrages budgétaires publics et documents de stratégie. Ces documents reflètent l'activité, les orientations et la gouvernance de l'institut. Certains documents sont soumis à diffusion restreinte et nécessitent une accréditation institutionnelle.</p>
-  </div>
-  <div class="intro-right">
-    <div class="intro-stat">
-      <div class="intro-stat-value">18</div>
-      <div class="intro-stat-label">Documents disponibles en ligne</div>
-      <div class="intro-stat-bar"></div>
-    </div>
-    <div class="intro-stat">
-      <div class="intro-stat-value">5</div>
-      <div class="intro-stat-label">Types de publications</div>
-      <div class="intro-stat-bar"></div>
-    </div>
-    <div class="intro-stat">
-      <div class="intro-stat-value">4</div>
-      <div class="intro-stat-label">Hors-séries thématiques</div>
-      <div class="intro-stat-bar"></div>
-    </div>
-    <div class="intro-stat">
-      <div class="intro-stat-value">63</div>
-      <div class="intro-stat-label">Années de rapports archivés</div>
-      <div class="intro-stat-bar"></div>
-    </div>
-  </div>
-</div>
+<!-- ===== SOUS-NAVIGATION (mêmes rubriques que publications.html) ===== -->
+<nav class="subnav" id="subnav" aria-label="Rubriques des publications">
+  <ul class="subnav-list">
+    <li><a class="subnav-link" href="publications-scientifiques.html" style="--c:var(--t-sci)"><i class="ph-light ph-article" aria-hidden="true"></i>Publications scientifiques</a></li>
+    <li><a class="subnav-link" href="publications-ifras.html" aria-current="true" style="--c:var(--t-ifras)"><i class="ph-light ph-book-open" aria-hidden="true"></i>Publications IFRAS</a></li>
+    <li><a class="subnav-link" href="evenements.html" style="--c:var(--t-event)"><i class="ph-light ph-calendar-dots" aria-hidden="true"></i>Événements</a></li>
+  </ul>
+</nav>
 
-<!-- FILTRES -->
-<div class="filters-bar">
-  <div class="search-box">
-    <span class="search-icon">🔍</span>
-    <input type="text" id="search-input" placeholder="Rechercher par titre, type, thème, année…">
-    <button class="search-clear" id="search-clear" title="Effacer">✕</button>
-  </div>
-  <div class="filters-right">
-    <span class="filter-label">Type :</span>
-    <div class="filter-group" id="filter-group">
-      <button class="filter-btn active" data-filter="tous">Tous</button>
-      <button class="filter-btn" data-filter="Rapport annuel">Rapport annuel</button>
-      <button class="filter-btn" data-filter="Lettre trimestrielle">Lettre trimestrielle</button>
-      <button class="filter-btn" data-filter="Hors-série">Hors-série</button>
-      <button class="filter-btn" data-filter="Note de cadrage">Note de cadrage</button>
-      <button class="filter-btn" data-filter="Document stratégique">Document stratégique</button>
-    </div>
-    <div class="sort-box">
-      <span class="filter-label">Trier :</span>
-      <select id="sort-select">
-        <option value="recent">Plus récent d'abord</option>
-        <option value="ancien">Plus ancien d'abord</option>
-      </select>
+<main id="contenu">
+
+<!-- ===== HERO ===== -->
+<section class="hero" aria-labelledby="hero-title">
+  <canvas class="sheets" id="sheets" aria-hidden="true"></canvas>
+  <div class="container">
+    <div class="hero-grid">
+
+      <div class="hero-left">
+        <ol class="breadcrumb hero-in" style="--i:0" aria-label="Fil d'Ariane">
+          <li><a href="publications.html">Publications</a></li>
+          <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+          <li aria-current="page">IFRAS</li>
+        </ol>
+        <h1 id="hero-title"><span class="line"><span style="--i:0">Publications</span></span><span class="line line--soft"><span style="--i:1">IFRAS</span></span></h1>
+        <p class="hero-desc hero-in" style="--i:2">Lettres de la Direction scientifique, rapports annuels, hors-séries et notes de cadrage : les documents édités par l'institut.</p>
+        <div class="peer hero-in" style="--i:3"><i class="ph-light ph-lock-simple-open" aria-hidden="true"></i> En accès libre, sauf mention « Accès restreint »</div>
+      </div>
+
+      <div class="finder-panel hero-in" style="--i:3" id="finder">
+        <h2>Trouver un document</h2>
+        <div class="finder-field">
+          <i class="ph-light ph-magnifying-glass" aria-hidden="true"></i>
+          <input id="finder-input" type="search" placeholder="Titre, thème, programme, année…" autocomplete="off" aria-describedby="finder-result" aria-controls="pub-list">
+          <button class="finder-clear" type="button" aria-label="Effacer la recherche"><i class="ph-light ph-x" aria-hidden="true"></i></button>
+          <kbd class="kbd" aria-hidden="true">/</kbd>
+        </div>
+        <ul class="chips" aria-label="Filtrer par type">
+          <li><button class="chip" type="button" aria-pressed="true" data-domain="tous">Tous <small></small></button></li>
+          <li><button class="chip" type="button" aria-pressed="false" data-domain="Lettre trimestrielle" style="--c:#60a5fa">Lettre trimestrielle <small></small></button></li>
+          <li><button class="chip" type="button" aria-pressed="false" data-domain="Rapport annuel" style="--c:#34d399">Rapport annuel <small></small></button></li>
+          <li><button class="chip" type="button" aria-pressed="false" data-domain="Hors-série" style="--c:#f97316">Hors-série <small></small></button></li>
+          <li><button class="chip" type="button" aria-pressed="false" data-domain="Note de cadrage" style="--c:#c084fc">Note de cadrage <small></small></button></li>
+          <li><button class="chip" type="button" aria-pressed="false" data-domain="Document stratégique" style="--c:#facc15">Document stratégique <small></small></button></li>
+        </ul>
+        <div class="finder-result" id="finder-result" aria-live="polite"></div>
+      </div>
+
     </div>
   </div>
-</div>
+</section>
 
-<div class="results-bar">
-  <span id="results-count">12 publications</span>
-  <button class="reset-btn" id="reset-btn">Réinitialiser les filtres</button>
-</div>
+<!-- ===== LISTE ===== -->
+<section id="liste" aria-label="Documents IFRAS">
+  <div class="container">
+    <div class="toolbar">
+      <p class="count" id="count" aria-live="polite"></p>
+      <div class="toolbar-right">
+        <button class="reset" id="reset" type="button" hidden><i class="ph-light ph-arrow-counter-clockwise" aria-hidden="true"></i> Réinitialiser</button>
+        <div class="segmented" id="segmented" role="group" aria-label="Trier">
+          <span class="segmented-indicator" aria-hidden="true"></span>
+          <button type="button" aria-pressed="true" data-order="recent">Plus récentes</button>
+          <button type="button" aria-pressed="false" data-order="ancien">Plus anciennes</button>
+        </div>
+      </div>
+    </div>
 
-<!-- GRILLE -->
-<div class="pub-list" id="pub-list">
+    <div class="ifras-grid" id="pub-list">
+      <a class="ifras-card" href="#" data-date="2026-01" data-domain="Lettre trimestrielle" style="--c:#60a5fa">
+        <div class="cover"><span class="cover-rings" aria-hidden="true"></span><span class="cover-num">N°22</span><span class="cover-type">Lettre trimestrielle</span></div>
+        <div class="ifras-body">
+          <span class="featured-flag"><i class="ph-light ph-envelope-open" aria-hidden="true"></i> Dernière parution</span>
+          <div class="ifras-date"><time datetime="2026-01">Janvier 2026</time></div>
+          <h3 class="ifras-title">Lettre de la Direction scientifique, printemps 2026</h3>
+          <p class="ifras-desc">ARTEMIS-9 entre en phase III, PROMETHEUS livre ses premiers résultats de phase II et trois nouveaux partenariats sont signés.</p>
+          <div class="ifras-cta"><span>Consulter <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span><small>12 pages</small></div>
+        </div>
+      </a>
+      <a class="ifras-card" href="#" data-date="2025-12" data-domain="Rapport annuel" style="--c:#34d399">
+        <div class="cover"><span class="cover-rings" aria-hidden="true"></span><span class="cover-num">2025</span><span class="cover-type">Rapport annuel</span></div>
+        <div class="ifras-body">
+          <span class="featured-flag"><i class="ph-light ph-chart-line-up" aria-hidden="true"></i> Dernière parution</span>
+          <div class="ifras-date"><time datetime="2025-12">Décembre 2025</time></div>
+          <h3 class="ifras-title">Rapport annuel IFRAS 2025</h3>
+          <p class="ifras-desc">L'année de l'institut, département par département : activité scientifique, finances et partenariats.</p>
+          <div class="ifras-cta"><span><i class="ph-light ph-file-pdf" aria-hidden="true"></i> Télécharger</span><small>PDF, 148 pages</small></div>
+        </div>
+      </a>
+      <a class="ifras-card" href="#" data-date="2025-10" data-domain="Lettre trimestrielle" style="--c:#60a5fa">
+        <div class="cover"><span class="cover-rings" aria-hidden="true"></span><span class="cover-num">N°21</span><span class="cover-type">Lettre trimestrielle</span></div>
+        <div class="ifras-body">
+          <span class="featured-flag"><i class="ph-light ph-envelope-open" aria-hidden="true"></i> Dernière parution</span>
+          <div class="ifras-date"><time datetime="2025-10">Octobre 2025</time></div>
+          <h3 class="ifras-title">Lettre de la Direction scientifique, hiver 2025</h3>
+          <p class="ifras-desc">Bilan de l'année, transferts de technologie et ouverture de la phase II du programme LYNX.</p>
+          <div class="ifras-cta"><span>Consulter <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span><small>14 pages</small></div>
+        </div>
+      </a>
+      <a class="ifras-card" href="#" data-date="2025-09" data-domain="Hors-série" style="--c:#f97316">
+        <div class="cover"><span class="cover-rings" aria-hidden="true"></span><span class="cover-num">HS 4</span><span class="cover-type">Hors-série</span></div>
+        <div class="ifras-body">
+          <span class="featured-flag"><i class="ph-light ph-books" aria-hidden="true"></i> Dernière parution</span>
+          <div class="ifras-date"><time datetime="2025-09">Septembre 2025</time></div>
+          <h3 class="ifras-title">Propulsion du futur</h3>
+          <p class="ifras-desc">Ionique à plasma froid, nucléaire thermique, voile solaire : les architectures de demain, par les équipes du DPET.</p>
+          <div class="ifras-cta"><span>Consulter <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span><small>64 pages</small></div>
+        </div>
+      </a>
+      <a class="ifras-card is-restricted" href="connexion.html" data-date="2025-06" data-domain="Document stratégique" style="--c:#facc15">
+        <div class="cover"><span class="lock"><i class="ph-light ph-lock-simple" aria-hidden="true"></i> Accès restreint</span><span class="cover-rings" aria-hidden="true"></span><span class="cover-num">PSS</span><span class="cover-type">Document stratégique</span></div>
+        <div class="ifras-body">
+          <span class="featured-flag"><i class="ph-light ph-compass" aria-hidden="true"></i> Dernière parution</span>
+          <div class="ifras-date"><time datetime="2025-06">Juin 2025</time></div>
+          <h3 class="ifras-title">Plan stratégique scientifique 2030</h3>
+          <p class="ifras-desc">Les grandes orientations de recherche de l'institut et la feuille de route de chaque département.</p>
+          <div class="ifras-cta"><span><i class="ph-light ph-lock-simple" aria-hidden="true"></i> Accéder</span><small>Accréditation requise</small></div>
+        </div>
+      </a>
+      <a class="ifras-card" href="#" data-date="2025-04" data-domain="Lettre trimestrielle" style="--c:#60a5fa">
+        <div class="cover"><span class="cover-rings" aria-hidden="true"></span><span class="cover-num">N°20</span><span class="cover-type">Lettre trimestrielle</span></div>
+        <div class="ifras-body">
+          <span class="featured-flag"><i class="ph-light ph-envelope-open" aria-hidden="true"></i> Dernière parution</span>
+          <div class="ifras-date"><time datetime="2025-04">Avril 2025</time></div>
+          <h3 class="ifras-title">Lettre de la Direction scientifique, été 2025</h3>
+          <p class="ifras-desc">Lancement de LYNX, premiers résultats d'ORION-3 et arrivée d'une nouvelle promotion de doctorants.</p>
+          <div class="ifras-cta"><span>Consulter <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span><small>11 pages</small></div>
+        </div>
+      </a>
+      <a class="ifras-card" href="#" data-date="2025-03" data-domain="Hors-série" style="--c:#f97316">
+        <div class="cover"><span class="cover-rings" aria-hidden="true"></span><span class="cover-num">HS 3</span><span class="cover-type">Hors-série</span></div>
+        <div class="ifras-body">
+          <span class="featured-flag"><i class="ph-light ph-books" aria-hidden="true"></i> Dernière parution</span>
+          <div class="ifras-date"><time datetime="2025-03">Mars 2025</time></div>
+          <h3 class="ifras-title">Intelligence artificielle embarquée</h3>
+          <p class="ifras-desc">L'IA à bord des systèmes autonomes : cas d'usage de LYNX et d'ATLAS, limites décisionnelles et cadre réglementaire.</p>
+          <div class="ifras-cta"><span>Consulter <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span><small>58 pages</small></div>
+        </div>
+      </a>
+      <a class="ifras-card is-restricted" href="connexion.html" data-date="2025-02" data-domain="Note de cadrage" style="--c:#c084fc">
+        <div class="cover"><span class="lock"><i class="ph-light ph-lock-simple" aria-hidden="true"></i> Accès restreint</span><span class="cover-rings" aria-hidden="true"></span><span class="cover-num">NC</span><span class="cover-type">Note de cadrage</span></div>
+        <div class="ifras-body">
+          <span class="featured-flag"><i class="ph-light ph-clipboard-text" aria-hidden="true"></i> Dernière parution</span>
+          <div class="ifras-date"><time datetime="2025-02">Février 2025</time></div>
+          <h3 class="ifras-title">Note de cadrage : HERMES, phase II</h3>
+          <p class="ifras-desc">Objectifs, calendrier et indicateurs de réussite de la phase II. Réservée au comité de pilotage.</p>
+          <div class="ifras-cta"><span><i class="ph-light ph-lock-simple" aria-hidden="true"></i> Accéder</span><small>Accréditation requise</small></div>
+        </div>
+      </a>
+      <a class="ifras-card" href="#" data-date="2024-12" data-domain="Rapport annuel" style="--c:#34d399">
+        <div class="cover"><span class="cover-rings" aria-hidden="true"></span><span class="cover-num">2024</span><span class="cover-type">Rapport annuel</span></div>
+        <div class="ifras-body">
+          <span class="featured-flag"><i class="ph-light ph-chart-line-up" aria-hidden="true"></i> Dernière parution</span>
+          <div class="ifras-date"><time datetime="2024-12">Décembre 2024</time></div>
+          <h3 class="ifras-title">Rapport annuel IFRAS 2024</h3>
+          <p class="ifras-desc">Résultats et faits marquants de l'exercice : lancement de PROMETHEUS, clôture de CASSINI-R.</p>
+          <div class="ifras-cta"><span><i class="ph-light ph-file-pdf" aria-hidden="true"></i> Télécharger</span><small>PDF, 136 pages</small></div>
+        </div>
+      </a>
+      <a class="ifras-card" href="#" data-date="2024-10" data-domain="Hors-série" style="--c:#f97316">
+        <div class="cover"><span class="cover-rings" aria-hidden="true"></span><span class="cover-num">HS 2</span><span class="cover-type">Hors-série</span></div>
+        <div class="ifras-body">
+          <span class="featured-flag"><i class="ph-light ph-books" aria-hidden="true"></i> Dernière parution</span>
+          <div class="ifras-date"><time datetime="2024-10">Octobre 2024</time></div>
+          <h3 class="ifras-title">Matériaux extrêmes pour l'espace</h3>
+          <p class="ifras-desc">Composites céramiques, alliages réfractaires et revêtements de rentrée : la synthèse des travaux du DSMR.</p>
+          <div class="ifras-cta"><span>Consulter <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span><small>72 pages</small></div>
+        </div>
+      </a>
+      <a class="ifras-card" href="#" data-date="2024-05" data-domain="Note de cadrage" style="--c:#c084fc">
+        <div class="cover"><span class="cover-rings" aria-hidden="true"></span><span class="cover-num">NC</span><span class="cover-type">Note de cadrage</span></div>
+        <div class="ifras-body">
+          <span class="featured-flag"><i class="ph-light ph-clipboard-text" aria-hidden="true"></i> Dernière parution</span>
+          <div class="ifras-date"><time datetime="2024-05">Mai 2024</time></div>
+          <h3 class="ifras-title">Note de cadrage : ATLAS</h3>
+          <p class="ifras-desc">La chambre de simulation martienne : spécifications, protocoles d'expérience et règles d'accès.</p>
+          <div class="ifras-cta"><span>Consulter <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span><small>34 pages</small></div>
+        </div>
+      </a>
+      <a class="ifras-card" href="#" data-date="2024-01" data-domain="Hors-série" style="--c:#f97316">
+        <div class="cover"><span class="cover-rings" aria-hidden="true"></span><span class="cover-num">HS 1</span><span class="cover-type">Hors-série</span></div>
+        <div class="ifras-body">
+          <span class="featured-flag"><i class="ph-light ph-books" aria-hidden="true"></i> Dernière parution</span>
+          <div class="ifras-date"><time datetime="2024-01">Janvier 2024</time></div>
+          <h3 class="ifras-title">Biologie humaine en microgravité</h3>
+          <p class="ifras-desc">Le premier hors-série de la collection : comment le corps s'adapte à l'impesanteur, en préparation d'ARTEMIS-9.</p>
+          <div class="ifras-cta"><span>Consulter <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span><small>80 pages</small></div>
+        </div>
+      </a>
+    </div>
 
-  <a class="pub-card" href="#" style="--card-accent:#60a5fa"
-     data-date="Janvier 2026" data-type="Lettre trimestrielle">
-    <span class="pub-badge-new">Nouveau</span>
-    <div class="pub-cover" style="background:linear-gradient(135deg,#0b1e4a,#071230)">
-      <div class="pub-cover-num" style="color:#60a5fa">N°22</div>
-      <div class="pub-cover-sublabel">Lettre trimestrielle</div>
+    <div class="list-empty" id="list-empty" hidden>
+      <i class="ph-light ph-magnifying-glass" aria-hidden="true"></i>
+      Aucun document ne correspond à votre recherche.<br>
+      <button type="button">Réinitialiser les filtres</button>
     </div>
-    <div class="pub-body">
-      <div class="pub-type-row">
-        <span class="pub-type-tag" style="background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.25);color:#60a5fa">Lettre trimestrielle</span>
-        <span class="pub-date">T1 2026</span>
-      </div>
-      <div class="pub-title">Lettre de la Direction Scientifique — Printemps 2026</div>
-      <p class="pub-desc">Avancées ARTEMIS-9 en phase III, résultats PROMETHEUS phase II, bilan des partenariats ESA et NASA signés en janvier. Éditorial de Jean-Luc Rousseau.</p>
-      <div class="pub-footer">
-        <span class="pub-pages">12 pages · Diffusion publique</span>
-        <span class="pub-dl-btn">Consulter →</span>
-      </div>
-    </div>
-  </a>
 
-  <a class="pub-card" href="#" style="--card-accent:#a78bfa"
-     data-date="Octobre 2025" data-type="Lettre trimestrielle">
-    <div class="pub-cover" style="background:linear-gradient(135deg,#1a0d3a,#0f0828)">
-      <div class="pub-cover-num" style="color:#a78bfa">N°21</div>
-      <div class="pub-cover-sublabel">Lettre trimestrielle</div>
-    </div>
-    <div class="pub-body">
-      <div class="pub-type-row">
-        <span class="pub-type-tag" style="background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.25);color:#a78bfa">Lettre trimestrielle</span>
-        <span class="pub-date">T4 2025</span>
+    <div class="cta-band reveal">
+      <span class="cta-icon" aria-hidden="true"><i class="ph-light ph-archive"></i></span>
+      <div>
+        <h2>Documents antérieurs à 2024</h2>
+        <p>Seuls les documents récents sont en ligne. L'intégralité des rapports, lettres et documents stratégiques de l'institut est disponible sur demande auprès du service Archives &amp; Documentation.</p>
       </div>
-      <div class="pub-title">Lettre de la Direction Scientifique — Hiver 2025</div>
-      <p class="pub-desc">Bilan annuel de la recherche, transferts de technologie réalisés, ouverture du programme LYNX phase II. Point sur les recrutements de l'année.</p>
-      <div class="pub-footer">
-        <span class="pub-pages">14 pages · Diffusion publique</span>
-        <span class="pub-dl-btn">Consulter →</span>
+      <div class="cta-actions">
+        <a href="mailto:archives@ifras.fr" class="btn btn-primary">Contacter les archives <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
+        <a href="publications-scientifiques.html" class="btn btn-ghost">Publications scientifiques</a>
       </div>
     </div>
-  </a>
-
-  <a class="pub-card" href="#" style="--card-accent:#34d399"
-     data-date="Décembre 2025" data-type="Rapport annuel">
-    <div class="pub-cover" style="background:linear-gradient(135deg,#0d2e1a,#071a0f)">
-      <div class="pub-cover-num" style="color:#34d399">2025</div>
-      <div class="pub-cover-sublabel">Rapport annuel</div>
-    </div>
-    <div class="pub-body">
-      <div class="pub-type-row">
-        <span class="pub-type-tag" style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.25);color:#34d399">Rapport annuel</span>
-        <span class="pub-date">Décembre 2025</span>
-      </div>
-      <div class="pub-title">Rapport Annuel IFRAS 2025</div>
-      <p class="pub-desc">Bilan complet de l'activité scientifique, financière et partenariale de l'institut. Résultats par département, publications, brevets déposés et perspectives 2026.</p>
-      <div class="pub-footer">
-        <span class="pub-pages">148 pages · PDF</span>
-        <span class="pub-dl-btn">Télécharger →</span>
-      </div>
-    </div>
-  </a>
-
-  <a class="pub-card" href="#" style="--card-accent:#f97316"
-     data-date="Septembre 2025" data-type="Hors-série">
-    <div class="pub-cover" style="background:linear-gradient(135deg,#2a1a08,#180e04)">
-      <div class="pub-cover-num" style="color:#f97316">HS·4</div>
-      <div class="pub-cover-sublabel">Hors-série thématique</div>
-    </div>
-    <div class="pub-body">
-      <div class="pub-type-row">
-        <span class="pub-type-tag" style="background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.25);color:#f97316">Hors-série</span>
-        <span class="pub-date">Septembre 2025</span>
-      </div>
-      <div class="pub-title">Hors-série : Propulsion du futur</div>
-      <p class="pub-desc">Dossier spécial consacré aux nouvelles architectures de propulsion — ionique à plasma froid, nucléaire thermique, voile solaire. Contributions des équipes DPET et PROMETHEUS.</p>
-      <div class="pub-footer">
-        <span class="pub-pages">64 pages · Diffusion publique</span>
-        <span class="pub-dl-btn">Consulter →</span>
-      </div>
-    </div>
-  </a>
-
-  <a class="pub-card" href="#" style="--card-accent:#facc15"
-     data-date="Juin 2025" data-type="Document stratégique">
-    <span class="pub-badge-restricted">Accès restreint</span>
-    <div class="pub-cover" style="background:linear-gradient(135deg,#1f1a06,#110e03)">
-      <div class="pub-cover-num" style="color:#facc15">PSS</div>
-      <div class="pub-cover-sublabel">Document stratégique</div>
-    </div>
-    <div class="pub-body">
-      <div class="pub-type-row">
-        <span class="pub-type-tag" style="background:rgba(250,204,21,.08);border:1px solid rgba(250,204,21,.25);color:#facc15">Document stratégique</span>
-        <span class="pub-date">Juin 2025</span>
-      </div>
-      <div class="pub-title">Plan Stratégique Scientifique IFRAS — PSS 2030</div>
-      <p class="pub-desc">Document cadre définissant les grandes orientations de recherche à l'horizon 2030. Axes prioritaires, feuilles de route départementales et objectifs de valorisation.</p>
-      <div class="pub-footer">
-        <span class="pub-pages">92 pages · Accréditation requise</span>
-        <span class="pub-dl-btn">Accéder →</span>
-      </div>
-    </div>
-  </a>
-
-  <a class="pub-card" href="#" style="--card-accent:#60a5fa"
-     data-date="Avril 2025" data-type="Lettre trimestrielle">
-    <div class="pub-cover" style="background:linear-gradient(135deg,#0b1e4a,#071230)">
-      <div class="pub-cover-num" style="color:#60a5fa">N°20</div>
-      <div class="pub-cover-sublabel">Lettre trimestrielle</div>
-    </div>
-    <div class="pub-body">
-      <div class="pub-type-row">
-        <span class="pub-type-tag" style="background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.25);color:#60a5fa">Lettre trimestrielle</span>
-        <span class="pub-date">T2 2025</span>
-      </div>
-      <div class="pub-title">Lettre de la Direction Scientifique — Été 2025</div>
-      <p class="pub-desc">Lancement du programme LYNX, résultats intermédiaires ORION-3, accueil de 14 nouveaux doctorants et signature du partenariat JAXA.</p>
-      <div class="pub-footer">
-        <span class="pub-pages">11 pages · Diffusion publique</span>
-        <span class="pub-dl-btn">Consulter →</span>
-      </div>
-    </div>
-  </a>
-
-  <a class="pub-card" href="#" style="--card-accent:#38bdf8"
-     data-date="Mars 2025" data-type="Hors-série">
-    <div class="pub-cover" style="background:linear-gradient(135deg,#0d2535,#06131d)">
-      <div class="pub-cover-num" style="color:#38bdf8">HS·3</div>
-      <div class="pub-cover-sublabel">Hors-série thématique</div>
-    </div>
-    <div class="pub-body">
-      <div class="pub-type-row">
-        <span class="pub-type-tag" style="background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.25);color:#38bdf8">Hors-série</span>
-        <span class="pub-date">Mars 2025</span>
-      </div>
-      <div class="pub-title">Hors-série : Intelligence artificielle embarquée</div>
-      <p class="pub-desc">Panorama des architectures IA déployées sur systèmes autonomes spatiaux — cas d'usage LYNX et ATLAS, limites décisionnelles et perspectives réglementaires européennes.</p>
-      <div class="pub-footer">
-        <span class="pub-pages">58 pages · Diffusion publique</span>
-        <span class="pub-dl-btn">Consulter →</span>
-      </div>
-    </div>
-  </a>
-
-  <a class="pub-card" href="#" style="--card-accent:#c084fc"
-     data-date="Février 2025" data-type="Note de cadrage">
-    <span class="pub-badge-restricted">Accès restreint</span>
-    <div class="pub-cover" style="background:linear-gradient(135deg,#1e0d38,#120820)">
-      <div class="pub-cover-num" style="color:#c084fc">NC</div>
-      <div class="pub-cover-sublabel">Note de cadrage</div>
-    </div>
-    <div class="pub-body">
-      <div class="pub-type-row">
-        <span class="pub-type-tag" style="background:rgba(192,132,252,.1);border:1px solid rgba(192,132,252,.25);color:#c084fc">Note de cadrage</span>
-        <span class="pub-date">Février 2025</span>
-      </div>
-      <div class="pub-title">Note de cadrage — Programme HERMES, Phase II</div>
-      <p class="pub-desc">Objectifs scientifiques, calendrier, indicateurs de réussite et ressources allouées à la phase II du programme HERMES. Diffusion restreinte au comité de pilotage.</p>
-      <div class="pub-footer">
-        <span class="pub-pages">28 pages · Accréditation requise</span>
-        <span class="pub-dl-btn">Accéder →</span>
-      </div>
-    </div>
-  </a>
-
-  <a class="pub-card" href="#" style="--card-accent:#facc15"
-     data-date="Décembre 2024" data-type="Rapport annuel">
-    <div class="pub-cover" style="background:linear-gradient(135deg,#1a1208,#0e0a04)">
-      <div class="pub-cover-num" style="color:#facc15">2024</div>
-      <div class="pub-cover-sublabel">Rapport annuel</div>
-    </div>
-    <div class="pub-body">
-      <div class="pub-type-row">
-        <span class="pub-type-tag" style="background:rgba(250,204,21,.08);border:1px solid rgba(250,204,21,.25);color:#facc15">Rapport annuel</span>
-        <span class="pub-date">Décembre 2024</span>
-      </div>
-      <div class="pub-title">Rapport Annuel IFRAS 2024</div>
-      <p class="pub-desc">Résultats scientifiques, faits marquants et données budgétaires de l'exercice 2024. Lancement de PROMETHEUS, clôture de CASSINI-R, 89 publications produites.</p>
-      <div class="pub-footer">
-        <span class="pub-pages">136 pages · PDF</span>
-        <span class="pub-dl-btn">Télécharger →</span>
-      </div>
-    </div>
-  </a>
-
-  <a class="pub-card" href="#" style="--card-accent:#fb7185"
-     data-date="Octobre 2024" data-type="Hors-série">
-    <div class="pub-cover" style="background:linear-gradient(135deg,#2a0d12,#180608)">
-      <div class="pub-cover-num" style="color:#fb7185">HS·2</div>
-      <div class="pub-cover-sublabel">Hors-série thématique</div>
-    </div>
-    <div class="pub-body">
-      <div class="pub-type-row">
-        <span class="pub-type-tag" style="background:rgba(251,113,133,.1);border:1px solid rgba(251,113,133,.25);color:#fb7185">Hors-série</span>
-        <span class="pub-date">Octobre 2024</span>
-      </div>
-      <div class="pub-title">Hors-série : Matériaux extrêmes pour l'espace</div>
-      <p class="pub-desc">Synthèse des travaux DSMR sur les composites à matrice céramique, les alliages réfractaires et les revêtements thermiques pour rentrée atmosphérique.</p>
-      <div class="pub-footer">
-        <span class="pub-pages">72 pages · Diffusion publique</span>
-        <span class="pub-dl-btn">Consulter →</span>
-      </div>
-    </div>
-  </a>
-
-  <a class="pub-card" href="#" style="--card-accent:#34d399"
-     data-date="Mai 2024" data-type="Note de cadrage">
-    <div class="pub-cover" style="background:linear-gradient(135deg,#0a2218,#051410)">
-      <div class="pub-cover-num" style="color:#34d399">NC</div>
-      <div class="pub-cover-sublabel">Note de cadrage</div>
-    </div>
-    <div class="pub-body">
-      <div class="pub-type-row">
-        <span class="pub-type-tag" style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.25);color:#34d399">Note de cadrage</span>
-        <span class="pub-date">Mai 2024</span>
-      </div>
-      <div class="pub-title">Note de cadrage — Programme ATLAS, simulation environnementale</div>
-      <p class="pub-desc">Spécifications techniques et scientifiques de la chambre de simulation environnementale martienne. Critères d'accréditation, protocoles d'expérimentation et gestion des accès.</p>
-      <div class="pub-footer">
-        <span class="pub-pages">34 pages · Diffusion publique</span>
-        <span class="pub-dl-btn">Consulter →</span>
-      </div>
-    </div>
-  </a>
-
-  <a class="pub-card" href="#" style="--card-accent:#4ade80"
-     data-date="Janvier 2024" data-type="Hors-série">
-    <div class="pub-cover" style="background:linear-gradient(135deg,#0b2210,#051508)">
-      <div class="pub-cover-num" style="color:#4ade80">HS·1</div>
-      <div class="pub-cover-sublabel">Hors-série thématique</div>
-    </div>
-    <div class="pub-body">
-      <div class="pub-type-row">
-        <span class="pub-type-tag" style="background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.25);color:#4ade80">Hors-série</span>
-        <span class="pub-date">Janvier 2024</span>
-      </div>
-      <div class="pub-title">Hors-série : Biologie humaine en microgravité</div>
-      <p class="pub-desc">Premier hors-série de la collection IFRAS, consacré aux mécanismes d'adaptation biologique en microgravité. Synthèse de 15 ans de recherche en préparation d'ARTEMIS-9.</p>
-      <div class="pub-footer">
-        <span class="pub-pages">80 pages · Diffusion publique</span>
-        <span class="pub-dl-btn">Consulter →</span>
-      </div>
-    </div>
-  </a>
-
-  <div class="no-results" id="no-results">
-    <strong>Aucun résultat</strong>
-    Aucune publication ne correspond à votre recherche. Essayez d'autres termes ou réinitialisez les filtres.
   </div>
+</section>
 
-</div>
+</main>
 
-<!-- ARCHIVES -->
-<div class="archive-notice">
-  <div class="archive-notice-inner">
-    <div class="archive-icon">🗂</div>
-    <div class="archive-text">
-      <strong>Documents antérieurs à 2024</strong>
-      <p>Pour des raisons de capacité de stockage, seules les publications récentes sont accessibles directement sur ce site. L'intégralité des rapports annuels, lettres et documents stratégiques depuis 1962 est consultable sur demande auprès du <a href="mailto:archives@ifras.fr">Service Archives &amp; Documentation</a>.</p>
-    </div>
-    <a href="mailto:archives@ifras.fr" class="archive-cta">Contacter les archives →</a>
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© IFRAS, Institut Français de Recherche Aéronautique et Spatiale</span>
+    <span><i class="ph-light ph-lock-simple" aria-hidden="true"></i> Certains documents sont soumis à accréditation</span>
   </div>
-</div>
-
-<footer>
-  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale<br>
-  Certains documents sont soumis à accréditation institutionnelle
 </footer>
 
 <script>
-const pubCards = Array.from(document.querySelectorAll('.pub-card'));
-const list = document.getElementById('pub-list');
-const searchInput = document.getElementById('search-input');
-const searchClear = document.getElementById('search-clear');
-const sortSelect = document.getElementById('sort-select');
-const filterBtns = document.querySelectorAll('.filter-btn');
-const resultsCount = document.getElementById('results-count');
-const resetBtn = document.getElementById('reset-btn');
-const noResults = document.getElementById('no-results');
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-pubCards.forEach(card => {
-  card.dataset.searchText = card.textContent.toLowerCase();
-});
-
-function parseDate(str) {
-  const months = {
-    'janvier':1,'février':2,'mars':3,'avril':4,'mai':5,'juin':6,
-    'juillet':7,'août':8,'septembre':9,'octobre':10,'novembre':11,'décembre':12
+  /* ---------- Menu mobile ---------- */
+  const toggle = document.querySelector('.menu-toggle');
+  const panel = document.getElementById('mobile-panel');
+  const icon = toggle.querySelector('i');
+  const setMenu = (open) => {
+    panel.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    icon.className = open ? 'ph-light ph-x' : 'ph-light ph-list';
   };
-  const parts = (str || '').toLowerCase().split(' ');
-  if (parts.length < 2) return 0;
-  return (parseInt(parts[1]) || 0) * 100 + (months[parts[0]] || 0);
-}
+  toggle.addEventListener('click', () => setMenu(!panel.classList.contains('is-open')));
+  document.addEventListener('click', (e) => {
+    if (panel.classList.contains('is-open') && !panel.contains(e.target) && !toggle.contains(e.target)) setMenu(false);
+  });
+  window.addEventListener('pageshow', () => setMenu(false));
 
-let activeFilter = 'tous';
-let searchQuery = '';
-let sortOrder = 'recent';
+  /* ---------- Apparition au défilement ---------- */
+  const revealIO = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      revealIO.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach((el) => revealIO.observe(el));
 
-function applyAll() {
-  const sorted = [...pubCards].sort((a, b) => {
-    const da = parseDate(a.dataset.date);
-    const db = parseDate(b.dataset.date);
-    return sortOrder === 'recent' ? db - da : da - db;
+  /* ---------- Données des cartes ---------- */
+  const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  const list = document.getElementById('pub-list');
+  const today = new Date();
+
+  const cards = [...list.querySelectorAll('.ifras-card')].map((el) => {
+    const [y, m] = el.dataset.date.split('-').map(Number);
+    /* pastille « Nouveau » calculée selon la date du jour (moins de 8 mois) */
+    const age = (today.getFullYear() - y) * 12 + (today.getMonth() + 1 - m);
+    if (age >= 0 && age <= 8) {
+      const n = document.createElement('span');
+      n.className = 'new'; n.textContent = 'Nouveau';
+      el.querySelector('.ifras-date').appendChild(n);
+    }
+    const hl = [...el.querySelectorAll('.ifras-title, .ifras-desc')];
+    return {
+      el, y, key: y * 100 + m,
+      domain: el.dataset.domain,
+      text: norm(el.textContent),
+      hl: hl.map((node) => ({ node, html: node.innerHTML }))
+    };
   });
 
-  sorted.forEach(card => list.insertBefore(card, noResults));
+  /* ---------- Surlignage des mots recherchés (insensible aux accents) ---------- */
+  const highlight = (entry, q) => {
+    entry.hl.forEach(({ node, html }) => {
+      node.innerHTML = html;
+      if (!q) return;
+      const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
+      const texts = [];
+      while (walker.nextNode()) texts.push(walker.currentNode);
+      texts.forEach((t) => {
+        const raw = t.nodeValue;
+        const flat = [...raw].map((c) => norm(c)[0] || c).join('');
+        const i = flat.indexOf(q);
+        if (i < 0) return;
+        const mark = document.createElement('mark');
+        const after = t.splitText(i);
+        after.splitText(q.length);
+        mark.textContent = after.nodeValue;
+        after.replaceWith(mark);
+      });
+    });
+  };
 
-  let visible = 0;
-  sorted.forEach(card => {
-    const matchType = activeFilter === 'tous' ||
-      (card.dataset.type || '').toLowerCase() === activeFilter.toLowerCase();
-    const matchSearch = searchQuery === '' ||
-      card.dataset.searchText.includes(searchQuery);
+  /* ---------- État + rendu de la grille ---------- */
+  const input = document.getElementById('finder-input');
+  const finder = document.getElementById('finder');
+  const result = document.getElementById('finder-result');
+  const chips = [...document.querySelectorAll('.chip')];
+  const count = document.getElementById('count');
+  const reset = document.getElementById('reset');
+  const empty = document.getElementById('list-empty');
+  const state = { q: '', domain: 'tous', order: 'recent' };
 
-    if (matchType && matchSearch) {
-      card.style.display = '';
-      visible++;
-    } else {
-      card.style.display = 'none';
+  /* compteurs par type de document */
+  chips.forEach((chip) => {
+    const d = chip.dataset.domain;
+    const n = d === 'tous' ? cards.length : cards.filter((c) => c.domain === d).length;
+    chip.querySelector('small').textContent = n;
+  });
+
+  const render = () => {
+    const q = norm(state.q.trim());
+    finder.classList.toggle('has-value', q.length > 0);
+    const visible = cards
+      .filter((c) => (state.domain === 'tous' || c.domain === state.domain) && (!q || c.text.includes(q)))
+      .sort((a, b) => state.order === 'recent' ? b.key - a.key : a.key - b.key);
+
+    /* réordonnancement : les cartes existantes sont déplacées, pas recréées */
+    const prev = new Set(cards.filter((c) => c.el.isConnected).map((c) => c.el));
+    cards.forEach((c) => c.el.classList.remove('is-featured'));
+    visible.forEach((c) => {
+      highlight(c, q);
+      list.appendChild(c.el);
+      if (!prev.has(c.el) && !reduceMotion) { c.el.classList.remove('pop-in'); void c.el.offsetWidth; c.el.classList.add('pop-in'); }
+    });
+    cards.filter((c) => !visible.includes(c)).forEach((c) => c.el.remove());
+    /* sans filtre, le dernier numéro paru s'affiche en grand */
+    if (!q && state.domain === 'tous' && state.order === 'recent' && visible[0]) visible[0].el.classList.add('is-featured');
+
+    empty.hidden = visible.length > 0;
+    const chip = chips.find((c) => c.dataset.domain === state.domain);
+    const label = state.domain === 'tous' ? '' : ` · <span class="active-domain" style="--c:${chip.style.getPropertyValue('--c')}">${chip.dataset.domain}</span>`;
+    count.innerHTML = `<strong>${visible.length}</strong> document${visible.length > 1 ? 's' : ''}${label}`;
+    reset.hidden = !q && state.domain === 'tous';
+
+    result.innerHTML = q
+      ? (visible.length ? `${visible.length} résultat${visible.length > 1 ? 's' : ''}. <a href="#liste">Voir la liste</a>` : 'Aucun résultat. Essayez un autre mot-clé.')
+      : (canHover ? '<span class="hint">Astuce : appuyez sur <kbd>/</kbd> pour chercher depuis n’importe où.</span>' : '');
+  };
+
+  input.addEventListener('input', () => { state.q = input.value; render(); });
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') document.getElementById('liste').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+    if (e.key === 'Escape' && input.value) { e.stopPropagation(); input.value = ''; state.q = ''; render(); }
+  });
+  finder.querySelector('.finder-clear').addEventListener('click', () => { input.value = ''; state.q = ''; render(); input.focus(); });
+
+  /* « / » place le curseur dans la recherche, comme sur la plupart des bases documentaires */
+  document.addEventListener('keydown', (e) => {
+    if (e.key === '/' && !/input|textarea|select/i.test(document.activeElement.tagName)) {
+      e.preventDefault(); input.focus();
     }
   });
 
-  noResults.style.display = visible === 0 ? 'block' : 'none';
-  resultsCount.textContent = visible === 0 ? 'Aucun résultat' :
-    `${visible} publication${visible > 1 ? 's' : ''}`;
-  resetBtn.style.display =
-    (activeFilter !== 'tous' || searchQuery !== '') ? 'inline-flex' : 'none';
-  searchClear.style.display = searchQuery !== '' ? 'flex' : 'none';
-}
+  chips.forEach((chip) => chip.addEventListener('click', () => {
+    state.domain = chip.dataset.domain;
+    chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+    render();
+  }));
 
-filterBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    filterBtns.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeFilter = btn.dataset.filter;
-    applyAll();
+  const doReset = () => {
+    state.q = ''; state.domain = 'tous'; input.value = '';
+    chips.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.domain === 'tous')));
+    render();
+  };
+  reset.addEventListener('click', doReset);
+  empty.querySelector('button').addEventListener('click', doReset);
+
+  /* ---------- Tri : contrôle segmenté (même composant que publications.html) ---------- */
+  const seg = document.getElementById('segmented');
+  const indicator = seg.querySelector('.segmented-indicator');
+  const segBtns = [...seg.querySelectorAll('button')];
+  const moveIndicator = (btn) => {
+    seg.style.setProperty('--x', `${btn.offsetLeft}px`);
+    seg.style.setProperty('--w', `${btn.offsetWidth}px`);
+  };
+  segBtns.forEach((btn) => btn.addEventListener('click', () => {
+    state.order = btn.dataset.order;
+    segBtns.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+    moveIndicator(btn);
+    render();
+  }));
+  const initIndicator = () => moveIndicator(seg.querySelector('[aria-pressed="true"]'));
+  initIndicator();
+  window.addEventListener('resize', initIndicator);
+  document.fonts?.ready.then(initIndicator);
+
+  render();
+
+  /* ---------- Feuilles flottantes (fond du hero) ----------
+     Des pages de document dérivent lentement vers le haut, à trois profondeurs ;
+     la souris les décale légèrement (parallaxe). */
+  const canvas = document.getElementById('sheets');
+  const ctx = canvas.getContext('2d');
+  const hero = document.querySelector('.hero');
+  const COLORS = chips.filter((c) => c.dataset.domain !== 'tous').map((c) => c.style.getPropertyValue('--c').trim());
+  let sheets = [], w = 0, h = 0, running = false, raf = 0, last = 0;
+  const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
+
+  const make = (y) => {
+    const z = Math.random() * .75 + .25;                 /* profondeur : 1 = proche */
+    const sw = 46 + z * 70;
+    return {
+      x: Math.random() * w, y: y ?? Math.random() * h, z,
+      w: sw, h: sw * 1.32,
+      rot: (Math.random() - .5) * .5, vr: (Math.random() - .5) * .00006,
+      c: COLORS[Math.floor(Math.random() * COLORS.length)],
+      lines: 3 + Math.floor(Math.random() * 4)
+    };
+  };
+  const build = () => {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = hero.clientWidth; h = hero.clientHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const n = Math.max(8, Math.min(22, Math.round((w * h) / 52000)));
+    sheets = Array.from({ length: n }, () => make()).sort((a, b) => a.z - b.z);
+  };
+
+  const rr = (x, y, ww, hh, r) => {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y); ctx.arcTo(x + ww, y, x + ww, y + hh, r); ctx.arcTo(x + ww, y + hh, x, y + hh, r);
+    ctx.arcTo(x, y + hh, x, y, r); ctx.arcTo(x, y, x + ww, y, r); ctx.closePath();
+  };
+
+  const draw = () => {
+    ctx.clearRect(0, 0, w, h);
+    for (const s of sheets) {
+      const px = s.x + pointer.x * s.z * 18, py = s.y + pointer.y * s.z * 12;
+      ctx.save();
+      ctx.translate(px, py); ctx.rotate(s.rot);
+      ctx.globalAlpha = .1 + s.z * .22;
+      /* page */
+      rr(-s.w / 2, -s.h / 2, s.w, s.h, 6);
+      ctx.fillStyle = 'rgba(10,20,54,.9)'; ctx.fill();
+      ctx.strokeStyle = s.c; ctx.lineWidth = 1; ctx.stroke();
+      /* bandeau de couverture + lignes de texte */
+      ctx.fillStyle = s.c;
+      ctx.globalAlpha *= .9;
+      ctx.fillRect(-s.w / 2 + 8, -s.h / 2 + 8, s.w * .45, 4);
+      ctx.fillStyle = '#aab3d6';
+      for (let i = 0; i < s.lines; i++) {
+        const lw = (s.w - 16) * (i === s.lines - 1 ? .55 : .9);
+        ctx.fillRect(-s.w / 2 + 8, -s.h / 2 + 22 + i * 8, lw, 2);
+      }
+      ctx.restore();
+    }
+    ctx.globalAlpha = 1;
+  };
+
+  const loop = (t) => {
+    const dt = Math.min(64, t - (last || t)); last = t;
+    pointer.x += (pointer.tx - pointer.x) * .05; pointer.y += (pointer.ty - pointer.y) * .05;
+    for (const s of sheets) {
+      s.y -= (.006 + s.z * .014) * dt;                  /* les pages proches montent plus vite */
+      s.rot += s.vr * dt;
+      if (s.y < -s.h) Object.assign(s, make(h + s.h), { z: s.z, w: s.w, h: s.h });
+    }
+    draw();
+    if (running) raf = requestAnimationFrame(loop);
+  };
+  const start = () => { if (running || reduceMotion) return; running = true; last = 0; raf = requestAnimationFrame(loop); };
+  const stop = () => { running = false; cancelAnimationFrame(raf); };
+
+  build(); draw(); canvas.classList.add('is-ready');
+
+  hero.addEventListener('pointermove', (e) => {
+    if (e.pointerType !== 'mouse') return;
+    pointer.tx = e.clientX / window.innerWidth - .5;
+    pointer.ty = e.clientY / window.innerHeight - .5;
   });
-});
+  hero.addEventListener('pointerleave', () => { pointer.tx = pointer.ty = 0; });
 
-searchInput.addEventListener('input', () => {
-  searchQuery = searchInput.value.toLowerCase().trim();
-  applyAll();
-});
-
-searchClear.addEventListener('click', () => {
-  searchInput.value = '';
-  searchQuery = '';
-  applyAll();
-  searchInput.focus();
-});
-
-sortSelect.addEventListener('change', () => {
-  sortOrder = sortSelect.value;
-  applyAll();
-});
-
-resetBtn.addEventListener('click', () => {
-  activeFilter = 'tous';
-  searchQuery = '';
-  sortOrder = 'recent';
-  searchInput.value = '';
-  sortSelect.value = 'recent';
-  filterBtns.forEach(b => b.classList.remove('active'));
-  document.querySelector('[data-filter="tous"]').classList.add('active');
-  applyAll();
-});
-
-applyAll();
+  let heroVisible = true;
+  new IntersectionObserver(([entry]) => {
+    heroVisible = entry.isIntersecting;
+    heroVisible && !document.hidden ? start() : stop();
+  }).observe(hero);
+  document.addEventListener('visibilitychange', () => { document.hidden ? stop() : heroVisible && start(); });
+  let resizeTimer = 0;
+  window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => { build(); draw(); }, 150); });
+})();
 </script>
 
 </body>
