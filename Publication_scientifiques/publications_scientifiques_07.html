@@ -2,1032 +2,1890 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>AQUA-CYCLE · Recyclage de l'eau en mission spatiale longue durée — IFRAS DSEV</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Recycler 99,6 % de l'eau d'un vaisseau pendant un an en orbite | Publications IFRAS</title>
+<meta name="description" content="Le procédé AQUA-CYCLE de l'IFRAS recycle 99,6 % de l'eau pendant 360 jours en orbite, en apesanteur comme en gravité martienne.">
+<meta name="theme-color" content="#050b1e">
+<link rel="icon" type="image/png" sizes="1000x1000" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+
 <style>
+/* =========================================================
+   TOKENS (identiques aux autres pages)
+   ========================================================= */
 :root {
-  --bg-main:#050b1e; --bg-dark:#020617; --bg-light:#070f2b;
-  --border:#1b2555; --border-sub:#0e1535;
-  --accent:#34d399; --accent2:#4f6bed; --accent3:#f97316;
-  --text-main:#e6e6e6; --text-soft:#aab3d6; --text-muted:#4a5280;
-  --mono:"DM Mono",monospace;
+  --bg-main: #050b1e;
+  --bg-dark: #020617;
+  --bg-light: #070f2b;
+  --bg-raise: #0a1436;
+  --accent: #4f6bed;
+  --accent-hover: #3d5adb;
+  --accent-soft: rgba(79,107,237,.14);
+  --accent-line: rgba(79,107,237,.38);
+  --text-main: #e6e6e6;
+  --text-strong: #f5f7ff;
+  --text-soft: #aab3d6;
+  --text-mute: #8891b8;
+  --border: #1b2555;
+
+  /* Une couleur par type de contenu */
+  --t-sci: #60a5fa;
+  --t-ifras: #34d399;
+  --t-event: #f97316;
+  /* Types de publications IFRAS */
+  --t-lettre: #60a5fa;
+  --t-rapport: #34d399;
+  --t-hs: #f97316;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --header-h: 68px;
+  --subnav-h: 48px;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:"DM Sans",sans-serif;background:var(--bg-main);color:var(--text-main);line-height:1.7;}
-::-webkit-scrollbar{width:4px;} ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
 
-header{position:fixed;top:0;width:100%;z-index:1000;background:rgba(5,11,30,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
-.header-inner{max-width:1300px;margin:auto;padding:12px 30px;display:flex;align-items:center;justify-content:space-between;}
-.header-left{display:flex;align-items:center;gap:40px;}
-.logo-link img{height:60px;}
-.main-nav{list-style:none;display:flex;gap:32px;}
-.main-nav a{text-decoration:none;color:var(--text-soft);font-size:14px;letter-spacing:.05em;}
-.main-nav a:hover{color:white;}
-.login-btn{padding:8px 18px;border-radius:6px;border:1px solid var(--accent2);color:white;text-decoration:none;font-size:13px;}
-.login-btn:hover{background:var(--accent2);}
-.sub-nav{margin-top:84px;background:var(--bg-light);border-bottom:1px solid var(--border);}
-.sub-nav ul{max-width:1300px;margin:0 auto;padding:0 30px;list-style:none;display:flex;justify-content:space-between;}
-.sub-nav li{padding:14px 0;}
-.sub-nav a{color:var(--text-soft);text-decoration:none;font-size:14px;letter-spacing:.06em;}
-.sub-nav a:hover{color:white;}
-.sub-nav a.active{color:white;border-bottom:2px solid var(--accent2);padding-bottom:12px;}
+*, *::before, *::after { box-sizing: border-box; }
 
-.pub-wrapper{max-width:900px;margin:0 auto;padding:52px 30px 100px;}
-.breadcrumb{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--text-muted);letter-spacing:.06em;margin-bottom:36px;font-family:var(--mono);}
-.breadcrumb a{color:var(--text-muted);text-decoration:none;}
-.breadcrumb a:hover{color:var(--accent);}
-.breadcrumb span{opacity:.4;}
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 20px); }
 
-.meta-top{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
-.badge{font-size:10.5px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;font-weight:500;}
-.badge-j{background:rgba(52,211,153,.1);color:var(--accent);border:1px solid rgba(52,211,153,.25);}
-.badge-d{background:rgba(79,107,237,.1);color:var(--accent2);border:1px solid rgba(79,107,237,.2);}
-.badge-o{background:rgba(52,211,153,.07);color:var(--accent);border:1px solid rgba(52,211,153,.15);}
-.badge-dt{background:rgba(255,255,255,.04);color:var(--text-muted);border:1px solid rgba(255,255,255,.08);}
+body {
+  margin: 0;
+  font-family: "DM Sans", "Segoe UI", system-ui, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
 
-.article-title{font-family:"DM Sans",sans-serif;font-size:clamp(18px,2.4vw,23px);font-weight:400;color:var(--text-main);line-height:1.5;letter-spacing:0;margin-bottom:18px;}
-.article-subtitle{font-size:15px;color:var(--text-soft);font-weight:300;line-height:1.65;margin-bottom:28px;font-style:italic;border-left:2px solid var(--accent);padding-left:16px;}
-.authors-block{background:var(--bg-light);border:1px solid var(--border);border-radius:10px;padding:16px 20px;display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;margin-bottom:28px;}
-.author-entry{display:flex;flex-direction:column;gap:2px;}
-.author-name{font-size:13.5px;font-weight:600;color:white;}
-.author-role{font-size:11px;color:var(--text-muted);letter-spacing:.04em;}
-.author-sep{width:1px;background:var(--border);align-self:stretch;}
-.cite-block{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:12px 16px;background:rgba(0,0,0,.25);border:1px solid var(--border-sub);border-radius:8px;}
-.cite-item{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;color:var(--text-muted);}
-.cite-label{color:var(--accent);font-weight:500;}
-.cite-sep{color:var(--border);}
-.art-divider{height:1px;background:linear-gradient(90deg,var(--accent) 0%,transparent 60%);margin:40px 0;opacity:.3;}
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+[hidden] { display: none !important; }
 
-.abstract-box{background:rgba(52,211,153,.04);border:1px solid rgba(52,211,153,.14);border-radius:12px;padding:28px 32px;margin-bottom:44px;}
-.abstract-label{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;font-weight:500;}
-.abstract-text{font-size:14.5px;line-height:1.85;color:var(--text-soft);font-weight:300;}
-.kw-wrap{margin-top:16px;display:flex;flex-wrap:wrap;gap:7px;align-items:center;}
-.kw-lbl{font-size:11px;color:var(--text-muted);font-family:var(--mono);letter-spacing:.08em;}
-.kw-tag{font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--text-soft);}
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
-.section-heading{font-family:"Syne",sans-serif;font-size:18px;font-weight:700;color:white;margin:44px 0 16px;display:flex;align-items:center;gap:12px;}
-.section-heading::before{content:'';display:block;width:4px;height:18px;background:var(--accent);border-radius:2px;flex-shrink:0;}
-.section-heading.blue::before{background:var(--accent2);}
-.section-heading.orange::before{background:var(--accent3);}
-.sub{font-family:"Syne",sans-serif;font-weight:700;color:var(--text-soft);margin:28px 0 10px;letter-spacing:.04em;text-transform:uppercase;font-size:11.5px;}
-p.bt{font-size:14.5px;color:var(--text-soft);line-height:1.85;font-weight:300;margin-bottom:16px;}
-ul.bt-list{font-size:14.5px;color:var(--text-soft);line-height:1.85;font-weight:300;margin-bottom:16px;padding-left:20px;display:flex;flex-direction:column;gap:8px;}
-ul.bt-list li{padding-left:8px;}
-ul.bt-list li strong{color:var(--text-main);font-weight:500;}
+.skip-link {
+  position: absolute; left: 16px; top: -48px;
+  padding: 10px 16px;
+  background: var(--accent); color: #fff;
+  border-radius: var(--radius-sm);
+  z-index: 3000; text-decoration: none;
+  transition: top 160ms var(--ease-out);
+}
+.skip-link:focus { top: 12px; }
 
-/* ===== SCHÉMA CYCLE EAU ===== */
-.cycle-schema{margin:36px 0;background:var(--bg-light);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
-.cycle-inner{padding:28px 24px 20px;}
-.cycle-ttl{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:20px;}
-.cycle-cap{padding:12px 20px;font-size:12.5px;color:var(--text-muted);line-height:1.6;border-top:1px solid var(--border-sub);}
-.cycle-cap strong{font-weight:600;color:var(--text-soft);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
+.container { max-width: 1300px; margin: 0 auto; padding: 0 30px; }
 
-/* ===== GRILLE TECHNOS ===== */
-.tech-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0;}
-.tech-card{background:var(--bg-light);border:1px solid var(--border);border-radius:12px;padding:20px 22px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;}
-.tech-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
-.tech-card.green::before{background:var(--accent);}
-.tech-card.blue::before{background:var(--accent2);}
-.tech-card.orange::before{background:var(--accent3);}
-.tech-card.yellow::before{background:#facc15;}
-.tech-name{font-family:"Syne",sans-serif;font-weight:700;font-size:14px;color:white;line-height:1.2;}
-.tech-acro{font-size:11px;font-family:var(--mono);color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase;}
-.tech-desc{font-size:13px;color:var(--text-soft);font-weight:300;line-height:1.6;}
-.tech-stat{display:flex;align-items:center;gap:8px;margin-top:2px;}
-.tech-stat-val{font-family:var(--mono);font-size:13px;font-weight:500;}
-.tech-stat-val.g{color:var(--accent);}
-.tech-stat-val.b{color:var(--accent2);}
-.tech-stat-val.o{color:var(--accent3);}
-.tech-stat-val.y{color:#facc15;}
-.tech-stat-lbl{font-size:11.5px;color:var(--text-muted);}
+/* =========================================================
+   BOUTONS
+   ========================================================= */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 22px;
+  border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 500;
+  text-decoration: none; white-space: nowrap;
+  border: 1px solid transparent;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.btn:active { transform: scale(0.97); }
+.btn i { font-size: 16px; transition: transform 200ms var(--ease-out); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-ghost { border-color: var(--accent-line); color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-ghost:hover { background: var(--accent-soft); border-color: var(--accent); }
+  .btn:hover i { transform: translateX(3px); }
+}
 
-/* ===== TABLEAU ===== */
-.tbl-wrap{margin:36px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);}
-.tbl-head{background:rgba(52,211,153,.08);padding:12px 20px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--border);}
-table{width:100%;border-collapse:collapse;font-size:13px;}
-thead th{background:rgba(0,0,0,.3);padding:11px 16px;text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--border-sub);font-weight:500;}
-tbody tr{border-bottom:1px solid var(--border-sub);transition:background .15s;}
-tbody tr:last-child{border-bottom:none;}
-tbody tr:hover{background:rgba(255,255,255,.025);}
-tbody td{padding:10px 16px;color:var(--text-soft);vertical-align:middle;font-weight:300;}
-.tm{font-family:var(--mono);font-size:12.5px;color:var(--text-main);}
-.tg{font-family:var(--mono);font-size:12.5px;color:var(--accent);}
-.ty{font-family:var(--mono);font-size:12.5px;color:#facc15;}
-.to{font-family:var(--mono);font-size:12.5px;color:var(--accent3);}
-.tr{font-family:var(--mono);font-size:12.5px;color:#f87171;}
-.tb{font-family:var(--mono);font-size:12.5px;color:var(--accent2);}
-.tbl-note{padding:10px 20px;font-size:11.5px;color:var(--text-muted);background:rgba(0,0,0,.2);font-style:italic;border-top:1px solid var(--border-sub);}
+.text-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--text-soft);
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.text-link i { transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .text-link:hover { color: #fff; }
+  .text-link:hover i { transform: translateX(3px); }
+}
 
-/* ===== HIGHLIGHT ===== */
-.hl{border-left:3px solid var(--accent);background:rgba(52,211,153,.04);border-radius:0 8px 8px 0;padding:16px 20px;margin:24px 0;font-size:14px;color:var(--text-soft);font-style:italic;line-height:1.75;}
-.hl.blue{border-color:var(--accent2);background:rgba(79,107,237,.05);}
-.hl.orange{border-color:var(--accent3);background:rgba(249,115,22,.04);}
+/* =========================================================
+   HEADER (opaque)
+   ========================================================= */
+.site-header {
+  position: fixed; inset: 0 0 auto 0;
+  z-index: 2000;
+  height: var(--header-h);
+  background: rgba(5,11,30,.88);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.header-left { display: flex; align-items: center; gap: 44px; }
+.logo-link { display: flex; align-items: center; }
+.logo-link img { height: 44px; width: auto; }
 
-/* ===== FIGURE PHOTO ===== */
-.fig-wrap{margin:36px 0;background:var(--bg-light);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
-.fig-wrap img{width:100%;display:block;border-bottom:1px solid var(--border);}
-.fig-ph{height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(79,107,237,.07),rgba(52,211,153,.03));border-bottom:1px solid var(--border);gap:10px;}
-.fig-icon{font-size:40px;opacity:.2;}
-.fig-ph-label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);}
-.fig-cap{padding:14px 20px;font-size:12.5px;color:var(--text-muted);line-height:1.6;}
-.fig-cap strong{font-weight:600;color:var(--text-soft);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
+.main-nav { list-style: none; display: flex; gap: 6px; margin: 0; padding: 0; }
+.main-nav a {
+  position: relative; display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--text-soft);
+  font-size: 14px; letter-spacing: .02em;
+  border-radius: 6px;
+  transition: color 160ms ease;
+}
+.main-nav a::after {
+  content: ""; position: absolute;
+  left: 12px; right: 12px; bottom: 2px; height: 1px;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 200ms var(--ease-out);
+}
+.main-nav a[aria-current="page"] { color: #fff; }
+.main-nav a[aria-current="page"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .main-nav a:hover { color: #fff; }
+  .main-nav a:hover::after { transform: scaleX(1); }
+}
 
-/* ===== CHART ===== */
-.chart-wrap{margin:36px 0;background:var(--bg-light);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
-.chart-inner{padding:28px 24px 16px;background:rgba(0,0,0,.15);border-bottom:1px solid var(--border-sub);}
-.chart-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:8px;}
-.chart-ttl{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);max-width:500px;line-height:1.5;}
-.legend{display:flex;gap:14px;flex-wrap:wrap;}
-.li{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);}
-.ld{width:8px;height:8px;border-radius:2px;}
-.chart-cap{padding:12px 20px;font-size:12.5px;color:var(--text-muted);line-height:1.6;}
-.chart-cap strong{font-weight:600;color:var(--text-soft);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
+.header-right { display: flex; align-items: center; gap: 10px; }
+.header-right .btn { padding: 9px 18px; font-size: 13px; }
 
-/* ===== PIPELINE ===== */
-.pipeline{display:flex;align-items:stretch;gap:0;margin:32px 0;overflow-x:auto;}
-.pipe-step{flex:1;min-width:120px;background:var(--bg-light);border:1px solid var(--border);padding:16px 14px;display:flex;flex-direction:column;gap:8px;position:relative;}
-.pipe-step:not(:first-child){border-left:none;}
-.pipe-step:first-child{border-radius:10px 0 0 10px;}
-.pipe-step:last-child{border-radius:0 10px 10px 0;}
-.pipe-step::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px;z-index:2;}
-.pipe-step:last-child::after{display:none;}
-.pipe-num{font-family:var(--mono);font-size:10px;color:var(--text-muted);letter-spacing:.1em;}
-.pipe-title{font-family:"Syne",sans-serif;font-size:12px;font-weight:700;color:white;line-height:1.3;}
-.pipe-desc{font-size:11px;color:var(--text-muted);line-height:1.5;}
-.pipe-step.active{background:rgba(52,211,153,.06);border-color:rgba(52,211,153,.25);}
-.pipe-step.active .pipe-title{color:var(--accent);}
-.pipe-step.new{background:rgba(249,115,22,.06);border-color:rgba(249,115,22,.3);}
-.pipe-step.new .pipe-title{color:var(--accent3);}
-.pipe-step.new .pipe-num::after{content:' ★ NOUVEAU';color:var(--accent3);}
+.menu-toggle {
+  display: none;
+  width: 42px; height: 42px;
+  align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: #fff; font-size: 20px; cursor: pointer;
+  transition: transform 160ms var(--ease-out);
+}
+.menu-toggle:active { transform: scale(0.95); }
 
-/* ===== COMPARATIF AVANT/APRÈS ===== */
-.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0;}
-.compare-card{border-radius:12px;padding:20px 22px;display:flex;flex-direction:column;gap:12px;}
-.compare-card.before{background:rgba(248,113,113,.05);border:1px solid rgba(248,113,113,.2);}
-.compare-card.after{background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.2);}
-.compare-label{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;}
-.compare-card.before .compare-label{color:#f87171;}
-.compare-card.after .compare-label{color:var(--accent);}
-.compare-title{font-family:"Syne",sans-serif;font-weight:700;font-size:14px;color:white;}
-.compare-items{display:flex;flex-direction:column;gap:8px;}
-.compare-item{font-size:13px;color:var(--text-soft);font-weight:300;display:flex;gap:8px;align-items:baseline;}
-.compare-item::before{flex-shrink:0;font-size:10px;}
-.compare-card.before .compare-item::before{content:'✗';color:#f87171;}
-.compare-card.after .compare-item::before{content:'✓';color:var(--accent);}
+.mobile-panel {
+  position: fixed; top: var(--header-h); left: 12px; right: 12px;
+  z-index: 1999;
+  padding: 10px;
+  background: rgba(7,15,43,.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(2,6,23,.6);
+  transform-origin: top right;
+  opacity: 0; transform: scale(0.96) translateY(-6px);
+  pointer-events: none; visibility: hidden;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s linear 220ms;
+}
+.mobile-panel.is-open {
+  opacity: 1; transform: none; pointer-events: auto; visibility: visible;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s;
+}
+.mobile-panel ul { list-style: none; margin: 0; padding: 0; }
+.mobile-panel a {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px; color: var(--text-main);
+  text-decoration: none; font-size: 16px; border-radius: 10px;
+}
+.mobile-panel a[aria-current="page"] { background: var(--accent-soft); color: #fff; }
+.mobile-panel .btn { width: 100%; justify-content: center; margin-top: 8px; }
 
-/* ===== REFS ===== */
-.refs-sec{margin-top:60px;padding-top:32px;border-top:1px solid var(--border);}
-.ref-ttl{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:20px;}
-.ref-list{counter-reset:ref;display:flex;flex-direction:column;gap:6px;}
-.ref-item{counter-increment:ref;display:flex;align-items:baseline;gap:12px;font-size:13px;line-height:1.55;color:var(--text-muted);padding:9px 14px;border-radius:6px;background:rgba(0,0,0,.15);border:1px solid var(--border-sub);}
-.ref-item::before{content:'[' counter(ref) ']';font-family:var(--mono);font-size:11px;color:var(--accent);flex-shrink:0;min-width:26px;}
-.ref-item b{color:var(--text-soft);font-weight:500;}
-.footnote{margin-top:48px;padding:20px 24px;background:rgba(0,0,0,.25);border:1px solid var(--border-sub);border-radius:10px;font-size:11.5px;color:var(--text-muted);line-height:1.7;}
-.footnote strong{color:var(--text-soft);}
+/* =========================================================
+   SOUS-NAVIGATION (ancres + section visible)
+   ========================================================= */
+.subnav {
+  position: sticky;
+  top: var(--header-h);
+  margin-top: var(--header-h);
+  z-index: 1500;
+  height: var(--subnav-h);
+  background: rgba(8,18,53,.94);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.subnav-list {
+  height: 100%;
+  list-style: none; margin: 0 auto; padding: 0 30px;
+  max-width: 1300px;
+  display: flex; align-items: stretch; justify-content: space-between;
+}
+.subnav-list li { display: flex; }
+.subnav-link {
+  position: relative;
+  display: flex; align-items: center; gap: 9px;
+  padding: 0 14px;
+  color: var(--text-soft);
+  text-decoration: none;
+  font-size: 14px; font-weight: 500;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.subnav-link i { font-size: 17px; color: var(--c); }
+.subnav-link::after {
+  content: ""; position: absolute;
+  left: 14px; right: 14px; bottom: -1px; height: 2px;
+  background: var(--c);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+.subnav-link[aria-current="true"] { color: #fff; }
+.subnav-link[aria-current="true"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .subnav-link:hover { color: #fff; }
+}
 
-/* ===== PROGRESS / TOC ===== */
-.progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent2),#60a5fa);z-index:9999;width:0%;transition:width .1s linear;}
-.toc-sidebar{position:fixed;right:32px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:100;}
-.toc-dot{width:6px;height:6px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s,transform .2s;position:relative;}
-.toc-dot:hover,.toc-dot.active{background:var(--accent2);transform:scale(1.5);}
-.toc-dot::after{content:attr(data-label);position:absolute;right:14px;top:50%;transform:translateY(-50%);background:var(--bg-light);border:1px solid var(--border);border-radius:5px;padding:3px 8px;font-size:10.5px;color:var(--text-soft);white-space:nowrap;font-family:var(--mono);letter-spacing:.04em;opacity:0;pointer-events:none;transition:opacity .2s;}
-.toc-dot:hover::after{opacity:1;}
-@media(max-width:1100px){.toc-sidebar{display:none;}}
-@media(max-width:640px){.tech-grid,.compare-grid{grid-template-columns:1fr;}.pipeline{flex-direction:column;}.pipe-step{border-radius:0;border-left:1px solid var(--border)!important;}.pipe-step::after{display:none;}}
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.site-footer {
+  margin-top: 100px;
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border);
+  padding: 36px 0;
+  font-size: 13px; color: var(--text-mute);
+}
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+/* =========================================================
+   ARTICLE
+   ========================================================= */
+:root {
+  --mono: "DM Mono", ui-monospace, Menlo, Consolas, monospace;
+  --c10: #3b82f6;   /* CMC-10Z */
+  --c20: #059669;   /* CMC-20Z */
+  --c30: #ea580c;   /* CMC-30Z */
+  --hot: #f97316;
+  --ok: #34d399;
+  --warn: #fbbf24;
+  --bad: #f87171;
+  --surface: #070f2b;
+  --line: #13204d;
+}
+html { scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 24px); }
+
+/* barre de lecture sous la sous-navigation */
+.progress {
+  position: fixed; left: 0; right: 0; top: calc(var(--header-h) + var(--subnav-h)); z-index: 1400;
+  height: 2px; background: transparent; pointer-events: none;
+}
+.progress span { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, var(--accent), #fb7185); transform-origin: left; transform: scaleX(0); }
+
+/* ----- En-tête de l'article ----- */
+.art-hero { position: relative; overflow: hidden; isolation: isolate; border-bottom: 1px solid var(--border); }
+.art-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(ellipse 45% 70% at 78% 45%, rgba(249,115,22,.16), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(79,107,237,.14), transparent 60%);
+}
+.art-hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 48px; align-items: center; padding: 48px 0 56px; }
+.crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 26px; padding: 0; list-style: none; font-size: 13px; color: var(--text-mute); }
+.crumbs a { color: var(--text-soft); text-decoration: none; transition: color 160ms ease; }
+.crumbs i { font-size: 11px; opacity: .6; }
+@media (hover: hover) and (pointer: fine) { .crumbs a:hover { color: #fff; } }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 11px; border-radius: 999px; font-size: 12.5px; font-weight: 500;
+  color: var(--b, var(--text-soft));
+  background: color-mix(in srgb, var(--b, var(--text-soft)) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--b, var(--text-soft)) 28%, transparent);
+}
+.badge i { font-size: 14px; }
+.art-title {
+  margin: 0 0 18px; font-family: "Syne", sans-serif; font-weight: 700;
+  font-size: clamp(30px, 3.6vw, 48px); line-height: 1.08; letter-spacing: -0.025em; color: var(--text-strong);
+  text-wrap: balance;
+}
+.art-lede { margin: 0 0 28px; max-width: 60ch; font-size: 18px; line-height: 1.6; color: var(--text-soft); font-weight: 300; }
+.authors { display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 0 0 22px; padding: 0; list-style: none; }
+.author { display: flex; align-items: center; gap: 10px; }
+.author .av { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-family: "Syne", sans-serif; font-size: 12px; font-weight: 700; color: #fff; background: linear-gradient(135deg, hsl(var(--ah) 55% 38%), hsl(var(--ah) 70% 60%)); }
+.author strong { display: block; font-size: 14px; font-weight: 500; color: var(--text-main); }
+.author small { display: block; font-size: 12.5px; color: var(--text-mute); }
+.meta-line { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 13px; color: var(--text-mute); }
+.meta-line span { display: inline-flex; align-items: center; gap: 7px; }
+.meta-line i { font-size: 15px; color: var(--text-soft); }
+.meta-line code { font-family: var(--mono); font-size: 12.5px; color: var(--text-soft); }
+
+.hero-in { opacity: 0; transform: translateY(12px); animation: heroIn 700ms var(--ease-out) forwards; animation-delay: calc(80ms + var(--i, 0) * 90ms); }
+@keyframes heroIn { to { opacity: 1; transform: none; } }
+
+/* illustration : capsule en rentrée */
+.reentry { position: relative; aspect-ratio: 1 / 0.86; max-width: 520px; justify-self: end; width: 100%; }
+.reentry canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.reentry svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.reentry .shock { animation: shock 2.4s var(--ease-in-out) infinite alternate; transform-origin: 62% 50%; }
+@keyframes shock { from { opacity: .75; transform: scale(.985); } to { opacity: 1; transform: scale(1.015); } }
+.reentry .glow { animation: glow 1.6s ease-in-out infinite alternate; }
+@keyframes glow { from { opacity: .55; } to { opacity: .95; } }
+.reentry-tag {
+  position: absolute; display: flex; align-items: center; gap: 8px;
+  padding: 6px 10px; border-radius: 8px; font-family: var(--mono); font-size: 12px; color: var(--text-soft);
+  background: rgba(2,6,23,.7); border: 1px solid var(--border); backdrop-filter: blur(6px);
+}
+.reentry-tag b { color: #fff; font-weight: 500; }
+.reentry-tag i { width: 7px; height: 7px; border-radius: 50%; background: var(--hot); }
+
+/* ----- Mise en page 3 colonnes ----- */
+.art-layout {
+  display: grid; grid-template-columns: 220px minmax(0, 720px) 280px; justify-content: space-between; gap: 48px;
+  padding-top: 48px;
+}
+.toc, .rail { position: sticky; top: calc(var(--header-h) + var(--subnav-h) + 28px); align-self: start; }
+.toc-title, .rail-title { margin: 0 0 14px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.toc ol { position: relative; list-style: none; margin: 0; padding: 0 0 0 14px; border-left: 1px solid var(--border); }
+.toc-ind { list-style: none; position: absolute; left: -1px; top: 0; width: 2px; height: 34px; background: var(--accent); border-radius: 2px; transition: transform 300ms var(--ease-out), height 300ms var(--ease-out); }
+.toc a {
+  display: flex; gap: 10px; padding: 7px 0; font-size: 14px; line-height: 1.35;
+  color: var(--text-mute); text-decoration: none; transition: color 160ms ease;
+}
+.toc a span { font-family: var(--mono); font-size: 12px; padding-top: 1px; color: inherit; opacity: .8; min-width: 16px; }
+.toc a.on { color: #fff; }
+@media (hover: hover) and (pointer: fine) { .toc a:hover { color: var(--text-main); } }
+.toc-time { display: flex; align-items: center; gap: 8px; margin-top: 18px; font-size: 13px; color: var(--text-mute); }
+.toc-time i { font-size: 15px; }
+
+/* ----- Colonne de droite ----- */
+.rail { display: grid; gap: 16px; max-height: calc(100vh - var(--header-h) - var(--subnav-h) - 44px); overflow-y: auto; scrollbar-width: none; overscroll-behavior: contain; }
+.rail::-webkit-scrollbar { display: none; }
+.rail-card { padding: 18px; border-radius: var(--radius); background: var(--bg-light); border: 1px solid var(--border); }
+.cite-text { margin: 0 0 14px; font-size: 13px; line-height: 1.6; color: var(--text-soft); }
+.cite-text em { color: var(--text-main); }
+.rail-actions { display: grid; gap: 8px; }
+.rbtn {
+  display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 40px; border-radius: 10px;
+  border: 1px solid var(--border); background: transparent; color: var(--text-main); font: inherit; font-size: 13.5px; cursor: pointer; text-decoration: none;
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out);
+}
+.rbtn i { font-size: 16px; }
+.rbtn:active { transform: scale(.97); }
+.rbtn.done { border-color: color-mix(in srgb, var(--ok) 45%, transparent); color: var(--ok); }
+@media (hover: hover) and (pointer: fine) { .rbtn:hover { border-color: var(--accent); background: var(--accent-soft); } }
+.fig-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.fig-list a { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: center; padding: 7px 8px; margin: 0 -8px; border-radius: 8px; font-size: 13.5px; color: var(--text-soft); text-decoration: none; transition: background-color 120ms ease, color 120ms ease; }
+.fig-list i { font-size: 17px; color: var(--accent); }
+@media (hover: hover) and (pointer: fine) { .fig-list a:hover { background: var(--bg-raise); color: #fff; } }
+.prog-link { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.prog-link .pi { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; font-size: 19px; color: var(--hot); background: rgba(249,115,22,.12); flex-shrink: 0; }
+.prog-link strong { display: block; font-size: 14px; font-weight: 500; }
+.prog-link small { display: block; font-size: 12.5px; color: var(--text-mute); }
+
+/* ----- Corps de texte ----- */
+.art { min-width: 0; counter-reset: fig; }
+.art p { margin: 0 0 18px; font-size: 17px; line-height: 1.75; color: #c3cae6; font-weight: 300; }
+.art p strong { color: var(--text-main); font-weight: 500; }
+.art h2 {
+  display: flex; align-items: baseline; gap: 14px;
+  margin: 64px 0 18px; font-family: "Syne", sans-serif; font-size: 26px; font-weight: 700; letter-spacing: -0.01em; color: var(--text-strong);
+}
+.art h2 .n { font-family: var(--mono); font-size: 14px; font-weight: 400; color: var(--accent); }
+.art h3 { margin: 34px 0 12px; font-size: 18px; font-weight: 500; color: var(--text-main); }
+sub, sup { line-height: 0; }
+
+/* L'essentiel */
+.essentials { padding: 26px; border-radius: 18px; background: linear-gradient(160deg, var(--bg-raise), var(--bg-light)); border: 1px solid var(--border); }
+.essentials-head { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; }
+.essentials-head i { font-size: 17px; color: var(--hot); }
+.kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 22px; }
+.kpi { padding: 16px; border-radius: 14px; background: rgba(2,6,23,.45); border: 1px solid var(--line); }
+.kpi strong { display: block; font-family: "Syne", sans-serif; font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -0.02em; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.kpi strong small { font-size: .55em; font-weight: 700; margin-left: 2px; color: var(--text-soft); }
+.kpi span { display: block; margin-top: 8px; font-size: 13.5px; line-height: 1.4; color: var(--text-soft); }
+.takeaways { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.takeaways li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 15.5px; line-height: 1.55; color: var(--text-main); }
+.takeaways i { font-size: 18px; color: var(--ok); margin-top: 2px; }
+
+/* Résumé */
+.abstract { margin-top: 28px; padding: 24px 26px; border-radius: 16px; border: 1px solid var(--border); background: rgba(79,107,237,.05); }
+.abstract .label { display: block; margin-bottom: 10px; font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+.abstract p { font-size: 15.5px !important; margin: 0 !important; }
+.kw { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+.kw span { padding: 3px 10px; border-radius: 999px; font-size: 12.5px; color: var(--text-soft); border: 1px solid var(--border); }
+
+/* Termes expliqués (infobulle) */
+.term {
+  position: relative; display: inline; padding: 0; border: 0; background: none; font: inherit; color: var(--text-main); cursor: help;
+  text-decoration: underline dotted color-mix(in srgb, var(--accent) 80%, transparent); text-decoration-thickness: 1.5px; text-underline-offset: 4px;
+}
+.tip {
+  position: absolute; z-index: 1600; width: min(300px, calc(100vw - 32px));
+  padding: 12px 14px; border-radius: 12px;
+  background: #0b1540; border: 1px solid var(--accent-line); box-shadow: 0 18px 50px rgba(0,0,0,.5);
+  font-size: 13.5px; line-height: 1.55; color: var(--text-soft); font-weight: 400;
+  opacity: 0; transform: scale(.97) translateY(4px); pointer-events: none;
+  transition: opacity 140ms ease, transform 160ms var(--ease-out);
+}
+.tip.show { opacity: 1; transform: none; }
+.tip.instant { transition: none; }
+.tip b { display: block; margin-bottom: 3px; color: #fff; font-weight: 500; font-size: 14px; }
+.cite { font-family: var(--mono); font-size: .78em; color: var(--accent); text-decoration: none; vertical-align: .15em; padding: 0 1px; border: 0; background: none; cursor: pointer; }
+
+/* Encadrés */
+.note { display: grid; grid-template-columns: 26px 1fr; gap: 12px; margin: 26px 0; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.note i { font-size: 22px; color: var(--nc, var(--accent)); }
+.note p { margin: 0 !important; font-size: 15.5px !important; color: var(--text-main) !important; }
+.note .nt { display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--nc, var(--accent)); font-weight: 500; }
+
+/* ----- Figures ----- */
+.fig { margin: 34px 0; border-radius: 18px; border: 1px solid var(--border); background: var(--surface); overflow: hidden; counter-increment: fig; scroll-margin-top: calc(var(--header-h) + var(--subnav-h) + 24px); }
+.fig-stage { position: relative; padding: 22px; background: radial-gradient(ellipse at 50% 0%, rgba(79,107,237,.06), transparent 70%); }
+.fig-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin-bottom: 16px; }
+.fig-name { font-size: 14.5px; font-weight: 500; color: var(--text-main); }
+.fig figcaption, .fig .cap { padding: 14px 22px 18px; border-top: 1px solid var(--line); font-size: 14px; line-height: 1.6; color: var(--text-soft); }
+.fig figcaption b, .fig .cap b { font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-right: 8px; }
+.fig svg { display: block; width: 100%; height: auto; overflow: visible; }
+.fig text { font-family: "DM Sans", sans-serif; }
+.fig .mono, .fig text.mono { font-family: var(--mono); }
+.ctrl { display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 12px; border-radius: 9px; border: 1px solid var(--border); background: var(--bg-light); color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out); }
+.ctrl i { font-size: 15px; }
+.ctrl:active { transform: scale(.96); }
+@media (hover: hover) and (pointer: fine) { .ctrl:hover { color: #fff; border-color: var(--accent); } }
+
+/* Fig. 1 trajectoire */
+.readouts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+.readout { padding: 10px 12px; border-radius: 10px; background: rgba(2,6,23,.5); border: 1px solid var(--line); }
+.readout small { display: block; font-size: 12px; color: var(--text-mute); }
+.readout strong { display: block; margin-top: 2px; font-family: var(--mono); font-size: 17px; font-weight: 500; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.readout.hot strong { color: var(--rc, var(--text-strong)); }
+.scrub { display: flex; align-items: center; gap: 12px; margin-top: 14px; }
+.scrub input { flex: 1; accent-color: var(--hot); }
+.scrub output { min-width: 52px; text-align: right; font-family: var(--mono); font-size: 13px; color: var(--text-soft); }
+
+/* Fig. 2 microstructure */
+.parts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.part { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease; }
+.part i { width: 10px; height: 10px; border-radius: 3px; background: var(--pc); }
+.part[aria-pressed="true"] { color: #fff; border-color: var(--pc); background: color-mix(in srgb, var(--pc) 14%, transparent); }
+.art .part-desc { margin: 12px 0 0; min-height: 44px; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+.part-desc b { color: #fff; font-weight: 500; }
+.micro [data-part] { transition: opacity 220ms ease; }
+.micro.focus [data-part] { opacity: .16; }
+.micro.focus [data-part].lit { opacity: 1; }
+
+/* Fig. 3 banc d'essai */
+.bench-v { display: none !important; }
+.flow { stroke-dasharray: 6 10; animation: flow 900ms linear infinite; }
+@keyframes flow { to { stroke-dashoffset: -32; } }
+.flame { animation: glow 900ms ease-in-out infinite alternate; }
+
+/* Tableau */
+.table-wrap { margin: 30px 0; border-radius: 16px; border: 1px solid var(--border); overflow: hidden; background: var(--surface); }
+.table-cap { padding: 14px 20px; font-size: 14px; color: var(--text-soft); border-bottom: 1px solid var(--line); }
+.table-cap b { font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-right: 8px; }
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { padding: 11px 12px; text-align: left; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; background: rgba(2,6,23,.4); border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 11px 12px; color: var(--text-soft); border-bottom: 1px solid var(--line); white-space: nowrap; font-variant-numeric: tabular-nums; }
+tr:last-child td { border-bottom: 0; }
+td:last-child, th:last-child { white-space: normal; }
+td:first-child, th:first-child { padding-left: 18px; }
+td.num { font-family: var(--mono); font-size: 13.5px; color: var(--text-main); }
+th.num, td.num { text-align: right; }
+tbody tr { transition: background-color 120ms ease; }
+@media (hover: hover) and (pointer: fine) { tbody tr:hover { background: rgba(79,107,237,.06); } }
+.mat { display: inline-flex; align-items: center; gap: 8px; color: var(--text-main); }
+.mat i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.state { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--sc); }
+.state i { font-size: 15px; }
+.table-note { padding: 12px 20px; font-size: 13px; color: var(--text-mute); border-top: 1px solid var(--line); background: rgba(2,6,23,.3); }
+
+/* Fig. 4 graphique */
+.legend { display: flex; flex-wrap: wrap; gap: 6px; }
+.lg { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-main); font: inherit; font-size: 13px; cursor: pointer; transition: opacity 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out); }
+.lg:active { transform: scale(.96); }
+.lg i { width: 14px; height: 3px; border-radius: 2px; background: var(--lc); }
+.lg[aria-pressed="false"] { opacity: .45; }
+.lg[aria-pressed="false"] i { background: transparent; border: 1px solid var(--lc); height: 5px; }
+.chart { position: relative; }
+.chart .series { transition: opacity 220ms ease; }
+.chart .series.off { opacity: 0; }
+.chart .draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); }
+.chart.drawn .draw { transition: stroke-dashoffset 1400ms var(--ease-in-out); stroke-dashoffset: 0; }
+.chart .dot { opacity: 0; transition: opacity 300ms ease 1100ms; }
+.chart.drawn .dot { opacity: 1; }
+.hit { fill: transparent; cursor: crosshair; }
+.xhair { opacity: 0; transition: opacity 120ms ease; pointer-events: none; }
+.xhair.show { opacity: 1; }
+.ctip {
+  position: absolute; z-index: 5; pointer-events: none; min-width: 170px;
+  padding: 10px 12px; border-radius: 10px; background: #0b1540; border: 1px solid var(--accent-line);
+  box-shadow: 0 14px 40px rgba(0,0,0,.5); font-size: 13px; color: var(--text-soft);
+  opacity: 0; transform: translateY(4px); transition: opacity 120ms ease, transform 140ms var(--ease-out);
+}
+.ctip.show { opacity: 1; transform: none; }
+.ctip b { display: block; margin-bottom: 6px; color: #fff; font-weight: 500; font-family: var(--mono); }
+.ctip div { display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+.ctip div span { display: inline-flex; align-items: center; gap: 7px; }
+.ctip div span i { width: 8px; height: 8px; border-radius: 50%; background: var(--lc); }
+.ctip div em { font-style: normal; font-family: var(--mono); color: var(--text-main); }
+.data-toggle { margin-top: 12px; }
+.data-table { margin-top: 12px; border-radius: 12px; border: 1px solid var(--line); overflow-x: auto; }
+.data-table[hidden] { display: none; }
+
+/* Fig. 5 carte thermique */
+.thermo { display: grid; grid-template-columns: minmax(0, 1fr) 70px; gap: 18px; align-items: stretch; }
+.thermo-plate { position: relative; aspect-ratio: 1; max-width: 420px; width: 100%; justify-self: center; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); cursor: crosshair; }
+.thermo-plate canvas { width: 100%; height: 100%; display: block; }
+.probe { position: absolute; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.5); pointer-events: none; opacity: 0; transition: opacity 120ms ease; }
+.probe.show { opacity: 1; }
+.probe-read { position: absolute; left: 12px; top: 12px; padding: 6px 10px; border-radius: 8px; background: rgba(2,6,23,.78); font-family: var(--mono); font-size: 13px; color: #fff; pointer-events: none; }
+.scale { display: grid; grid-template-columns: 14px 1fr; gap: 8px; align-self: center; height: min(100%, 420px); aspect-ratio: auto; }
+.scale-bar { display: block; width: 14px; height: 100%; border-radius: 6px; }
+.scale-labels { display: flex; flex-direction: column; justify-content: space-between; font-family: var(--mono); font-size: 12px; color: var(--text-soft); }
+
+/* Fig. 6 couche protectrice */
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.duo-card { border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.4); overflow: hidden; }
+.duo-card h4 { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0; padding: 12px 14px; font-size: 14px; font-weight: 500; color: var(--text-main); border-bottom: 1px solid var(--line); }
+.duo-card h4 span { display: inline-flex; align-items: center; gap: 8px; }
+.duo-card h4 i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.duo-card svg { aspect-ratio: 1.25; }
+.duo-stats { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
+.duo-stats div { padding: 10px 14px; }
+.duo-stats div + div { border-left: 1px solid var(--line); }
+.duo-stats small { display: block; font-size: 12px; color: var(--text-mute); }
+.duo-stats strong { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--text-main); font-variant-numeric: tabular-nums; }
+.verdict { font-size: 12px; font-weight: 500; padding: 2px 8px; border-radius: 999px; color: var(--vc); background: color-mix(in srgb, var(--vc) 14%, transparent); transition: color 200ms ease, background-color 200ms ease; }
+
+/* Équation */
+.eq { margin: 26px 0; padding: 22px; border-radius: 14px; background: rgba(2,6,23,.5); border: 1px solid var(--border); text-align: center; font-family: var(--mono); font-size: 17px; color: #d5dcfb; overflow-x: auto; white-space: nowrap; }
+.eq-parts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: -12px 0 26px; }
+.eq-part { padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-light); font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.eq-part b { display: block; margin-bottom: 2px; font-family: var(--mono); font-weight: 500; color: #fff; }
+
+/* Suite du programme */
+.next { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.next li { position: relative; padding: 16px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.next li::before { content: ""; position: absolute; top: 20px; right: -13px; width: 13px; height: 1px; background: var(--border); }
+.next li:last-child::before { display: none; }
+.next time { font-family: var(--mono); font-size: 12.5px; color: var(--nc, var(--accent)); }
+.next strong { display: block; margin: 6px 0 4px; font-size: 15px; font-weight: 500; color: var(--text-main); }
+.next span { font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.next li.now { border-color: color-mix(in srgb, var(--ok) 45%, var(--border)); }
+
+/* Références */
+.refs { list-style: none; margin: 0; padding: 0; counter-reset: r; display: grid; gap: 4px; }
+.refs li { counter-increment: r; position: relative; display: block; padding: 10px 12px 10px 54px; margin: 0 -12px; border-radius: 10px; font-size: 14px; line-height: 1.6; color: var(--text-soft); transition: background-color 600ms ease; scroll-margin-top: calc(var(--header-h) + var(--subnav-h) + 40px); }
+.refs li::before { content: "[" counter(r) "]"; position: absolute; left: 12px; top: 11px; font-family: var(--mono); font-size: 13px; color: var(--accent); }
+.refs li.flash { background: rgba(79,107,237,.16); transition: none; }
+.refs em { color: var(--text-main); }
+.decl { margin-top: 28px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.35); display: grid; gap: 8px; font-size: 13.5px; line-height: 1.6; color: var(--text-mute); }
+.decl strong { color: var(--text-soft); font-weight: 500; }
+
+/* Articles liés */
+.related { margin-top: 72px; padding-top: 40px; border-top: 1px solid var(--border); }
+.related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
+.rel { display: flex; flex-direction: column; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); background: var(--bg-light); text-decoration: none; transition: border-color 200ms ease, transform 220ms var(--ease-out); }
+.rel-img { aspect-ratio: 16 / 9; overflow: hidden; background: linear-gradient(135deg, color-mix(in srgb, var(--c) 30%, var(--bg-raise)), var(--bg-light)); }
+.rel-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 500ms var(--ease-out); }
+.rel-body { padding: 16px; }
+.rel-body small { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--text-soft); }
+.rel-body small::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c); }
+.rel-body strong { display: block; margin-top: 6px; font-size: 16px; font-weight: 500; line-height: 1.4; color: var(--text-main); }
+.rel:active { transform: scale(.98); }
+@media (hover: hover) and (pointer: fine) {
+  .rel:hover { border-color: color-mix(in srgb, var(--c) 55%, var(--border)); transform: translateY(-3px); }
+  .rel:hover .rel-img img { transform: scale(1.04); }
+}
+.section-title { margin: 0; font-family: "Syne", sans-serif; font-size: 22px; font-weight: 700; color: var(--text-strong); }
+
+/* apparition des figures */
+.js .rv { opacity: 0; transform: translateY(16px); transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
+.js .rv.in { opacity: 1; transform: none; }
+
+.toast {
+  position: fixed; left: 50%; bottom: 24px; z-index: 4000;
+  display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 12px;
+  background: #0b1540; border: 1px solid rgba(52,211,153,.35); color: #a7f3d0; font-size: 14px;
+  box-shadow: 0 16px 40px rgba(0,0,0,.5);
+  transform: translate(-50%, 16px); opacity: 0; pointer-events: none;
+  transition: transform 260ms var(--ease-out), opacity 200ms ease;
+}
+.toast.show { transform: translate(-50%, 0); opacity: 1; }
+.toast i { font-size: 18px; color: var(--ok); }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1320px) {
+  .art-layout { grid-template-columns: minmax(0, 720px) 280px; justify-content: center; }
+  .toc { display: none; }
+}
+@media (max-width: 1060px) {
+  .art-layout { grid-template-columns: minmax(0, 720px); }
+  .rail { position: static; max-height: none; overflow: visible; grid-template-columns: repeat(2, minmax(0, 1fr)); order: 2; }
+  .rail .rail-figs { display: none; }
+  .art-hero-grid { grid-template-columns: 1fr; gap: 10px; padding-bottom: 36px; }
+  .reentry { justify-self: center; max-width: 440px; order: -1; margin-top: -10px; }
+}
+@media (max-width: 860px) {
+  .main-nav, .header-right .btn-desktop { display: none; }
+  .menu-toggle { display: inline-flex; }
+}
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .subnav-list { padding: 0 20px; overflow-x: auto; scrollbar-width: none; }
+  .subnav-link { padding: 0 10px; font-size: 13.5px; }
+  .art-lede { font-size: 16.5px; }
+  .art p { font-size: 16px; }
+  .art h2 { font-size: 22px; margin-top: 52px; }
+  .kpis { grid-template-columns: 1fr; }
+  .kpi { display: flex; align-items: baseline; gap: 14px; }
+  .kpi span { margin: 0; }
+  .essentials { padding: 20px; }
+  .fig-stage { padding: 16px; }
+  .fig figcaption, .fig .cap { padding: 12px 16px 16px; }
+  .readouts { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .readout strong { font-size: 14px; }
+  .thermo { grid-template-columns: 1fr 56px; gap: 10px; }
+  .duo { grid-template-columns: 1fr; }
+  .eq { font-size: 14px; }
+  #trajSvg text { font-size: 22px; }
+  .bench-h { display: none !important; }
+  .bench-v { display: block !important; }
+  .duo-card svg text { font-size: 13px; }
+  .eq-parts { grid-template-columns: 1fr; }
+  .next { grid-template-columns: 1fr; }
+  .next li::before { display: none; }
+  .rail { grid-template-columns: 1fr; }
+  .related-grid { grid-template-columns: 1fr; }
+  .site-footer { margin-top: 72px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
+  .hero-in { opacity: 1; transform: none; }
+}
+
+/* impression / PDF : texte seul, figures conservées */
+@media print {
+  .site-header, .subnav, .mobile-panel, .progress, .toc, .rail, .related, .site-footer, .ctrl, .legend, .scrub, .parts, .skip-link { display: none !important; }
+  body { background: #fff; color: #111; }
+  .art-layout { display: block; padding: 0; }
+  .art p, .art h2, .art h3, .art-title, .art-lede { color: #111 !important; }
+  .fig, .table-wrap, .essentials, .abstract, .note { break-inside: avoid; }
+  .js .rv { opacity: 1; transform: none; }
+}
+
+/* =========================================================
+   ARTICLE 02 : PROPULSION IONIQUE
+   ========================================================= */
+.art-hero--ion::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 82% 45%, rgba(59,130,246,.2), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(249,115,22,.1), transparent 60%);
+}
+.thruster .glow { animation: glow 1.4s ease-in-out infinite alternate; }
+
+.seg { display: inline-flex; padding: 3px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-light); }
+.seg button { height: 30px; padding: 0 12px; border: 0; border-radius: 7px; background: none; color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out); }
+.seg button:active { transform: scale(.96); }
+.seg button[aria-pressed="true"] { background: var(--bg-raise); color: #fff; box-shadow: inset 0 0 0 1px var(--border); }
+@media (hover: hover) and (pointer: fine) { .seg button:hover { color: #fff; } }
+
+.lg.static { cursor: default; }
+#howSvg .zone { transition: opacity 240ms ease; }
+#howSvg.focus .zone { opacity: .22; }
+#howSvg.focus .zone.lit { opacity: 1; }
+
+tr.hi td { background: rgba(59,130,246,.07); }
+td.gain { color: var(--ok); }
+
+.multiples { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.multiples .chart { border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.35); padding: 8px 4px 0; }
+
+.wear { display: grid; grid-template-columns: minmax(0, 1fr) 170px; gap: 16px; align-items: center; }
+.discs { display: grid; gap: 12px; }
+.disc { display: grid; justify-items: center; gap: 4px; padding: 10px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.35); }
+.disc svg { width: 110px; height: 110px; }
+.disc span { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--text-soft); }
+.disc span i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.disc strong { font-family: var(--mono); font-size: 14px; font-weight: 500; color: var(--text-main); }
+.disc.over { border-color: rgba(248,113,113,.5); }
+.disc.over strong { color: var(--bad); }
+
+@media (max-width: 640px) {
+  .multiples { grid-template-columns: 1fr; }
+  .wear { grid-template-columns: 1fr; }
+  .discs { grid-template-columns: 1fr 1fr; }
+  .disc svg { width: 96px; height: 96px; }
+  #howSvg text { display: none; }
+  .readouts { grid-template-columns: 1fr; gap: 6px; }
+  .readout { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 8px 12px; }
+  .readout strong { margin: 0; white-space: nowrap; }
+  #orbitSvg text { font-size: 18px; }
+}
+#gridSvg, #orbitSvg, #howSvg { overflow: hidden; border-radius: 10px; }
+
+/* =========================================================
+   ARTICLE 03 : ASTROBIOLOGIE
+   ========================================================= */
+.art-hero--mars::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 78% 45%, rgba(234,88,12,.18), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(52,211,153,.12), transparent 60%);
+}
+.art-hero--mars .reentry svg { overflow: visible; }
+
+/* jauges Terre / Mars */
+.gauges { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 22px; }
+.gauge { display: grid; gap: 8px; padding: 14px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.4); }
+.gauge-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.gauge-top span { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--text-soft); }
+.gauge-top span i { font-size: 16px; color: var(--text-mute); }
+.gauge-top strong { font-family: var(--mono); font-size: 14.5px; font-weight: 500; color: var(--text-strong); white-space: nowrap; transition: color 200ms ease; }
+.gauge-bar { position: relative; height: 8px; border-radius: 8px; background: linear-gradient(90deg, rgba(52,211,153,.18), rgba(251,191,36,.18) 60%, rgba(248,113,113,.22)); }
+.gauge-fill { position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(90deg, #34d399, #fbbf24 60%, #f87171); transform-origin: left; transform: scaleX(var(--v, 0)); transition: transform 600ms var(--ease-out); clip-path: inset(0 round 8px); }
+.gauge-limit { position: absolute; top: -5px; bottom: -5px; width: 2px; border-radius: 2px; background: #fff; left: var(--l); }
+.gauge-foot { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; color: var(--text-mute); }
+.gauge.beyond .gauge-top strong { color: #fca5a5; }
+
+/* fiches espèces */
+.orgs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 26px 0 12px; }
+.org { position: relative; display: grid; grid-template-columns: 64px 1fr; gap: 14px; padding: 16px; border-radius: 16px; border: 1px solid var(--border); background: var(--bg-light); overflow: hidden; }
+.org::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--oc); }
+.org-pic { width: 64px; height: 64px; border-radius: 14px; background: radial-gradient(circle, color-mix(in srgb, var(--oc) 22%, transparent), rgba(2,6,23,.6)); }
+.org-kind { display: block; font-size: 12px; color: var(--text-mute); }
+.org h4 { margin: 2px 0 6px; font-size: 16px; font-weight: 500; color: var(--text-strong); }
+.art .org p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+.org-state { grid-column: 1 / -1; justify-self: start; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 500; color: var(--sc); background: color-mix(in srgb, var(--sc) 12%, transparent); border: 1px solid color-mix(in srgb, var(--sc) 28%, transparent); }
+.art .small-note { font-size: 14px; color: var(--text-mute); }
+
+/* journal des cultures */
+.dishes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.dish { display: grid; justify-items: center; gap: 6px; padding: 12px 8px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.4); }
+.dish svg { width: 100%; max-width: 132px; aspect-ratio: 1; }
+.dish svg circle.cell { transition: opacity 400ms ease, fill 400ms ease; }
+.dish span { font-size: 12.5px; color: var(--text-soft); text-align: center; }
+.dish strong { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--text-strong); }
+.event { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-items: baseline; margin-top: 14px; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-light); min-height: 78px; }
+.event time { font-family: var(--mono); font-size: 13px; color: var(--ec, var(--accent)); grid-row: span 2; }
+.event strong { font-size: 14.5px; font-weight: 500; color: var(--text-main); }
+.event span { font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.event.swap { animation: evIn 260ms var(--ease-out); }
+@keyframes evIn { from { opacity: 0; transform: translateY(4px); } }
+.scrub { position: relative; }
+.ticks { position: absolute; left: 0; right: 0; top: -6px; height: 6px; pointer-events: none; }
+
+/* comparaison microscope */
+.compare { position: relative; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; background: #000; cursor: ew-resize; touch-action: pan-y; user-select: none; }
+.compare canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+#micB { clip-path: inset(0 0 0 var(--p, 50%)); }
+.cmp-label { position: absolute; top: 12px; padding: 4px 10px; border-radius: 8px; font-family: var(--mono); font-size: 12.5px; color: #fff; background: rgba(0,0,0,.55); pointer-events: none; }
+.cmp-label.l { left: 12px; }
+.cmp-label.r { right: 12px; }
+.cmp-handle { position: absolute; top: 0; bottom: 0; left: var(--p, 50%); width: 2px; margin-left: -1px; background: #fff; pointer-events: none; }
+.cmp-handle i { position: absolute; top: 50%; left: 50%; width: 38px; height: 38px; margin: -19px 0 0 -19px; border-radius: 50%; display: grid; place-items: center; font-size: 18px; color: #050b1e; background: #fff; box-shadow: 0 6px 20px rgba(0,0,0,.5); transition: transform 160ms var(--ease-out); }
+.compare:active .cmp-handle i { transform: scale(.92); }
+.compare:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+#chamberSvg { overflow: hidden; border-radius: 10px; }
+
+@media (max-width: 640px) {
+  .gauges { grid-template-columns: 1fr; }
+  .orgs { grid-template-columns: 1fr; }
+  .dishes { grid-template-columns: 1fr 1fr; }
+  #chamberSvg text { font-size: 15px; }
+  #chamberSvg text.side { display: none; }
+  .compare { aspect-ratio: 4 / 3; }
+}
+
+/* =========================================================
+   ARTICLE 04 : PHYSIQUE QUANTIQUE
+   ========================================================= */
+.art-hero--q::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 78% 40%, rgba(168,85,247,.18), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(59,130,246,.12), transparent 60%);
+}
+.qlink svg { overflow: hidden; -webkit-mask-image: radial-gradient(ellipse 52% 52% at 60% 44%, #000 55%, transparent 100%); mask-image: radial-gradient(ellipse 52% 52% at 60% 44%, #000 55%, transparent 100%); }
+
+/* jeu de Bell */
+.bell { display: grid; grid-template-columns: 150px minmax(0, 1fr) 150px; gap: 16px; align-items: center; }
+.bell-side { display: grid; justify-items: center; gap: 8px; padding: 12px; border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.4); }
+.bell-who { font-size: 13px; color: var(--text-soft); }
+.dial { width: 96px; height: 96px; }
+.dial .needle { transition: transform 260ms var(--ease-out); transform-origin: 50px 50px; }
+.bell-angle { display: grid; gap: 6px; width: 100%; font-size: 12px; color: var(--text-mute); text-align: center; }
+.bell-angle output { font-family: var(--mono); color: var(--text-main); }
+.bell-angle input { width: 100%; accent-color: #a855f7; }
+.bell-mid { display: grid; gap: 14px; min-width: 0; }
+.bell-rows { display: grid; gap: 8px; padding: 14px; border-radius: 12px; background: rgba(2,6,23,.5); border: 1px solid var(--line); overflow: hidden; }
+.bell-row { display: flex; gap: 5px; justify-content: flex-end; height: 16px; }
+.bell-row i { flex: 0 0 16px; height: 16px; border-radius: 4px; border: 2px solid #c084fc; animation: pop 260ms var(--ease-out); }
+.bell-row i.on { background: #c084fc; }
+.bell-row i.diff { border-color: #f87171; }
+.bell-row i.diff.on { background: #f87171; }
+@keyframes pop { from { transform: scale(.6); opacity: 0; } }
+.bell-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.bell-stats div { padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg-light); }
+.bell-stats small { display: block; font-size: 12px; color: var(--text-mute); }
+.bell-stats strong { display: block; margin-top: 2px; font-family: var(--mono); font-size: 18px; font-weight: 500; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+
+/* pertes : gaufre de points */
+.waffle { position: relative; border-radius: 12px; overflow: hidden; background: #03050f; border: 1px solid var(--line); aspect-ratio: 2.2; }
+.waffle canvas { width: 100%; height: 100%; display: block; }
+
+#setupSvg [data-part] { transition: opacity 220ms ease; }
+#setupSvg.focus [data-part] { opacity: .18; }
+#setupSvg.focus [data-part].lit { opacity: 1; }
+#setupSvg, #bellGauge { overflow: visible; }
+
+@media (max-width: 760px) {
+  .bell { grid-template-columns: 1fr 1fr; }
+  .bell-mid { grid-column: 1 / -1; order: 3; }
+}
+@media (max-width: 640px) {
+  .waffle { aspect-ratio: 1.3; }
+  .dial { width: 80px; height: 80px; }
+  #setupSvg text { display: none; }
+}
+
+/* =========================================================
+   ARTICLE : RECYCLAGE DE L'EAU
+   ========================================================= */
+.art-hero--water::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 76% 48%, rgba(56,189,248,.14), transparent 70%),
+    radial-gradient(ellipse 40% 50% at 90% 90%, rgba(234,88,12,.08), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(52,211,153,.08), transparent 60%);
+}
+.waterart svg { -webkit-mask-image: radial-gradient(ellipse 74% 74% at 50% 50%, #000 62%, transparent 100%); mask-image: radial-gradient(ellipse 74% 74% at 50% 50%, #000 62%, transparent 100%); }
+.waterart .reentry-tag { z-index: 2; }
+.wave { animation: wave 5s var(--ease-in-out) infinite alternate; }
+@keyframes wave { from { transform: translateX(-14px); } to { transform: translateX(14px); } }
+.chart svg { display: block; width: 100%; }
+.verdict-pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 500; color: var(--vc); background: color-mix(in srgb, var(--vc) 12%, transparent); border: 1px solid color-mix(in srgb, var(--vc) 30%, transparent); }
+.scrub-l { font-size: 13px; color: var(--text-soft); white-space: nowrap; }
+#resRange { accent-color: #38bdf8; }
+.readout.hot strong { color: var(--rc, #38bdf8); transition: color 240ms ease; }
+
+/* Fig. 1 réserve */
+.reserve { position: relative; }
+.reserve svg { display: block; width: 100%; }
+
+/* Fig. 2 boucle */
+.loop { display: grid; grid-template-columns: 1fr; gap: 16px; }
+.loop svg { display: block; width: 100%; max-width: 540px; margin: 0 auto; }
+.loop-info { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 14px; align-items: start; }
+.loop-info .parts { flex-direction: column; align-items: stretch; }
+.loop-info .step-desc { margin-top: 0; }
+.loop .parts { margin-top: 0; }
+.loop .part { cursor: pointer; }
+.step-desc { margin-top: 14px; min-height: 120px; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--border); background: rgba(2,6,23,.45); }
+.step-desc h4 { margin: 0 0 6px; font-size: 16px; font-weight: 500; color: var(--text-strong); display: flex; align-items: center; gap: 8px; }
+.step-desc h4 em { font-style: normal; font-size: 11.5px; padding: 2px 8px; border-radius: 999px; color: #fb923c; border: 1px solid rgba(251,146,60,.4); background: rgba(251,146,60,.1); }
+.art .step-desc p { margin: 0; font-size: 14.5px; line-height: 1.6; color: var(--text-soft); }
+.step-desc .kv { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; font-family: var(--mono); font-size: 12.5px; color: var(--text-mute); }
+.step-desc .kv b { color: #e0e7ff; font-weight: 500; }
+.step-desc.swap { animation: evIn 260ms var(--ease-out); }
+@keyframes evIn { from { opacity: 0; transform: translateY(4px); } }
+.node { transition: transform 200ms var(--ease-out); transform-box: fill-box; transform-origin: center; cursor: pointer; }
+.node.on circle.ring-n { stroke-width: 3; }
+.flowline { stroke-dasharray: 3 9; animation: flowdash 1.2s linear infinite; }
+@keyframes flowdash { to { stroke-dashoffset: -24; } }
+
+/* Fig. 3 membranes */
+.mem { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.mem-p { border-radius: 12px; border: 1px solid var(--line); background: #020817; padding: 10px 10px 8px; }
+.art .mem-t { margin: 0 0 6px; font-size: 13.5px; color: var(--text-soft); }
+.mem-p svg { display: block; width: 100%; }
+.art .mem-f { margin: 6px 0 0; font-size: 13px; color: var(--text-mute); }
+.mem-f b { font-family: var(--mono); font-weight: 500; color: #e0e7ff; transition: color 240ms ease; }
+
+/* Fig. 4 module */
+.module { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: 16px; align-items: center; }
+.module-photo { border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: #020817; }
+.module-photo img { display: block; width: 100%; height: auto; }
+.module.nophoto { grid-template-columns: 1fr; }
+.module.nophoto .module-photo { display: none; }
+.module svg { width: 100%; max-width: 260px; justify-self: center; }
+.uv { animation: uvp 2.4s ease-in-out infinite alternate; }
+@keyframes uvp { from { opacity: .35; } to { opacity: 1; } }
+
+/* comparaison */
+.versus { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 24px 0; }
+.vs-col { padding: 16px 18px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.vs-col.bad { border-color: rgba(248,113,113,.28); }
+.vs-col.good { border-color: rgba(52,211,153,.35); background: rgba(52,211,153,.04); }
+.art .vs-t { margin: 0 0 10px; display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 500; color: var(--text-strong); }
+.vs-col.bad .vs-t i { color: #f87171; font-size: 19px; }
+.vs-col.good .vs-t i { color: #34d399; font-size: 19px; }
+.vs-col ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: 14px; line-height: 1.5; color: var(--text-soft); }
+.vs-col li::marker { color: var(--text-mute); }
+
+/* Fig. 6 légende */
+.legend .lg { cursor: pointer; }
+
+/* Tableau qualité */
+.gauge { position: relative; display: block; width: 140px; height: 8px; border-radius: 99px; background: #13204d; overflow: hidden; }
+.gauge i { position: absolute; left: 0; top: 0; bottom: 0; width: calc(var(--v) * 100%); min-width: 3px; border-radius: 99px; background: #34d399; transform-origin: left; }
+.gauge.range { background: linear-gradient(90deg, rgba(52,211,153,.18), rgba(52,211,153,.18)); overflow: visible; }
+.gauge.range i { left: calc(var(--v) * 100%); width: 4px; min-width: 0; top: -3px; bottom: -3px; background: #fff; box-shadow: 0 0 0 2px #34d399; transform: translateX(-50%); }
+.js .table-wrap.rv .gauge:not(.range) i { transform: scaleX(0); transition: transform 900ms var(--ease-out) 200ms; }
+.js .table-wrap.rv.in .gauge:not(.range) i { transform: none; }
+.quality .term { font-size: inherit; }
+
+@media (max-width: 760px) { .loop-info { grid-template-columns: 1fr; } .loop-info .parts { flex-direction: row; flex-wrap: wrap; } }
+@media (max-width: 760px) {
+  .mem, .versus, .module { grid-template-columns: 1fr; }
+  .gauge { width: 90px; }
+}
+@media (prefers-reduced-motion: reduce) { .wave, .flowline, .uv { animation: none; } }
+#lossLegend { margin-bottom: 12px; }
+#lossLegend .lg i { width: 10px; height: 10px; border-radius: 3px; }
+#lossLegend .lg[aria-pressed="false"] i { background: transparent; border: 1px solid var(--lc); height: 10px; }
+.drops { display: grid; grid-template-columns: repeat(25, minmax(0, 1fr)); gap: 7px; padding: 8px 4px 2px; }
+.drops i { position: relative; display: block; aspect-ratio: 1; border-radius: 50% 0 50% 50%; transform: rotate(-45deg) scale(.86); background: #13204d; }
+.drops i b { position: absolute; inset: 0; border-radius: inherit; background: #38bdf8; transform: scale(var(--f, 0)); transition: transform 220ms var(--ease-out), background-color 220ms ease; }
+.drops i.x b { background: #fbbf24; }
+.art .drops-l { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 0; font-size: 12.5px; color: var(--text-mute); }
+.drops-l span { display: inline-flex; align-items: center; gap: 8px; }
+.drops-l i { display: inline-block; width: 10px; height: 10px; border-radius: 50% 0 50% 50%; transform: rotate(-45deg); background: #38bdf8; }
+.drops-l i.x { background: #fbbf24; }
+@media (max-width: 760px) { .drops { grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 6px; max-width: 320px; } }
+
 </style>
+<script>document.documentElement.classList.add('js');</script>
 </head>
+
 <body>
 
-<div class="progress-bar" id="progressBar"></div>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
 
-<header>
-  <div class="header-inner">
+<!-- ===== HEADER ===== -->
+<header class="site-header" id="header">
+  <div class="container header-inner">
     <div class="header-left">
-      <a href="../index.html" class="logo-link"><img src="../logo.png" alt="IFRAS"></a>
-      <nav><ul class="main-nav">
-        <li><a href="../index.html">Accueil</a></li>
-        <li><a href="../recherche.html">Recherche</a></li>
-        <li><a href="../programmes.html">Programmes</a></li>
-        <li><a href="../publications.html">Publications</a></li>
-      </ul></nav>
+      <a href="../index.html" class="logo-link" aria-label="IFRAS, accueil">
+        <img src="../logo.png" alt="Logo IFRAS" width="44" height="44">
+      </a>
+      <nav aria-label="Navigation principale">
+        <ul class="main-nav">
+          <li><a href="../index.html">Accueil</a></li>
+          <li><a href="../recherche.html">Recherche</a></li>
+          <li><a href="../programmes.html">Programmes</a></li>
+          <li><a href="../publications.html" aria-current="page">Publications</a></li>
+        </ul>
+      </nav>
     </div>
-    <div class="header-right"><a href="../connexion.html" class="login-btn">Connexion</a></div>
+    <div class="header-right">
+      <a href="../connexion.html" class="btn btn-ghost btn-desktop">Connexion</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-panel" aria-label="Ouvrir le menu">
+        <i class="ph-light ph-list" aria-hidden="true"></i>
+      </button>
+    </div>
   </div>
 </header>
 
-<div class="sub-nav">
+<div class="mobile-panel" id="mobile-panel">
   <ul>
-    <li><a href="../publications-scientifiques.html" class="active">Publications scientifiques</a></li>
-    <li><a href="../publications-ifras.html">Publications IFRAS</a></li>
-    <li><a href="../evenements.html">Événements</a></li>
+    <li><a href="../index.html">Accueil <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../recherche.html">Recherche <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../programmes.html">Programmes <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../publications.html" aria-current="page">Publications <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
   </ul>
+  <a href="../connexion.html" class="btn btn-primary">Connexion</a>
 </div>
 
-<nav class="toc-sidebar">
-  <div class="toc-dot active" data-label="Résumé"       data-target="s0"></div>
-  <div class="toc-dot"        data-label="Contexte"     data-target="s1"></div>
-  <div class="toc-dot"        data-label="Systèmes"     data-target="s2"></div>
-  <div class="toc-dot"        data-label="Cycle complet" data-target="s3"></div>
-  <div class="toc-dot"        data-label="Avancée"      data-target="s4"></div>
-  <div class="toc-dot"        data-label="Résultats"    data-target="s5"></div>
-  <div class="toc-dot"        data-label="Discussion"   data-target="s6"></div>
-  <div class="toc-dot"        data-label="Références"   data-target="s7"></div>
+<!-- ===== SOUS-NAVIGATION (mêmes rubriques que publications.html) ===== -->
+<nav class="subnav" id="subnav" aria-label="Rubriques des publications">
+  <ul class="subnav-list">
+    <li><a class="subnav-link" href="../publications-scientifiques.html" aria-current="true" style="--c:var(--t-sci)"><i class="ph-light ph-article" aria-hidden="true"></i>Publications scientifiques</a></li>
+    <li><a class="subnav-link" href="../publications-ifras.html" style="--c:var(--t-ifras)"><i class="ph-light ph-book-open" aria-hidden="true"></i>Publications IFRAS</a></li>
+    <li><a class="subnav-link" href="../evenements.html" style="--c:var(--t-event)"><i class="ph-light ph-calendar-dots" aria-hidden="true"></i>Événements</a></li>
+  </ul>
 </nav>
 
-<div class="pub-wrapper">
+<div class="progress" aria-hidden="true"><span id="progress"></span></div>
 
-  <nav class="breadcrumb">
-    <a href="../publications.html">Publications</a>
-    <span>/</span>
-    <a href="../publications-scientifiques.html">Publications scientifiques</a>
-    <span>/</span>
-    DSEV · 2026 · Systèmes de survie
+<main id="contenu">
+
+<!-- ===== EN-TÊTE DE L'ARTICLE ===== -->
+<header class="art-hero art-hero--water">
+  <div class="container art-hero-grid">
+    <div>
+      <ol class="crumbs hero-in" style="--i:0" aria-label="Fil d'Ariane">
+        <li><a href="../publications.html">Publications</a></li>
+        <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+        <li><a href="../publications-scientifiques.html">Publications scientifiques</a></li>
+        <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+        <li aria-current="page">Systèmes de survie</li>
+      </ol>
+      <div class="badges hero-in" style="--i:1">
+        <span class="badge" style="--b:#38bdf8"><i class="ph-light ph-drop" aria-hidden="true"></i>Systèmes de survie · DSEV</span>
+        <span class="badge" style="--b:#60a5fa"><i class="ph-light ph-seal-check" aria-hidden="true"></i>Évalué par les pairs</span>
+        <span class="badge" style="--b:#34d399"><i class="ph-light ph-lock-simple-open" aria-hidden="true"></i>Accès libre</span>
+      </div>
+      <h1 class="art-title hero-in" style="--i:2">Recycler 99,6 % de l'eau d'un vaisseau pendant un an en orbite</h1>
+      <p class="art-lede hero-in" style="--i:3">Pour aller sur Mars sans ravitaillement, un équipage doit réutiliser presque chaque goutte. Le procédé AQUA-CYCLE de l'IFRAS y parvient pendant 360 jours, en apesanteur comme en gravité martienne, là où les systèmes actuels se dégradent.</p>
+      <ul class="authors hero-in" style="--i:4" aria-label="Auteurs">
+        <li class="author"><span class="av" style="--ah:190" aria-hidden="true">CR</span><span><strong>Camille Rousseau</strong><small>Systèmes de recyclage</small></span></li>
+        <li class="author"><span class="av" style="--ah:30" aria-hidden="true">TB</span><span><strong>Thomas Berger</strong><small>Électrochimie des membranes</small></span></li>
+        <li class="author"><span class="av" style="--ah:260" aria-hidden="true">AT</span><span><strong>Aiko Taniguchi</strong><small>Survie longue durée</small></span></li>
+        <li class="author"><span class="av" style="--ah:140" aria-hidden="true">ML</span><span><strong>Marc Lefèvre</strong><small>Microbiologie</small></span></li>
+        <li class="author"><span class="av" style="--ah:330" aria-hidden="true">SE</span><span><strong>Sara El-Amin</strong><small>Ingénierie membranaire</small></span></li>
+      </ul>
+      <div class="meta-line hero-in" style="--i:5">
+        <span><i class="ph-light ph-calendar-blank" aria-hidden="true"></i>Publié le 24 mars 2026</span>
+        <span><i class="ph-light ph-clock" aria-hidden="true"></i>9 min de lecture</span>
+        <span><i class="ph-light ph-hash" aria-hidden="true"></i><code>IFRAS-DSEV-2026-008</code></span>
+      </div>
+    </div>
+
+    <!-- Illustration : boucle d'eau fermée -->
+    <div class="reentry waterart hero-in" style="--i:3" aria-hidden="true">
+      <svg viewBox="0 0 520 447" id="heroLoop"></svg>
+      <span class="reentry-tag" style="right:2%;top:10%"><i style="background:#38bdf8"></i> Récupération <b>99,6 %</b></span>
+      <span class="reentry-tag" style="left:2%;bottom:10%"><i style="background:#34d399"></i> Durée <b>360 jours</b></span>
+    </div>
+  </div>
+</header>
+
+<div class="container art-layout">
+
+  <!-- Sommaire -->
+  <nav class="toc" aria-label="Sommaire">
+    <p class="toc-title">Sommaire</p>
+    <ol id="toc">
+      <li class="toc-ind" aria-hidden="true"></li>
+      <li><a href="#s-essentiel"><span>—</span>L'essentiel</a></li>
+      <li><a href="#s-intro"><span>1</span>Chaque goutte compte</a></li>
+      <li><a href="#s-cycle"><span>2</span>Le cycle fermé</a></li>
+      <li><a href="#s-methodes"><span>3</span>AQUA-CYCLE</a></li>
+      <li><a href="#s-resultats"><span>4</span>Un an en orbite</a></li>
+      <li><a href="#s-conclusion"><span>5</span>Discussion</a></li>
+    </ol>
+    <p class="toc-time"><i class="ph-light ph-hourglass-medium" aria-hidden="true"></i><span id="timeLeft">9 min restantes</span></p>
   </nav>
 
-  <!-- ===== EN-TÊTE ===== -->
-  <div id="s0">
-    <div class="meta-top">
-      <span class="badge badge-j">Life Sciences in Space Research · Vol. 41</span>
-      <span class="badge badge-d">DSEV — Département Systèmes d'Exploration et de Vie</span>
-      <span class="badge badge-o">Accès ouvert</span>
-      <span class="badge badge-dt">Soumis 11 nov. 2025 · Accepté 17 mars 2026</span>
-    </div>
+  <!-- ===== ARTICLE ===== -->
+  <article class="art" id="article">
 
-    <h1 class="article-title">
-      Recyclage intégral de l'eau en mission spatiale longue durée : fonctionnement des systèmes actuels
-      et démonstration d'un procédé membranaire bio-hybride atteignant 99,6 % de récupération
-    </h1>
-
-    <p class="article-subtitle">
-      Les missions actuelles vers la Station spatiale internationale atteignent un taux de récupération
-      d'eau de 93–95 %. Une mission vers Mars — durée minimale 900 jours, ravitaillement impossible —
-      exige de dépasser 98 %. Nous présentons ici le système HERA-W (Hybrid Electrochemical
-      &amp; Reverse-osmosis Aqua-cycle), premier procédé bio-hybride à atteindre 99,6 % de récupération
-      en conditions de microgravité simulée sur 360 jours continus.
-    </p>
-
-    <div class="authors-block">
-      <div class="author-entry">
-        <span class="author-name">Dr. Camille Rousseau</span>
-        <span class="author-role">DSEV · Systèmes de recyclage &amp; vie à bord</span>
+    <section id="s-essentiel" aria-label="L'essentiel">
+      <div class="essentials rv">
+        <div class="essentials-head"><i class="ph-light ph-lightning" aria-hidden="true"></i> L'essentiel en 30 secondes</div>
+        <div class="kpis">
+          <div class="kpi"><strong>99,6<small> %</small></strong><span>de l'eau récupérée, stable pendant 360 jours</span></div>
+          <div class="kpi"><strong data-count="49" data-suffix=" L">49<small> L</small></strong><span>de réserve pour 4 personnes et 900 jours, au lieu de 610</span></div>
+          <div class="kpi"><strong>−30<small> %</small></strong><span>d'énergie consommée par litre traité</span></div>
+        </div>
+        <ul class="takeaways">
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>Les systèmes actuels perdent en efficacité en apesanteur : les bulles de gaz perturbent leurs membranes.</li>
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>AQUA-CYCLE utilise des membranes céramiques rigides qui évacuent les bulles et se nettoient seules.</li>
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>Testé un an sur une plateforme orbitale, il dépasse l'exigence de 98 % du programme ARTEMIS-9.</li>
+        </ul>
       </div>
-      <div class="author-sep"></div>
-      <div class="author-entry">
-        <span class="author-name">Dr. Thomas Berger</span>
-        <span class="author-role">DSEV · Électrochimie des membranes</span>
+
+      <div class="abstract rv">
+        <span class="label">Résumé</span>
+        <p>Une mission martienne de 900 jours sans ravitaillement impose de recycler plus de 98 % de l'eau à bord, un seuil jamais tenu durablement en apesanteur. Les systèmes actuels, fondés sur des membranes polymères et une séparation gaz-liquide qui dépend de la gravité, voient leur rendement baisser de 2 à 4 points au fil des mois. Nous présentons AQUA-CYCLE, un procédé qui associe osmose inverse, bioréacteur, oxydation électrochimique et une membrane céramique nanoporeuse auto-nettoyante. Testé 360 jours sur la plateforme orbitale ORBIS-2 de l'IFRAS, dont 180 jours en apesanteur puis 180 jours à 0,38 g dans une centrifugeuse embarquée, il récupère 99,6 ± 0,08 % de l'eau, pour 3,2 Wh par litre, soit 30 % de moins que le système de référence. L'eau produite respecte en permanence la norme de potabilité de bord.</p>
+        <div class="kw" aria-label="Mots-clés"><span>Recyclage de l'eau</span><span>Apesanteur</span><span>Osmose inverse</span><span>Membranes céramiques</span><span>Mission Mars</span></div>
       </div>
-      <div class="author-sep"></div>
-      <div class="author-entry">
-        <span class="author-name">Prof. Aiko Taniguchi</span>
-        <span class="author-role">DSEV / JAXA · Systèmes vie longue durée</span>
-      </div>
-      <div class="author-sep"></div>
-      <div class="author-entry">
-        <span class="author-name">Dr. Marc Lefèvre</span>
-        <span class="author-role">DSEV · Microbiologie des bioréacteurs</span>
-      </div>
-      <div class="author-sep"></div>
-      <div class="author-entry">
-        <span class="author-name">Sara El-Amin</span>
-        <span class="author-role">DSEV · Doctorante, ingénierie membranaire</span>
-      </div>
-    </div>
+    </section>
 
-    <div class="cite-block">
-      <div class="cite-item"><span class="cite-label">DOI</span><span>10.1016/j.lssr.2026.03.004</span></div>
-      <span class="cite-sep">|</span>
-      <div class="cite-item"><span class="cite-label">Réf. interne</span><span>IFRAS-DSEV-2026-008</span></div>
-      <span class="cite-sep">|</span>
-      <div class="cite-item"><span class="cite-label">Données</span><span>Zenodo : 10.5281/zenodo.15204817</span></div>
-    </div>
-  </div>
+    <!-- 1. CONTEXTE -->
+    <section id="s-intro">
+      <h2><span class="n">01</span>Dans l'espace, chaque goutte compte</h2>
+      <p>Un astronaute utilise environ <strong>3,4 litres d'eau par jour</strong> : 2,0 pour boire, 0,7 pour l'hygiène, 0,5 pour les repas et 0,2 pour les soins et les expériences. Pour quatre personnes et 900 jours, le temps d'un aller-retour vers Mars, cela fait 12 240 litres, soit plus de 12 tonnes à lancer.</p>
+      <p>Le recyclage change complètement l'équation. Tout ce qui n'est pas récupéré doit être emporté au départ : la réserve nécessaire dépend directement du taux de récupération.</p>
 
-  <div class="art-divider"></div>
+      <figure class="fig rv" id="fig1">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">Réserve d'eau à emporter pour 900 jours</span>
+            <div class="seg" role="group" aria-label="Système : ancien 95 %, actuel 98 %, AQUA-CYCLE 99,6 %" id="resSeg">
+              <button type="button" data-r="95" aria-pressed="false">95 %</button>
+              <button type="button" data-r="98" aria-pressed="false">98 %</button>
+              <button type="button" data-r="99.6" aria-pressed="true">99,6 %</button>
+            </div>
+          </div>
+          <div class="reserve" id="reserve"></div>
+          <div class="scrub">
+            <label for="resRange" class="scrub-l">Récupération</label>
+            <input type="range" id="resRange" min="90" max="100" value="99.6" step="0.1" aria-label="Taux de récupération de l'eau">
+            <output id="resOut" for="resRange">99,6 %</output>
+          </div>
+          <div class="readouts" aria-live="polite">
+            <div class="readout hot" id="roRBox"><small>Réserve à emporter</small><strong id="roR">49 L</strong></div>
+            <div class="readout"><small>Perte par jour</small><strong id="roD">0,05 L</strong></div>
+            <div class="readout"><small>Sans recyclage</small><strong>12 240 L</strong></div>
+          </div>
+        </div>
+        <figcaption><b>Figure 1</b>Eau perdue sur 900 jours par un équipage de 4 personnes (13,6 L traités par jour), selon le taux de récupération. Les gouttes orange dépassent l'exigence du programme ARTEMIS-9 : 98 %, soit au plus 245 L de réserve. Faites glisser le curseur ou choisissez un système.</figcaption>
+      </figure>
+    </section>
 
-  <!-- ===== ABSTRACT ===== -->
-  <div class="abstract-box">
-    <div class="abstract-label">Résumé — Abstract</div>
-    <p class="abstract-text">
-      La gestion de l'eau est l'une des contraintes les plus critiques des missions spatiales longue durée.
-      Une mission Mars aller-retour de 900 jours avec un équipage de quatre personnes nécessite, en l'absence
-      de ravitaillement, un taux de récupération de l'eau supérieur à 98 % — seuil jamais atteint de manière
-      stable en conditions de microgravité. Après une revue exhaustive des technologies actuellement déployées
-      sur l'ISS (WRS, ECLSS) et de leurs limitations fondamentales, nous présentons le système HERA-W,
-      un procédé bio-hybride couplant osmose inverse à membranes céramiques nanoporeuses, électrolyse
-      à potentiel modulé et bioréacteur à nitrification partielle. Testé pendant 360 jours consécutifs
-      dans l'enceinte de simulation microgravité GRAV-360 (centrifuge inverse, 0,1–0,38 g),
-      HERA-W atteint un taux de récupération moyen de 99,6 % (± 0,08 %), avec une consommation
-      énergétique de 3,2 Wh·L⁻¹ d'eau traitée — 31 % inférieure aux systèmes ISS actuels.
-      Ces résultats franchissent pour la première fois le seuil de viabilité des missions interplanétaires.
-    </p>
-    <div class="kw-wrap">
-      <span class="kw-lbl">Mots-clés :</span>
-      <span class="kw-tag">Recyclage eau</span>
-      <span class="kw-tag">Microgravité</span>
-      <span class="kw-tag">ECLSS</span>
-      <span class="kw-tag">Osmose inverse</span>
-      <span class="kw-tag">Bioréacteur</span>
-      <span class="kw-tag">Mission Mars</span>
-      <span class="kw-tag">HERA-W</span>
-      <span class="kw-tag">Membranes céramiques</span>
-    </div>
-  </div>
+    <!-- 2. LE CYCLE -->
+    <section id="s-cycle">
+      <h2><span class="n">02</span>Comment fonctionne un cycle fermé</h2>
+      <p>À bord, toute l'eau est collectée : l'urine (environ 1,5 L par personne et par jour), l'humidité de l'air, qui vient de la respiration et de la transpiration (1,3 L), et les eaux de lavage. Elle traverse ensuite plusieurs étapes qui éliminent chacune une famille de contaminants, avant de revenir au réservoir d'eau potable.</p>
 
-  <!-- ===== 1. CONTEXTE ===== -->
-  <h2 class="section-heading" id="s1">1. Pourquoi l'eau est la contrainte la plus critique des missions interplanétaires</h2>
+      <figure class="fig rv" id="fig2">
+        <div class="fig-stage">
+          <div class="fig-head"><span class="fig-name">Le cycle de l'eau AQUA-CYCLE</span></div>
+          <div class="loop">
+            <svg viewBox="0 0 480 310" id="loopSvg" aria-label="Boucle fermée : équipage, collecte, cinq étapes de traitement, réservoir, retour à l'équipage"></svg>
+            <div class="loop-info">
+              <div class="parts" role="group" aria-label="Étapes du traitement" id="stepBtns">
+                <button class="part" type="button" data-k="0" aria-pressed="true" style="--pc:#60a5fa"><i></i>1 · Osmose inverse</button>
+                <button class="part" type="button" data-k="1" aria-pressed="false" style="--pc:#34d399"><i></i>2 · Bioréacteur</button>
+                <button class="part" type="button" data-k="2" aria-pressed="false" style="--pc:#a78bfa"><i></i>3 · Oxydation</button>
+                <button class="part" type="button" data-k="3" aria-pressed="false" style="--pc:#fb923c"><i></i>4 · Membrane céramique</button>
+                <button class="part" type="button" data-k="4" aria-pressed="false" style="--pc:#67e8f9"><i></i>5 · Désinfection</button>
+              </div>
+              <div class="step-desc" id="stepDesc" aria-live="polite"></div>
+            </div>
+          </div>
+        </div>
+        <figcaption><b>Figure 2</b>Boucle d'eau d'AQUA-CYCLE. Les gouttes circulent de l'équipage vers la collecte, traversent les cinq étapes, rejoignent le réservoir puis reviennent à l'équipage. Seuls 0,4 % de l'eau quittent la boucle, dans les résidus concentrés. Choisissez une étape pour la détailler.</figcaption>
+      </figure>
 
-  <p class="bt">
-    Un être humain en activité physique modérée en environnement spatial consomme en moyenne 2,0 L d'eau
-    potable par jour, auxquels s'ajoutent 0,7 L pour l'hygiène corporelle, 0,5 L pour la préparation
-    alimentaire et 0,2 L pour les besoins médicaux et expérimentaux — soit un total de 3,4 L·j⁻¹·personne⁻¹ [1].
-    Pour un équipage de quatre personnes sur une mission Mars de 900 jours, cela représente
-    12 240 litres. Transporter cette masse depuis la Terre (coût estimé : 12 000 à 54 000 €·kg⁻¹ selon
-    le lanceur [2]) est économiquement et logistiquement impossible. Le recyclage en boucle fermée
-    n'est pas une option : c'est une nécessité absolue.
-  </p>
+      <h3>Pourquoi l'apesanteur complique tout</h3>
+      <p>Sur Terre, les bulles de gaz remontent et se séparent seules de l'eau. En apesanteur, elles restent en suspension. Dans les systèmes actuels, elles viennent se coller aux <button class="term" type="button" data-term="membrane">membranes</button> polymères souples, bouchent une partie des pores et perturbent la pression de part et d'autre. Le rendement baisse de mois en mois.</p>
 
-  <div class="hl blue">
-    À titre de comparaison, la navette spatiale ne recyclait aucune eau — elle en emportait l'intégralité.
-    L'ISS recycle aujourd'hui 93–95 % de l'eau à bord via son système ECLSS, ce qui représente
-    déjà une avancée considérable. Mais pour Mars, ce chiffre condamne l'équipage à une perte
-    irréversible de 5 à 7 % par cycle, soit environ 860 litres perdus sur la durée totale de la mission
-    — une quantité que nul ravitaillement ne peut compenser.
-  </div>
+      <figure class="fig rv" id="fig3">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">Une membrane face aux bulles, en apesanteur</span>
+            <button class="ctrl" type="button" id="memPlay"><i class="ph-light ph-pause" aria-hidden="true"></i><span>Pause</span></button>
+          </div>
+          <div class="mem">
+            <div class="mem-p"><p class="mem-t">Membrane polymère</p><svg viewBox="0 0 300 200" id="memA" aria-hidden="true"></svg><p class="mem-f">Débit : <b id="fluxA">100 %</b></p></div>
+            <div class="mem-p"><p class="mem-t">Membrane céramique AQUA-CYCLE</p><svg viewBox="0 0 300 200" id="memB" aria-hidden="true"></svg><p class="mem-f">Débit : <b id="fluxB">100 %</b></p></div>
+          </div>
+        </div>
+        <figcaption><b>Figure 3</b>Schéma animé. À gauche, les bulles se coincent contre la membrane souple et bouchent des pores : le débit chute jusqu'au prochain rinçage. À droite, la surface céramique rigide et non mouillante guide les bulles vers un canal d'évacuation du gaz : tous les pores restent ouverts.</figcaption>
+      </figure>
+    </section>
 
-  <p class="bt">
-    La figure 1 illustre l'architecture générale de la gestion de l'eau à bord d'un vaisseau interplanétaire
-    type. Toutes les sources d'eau — urine, condensation atmosphérique, transpiration, eau métabolique
-    des aliments — sont collectées, traitées et réinjectées dans le circuit de consommation.
-    La qualité finale de l'eau produite doit satisfaire les normes NASA potable water standards
-    (NHB 8060.1C) qui fixent notamment une limite de contamination organique totale inférieure
-    à 0,5 mg·L⁻¹ de carbone organique total (COT).
-  </p>
+    <!-- 3. AQUA-CYCLE -->
+    <section id="s-methodes">
+      <h2><span class="n">03</span>AQUA-CYCLE : deux idées clés</h2>
+      <h3>Une membrane céramique qui se nettoie seule</h3>
+      <p>La première innovation remplace la membrane polymère de finition par un tube céramique d'alumine et de dioxyde de titane, percé de pores de 2 nanomètres. Rigide, il ne se déforme pas sous l'effet des bulles. Sa surface interne est couverte d'une couche de dioxyde de titane de 200 nm qui, éclairée en ultraviolet, détruit les dépôts organiques par <button class="term" type="button" data-term="photocat">photocatalyse</button> : la membrane ne s'encrasse pas.</p>
 
-  <!-- Figure 1 : schéma cycle eau (SVG) -->
-  <div class="cycle-schema">
-    <div class="cycle-inner">
-      <div class="cycle-ttl">Figure 1 — Cycle fermé de l'eau à bord d'un vaisseau interplanétaire</div>
-      <svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
-        <defs>
-          <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L8,3 z" fill="#4a5280"/>
-          </marker>
-          <marker id="arr-g" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L8,3 z" fill="#34d399"/>
-          </marker>
-          <marker id="arr-b" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L8,3 z" fill="#4f6bed"/>
-          </marker>
-          <marker id="arr-o" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L8,3 z" fill="#f97316"/>
-          </marker>
-        </defs>
+      <figure class="fig rv" id="fig4">
+        <div class="fig-stage">
+          <div class="fig-head"><span class="fig-name">Le module membranaire céramique</span></div>
+          <div class="module">
+            <div class="module-photo" id="modPhoto"><img src="../Assets/publication/filtre01.png" alt="Prototype du module membranaire céramique AQUA-CYCLE" loading="lazy"></div>
+            <svg viewBox="0 0 260 260" id="modSvg" aria-label="Coupe du module : 19 canaux de 3,5 mm dans un tube de 28 mm"></svg>
+          </div>
+        </div>
+        <figcaption><b>Figure 4</b>Prototype du module (longueur 420 mm, diamètre 28 mm) et sa coupe : 19 canaux parallèles de 3,5 mm, dont la paroi porte la couche photocatalytique (en bleu, éclairée en UV). Après 360 jours, la perméabilité n'a perdu que 2 %. Fabrication : plateforme Céramiques fonctionnelles de l'IFRAS.</figcaption>
+      </figure>
 
-        <!-- SOURCES (gauche) -->
-        <rect x="20"  y="60"  width="130" height="44" rx="8" fill="rgba(79,107,237,.12)" stroke="#4f6bed" stroke-width="1"/>
-        <text x="85"  y="78"  fill="#60a5fa" font-size="11" text-anchor="middle" font-family="DM Mono,monospace" font-weight="500">ÉQUIPAGE</text>
-        <text x="85"  y="93"  fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">4 personnes</text>
+      <h3>Faire cohabiter microbes et électrochimie</h3>
+      <p>La seconde innovation associe un <button class="term" type="button" data-term="bio">bioréacteur</button> et une cellule d'oxydation électrochimique. Les tensions nécessaires pour détruire les polluants tenaces (1,8 à 2,4 V) tuent les bactéries : les deux modules sont donc séparés, et un contrôleur répartit l'eau. Les flux peu chargés, comme l'humidité condensée, vont au bioréacteur ; les flux concentrés, issus de l'urine, vont à l'oxydation. Les deux se rejoignent avant la membrane céramique.</p>
 
-        <!-- Sources secondaires -->
-        <rect x="20" y="130" width="130" height="36" rx="6" fill="rgba(79,107,237,.07)" stroke="#1b2555" stroke-width="1"/>
-        <text x="85" y="148" fill="#aab3d6" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Urine (1,5 L/j/p)</text>
-        <text x="85" y="161" fill="#4a5280" font-size="9"  text-anchor="middle" font-family="DM Mono,monospace">UPA → WPA</text>
-
-        <rect x="20" y="178" width="130" height="36" rx="6" fill="rgba(79,107,237,.07)" stroke="#1b2555" stroke-width="1"/>
-        <text x="85" y="196" fill="#aab3d6" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Condensat atm.</text>
-        <text x="85" y="209" fill="#4a5280" font-size="9"  text-anchor="middle" font-family="DM Mono,monospace">WPA direct</text>
-
-        <rect x="20" y="226" width="130" height="36" rx="6" fill="rgba(79,107,237,.07)" stroke="#1b2555" stroke-width="1"/>
-        <text x="85" y="244" fill="#aab3d6" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Transpiration</text>
-        <text x="85" y="257" fill="#4a5280" font-size="9"  text-anchor="middle" font-family="DM Mono,monospace">condensé</text>
-
-        <rect x="20" y="274" width="130" height="36" rx="6" fill="rgba(79,107,237,.07)" stroke="#1b2555" stroke-width="1"/>
-        <text x="85" y="292" fill="#aab3d6" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Eau métabolique</text>
-        <text x="85" y="305" fill="#4a5280" font-size="9"  text-anchor="middle" font-family="DM Mono,monospace">CO₂ + H₂ → H₂O</text>
-
-        <!-- Flèches sources → collecteur -->
-        <line x1="150" y1="148" x2="195" y2="200" stroke="#4a5280" stroke-width="1.2" marker-end="url(#arr)"/>
-        <line x1="150" y1="196" x2="195" y2="206" stroke="#4a5280" stroke-width="1.2" marker-end="url(#arr)"/>
-        <line x1="150" y1="244" x2="195" y2="212" stroke="#4a5280" stroke-width="1.2" marker-end="url(#arr)"/>
-        <line x1="150" y1="292" x2="195" y2="218" stroke="#4a5280" stroke-width="1.2" marker-end="url(#arr)"/>
-
-        <!-- COLLECTEUR -->
-        <rect x="195" y="168" width="110" height="72" rx="8" fill="rgba(249,115,22,.1)" stroke="#f97316" stroke-width="1.5"/>
-        <text x="250" y="196" fill="#f97316" font-size="11" text-anchor="middle" font-family="DM Mono,monospace" font-weight="500">COLLECTEUR</text>
-        <text x="250" y="212" fill="#aab3d6" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">& pré-traitement</text>
-        <text x="250" y="228" fill="#4a5280" font-size="9"  text-anchor="middle" font-family="DM Mono,monospace">filtration mécanique</text>
-
-        <!-- Flèche collecteur → traitement -->
-        <line x1="305" y1="204" x2="345" y2="204" stroke="#f97316" stroke-width="1.5" marker-end="url(#arr-o)"/>
-
-        <!-- TRAITEMENT CENTRAL -->
-        <rect x="345" y="100" width="150" height="210" rx="10" fill="rgba(52,211,153,.06)" stroke="#34d399" stroke-width="1.5"/>
-        <text x="420" y="128" fill="#34d399" font-size="11" text-anchor="middle" font-family="DM Mono,monospace" font-weight="500">TRAITEMENT</text>
-
-        <!-- Sous-étapes traitement -->
-        <rect x="360" y="138" width="120" height="30" rx="5" fill="rgba(52,211,153,.08)" stroke="rgba(52,211,153,.2)" stroke-width="1"/>
-        <text x="420" y="153" fill="#6ee7b7" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">① Osmose inverse</text>
-        <text x="420" y="165" fill="#4a5280" font-size="8.5" text-anchor="middle" font-family="DM Mono,monospace">membranes 0,1–1 nm</text>
-
-        <rect x="360" y="178" width="120" height="30" rx="5" fill="rgba(52,211,153,.08)" stroke="rgba(52,211,153,.2)" stroke-width="1"/>
-        <text x="420" y="193" fill="#6ee7b7" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">② Bioréacteur</text>
-        <text x="420" y="205" fill="#4a5280" font-size="8.5" text-anchor="middle" font-family="DM Mono,monospace">nitrification partielle</text>
-
-        <rect x="360" y="218" width="120" height="30" rx="5" fill="rgba(52,211,153,.08)" stroke="rgba(52,211,153,.2)" stroke-width="1"/>
-        <text x="420" y="233" fill="#6ee7b7" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">③ Électrolyse</text>
-        <text x="420" y="245" fill="#4a5280" font-size="8.5" text-anchor="middle" font-family="DM Mono,monospace">oxydation avancée</text>
-
-        <rect x="360" y="258" width="120" height="30" rx="5" fill="rgba(52,211,153,.08)" stroke="rgba(52,211,153,.2)" stroke-width="1"/>
-        <text x="420" y="273" fill="#6ee7b7" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">④ Polissage UV</text>
-        <text x="420" y="285" fill="#4a5280" font-size="8.5" text-anchor="middle" font-family="DM Mono,monospace">désinfection finale</text>
-
-        <!-- Flèche traitement → stockage -->
-        <line x1="495" y1="204" x2="535" y2="204" stroke="#34d399" stroke-width="1.5" marker-end="url(#arr-g)"/>
-
-        <!-- STOCKAGE -->
-        <rect x="535" y="168" width="110" height="72" rx="8" fill="rgba(52,211,153,.1)" stroke="#34d399" stroke-width="1.5"/>
-        <text x="590" y="196" fill="#34d399" font-size="11" text-anchor="middle" font-family="DM Mono,monospace" font-weight="500">STOCKAGE</text>
-        <text x="590" y="212" fill="#aab3d6" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">eau potable certifiée</text>
-        <text x="590" y="228" fill="#4a5280" font-size="9"  text-anchor="middle" font-family="DM Mono,monospace">COT &lt; 0,5 mg·L⁻¹</text>
-
-        <!-- Flèche stockage → équipage -->
-        <line x1="645" y1="188" x2="720" y2="150" stroke="#34d399" stroke-width="1.5" marker-end="url(#arr-g)"/>
-        <line x1="645" y1="220" x2="720" y2="260" stroke="#34d399" stroke-width="1.5" marker-end="url(#arr-g)"/>
-
-        <!-- ÉQUIPAGE sortie -->
-        <rect x="720" y="120" width="80" height="36" rx="6" fill="rgba(52,211,153,.08)" stroke="rgba(52,211,153,.2)" stroke-width="1"/>
-        <text x="760" y="138" fill="#6ee7b7" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Boisson</text>
-        <text x="760" y="150" fill="#4a5280" font-size="9" text-anchor="middle" font-family="DM Mono,monospace">2,0 L/j/p</text>
-
-        <rect x="720" y="170" width="80" height="36" rx="6" fill="rgba(52,211,153,.08)" stroke="rgba(52,211,153,.2)" stroke-width="1"/>
-        <text x="760" y="188" fill="#6ee7b7" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Hygiène</text>
-        <text x="760" y="200" fill="#4a5280" font-size="9" text-anchor="middle" font-family="DM Mono,monospace">0,7 L/j/p</text>
-
-        <rect x="720" y="220" width="80" height="36" rx="6" fill="rgba(52,211,153,.08)" stroke="rgba(52,211,153,.2)" stroke-width="1"/>
-        <text x="760" y="238" fill="#6ee7b7" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Cuisine</text>
-        <text x="760" y="250" fill="#4a5280" font-size="9" text-anchor="middle" font-family="DM Mono,monospace">0,5 L/j/p</text>
-
-        <!-- Boucle retour (grand arc bas) -->
-        <path d="M760,256 Q760,345 420,345 Q180,345 85,320 Q30,305 30,274" fill="none" stroke="#4a5280" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arr)"/>
-        <text x="420" y="360" fill="#4a5280" font-size="9" text-anchor="middle" font-family="DM Mono,monospace">boucle de récupération</text>
-
-        <!-- Perte résiduelle -->
-        <line x1="590" y1="168" x2="590" y2="90" stroke="#f87171" stroke-width="1" stroke-dasharray="3,3"/>
-        <rect x="540" y="60" width="100" height="26" rx="4" fill="rgba(248,113,113,.08)" stroke="rgba(248,113,113,.2)" stroke-width="1"/>
-        <text x="590" y="75" fill="#f87171" font-size="9.5" text-anchor="middle" font-family="DM Mono,monospace">Perte : 0,4 %</text>
-        <text x="590" y="84" fill="#4a5280" font-size="8.5" text-anchor="middle" font-family="DM Mono,monospace">(HERA-W)</text>
-      </svg>
-    </div>
-    <div class="cycle-cap">
-      <strong>Figure 1 — Architecture du cycle fermé de l'eau (système HERA-W)</strong>
-      Toutes les sources d'eau humaine (urine, condensat atmosphérique, transpiration, eau métabolique)
-      sont collectées, traitées en quatre étapes séquentielles et restituées à l'équipage.
-      Le système HERA-W limite les pertes à 0,4 % par cycle, contre 5–7 % pour les systèmes ISS actuels.
-      La boucle de récupération (pointillés) représente le retour des condensats des usages vers le collecteur.
-    </div>
-  </div>
-
-  <!-- ===== 2. SYSTÈMES ACTUELS ===== -->
-  <h2 class="section-heading blue" id="s2">2. État de l'art — les systèmes actuellement déployés sur l'ISS</h2>
-
-  <p class="bt">
-    Le système ECLSS (Environmental Control and Life Support System) de l'ISS est constitué de deux
-    sous-systèmes complémentaires : le WPA (Water Processor Assembly), qui traite le condensat atmosphérique
-    et l'eau de lavage, et l'UPA (Urine Processor Assembly), qui distille l'urine par évaporation sous vide.
-    Ces deux flux convergent vers le WPA pour un traitement final commun [3].
-  </p>
-
-  <div class="tech-grid">
-    <div class="tech-card blue">
-      <div class="tech-acro">WPA — Water Processor Assembly</div>
-      <div class="tech-name">Traitement du condensat atmosphérique</div>
-      <div class="tech-desc">
-        Filtre le condensat de l'air ambiant (humidité respiratoire, transpiration)
-        via une série de lits adsorbants (charbon actif, résines échangeuses d'ions),
-        une chambre de catalyse à haute température (130 °C) et un lit iodé bactériostatique final.
-        Produit une eau conforme aux standards NASA potable en environ 90 minutes par lot.
-      </div>
-      <div class="tech-stat">
-        <span class="tech-stat-val b">93–95 %</span>
-        <span class="tech-stat-lbl">taux de récupération global ISS</span>
-      </div>
-    </div>
-
-    <div class="tech-card green">
-      <div class="tech-acro">UPA — Urine Processor Assembly</div>
-      <div class="tech-name">Distillation de l'urine sous vide</div>
-      <div class="tech-desc">
-        Distille l'urine par évaporation centrifuge sous vide partiel (~ 50 mbar).
-        Récupère environ 85 % de l'eau contenue dans l'urine. Le distillat est ensuite
-        envoyé vers le WPA pour traitement final. Le concentrat résiduel (brine) est
-        évacué — c'est la principale source de perte irréversible du système ISS actuel.
-      </div>
-      <div class="tech-stat">
-        <span class="tech-stat-val g">85 %</span>
-        <span class="tech-stat-lbl">récupération eau de l'urine</span>
-      </div>
-    </div>
-
-    <div class="tech-card orange">
-      <div class="tech-acro">BPA — Brine Processor Assembly</div>
-      <div class="tech-name">Traitement du concentrat urinaire (depuis 2023)</div>
-      <div class="tech-desc">
-        Module ajouté à l'ISS en 2023 pour traiter le concentrat (brine) résiduel de l'UPA.
-        Utilise une membrane à osmose inverse assistée par vapeur pour extraire
-        jusqu'à 80 % de l'eau résiduelle du concentrat. A permis de porter le taux global
-        ISS de 93 % à 98 % — mais uniquement en conditions 1g, instable en microgravité prolongée.
-      </div>
-      <div class="tech-stat">
-        <span class="tech-stat-val o">98 %</span>
-        <span class="tech-stat-lbl">taux post-BPA (1g uniquement)</span>
-      </div>
-    </div>
-
-    <div class="tech-card yellow">
-      <div class="tech-acro">Limitation fondamentale</div>
-      <div class="tech-name">Instabilité en microgravité prolongée</div>
-      <div class="tech-desc">
-        Le BPA et le WPA utilisent des processus dépendant de la gravité pour la séparation
-        liquide/gaz (dégazage) et la décantation. En microgravité durable (0,0 g),
-        la formation de bulles dans les circuits perturbe les pressions transmembranaires
-        et dégrade les performances de 4 à 12 % dès 90 jours d'opération continue [4].
-        Ce phénomène constitue la barrière principale que HERA-W cherche à franchir.
-      </div>
-      <div class="tech-stat">
-        <span class="tech-stat-val" style="color:#f87171;">−4 à −12 %</span>
-        <span class="tech-stat-lbl">dégradation performance en µg prolongée</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== 3. CYCLE COMPLET ===== -->
-  <h2 class="section-heading" id="s3">3. Fonctionnement détaillé du cycle de recyclage</h2>
-
-  <h3 class="sub">3.1 Collecte et pré-traitement</h3>
-
-  <p class="bt">
-    La première étape consiste à centraliser toutes les sources d'eau du vaisseau. L'urine (source
-    la plus volumineuse : ~1,5 L·j⁻¹·personne⁻¹) est collectée via des toilettes à aspiration
-    différentielle qui séparent les liquides des solides par effet Venturi. La vapeur d'eau contenue
-    dans l'air expiré (~0,4 L·j⁻¹·personne⁻¹) et la transpiration cutanée (~0,9 L·j⁻¹·personne⁻¹)
-    sont condensées sur des échangeurs thermiques refroidis, puis collectées. L'eau de lavage des mains
-    et des ustensiles est filtrée mécaniquement (5 µm) avant collecte.
-  </p>
-
-  <h3 class="sub">3.2 Les quatre étapes de traitement</h3>
-
-  <p class="bt">
-    Le traitement proprement dit s'organise en quatre étapes séquentielles qui s'attaquent successivement
-    aux différentes classes de contaminants.
-  </p>
-
-  <div class="pipeline">
-    <div class="pipe-step">
-      <div class="pipe-num">ÉTAPE 01</div>
-      <div class="pipe-title">Osmose inverse primaire</div>
-      <div class="pipe-desc">Élimination des sels, urée, créatinine. Membranes PA-TFC, rejet 98,5 % des solutés. Pression 12–18 bar.</div>
-    </div>
-    <div class="pipe-step active">
-      <div class="pipe-num">ÉTAPE 02</div>
-      <div class="pipe-title">Bioréacteur à membrane</div>
-      <div class="pipe-desc">Dégradation biologique des composés organiques résiduels (COT). Biofilm de nitrifiants immobilisés sur support céramique.</div>
-    </div>
-    <div class="pipe-step">
-      <div class="pipe-num">ÉTAPE 03</div>
-      <div class="pipe-title">Oxydation électrochimique</div>
-      <div class="pipe-desc">Électrodes de diamant dopé bore (BDD). Minéralisation des micropolluants organiques persistants en CO₂ + H₂O.</div>
-    </div>
-    <div class="pipe-step new">
-      <div class="pipe-num">ÉTAPE 04</div>
-      <div class="pipe-title">Polissage membranaire céramique</div>
-      <div class="pipe-desc">★ Innovation HERA-W. Membranes Al₂O₃/TiO₂ nanoporeuses (2 nm). Fonctionnement stable en µg, sans dégazage.</div>
-    </div>
-    <div class="pipe-step">
-      <div class="pipe-num">ÉTAPE 05</div>
-      <div class="pipe-title">Désinfection UV-C + iode</div>
-      <div class="pipe-desc">Lampe UV-C 254 nm (dose ≥ 40 mJ·cm⁻²) + iodation résiduelle 0,2–0,5 mg·L⁻¹ pour protection stockage.</div>
-    </div>
-  </div>
-
-  <h3 class="sub">3.3 Bilan massique et sources de perte résiduelle</h3>
-
-  <p class="bt">
-    Même dans les meilleurs systèmes, une fraction irréductible de l'eau est perdue à chaque cycle.
-    Ces pertes proviennent de trois sources principales : (a) l'eau liée chimiquement aux boues
-    du bioréacteur évacuées périodiquement, (b) l'eau adsorbée dans les résines de polissage
-    lors de leur régénération, et (c) l'humidité résiduelle des concentrats solides évacués.
-    Comprendre et minimiser ces pertes constitue l'objectif central de l'ingénierie du système HERA-W.
-  </p>
-
-  <div class="tbl-wrap">
-    <div class="tbl-head">Tableau 1 — Bilan des sources de perte d'eau dans les systèmes de recyclage spatiaux</div>
-    <table>
-      <thead>
-        <tr>
-          <th>Source de perte</th>
-          <th>Système ISS (WPA+UPA)</th>
-          <th>Système ISS+BPA (2023)</th>
-          <th>HERA-W (cette étude)</th>
-          <th>Irréductible ?</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Brine urinaire résiduelle</td>
-          <td class="tr">3,2 %</td>
-          <td class="ty">0,8 %</td>
-          <td class="tg">0,15 %</td>
-          <td class="tm">Non</td>
-        </tr>
-        <tr>
-          <td>Boues bioréacteur</td>
-          <td class="tm">n/a</td>
-          <td class="tm">n/a</td>
-          <td class="tg">0,08 %</td>
-          <td class="ty">Partiel</td>
-        </tr>
-        <tr>
-          <td>Régénération résines</td>
-          <td class="tr">1,1 %</td>
-          <td class="ty">0,6 %</td>
-          <td class="tg">0,10 %</td>
-          <td class="tm">Non</td>
-        </tr>
-        <tr>
-          <td>Pertes gazeuses (dégazage)</td>
-          <td class="ty">0,4 %</td>
-          <td class="ty">0,4 %</td>
-          <td class="tg">0,07 %</td>
-          <td class="tm">Non</td>
-        </tr>
-        <tr>
-          <td>Évaporation circuits</td>
-          <td class="ty">0,3 %</td>
-          <td class="ty">0,2 %</td>
-          <td class="tg">0,01 %</td>
-          <td class="tm">Non</td>
-        </tr>
-        <tr>
-          <td><strong>Perte totale</strong></td>
-          <td class="tr"><strong>5–7 %</strong></td>
-          <td class="ty"><strong>2,0 %</strong></td>
-          <td class="tg"><strong>0,4 %</strong></td>
-          <td class="tm">—</td>
-        </tr>
-        <tr>
-          <td><strong>Taux de récupération</strong></td>
-          <td class="tr"><strong>93–95 %</strong></td>
-          <td class="ty"><strong>98,0 %</strong></td>
-          <td class="tg"><strong>99,6 %</strong></td>
-          <td class="tm">—</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="tbl-note">
-      Valeurs moyennes sur 360 jours de fonctionnement continu pour HERA-W, sur 180 jours pour ISS+BPA.
-      Le système ISS+BPA a montré une dégradation progressive à partir de J+90 en conditions de microgravité simulée, non reflétée dans ce tableau (voir figure 2).
-    </div>
-  </div>
-
-  <!-- ===== 4. AVANCÉE HERA-W ===== -->
-  <h2 class="section-heading orange" id="s4">4. L'avancée HERA-W — le procédé bio-hybride à membranes céramiques</h2>
-
-  <p class="bt">
-    Le verrou technologique que HERA-W cherche à franchir n'est pas d'ordre chimique — les procédés
-    de purification de l'eau sont bien maîtrisés sur Terre — mais d'ordre mécanique et physique :
-    comment maintenir des pressions transmembranaires stables et des séparations liquide/gaz efficaces
-    en l'absence de gravité, pendant plusieurs centaines de jours, sans intervention humaine ?
-  </p>
-
-  <div class="hl">
-    L'innovation centrale de HERA-W réside dans le remplacement des membranes polymères conventionnelles
-    (polyamide TFC, cellulose d'acétate) par des membranes céramiques nanoporeuses à base d'alumine
-    et dioxyde de titane (Al₂O₃/TiO₂), dont la structure rigide est insensible aux variations de
-    pression différentielle générées par les bulles en microgravité. La surface de ces membranes est
-    fonctionnalisée par un dépôt de nanoparticules de TiO₂ actives en UV, permettant une auto-nettoyage
-    photocatalytique continu qui supprime le colmatage — première cause de dégradation des performances
-    dans les systèmes de recyclage longue durée.
-  </div>
-
-  <h3 class="sub">4.1 Le couplage bio-hybride : bioréacteur + électrochimie</h3>
-
-  <p class="bt">
-    La seconde innovation de HERA-W est le couplage inédit d'un bioréacteur à membrane (MBR) et
-    d'une cellule d'électrolyse à potentiel modulé (EPM). Dans les systèmes classiques, ces deux
-    approches sont incompatibles : les potentiels électriques nécessaires à l'oxydation des polluants
-    organiques (1,8–2,4 V vs ESH) sont létaux pour les micro-organismes du bioréacteur. HERA-W
-    résout ce conflit par une séparation physique des deux modules combinée à un système de gestion
-    de flux adaptatif contrôlé par algorithme : le bioréacteur traite en priorité les flux de faible
-    concentration en contaminants (condensat atmosphérique pur), tandis que l'électrochimie prend
-    en charge les flux concentrés (brine post-UPA). Les deux flux se rejoignent en aval pour le
-    polissage membranaire céramique commun.
-  </p>
-
-  <!-- Figure 2 : comparaison avant/après -->
-  <div class="fig-wrap">
-  <img src="../Assets/publication/filtre01.png" alt="Jezero Crater" style="width:100%;display:block;border-bottom:1px solid var(--border);">
-    <div class="fig-cap">
-      <strong>Figure 2 — Prototype du module membranaire céramique Al₂O₃/TiO₂ (HERA-W)</strong>
-      Vue en coupe du module tubulaire (longueur 420 mm, diamètre externe 28 mm) constitué de 19 canaux
-      parallèles de 3,5 mm de diamètre. La couche active TiO₂ photocatalytique (épaisseur 200 nm, déposée
-      par ALD) est visible sous irradiation UV-A. Ce module a fonctionné 360 jours sans colmatage mesurable
-      (perte de perméabilité &lt; 2 %) dans l'enceinte GRAV-360. Fabrication : IFRAS — Plateforme Céramiques
-      Fonctionnelles, Toulouse, 2024.
-    </div>
-  </div>
-
-  <h3 class="sub">4.2 Comparaison avec les systèmes antérieurs</h3>
-
-  <div class="compare-grid">
-    <div class="compare-card before">
-      <div class="compare-label">Avant — Systèmes ISS (WPA + UPA + BPA)</div>
-      <div class="compare-title">Limites des technologies polymères</div>
-      <div class="compare-items">
-        <div class="compare-item">Membranes polymères sensibles au colmatage en µg (perte −4 à −12 % dès J+90)</div>
-        <div class="compare-item">Dégazage liquide/gaz dépendant de la gravité — instable en microgravité durable</div>
-        <div class="compare-item">Bioréacteur et électrochimie incompatibles — utilisés séparément uniquement</div>
-        <div class="compare-item">Taux de récupération plafonné à 98 % en 1g, &lt; 95 % en µg prolongée</div>
-        <div class="compare-item">Consommation énergétique : 4,6 Wh·L⁻¹</div>
-        <div class="compare-item">Régénération des résines requise tous les 30–45 jours (intervention équipage)</div>
-      </div>
-    </div>
-    <div class="compare-card after">
-      <div class="compare-label">Après — HERA-W (cette étude)</div>
-      <div class="compare-title">Procédé bio-hybride céramique</div>
-      <div class="compare-items">
-        <div class="compare-item">Membranes Al₂O₃/TiO₂ rigides + auto-nettoyage photocatalytique — zéro colmatage sur 360 j</div>
-        <div class="compare-item">Séparation liquide/gaz par effet capillaire dans nanocanaux — indépendante de la gravité</div>
-        <div class="compare-item">Couplage bio-hybride MBR + EPM via gestion de flux adaptatif (algorithme IFRAS-FlowCtrl)</div>
-        <div class="compare-item">Taux de récupération 99,6 % stable sur 360 jours en µg (0,1–0,38 g)</div>
-        <div class="compare-item">Consommation énergétique : 3,2 Wh·L⁻¹ (−31 %)</div>
-        <div class="compare-item">Maintenance autonome — aucune intervention manuelle sur 360 jours de test</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== 5. RÉSULTATS ===== -->
-  <h2 class="section-heading" id="s5">5. Résultats expérimentaux — 360 jours dans l'enceinte GRAV-360</h2>
-
-  <p class="bt">
-    Le prototype HERA-W a été soumis à un test continu de 360 jours dans l'enceinte GRAV-360 du centre
-    IFRAS de Toulouse. Cette enceinte est une plateforme de centrifugation inverse capable de simuler
-    des niveaux de gravité entre 0,05 g et 0,38 g (gravité martienne) avec une précision de ±0,005 g.
-    Le cycle de simulation a alterné 180 jours en microgravité quasi-nulle (0,05 g) et 180 jours en
-    gravité martienne (0,38 g), afin de reproduire les conditions d'une mission de transfert Terre-Mars.
-  </p>
-
-  <!-- Graphique performances sur 360 jours -->
-  <div class="chart-wrap">
-    <div class="chart-inner">
-      <div class="chart-top">
-        <span class="chart-ttl">Taux de récupération d'eau (%) sur 360 jours — HERA-W vs systèmes ISS en conditions microgravité simulée (GRAV-360)</span>
-        <div class="legend">
-          <div class="li"><div class="ld" style="background:#34d399"></div>HERA-W (cette étude)</div>
-          <div class="li"><div class="ld" style="background:#f97316"></div>ISS WPA+UPA+BPA</div>
-          <div class="li"><div class="ld" style="background:#f87171;opacity:.6"></div>ISS WPA+UPA (2021)</div>
-          <div class="li"><div class="ld" style="background:rgba(255,255,255,.15)"></div>Seuil mission Mars</div>
+      <div class="versus rv">
+        <div class="vs-col bad">
+          <p class="vs-t"><i class="ph-light ph-x-circle" aria-hidden="true"></i>Système de référence</p>
+          <ul>
+            <li>Membranes polymères qui s'encrassent en apesanteur</li>
+            <li>Séparation gaz-liquide qui dépend de la gravité</li>
+            <li>Changement des cartouches tous les 30 à 45 jours</li>
+            <li>4,6 Wh par litre traité</li>
+          </ul>
+        </div>
+        <div class="vs-col good">
+          <p class="vs-t"><i class="ph-light ph-check-circle" aria-hidden="true"></i>AQUA-CYCLE</p>
+          <ul>
+            <li>Membrane céramique rigide et auto-nettoyante</li>
+            <li>Bulles évacuées par capillarité, sans gravité</li>
+            <li>Aucune intervention de l'équipage en 360 jours</li>
+            <li>3,2 Wh par litre traité (−30 %)</li>
+          </ul>
         </div>
       </div>
-      <svg viewBox="0 0 820 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
-        <!-- Axes -->
-        <line x1="65" y1="15" x2="65"  y2="250" stroke="#1b2555" stroke-width="1"/>
-        <line x1="65" y1="250" x2="800" y2="250" stroke="#1b2555" stroke-width="1"/>
-        <!-- Grilles H -->
-        <line x1="65" y1="50"  x2="800" y2="50"  stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
-        <line x1="65" y1="100" x2="800" y2="100" stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
-        <line x1="65" y1="150" x2="800" y2="150" stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
-        <line x1="65" y1="200" x2="800" y2="200" stroke="#0e1535" stroke-width="1" stroke-dasharray="4,4"/>
-        <!-- Labels Y -->
-        <text x="55" y="54"  fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">100 %</text>
-        <text x="55" y="104" fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">99 %</text>
-        <text x="55" y="154" fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">98 %</text>
-        <text x="55" y="204" fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">97 %</text>
-        <text x="55" y="250" fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">96 %</text>
-        <!-- Labels X -->
-        <text x="65"  y="268" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">J0</text>
-        <text x="195" y="268" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">J60</text>
-        <text x="325" y="268" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">J120</text>
-        <text x="455" y="268" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">J180</text>
-        <text x="585" y="268" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">J280</text>
-        <text x="800" y="268" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">J360</text>
-        <!-- Seuil mission Mars 98 % -->
-        <line x1="65" y1="150" x2="800" y2="150" stroke="rgba(255,255,255,.15)" stroke-width="1.5" stroke-dasharray="6,4"/>
-        <text x="806" y="153" fill="rgba(255,255,255,.3)" font-size="9" font-family="DM Mono,monospace">Seuil</text>
+    </section>
 
-        <!-- Phase µg label -->
-        <rect x="65" y="22" width="195" height="16" rx="3" fill="rgba(79,107,237,.08)" stroke="none"/>
-        <text x="162" y="33" fill="#4a5280" font-size="8.5" text-anchor="middle" font-family="DM Mono,monospace">µg (0,05 g)</text>
-        <!-- Phase Mars label -->
-        <rect x="455" y="22" width="195" height="16" rx="3" fill="rgba(249,115,22,.06)" stroke="none"/>
-        <text x="552" y="33" fill="#4a5280" font-size="8.5" text-anchor="middle" font-family="DM Mono,monospace">gravité martienne (0,38 g)</text>
+    <!-- 4. RÉSULTATS -->
+    <section id="s-resultats">
+      <h2><span class="n">04</span>Un an sur une plateforme orbitale</h2>
+      <p>Seule l'orbite permet de tester un système complet en vraie apesanteur pendant des mois. Trois modules AQUA-CYCLE ont fonctionné en parallèle sur la plateforme orbitale ORBIS-2 de l'IFRAS : <strong>180 jours en apesanteur</strong>, puis <strong>180 jours à 0,38 g</strong>, la gravité de Mars, dans la centrifugeuse embarquée GRAV-360. Deux systèmes de référence ont suivi le même programme.</p>
 
-        <!-- HERA-W — stable à 99,6 % avec légère montée initiale -->
-        <polyline points="65,70 195,68 325,66 455,68 585,67 800,66" fill="none" stroke="#34d399" stroke-width="2.5"/>
-        <circle cx="65"  cy="70" r="4" fill="#34d399"/>
-        <circle cx="195" cy="68" r="4" fill="#34d399"/>
-        <circle cx="325" cy="66" r="4" fill="#34d399"/>
-        <circle cx="455" cy="68" r="4" fill="#34d399"/>
-        <circle cx="585" cy="67" r="4" fill="#34d399"/>
-        <circle cx="800" cy="66" r="5" fill="#34d399" stroke="rgba(52,211,153,.3)" stroke-width="8"/>
-        <text x="806" y="68" fill="#34d399" font-size="10" font-family="DM Mono,monospace">99,6 %</text>
+      <figure class="fig rv" id="fig5">
+        <div class="fig-stage">
+          <div class="fig-head"><span class="fig-name">Taux de récupération pendant 360 jours</span></div>
+          <div class="chart" id="year"><div class="ctip" id="yearTip"></div></div>
+        </div>
+        <figcaption><b>Figure 5</b>Moyennes hebdomadaires (3 modules, ±1 écart-type). AQUA-CYCLE reste à 99,6 % pendant toute la durée, y compris au passage à 0,38 g (J180). Le système de référence avec traitement des saumures perd 1,8 point en apesanteur puis se stabilise quand la gravité aide à séparer les bulles. Survolez pour lire les valeurs.</figcaption>
+      </figure>
 
-        <!-- ISS BPA — dégradation progressive en µg -->
-        <polyline points="65,150 195,162 325,178 455,195 585,208 800,218" fill="none" stroke="#f97316" stroke-width="2" stroke-dasharray="5,3"/>
-        <circle cx="195" cy="162" r="3.5" fill="#f97316"/>
-        <circle cx="325" cy="178" r="3.5" fill="#f97316"/>
-        <circle cx="455" cy="195" r="3.5" fill="#f97316"/>
-        <circle cx="585" cy="208" r="3.5" fill="#f97316"/>
-        <circle cx="800" cy="218" r="3.5" fill="#f97316"/>
-        <text x="806" y="221" fill="#f97316" font-size="10" font-family="DM Mono,monospace">95,6 %</text>
+      <p>Où passe l'eau perdue ? Nous avons mesuré chaque fuite de la boucle. Dans les systèmes de référence, l'essentiel part avec les <button class="term" type="button" data-term="saumure">saumures</button> issues de l'urine. AQUA-CYCLE réduit chacune des pertes, au prix d'une nouvelle, faible : les boues du bioréacteur.</p>
 
-        <!-- ISS WPA+UPA 2021 — dégradation plus rapide -->
-        <polyline points="65,200 195,218 325,232 455,244 585,248 800,248" fill="none" stroke="#f87171" stroke-width="1.8" stroke-dasharray="3,4" opacity=".5"/>
-        <circle cx="325" cy="232" r="3" fill="#f87171" opacity=".5"/>
-        <circle cx="455" cy="244" r="3" fill="#f87171" opacity=".5"/>
-        <circle cx="800" cy="248" r="3" fill="#f87171" opacity=".5"/>
-        <text x="806" y="251" fill="#f87171" font-size="10" font-family="DM Mono,monospace" opacity=".6">93,2 %</text>
+      <figure class="fig rv" id="fig6">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">D'où viennent les pertes</span>
+            <div class="seg" role="group" aria-label="Échelle" id="lossSeg">
+              <button type="button" data-z="0" aria-pressed="true">Échelle complète</button>
+              <button type="button" data-z="1" aria-pressed="false">Zoom ×10</button>
+            </div>
+          </div>
+          <div class="legend" id="lossLegend"></div>
+          <div class="chart" id="loss"><div class="ctip" id="lossTip"></div></div>
+        </div>
+        <figcaption><b>Figure 6</b>Part de l'eau traitée perdue, par source, pour chaque système (moyennes des 30 premiers jours pour les systèmes de référence, des 360 jours pour AQUA-CYCLE). Le zoom montre le détail d'AQUA-CYCLE : 0,41 % au total.</figcaption>
+      </figure>
 
-        <!-- Annotation transition µg → Mars -->
-        <line x1="455" y1="15" x2="455" y2="250" stroke="rgba(249,115,22,.3)" stroke-width="1" stroke-dasharray="3,3"/>
-        <text x="458" y="48" fill="#f97316" font-size="8.5" font-family="DM Mono,monospace" opacity=".6">J180</text>
-      </svg>
+      <div class="table-wrap rv">
+        <div class="table-cap"><b>Tableau 1</b>Qualité de l'eau produite par AQUA-CYCLE, comparée à la norme de bord</div>
+        <div class="table-scroll">
+          <table class="quality">
+            <thead><tr><th>Paramètre</th><th class="num">Norme</th><th class="num">AQUA-CYCLE</th><th>Position dans la norme</th></tr></thead>
+            <tbody>
+              <tr><td><button class="term" type="button" data-term="cot">Carbone organique</button></td><td class="num">&lt; 0,50 mg/L</td><td class="num">0,08 ± 0,02</td><td><span class="gauge" style="--v:.16"><i></i></span></td></tr>
+              <tr><td>Nitrates</td><td class="num">&lt; 44 mg/L</td><td class="num">2,1 ± 0,4</td><td><span class="gauge" style="--v:.05"><i></i></span></td></tr>
+              <tr><td>Ammonium</td><td class="num">&lt; 0,50 mg/L</td><td class="num">0,04 ± 0,01</td><td><span class="gauge" style="--v:.08"><i></i></span></td></tr>
+              <tr><td>Conductivité</td><td class="num">&lt; 500 µS/cm</td><td class="num">18 ± 3</td><td><span class="gauge" style="--v:.04"><i></i></span></td></tr>
+              <tr><td>Micro-organismes</td><td class="num">&lt; 50 /100 mL</td><td class="num">&lt; 1</td><td><span class="gauge" style="--v:.02"><i></i></span></td></tr>
+              <tr><td>pH</td><td class="num">6,0 – 8,5</td><td class="num">7,2 ± 0,1</td><td><span class="gauge range" style="--v:.48"><i></i></span></td></tr>
+              <tr><td>Iode résiduel</td><td class="num">0,2 – 0,5 mg/L</td><td class="num">0,31 ± 0,04</td><td><span class="gauge range" style="--v:.37"><i></i></span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-note">Moyennes de 52 analyses hebdomadaires. Pour les seuils maximaux, la barre montre la valeur mesurée rapportée à la limite ; pour les plages (pH, iode), le repère montre la position dans la plage autorisée. Aucune valeur n'est sortie de la norme en 360 jours.</div>
+      </div>
+    </section>
+
+    <!-- 5. DISCUSSION -->
+    <section id="s-conclusion">
+      <h2><span class="n">05</span>Discussion et suite</h2>
+      <p>Passer de 95 % à 99,6 % de récupération divise par plus de douze la réserve d'eau d'une mission martienne : de 610 à 49 litres pour quatre personnes et 900 jours. C'est aussi la première fois qu'un système tient l'exigence de 98 % en apesanteur pendant une durée comparable à un transit vers Mars.</p>
+
+      <div class="note" style="--nc:#fbbf24">
+        <i class="ph-light ph-warning" aria-hidden="true"></i>
+        <p><span class="nt">Limites</span>Le prototype traite 10 L par jour, assez pour trois personnes. Pour un équipage de quatre (13,6 L par jour), il faudra 1,4 fois plus de modules, validés au sol mais pas encore en orbite. Le comportement des bactéries du bioréacteur (<em>Nitrosomonas ureae</em> et <em>Nitrobacter winogradskyi</em>) au-delà d'un an reste à vérifier, tout comme la durée de vie des membranes, en cours de test par vieillissement accéléré à 70 °C.</p>
+      </div>
+
+      <p>Une version 2 ajoutera la récupération de l'eau contenue dans les déchets solides, par séchage sous vide à 180 °C, soit environ 0,3 L par personne et par jour. Elle sera testée lors de la mission analogue LDS-1 : 120 jours d'isolement pour quatre personnes, dans les Pyrénées, en 2027.</p>
+
+      <ol class="next" aria-label="Prochaines étapes">
+        <li class="now" style="--nc:var(--ok)"><time>Mars 2026</time><strong>360 jours en orbite</strong><span>99,6 % de récupération, sans intervention.</span></li>
+        <li><time>2026</time><strong>Vieillissement</strong><span>Durée de vie des membranes à 70 °C.</span></li>
+        <li style="--nc:#34d399"><time>2027</time><strong>Mission LDS-1</strong><span>Version 2, 4 personnes, 120 jours.</span></li>
+      </ol>
+    </section>
+
+  </article>
+
+  <!-- Colonne de droite -->
+  <aside class="rail" aria-label="Outils de l'article">
+    <div class="rail-card rail-figs">
+      <p class="rail-title">Figures</p>
+      <ul class="fig-list">
+        <li><a href="#fig1"><i class="ph-light ph-drop" aria-hidden="true"></i>Réserve d'eau</a></li>
+        <li><a href="#fig2"><i class="ph-light ph-arrows-clockwise" aria-hidden="true"></i>Le cycle fermé</a></li>
+        <li><a href="#fig3"><i class="ph-light ph-circles-three" aria-hidden="true"></i>Bulles et membranes</a></li>
+        <li><a href="#fig4"><i class="ph-light ph-hexagon" aria-hidden="true"></i>Module céramique</a></li>
+        <li><a href="#fig5"><i class="ph-light ph-chart-line" aria-hidden="true"></i>360 jours</a></li>
+        <li><a href="#fig6"><i class="ph-light ph-chart-bar-horizontal" aria-hidden="true"></i>Sources de pertes</a></li>
+      </ul>
     </div>
-    <div class="chart-cap">
-      <strong>Figure 3 — Performances comparées sur 360 jours en gravité simulée</strong>
-      HERA-W (vert) maintient un taux de récupération de 99,6 % stable sur les 360 jours, indépendamment
-      du niveau de gravité simulé (transition 0,05 g → 0,38 g à J180). Le système ISS+BPA (orange, pointillés)
-      montre une dégradation progressive en µg de −2,4 points sur 360 jours. Le système ISS original 2021
-      (rouge, translucide) descend sous le seuil de viabilité martienne (98 %) dès J60.
-      Les mesures sont hebdomadaires ; barres d'erreur ±1 ET (n=3 modules en parallèle).
+    <div class="rail-card">
+      <p class="rail-title">Programme lié</p>
+      <a class="prog-link" href="../programmes-actifs.html#artemis9">
+        <span class="pi" style="color:#34d399;background:rgba(52,211,153,.12)"><i class="ph-light ph-planet" aria-hidden="true"></i></span>
+        <span><strong>ARTEMIS-9</strong><small>Mission habitée longue durée sur Mars</small></span>
+      </a>
     </div>
-  </div>
-
-  <div class="tbl-wrap">
-    <div class="tbl-head">Tableau 2 — Qualité de l'eau produite par HERA-W vs standards NASA (NHB 8060.1C)</div>
-    <table>
-      <thead>
-        <tr>
-          <th>Paramètre</th>
-          <th>Standard NASA potable</th>
-          <th>HERA-W eau produite</th>
-          <th>Conformité</th>
-          <th>Méthode d'analyse</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Carbone organique total (COT)</td>
-          <td class="tm">&lt; 0,50 mg·L⁻¹</td>
-          <td class="tg">0,08 ± 0,02 mg·L⁻¹</td>
-          <td class="tg">✓ Conforme</td>
-          <td class="tm">TOC-L Shimadzu</td>
-        </tr>
-        <tr>
-          <td>Nitrates (NO₃⁻)</td>
-          <td class="tm">&lt; 44 mg·L⁻¹</td>
-          <td class="tg">2,1 ± 0,4 mg·L⁻¹</td>
-          <td class="tg">✓ Conforme</td>
-          <td class="tm">Chromatographie ionique</td>
-        </tr>
-        <tr>
-          <td>Conductivité</td>
-          <td class="tm">&lt; 500 µS·cm⁻¹</td>
-          <td class="tg">18 ± 3 µS·cm⁻¹</td>
-          <td class="tg">✓ Conforme</td>
-          <td class="tm">Conductimétrie en ligne</td>
-        </tr>
-        <tr>
-          <td>Microorganismes viables</td>
-          <td class="tm">&lt; 50 UFC·100 mL⁻¹</td>
-          <td class="tg">&lt; 1 UFC·100 mL⁻¹</td>
-          <td class="tg">✓ Conforme</td>
-          <td class="tm">R2A gélose 28°C, 7j</td>
-        </tr>
-        <tr>
-          <td>pH</td>
-          <td class="tm">6,0 – 8,5</td>
-          <td class="tg">7,2 ± 0,1</td>
-          <td class="tg">✓ Conforme</td>
-          <td class="tm">pH-mètre en ligne</td>
-        </tr>
-        <tr>
-          <td>Urée résiduelle</td>
-          <td class="tm">&lt; 0,001 mg·L⁻¹</td>
-          <td class="tg">&lt; 0,0002 mg·L⁻¹</td>
-          <td class="tg">✓ Conforme</td>
-          <td class="tm">LC-MS/MS</td>
-        </tr>
-        <tr>
-          <td>Iode résiduel</td>
-          <td class="tm">0,2 – 0,5 mg·L⁻¹</td>
-          <td class="tg">0,31 ± 0,04 mg·L⁻¹</td>
-          <td class="tg">✓ Conforme</td>
-          <td class="tm">Titrimétrie DPD</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="tbl-note">
-      Moyennes sur 52 analyses hebdomadaires (J0 à J360). Toutes les valeurs sont en dessous des seuils NASA sur l'intégralité de la durée du test, sans dégradation temporelle mesurable.
-    </div>
-  </div>
-
-  <!-- ===== 6. DISCUSSION ===== -->
-  <h2 class="section-heading blue" id="s6">6. Discussion et implications pour les missions interplanétaires</h2>
-
-  <h3 class="sub">6.1 Signification du seuil 99,6 %</h3>
-
-  <p class="bt">
-    Le franchissement du seuil de 99 % n'est pas symbolique. Il correspond à un changement qualitatif
-    dans la faisabilité des missions interplanétaires. Avec un taux de 95 % (ISS actuel), une mission
-    Mars de 900 jours avec 4 astronautes perd environ 860 litres d'eau — soit l'équivalent de 85 jours
-    d'eau potable. Avec 99,6 %, la perte est réduite à 49 litres sur toute la mission, une quantité
-    compensable par l'eau métabolique produite lors de l'oxydation des substrats alimentaires (environ
-    0,3 L·j⁻¹·personne⁻¹). En d'autres termes, HERA-W permet théoriquement une mission Mars en
-    boucle fermée totale, sans apport d'eau extérieur depuis la Terre.
-  </p>
-
-  <div class="hl orange">
-    Ce résultat place HERA-W au-dessus du seuil de viabilité des missions interplanétaires pour la première fois
-    dans l'histoire des systèmes de survie spatiaux. La NASA et l'ESA ont toutes deux identifié le franchissement
-    du seuil de 99 % en microgravité prolongée comme l'un des quatre « technology readiness gates »
-    indispensables à une mission Mars habitée [5]. HERA-W est le premier système à franchir ce gate
-    en conditions expérimentales contrôlées.
-  </div>
-
-  <h3 class="sub">6.2 Limitations et travaux en cours</h3>
-
-  <p class="bt">
-    Trois limitations méritent d'être soulignées. Premièrement, le prototype testé traite un débit de
-    10 L·j⁻¹ — adapté à un équipage de 3 astronautes en usage modéré. Le passage à l'échelle pour
-    4–6 astronautes en activité normale (13,6 L·j⁻¹) nécessite une multiplication des modules par 1,4,
-    ce qui a été validé en banc d'essai statique mais pas encore en microgravité simulée. Deuxièmement,
-    le bioréacteur contient des micro-organismes vivants (consortium de Nitrosomonas ureae et Nitrobacter
-    winogradskyi) dont le comportement sur des durées supérieures à 360 jours en microgravité reste
-    mal documenté. Troisièmement, la durée de vie des membranes céramiques au-delà de 360 jours
-    doit être validée — des essais de vieillissement accéléré à 70 °C sont en cours.
-  </p>
-
-  <h3 class="sub">6.3 Perspectives — vers HERA-W v2 et la mission IFRAS LDS-1</h3>
-
-  <p class="bt">
-    Une version améliorée, HERA-W v2, intègre un module de récupération de l'eau contenue dans les
-    matières fécales déshydratées (traitement thermique sous vide, 180 °C), dont le potentiel de
-    récupération est estimé à 0,3 L·j⁻¹·personne⁻¹. Couplé à HERA-W, ce module porterait théoriquement
-    le taux de récupération global (eau potable + eau alimentaire) au-delà de 99,9 %. Le déploiement
-    du prototype HERA-W v2 est prévu sur la mission analogique IFRAS LDS-1 (Long Duration Simulation,
-    120 jours en isolement, 4 personnes, Pyrénées, 2027).
-  </p>
-
-  <div class="art-divider"></div>
-
-  <!-- RÉFÉRENCES -->
-  <div class="refs-sec" id="s7">
-    <div class="ref-ttl">Références bibliographiques</div>
-    <div class="ref-list">
-      <div class="ref-item"><b>Carter D.L. et al.</b> — <em>Status of ISS water recovery and management</em> — AIAA ICES Conference, 2019</div>
-      <div class="ref-item"><b>Jones H.W.</b> — <em>The recent large reduction in space launch cost</em> — AIAA SPACE and Astronautics Forum, 2018</div>
-      <div class="ref-item"><b>Tobias B. et al.</b> — <em>International Space Station water balance operations</em> — AIAA ICES Conference, 2011</div>
-      <div class="ref-item"><b>Muirhead B. et al.</b> — <em>Microgravity effects on membrane separation processes: a review</em> — npj Microgravity, 2021</div>
-      <div class="ref-item"><b>NASA</b> — <em>Human Research Program — Technology Readiness Requirements for Crewed Mars Transit</em> — HRP-47065, 2024</div>
-      <div class="ref-item"><b>Wolfram E. et al.</b> — <em>Ceramic nanofiltration membranes for water reuse in closed-loop life support</em> — Journal of Membrane Science, 2023</div>
-      <div class="ref-item"><b>Christenson H.K.</b> — <em>Confinement effects on freezing and melting</em> — Journal of Physics: Condensed Matter, 2001</div>
-      <div class="ref-item"><b>Verseux C. et al.</b> — <em>Sustainable life support on Mars: the potential roles of microorganisms</em> — International Journal of Astrobiology, 2016</div>
-      <div class="ref-item"><b>Lefèvre M. &amp; Rousseau C.</b> — <em>Nitrifying biofilm stability under variable gravity conditions — preliminary results</em> — IFRAS Technical Report DSEV-2025-TR-011, 2025</div>
-    </div>
-  </div>
-
-  <div class="footnote">
-    <strong>Conflits d'intérêts :</strong> Aucun. Prof. A. Taniguchi contribue à titre personnel et n'engage pas la position de la JAXA. —
-    <strong>Financement :</strong> ANR-23-SURV-0019 « AQUA-CLOSE » ; ESA OSIP étude CDF Life Support 2024 ; soutien CNES programme exploration humaine. —
-    <strong>Brevet :</strong> Procédé HERA-W, dépôt de brevet INPI n° FR2500412, janvier 2026 (en cours d'examen). —
-    <strong>Données brutes :</strong> Zenodo 10.5281/zenodo.15204817 — séries temporelles 360 jours, protocoles analytiques, scripts Python (CC-BY 4.0). —
-    <strong>Contributions :</strong> C.R. : direction, conception HERA-W, interprétation ; T.B. : électrochimie, membranes céramiques ; A.T. : systèmes de survie, mise en perspective missions ; M.L. : bioréacteur, microbiologie ; S.E. : analyses membranaires, montage expérimental GRAV-360.
-  </div>
-
+  </aside>
 </div>
 
-<footer style="background:#020617;border-top:1px solid #1b2555;padding:32px 30px;text-align:center;font-size:12px;color:#6b7280;">
-  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale · Publications soumises à validation institutionnelle
+<!-- Articles liés -->
+<section class="container related" aria-labelledby="relTitle">
+  <h2 class="section-title" id="relTitle">À lire aussi</h2>
+  <div class="related-grid">
+    <a class="rel" href="publications_scientifiques_03.html" style="--c:#34d399">
+      <div class="rel-img"><img src="../Assets/publication/mars01.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Astrobiologie</small><strong>Des microbes qui se multiplient en conditions martiennes simulées</strong></div>
+    </a>
+    <a class="rel" href="publications_scientifiques_02.html" style="--c:#f97316">
+      <div class="rel-img"><img src="../Assets/accueil/alaune02.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Propulsion</small><strong>NK-125 : un propulseur ionique à grilles tri-étages validé à haute puissance</strong></div>
+    </a>
+    <a class="rel" href="publications_scientifiques_01.html" style="--c:#fb7185">
+      <div class="rel-img"><img src="../Assets/accueil/alaune01.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Matériaux</small><strong>Un bouclier céramique qui résiste à 2 250 °C pour la rentrée atmosphérique</strong></div>
+    </a>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© IFRAS, Institut Français de Recherche Aéronautique et Spatiale</span>
+    <span>Publications soumises à validation institutionnelle</span>
+  </div>
 </footer>
 
+<div class="toast" id="toast" role="status"><i class="ph-light ph-check-circle" aria-hidden="true"></i><span></span></div>
+<div class="tip" id="tip" role="tooltip"></div>
 <script>
-window.addEventListener('scroll',()=>{
-  const d=document.documentElement;
-  document.getElementById('progressBar').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%';
-});
-const secs=['s0','s1','s2','s3','s4','s5','s6','s7'];
-const dots=document.querySelectorAll('.toc-dot');
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      const i=secs.indexOf(e.target.id);
-      if(i>=0){dots.forEach(d=>d.classList.remove('active'));dots[i]&&dots[i].classList.add('active');}
-    }
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const $ = (id) => document.getElementById(id);
+  const NS = 'http://www.w3.org/2000/svg';
+  const fmt = (n, d = 0) => n.toLocaleString('fr-FR', { minimumFractionDigits: d, maximumFractionDigits: d });
+  const svgEl = (tag, attrs = {}, parent) => {
+    const el = document.createElementNS(NS, tag);
+    for (const k in attrs) el.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(el);
+    return el;
+  };
+  /* lance une fonction quand l'élément devient visible (une seule fois) */
+  const onceVisible = (el, fn, margin = '0px 0px -15% 0px') => {
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { io.disconnect(); fn(); } }, { rootMargin: margin });
+    io.observe(el);
+  };
+  /* boucle d'animation suspendue hors écran et onglet masqué */
+  const loopWhileVisible = (el, frame) => {
+    let raf = 0, visible = false;
+    const tick = (t) => { frame(t); raf = requestAnimationFrame(tick); };
+    const sync = () => { cancelAnimationFrame(raf); if (visible && !document.hidden) raf = requestAnimationFrame(tick); };
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; sync(); }).observe(el);
+    document.addEventListener('visibilitychange', sync);
+  };
+
+  /* ---------- Menu mobile ---------- */
+  const toggle = document.querySelector('.menu-toggle');
+  const panel = $('mobile-panel');
+  const setMenu = (open) => {
+    panel.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    toggle.querySelector('i').className = open ? 'ph-light ph-x' : 'ph-light ph-list';
+  };
+  toggle.addEventListener('click', () => setMenu(!panel.classList.contains('is-open')));
+  document.addEventListener('click', (e) => { if (panel.classList.contains('is-open') && !panel.contains(e.target) && !toggle.contains(e.target)) setMenu(false); });
+
+  /* ---------- Apparition au défilement ---------- */
+  const rvIO = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (e.isIntersecting) { e.target.classList.add('in'); rvIO.unobserve(e.target); }
+  }), { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.rv').forEach((el) => rvIO.observe(el));
+
+  /* ---------- Toast ---------- */
+  let toastT;
+  const toast = (msg) => { const t = $('toast'); t.querySelector('span').textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2600); };
+
+  /* ---------- Progression de lecture + sommaire ---------- */
+  const article = $('article');
+  const tocLinks = [...document.querySelectorAll('#toc a')];
+  const sections = tocLinks.map((a) => document.querySelector(a.getAttribute('href')));
+  const ind = document.querySelector('.toc-ind');
+  const WORDS = article.innerText.split(/\s+/).length;
+  let ticking = false;
+  function onScroll() {
+    ticking = false;
+    const r = article.getBoundingClientRect();
+    const total = r.height - window.innerHeight * 0.6;
+    const p = Math.min(1, Math.max(0, -r.top / total));
+    $('progress').style.transform = `scaleX(${p})`;
+    const left = Math.max(0, Math.ceil((WORDS / 220) * (1 - p)));
+    $('timeLeft').textContent = p >= 0.98 ? 'Lecture terminée' : `${left || 1} min restante${left > 1 ? 's' : ''}`;
+    let cur = 0;
+    sections.forEach((s, i) => { if (s && s.getBoundingClientRect().top < window.innerHeight * 0.35) cur = i; });
+    tocLinks.forEach((a, i) => a.classList.toggle('on', i === cur));
+    const a = tocLinks[cur];
+    if (a && ind) { ind.style.transform = `translateY(${a.parentElement.offsetTop}px)`; ind.style.height = a.offsetHeight + 'px'; }
+  }
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  /* ---------- Chiffres clés animés ---------- */
+  document.querySelectorAll('[data-count]').forEach((el) => {
+    const target = Number(el.dataset.count), suffix = el.dataset.suffix || '';
+    const paint = (v) => { el.innerHTML = `${fmt(v)}<small>${suffix}</small>`; };
+    if (reduceMotion) return;
+    paint(0);
+    onceVisible(el, () => {
+      const t0 = performance.now(), dur = 1100;
+      const step = (t) => { const k = Math.min(1, (t - t0) / dur); paint(Math.round(target * (1 - Math.pow(1 - k, 4)))); if (k < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    });
   });
-},{rootMargin:'-20% 0px -70% 0px'});
-secs.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
-dots.forEach((d,i)=>{d.addEventListener('click',()=>{const el=document.getElementById(secs[i]);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});});});
+
+  /* ---------- Infobulles : termes expliqués ---------- */
+  const TERMS = {
+    membrane: ['Membrane', "Paroi très fine percée de pores microscopiques. L'eau la traverse sous pression, tandis que les sels et les molécules plus grosses restent bloqués."],
+    photocat: ['Photocatalyse', "Réaction chimique déclenchée par la lumière à la surface d'un matériau. Éclairé en ultraviolet, le dioxyde de titane décompose les dépôts organiques en CO₂ et en eau."],
+    bio: ['Bioréacteur', "Réservoir où des bactéries, fixées sur un support, dégradent les matières organiques dissoutes. C'est le principe des stations d'épuration, en miniature."],
+    saumure: ['Saumure', "Liquide très concentré en sels qui reste après l'extraction de l'eau de l'urine. L'eau qu'elle contient encore est difficile à récupérer."],
+    cot: ['Carbone organique total', "Quantité de carbone contenue dans les molécules organiques dissoutes. C'est l'indicateur principal de la pureté d'une eau recyclée."]
+  };
+  const tip = $('tip');
+  let tipOpenAt = 0, hideT = null, tipOwner = null;
+  function showTip(el) {
+    clearTimeout(hideT);
+    const t = TERMS[el.dataset.term];
+    tip.innerHTML = `<b>${t[0]}</b>${t[1]}`;
+    tip.classList.toggle('instant', Date.now() - tipOpenAt < 400 && tip.classList.contains('show'));
+    const r = el.getBoundingClientRect();
+    tip.style.left = '0px'; tip.style.top = '0px';
+    tip.classList.add('show');
+    const w = tip.offsetWidth, h = tip.offsetHeight;
+    let x = r.left + r.width / 2 - w / 2 + window.scrollX;
+    x = Math.max(16 + window.scrollX, Math.min(x, window.scrollX + document.documentElement.clientWidth - w - 16));
+    let y = r.top + window.scrollY - h - 10, below = false;
+    if (r.top - h - 10 < 130) { y = r.bottom + window.scrollY + 10; below = true; }
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+    tip.style.transformOrigin = `${r.left + r.width / 2 + window.scrollX - x}px ${below ? '0%' : '100%'}`;
+    tipOpenAt = Date.now(); tipOwner = el;
+    el.setAttribute('aria-describedby', 'tip');
+  }
+  function hideTip(delay = 80) {
+    clearTimeout(hideT);
+    hideT = setTimeout(() => { tip.classList.remove('show'); if (tipOwner) tipOwner.removeAttribute('aria-describedby'); tipOwner = null; tipOpenAt = Date.now(); }, delay);
+  }
+  document.querySelectorAll('.term').forEach((el) => {
+    if (canHover) { el.addEventListener('mouseenter', () => showTip(el)); el.addEventListener('mouseleave', () => hideTip()); }
+    el.addEventListener('focus', () => showTip(el));
+    el.addEventListener('blur', () => hideTip(0));
+    el.addEventListener('click', () => { if (!canHover) (tipOwner === el && tip.classList.contains('show')) ? hideTip(0) : showTip(el); });
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { hideTip(0); setMenu(false); } });
+  window.addEventListener('scroll', () => { if (!canHover && tip.classList.contains('show')) hideTip(0); }, { passive: true });
+
+  /* petite infobulle de graphique, placée à côté d'un point */
+  const placeTip = (tipEl, box, svg, W, H, px, py) => {
+    const r = svg.getBoundingClientRect(), bx = box.getBoundingClientRect();
+    const sx = px / W * r.width + (r.left - bx.left), sy = py / H * r.height + (r.top - bx.top);
+    tipEl.classList.add('show');
+    tipEl.style.left = (sx + 14 + tipEl.offsetWidth > bx.width ? sx - 14 - tipEl.offsetWidth : sx + 14) + 'px';
+    tipEl.style.top = Math.max(0, Math.min(bx.height - tipEl.offsetHeight, sy - tipEl.offsetHeight / 2)) + 'px';
+  };
+  const BLUE = '#3b82f6', ORANGE = '#ea580c';
+
+    /* ---------- aide : repère de graphique ---------- */
+  const rng = (seed) => { let s = seed; return () => (s = (s * 16807) % 2147483647) / 2147483647; };
+  const gauss = (r) => { let u = 0, v = 0; while (!u) u = r(); v = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+  function frame(box, o) {
+    const W = Math.round(Math.max(o.minW || 300, Math.min(o.maxW || 680, box.clientWidth))), H = o.H || (W < 520 ? 280 : 300);
+    const m = Object.assign({ l: 50, r: 16, t: 16, b: 40 }, o.m || {});
+    const [x0, x1] = o.x, [y0, y1] = o.y;
+    const x = (v) => m.l + (v - x0) / (x1 - x0) * (W - m.l - m.r);
+    const y = (v) => H - m.b - (v - y0) / (y1 - y0) * (H - m.t - m.b);
+    const svg = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': o.aria || '' });
+    box.prepend(svg);
+    (o.yt || []).forEach((v) => {
+      svgEl('line', { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: '#13204d' }, svg);
+      svgEl('text', { x: m.l - 6, y: y(v) + 4, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 11, class: 'mono' }, svg).textContent = o.yf ? o.yf(v) : fmt(v);
+    });
+    (o.xt || []).forEach((v) => svgEl('text', { x: x(v), y: H - m.b + 18, 'text-anchor': 'middle', fill: '#8891b8', 'font-size': 11, class: 'mono' }, svg).textContent = o.xf ? o.xf(v) : fmt(v));
+    if (o.xl) svgEl('text', { x: W - m.r, y: H - 3, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 11 }, svg).textContent = o.xl;
+    if (o.yl) svgEl('text', { x: m.l + 4, y: m.t + 12, fill: '#8891b8', 'font-size': 11 }, svg).textContent = o.yl;
+    const hit = () => svgEl('rect', { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, class: 'hit' }, svg);
+    return { svg, W, H, m, x, y, hit };
+  }
+  const NBSP = ' ', SKY = '#38bdf8', USED = '#fbbf24';
+  const mixCol = (a, b, q) => { const pa = [1, 3, 5].map((i) => parseInt(a.substr(i, 2), 16)), pb = [1, 3, 5].map((i) => parseInt(b.substr(i, 2), 16)); return `rgb(${pa.map((v, i) => Math.round(v + (pb[i] - v) * q)).join(',')})`; };
+
+  /* ---------- En-tête : boucle d'eau ---------- */
+  (function hero() {
+    const s = $('heroLoop'); if (!s) return;
+    const CX = 260, CY = 224, R = 150;
+    const defs = svgEl('defs', {}, s);
+    const dg = svgEl('linearGradient', { id: 'dropG', x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
+    svgEl('stop', { offset: 0, 'stop-color': '#7dd3fc' }, dg); svgEl('stop', { offset: 1, 'stop-color': '#0369a1' }, dg);
+    const mg = svgEl('radialGradient', { id: 'marsG', cx: 0.4, cy: 0.35, r: 0.7 }, defs);
+    svgEl('stop', { offset: 0, 'stop-color': '#c2410c' }, mg); svgEl('stop', { offset: 1, 'stop-color': '#431407' }, mg);
+    const cp = svgEl('clipPath', { id: 'dropClip' }, defs);
+    const DROP = `M${CX} ${CY - 70} C${CX + 18} ${CY - 40} ${CX + 48} ${CY - 8} ${CX + 48} ${CY + 22} a48 48 0 0 1 -96 0 C${CX - 48} ${CY - 8} ${CX - 18} ${CY - 40} ${CX} ${CY - 70} Z`;
+    svgEl('path', { d: DROP }, cp);
+    /* Mars, en bas à droite */
+    svgEl('circle', { cx: 452, cy: 372, r: 58, fill: 'url(#marsG)', opacity: 0.6 }, s);
+    /* anneau */
+    svgEl('circle', { cx: CX, cy: CY, r: R, fill: 'none', stroke: '#1b2555', 'stroke-width': 18, 'stroke-opacity': 0.6 }, s);
+    svgEl('circle', { cx: CX, cy: CY, r: R, fill: 'none', stroke: '#38bdf8', 'stroke-opacity': 0.18 }, s);
+    /* étapes (haut) */
+    const stG = svgEl('g', {}, s);
+    [-150, -120, -90, -60, -30].forEach((a, i) => {
+      const t = a * Math.PI / 180;
+      svgEl('circle', { cx: CX + Math.cos(t) * R, cy: CY + Math.sin(t) * R, r: 11, fill: '#0a1436', stroke: i === 3 ? '#fb923c' : '#475394', 'stroke-width': 1.5 }, stG);
+      svgEl('text', { x: CX + Math.cos(t) * R, y: CY + Math.sin(t) * R + 4, 'text-anchor': 'middle', fill: '#e0e7ff', 'font-size': 11, class: 'mono' }, stG).textContent = i + 1;
+    });
+    /* goutte centrale */
+    svgEl('path', { d: DROP, fill: '#0b1f3f', stroke: '#38bdf8', 'stroke-opacity': 0.5 }, s);
+    const wg = svgEl('g', { 'clip-path': 'url(#dropClip)' }, s);
+    const wave = svgEl('path', { d: `M${CX - 80} ${CY - 44} q20 -8 40 0 t40 0 t40 0 t40 0 V${CY + 80} H${CX - 80} Z`, fill: 'url(#dropG)', opacity: 0.85, class: reduceMotion ? '' : 'wave' }, wg);
+    svgEl('text', { x: CX, y: CY + 30, 'text-anchor': 'middle', fill: '#fff', 'font-size': 22, 'font-weight': 600 }, s).textContent = '99,6 %';
+    /* gouttes qui circulent */
+    const N = 26, drops = Array.from({ length: N }, (_, i) => ({ a: i / N * 360, el: svgEl('circle', { r: 4.2 }, s) }));
+    /* fuite : une goutte qui s'échappe de temps en temps */
+    const leak = svgEl('circle', { r: 3, fill: '#f87171', opacity: 0 }, s);
+    s.appendChild(stG);
+    let lt = 0;
+    const draw = () => {
+      drops.forEach((d) => {
+        d.a = (d.a + 0.35) % 360;
+        const deg = 180 + d.a, t = deg * Math.PI / 180;
+        d.el.setAttribute('cx', (CX + Math.cos(t) * R).toFixed(1)); d.el.setAttribute('cy', (CY + Math.sin(t) * R).toFixed(1));
+        /* sale après l'équipage (180°), propre après l'étape 5 (330°) */
+        const q = Math.max(0, Math.min(1, (deg - 200) / 130));
+        d.el.setAttribute('fill', deg < 200 ? USED : mixCol(USED, '#7dd3fc', q));
+      });
+      lt = (lt + 1) % 420;
+      const p = lt / 120;
+      if (p < 1) { const t = -60 * Math.PI / 180; leak.setAttribute('cx', CX + Math.cos(t) * R + p * 30); leak.setAttribute('cy', CY + Math.sin(t) * R - p * 40); leak.setAttribute('opacity', (1 - p) * 0.9); }
+      else leak.setAttribute('opacity', 0);
+    };
+    draw();
+    if (!reduceMotion) loopWhileVisible(s, draw);
+  })();
+
+  /* ---------- Figure 1 : réserve ---------- */
+  (function reserve() {
+    const box = $('reserve'), range = $('resRange'), out = $('resOut');
+    const PER = 25, N = 50, TOTAL = 13.6 * 900, LIMIT = TOTAL * 0.02;
+    box.innerHTML = `<div class="drops" id="drops">${Array.from({ length: N }, () => '<i><b></b></i>').join('')}</div><p class="drops-l"><span><i></i>1 goutte = 25 L</span><span><i class="x"></i>au-delà de l'exigence de 98 %</span></p>`;
+    const cells = [...box.querySelectorAll('.drops i')];
+    const roR = $('roR'), roD = $('roD'), roRBox = $('roRBox');
+    const setSeg = (r) => document.querySelectorAll('#resSeg [data-r]').forEach((b) => b.setAttribute('aria-pressed', String(Math.abs(Number(b.dataset.r) - r) < 0.05)));
+    const draw = (r) => {
+      const L = TOTAL * (1 - r / 100), n = L / PER, lim = LIMIT / PER;
+      cells.forEach((c, i) => {
+        const f = Math.max(0, Math.min(1, n - i));
+        c.style.setProperty('--f', f.toFixed(3));
+        c.classList.toggle('x', i >= Math.floor(lim) && f > 0 && (i + f) > lim);
+      });
+      roR.textContent = fmt(Math.round(L)).replace(/\s/g, NBSP) + NBSP + 'L';
+      roD.textContent = fmt(L / 900, 2) + NBSP + 'L';
+      roRBox.style.setProperty('--rc', L > LIMIT + 0.5 ? '#fbbf24' : '#34d399');
+      out.textContent = fmt(r, 1) + NBSP + '%';
+      setSeg(r);
+    };
+    range.addEventListener('input', () => draw(Number(range.value)));
+    let tw = 0;
+    document.querySelectorAll('#resSeg [data-r]').forEach((b) => b.addEventListener('click', () => {
+      const to = Number(b.dataset.r), from = Number(range.value), t0 = performance.now();
+      cancelAnimationFrame(tw);
+      const step = (now) => {
+        const q = reduceMotion ? 1 : Math.max(0, Math.min(1, (now - t0) / 600)), e = 1 - Math.pow(1 - q, 3);
+        const v = Math.round((from + (to - from) * e) * 10) / 10;
+        range.value = v; draw(v);
+        if (q < 1) tw = requestAnimationFrame(step);
+      };
+      tw = requestAnimationFrame(step);
+    }));
+    draw(99.6);
+  })();
+
+  /* ---------- Figure 2 : boucle ---------- */
+  (function loop() {
+    const s = $('loopSvg'), CX = 240, CY = 158, R = 110;
+    const P = (deg, r = R) => { const t = deg * Math.PI / 180; return [CX + Math.cos(t) * r, CY + Math.sin(t) * r]; };
+    const COLS = ['#60a5fa', '#34d399', '#a78bfa', '#fb923c', '#67e8f9'];
+    const STEPS = [
+      ['Osmose inverse', 'L\'eau est poussée à travers une membrane si fine que les sels, l\'urée et la plupart des molécules restent bloqués.', ['Pression <b>12–18 bar</b>', 'Rétention <b>98,5 %</b>']],
+      ['Bioréacteur', 'Des bactéries fixées sur un support céramique dégradent les molécules organiques restantes, comme une station d\'épuration miniature.', ['Flux <b>peu chargés</b>', 'Bactéries <b>nitrifiantes</b>']],
+      ['Oxydation électrochimique', 'Des électrodes en diamant dopé au bore détruisent les polluants les plus tenaces et les transforment en CO₂ et en eau.', ['Tension <b>1,8–2,4 V</b>', 'Flux <b>concentrés</b>']],
+      ['Membrane céramique', 'Un tube d\'alumine et de dioxyde de titane aux pores de 2 nm assure la finition. Rigide et auto-nettoyant, il fonctionne sans gravité.', ['Pores <b>2 nm</b>', '<b>360 j</b> sans encrassement'], true],
+      ['Désinfection', 'Une lampe ultraviolette tue les micro-organismes restants, puis une faible dose d\'iode protège l\'eau pendant son stockage.', ['UV <b>254 nm</b>', 'Iode <b>0,2–0,5 mg/L</b>']]
+    ];
+    /* anneau et flux */
+    svgEl('circle', { cx: CX, cy: CY, r: R, fill: 'none', stroke: '#1b2555', 'stroke-width': 14, 'stroke-opacity': 0.55 }, s);
+    svgEl('circle', { cx: CX, cy: CY, r: R, fill: 'none', stroke: SKY, 'stroke-opacity': 0.35, 'stroke-width': 1.5, class: reduceMotion ? '' : 'flowline', transform: `rotate(0 ${CX} ${CY})` }, s);
+    /* fuite */
+    const [lx, ly] = P(-124), [lx2, ly2] = P(-124, 146);
+    svgEl('line', { x1: lx, y1: ly, x2: lx2, y2: ly2, stroke: '#f87171', 'stroke-dasharray': '3 4' }, s);
+    svgEl('text', { x: lx2 - 4, y: ly2 - 6, 'text-anchor': 'middle', fill: '#f87171', 'font-size': 13 }, s).textContent = 'Pertes 0,4 %';
+    /* gouttes */
+    const N = 20, drops = Array.from({ length: N }, (_, i) => ({ a: i / N * 360, el: svgEl('circle', { r: 3.6 }, s) }));
+    /* nœuds fixes */
+    const big = (deg, label, sub, anchor, dx, icon) => {
+      const [x, y] = P(deg);
+      svgEl('circle', { cx: x, cy: y, r: 24, fill: '#0a1436', stroke: '#475394', 'stroke-width': 1.5 }, s);
+      svgEl('text', { x, y: y + 5, 'text-anchor': 'middle', fill: '#e0e7ff', 'font-size': 14 }, s).textContent = icon;
+      svgEl('text', { x: x + dx, y: y - 2, 'text-anchor': anchor, fill: '#e6e6e6', 'font-size': 14, 'font-weight': 500 }, s).textContent = label;
+      svgEl('text', { x: x + dx, y: y + 15, 'text-anchor': anchor, fill: '#8891b8', 'font-size': 12 }, s).textContent = sub;
+    };
+    big(180, 'Équipage', '4 pers.', 'end', -30, '4');
+    big(0, 'Réservoir', 'eau potable', 'start', 30, '');
+    svgEl('path', { d: `M${P(0)[0] - 9} ${P(0)[1] - 6} q9 -12 18 0 v8 a9 9 0 0 1 -18 0 Z`, fill: SKY, opacity: 0.8 }, s);
+    const [cx0, cy0] = P(-153);
+    svgEl('rect', { x: cx0 - 20, y: cy0 - 14, width: 40, height: 28, rx: 8, fill: '#0a1436', stroke: '#475394' }, s);
+    svgEl('text', { x: cx0 - 26, y: cy0 - 16, 'text-anchor': 'end', fill: '#e6e6e6', 'font-size': 14, 'font-weight': 500 }, s).textContent = 'Collecte';
+    svgEl('text', { x: CX, y: CY + R + 34, 'text-anchor': 'middle', fill: '#8891b8', 'font-size': 12.5 }, s).textContent = 'retour vers l\'équipage';
+    /* étapes */
+    const ANG = [-124, -99, -74, -49, -24];
+    const nodes = ANG.map((deg, k) => {
+      const [x, y] = P(deg);
+      const g = svgEl('g', { class: 'node', 'data-k': k, role: 'button', tabindex: -1 }, s);
+      svgEl('circle', { cx: x, cy: y, r: 16, fill: '#0a1436', stroke: COLS[k], 'stroke-width': 1.5, class: 'ring-n' }, g);
+      svgEl('text', { x, y: y + 5, 'text-anchor': 'middle', fill: '#fff', 'font-size': 14, class: 'mono' }, g).textContent = k + 1;
+      return g;
+    });
+    const desc = $('stepDesc'), btns = [...document.querySelectorAll('#stepBtns .part')];
+    let cur = -1, user = false;
+    const set = (k) => {
+      if (k === cur) return; cur = k;
+      btns.forEach((b, i) => b.setAttribute('aria-pressed', String(i === k)));
+      nodes.forEach((n, i) => { n.classList.toggle('on', i === k); n.querySelector('circle').setAttribute('fill', i === k ? COLS[i] + '33' : '#0a1436'); });
+      const [t, p, kv, isNew] = STEPS[k];
+      desc.innerHTML = `<h4><span style="color:${COLS[k]}">${k + 1}</span> ${t}${isNew ? ' <em>Nouveau</em>' : ''}</h4><p>${p}</p><div class="kv">${kv.map((x) => `<span>${x}</span>`).join('')}</div>`;
+      desc.classList.remove('swap'); void desc.offsetWidth; desc.classList.add('swap');
+    };
+    btns.forEach((b, i) => b.addEventListener('click', () => { user = true; set(i); }));
+    nodes.forEach((n, i) => n.addEventListener('click', () => { user = true; set(i); }));
+    set(0);
+    let last = 0, acc = 0;
+    const draw = (now) => {
+      const dt = last ? Math.min(0.1, (now - last) / 1000) : 0; last = now;
+      drops.forEach((d) => {
+        d.a = (d.a + dt * 22) % 360;
+        const deg = 180 + d.a, [x, y] = P(deg);
+        d.el.setAttribute('cx', x.toFixed(1)); d.el.setAttribute('cy', y.toFixed(1));
+        const q = Math.max(0, Math.min(1, (deg - 242) / 104));
+        d.el.setAttribute('fill', deg < 242 ? USED : mixCol(USED, '#7dd3fc', q));
+      });
+      if (!user) { acc += dt; if (acc > 4) { acc = 0; set((cur + 1) % 5); } }
+    };
+    if (reduceMotion) { drops.forEach((d) => { const deg = 180 + d.a, [x, y] = P(deg); d.el.setAttribute('cx', x); d.el.setAttribute('cy', y); d.el.setAttribute('fill', deg < 300 ? USED : '#7dd3fc'); }); }
+    else loopWhileVisible($('fig2'), draw);
+  })();
+
+  /* ---------- Figure 3 : bulles et membranes ---------- */
+  (function membranes() {
+    const LANES = [40, 72, 104, 136, 168], MX = 150, MW = 14;
+    let playing = !reduceMotion;
+    const sims = [['memA', 'fluxA', false], ['memB', 'fluxB', true]].map(([id, fid, ceramic]) => {
+      const s = $(id), fluxEl = $(fid);
+      svgEl('rect', { x: 0, y: 24, width: MX, height: 170, fill: 'rgba(251,191,36,.05)' }, s);
+      svgEl('rect', { x: MX + MW, y: 24, width: 300 - MX - MW, height: 170, fill: 'rgba(56,189,248,.06)' }, s);
+      svgEl('text', { x: 8, y: 190, fill: '#8891b8', 'font-size': 12 }, s).textContent = 'eau à traiter';
+      svgEl('text', { x: 292, y: 190, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 12 }, s).textContent = 'eau filtrée';
+      if (ceramic) {
+        svgEl('rect', { x: 0, y: 4, width: MX + MW, height: 16, rx: 4, fill: 'rgba(148,163,184,.12)', stroke: '#475394' }, s);
+        svgEl('text', { x: 8, y: 16, fill: '#aab3d6', 'font-size': 11 }, s).textContent = '← évacuation du gaz';
+      }
+      /* membrane : segments entre les pores */
+      const cuts = [24, ...LANES.flatMap((y) => [y - 6, y + 6]), 194];
+      for (let i = 0; i < cuts.length; i += 2) {
+        const y0 = cuts[i], y1 = cuts[i + 1];
+        if (ceramic) svgEl('rect', { x: MX, y: y0, width: MW, height: y1 - y0, fill: '#94a3b8', rx: 2 }, s);
+        else svgEl('path', { d: `M${MX + 3} ${y0} q-5 ${(y1 - y0) / 2} 0 ${y1 - y0} h8 q-5 ${-(y1 - y0) / 2} 0 ${-(y1 - y0)} Z`, fill: '#a78bfa', opacity: 0.85 }, s);
+      }
+      const r = rng(ceramic ? 7 : 3);
+      const parts = Array.from({ length: 34 }, () => ({ lane: Math.floor(r() * 5), x: r() * 300, v: 0.7 + r() * 0.5, el: svgEl('circle', { r: 2.2, fill: SKY, opacity: 0.85 }, s) }));
+      const bubbles = [];
+      const blocked = [false, false, false, false, false];
+      const flash = svgEl('text', { x: MX / 2, y: 120, 'text-anchor': 'middle', fill: '#fbbf24', 'font-size': 14, 'font-weight': 500, opacity: 0 }, s); flash.textContent = 'rinçage';
+      return { s, fluxEl, ceramic, r, parts, bubbles, blocked, flash, spawn: 0.8, flux: 1, rinse: -1 };
+    });
+    const step = (dt) => sims.forEach((m) => {
+      /* bulles */
+      m.spawn -= dt;
+      if (m.spawn <= 0) {
+        m.spawn = 1.4 + m.r() * 0.8;
+        const lane = Math.floor(m.r() * 5);
+        m.bubbles.push({ lane, x: -8, y: LANES[lane] + (m.r() - 0.5) * 10, rad: 6 + m.r() * 3, st: 'go', el: svgEl('circle', { fill: 'rgba(255,255,255,.12)', stroke: '#e2e8f0', 'stroke-width': 1.2 }, m.s) });
+      }
+      m.bubbles.forEach((b) => {
+        if (b.st === 'go') {
+          b.x += dt * 38;
+          if (m.ceramic && b.x > MX - 30) b.st = 'up';
+          if (!m.ceramic && b.x >= MX - b.rad + 1) { b.x = MX - b.rad + 1; b.y = LANES[b.lane]; b.st = 'stuck'; m.blocked[b.lane] = true; }
+        } else if (b.st === 'up') {
+          b.y -= dt * 70; b.x += dt * 8;
+          if (b.y < 12) { b.y = 12; b.st = 'vent'; }
+        } else if (b.st === 'vent') { b.x -= dt * 90; if (b.x < -12) b.st = 'gone'; }
+        b.el.setAttribute('cx', b.x.toFixed(1)); b.el.setAttribute('cy', b.y.toFixed(1)); b.el.setAttribute('r', b.st === 'vent' ? Math.min(b.rad, 6) : b.rad);
+      });
+      /* rinçage périodique de la membrane polymère */
+      const nb = m.blocked.filter(Boolean).length;
+      if (!m.ceramic && nb >= 3 && m.rinse < 0) m.rinse = 1.6;
+      if (m.rinse >= 0) {
+        m.rinse -= dt;
+        m.flash.setAttribute('opacity', m.rinse < 0.8 ? Math.max(0, m.rinse / 0.8) : 1);
+        if (m.rinse < 0) { m.bubbles.forEach((b) => { if (b.st === 'stuck') b.st = 'gone'; }); m.blocked.fill(false); m.rinse = -1; m.flash.setAttribute('opacity', 0); }
+      }
+      m.bubbles = m.bubbles.filter((b) => { if (b.st === 'gone') { b.el.remove(); return false; } return true; });
+      /* molécules d'eau */
+      m.parts.forEach((p) => {
+        p.x += dt * 60 * p.v;
+        if (p.x > MX - 4 && p.x < MX + MW && m.blocked[p.lane]) { p.x = -4; p.lane = Math.floor(m.r() * 5); }
+        if (p.x > 302) { p.x = -4; p.lane = Math.floor(m.r() * 5); }
+        const y = LANES[p.lane] + (p.x < MX - 20 || p.x > MX + MW + 20 ? Math.sin(p.x * 0.05 + p.lane) * 8 : 0);
+        p.el.setAttribute('cx', p.x.toFixed(1)); p.el.setAttribute('cy', y.toFixed(1));
+      });
+      const target = 1 - m.blocked.filter(Boolean).length / 5;
+      m.flux += (target - m.flux) * Math.min(1, dt * 3);
+      m.fluxEl.textContent = Math.round(m.flux * 100) + NBSP + '%';
+      m.fluxEl.style.color = m.flux < 0.85 ? '#fbbf24' : '#e0e7ff';
+    });
+    const btn = $('memPlay');
+    const setBtn = () => { btn.querySelector('i').className = playing ? 'ph-light ph-pause' : 'ph-light ph-play'; btn.querySelector('span').textContent = playing ? 'Pause' : 'Lancer'; };
+    btn.addEventListener('click', () => { playing = !playing; setBtn(); });
+    setBtn();
+    step(0);
+    let last = 0;
+    loopWhileVisible($('fig3'), (now) => { const dt = last ? Math.min(0.05, (now - last) / 1000) : 0; last = now; if (playing) step(dt); });
+  })();
+
+  /* ---------- Figure 4 : module céramique ---------- */
+  (function module() {
+    const img = document.querySelector('#modPhoto img'), mod = document.querySelector('.module');
+    const noPhoto = () => mod.classList.add('nophoto');
+    if (img) { img.addEventListener('error', noPhoto); if (img.complete && !img.naturalWidth) noPhoto(); }
+    const s = $('modSvg'), CX = 130, CY = 120, RT = 110, MM = RT * 2 / 28;
+    const rc = 1.75 * MM, pitch = 5.2 * MM;
+    const defs = svgEl('defs', {}, s);
+    const cg = svgEl('radialGradient', { id: 'ceram', cx: 0.4, cy: 0.35, r: 0.8 }, defs);
+    svgEl('stop', { offset: 0, 'stop-color': '#475569' }, cg); svgEl('stop', { offset: 1, 'stop-color': '#1e293b' }, cg);
+    svgEl('circle', { cx: CX, cy: CY, r: RT, fill: 'url(#ceram)', stroke: '#94a3b8', 'stroke-width': 1.5 }, s);
+    const pos = [[0, 0]];
+    for (let k = 0; k < 6; k++) { const a = k * Math.PI / 3; pos.push([Math.cos(a) * pitch, Math.sin(a) * pitch]); }
+    for (let k = 0; k < 6; k++) { const a = k * Math.PI / 3; pos.push([Math.cos(a) * pitch * 2, Math.sin(a) * pitch * 2]); const b = a + Math.PI / 6; pos.push([Math.cos(b) * pitch * Math.sqrt(3), Math.sin(b) * pitch * Math.sqrt(3)]); }
+    pos.forEach(([dx, dy], i) => {
+      svgEl('circle', { cx: CX + dx, cy: CY + dy, r: rc, fill: '#020817' }, s);
+      svgEl('circle', { cx: CX + dx, cy: CY + dy, r: rc - 1, fill: 'none', stroke: '#67e8f9', 'stroke-width': 2, class: reduceMotion ? '' : 'uv', style: `animation-delay:${(-i * 0.13).toFixed(2)}s` }, s);
+    });
+    svgEl('line', { x1: CX - 2.5 * MM, x2: CX + 2.5 * MM, y1: 248, y2: 248, stroke: '#aab3d6', 'stroke-width': 1.5 }, s);
+    svgEl('text', { x: CX, y: 242, 'text-anchor': 'middle', fill: '#aab3d6', 'font-size': 11, class: 'mono' }, s).textContent = '5 mm';
+  })();
+
+  /* ---------- Figure 5 : 360 jours ---------- */
+  (function year() {
+    const box = $('year'), tipEl = $('yearTip');
+    const S = [
+      { k: 'a', n: 'AQUA-CYCLE', c: '#059669', lc: '#34d399', f: (d) => 99.6 - (d >= 180 && d < 196 ? 0.07 : 0), sd: 0.08 },
+      { k: 'r', n: 'Référence + saumures', short: 'Référence', c: '#ea580c', lc: '#fb923c', f: (d) => (d <= 180 ? 98.0 - 1.8 * Math.pow(d / 180, 1.3) : 96.2 + 0.45 * (1 - Math.exp(-(d - 180) / 40))), sd: 0.2 },
+      { k: 'o', n: 'Ancien système', short: 'Ancien', c: '#3b82f6', lc: '#60a5fa', f: (d) => (d <= 180 ? 95.0 - 1.9 * Math.pow(d / 180, 1.2) : 93.1 + 0.4 * (1 - Math.exp(-(d - 180) / 40))), sd: 0.22 }
+    ];
+    const r = rng(17);
+    const WEEKS = Array.from({ length: 52 }, (_, i) => i * 7);
+    const DATA = WEEKS.map((d) => { const o = { d }; S.forEach((sr) => { o[sr.k] = sr.f(d) + gauss(r) * sr.sd * 0.35; }); return o; });
+    const narrow = box.clientWidth < 520;
+    const F = frame(box, { x: [0, 360], y: [92, 100.4], xt: narrow ? [0, 90, 180, 270, 360] : [0, 60, 120, 180, 240, 300, 360], yt: [92, 94, 96, 98, 100], xf: (v) => 'J' + v, yf: (v) => v + NBSP + '%', xl: 'Jours', H: narrow ? 300 : 320, m: { r: narrow ? 12 : 134, t: 34, l: 54 }, aria: 'AQUA-CYCLE stable à 99,6 % ; référence de 98 à 96,2 puis 96,6 % ; ancien de 95 à 93,1 puis 93,5 %' });
+    /* phases */
+    [[0, 180, 'Apesanteur', 'rgba(79,107,237,.06)'], [180, 360, 'Gravité martienne · 0,38 g', 'rgba(234,88,12,.06)']].forEach(([a, b, t, c]) => {
+      svgEl('rect', { x: F.x(a), y: F.m.t, width: F.x(b) - F.x(a), height: F.H - F.m.t - F.m.b, fill: c }, F.svg);
+      svgEl('text', { x: (F.x(a) + F.x(b)) / 2, y: F.m.t - 10, 'text-anchor': 'middle', fill: '#aab3d6', 'font-size': 11.5 }, F.svg).textContent = narrow && a ? '0,38 g' : t;
+    });
+    svgEl('line', { x1: F.x(0), x2: F.x(360), y1: F.y(98), y2: F.y(98), stroke: '#e6e6e6', 'stroke-dasharray': '6 5', 'stroke-opacity': 0.55 }, F.svg);
+    svgEl('text', { x: F.x(4), y: F.y(98) - 6, fill: '#e6e6e6', 'font-size': 11.5, opacity: 0.8 }, F.svg).textContent = 'Exigence ARTEMIS-9 : 98 %';
+    const pts = {};
+    S.forEach((sr) => {
+      const p = []; for (let d = 0; d <= 360; d += 2) p.push(`${p.length ? 'L' : 'M'}${F.x(d).toFixed(1)} ${F.y(sr.f(d)).toFixed(1)}`);
+      const el = svgEl('path', { d: p.join(' '), fill: 'none', stroke: sr.c, 'stroke-width': 2.4, class: 'draw' }, F.svg);
+      el.style.setProperty('--len', Math.ceil(el.getTotalLength()));
+      pts[sr.k] = DATA.map((o) => {
+        svgEl('line', { x1: F.x(o.d), x2: F.x(o.d), y1: F.y(o[sr.k] - sr.sd), y2: F.y(o[sr.k] + sr.sd), stroke: sr.c, 'stroke-opacity': 0.45, class: 'dot' }, F.svg);
+        return svgEl('circle', { cx: F.x(o.d), cy: F.y(o[sr.k]), r: 2.4, fill: sr.c, class: 'dot' }, F.svg);
+      });
+      const ey = F.y(sr.f(360));
+      if (narrow) svgEl('text', { x: F.x(360) - 2, y: ey + (sr.k === 'a' ? 18 : -8), 'text-anchor': 'end', fill: sr.lc, 'font-size': 11.5, 'font-weight': 500, class: 'dot' }, F.svg).textContent = sr.short || sr.n;
+      else svgEl('text', { x: F.x(360) + 8, y: ey + 4, fill: '#e6e6e6', 'font-size': 12, class: 'dot' }, F.svg).textContent = `${sr.short || sr.n} ${fmt(sr.f(360), 1)}${NBSP}%`;
+    });
+    const xh = svgEl('line', { y1: F.m.t, y2: F.H - F.m.b, stroke: '#aab3d6', 'stroke-opacity': 0.5, class: 'xhair' }, F.svg);
+    const hit = F.hit();
+    hit.addEventListener('pointermove', (e) => {
+      const rr = F.svg.getBoundingClientRect(), px = (e.clientX - rr.left) / rr.width * F.W;
+      let i = 0; DATA.forEach((o, k) => { if (Math.abs(F.x(o.d) - px) < Math.abs(F.x(DATA[i].d) - px)) i = k; });
+      const o = DATA[i];
+      xh.setAttribute('x1', F.x(o.d)); xh.setAttribute('x2', F.x(o.d)); xh.classList.add('show');
+      S.forEach((sr) => pts[sr.k].forEach((c, j) => c.setAttribute('r', j === i ? 4.5 : 2.4)));
+      tipEl.innerHTML = `<b>Jour ${o.d} · ${o.d < 180 ? 'apesanteur' : '0,38 g'}</b>` + S.map((sr) => `<div><span style="--lc:${sr.c}"><i></i>${sr.short || sr.n}</span><em>${fmt(o[sr.k], 1)}${NBSP}%</em></div>`).join('');
+      placeTip(tipEl, box, F.svg, F.W, F.H, F.x(o.d), F.y(o.a));
+    });
+    hit.addEventListener('pointerleave', () => { tipEl.classList.remove('show'); xh.classList.remove('show'); S.forEach((sr) => pts[sr.k].forEach((c) => c.setAttribute('r', 2.4))); });
+    if (reduceMotion) box.classList.add('drawn'); else onceVisible(box, () => box.classList.add('drawn'), '0px 0px -25% 0px');
+  })();
+
+  /* ---------- Figure 6 : sources de pertes ---------- */
+  (function losses() {
+    const box = $('loss'), tipEl = $('lossTip'), leg = $('lossLegend');
+    const SRC = [['Saumures de l\'urine', '#3b82f6'], ['Cartouches et résines', '#059669'], ['Dégazage', '#d97706'], ['Évaporation', '#e11d48'], ['Boues du bioréacteur', '#8b5cf6']];
+    const SYS = [['Ancien système', [3.2, 1.1, 0.4, 0.3, 0]], ['Référence + saumures', [0.8, 0.6, 0.4, 0.2, 0]], ['AQUA-CYCLE', [0.15, 0.10, 0.07, 0.01, 0.08]]];
+    leg.innerHTML = SRC.map(([n, c], i) => `<button type="button" class="lg" data-i="${i}" aria-pressed="true" style="--lc:${c}"><i></i>${n}</button>`).join('');
+    const W = Math.round(Math.max(300, Math.min(680, box.clientWidth))), rowH = 62, top = 8, H = top + SYS.length * rowH + 26;
+    const ml = 2, mr = 70;
+    const svg = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Pertes totales : ancien 5,0 %, référence 2,0 %, AQUA-CYCLE 0,41 %' });
+    box.prepend(svg);
+    const axis = svgEl('g', {}, svg);
+    const segs = [], totals = [], clips = [];
+    SYS.forEach(([name, vals], j) => {
+      const y = top + j * rowH;
+      svgEl('text', { x: ml, y: y + 14, fill: '#e6e6e6', 'font-size': 13.5, 'font-weight': j === 2 ? 500 : 400 }, svg).textContent = name;
+      svgEl('rect', { x: ml, y: y + 22, width: W - ml - mr, height: 22, rx: 5, fill: '#0e1838' }, svg);
+      vals.forEach((v, i) => { if (v > 0) segs.push({ j, i, v, el: svgEl('rect', { y: y + 22, height: 22, fill: SRC[i][1], stroke: '#070f2b', 'stroke-width': 1 }, svg) }); });
+      totals.push({ j, v: vals.reduce((a, b) => a + b, 0), el: svgEl('text', { y: y + 38, fill: '#fff', 'font-size': 12.5, class: 'mono' }, svg) });
+      clips.push(svgEl('text', { y: y + 38, 'text-anchor': 'end', fill: '#fff', 'font-size': 14, opacity: 0 }, svg));
+    });
+    let max = 5.2, shown = 5.2, grow = 0;
+    const X = (v) => ml + Math.min(v, shown) / shown * (W - ml - mr);
+    const paint = () => {
+      axis.innerHTML = '';
+      const ticks = shown > 1 ? [0, 1, 2, 3, 4, 5] : [0, 0.1, 0.2, 0.3, 0.4, 0.5];
+      ticks.forEach((t) => {
+        if (t > shown + 1e-9) return;
+        svgEl('line', { x1: X(t), x2: X(t), y1: top + 18, y2: H - 22, stroke: '#13204d' }, axis);
+        svgEl('text', { x: X(t), y: H - 6, 'text-anchor': 'middle', fill: '#8891b8', 'font-size': 11, class: 'mono' }, axis).textContent = fmt(t, shown > 1 ? 0 : 1) + NBSP + '%';
+      });
+      const acc = [0, 0, 0];
+      segs.forEach((sg) => {
+        const a = acc[sg.j] * grow, b = (acc[sg.j] + sg.v) * grow;
+        acc[sg.j] += sg.v;
+        sg.el.setAttribute('x', X(a)); sg.el.setAttribute('width', Math.max(0, X(b) - X(a)));
+      });
+      totals.forEach((t, j) => {
+        const over = t.v > shown;
+        t.el.setAttribute('x', over ? W - mr + 6 : X(t.v * grow) + 6);
+        t.el.textContent = fmt(t.v, t.v < 1 ? 2 : 1) + NBSP + '%';
+        t.el.setAttribute('opacity', grow > 0.95 ? 1 : 0);
+        clips[j].setAttribute('x', W - mr - 4); clips[j].setAttribute('opacity', over && grow > 0.95 ? 0.9 : 0); clips[j].textContent = '›';
+      });
+    };
+    const tween = (key, to, dur = 600) => {
+      const from = key === 'grow' ? grow : shown, t0 = performance.now();
+      const st = (now) => {
+        const q = reduceMotion ? 1 : Math.max(0, Math.min(1, (now - t0) / dur)), e = 1 - Math.pow(1 - q, 3);
+        if (key === 'grow') grow = from + (to - from) * e; else shown = from + (to - from) * e;
+        paint(); if (q < 1) requestAnimationFrame(st);
+      };
+      requestAnimationFrame(st);
+    };
+    paint();
+    if (reduceMotion) { grow = 1; paint(); } else onceVisible(box, () => tween('grow', 1, 900), '0px 0px -25% 0px');
+    document.querySelectorAll('#lossSeg [data-z]').forEach((b) => b.addEventListener('click', () => {
+      document.querySelectorAll('#lossSeg [data-z]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      max = b.dataset.z === '1' ? 0.52 : 5.2; tween('shown', max);
+    }));
+    /* surbrillance d'une source */
+    let focus = -1;
+    const lgs = [...leg.querySelectorAll('.lg')];
+    const setFocus = (i) => { focus = i; segs.forEach((sg) => sg.el.setAttribute('opacity', i < 0 || sg.i === i ? 1 : 0.2)); lgs.forEach((l, k) => l.setAttribute('aria-pressed', String(i < 0 || k === i))); };
+    lgs.forEach((l, k) => l.addEventListener('click', () => setFocus(focus === k ? -1 : k)));
+    segs.forEach((sg) => {
+      sg.el.addEventListener('pointermove', () => {
+        tipEl.innerHTML = `<b>${SYS[sg.j][0]}</b><div><span style="--lc:${SRC[sg.i][1]}"><i></i>${SRC[sg.i][0]}</span><em>${fmt(sg.v, 2)}${NBSP}%</em></div>`;
+        placeTip(tipEl, box, svg, W, H, Number(sg.el.getAttribute('x')) + Number(sg.el.getAttribute('width')) / 2, Number(sg.el.getAttribute('y')));
+      });
+      sg.el.addEventListener('pointerleave', () => tipEl.classList.remove('show'));
+    });
+  })();
+
+  /* images des articles liés introuvables : on garde le fond coloré */
+  document.querySelectorAll('.rel-img img').forEach((img) => img.addEventListener('error', () => img.remove()));
+})();
 </script>
 </body>
 </html>
