@@ -2,794 +2,1941 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Bioluminescence abyssale · Imagerie µCT — IFRAS DSVT</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Le poisson-vipère des abysses tire sa lumière de ses repas | Publications IFRAS</title>
+<meta name="description" content="Privés de coelentérazine, six poissons-vipères maintenus sous 80 bar se sont éteints ; un seul repas les a rallumés en 12 heures, de la tête vers la queue.">
+<meta name="theme-color" content="#050b1e">
+<link rel="icon" type="image/png" sizes="1000x1000" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+
 <style>
+/* =========================================================
+   TOKENS (identiques aux autres pages)
+   ========================================================= */
 :root {
-  --bg-main:#050b1e; --bg-dark:#020617; --bg-light:#070f2b;
-  --border:#1b2555; --border-sub:#0e1535;
-  --accent:#22d3ee; --accent2:#4f6bed; --accent3:#34d399;
-  --text-main:#e6e6e6; --text-soft:#aab3d6; --text-muted:#4a5280;
-  --mono:"DM Mono",monospace;
+  --bg-main: #050b1e;
+  --bg-dark: #020617;
+  --bg-light: #070f2b;
+  --bg-raise: #0a1436;
+  --accent: #4f6bed;
+  --accent-hover: #3d5adb;
+  --accent-soft: rgba(79,107,237,.14);
+  --accent-line: rgba(79,107,237,.38);
+  --text-main: #e6e6e6;
+  --text-strong: #f5f7ff;
+  --text-soft: #aab3d6;
+  --text-mute: #8891b8;
+  --border: #1b2555;
+
+  /* Une couleur par type de contenu */
+  --t-sci: #60a5fa;
+  --t-ifras: #34d399;
+  --t-event: #f97316;
+  /* Types de publications IFRAS */
+  --t-lettre: #60a5fa;
+  --t-rapport: #34d399;
+  --t-hs: #f97316;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --header-h: 68px;
+  --subnav-h: 48px;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:"DM Sans",sans-serif;background:var(--bg-main);color:var(--text-main);line-height:1.7;}
-::-webkit-scrollbar{width:4px;} ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
-header{position:fixed;top:0;width:100%;z-index:1000;background:rgba(5,11,30,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
-.header-inner{max-width:1300px;margin:auto;padding:12px 30px;display:flex;align-items:center;justify-content:space-between;}
-.header-left{display:flex;align-items:center;gap:40px;}
-.logo-link img{height:60px;}
-.main-nav{list-style:none;display:flex;gap:32px;}
-.main-nav a{text-decoration:none;color:var(--text-soft);font-size:14px;letter-spacing:.05em;}
-.main-nav a:hover{color:white;}
-.login-btn{padding:8px 18px;border-radius:6px;border:1px solid var(--accent2);color:white;text-decoration:none;font-size:13px;}
-.login-btn:hover{background:var(--accent2);}
-.sub-nav{margin-top:84px;background:var(--bg-light);border-bottom:1px solid var(--border);}
-.sub-nav ul{max-width:1300px;margin:0 auto;padding:0 30px;list-style:none;display:flex;justify-content:space-between;}
-.sub-nav li{padding:14px 0;}
-.sub-nav a{color:var(--text-soft);text-decoration:none;font-size:14px;letter-spacing:.06em;}
-.sub-nav a:hover{color:white;}
-.sub-nav a.active{color:white;border-bottom:2px solid var(--accent2);padding-bottom:12px;}
-.pub-wrapper{max-width:900px;margin:0 auto;padding:52px 30px 100px;}
-.breadcrumb{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--text-muted);letter-spacing:.06em;margin-bottom:36px;font-family:var(--mono);}
-.breadcrumb a{color:var(--text-muted);text-decoration:none;}
-.breadcrumb a:hover{color:var(--accent);}
-.breadcrumb span{opacity:.4;}
 
-.meta-top{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
-.badge{font-size:10.5px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;font-weight:500;}
-.badge-j{background:rgba(34,211,238,.1);color:var(--accent);border:1px solid rgba(34,211,238,.25);}
-.badge-d{background:rgba(79,107,237,.1);color:var(--accent2);border:1px solid rgba(79,107,237,.2);}
-.badge-o{background:rgba(52,211,153,.07);color:var(--accent3);border:1px solid rgba(52,211,153,.15);}
-.badge-dt{background:rgba(255,255,255,.04);color:var(--text-muted);border:1px solid rgba(255,255,255,.08);}
+*, *::before, *::after { box-sizing: border-box; }
 
-.article-title{font-family:"DM Sans",sans-serif;font-size:clamp(18px,2.4vw,23px);font-weight:400;color:var(--text-main);line-height:1.5;letter-spacing:0;margin-bottom:18px;}
-.article-subtitle{font-size:15px;color:var(--text-soft);font-weight:300;line-height:1.65;margin-bottom:28px;font-style:italic;border-left:2px solid var(--accent);padding-left:16px;}
-.authors-block{background:var(--bg-light);border:1px solid var(--border);border-radius:10px;padding:16px 20px;display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;margin-bottom:28px;}
-.author-entry{display:flex;flex-direction:column;gap:2px;}
-.author-name{font-size:13.5px;font-weight:600;color:white;}
-.author-role{font-size:11px;color:var(--text-muted);letter-spacing:.04em;}
-.author-sep{width:1px;background:var(--border);align-self:stretch;}
-.cite-block{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:12px 16px;background:rgba(0,0,0,.25);border:1px solid var(--border-sub);border-radius:8px;}
-.cite-item{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;color:var(--text-muted);}
-.cite-label{color:var(--accent);font-weight:500;}
-.cite-sep{color:var(--border);}
-.art-divider{height:1px;background:linear-gradient(90deg,var(--accent) 0%,transparent 60%);margin:40px 0;opacity:.3;}
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 20px); }
 
-.abstract-box{background:rgba(34,211,238,.04);border:1px solid rgba(34,211,238,.14);border-radius:12px;padding:28px 32px;margin-bottom:44px;}
-.abstract-label{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;font-weight:500;}
-.abstract-text{font-size:14.5px;line-height:1.85;color:var(--text-soft);font-weight:300;}
-.kw-wrap{margin-top:16px;display:flex;flex-wrap:wrap;gap:7px;align-items:center;}
-.kw-lbl{font-size:11px;color:var(--text-muted);font-family:var(--mono);letter-spacing:.08em;}
-.kw-tag{font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--text-soft);}
-
-.section-heading{font-family:"Syne",sans-serif;font-size:18px;font-weight:700;color:white;margin:44px 0 16px;display:flex;align-items:center;gap:12px;}
-.section-heading::before{content:'';display:block;width:4px;height:18px;background:var(--accent);border-radius:2px;flex-shrink:0;}
-.section-heading.blue::before{background:var(--accent2);}
-.section-heading.green::before{background:var(--accent3);}
-.sub{font-family:"Syne",sans-serif;font-weight:700;color:var(--text-soft);margin:28px 0 10px;letter-spacing:.04em;text-transform:uppercase;font-size:11.5px;}
-p.bt{font-size:14.5px;color:var(--text-soft);line-height:1.85;font-weight:300;margin-bottom:16px;}
-.hl{border-left:3px solid var(--accent);background:rgba(34,211,238,.04);border-radius:0 8px 8px 0;padding:16px 20px;margin:24px 0;font-size:14px;color:var(--text-soft);font-style:italic;line-height:1.75;}
-.hl.green{border-color:var(--accent3);background:rgba(52,211,153,.04);}
-.hl.blue{border-color:var(--accent2);background:rgba(79,107,237,.05);}
-
-/* ===== FICHE ESPÈCE ===== */
-.species-header{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:1px;
-  background:var(--border);
-  border:1px solid var(--border);
-  border-radius:14px;
-  overflow:hidden;
-  margin:32px 0;
+body {
+  margin: 0;
+  font-family: "DM Sans", "Segoe UI", system-ui, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
-.species-visual{
-  background:var(--bg-dark);
-  padding:28px 24px;
-  display:flex;
-  flex-direction:column;
-  gap:14px;
+
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+[hidden] { display: none !important; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.skip-link {
+  position: absolute; left: 16px; top: -48px;
+  padding: 10px 16px;
+  background: var(--accent); color: #fff;
+  border-radius: var(--radius-sm);
+  z-index: 3000; text-decoration: none;
+  transition: top 160ms var(--ease-out);
 }
-.species-name-block{display:flex;flex-direction:column;gap:6px;}
-.species-sci{font-family:"Syne",sans-serif;font-size:18px;font-weight:700;color:white;font-style:italic;line-height:1.2;}
-.species-common{font-size:12px;color:var(--text-muted);font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;}
-.species-svg-wrap{display:flex;align-items:center;justify-content:center;flex:1;}
-.species-facts{background:var(--bg-light);display:flex;flex-direction:column;gap:1px;background:var(--border);}
-.fact-row{background:var(--bg-light);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;}
-.fact-lbl{font-size:11.5px;color:var(--text-muted);font-family:var(--mono);letter-spacing:.06em;}
-.fact-val{font-size:13px;font-family:var(--mono);color:white;text-align:right;}
-.fact-val.c{color:var(--accent);}
+.skip-link:focus { top: 12px; }
 
-/* ===== SCHÉMA ANATOMIQUE µCT — SVG inline ===== */
-.anatomy-block{margin:36px 0;background:var(--bg-light);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
-.anatomy-inner{padding:28px 24px 16px;background:rgba(0,0,0,.15);border-bottom:1px solid var(--border-sub);}
-.anatomy-label{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:18px;}
-.anatomy-cap{padding:12px 20px;font-size:12.5px;color:var(--text-muted);line-height:1.6;}
-.anatomy-cap strong{font-weight:600;color:var(--text-soft);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
+.container { max-width: 1300px; margin: 0 auto; padding: 0 30px; }
 
-/* ===== GRAPHIQUE INTENSITÉ µCT ===== */
-.chart-wrap{margin:36px 0;background:var(--bg-light);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
-.chart-inner{padding:28px 24px 16px;background:rgba(0,0,0,.15);border-bottom:1px solid var(--border-sub);}
-.chart-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:8px;}
-.chart-ttl{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);max-width:500px;line-height:1.5;}
-.legend{display:flex;gap:14px;flex-wrap:wrap;}
-.li{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);}
-.ld{width:8px;height:8px;border-radius:2px;}
-.chart-cap{padding:12px 20px;font-size:12.5px;color:var(--text-muted);line-height:1.6;}
-.chart-cap strong{font-weight:600;color:var(--text-soft);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
+/* =========================================================
+   BOUTONS
+   ========================================================= */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 22px;
+  border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 500;
+  text-decoration: none; white-space: nowrap;
+  border: 1px solid transparent;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.btn:active { transform: scale(0.97); }
+.btn i { font-size: 16px; transition: transform 200ms var(--ease-out); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-ghost { border-color: var(--accent-line); color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-ghost:hover { background: var(--accent-soft); border-color: var(--accent); }
+  .btn:hover i { transform: translateX(3px); }
+}
 
-/* ===== TABLEAU ===== */
-.tbl-wrap{margin:36px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);}
-.tbl-head{background:rgba(34,211,238,.08);padding:12px 20px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--border);}
-table{width:100%;border-collapse:collapse;font-size:13px;}
-thead th{background:rgba(0,0,0,.3);padding:11px 16px;text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--border-sub);font-weight:500;}
-tbody tr{border-bottom:1px solid var(--border-sub);transition:background .15s;}
-tbody tr:last-child{border-bottom:none;}
-tbody tr:hover{background:rgba(255,255,255,.025);}
-tbody td{padding:10px 16px;color:var(--text-soft);vertical-align:middle;font-weight:300;}
-.tm{font-family:var(--mono);font-size:12.5px;color:var(--text-main);}
-.tc{font-family:var(--mono);font-size:12.5px;color:var(--accent);}
-.tg{font-family:var(--mono);font-size:12.5px;color:var(--accent3);}
-.ty{font-family:var(--mono);font-size:12.5px;color:#facc15;font-weight:600;}
-.tr-hi{background:rgba(34,211,238,.04);}
-.tbl-note{padding:10px 20px;font-size:11.5px;color:var(--text-muted);background:rgba(0,0,0,.2);font-style:italic;border-top:1px solid var(--border-sub);}
+.text-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--text-soft);
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.text-link i { transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .text-link:hover { color: #fff; }
+  .text-link:hover i { transform: translateX(3px); }
+}
 
-/* FIGURE */
-.fig-wrap{margin:36px 0;background:var(--bg-light);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
-.fig-ph{height:240px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(34,211,238,.01));border-bottom:1px solid var(--border);gap:10px;}
-.fig-icon{font-size:34px;opacity:.2;}
-.fig-desc{font-size:11.5px;font-family:var(--mono);color:var(--text-muted);letter-spacing:.06em;}
-.fig-sub{font-size:11px;color:var(--text-muted);text-align:center;max-width:440px;line-height:1.55;}
-.fig-cap{padding:14px 20px;font-size:12.5px;color:var(--text-muted);line-height:1.6;}
-.fig-cap strong{font-weight:600;color:var(--text-soft);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
+/* =========================================================
+   HEADER (opaque)
+   ========================================================= */
+.site-header {
+  position: fixed; inset: 0 0 auto 0;
+  z-index: 2000;
+  height: var(--header-h);
+  background: rgba(5,11,30,.88);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.header-left { display: flex; align-items: center; gap: 44px; }
+.logo-link { display: flex; align-items: center; }
+.logo-link img { height: 44px; width: auto; }
 
-/* REFS */
-.refs-sec{margin-top:60px;padding-top:32px;border-top:1px solid var(--border);}
-.ref-ttl{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:20px;}
-.ref-list{counter-reset:ref;display:flex;flex-direction:column;gap:6px;}
-.ref-item{counter-increment:ref;display:flex;align-items:baseline;gap:12px;font-size:13px;line-height:1.55;color:var(--text-muted);padding:9px 14px;border-radius:6px;background:rgba(0,0,0,.15);border:1px solid var(--border-sub);}
-.ref-item::before{content:'[' counter(ref) ']';font-family:var(--mono);font-size:11px;color:var(--accent);flex-shrink:0;min-width:26px;}
-.ref-item b{color:var(--text-soft);font-weight:500;}
-.footnote{margin-top:48px;padding:20px 24px;background:rgba(0,0,0,.25);border:1px solid var(--border-sub);border-radius:10px;font-size:11.5px;color:var(--text-muted);line-height:1.7;}
-.footnote strong{color:var(--text-soft);}
+.main-nav { list-style: none; display: flex; gap: 6px; margin: 0; padding: 0; }
+.main-nav a {
+  position: relative; display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--text-soft);
+  font-size: 14px; letter-spacing: .02em;
+  border-radius: 6px;
+  transition: color 160ms ease;
+}
+.main-nav a::after {
+  content: ""; position: absolute;
+  left: 12px; right: 12px; bottom: 2px; height: 1px;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 200ms var(--ease-out);
+}
+.main-nav a[aria-current="page"] { color: #fff; }
+.main-nav a[aria-current="page"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .main-nav a:hover { color: #fff; }
+  .main-nav a:hover::after { transform: scaleX(1); }
+}
 
-.progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent),#67e8f9);z-index:9999;width:0%;transition:width .1s linear;}
-.toc-sidebar{position:fixed;right:32px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:100;}
-.toc-dot{width:6px;height:6px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s,transform .2s;position:relative;}
-.toc-dot:hover,.toc-dot.active{background:var(--accent);transform:scale(1.5);}
-.toc-dot::after{content:attr(data-label);position:absolute;right:14px;top:50%;transform:translateY(-50%);background:var(--bg-light);border:1px solid var(--border);border-radius:5px;padding:3px 8px;font-size:10.5px;color:var(--text-soft);white-space:nowrap;font-family:var(--mono);letter-spacing:.04em;opacity:0;pointer-events:none;transition:opacity .2s;}
-.toc-dot:hover::after{opacity:1;}
-@media(max-width:1100px){.toc-sidebar{display:none;}}
-@media(max-width:640px){.species-header{grid-template-columns:1fr;}}
+.header-right { display: flex; align-items: center; gap: 10px; }
+.header-right .btn { padding: 9px 18px; font-size: 13px; }
+
+.menu-toggle {
+  display: none;
+  width: 42px; height: 42px;
+  align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: #fff; font-size: 20px; cursor: pointer;
+  transition: transform 160ms var(--ease-out);
+}
+.menu-toggle:active { transform: scale(0.95); }
+
+.mobile-panel {
+  position: fixed; top: var(--header-h); left: 12px; right: 12px;
+  z-index: 1999;
+  padding: 10px;
+  background: rgba(7,15,43,.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(2,6,23,.6);
+  transform-origin: top right;
+  opacity: 0; transform: scale(0.96) translateY(-6px);
+  pointer-events: none; visibility: hidden;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s linear 220ms;
+}
+.mobile-panel.is-open {
+  opacity: 1; transform: none; pointer-events: auto; visibility: visible;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s;
+}
+.mobile-panel ul { list-style: none; margin: 0; padding: 0; }
+.mobile-panel a {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px; color: var(--text-main);
+  text-decoration: none; font-size: 16px; border-radius: 10px;
+}
+.mobile-panel a[aria-current="page"] { background: var(--accent-soft); color: #fff; }
+.mobile-panel .btn { width: 100%; justify-content: center; margin-top: 8px; }
+
+/* =========================================================
+   SOUS-NAVIGATION (ancres + section visible)
+   ========================================================= */
+.subnav {
+  position: sticky;
+  top: var(--header-h);
+  margin-top: var(--header-h);
+  z-index: 1500;
+  height: var(--subnav-h);
+  background: rgba(8,18,53,.94);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.subnav-list {
+  height: 100%;
+  list-style: none; margin: 0 auto; padding: 0 30px;
+  max-width: 1300px;
+  display: flex; align-items: stretch; justify-content: space-between;
+}
+.subnav-list li { display: flex; }
+.subnav-link {
+  position: relative;
+  display: flex; align-items: center; gap: 9px;
+  padding: 0 14px;
+  color: var(--text-soft);
+  text-decoration: none;
+  font-size: 14px; font-weight: 500;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.subnav-link i { font-size: 17px; color: var(--c); }
+.subnav-link::after {
+  content: ""; position: absolute;
+  left: 14px; right: 14px; bottom: -1px; height: 2px;
+  background: var(--c);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+.subnav-link[aria-current="true"] { color: #fff; }
+.subnav-link[aria-current="true"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .subnav-link:hover { color: #fff; }
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.site-footer {
+  margin-top: 100px;
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border);
+  padding: 36px 0;
+  font-size: 13px; color: var(--text-mute);
+}
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+/* =========================================================
+   ARTICLE
+   ========================================================= */
+:root {
+  --mono: "DM Mono", ui-monospace, Menlo, Consolas, monospace;
+  --c10: #3b82f6;   /* CMC-10Z */
+  --c20: #059669;   /* CMC-20Z */
+  --c30: #ea580c;   /* CMC-30Z */
+  --hot: #f97316;
+  --ok: #34d399;
+  --warn: #fbbf24;
+  --bad: #f87171;
+  --surface: #070f2b;
+  --line: #13204d;
+}
+html { scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 24px); }
+
+/* barre de lecture sous la sous-navigation */
+.progress {
+  position: fixed; left: 0; right: 0; top: calc(var(--header-h) + var(--subnav-h)); z-index: 1400;
+  height: 2px; background: transparent; pointer-events: none;
+}
+.progress span { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, var(--accent), #fb7185); transform-origin: left; transform: scaleX(0); }
+
+/* ----- En-tête de l'article ----- */
+.art-hero { position: relative; overflow: hidden; isolation: isolate; border-bottom: 1px solid var(--border); }
+.art-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(ellipse 45% 70% at 78% 45%, rgba(249,115,22,.16), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(79,107,237,.14), transparent 60%);
+}
+.art-hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 48px; align-items: center; padding: 48px 0 56px; }
+.crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 26px; padding: 0; list-style: none; font-size: 13px; color: var(--text-mute); }
+.crumbs a { color: var(--text-soft); text-decoration: none; transition: color 160ms ease; }
+.crumbs i { font-size: 11px; opacity: .6; }
+@media (hover: hover) and (pointer: fine) { .crumbs a:hover { color: #fff; } }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 11px; border-radius: 999px; font-size: 12.5px; font-weight: 500;
+  color: var(--b, var(--text-soft));
+  background: color-mix(in srgb, var(--b, var(--text-soft)) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--b, var(--text-soft)) 28%, transparent);
+}
+.badge i { font-size: 14px; }
+.art-title {
+  margin: 0 0 18px; font-family: "Syne", sans-serif; font-weight: 700;
+  font-size: clamp(30px, 3.6vw, 48px); line-height: 1.08; letter-spacing: -0.025em; color: var(--text-strong);
+  text-wrap: balance;
+}
+.art-lede { margin: 0 0 28px; max-width: 60ch; font-size: 18px; line-height: 1.6; color: var(--text-soft); font-weight: 300; }
+.authors { display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 0 0 22px; padding: 0; list-style: none; }
+.author { display: flex; align-items: center; gap: 10px; }
+.author .av { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-family: "Syne", sans-serif; font-size: 12px; font-weight: 700; color: #fff; background: linear-gradient(135deg, hsl(var(--ah) 55% 38%), hsl(var(--ah) 70% 60%)); }
+.author strong { display: block; font-size: 14px; font-weight: 500; color: var(--text-main); }
+.author small { display: block; font-size: 12.5px; color: var(--text-mute); }
+.meta-line { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 13px; color: var(--text-mute); }
+.meta-line span { display: inline-flex; align-items: center; gap: 7px; }
+.meta-line i { font-size: 15px; color: var(--text-soft); }
+.meta-line code { font-family: var(--mono); font-size: 12.5px; color: var(--text-soft); }
+
+.hero-in { opacity: 0; transform: translateY(12px); animation: heroIn 700ms var(--ease-out) forwards; animation-delay: calc(80ms + var(--i, 0) * 90ms); }
+@keyframes heroIn { to { opacity: 1; transform: none; } }
+
+/* illustration : capsule en rentrée */
+.reentry { position: relative; aspect-ratio: 1 / 0.86; max-width: 520px; justify-self: end; width: 100%; }
+.reentry canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.reentry svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.reentry .shock { animation: shock 2.4s var(--ease-in-out) infinite alternate; transform-origin: 62% 50%; }
+@keyframes shock { from { opacity: .75; transform: scale(.985); } to { opacity: 1; transform: scale(1.015); } }
+.reentry .glow { animation: glow 1.6s ease-in-out infinite alternate; }
+@keyframes glow { from { opacity: .55; } to { opacity: .95; } }
+.reentry-tag {
+  position: absolute; display: flex; align-items: center; gap: 8px;
+  padding: 6px 10px; border-radius: 8px; font-family: var(--mono); font-size: 12px; color: var(--text-soft);
+  background: rgba(2,6,23,.7); border: 1px solid var(--border); backdrop-filter: blur(6px);
+}
+.reentry-tag b { color: #fff; font-weight: 500; }
+.reentry-tag i { width: 7px; height: 7px; border-radius: 50%; background: var(--hot); }
+
+/* ----- Mise en page 3 colonnes ----- */
+.art-layout {
+  display: grid; grid-template-columns: 220px minmax(0, 720px) 280px; justify-content: space-between; gap: 48px;
+  padding-top: 48px;
+}
+.toc, .rail { position: sticky; top: calc(var(--header-h) + var(--subnav-h) + 28px); align-self: start; }
+.toc-title, .rail-title { margin: 0 0 14px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.toc ol { position: relative; list-style: none; margin: 0; padding: 0 0 0 14px; border-left: 1px solid var(--border); }
+.toc-ind { list-style: none; position: absolute; left: -1px; top: 0; width: 2px; height: 34px; background: var(--accent); border-radius: 2px; transition: transform 300ms var(--ease-out), height 300ms var(--ease-out); }
+.toc a {
+  display: flex; gap: 10px; padding: 7px 0; font-size: 14px; line-height: 1.35;
+  color: var(--text-mute); text-decoration: none; transition: color 160ms ease;
+}
+.toc a span { font-family: var(--mono); font-size: 12px; padding-top: 1px; color: inherit; opacity: .8; min-width: 16px; }
+.toc a.on { color: #fff; }
+@media (hover: hover) and (pointer: fine) { .toc a:hover { color: var(--text-main); } }
+.toc-time { display: flex; align-items: center; gap: 8px; margin-top: 18px; font-size: 13px; color: var(--text-mute); }
+.toc-time i { font-size: 15px; }
+
+/* ----- Colonne de droite ----- */
+.rail { display: grid; gap: 16px; max-height: calc(100vh - var(--header-h) - var(--subnav-h) - 44px); overflow-y: auto; scrollbar-width: none; overscroll-behavior: contain; }
+.rail::-webkit-scrollbar { display: none; }
+.rail-card { padding: 18px; border-radius: var(--radius); background: var(--bg-light); border: 1px solid var(--border); }
+.cite-text { margin: 0 0 14px; font-size: 13px; line-height: 1.6; color: var(--text-soft); }
+.cite-text em { color: var(--text-main); }
+.rail-actions { display: grid; gap: 8px; }
+.rbtn {
+  display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 40px; border-radius: 10px;
+  border: 1px solid var(--border); background: transparent; color: var(--text-main); font: inherit; font-size: 13.5px; cursor: pointer; text-decoration: none;
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out);
+}
+.rbtn i { font-size: 16px; }
+.rbtn:active { transform: scale(.97); }
+.rbtn.done { border-color: color-mix(in srgb, var(--ok) 45%, transparent); color: var(--ok); }
+@media (hover: hover) and (pointer: fine) { .rbtn:hover { border-color: var(--accent); background: var(--accent-soft); } }
+.fig-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.fig-list a { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: center; padding: 7px 8px; margin: 0 -8px; border-radius: 8px; font-size: 13.5px; color: var(--text-soft); text-decoration: none; transition: background-color 120ms ease, color 120ms ease; }
+.fig-list i { font-size: 17px; color: var(--accent); }
+@media (hover: hover) and (pointer: fine) { .fig-list a:hover { background: var(--bg-raise); color: #fff; } }
+.prog-link { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.prog-link .pi { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; font-size: 19px; color: var(--hot); background: rgba(249,115,22,.12); flex-shrink: 0; }
+.prog-link strong { display: block; font-size: 14px; font-weight: 500; }
+.prog-link small { display: block; font-size: 12.5px; color: var(--text-mute); }
+
+/* ----- Corps de texte ----- */
+.art { min-width: 0; counter-reset: fig; }
+.art p { margin: 0 0 18px; font-size: 17px; line-height: 1.75; color: #c3cae6; font-weight: 300; }
+.art p strong { color: var(--text-main); font-weight: 500; }
+.art h2 {
+  display: flex; align-items: baseline; gap: 14px;
+  margin: 64px 0 18px; font-family: "Syne", sans-serif; font-size: 26px; font-weight: 700; letter-spacing: -0.01em; color: var(--text-strong);
+}
+.art h2 .n { font-family: var(--mono); font-size: 14px; font-weight: 400; color: var(--accent); }
+.art h3 { margin: 34px 0 12px; font-size: 18px; font-weight: 500; color: var(--text-main); }
+sub, sup { line-height: 0; }
+
+/* L'essentiel */
+.essentials { padding: 26px; border-radius: 18px; background: linear-gradient(160deg, var(--bg-raise), var(--bg-light)); border: 1px solid var(--border); }
+.essentials-head { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; }
+.essentials-head i { font-size: 17px; color: var(--hot); }
+.kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 22px; }
+.kpi { padding: 16px; border-radius: 14px; background: rgba(2,6,23,.45); border: 1px solid var(--line); }
+.kpi strong { display: block; font-family: "Syne", sans-serif; font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -0.02em; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.kpi strong small { font-size: .55em; font-weight: 700; margin-left: 2px; color: var(--text-soft); }
+.kpi span { display: block; margin-top: 8px; font-size: 13.5px; line-height: 1.4; color: var(--text-soft); }
+.takeaways { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.takeaways li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 15.5px; line-height: 1.55; color: var(--text-main); }
+.takeaways i { font-size: 18px; color: var(--ok); margin-top: 2px; }
+
+/* Résumé */
+.abstract { margin-top: 28px; padding: 24px 26px; border-radius: 16px; border: 1px solid var(--border); background: rgba(79,107,237,.05); }
+.abstract .label { display: block; margin-bottom: 10px; font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+.abstract p { font-size: 15.5px !important; margin: 0 !important; }
+.kw { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+.kw span { padding: 3px 10px; border-radius: 999px; font-size: 12.5px; color: var(--text-soft); border: 1px solid var(--border); }
+
+/* Termes expliqués (infobulle) */
+.term {
+  position: relative; display: inline; padding: 0; border: 0; background: none; font: inherit; color: var(--text-main); cursor: help;
+  text-decoration: underline dotted color-mix(in srgb, var(--accent) 80%, transparent); text-decoration-thickness: 1.5px; text-underline-offset: 4px;
+}
+.tip {
+  position: absolute; z-index: 1600; width: min(300px, calc(100vw - 32px));
+  padding: 12px 14px; border-radius: 12px;
+  background: #0b1540; border: 1px solid var(--accent-line); box-shadow: 0 18px 50px rgba(0,0,0,.5);
+  font-size: 13.5px; line-height: 1.55; color: var(--text-soft); font-weight: 400;
+  opacity: 0; transform: scale(.97) translateY(4px); pointer-events: none;
+  transition: opacity 140ms ease, transform 160ms var(--ease-out);
+}
+.tip.show { opacity: 1; transform: none; }
+.tip.instant { transition: none; }
+.tip b { display: block; margin-bottom: 3px; color: #fff; font-weight: 500; font-size: 14px; }
+.cite { font-family: var(--mono); font-size: .78em; color: var(--accent); text-decoration: none; vertical-align: .15em; padding: 0 1px; border: 0; background: none; cursor: pointer; }
+
+/* Encadrés */
+.note { display: grid; grid-template-columns: 26px 1fr; gap: 12px; margin: 26px 0; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.note i { font-size: 22px; color: var(--nc, var(--accent)); }
+.note p { margin: 0 !important; font-size: 15.5px !important; color: var(--text-main) !important; }
+.note .nt { display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--nc, var(--accent)); font-weight: 500; }
+
+/* ----- Figures ----- */
+.fig { margin: 34px 0; border-radius: 18px; border: 1px solid var(--border); background: var(--surface); overflow: hidden; counter-increment: fig; scroll-margin-top: calc(var(--header-h) + var(--subnav-h) + 24px); }
+.fig-stage { position: relative; padding: 22px; background: radial-gradient(ellipse at 50% 0%, rgba(79,107,237,.06), transparent 70%); }
+.fig-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin-bottom: 16px; }
+.fig-name { font-size: 14.5px; font-weight: 500; color: var(--text-main); }
+.fig figcaption, .fig .cap { padding: 14px 22px 18px; border-top: 1px solid var(--line); font-size: 14px; line-height: 1.6; color: var(--text-soft); }
+.fig figcaption b, .fig .cap b { font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-right: 8px; }
+.fig svg { display: block; width: 100%; height: auto; overflow: visible; }
+.fig text { font-family: "DM Sans", sans-serif; }
+.fig .mono, .fig text.mono { font-family: var(--mono); }
+.ctrl { display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 12px; border-radius: 9px; border: 1px solid var(--border); background: var(--bg-light); color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out); }
+.ctrl i { font-size: 15px; }
+.ctrl:active { transform: scale(.96); }
+@media (hover: hover) and (pointer: fine) { .ctrl:hover { color: #fff; border-color: var(--accent); } }
+
+/* Fig. 1 trajectoire */
+.readouts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+.readout { padding: 10px 12px; border-radius: 10px; background: rgba(2,6,23,.5); border: 1px solid var(--line); }
+.readout small { display: block; font-size: 12px; color: var(--text-mute); }
+.readout strong { display: block; margin-top: 2px; font-family: var(--mono); font-size: 17px; font-weight: 500; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.readout.hot strong { color: var(--rc, var(--text-strong)); }
+.scrub { display: flex; align-items: center; gap: 12px; margin-top: 14px; }
+.scrub input { flex: 1; accent-color: var(--hot); }
+.scrub output { min-width: 52px; text-align: right; font-family: var(--mono); font-size: 13px; color: var(--text-soft); }
+
+/* Fig. 2 microstructure */
+.parts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.part { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease; }
+.part i { width: 10px; height: 10px; border-radius: 3px; background: var(--pc); }
+.part[aria-pressed="true"] { color: #fff; border-color: var(--pc); background: color-mix(in srgb, var(--pc) 14%, transparent); }
+.art .part-desc { margin: 12px 0 0; min-height: 44px; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+.part-desc b { color: #fff; font-weight: 500; }
+.micro [data-part] { transition: opacity 220ms ease; }
+.micro.focus [data-part] { opacity: .16; }
+.micro.focus [data-part].lit { opacity: 1; }
+
+/* Fig. 3 banc d'essai */
+.bench-v { display: none !important; }
+.flow { stroke-dasharray: 6 10; animation: flow 900ms linear infinite; }
+@keyframes flow { to { stroke-dashoffset: -32; } }
+.flame { animation: glow 900ms ease-in-out infinite alternate; }
+
+/* Tableau */
+.table-wrap { margin: 30px 0; border-radius: 16px; border: 1px solid var(--border); overflow: hidden; background: var(--surface); }
+.table-cap { padding: 14px 20px; font-size: 14px; color: var(--text-soft); border-bottom: 1px solid var(--line); }
+.table-cap b { font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-right: 8px; }
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { padding: 11px 12px; text-align: left; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; background: rgba(2,6,23,.4); border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 11px 12px; color: var(--text-soft); border-bottom: 1px solid var(--line); white-space: nowrap; font-variant-numeric: tabular-nums; }
+tr:last-child td { border-bottom: 0; }
+td:last-child, th:last-child { white-space: normal; }
+td:first-child, th:first-child { padding-left: 18px; }
+td.num { font-family: var(--mono); font-size: 13.5px; color: var(--text-main); }
+th.num, td.num { text-align: right; }
+tbody tr { transition: background-color 120ms ease; }
+@media (hover: hover) and (pointer: fine) { tbody tr:hover { background: rgba(79,107,237,.06); } }
+.mat { display: inline-flex; align-items: center; gap: 8px; color: var(--text-main); }
+.mat i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.state { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--sc); }
+.state i { font-size: 15px; }
+.table-note { padding: 12px 20px; font-size: 13px; color: var(--text-mute); border-top: 1px solid var(--line); background: rgba(2,6,23,.3); }
+
+/* Fig. 4 graphique */
+.legend { display: flex; flex-wrap: wrap; gap: 6px; }
+.lg { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-main); font: inherit; font-size: 13px; cursor: pointer; transition: opacity 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out); }
+.lg:active { transform: scale(.96); }
+.lg i { width: 14px; height: 3px; border-radius: 2px; background: var(--lc); }
+.lg[aria-pressed="false"] { opacity: .45; }
+.lg[aria-pressed="false"] i { background: transparent; border: 1px solid var(--lc); height: 5px; }
+.chart { position: relative; }
+.chart .series { transition: opacity 220ms ease; }
+.chart .series.off { opacity: 0; }
+.chart .draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); }
+.chart.drawn .draw { transition: stroke-dashoffset 1400ms var(--ease-in-out); stroke-dashoffset: 0; }
+.chart .dot { opacity: 0; transition: opacity 300ms ease 1100ms; }
+.chart.drawn .dot { opacity: 1; }
+.hit { fill: transparent; cursor: crosshair; }
+.xhair { opacity: 0; transition: opacity 120ms ease; pointer-events: none; }
+.xhair.show { opacity: 1; }
+.ctip {
+  position: absolute; z-index: 5; pointer-events: none; min-width: 170px;
+  padding: 10px 12px; border-radius: 10px; background: #0b1540; border: 1px solid var(--accent-line);
+  box-shadow: 0 14px 40px rgba(0,0,0,.5); font-size: 13px; color: var(--text-soft);
+  opacity: 0; transform: translateY(4px); transition: opacity 120ms ease, transform 140ms var(--ease-out);
+}
+.ctip.show { opacity: 1; transform: none; }
+.ctip b { display: block; margin-bottom: 6px; color: #fff; font-weight: 500; font-family: var(--mono); }
+.ctip div { display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+.ctip div span { display: inline-flex; align-items: center; gap: 7px; }
+.ctip div span i { width: 8px; height: 8px; border-radius: 50%; background: var(--lc); }
+.ctip div em { font-style: normal; font-family: var(--mono); color: var(--text-main); }
+.data-toggle { margin-top: 12px; }
+.data-table { margin-top: 12px; border-radius: 12px; border: 1px solid var(--line); overflow-x: auto; }
+.data-table[hidden] { display: none; }
+
+/* Fig. 5 carte thermique */
+.thermo { display: grid; grid-template-columns: minmax(0, 1fr) 70px; gap: 18px; align-items: stretch; }
+.thermo-plate { position: relative; aspect-ratio: 1; max-width: 420px; width: 100%; justify-self: center; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); cursor: crosshair; }
+.thermo-plate canvas { width: 100%; height: 100%; display: block; }
+.probe { position: absolute; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.5); pointer-events: none; opacity: 0; transition: opacity 120ms ease; }
+.probe.show { opacity: 1; }
+.probe-read { position: absolute; left: 12px; top: 12px; padding: 6px 10px; border-radius: 8px; background: rgba(2,6,23,.78); font-family: var(--mono); font-size: 13px; color: #fff; pointer-events: none; }
+.scale { display: grid; grid-template-columns: 14px 1fr; gap: 8px; align-self: center; height: min(100%, 420px); aspect-ratio: auto; }
+.scale-bar { display: block; width: 14px; height: 100%; border-radius: 6px; }
+.scale-labels { display: flex; flex-direction: column; justify-content: space-between; font-family: var(--mono); font-size: 12px; color: var(--text-soft); }
+
+/* Fig. 6 couche protectrice */
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.duo-card { border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.4); overflow: hidden; }
+.duo-card h4 { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0; padding: 12px 14px; font-size: 14px; font-weight: 500; color: var(--text-main); border-bottom: 1px solid var(--line); }
+.duo-card h4 span { display: inline-flex; align-items: center; gap: 8px; }
+.duo-card h4 i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.duo-card svg { aspect-ratio: 1.25; }
+.duo-stats { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
+.duo-stats div { padding: 10px 14px; }
+.duo-stats div + div { border-left: 1px solid var(--line); }
+.duo-stats small { display: block; font-size: 12px; color: var(--text-mute); }
+.duo-stats strong { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--text-main); font-variant-numeric: tabular-nums; }
+.verdict { font-size: 12px; font-weight: 500; padding: 2px 8px; border-radius: 999px; color: var(--vc); background: color-mix(in srgb, var(--vc) 14%, transparent); transition: color 200ms ease, background-color 200ms ease; }
+
+/* Équation */
+.eq { margin: 26px 0; padding: 22px; border-radius: 14px; background: rgba(2,6,23,.5); border: 1px solid var(--border); text-align: center; font-family: var(--mono); font-size: 17px; color: #d5dcfb; overflow-x: auto; white-space: nowrap; }
+.eq-parts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: -12px 0 26px; }
+.eq-part { padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-light); font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.eq-part b { display: block; margin-bottom: 2px; font-family: var(--mono); font-weight: 500; color: #fff; }
+
+/* Suite du programme */
+.next { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.next li { position: relative; padding: 16px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.next li::before { content: ""; position: absolute; top: 20px; right: -13px; width: 13px; height: 1px; background: var(--border); }
+.next li:last-child::before { display: none; }
+.next time { font-family: var(--mono); font-size: 12.5px; color: var(--nc, var(--accent)); }
+.next strong { display: block; margin: 6px 0 4px; font-size: 15px; font-weight: 500; color: var(--text-main); }
+.next span { font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.next li.now { border-color: color-mix(in srgb, var(--ok) 45%, var(--border)); }
+
+/* Références */
+.refs { list-style: none; margin: 0; padding: 0; counter-reset: r; display: grid; gap: 4px; }
+.refs li { counter-increment: r; position: relative; display: block; padding: 10px 12px 10px 54px; margin: 0 -12px; border-radius: 10px; font-size: 14px; line-height: 1.6; color: var(--text-soft); transition: background-color 600ms ease; scroll-margin-top: calc(var(--header-h) + var(--subnav-h) + 40px); }
+.refs li::before { content: "[" counter(r) "]"; position: absolute; left: 12px; top: 11px; font-family: var(--mono); font-size: 13px; color: var(--accent); }
+.refs li.flash { background: rgba(79,107,237,.16); transition: none; }
+.refs em { color: var(--text-main); }
+.decl { margin-top: 28px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.35); display: grid; gap: 8px; font-size: 13.5px; line-height: 1.6; color: var(--text-mute); }
+.decl strong { color: var(--text-soft); font-weight: 500; }
+
+/* Articles liés */
+.related { margin-top: 72px; padding-top: 40px; border-top: 1px solid var(--border); }
+.related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
+.rel { display: flex; flex-direction: column; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); background: var(--bg-light); text-decoration: none; transition: border-color 200ms ease, transform 220ms var(--ease-out); }
+.rel-img { aspect-ratio: 16 / 9; overflow: hidden; background: linear-gradient(135deg, color-mix(in srgb, var(--c) 30%, var(--bg-raise)), var(--bg-light)); }
+.rel-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 500ms var(--ease-out); }
+.rel-body { padding: 16px; }
+.rel-body small { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--text-soft); }
+.rel-body small::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c); }
+.rel-body strong { display: block; margin-top: 6px; font-size: 16px; font-weight: 500; line-height: 1.4; color: var(--text-main); }
+.rel:active { transform: scale(.98); }
+@media (hover: hover) and (pointer: fine) {
+  .rel:hover { border-color: color-mix(in srgb, var(--c) 55%, var(--border)); transform: translateY(-3px); }
+  .rel:hover .rel-img img { transform: scale(1.04); }
+}
+.section-title { margin: 0; font-family: "Syne", sans-serif; font-size: 22px; font-weight: 700; color: var(--text-strong); }
+
+/* apparition des figures */
+.js .rv { opacity: 0; transform: translateY(16px); transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
+.js .rv.in { opacity: 1; transform: none; }
+
+.toast {
+  position: fixed; left: 50%; bottom: 24px; z-index: 4000;
+  display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 12px;
+  background: #0b1540; border: 1px solid rgba(52,211,153,.35); color: #a7f3d0; font-size: 14px;
+  box-shadow: 0 16px 40px rgba(0,0,0,.5);
+  transform: translate(-50%, 16px); opacity: 0; pointer-events: none;
+  transition: transform 260ms var(--ease-out), opacity 200ms ease;
+}
+.toast.show { transform: translate(-50%, 0); opacity: 1; }
+.toast i { font-size: 18px; color: var(--ok); }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1320px) {
+  .art-layout { grid-template-columns: minmax(0, 720px) 280px; justify-content: center; }
+  .toc { display: none; }
+}
+@media (max-width: 1060px) {
+  .art-layout { grid-template-columns: minmax(0, 720px); }
+  .rail { position: static; max-height: none; overflow: visible; grid-template-columns: repeat(2, minmax(0, 1fr)); order: 2; }
+  .rail .rail-figs { display: none; }
+  .art-hero-grid { grid-template-columns: 1fr; gap: 10px; padding-bottom: 36px; }
+  .reentry { justify-self: center; max-width: 440px; order: -1; margin-top: -10px; }
+}
+@media (max-width: 860px) {
+  .main-nav, .header-right .btn-desktop { display: none; }
+  .menu-toggle { display: inline-flex; }
+}
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .subnav-list { padding: 0 20px; overflow-x: auto; scrollbar-width: none; }
+  .subnav-link { padding: 0 10px; font-size: 13.5px; }
+  .art-lede { font-size: 16.5px; }
+  .art p { font-size: 16px; }
+  .art h2 { font-size: 22px; margin-top: 52px; }
+  .kpis { grid-template-columns: 1fr; }
+  .kpi { display: flex; align-items: baseline; gap: 14px; }
+  .kpi span { margin: 0; }
+  .essentials { padding: 20px; }
+  .fig-stage { padding: 16px; }
+  .fig figcaption, .fig .cap { padding: 12px 16px 16px; }
+  .readouts { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .readout strong { font-size: 14px; }
+  .thermo { grid-template-columns: 1fr 56px; gap: 10px; }
+  .duo { grid-template-columns: 1fr; }
+  .eq { font-size: 14px; }
+  #trajSvg text { font-size: 22px; }
+  .bench-h { display: none !important; }
+  .bench-v { display: block !important; }
+  .duo-card svg text { font-size: 13px; }
+  .eq-parts { grid-template-columns: 1fr; }
+  .next { grid-template-columns: 1fr; }
+  .next li::before { display: none; }
+  .rail { grid-template-columns: 1fr; }
+  .related-grid { grid-template-columns: 1fr; }
+  .site-footer { margin-top: 72px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
+  .hero-in { opacity: 1; transform: none; }
+}
+
+/* impression / PDF : texte seul, figures conservées */
+@media print {
+  .site-header, .subnav, .mobile-panel, .progress, .toc, .rail, .related, .site-footer, .ctrl, .legend, .scrub, .parts, .skip-link { display: none !important; }
+  body { background: #fff; color: #111; }
+  .art-layout { display: block; padding: 0; }
+  .art p, .art h2, .art h3, .art-title, .art-lede { color: #111 !important; }
+  .fig, .table-wrap, .essentials, .abstract, .note { break-inside: avoid; }
+  .js .rv { opacity: 1; transform: none; }
+}
+
+/* =========================================================
+   ARTICLE 02 : PROPULSION IONIQUE
+   ========================================================= */
+.art-hero--ion::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 82% 45%, rgba(59,130,246,.2), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(249,115,22,.1), transparent 60%);
+}
+.thruster .glow { animation: glow 1.4s ease-in-out infinite alternate; }
+
+.seg { display: inline-flex; padding: 3px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-light); }
+.seg button { height: 30px; padding: 0 12px; border: 0; border-radius: 7px; background: none; color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out); }
+.seg button:active { transform: scale(.96); }
+.seg button[aria-pressed="true"] { background: var(--bg-raise); color: #fff; box-shadow: inset 0 0 0 1px var(--border); }
+@media (hover: hover) and (pointer: fine) { .seg button:hover { color: #fff; } }
+
+.lg.static { cursor: default; }
+#howSvg .zone { transition: opacity 240ms ease; }
+#howSvg.focus .zone { opacity: .22; }
+#howSvg.focus .zone.lit { opacity: 1; }
+
+tr.hi td { background: rgba(59,130,246,.07); }
+td.gain { color: var(--ok); }
+
+.multiples { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.multiples .chart { border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.35); padding: 8px 4px 0; }
+
+.wear { display: grid; grid-template-columns: minmax(0, 1fr) 170px; gap: 16px; align-items: center; }
+.discs { display: grid; gap: 12px; }
+.disc { display: grid; justify-items: center; gap: 4px; padding: 10px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.35); }
+.disc svg { width: 110px; height: 110px; }
+.disc span { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--text-soft); }
+.disc span i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.disc strong { font-family: var(--mono); font-size: 14px; font-weight: 500; color: var(--text-main); }
+.disc.over { border-color: rgba(248,113,113,.5); }
+.disc.over strong { color: var(--bad); }
+
+@media (max-width: 640px) {
+  .multiples { grid-template-columns: 1fr; }
+  .wear { grid-template-columns: 1fr; }
+  .discs { grid-template-columns: 1fr 1fr; }
+  .disc svg { width: 96px; height: 96px; }
+  #howSvg text { display: none; }
+  .readouts { grid-template-columns: 1fr; gap: 6px; }
+  .readout { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 8px 12px; }
+  .readout strong { margin: 0; white-space: nowrap; }
+  #orbitSvg text { font-size: 18px; }
+}
+#gridSvg, #orbitSvg, #howSvg { overflow: hidden; border-radius: 10px; }
+
+/* =========================================================
+   ARTICLE 03 : ASTROBIOLOGIE
+   ========================================================= */
+.art-hero--mars::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 78% 45%, rgba(234,88,12,.18), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(52,211,153,.12), transparent 60%);
+}
+.art-hero--mars .reentry svg { overflow: visible; }
+
+/* jauges Terre / Mars */
+.gauges { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 22px; }
+.gauge { display: grid; gap: 8px; padding: 14px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.4); }
+.gauge-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.gauge-top span { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--text-soft); }
+.gauge-top span i { font-size: 16px; color: var(--text-mute); }
+.gauge-top strong { font-family: var(--mono); font-size: 14.5px; font-weight: 500; color: var(--text-strong); white-space: nowrap; transition: color 200ms ease; }
+.gauge-bar { position: relative; height: 8px; border-radius: 8px; background: linear-gradient(90deg, rgba(52,211,153,.18), rgba(251,191,36,.18) 60%, rgba(248,113,113,.22)); }
+.gauge-fill { position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(90deg, #34d399, #fbbf24 60%, #f87171); transform-origin: left; transform: scaleX(var(--v, 0)); transition: transform 600ms var(--ease-out); clip-path: inset(0 round 8px); }
+.gauge-limit { position: absolute; top: -5px; bottom: -5px; width: 2px; border-radius: 2px; background: #fff; left: var(--l); }
+.gauge-foot { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; color: var(--text-mute); }
+.gauge.beyond .gauge-top strong { color: #fca5a5; }
+
+/* fiches espèces */
+.orgs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 26px 0 12px; }
+.org { position: relative; display: grid; grid-template-columns: 64px 1fr; gap: 14px; padding: 16px; border-radius: 16px; border: 1px solid var(--border); background: var(--bg-light); overflow: hidden; }
+.org::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--oc); }
+.org-pic { width: 64px; height: 64px; border-radius: 14px; background: radial-gradient(circle, color-mix(in srgb, var(--oc) 22%, transparent), rgba(2,6,23,.6)); }
+.org-kind { display: block; font-size: 12px; color: var(--text-mute); }
+.org h4 { margin: 2px 0 6px; font-size: 16px; font-weight: 500; color: var(--text-strong); }
+.art .org p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+.org-state { grid-column: 1 / -1; justify-self: start; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 500; color: var(--sc); background: color-mix(in srgb, var(--sc) 12%, transparent); border: 1px solid color-mix(in srgb, var(--sc) 28%, transparent); }
+.art .small-note { font-size: 14px; color: var(--text-mute); }
+
+/* journal des cultures */
+.dishes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.dish { display: grid; justify-items: center; gap: 6px; padding: 12px 8px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.4); }
+.dish svg { width: 100%; max-width: 132px; aspect-ratio: 1; }
+.dish svg circle.cell { transition: opacity 400ms ease, fill 400ms ease; }
+.dish span { font-size: 12.5px; color: var(--text-soft); text-align: center; }
+.dish strong { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--text-strong); }
+.event { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-items: baseline; margin-top: 14px; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-light); min-height: 78px; }
+.event time { font-family: var(--mono); font-size: 13px; color: var(--ec, var(--accent)); grid-row: span 2; }
+.event strong { font-size: 14.5px; font-weight: 500; color: var(--text-main); }
+.event span { font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.event.swap { animation: evIn 260ms var(--ease-out); }
+@keyframes evIn { from { opacity: 0; transform: translateY(4px); } }
+.scrub { position: relative; }
+.ticks { position: absolute; left: 0; right: 0; top: -6px; height: 6px; pointer-events: none; }
+
+/* comparaison microscope */
+.compare { position: relative; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; background: #000; cursor: ew-resize; touch-action: pan-y; user-select: none; }
+.compare canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+#micB { clip-path: inset(0 0 0 var(--p, 50%)); }
+.cmp-label { position: absolute; top: 12px; padding: 4px 10px; border-radius: 8px; font-family: var(--mono); font-size: 12.5px; color: #fff; background: rgba(0,0,0,.55); pointer-events: none; }
+.cmp-label.l { left: 12px; }
+.cmp-label.r { right: 12px; }
+.cmp-handle { position: absolute; top: 0; bottom: 0; left: var(--p, 50%); width: 2px; margin-left: -1px; background: #fff; pointer-events: none; }
+.cmp-handle i { position: absolute; top: 50%; left: 50%; width: 38px; height: 38px; margin: -19px 0 0 -19px; border-radius: 50%; display: grid; place-items: center; font-size: 18px; color: #050b1e; background: #fff; box-shadow: 0 6px 20px rgba(0,0,0,.5); transition: transform 160ms var(--ease-out); }
+.compare:active .cmp-handle i { transform: scale(.92); }
+.compare:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+#chamberSvg { overflow: hidden; border-radius: 10px; }
+
+@media (max-width: 640px) {
+  .gauges { grid-template-columns: 1fr; }
+  .orgs { grid-template-columns: 1fr; }
+  .dishes { grid-template-columns: 1fr 1fr; }
+  #chamberSvg text { font-size: 15px; }
+  #chamberSvg text.side { display: none; }
+  .compare { aspect-ratio: 4 / 3; }
+}
+
+/* =========================================================
+   ARTICLE 04 : PHYSIQUE QUANTIQUE
+   ========================================================= */
+.art-hero--q::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 78% 40%, rgba(168,85,247,.18), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(59,130,246,.12), transparent 60%);
+}
+.qlink svg { overflow: hidden; -webkit-mask-image: radial-gradient(ellipse 52% 52% at 60% 44%, #000 55%, transparent 100%); mask-image: radial-gradient(ellipse 52% 52% at 60% 44%, #000 55%, transparent 100%); }
+
+/* jeu de Bell */
+.bell { display: grid; grid-template-columns: 150px minmax(0, 1fr) 150px; gap: 16px; align-items: center; }
+.bell-side { display: grid; justify-items: center; gap: 8px; padding: 12px; border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.4); }
+.bell-who { font-size: 13px; color: var(--text-soft); }
+.dial { width: 96px; height: 96px; }
+.dial .needle { transition: transform 260ms var(--ease-out); transform-origin: 50px 50px; }
+.bell-angle { display: grid; gap: 6px; width: 100%; font-size: 12px; color: var(--text-mute); text-align: center; }
+.bell-angle output { font-family: var(--mono); color: var(--text-main); }
+.bell-angle input { width: 100%; accent-color: #a855f7; }
+.bell-mid { display: grid; gap: 14px; min-width: 0; }
+.bell-rows { display: grid; gap: 8px; padding: 14px; border-radius: 12px; background: rgba(2,6,23,.5); border: 1px solid var(--line); overflow: hidden; }
+.bell-row { display: flex; gap: 5px; justify-content: flex-end; height: 16px; }
+.bell-row i { flex: 0 0 16px; height: 16px; border-radius: 4px; border: 2px solid #c084fc; animation: pop 260ms var(--ease-out); }
+.bell-row i.on { background: #c084fc; }
+.bell-row i.diff { border-color: #f87171; }
+.bell-row i.diff.on { background: #f87171; }
+@keyframes pop { from { transform: scale(.6); opacity: 0; } }
+.bell-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.bell-stats div { padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg-light); }
+.bell-stats small { display: block; font-size: 12px; color: var(--text-mute); }
+.bell-stats strong { display: block; margin-top: 2px; font-family: var(--mono); font-size: 18px; font-weight: 500; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+
+/* pertes : gaufre de points */
+.waffle { position: relative; border-radius: 12px; overflow: hidden; background: #03050f; border: 1px solid var(--line); aspect-ratio: 2.2; }
+.waffle canvas { width: 100%; height: 100%; display: block; }
+
+#setupSvg [data-part] { transition: opacity 220ms ease; }
+#setupSvg.focus [data-part] { opacity: .18; }
+#setupSvg.focus [data-part].lit { opacity: 1; }
+#setupSvg, #bellGauge { overflow: visible; }
+
+@media (max-width: 760px) {
+  .bell { grid-template-columns: 1fr 1fr; }
+  .bell-mid { grid-column: 1 / -1; order: 3; }
+}
+@media (max-width: 640px) {
+  .waffle { aspect-ratio: 1.3; }
+  .dial { width: 80px; height: 80px; }
+  #setupSvg text { display: none; }
+}
+
+/* =========================================================
+   ARTICLE 06 : BIOLUMINESCENCE ABYSSALE
+   ========================================================= */
+.art-hero--abyss::before {
+  background:
+    linear-gradient(180deg, rgba(56,189,248,.10), transparent 55%),
+    radial-gradient(ellipse 45% 70% at 76% 50%, rgba(34,211,238,.12), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(79,107,237,.1), transparent 60%);
+}
+.abyss canvas, .abyss svg { -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 55%, transparent 100%); mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 55%, transparent 100%); }
+.abyss svg { overflow: hidden; }
+.abyss { overflow: hidden; }
+.abyss .reentry-tag { z-index: 2; }
+.fish-bob { animation: bob 6s var(--ease-in-out) infinite alternate; transform-box: fill-box; transform-origin: center; }
+@keyframes bob { from { transform: translate(-6px, -5px) rotate(-1.2deg); } to { transform: translate(6px, 5px) rotate(1deg); } }
+.pulse { animation: pulse 2.6s ease-in-out infinite alternate; animation-delay: var(--d, 0s); }
+@keyframes pulse { from { opacity: .45; } to { opacity: 1; } }
+
+/* Fig. 1 anatomie */
+.anat { margin-top: 4px; }
+.anat [data-part] { transition: opacity 220ms ease; }
+.anat.focus [data-part] { opacity: .12; }
+.anat.focus [data-part].lit { opacity: 1; }
+
+/* Fig. 2 réaction */
+.chem { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 22px; align-items: center; }
+.chem svg { max-width: 300px; justify-self: center; }
+.chem-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.chem-steps li { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start; padding: 10px 12px; border-radius: 12px; border: 1px solid transparent; color: var(--text-mute); font-size: 14px; line-height: 1.5; transition: background-color 260ms ease, border-color 260ms ease, color 260ms ease; }
+.chem-steps li strong { display: block; color: var(--text-soft); font-weight: 500; font-size: 14.5px; transition: color 260ms ease; }
+.chem-steps li.on { background: rgba(34,211,238,.06); border-color: rgba(34,211,238,.28); color: var(--text-soft); }
+.chem-steps li.on strong { color: #fff; }
+.cs-n { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-family: var(--mono); font-size: 12.5px; border: 1px solid var(--border); color: var(--text-mute); transition: background-color 260ms ease, color 260ms ease, border-color 260ms ease; }
+.chem-steps li.on .cs-n { background: #22d3ee; border-color: #22d3ee; color: #03101f; }
+.art .eq { margin: 16px 0 0; padding: 12px 14px; border-radius: 12px; background: rgba(2,6,23,.5); border: 1px solid var(--line); font-family: var(--mono); font-size: 13.5px; color: var(--text-soft); text-align: center; line-height: 1.9; }
+@media (max-width: 760px) { .art .eq { font-size: 12.5px; } }
+.art .eq { white-space: normal; overflow-wrap: anywhere; }
+.eq b { color: #67e8f9; font-weight: 500; }
+.eq-arrow { display: inline-flex; flex-direction: column; align-items: center; margin: 0 8px; font-size: 11px; color: #a78bfa; vertical-align: middle; line-height: 1.1; }
+.eq-arrow::after { content: "⟶"; font-size: 18px; color: var(--text-soft); }
+
+/* Fig. 3 aquarium */
+.flow { stroke-dasharray: 6 10; animation: flow 900ms linear infinite; }
+@keyframes flow { to { stroke-dashoffset: -32; } }
+.needle { transform-box: view-box; animation: needle 3s var(--ease-in-out) infinite alternate; }
+@keyframes needle { from { transform: rotate(-2deg); } to { transform: rotate(2deg); } }
+.proto { list-style: none; margin: 16px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; counter-reset: st; }
+.proto li { position: relative; display: grid; grid-template-columns: 30px 1fr; gap: 10px; align-items: start; padding: 12px; border-radius: 12px; border: 1px solid var(--border); background: rgba(2,6,23,.4); font-size: 13.5px; line-height: 1.45; color: var(--text-soft); }
+.proto li i { font-size: 22px; color: var(--pc); }
+.proto li strong { display: block; color: #fff; font-weight: 500; font-size: 14.5px; }
+.proto li + li::before { content: ""; position: absolute; left: -11px; top: 50%; width: 10px; height: 1px; background: var(--border); }
+
+/* Fig. 4 rallumage */
+.relight { border-radius: 12px; background: radial-gradient(ellipse at 50% 60%, #04112a, #01040d 75%); border: 1px solid var(--line); overflow: hidden; }
+.relight svg { overflow: hidden; }
+#relRange { accent-color: #22d3ee; }
+
+/* Fig. 6 contre-illumination */
+.ci { display: grid; grid-template-columns: minmax(0, 1fr) 220px; gap: 18px; align-items: center; }
+.ci svg { border-radius: 12px; border: 1px solid var(--line); overflow: hidden; }
+.ci-info h4 { margin: 0 0 6px; font-size: 17px; font-weight: 500; color: var(--text-strong); }
+.art .ci-info p { margin: 0 0 12px; font-size: 14.5px; line-height: 1.6; color: var(--text-soft); }
+.ci-bar { position: relative; height: 8px; border-radius: 99px; background: linear-gradient(90deg, #020617, #1d4e89 50%, #bae6fd); margin: 18px 0 6px; }
+.ci-bar i { position: absolute; top: 50%; width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 2px solid #22d3ee; transform: translate(-50%, -50%); transition: left 500ms var(--ease-out); }
+.ci-bar b { position: absolute; left: 50%; top: -4px; bottom: -4px; width: 1px; background: rgba(255,255,255,.55); }
+.ci-scale { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--text-mute); }
+.verdict-pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 500; color: var(--vc); background: color-mix(in srgb, var(--vc) 12%, transparent); border: 1px solid color-mix(in srgb, var(--vc) 30%, transparent); }
+.chart svg { display: block; width: 100%; }
+
+@media (max-width: 900px) {
+  .ci { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .chem { grid-template-columns: 1fr; }
+  .chem svg { max-width: 240px; }
+  .proto { grid-template-columns: 1fr; }
+  .proto li + li::before { display: none; }
+  .tank-side { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fish-bob, .pulse, .flow, .needle { animation: none; }
+}
+
 </style>
+<script>document.documentElement.classList.add('js');</script>
 </head>
+
 <body>
 
-<div class="progress-bar" id="progressBar"></div>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
 
-<header>
-  <div class="header-inner">
+<!-- ===== HEADER ===== -->
+<header class="site-header" id="header">
+  <div class="container header-inner">
     <div class="header-left">
-      <a href="../index.html" class="logo-link"><img src="../logo.png" alt="IFRAS"></a>
-      <nav><ul class="main-nav">
-        <li><a href="../index.html">Accueil</a></li>
-        <li><a href="../recherche.html">Recherche</a></li>
-        <li><a href="../programmes.html">Programmes</a></li>
-        <li><a href="../publications.html">Publications</a></li>
-      </ul></nav>
+      <a href="../index.html" class="logo-link" aria-label="IFRAS, accueil">
+        <img src="../logo.png" alt="Logo IFRAS" width="44" height="44">
+      </a>
+      <nav aria-label="Navigation principale">
+        <ul class="main-nav">
+          <li><a href="../index.html">Accueil</a></li>
+          <li><a href="../recherche.html">Recherche</a></li>
+          <li><a href="../programmes.html">Programmes</a></li>
+          <li><a href="../publications.html" aria-current="page">Publications</a></li>
+        </ul>
+      </nav>
     </div>
-    <div class="header-right"><a href="../connexion.html" class="login-btn">Connexion</a></div>
+    <div class="header-right">
+      <a href="../connexion.html" class="btn btn-ghost btn-desktop">Connexion</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-panel" aria-label="Ouvrir le menu">
+        <i class="ph-light ph-list" aria-hidden="true"></i>
+      </button>
+    </div>
   </div>
 </header>
 
-<div class="sub-nav">
+<div class="mobile-panel" id="mobile-panel">
   <ul>
-    <li><a href="../publications-scientifiques.html" class="active">Publications scientifiques</a></li>
-    <li><a href="../publications-ifras.html">Publications IFRAS</a></li>
-    <li><a href="../evenements.html">Événements</a></li>
+    <li><a href="../index.html">Accueil <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../recherche.html">Recherche <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../programmes.html">Programmes <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../publications.html" aria-current="page">Publications <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
   </ul>
+  <a href="../connexion.html" class="btn btn-primary">Connexion</a>
 </div>
 
-<nav class="toc-sidebar">
-  <div class="toc-dot active" data-label="Résumé"      data-target="s0"></div>
-  <div class="toc-dot"        data-label="Espèce"      data-target="s1"></div>
-  <div class="toc-dot"        data-label="Protocole"   data-target="s2"></div>
-  <div class="toc-dot"        data-label="Imagerie"    data-target="s3"></div>
-  <div class="toc-dot"        data-label="Résultats"   data-target="s4"></div>
-  <div class="toc-dot"        data-label="Discussion"  data-target="s5"></div>
-  <div class="toc-dot"        data-label="Références"  data-target="s6"></div>
+<!-- ===== SOUS-NAVIGATION (mêmes rubriques que publications.html) ===== -->
+<nav class="subnav" id="subnav" aria-label="Rubriques des publications">
+  <ul class="subnav-list">
+    <li><a class="subnav-link" href="../publications-scientifiques.html" aria-current="true" style="--c:var(--t-sci)"><i class="ph-light ph-article" aria-hidden="true"></i>Publications scientifiques</a></li>
+    <li><a class="subnav-link" href="../publications-ifras.html" style="--c:var(--t-ifras)"><i class="ph-light ph-book-open" aria-hidden="true"></i>Publications IFRAS</a></li>
+    <li><a class="subnav-link" href="../evenements.html" style="--c:var(--t-event)"><i class="ph-light ph-calendar-dots" aria-hidden="true"></i>Événements</a></li>
+  </ul>
 </nav>
 
-<div class="pub-wrapper">
+<div class="progress" aria-hidden="true"><span id="progress"></span></div>
 
-  <nav class="breadcrumb">
-    <a href="../publications.html">Publications</a>
-    <span>/</span>
-    <a href="../publications-scientifiques.html">Publications scientifiques</a>
-    <span>/</span>
-    DSVT · 2025 · Biologie des profondeurs
+<main id="contenu">
+
+<!-- ===== EN-TÊTE DE L'ARTICLE ===== -->
+<header class="art-hero art-hero--abyss">
+  <div class="container art-hero-grid">
+    <div>
+      <ol class="crumbs hero-in" style="--i:0" aria-label="Fil d'Ariane">
+        <li><a href="../publications.html">Publications</a></li>
+        <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+        <li><a href="../publications-scientifiques.html">Publications scientifiques</a></li>
+        <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+        <li aria-current="page">Océans profonds</li>
+      </ol>
+      <div class="badges hero-in" style="--i:1">
+        <span class="badge" style="--b:#38bdf8"><i class="ph-light ph-waves" aria-hidden="true"></i>Océans profonds · DSVT</span>
+        <span class="badge" style="--b:#60a5fa"><i class="ph-light ph-seal-check" aria-hidden="true"></i>Évalué par les pairs</span>
+        <span class="badge" style="--b:#34d399"><i class="ph-light ph-lock-simple-open" aria-hidden="true"></i>Accès libre</span>
+      </div>
+      <h1 class="art-title hero-in" style="--i:2">Le poisson-vipère des abysses tire sa lumière de ses repas</h1>
+      <p class="art-lede hero-in" style="--i:3">Privés de la molécule qui produit leur lumière, six poissons-vipères maintenus sous 80 bar se sont peu à peu éteints. Un seul repas les a rallumés en 12 heures, de la tête vers la queue, et presque quatre fois plus fort sous le ventre que sur les flancs.</p>
+      <ul class="authors hero-in" style="--i:4" aria-label="Auteurs">
+        <li class="author"><span class="av" style="--ah:200" aria-hidden="true">LB</span><span><strong>Lucie Bernard</strong><small>Biologie marine des extrêmes</small></span></li>
+        <li class="author"><span class="av" style="--ah:250" aria-hidden="true">NL</span><span><strong>Nathan Lejeune</strong><small>Imagerie biomédicale</small></span></li>
+        <li class="author"><span class="av" style="--ah:170" aria-hidden="true">CV</span><span><strong>Céline Vasseur</strong><small>Bioluminescence</small></span></li>
+        <li class="author"><span class="av" style="--ah:30" aria-hidden="true">KM</span><span><strong>Kenji Mori</strong><small>Physiologie haute pression</small></span></li>
+      </ul>
+      <div class="meta-line hero-in" style="--i:5">
+        <span><i class="ph-light ph-calendar-blank" aria-hidden="true"></i>Publié le 14 avril 2025</span>
+        <span><i class="ph-light ph-clock" aria-hidden="true"></i>8 min de lecture</span>
+        <span><i class="ph-light ph-hash" aria-hidden="true"></i><code>IFRAS-DSVT-2025-022</code></span>
+      </div>
+    </div>
+
+    <!-- Illustration : poisson-vipère dans le noir, neige marine -->
+    <div class="reentry abyss hero-in" style="--i:3" aria-hidden="true">
+      <canvas id="abyssSnow"></canvas>
+      <svg viewBox="0 0 520 447" id="heroFish"></svg>
+      <span class="reentry-tag" style="right:2%;top:10%"><i style="background:#38bdf8"></i> Profondeur <b>800 m</b></span>
+      <span class="reentry-tag" style="left:2%;bottom:12%"><i style="background:#22d3ee"></i> Lumière <b>470 nm</b></span>
+    </div>
+  </div>
+</header>
+
+<div class="container art-layout">
+
+  <!-- Sommaire -->
+  <nav class="toc" aria-label="Sommaire">
+    <p class="toc-title">Sommaire</p>
+    <ol id="toc">
+      <li class="toc-ind" aria-hidden="true"></li>
+      <li><a href="#s-essentiel"><span>—</span>L'essentiel</a></li>
+      <li><a href="#s-intro"><span>1</span>Briller dans le noir</a></li>
+      <li><a href="#s-methodes"><span>2</span>Éteindre, puis rallumer</a></li>
+      <li><a href="#s-resultats"><span>3</span>Le rallumage</a></li>
+      <li><a href="#s-discussion"><span>4</span>Camouflage</a></li>
+      <li><a href="#s-conclusion"><span>5</span>Conclusion</a></li>
+    </ol>
+    <p class="toc-time"><i class="ph-light ph-hourglass-medium" aria-hidden="true"></i><span id="timeLeft">8 min restantes</span></p>
   </nav>
 
-  <div id="s0">
-    <div class="meta-top">
-      <span class="badge badge-j">Deep-Sea Research Part I · Vol. 208</span>
-      <span class="badge badge-d">DSVT — Dir. des Sciences du Vivant et des Technologies</span>
-      <span class="badge badge-o">Accès ouvert</span>
-      <span class="badge badge-dt">Soumis 11 jan. 2025 · Accepté 02 avr. 2025</span>
-    </div>
+  <!-- ===== ARTICLE ===== -->
+  <article class="art" id="article">
 
-    <h1 class="article-title">
-      Distribution topographique des photophores et cinétique de transport du coelentérazine chez <em>Chauliodus sloani</em> (Stomiidae) — cartographie par microtomographie à rayons X (µCT) in vivo à haute pression
-    </h1>
-
-    <p class="article-subtitle">
-      En administrant du coelentérazine deutéré (d<sub>6</sub>-CTZ) par voie orale et en suivant 
-      son incorporation dans les photophores par µCT synchrotron à 800 bar, nous révélons 
-      pour la première fois la hiérarchie de vascularisation des organes lumineux 
-      du poisson-vipère des abysses et identifions un gradient de concentration 
-      ventral-dorsal inédit.
-    </p>
-
-    <div class="authors-block">
-      <div class="author-entry">
-        <span class="author-name">Dr. Lucie Bernard</span>
-        <span class="author-role">DSVT · Biologie marine des extrêmes</span>
-      </div>
-      <div class="author-sep"></div>
-      <div class="author-entry">
-        <span class="author-name">Dr. Nathan Lejeune</span>
-        <span class="author-role">DSVT · Imagerie biomédicale</span>
-      </div>
-      <div class="author-sep"></div>
-      <div class="author-entry">
-        <span class="author-name">Prof. Céline Vasseur</span>
-        <span class="author-role">DSVT / IFREMER · Bioluminescence</span>
-      </div>
-      <div class="author-sep"></div>
-      <div class="author-entry">
-        <span class="author-name">Dr. Kenji Mori</span>
-        <span class="author-role">JAMSTEC · Physiologie haute pression</span>
-      </div>
-    </div>
-
-    <div class="cite-block">
-      <div class="cite-item"><span class="cite-label">DOI</span><span>10.1016/j.dsr.2025.104312</span></div>
-      <span class="cite-sep">|</span>
-      <div class="cite-item"><span class="cite-label">Réf. interne</span><span>IFRAS-DSVT-2025-022</span></div>
-      <span class="cite-sep">|</span>
-      <div class="cite-item"><span class="cite-label">Données µCT</span><span>Zenodo : 10.5281/zenodo.13441802</span></div>
-    </div>
-  </div>
-
-  <div class="art-divider"></div>
-
-  <div class="abstract-box">
-    <div class="abstract-label">Résumé — Abstract</div>
-    <p class="abstract-text">
-      La bioluminescence est le mode de communication dominant dans les océans profonds 
-      (> 200 m), pourtant la cinétique d'approvisionnement en substrat luciférine des 
-      photophores reste très mal connue in vivo. Nous présentons ici une méthode inédite 
-      combinant l'administration orale d'un analogue deutéré du coelentérazine (d<sub>6</sub>-CTZ, 
-      50 nmol · g⁻¹ de masse corporelle) et la microtomographie à rayons X synchrotron 
-      sous haute pression (800 bar, 4 °C) sur des spécimens vivants de <em>Chauliodus sloani</em> 
-      maintenus dans l'aquarium hyperbare ABYSSAL-2 (IFRAS). Les volumes µCT acquis 
-      à 4 points temporels (T+2 h, T+6 h, T+12 h, T+24 h) révèlent une progression 
-      rostro-caudale du front d'incorporation de d<sub>6</sub>-CTZ, avec une densité 
-      de photophores actifs maximale dans la rangée ventrale médiane (VMR) à T+12 h. 
-      Un gradient de concentration ventral/dorsal de 3,8 ± 0,4 est mesuré 
-      pour la première fois chez un Stomiidae. Ces résultats éclairent la régulation 
-      spatiale de la bioluminescence abyssale et ouvrent des perspectives pour 
-      la bio-inspiration de sources lumineuses autonomes sans électronique.
-    </p>
-    <div class="kw-wrap">
-      <span class="kw-lbl">Mots-clés :</span>
-      <span class="kw-tag">Bioluminescence</span>
-      <span class="kw-tag">Photophores</span>
-      <span class="kw-tag"><em>Chauliodus sloani</em></span>
-      <span class="kw-tag">µCT synchrotron</span>
-      <span class="kw-tag">Coelentérazine</span>
-      <span class="kw-tag">Haute pression</span>
-      <span class="kw-tag">Abysses</span>
-      <span class="kw-tag">Stomiidae</span>
-    </div>
-  </div>
-
-  <!-- ===== 1. ESPÈCE ===== -->
-  <h2 class="section-heading" id="s1">1. <em>Chauliodus sloani</em> — le poisson-vipère des abysses</h2>
-
-  <p class="bt">
-    <em>Chauliodus sloani</em> (Bloch & Schneider, 1801) est un poisson téléostéen méso- et 
-    bathypélagique (200–2 800 m de profondeur) appartenant à la famille des Stomiidae. 
-    Il est reconnaissable à ses crocs démesurés — trop longs pour tenir dans la bouche fermée 
-    — et à ses deux rangées de photophores ventraux qui s'étendent sur toute la longueur 
-    du corps. Ces organes lumineux émettent dans le bleu-vert (λmax ≈ 470 nm) 
-    et jouent un rôle double : contre-illumination (camouflage par rapport à 
-    la lumière descendante) et signalisation intraspécifique [1, 2].
-  </p>
-
-  <!-- Fiche espèce — structure propre à cette publication -->
-  <div class="species-header">
-    <div class="species-visual">
-      <div class="species-name-block">
-        <div class="species-sci">Chauliodus sloani</div>
-        <div class="species-common">Bloch & Schneider, 1801 · Poisson-vipère de Sloane</div>
-      </div>
-      <div class="species-svg-wrap">
-        <!-- Silhouette SVG du poisson -->
-        <svg viewBox="0 0 340 110" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:320px;">
-          <defs>
-            <radialGradient id="fish-g" cx="40%" cy="45%" r="60%">
-              <stop offset="0%" stop-color="#164e63"/>
-              <stop offset="100%" stop-color="#020617"/>
-            </radialGradient>
-          </defs>
-          <!-- Corps du poisson (fuseau allongé) -->
-          <ellipse cx="150" cy="55" rx="130" ry="18" fill="url(#fish-g)" stroke="#22d3ee" stroke-width=".8" opacity=".8"/>
-          <!-- Nageoire caudale -->
-          <path d="M278,55 L310,35 L315,55 L310,75 Z" fill="url(#fish-g)" stroke="#22d3ee" stroke-width=".7" opacity=".7"/>
-          <!-- Nageoire dorsale -->
-          <path d="M140,37 Q155,20 175,30 L175,37 Z" fill="rgba(34,211,238,.15)" stroke="#22d3ee" stroke-width=".7"/>
-          <!-- Crocs (caractéristique) -->
-          <line x1="20" y1="55" x2="8"  y2="74" stroke="#e2e8f0" stroke-width="1.2"/>
-          <line x1="28" y1="55" x2="18" y2="78" stroke="#e2e8f0" stroke-width="1.2"/>
-          <line x1="36" y1="54" x2="28" y2="72" stroke="#e2e8f0" stroke-width="1"/>
-          <!-- Œil -->
-          <circle cx="28" cy="50" r="5" fill="#164e63" stroke="#22d3ee" stroke-width="1"/>
-          <circle cx="28" cy="50" r="2" fill="#22d3ee" opacity=".6"/>
-          <!-- Photophores VMR (rangée ventrale médiane — points cyan) -->
-          <circle cx="55"  cy="70" r="3" fill="#22d3ee" opacity=".9"/>
-          <circle cx="75"  cy="72" r="3" fill="#22d3ee" opacity=".9"/>
-          <circle cx="95"  cy="73" r="3" fill="#22d3ee" opacity=".9"/>
-          <circle cx="115" cy="73" r="3" fill="#22d3ee" opacity=".9"/>
-          <circle cx="135" cy="72" r="3" fill="#22d3ee" opacity=".9"/>
-          <circle cx="155" cy="72" r="3" fill="#22d3ee" opacity=".9"/>
-          <circle cx="175" cy="71" r="3" fill="#22d3ee" opacity=".9"/>
-          <circle cx="195" cy="70" r="3" fill="#22d3ee" opacity=".9"/>
-          <circle cx="215" cy="68" r="3" fill="#22d3ee" opacity=".9"/>
-          <circle cx="235" cy="66" r="3" fill="#22d3ee" opacity=".9"/>
-          <!-- Photophores dorsaux (points bleus) -->
-          <circle cx="85"  cy="44" r="2" fill="#60a5fa" opacity=".6"/>
-          <circle cx="110" cy="42" r="2" fill="#60a5fa" opacity=".6"/>
-          <circle cx="135" cy="41" r="2" fill="#60a5fa" opacity=".6"/>
-          <circle cx="160" cy="41" r="2" fill="#60a5fa" opacity=".6"/>
-          <circle cx="185" cy="42" r="2" fill="#60a5fa" opacity=".6"/>
-          <!-- Légende -->
-          <circle cx="55" cy="96" r="3" fill="#22d3ee"/>
-          <text x="62" y="100" fill="#22d3ee" font-size="9" font-family="DM Mono,monospace">Photophores VMR</text>
-          <circle cx="160" cy="96" r="2" fill="#60a5fa" opacity=".7"/>
-          <text x="166" y="100" fill="#60a5fa" font-size="9" font-family="DM Mono,monospace" opacity=".7">Photophores dorsaux</text>
-        </svg>
-      </div>
-    </div>
-    <div class="species-facts">
-      <div class="fact-row">
-        <span class="fact-lbl">Ordre</span>
-        <span class="fact-val">Stomiiformes</span>
-      </div>
-      <div class="fact-row">
-        <span class="fact-lbl">Famille</span>
-        <span class="fact-val">Stomiidae</span>
-      </div>
-      <div class="fact-row">
-        <span class="fact-lbl">Zone de vie</span>
-        <span class="fact-val c">200 – 2 800 m</span>
-      </div>
-      <div class="fact-row">
-        <span class="fact-lbl">Taille adulte</span>
-        <span class="fact-val">25 – 35 cm</span>
-      </div>
-      <div class="fact-row">
-        <span class="fact-lbl">Nb photophores VMR</span>
-        <span class="fact-val c">38 – 44</span>
-      </div>
-      <div class="fact-row">
-        <span class="fact-lbl">λmax bioluminescence</span>
-        <span class="fact-val c">470 nm</span>
-      </div>
-      <div class="fact-row">
-        <span class="fact-lbl">Luciférase</span>
-        <span class="fact-val">Luciférase CTZ-dépendante</span>
-      </div>
-      <div class="fact-row">
-        <span class="fact-lbl">Température habitat</span>
-        <span class="fact-val">2 – 8 °C</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== 2. PROTOCOLE ===== -->
-  <h2 class="section-heading blue" id="s2">2. Protocole expérimental</h2>
-
-  <h3 class="sub">2.1 Capture et maintien en conditions hyperbare</h3>
-
-  <p class="bt">
-    Six spécimens de <em>C. sloani</em> (longueur 26–31 cm, masse 18–24 g) ont été 
-    capturés par chalutage pélagique profond lors de la campagne ABYSSAL-IV 
-    (golfe de Gascogne, 47°N – 08°W, octobre 2024, profondeur 800 m). 
-    Le transfert sous pression isobare vers l'aquarium hyperbare ABYSSAL-2 
-    de l'IFRAS (capacité 20 L, pression contrôlée 1–1 000 bar, température 
-    2–10 °C) a été réalisé en moins de 4 heures après remontée, 
-    en maintenant la pression à 75 bar pour limiter le barotraumatisme [3].
-  </p>
-
-  <h3 class="sub">2.2 Administration orale de coelentérazine deutérée</h3>
-
-  <p class="bt">
-    Le coelentérazine deutéré (d<sub>6</sub>-CTZ, Sigma-Aldrich, 98 % deutération, 
-    M = 429,5 g·mol⁻¹) a été administré per os via l'alimentation vivante : 
-    des amphipodes (<em>Eurythenes gryllus</em>) préalablement incubés 6 heures 
-    dans une solution de d<sub>6</sub>-CTZ (100 µM dans eau de mer 800 bar) 
-    ont été introduits dans l'aquarium au temps T₀. 
-    La dose cible était de 50 nmol · g⁻¹ de masse corporelle, 
-    basée sur les travaux de Haddock et al. [4] sur la cinétique 
-    de renouvellement du CTZ endogène chez les mésopélagiques.
-  </p>
-
-  <p class="bt">
-    L'utilisation d'un analogue deutéré est essentielle : le d<sub>6</sub>-CTZ 
-    présente le même comportement biochimique que le CTZ natif (affinité luciférase 
-    K<sub>m</sub> = 0,18 µM vs 0,15 µM pour le CTZ natif) mais est distinguable 
-    en µCT synchrotron par sa densité électronique légèrement différente 
-    (+0,8 %) et surtout par spectrométrie de masse post-mortem, 
-    permettant de discriminer substrat exogène et endogène [5].
-  </p>
-
-  <div class="hl blue">
-    Innovation méthodologique : cette étude est la première à combiner 
-    administration orale in vivo, µCT synchrotron haute pression (800 bar) 
-    et traçage isotopique par deutérium sur un poisson bathypélagique vivant 
-    maintenu à sa pression native. Les tentatives précédentes utilisaient 
-    des spécimens fixés ou décompressés [4, 6].
-  </div>
-
-  <!-- ===== 3. IMAGERIE µCT ===== -->
-  <h2 class="section-heading" id="s3">3. Imagerie µCT synchrotron sous haute pression</h2>
-
-  <p class="bt">
-    Les acquisitions µCT ont été réalisées sur la ligne ESRF-BM18 
-    (European Synchrotron Radiation Facility, Grenoble) avec un énergie 
-    de faisceau de 35 keV (monochromatique), une résolution isotrope 
-    de 5,8 µm et un temps d'acquisition de 45 minutes par volume 
-    (rotation 180°, 2 000 projections). La cellule de haute pression 
-    transparente aux rayons X (acier Duplex 2507, fenêtres béryllium) 
-    a été développée conjointement par l'IFRAS et l'ESRF pour ces expériences.
-  </p>
-
-  <!-- Schéma anatomique µCT — SVG principal -->
-  <div class="anatomy-block">
-    <div class="anatomy-inner">
-      <div class="anatomy-label">Coupe longitudinale µCT — distribution du d₆-CTZ à T+12 h (intensité normalisée)</div>
-      <svg viewBox="0 0 820 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
-        <defs>
-          <linearGradient id="body-g" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="#0c1a2e"/>
-            <stop offset="100%" stop-color="#071020"/>
-          </linearGradient>
-          <radialGradient id="photo-hot" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#22d3ee" stop-opacity=".9"/>
-            <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
-          </radialGradient>
-          <radialGradient id="photo-warm" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#60a5fa" stop-opacity=".6"/>
-            <stop offset="100%" stop-color="#60a5fa" stop-opacity="0"/>
-          </radialGradient>
-          <radialGradient id="photo-cold" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#1e3a5f" stop-opacity=".8"/>
-            <stop offset="100%" stop-color="#1e3a5f" stop-opacity="0"/>
-          </radialGradient>
-        </defs>
-        <!-- Fond sombre (coupe transverse poisson) -->
-        <rect x="20" y="20" width="760" height="170" rx="6" fill="url(#body-g)" stroke="#1b2555" stroke-width="1"/>
-        <!-- Silhouette corpo (ellipse allongée) -->
-        <ellipse cx="390" cy="100" rx="355" ry="55" fill="#0a1628" stroke="#1e3a5f" stroke-width="1"/>
-        <!-- Épine dorsale (ligne fine) -->
-        <line x1="45" y1="85" x2="735" y2="85" stroke="#2d4a6e" stroke-width="1" stroke-dasharray="6,4" opacity=".6"/>
-        <!-- Cavité viscérale (ovale central) -->
-        <ellipse cx="280" cy="102" rx="160" ry="30" fill="rgba(30,58,95,.4)" stroke="#2d4a6e" stroke-width=".8"/>
-        <text x="280" y="106" fill="#4a5280" font-size="9" text-anchor="middle" font-family="DM Mono,monospace">Cavité viscérale</text>
-        <!-- Intestin (tube sinueux) -->
-        <path d="M160,100 Q200,90 230,102 Q260,114 290,102 Q320,90 350,100 Q380,110 410,100" fill="none" stroke="#2d4a6e" stroke-width="2" opacity=".5"/>
-        <!-- === PHOTOPHORES VMR (rangée ventrale — intensités graduées) === -->
-        <!-- Rostral T+2h (faible) : gris/bleu -->
-        <circle cx="90"  cy="148" r="8" fill="url(#photo-cold)" opacity=".5"/>
-        <circle cx="90"  cy="148" r="3" fill="#1e3a5f"/>
-        <circle cx="120" cy="150" r="8" fill="url(#photo-cold)" opacity=".5"/>
-        <circle cx="120" cy="150" r="3" fill="#1e3a5f"/>
-        <!-- T+6h : bleu intermédiaire -->
-        <circle cx="155" cy="151" r="10" fill="url(#photo-warm)" opacity=".6"/>
-        <circle cx="155" cy="151" r="4"  fill="#3b82f6"/>
-        <circle cx="190" cy="151" r="10" fill="url(#photo-warm)" opacity=".7"/>
-        <circle cx="190" cy="151" r="4"  fill="#3b82f6"/>
-        <!-- T+12h PLEIN (zone maximale) : cyan lumineux -->
-        <circle cx="230" cy="150" r="14" fill="url(#photo-hot)" opacity=".85"/>
-        <circle cx="230" cy="150" r="5"  fill="#22d3ee"/>
-        <circle cx="270" cy="150" r="14" fill="url(#photo-hot)"/>
-        <circle cx="270" cy="150" r="5"  fill="#22d3ee"/>
-        <circle cx="310" cy="150" r="14" fill="url(#photo-hot)"/>
-        <circle cx="310" cy="150" r="5"  fill="#22d3ee"/>
-        <circle cx="350" cy="150" r="14" fill="url(#photo-hot)"/>
-        <circle cx="350" cy="150" r="5"  fill="#22d3ee"/>
-        <circle cx="390" cy="149" r="14" fill="url(#photo-hot)"/>
-        <circle cx="390" cy="149" r="5"  fill="#22d3ee"/>
-        <circle cx="430" cy="149" r="12" fill="url(#photo-hot)" opacity=".9"/>
-        <circle cx="430" cy="149" r="4"  fill="#22d3ee"/>
-        <!-- Fin de zone : déclin caudal -->
-        <circle cx="470" cy="148" r="10" fill="url(#photo-warm)" opacity=".65"/>
-        <circle cx="470" cy="148" r="4"  fill="#3b82f6"/>
-        <circle cx="510" cy="147" r="8"  fill="url(#photo-warm)" opacity=".5"/>
-        <circle cx="510" cy="147" r="3"  fill="#3b82f6"/>
-        <circle cx="545" cy="146" r="6"  fill="url(#photo-cold)" opacity=".5"/>
-        <circle cx="545" cy="146" r="2"  fill="#1e3a5f"/>
-        <circle cx="575" cy="145" r="5"  fill="url(#photo-cold)" opacity=".4"/>
-        <circle cx="575" cy="145" r="2"  fill="#1e3a5f"/>
-        <!-- Photophores dorsaux (peu marqués) -->
-        <circle cx="200" cy="67" r="5" fill="#1e3a5f" stroke="#2d4a6e" stroke-width=".8"/>
-        <circle cx="260" cy="63" r="5" fill="#1e3a5f" stroke="#2d4a6e" stroke-width=".8"/>
-        <circle cx="320" cy="62" r="5" fill="#1e3a5f" stroke="#2d4a6e" stroke-width=".8"/>
-        <circle cx="380" cy="62" r="5" fill="#1e3a5f" stroke="#2d4a6e" stroke-width=".8"/>
-        <circle cx="440" cy="63" r="5" fill="#1e3a5f" stroke="#2d4a6e" stroke-width=".8"/>
-        <!-- Organe lumineux suborbital (photophore de barbe) -->
-        <ellipse cx="68" cy="108" rx="12" ry="6" fill="rgba(34,211,238,.1)" stroke="#22d3ee" stroke-width=".8"/>
-        <text x="68" y="112" fill="#22d3ee" font-size="7" text-anchor="middle" font-family="DM Mono,monospace">PO</text>
-        <!-- Crocs schématiques -->
-        <line x1="38" y1="100" x2="28" y2="118" stroke="#e2e8f0" stroke-width="1.5"/>
-        <line x1="46" y1="100" x2="38" y2="120" stroke="#e2e8f0" stroke-width="1.5"/>
-        <!-- Barre de couleur légende en bas -->
-        <defs>
-          <linearGradient id="legend-bar" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%"   stop-color="#1e3a5f"/>
-            <stop offset="40%"  stop-color="#3b82f6"/>
-            <stop offset="100%" stop-color="#22d3ee"/>
-          </linearGradient>
-        </defs>
-        <rect x="600" y="155" width="160" height="10" rx="4" fill="url(#legend-bar)" opacity=".8"/>
-        <text x="600" y="180" fill="#4a5280" font-size="8.5" font-family="DM Mono,monospace">Faible</text>
-        <text x="760" y="180" fill="#22d3ee" font-size="8.5" font-family="DM Mono,monospace" text-anchor="end">Élevée</text>
-        <text x="680" y="148" fill="#4a5280" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Intensité d₆-CTZ</text>
-        <!-- Labels anatomiques -->
-        <text x="68"  y="30" fill="#4a5280" font-size="9" text-anchor="middle" font-family="DM Mono,monospace">Tête</text>
-        <line x1="68" y1="32" x2="68" y2="45" stroke="#1b2555" stroke-width=".8"/>
-        <text x="390" y="30" fill="#4a5280" font-size="9" text-anchor="middle" font-family="DM Mono,monospace">← Région maximale T+12h →</text>
-        <text x="680" y="30" fill="#4a5280" font-size="9" text-anchor="middle" font-family="DM Mono,monospace">Queue</text>
-        <line x1="680" y1="32" x2="680" y2="45" stroke="#1b2555" stroke-width=".8"/>
-        <!-- Annotation gradient V/D -->
-        <line x1="310" y1="65" x2="310" y2="145" stroke="#22d3ee" stroke-width="1" stroke-dasharray="3,4" opacity=".4"/>
-        <text x="316" y="90"  fill="#22d3ee" font-size="8" font-family="DM Mono,monospace" opacity=".6">×3,8</text>
-        <text x="316" y="100" fill="#4a5280" font-size="7.5" font-family="DM Mono,monospace">V/D</text>
-      </svg>
-    </div>
-    <div class="anatomy-cap">
-      <strong>Figure 1 — Coupe longitudinale µCT reconstituée · T+12 h · ESRF-BM18</strong>
-      Faux coloris : intensité d<sub>6</sub>-CTZ normalisée (bleu foncé → faible ; cyan → élevée).
-      La rangée ventrale médiane (VMR) est massivement marquée (cyan), les photophores dorsaux restent faiblement actifs.
-      Le gradient ventral/dorsal de ×3,8 est indiqué par la flèche verticale au centre.
-      Résolution isotrope 5,8 µm. Specimen n°3, masse 21 g. Pression 800 bar, T = 4 °C.
-    </div>
-  </div>
-
-  <!-- ===== 4. RÉSULTATS ===== -->
-  <h2 class="section-heading green" id="s4">4. Résultats</h2>
-
-  <h3 class="sub">4.1 Cinétique d'incorporation temporelle</h3>
-
-  <p class="bt">
-    La figure 2 présente l'intensité µCT moyenne dans les photophores VMR 
-    en fonction du temps, pour les 6 spécimens. Le front d'incorporation 
-    progresse de la région rostrale (proximité intestin antérieur) vers 
-    la région caudale à une vitesse estimée de 4,2 ± 0,6 photophores · h⁻¹, 
-    cohérente avec une distribution vasculaire longitudinale 
-    et non systémique (pas de distribution simultanée homogène).
-  </p>
-
-  <!-- Graphique cinétique -->
-  <div class="chart-wrap">
-    <div class="chart-inner">
-      <div class="chart-top">
-        <span class="chart-ttl">Intensité µCT normalisée dans les photophores VMR en fonction du temps — 6 spécimens (n=3 sections par spécimen)</span>
-        <div class="legend">
-          <div class="li"><div class="ld" style="background:#22d3ee"></div>Photophores VMR (ventral)</div>
-          <div class="li"><div class="ld" style="background:#60a5fa;opacity:.6"></div>Photophores dorsaux</div>
-          <div class="li"><div class="ld" style="background:#4a5280"></div>Tissu musculaire (contrôle)</div>
+    <section id="s-essentiel" aria-label="L'essentiel">
+      <div class="essentials rv">
+        <div class="essentials-head"><i class="ph-light ph-lightning" aria-hidden="true"></i> L'essentiel en 30 secondes</div>
+        <div class="kpis">
+          <div class="kpi"><strong data-count="12" data-suffix=" h">12<small> h</small></strong><span>pour rallumer toute la rangée lumineuse du ventre après un repas</span></div>
+          <div class="kpi"><strong>×3,8</strong><span>plus de lumière sous le ventre que sur les flancs</span></div>
+          <div class="kpi"><strong>2<small> cm/h</small></strong><span>vitesse du « front » de rallumage, de la tête vers la queue</span></div>
         </div>
+        <ul class="takeaways">
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>Le poisson-vipère ne fabrique pas sa molécule lumineuse : il la trouve dans ses proies.</li>
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>La molécule progresse lentement le long du ventre, bien plus lentement que le sang.</li>
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>Le ventre brille le plus fort : c'est lui qui efface l'ombre du poisson vu d'en dessous.</li>
+        </ul>
       </div>
-      <svg viewBox="0 0 820 250" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
-        <defs>
-          <linearGradient id="gvmr" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#22d3ee" stop-opacity=".18"/>
-            <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
-          </linearGradient>
-        </defs>
-        <line x1="65" y1="15" x2="65" y2="215" stroke="#1b2555" stroke-width="1"/>
-        <line x1="65" y1="215" x2="790" y2="215" stroke="#1b2555" stroke-width="1"/>
-        <line x1="65" y1="55"  x2="790" y2="55"  stroke="#0e1535" stroke-dasharray="4,4" stroke-width="1"/>
-        <line x1="65" y1="95"  x2="790" y2="95"  stroke="#0e1535" stroke-dasharray="4,4" stroke-width="1"/>
-        <line x1="65" y1="135" x2="790" y2="135" stroke="#0e1535" stroke-dasharray="4,4" stroke-width="1"/>
-        <line x1="65" y1="175" x2="790" y2="175" stroke="#0e1535" stroke-dasharray="4,4" stroke-width="1"/>
-        <text x="55" y="59"  fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">1.0</text>
-        <text x="55" y="99"  fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">0.7</text>
-        <text x="55" y="139" fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">0.4</text>
-        <text x="55" y="179" fill="#4a5280" font-size="10" text-anchor="end" font-family="DM Mono,monospace">0.1</text>
-        <text x="65"  y="233" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">T0</text>
-        <text x="235" y="233" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">T+2h</text>
-        <text x="405" y="233" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">T+6h</text>
-        <text x="575" y="233" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">T+12h</text>
-        <text x="745" y="233" fill="#4a5280" font-size="10" text-anchor="middle" font-family="DM Mono,monospace">T+24h</text>
-        <!-- Tissu musculaire (contrôle, plat) -->
-        <polyline points="65,175 235,174 405,173 575,173 745,175" fill="none" stroke="#4a5280" stroke-width="1.5" stroke-dasharray="4,3"/>
-        <!-- Photophores dorsaux (légère montée) -->
-        <polyline points="65,175 235,168 405,152 575,138 745,145" fill="none" stroke="#60a5fa" stroke-width="1.8" stroke-dasharray="4,3" opacity=".6"/>
-        <!-- Photophores VMR (montée forte, plateau T+12h) -->
-        <polyline points="65,175 235,155 405,105 575,58 745,68" fill="none" stroke="#22d3ee" stroke-width="2.5"/>
-        <polygon  points="65,175 235,155 405,105 575,58 745,68 745,215 65,215" fill="url(#gvmr)"/>
-        <!-- Points -->
-        <circle cx="65"  cy="175" r="4"   fill="#22d3ee"/>
-        <circle cx="235" cy="155" r="4"   fill="#22d3ee"/>
-        <circle cx="405" cy="105" r="4"   fill="#22d3ee"/>
-        <circle cx="575" cy="58"  r="6"   fill="#22d3ee" stroke="rgba(34,211,238,.3)" stroke-width="10"/>
-        <circle cx="745" cy="68"  r="4"   fill="#22d3ee"/>
-        <!-- Annotation pic T+12h -->
-        <text x="580" y="46" fill="#22d3ee" font-size="10" font-family="DM Mono,monospace" font-weight="500">Max VMR ★</text>
-        <!-- Barres d'erreur T+12h -->
-        <line x1="575" y1="48" x2="575" y2="68" stroke="#22d3ee" stroke-width="1" opacity=".5"/>
-        <line x1="570" y1="48" x2="580" y2="48" stroke="#22d3ee" stroke-width="1" opacity=".5"/>
-        <line x1="570" y1="68" x2="580" y2="68" stroke="#22d3ee" stroke-width="1" opacity=".5"/>
-      </svg>
+
+      <div class="abstract rv">
+        <span class="label">Résumé</span>
+        <p>La bioluminescence est le mode de communication le plus répandu dans les océans profonds, mais on sait mal comment les organes lumineux des poissons sont approvisionnés en substrat. Six poissons-vipères (<em>Chauliodus sloani</em>) capturés à 800 m ont été remontés sans décompression puis maintenus à 80 bar et 5 °C dans l'aquarium hyperbare ABYSSAL-2 de l'IFRAS. Après six semaines d'une alimentation dépourvue de coelentérazine, la lumière de leurs photophores ventraux est tombée à 14 ± 4 % de sa valeur initiale. Un repas unique de crustacés riches en coelentérazine (50 nmol par gramme de poisson) a suffi à la rétablir. Filmée par une caméra à comptage de photons, la reprise progresse de la tête vers la queue à 4,2 ± 0,6 photophores par heure et atteint 96 ± 3 % de la valeur initiale à 12 h. À ce moment, la rangée ventrale brille 3,8 ± 0,2 fois plus que les photophores des flancs. Ces résultats montrent une origine alimentaire du substrat, un transport lent et orienté le long du corps, et un réglage fin de la lumière adapté au camouflage par contre-illumination.</p>
+        <div class="kw" aria-label="Mots-clés"><span>Bioluminescence</span><span>Photophores</span><span>Coelentérazine</span><span>Haute pression</span><span>Contre-illumination</span></div>
+      </div>
+    </section>
+
+    <!-- 1. INTRODUCTION -->
+    <section id="s-intro">
+      <h2><span class="n">01</span>Briller dans le noir</h2>
+      <p>Sous 200 mètres, la lumière du Soleil devient trop faible pour la photosynthèse ; au-delà de 1 000 mètres, elle disparaît complètement. Pourtant, dans cette obscurité, près de trois animaux sur quatre produisent leur propre lumière. Chez les poissons, elle naît dans de petits organes, les <button class="term" type="button" data-term="photophore">photophores</button>.</p>
+      <p>Le poisson-vipère de Sloane vit entre 200 et 2 800 mètres. Il mesure une trentaine de centimètres, possède des crocs si longs qu'ils ne tiennent pas dans sa bouche fermée, et porte sous le ventre deux rangées d'environ 40 photophores.</p>
+
+      <figure class="fig rv" id="fig1">
+        <div class="fig-stage">
+          <div class="fig-head"><span class="fig-name">Les organes lumineux du poisson-vipère</span></div>
+          <svg viewBox="0 0 560 230" id="anatFish" class="anat" aria-label="Dessin du poisson-vipère et de ses organes lumineux"></svg>
+          <div class="parts" role="group" aria-label="Mettre en évidence un organe">
+            <button class="part" type="button" data-part="ventral" aria-pressed="false" style="--pc:#22d3ee"><i></i>Rangée ventrale</button>
+            <button class="part" type="button" data-part="lateral" aria-pressed="false" style="--pc:#a78bfa"><i></i>Photophores des flancs</button>
+            <button class="part" type="button" data-part="postorb" aria-pressed="false" style="--pc:#38bdf8"><i></i>Organe sous l'œil</button>
+            <button class="part" type="button" data-part="lure" aria-pressed="false" style="--pc:#34d399"><i></i>Leurre dorsal</button>
+          </div>
+          <p class="part-desc" id="partDesc" aria-live="polite">Survolez ou touchez un organe pour le mettre en évidence.</p>
+        </div>
+        <figcaption><b>Figure 1</b>Emplacement des organes lumineux de <em>C. sloani</em>, relevé par microtomographie X sur un spécimen mort lors de la capture (dessin simplifié, proportions respectées). Les photophores ventraux mesurent 0,65 ± 0,08 mm et sont espacés de 1,8 ± 0,2 mm.</figcaption>
+      </figure>
+
+      <p>Chaque photophore fonctionne comme une petite lampe chimique. Une molécule, la <button class="term" type="button" data-term="ctz">coelentérazine</button>, réagit avec l'oxygène grâce à une enzyme, la <button class="term" type="button" data-term="luciferase">luciférase</button>. La réaction libère de l'énergie sous forme de lumière bleue, qui porte loin dans l'eau de mer. La molécule est détruite au passage : il faut sans cesse en fournir de nouvelles.</p>
+
+      <figure class="fig rv" id="fig2">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">Comment un photophore fabrique la lumière</span>
+            <button class="ctrl" type="button" id="chemPlay"><i class="ph-light ph-pause" aria-hidden="true"></i><span>Pause</span></button>
+          </div>
+          <div class="chem">
+            <svg viewBox="0 0 300 260" id="photoCut" aria-label="Coupe d'un photophore : cellules lumineuses, réflecteur, écran de pigment et lentille"></svg>
+            <ol class="chem-steps" id="chemSteps">
+              <li data-k="0"><span class="cs-n">1</span><span><strong>Apport</strong>Un vaisseau apporte la coelentérazine aux cellules lumineuses.</span></li>
+              <li data-k="1"><span class="cs-n">2</span><span><strong>Réaction</strong>La luciférase lui fait réagir avec l'oxygène.</span></li>
+              <li data-k="2"><span class="cs-n">3</span><span><strong>Lumière</strong>Un photon bleu (470 nm) est émis ; le réflecteur le renvoie vers la lentille.</span></li>
+              <li data-k="3"><span class="cs-n">4</span><span><strong>Déchet</strong>La molécule usée, la coelentéramide, ne peut plus servir.</span></li>
+            </ol>
+          </div>
+          <p class="eq" aria-label="Coelentérazine plus oxygène donne coelentéramide, dioxyde de carbone et lumière">coelentérazine + O₂ <span class="eq-arrow">luciférase</span> coelentéramide + CO₂ + <b>lumière</b></p>
+        </div>
+        <figcaption><b>Figure 2</b>Coupe schématique d'un photophore ventral. Un écran de pigment noir empêche la lumière de fuir vers l'intérieur du corps ; un réflecteur argenté et une lentille la dirigent vers le bas. Une seule molécule de coelentérazine donne au plus un photon.</figcaption>
+      </figure>
+
+      <div class="note" style="--nc:#38bdf8">
+        <i class="ph-light ph-question" aria-hidden="true"></i>
+        <p><span class="nt">La question de l'étude</span>Beaucoup de poissons lumineux semblent incapables de fabriquer eux-mêmes la coelentérazine. Le poisson-vipère la trouve-t-il dans ses proies ? Et si oui, comment arrive-t-elle jusqu'à ses photophores ?</p>
+      </div>
+    </section>
+
+    <!-- 2. MÉTHODES -->
+    <section id="s-methodes">
+      <h2><span class="n">02</span>Éteindre, puis rallumer</h2>
+      <h3>Des poissons gardés sous pression</h3>
+      <p>Remontés trop vite, les poissons des profondeurs meurent de la décompression. Huit poissons-vipères (26 à 31 cm, 18 à 24 g) ont été capturés à 800 m de profondeur lors de la campagne ABYSSAL-IV dans un piège isobare, qui garde la pression du fond pendant la remontée. Ils ont été transférés sans décompression dans l'aquarium hyperbare ABYSSAL-2 de l'IFRAS, maintenu à <button class="term" type="button" data-term="bar">80 bar</button> et 5 °C, dans l'obscurité totale.</p>
+
+      <figure class="fig rv" id="fig3">
+        <div class="fig-stage">
+          <div class="fig-head"><span class="fig-name">L'aquarium hyperbare ABYSSAL-2</span></div>
+          <svg viewBox="0 0 640 300" id="tank" aria-label="Schéma de l'aquarium hyperbare : cuve sous 80 bar, hublot, caméra à comptage de photons, sas d'alimentation, pompe et refroidisseur"></svg>
+          <ol class="proto">
+            <li style="--pc:#64748b"><i class="ph-light ph-prohibit" aria-hidden="true"></i><span><strong>6 semaines</strong>Crustacés d'élevage sans coelentérazine</span></li>
+            <li style="--pc:#22d3ee"><i class="ph-light ph-fish-simple" aria-hidden="true"></i><span><strong>Repas unique</strong>Crustacés riches en coelentérazine (T0)</span></li>
+            <li style="--pc:#34d399"><i class="ph-light ph-camera" aria-hidden="true"></i><span><strong>48 heures</strong>Une image toutes les 30 min, dans le noir</span></li>
+          </ol>
+        </div>
+        <figcaption><b>Figure 3</b>Schéma de l'aquarium (20 L, jusqu'à 1 000 bar). Les poissons sont nourris par un sas qui préserve la pression. La lumière est comptée photon par photon à travers un hublot en saphir, sans aucun éclairage extérieur.</figcaption>
+      </figure>
+
+      <h3>Le protocole</h3>
+      <p>Pendant six semaines, les poissons ont reçu des crustacés d'élevage sans coelentérazine. Leur lumière a baissé de semaine en semaine. Au temps T0, six d'entre eux ont reçu un repas unique de crustacés riches en coelentérazine, dosé à 50 nmol par gramme de poisson. Les deux autres, les <strong>témoins</strong>, ont continué le régime sans coelentérazine.</p>
+      <p>La lumière émise en continu par chaque photophore a ensuite été mesurée toutes les 30 minutes pendant 48 heures par une <button class="term" type="button" data-term="camera">caméra à comptage de photons</button>. Les valeurs sont exprimées en pourcentage de la lumière ventrale mesurée avant le jeûne.</p>
+    </section>
+
+    <!-- 3. RÉSULTATS -->
+    <section id="s-resultats">
+      <h2><span class="n">03</span>Le rallumage, photophore par photophore</h2>
+      <p>Au bout de six semaines de jeûne, les photophores ventraux ne brillaient plus qu'à <strong>14 ± 4 %</strong> de leur niveau initial. Après le repas, ils ne se sont pas rallumés tous ensemble : les premiers, juste derrière la tête, reprennent vers T+2 h, puis la reprise gagne l'arrière du corps, un photophore après l'autre.</p>
+
+      <figure class="fig rv" id="fig4">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">Le rallumage après le repas (spécimen n°3)</span>
+            <button class="ctrl" type="button" id="relPlay"><i class="ph-light ph-play" aria-hidden="true"></i><span>Lancer</span></button>
+          </div>
+          <div class="relight">
+            <svg viewBox="0 0 560 200" id="relFish" aria-label="Poisson-vipère dont les photophores se rallument de la tête vers la queue"></svg>
+          </div>
+          <div class="readouts" aria-live="off">
+            <div class="readout"><small>Après le repas</small><strong id="roT">0 h</strong></div>
+            <div class="readout hot" style="--rc:#67e8f9"><small>Photophores rallumés</small><strong id="roN">0 / 40</strong></div>
+            <div class="readout hot" style="--rc:#67e8f9"><small>Lumière du ventre</small><strong id="roV">14 %</strong></div>
+          </div>
+          <div class="scrub">
+            <input type="range" id="relRange" min="0" max="48" value="0" step="0.25" aria-label="Heures écoulées après le repas">
+            <output id="relOut" for="relRange">T0</output>
+          </div>
+        </div>
+        <figcaption><b>Figure 4</b>Reconstitution à partir des images de la caméra à comptage de photons (spécimen n°3). Un photophore est compté comme « rallumé » au-delà de 50 % de son niveau initial. Faites glisser le curseur ou lancez l'animation pour suivre les 48 heures.</figcaption>
+      </figure>
+
+      <p>Le front de rallumage avance à <strong>4,2 ± 0,6 photophores par heure</strong>, soit environ 2 centimètres par heure. Toute la rangée ventrale est rallumée en 10 à 11 heures, et la lumière culmine à <strong>T+12 h</strong>, à 96 ± 3 % de son niveau d'avant le jeûne. Elle baisse ensuite doucement, à mesure que la coelentérazine est consommée, pour se stabiliser autour de 86 %.</p>
+
+      <figure class="fig rv" id="fig5">
+        <div class="fig-stage">
+          <div class="fig-head"><span class="fig-name">Lumière des photophores après le repas</span></div>
+          <div class="chart" id="kin"><div class="ctip" id="kinTip"></div></div>
+        </div>
+        <figcaption><b>Figure 5</b>Lumière moyenne par photophore (6 poissons nourris, ±1 écart-type ; 2 témoins non nourris), en pourcentage de la lumière ventrale avant le jeûne. Les photophores des flancs suivent le même rythme que ceux du ventre, mais à un niveau 3,8 fois plus bas. Survolez le graphique pour lire les valeurs.</figcaption>
+      </figure>
+
+      <div class="table-wrap rv">
+        <div class="table-cap"><b>Tableau 1</b>Mesures à T+12 h pour chaque poisson nourri</div>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Poisson</th><th class="num">Longueur</th><th class="num">Masse</th><th class="num">Photophores ventraux</th><th class="num">Ventre</th><th class="num">Flancs</th><th class="num">Rapport</th></tr></thead>
+            <tbody>
+              <tr><td>n°1</td><td class="num">26 cm</td><td class="num">18,2 g</td><td class="num">38</td><td class="num">94 %</td><td class="num">26 %</td><td class="num">3,6</td></tr>
+              <tr><td>n°2</td><td class="num">28 cm</td><td class="num">20,8 g</td><td class="num">41</td><td class="num">98 %</td><td class="num">24 %</td><td class="num">4,1</td></tr>
+              <tr class="hi"><td><strong>n°3</strong></td><td class="num">29 cm</td><td class="num">21,1 g</td><td class="num">43</td><td class="num">100 %</td><td class="num">28 %</td><td class="num">3,6</td></tr>
+              <tr><td>n°4</td><td class="num">29 cm</td><td class="num">22,4 g</td><td class="num">40</td><td class="num">97 %</td><td class="num">25 %</td><td class="num">3,9</td></tr>
+              <tr><td>n°5</td><td class="num">30 cm</td><td class="num">23,0 g</td><td class="num">42</td><td class="num">95 %</td><td class="num">27 %</td><td class="num">3,5</td></tr>
+              <tr><td>n°6</td><td class="num">31 cm</td><td class="num">23,8 g</td><td class="num">39</td><td class="num">93 %</td><td class="num">23 %</td><td class="num">4,0</td></tr>
+              <tr class="hi"><td><strong>Moyenne</strong></td><td class="num">28,8 cm</td><td class="num">21,6 ± 2,0 g</td><td class="num">40,5 ± 1,9</td><td class="num">96 ± 3 %</td><td class="num">26 ± 2 %</td><td class="num"><strong>3,8 ± 0,2</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-note">Lumière exprimée en pourcentage de la lumière ventrale du même poisson avant le jeûne. Le rapport ventre / flancs est calculé pour chaque poisson, puis moyenné. Témoins à T+12 h : 13 % (ventre).</div>
+      </div>
+    </section>
+
+    <!-- 4. DISCUSSION -->
+    <section id="s-discussion">
+      <h2><span class="n">04</span>Un camouflage fait de lumière</h2>
+      <h3>Une molécule venue de l'alimentation</h3>
+      <p>Les témoins, restés sans coelentérazine, ne se sont jamais rallumés. La lumière du poisson-vipère dépend donc de ce qu'il mange. Mais le chemin suivi est surprenant : le sang fait le tour du corps en moins d'une minute, et aurait rallumé tous les photophores en même temps. Un front qui avance de 2 cm par heure suggère plutôt un <strong>transport lent le long du ventre</strong>, depuis l'intestin vers l'arrière, peut-être par un réseau de fins vaisseaux qui reste à identifier.</p>
+
+      <h3>Pourquoi le ventre brille plus fort</h3>
+      <p>Vu d'en dessous, un poisson se découpe en ombre noire sur la faible lumière qui descend de la surface. Pour disparaître, il doit émettre par le ventre exactement autant de lumière qu'il en cache : c'est la <button class="term" type="button" data-term="contre">contre-illumination</button>. La lumière qui arrive de côté est bien plus faible que celle qui tombe d'en haut ; les flancs ont donc besoin de briller beaucoup moins. Le rapport de 3,8 mesuré entre le ventre et les flancs va dans ce sens.</p>
+
+      <figure class="fig rv" id="fig6">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">Vu d'en dessous, par un prédateur</span>
+            <div class="seg" role="group" aria-label="Moment affiché" id="ciSeg">
+              <button type="button" data-t="0" aria-pressed="false">Après le jeûne</button>
+              <button type="button" data-t="6" aria-pressed="false">T+6 h</button>
+              <button type="button" data-t="12" aria-pressed="true">T+12 h</button>
+            </div>
+          </div>
+          <div class="ci">
+            <svg viewBox="0 0 560 250" id="ciSvg" aria-hidden="true"></svg>
+            <div class="ci-info" id="ciInfo" aria-live="polite"></div>
+          </div>
+        </div>
+        <figcaption><b>Figure 6</b>Simulation de la silhouette du poisson vue d'en dessous, sur la lumière qui descend de la surface, à partir des niveaux mesurés (figure 5). Affamé, le poisson dessine une ombre bien visible ; à T+12 h, sa silhouette se fond presque dans le fond.</figcaption>
+      </figure>
+
+      <div class="note" style="--nc:#34d399">
+        <i class="ph-light ph-lightbulb" aria-hidden="true"></i>
+        <p><span class="nt">Et pour l'IFRAS ?</span>Le principe d'un camouflage par la lumière, réglé selon la direction, intéresse la conception de robots sous-marins discrets. Au-delà, comprendre comment la vie produit de la lumière sans soleil aide à imaginer ce qu'on pourrait chercher dans les océans cachés sous la glace de certaines lunes, un des axes du programme ATLAS.</p>
+      </div>
+    </section>
+
+    <!-- 5. CONCLUSION -->
+    <section id="s-conclusion">
+      <h2><span class="n">05</span>Conclusion</h2>
+      <p>Le poisson-vipère ne fabrique pas la molécule de sa lumière : il la puise dans ses proies. Après un repas, elle rejoint lentement ses photophores, de la tête vers la queue, et la lumière se répartit de façon précise entre le ventre et les flancs, comme l'exige un camouflage efficace. Garder ces animaux vivants à leur pression d'origine a rendu cette observation possible pour la première fois.</p>
+      <ol class="next" aria-label="Prochaines étapes">
+        <li class="now" style="--nc:var(--ok)"><time>Avr. 2025</time><strong>Rallumage observé</strong><span>Origine alimentaire et front de la tête vers la queue.</span></li>
+        <li><time>2026</time><strong>Suivre la molécule</strong><span>Identifier le réseau de vaisseaux qui la transporte.</span></li>
+        <li style="--nc:#2dd4bf"><time>2027</time><strong>Surfaces lumineuses</strong><span>Premiers essais de camouflage bio-inspiré.</span></li>
+      </ol>
+    </section>
+
+  </article>
+
+  <!-- Colonne de droite -->
+  <aside class="rail" aria-label="Outils de l'article">
+    <div class="rail-card rail-figs">
+      <p class="rail-title">Figures</p>
+      <ul class="fig-list">
+        <li><a href="#fig1"><i class="ph-light ph-fish" aria-hidden="true"></i>Organes lumineux</a></li>
+        <li><a href="#fig2"><i class="ph-light ph-flask" aria-hidden="true"></i>La réaction</a></li>
+        <li><a href="#fig3"><i class="ph-light ph-gauge" aria-hidden="true"></i>Aquarium hyperbare</a></li>
+        <li><a href="#fig4"><i class="ph-light ph-play-circle" aria-hidden="true"></i>Rallumage animé</a></li>
+        <li><a href="#fig5"><i class="ph-light ph-chart-line" aria-hidden="true"></i>Lumière et temps</a></li>
+        <li><a href="#fig6"><i class="ph-light ph-eye" aria-hidden="true"></i>Contre-illumination</a></li>
+      </ul>
     </div>
-    <div class="chart-cap">
-      <strong>Figure 2</strong>
-      Intensité µCT normalisée (T0 = 0,1 = bruit de fond) dans les photophores VMR (cyan), 
-      photophores dorsaux (bleu pointillé) et tissu musculaire contrôle (gris pointillé),
-      en fonction du temps post-administration de d<sub>6</sub>-CTZ.
-      Le pic VMR à T+12 h atteint une intensité normalisée de 1,0 ± 0,08 (n=6).
-      La décroissance à T+24 h (−10 %) reflète le début de la dégradation enzymatique 
-      du substrat après oxydation en coelentéramide.
+    <div class="rail-card">
+      <p class="rail-title">Programme lié</p>
+      <a class="prog-link" href="../programmes-actifs.html#atlas">
+        <span class="pi" style="color:#2dd4bf;background:rgba(45,212,191,.12)"><i class="ph-light ph-globe-hemisphere-west" aria-hidden="true"></i></span>
+        <span><strong>ATLAS</strong><small>Simulation d'environnements extrêmes</small></span>
+      </a>
     </div>
-  </div>
-
-  <h3 class="sub">4.2 Gradient ventral-dorsal et comparaison entre spécimens</h3>
-
-  <div class="tbl-wrap">
-    <div class="tbl-head">Tableau 1 — Intensité µCT normalisée et gradient V/D par spécimen à T+12 h</div>
-    <table>
-      <thead>
-        <tr>
-          <th>Spécimen</th>
-          <th>Masse (g)</th>
-          <th>Nb photophores VMR actifs</th>
-          <th>Intensité VMR</th>
-          <th>Intensité dorsale</th>
-          <th>Gradient V/D</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>n°1</td><td class="tm">18,2</td><td class="tm">38</td><td class="tc">0,94</td><td class="tm">0,26</td><td class="tc">3,6</td></tr>
-        <tr><td>n°2</td><td class="tm">20,8</td><td class="tm">41</td><td class="tc">0,98</td><td class="tm">0,24</td><td class="tc">4,1</td></tr>
-        <tr class="tr-hi"><td><strong>n°3</strong></td><td class="tm">21,1</td><td class="ty">43</td><td class="ty">1,00</td><td class="tm">0,28</td><td class="ty">3,6</td></tr>
-        <tr><td>n°4</td><td class="tm">22,4</td><td class="tm">40</td><td class="tc">0,97</td><td class="tm">0,25</td><td class="tc">3,9</td></tr>
-        <tr><td>n°5</td><td class="tm">23,0</td><td class="tm">42</td><td class="tc">0,95</td><td class="tm">0,27</td><td class="tc">3,5</td></tr>
-        <tr><td>n°6</td><td class="tm">23,8</td><td class="tm">39</td><td class="tc">0,93</td><td class="tm">0,23</td><td class="tc">4,0</td></tr>
-        <tr class="tr-hi">
-          <td><strong>Moyenne ± ET</strong></td>
-          <td class="tm">21,6 ± 2,0</td>
-          <td class="tm">40,5 ± 1,8</td>
-          <td class="tc">0,96 ± 0,03</td>
-          <td class="tm">0,26 ± 0,02</td>
-          <td class="ty">3,8 ± 0,4 ★</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="tbl-note">
-      ★ Gradient V/D de 3,8 ± 0,4 jamais reporté chez un Stomiidae. Intensités normalisées au maximum de la série (spécimen n°3, T+12 h).
-      Le nombre de photophores VMR actifs (43 pour le spécimen n°3) correspond au maximum connu pour l'espèce (38–44 selon [2]).
-    </div>
-  </div>
-
-  <!-- Figure µCT 3D -->
-  <div class="fig-wrap">
-    <div class="fig-ph">
-      <span class="fig-icon">🐟</span>
-      <span class="fig-desc">Fig. 3 — Rendu volumique 3D µCT · Spécimen n°3 · T+12 h (attendu)</span>
-      <span class="fig-sub">
-        Rendu volumique de la région centrale (segments 14–28 VMR), faux coloris par intensité.<br>
-        Les photophores VMR apparaissent en cyan brillant, les tissus mous en gris translucide.<br>
-        ESRF-BM18 · Résolution 5,8 µm isotrope · Volume 12 × 5 × 4 mm³.
-      </span>
-    </div>
-    <div class="fig-cap">
-      <strong>Figure 3</strong>
-      Rendu volumique 3D de la région centrale de <em>C. sloani</em> n°3 à T+12 h 
-      (segments photophores VMR 14–28, volume reconstruit 12 × 5 × 4 mm³, 
-      résolution isotrope 5,8 µm, ESRF-BM18).
-      Les photophores VMR actifs (cyan) forment une file régulière espacée de 1,8 ± 0,2 mm.
-      Chaque photophore individual mesure 0,65 ± 0,08 mm de diamètre.
-      Les photophores dorsaux (bleu pâle, arrière-plan) présentent une intensité 
-      systématiquement inférieure de ×3,8.
-    </div>
-  </div>
-
-  <!-- ===== 5. DISCUSSION ===== -->
-  <h2 class="section-heading blue" id="s5">5. Discussion</h2>
-
-  <h3 class="sub">5.1 Vascularisation hiérarchique et distribution non-systémique</h3>
-
-  <p class="bt">
-    La progression rostro-caudale du front d'incorporation à 4,2 photophores · h⁻¹ 
-    est incompatible avec une distribution circulatoire systémique, qui produirait 
-    une activation simultanée sur l'ensemble du corps. Elle suggère une vascularisation 
-    longitudinale directe, analogue à un réseau de drainage enterocyte→photophore 
-    décrit hypothétiquement par Herring [1] mais jamais démontré in vivo. 
-    La nature exacte de ce réseau — capillaires lymphatiques, réseau portal 
-    intestinal direct ou transport actif neuralement dirigé — reste à établir 
-    par immunohistochimie post-mortem.
-  </p>
-
-  <h3 class="sub">5.2 Gradient V/D et fonction de contre-illumination</h3>
-
-  <p class="bt">
-    Le gradient de concentration ventral/dorsal de ×3,8 confirme que la 
-    contre-illumination — et non la signalisation intraspécifique — 
-    est la fonction primaire des photophores VMR chez <em>C. sloani</em>. 
-    Les prédateurs venant d'en bas voient le ventre du poisson illuminé 
-    se fondre dans la lumière descendante (Snell window effect), 
-    tandis que les photophores dorsaux moins actifs interviennent 
-    plutôt dans la communication latérale [6].
-  </p>
-
-  <div class="hl green">
-    Application bio-inspirée : un réseau de micro-lentilles organiques 
-    auto-alimentées par gradient de concentration, reproduisant l'architecture 
-    VMR de <em>C. sloani</em>, est en cours d'étude au DSVT comme candidat 
-    pour des surfaces camouflantes basse consommation pour engins sous-marins 
-    autonomes (programme DOL-CAMO, collaboration DCNS).
-  </div>
-
-  <div class="art-divider"></div>
-
-  <div class="refs-sec" id="s6">
-    <div class="ref-ttl">Références bibliographiques</div>
-    <div class="ref-list">
-      <div class="ref-item"><b>Herring P.J.</b> — <em>Bioluminescence of marine organisms</em> — 1987</div>
-      <div class="ref-item"><b>Partridge J.C. & Douglas R.H.</b> — <em>Far-red sensitivity of dragon fish</em> — 1995</div>
-      <div class="ref-item"><b>Drazen J.C. & Seibel B.A.</b> — <em>Depth-related trends in metabolism of benthic and benthopelagic deep-sea fishes</em> — 2007</div>
-      <div class="ref-item"><b>Haddock S.H.D., Moline M.A. & Case J.F.</b> — <em>Bioluminescence in the sea</em> — 2010</div>
-      <div class="ref-item"><b>Shimomura O.</b> — <em>Bioluminescence — chemical principles and methods</em> — 2006</div>
-      <div class="ref-item"><b>Wagner H.J. et al.</b> — <em>Photoreceptors in the ventral integument of the deep-sea fish Malacosteus niger</em> — 1998</div>
-      <div class="ref-item"><b>Johnsen S.</b> — <em>The Optics of Life — a biologist's guide to light in nature</em> — 2012</div>
-    </div>
-  </div>
-
-  <div class="footnote">
-    <strong>Conflits d'intérêts :</strong> Aucun. Prof. C. Vasseur est chercheuse associée IFREMER et contribue à titre personnel. Dr. K. Mori contribue dans le cadre de l'accord bilatéral IFRAS-JAMSTEC 2023. —
-    <strong>Financement :</strong> ANR-23-ABYS-0014 « LUMABYS » ; accès synchrotron ESRF-BM18 (proposition LS-3044) ; soutien IFREMER programme grande profondeur 2024. —
-    <strong>Éthique animale :</strong> Protocole approuvé par le comité d'éthique APAFIS n°42-217 (IFRAS, 2024). Capture autorisée campagne ABYSSAL-IV, permis IFREMER-2024-STHOM-001. —
-    <strong>Contributions :</strong> L.B. : direction, protocole d₆-CTZ, analyses µCT ; N.L. : reconstruction volumique, cartographie intensité ; C.V. : identification espèce, expertise bioluminescence ; K.M. : conception cellule haute pression, maintien specimens.
-  </div>
-
+  </aside>
 </div>
 
-<footer style="background:#020617;border-top:1px solid #1b2555;padding:32px 30px;text-align:center;font-size:12px;color:#6b7280;">
-  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale · Publications soumises à validation institutionnelle
+<!-- Articles liés -->
+<section class="container related" aria-labelledby="relTitle">
+  <h2 class="section-title" id="relTitle">À lire aussi</h2>
+  <div class="related-grid">
+    <a class="rel" href="publications_scientifiques_03.html" style="--c:#34d399">
+      <div class="rel-img"><img src="../Assets/publication/mars01.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Astrobiologie</small><strong>Des microbes qui se multiplient en conditions martiennes simulées</strong></div>
+    </a>
+    <a class="rel" href="publications_scientifiques_05.html" style="--c:#67e8f9">
+      <div class="rel-img"><img src="../Assets/publication/exoplanete01.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Astrophysique</small><strong>Une super-Terre au cœur de la zone habitable d'une étoile orange</strong></div>
+    </a>
+    <a class="rel" href="publications_scientifiques_04.html" style="--c:#c084fc">
+      <div class="rel-img"><img src="../Assets/publication/quantique01.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Physique quantique</small><strong>L'intrication quantique préservée sur une liaison Terre–satellite simulée</strong></div>
+    </a>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© IFRAS, Institut Français de Recherche Aéronautique et Spatiale</span>
+    <span>Publications soumises à validation institutionnelle</span>
+  </div>
 </footer>
 
+<div class="toast" id="toast" role="status"><i class="ph-light ph-check-circle" aria-hidden="true"></i><span></span></div>
+<div class="tip" id="tip" role="tooltip"></div>
 <script>
-window.addEventListener('scroll',()=>{
-  const d=document.documentElement;
-  document.getElementById('progressBar').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%';
-});
-const secs=['s0','s1','s2','s3','s4','s5','s6'];
-const dots=document.querySelectorAll('.toc-dot');
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      const i=secs.indexOf(e.target.id);
-      if(i>=0){dots.forEach(d=>d.classList.remove('active'));dots[i]&&dots[i].classList.add('active');}
-    }
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const $ = (id) => document.getElementById(id);
+  const NS = 'http://www.w3.org/2000/svg';
+  const fmt = (n, d = 0) => n.toLocaleString('fr-FR', { minimumFractionDigits: d, maximumFractionDigits: d });
+  const svgEl = (tag, attrs = {}, parent) => {
+    const el = document.createElementNS(NS, tag);
+    for (const k in attrs) el.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(el);
+    return el;
+  };
+  /* lance une fonction quand l'élément devient visible (une seule fois) */
+  const onceVisible = (el, fn, margin = '0px 0px -15% 0px') => {
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { io.disconnect(); fn(); } }, { rootMargin: margin });
+    io.observe(el);
+  };
+  /* boucle d'animation suspendue hors écran et onglet masqué */
+  const loopWhileVisible = (el, frame) => {
+    let raf = 0, visible = false;
+    const tick = (t) => { frame(t); raf = requestAnimationFrame(tick); };
+    const sync = () => { cancelAnimationFrame(raf); if (visible && !document.hidden) raf = requestAnimationFrame(tick); };
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; sync(); }).observe(el);
+    document.addEventListener('visibilitychange', sync);
+  };
+
+  /* ---------- Menu mobile ---------- */
+  const toggle = document.querySelector('.menu-toggle');
+  const panel = $('mobile-panel');
+  const setMenu = (open) => {
+    panel.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    toggle.querySelector('i').className = open ? 'ph-light ph-x' : 'ph-light ph-list';
+  };
+  toggle.addEventListener('click', () => setMenu(!panel.classList.contains('is-open')));
+  document.addEventListener('click', (e) => { if (panel.classList.contains('is-open') && !panel.contains(e.target) && !toggle.contains(e.target)) setMenu(false); });
+
+  /* ---------- Apparition au défilement ---------- */
+  const rvIO = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (e.isIntersecting) { e.target.classList.add('in'); rvIO.unobserve(e.target); }
+  }), { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.rv').forEach((el) => rvIO.observe(el));
+
+  /* ---------- Toast ---------- */
+  let toastT;
+  const toast = (msg) => { const t = $('toast'); t.querySelector('span').textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2600); };
+
+  /* ---------- Progression de lecture + sommaire ---------- */
+  const article = $('article');
+  const tocLinks = [...document.querySelectorAll('#toc a')];
+  const sections = tocLinks.map((a) => document.querySelector(a.getAttribute('href')));
+  const ind = document.querySelector('.toc-ind');
+  const WORDS = article.innerText.split(/\s+/).length;
+  let ticking = false;
+  function onScroll() {
+    ticking = false;
+    const r = article.getBoundingClientRect();
+    const total = r.height - window.innerHeight * 0.6;
+    const p = Math.min(1, Math.max(0, -r.top / total));
+    $('progress').style.transform = `scaleX(${p})`;
+    const left = Math.max(0, Math.ceil((WORDS / 220) * (1 - p)));
+    $('timeLeft').textContent = p >= 0.98 ? 'Lecture terminée' : `${left || 1} min restante${left > 1 ? 's' : ''}`;
+    let cur = 0;
+    sections.forEach((s, i) => { if (s && s.getBoundingClientRect().top < window.innerHeight * 0.35) cur = i; });
+    tocLinks.forEach((a, i) => a.classList.toggle('on', i === cur));
+    const a = tocLinks[cur];
+    if (a && ind) { ind.style.transform = `translateY(${a.parentElement.offsetTop}px)`; ind.style.height = a.offsetHeight + 'px'; }
+  }
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  /* ---------- Chiffres clés animés ---------- */
+  document.querySelectorAll('[data-count]').forEach((el) => {
+    const target = Number(el.dataset.count), suffix = el.dataset.suffix || '';
+    const paint = (v) => { el.innerHTML = `${fmt(v)}<small>${suffix}</small>`; };
+    if (reduceMotion) return;
+    paint(0);
+    onceVisible(el, () => {
+      const t0 = performance.now(), dur = 1100;
+      const step = (t) => { const k = Math.min(1, (t - t0) / dur); paint(Math.round(target * (1 - Math.pow(1 - k, 4)))); if (k < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    });
   });
-},{rootMargin:'-20% 0px -70% 0px'});
-secs.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
-dots.forEach((d,i)=>{d.addEventListener('click',()=>{const el=document.getElementById(secs[i]);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});});});
+
+  /* ---------- Infobulles : termes expliqués ---------- */
+  const TERMS = {
+    photophore: ['Photophore', "Organe lumineux de la peau, de moins d'un millimètre ici. Il contient des cellules qui produisent la lumière, un réflecteur, un écran de pigment et une petite lentille."],
+    ctz: ['Coelentérazine', "Petite molécule très répandue dans l'océan, utilisée par de nombreux animaux pour produire de la lumière. Elle est détruite par la réaction : il faut en fournir sans cesse."],
+    luciferase: ['Luciférase', "Enzyme qui accélère la réaction entre la coelentérazine et l'oxygène. Sans elle, la molécule ne brille presque pas."],
+    bar: ['Bar', "Unité de pression. Au niveau de la mer, l'air exerce environ 1 bar ; chaque tranche de 10 m d'eau en ajoute 1. À 800 m de profondeur, la pression atteint environ 80 bar."],
+    camera: ['Caméra à comptage de photons', "Caméra si sensible qu'elle détecte les grains de lumière un par un. Elle permet de mesurer une lumière des milliards de fois plus faible que celle du jour."],
+    contre: ['Contre-illumination', "Camouflage qui consiste à produire, sur le ventre, autant de lumière que celle qui vient d'en haut. Vu d'en dessous, l'animal ne fait plus d'ombre."]
+  };
+  const tip = $('tip');
+  let tipOpenAt = 0, hideT = null, tipOwner = null;
+  function showTip(el) {
+    clearTimeout(hideT);
+    const t = TERMS[el.dataset.term];
+    tip.innerHTML = `<b>${t[0]}</b>${t[1]}`;
+    tip.classList.toggle('instant', Date.now() - tipOpenAt < 400 && tip.classList.contains('show'));
+    const r = el.getBoundingClientRect();
+    tip.style.left = '0px'; tip.style.top = '0px';
+    tip.classList.add('show');
+    const w = tip.offsetWidth, h = tip.offsetHeight;
+    let x = r.left + r.width / 2 - w / 2 + window.scrollX;
+    x = Math.max(16 + window.scrollX, Math.min(x, window.scrollX + document.documentElement.clientWidth - w - 16));
+    let y = r.top + window.scrollY - h - 10, below = false;
+    if (r.top - h - 10 < 130) { y = r.bottom + window.scrollY + 10; below = true; }
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+    tip.style.transformOrigin = `${r.left + r.width / 2 + window.scrollX - x}px ${below ? '0%' : '100%'}`;
+    tipOpenAt = Date.now(); tipOwner = el;
+    el.setAttribute('aria-describedby', 'tip');
+  }
+  function hideTip(delay = 80) {
+    clearTimeout(hideT);
+    hideT = setTimeout(() => { tip.classList.remove('show'); if (tipOwner) tipOwner.removeAttribute('aria-describedby'); tipOwner = null; tipOpenAt = Date.now(); }, delay);
+  }
+  document.querySelectorAll('.term').forEach((el) => {
+    if (canHover) { el.addEventListener('mouseenter', () => showTip(el)); el.addEventListener('mouseleave', () => hideTip()); }
+    el.addEventListener('focus', () => showTip(el));
+    el.addEventListener('blur', () => hideTip(0));
+    el.addEventListener('click', () => { if (!canHover) (tipOwner === el && tip.classList.contains('show')) ? hideTip(0) : showTip(el); });
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { hideTip(0); setMenu(false); } });
+  window.addEventListener('scroll', () => { if (!canHover && tip.classList.contains('show')) hideTip(0); }, { passive: true });
+
+  /* petite infobulle de graphique, placée à côté d'un point */
+  const placeTip = (tipEl, box, svg, W, H, px, py) => {
+    const r = svg.getBoundingClientRect(), bx = box.getBoundingClientRect();
+    const sx = px / W * r.width + (r.left - bx.left), sy = py / H * r.height + (r.top - bx.top);
+    tipEl.classList.add('show');
+    tipEl.style.left = (sx + 14 + tipEl.offsetWidth > bx.width ? sx - 14 - tipEl.offsetWidth : sx + 14) + 'px';
+    tipEl.style.top = Math.max(0, Math.min(bx.height - tipEl.offsetHeight, sy - tipEl.offsetHeight / 2)) + 'px';
+  };
+  const BLUE = '#3b82f6', ORANGE = '#ea580c';
+
+    /* ---------- aide : repère de graphique ---------- */
+  const rng = (seed) => { let s = seed; return () => (s = (s * 16807) % 2147483647) / 2147483647; };
+  const gauss = (r) => { let u = 0, v = 0; while (!u) u = r(); v = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+  function frame(box, o) {
+    const W = Math.round(Math.max(o.minW || 320, Math.min(o.maxW || 680, box.clientWidth))), H = o.H || (W < 520 ? 280 : 300);
+    const m = Object.assign({ l: 50, r: 16, t: 16, b: 40 }, o.m || {});
+    const [x0, x1] = o.x, [y0, y1] = o.y;
+    const x = (v) => m.l + (v - x0) / (x1 - x0) * (W - m.l - m.r);
+    const y = (v) => H - m.b - (v - y0) / (y1 - y0) * (H - m.t - m.b);
+    const svg = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': o.aria || '' });
+    box.prepend(svg);
+    (o.yt || []).forEach((v) => {
+      svgEl('line', { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: '#13204d' }, svg);
+      svgEl('text', { x: m.l - 6, y: y(v) + 4, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 11, class: 'mono' }, svg).textContent = o.yf ? o.yf(v) : fmt(v);
+    });
+    (o.xt || []).forEach((v) => svgEl('text', { x: x(v), y: H - m.b + 18, 'text-anchor': 'middle', fill: '#8891b8', 'font-size': 11, class: 'mono' }, svg).textContent = o.xf ? o.xf(v) : fmt(v));
+    if (o.xl) svgEl('text', { x: W - m.r, y: H - 3, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 11 }, svg).textContent = o.xl;
+    if (o.yl) svgEl('text', { x: m.l + 4, y: m.t + 12, fill: '#8891b8', 'font-size': 11 }, svg).textContent = o.yl;
+    const hit = () => svgEl('rect', { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, class: 'hit' }, svg);
+    return { svg, W, H, m, x, y, hit };
+  }
+  const CYAN = '#67e8f9', NBSP = ' ';
+
+  /* ---------- modèle du rallumage (commun aux figures 4, 5 et 6) ---------- */
+  const NV = 40;
+  const tArr = (i) => 1.5 + i / 4.2;                                  /* arrivée du front au photophore i (h) */
+  const ramp = (dt) => (dt <= 0 ? 0 : 1 - Math.exp(-dt / 0.8));
+  const peak = (t) => (t <= 12 ? 0.98 : 0.86 + 0.12 * Math.exp(-(t - 12) / 10));
+  const lumV = (i, t) => 0.14 + (peak(t) - 0.14) * ramp(t - tArr(i));  /* fraction de la lumière d'avant le jeûne */
+  const meanV = (t) => { let s = 0; for (let i = 0; i < NV; i++) s += lumV(i, t); return s / NV; };
+  const LAT = 0.27;                                                     /* flancs / ventre */
+  const lit = (t) => { let n = 0; for (let i = 0; i < NV; i++) if (lumV(i, t) > 0.5) n++; return n; };
+
+  /* ---------- dessin du poisson-vipère (profil, tête à gauche) ---------- */
+  let fishN = 0;
+  function drawFish(g, o = {}) {
+    const id = 'fz' + (fishN++);
+    const X0 = 40, X1 = 455, c = 100;
+    const h = (x) => { const u = Math.min(1, Math.max(0, (x - X0) / (X1 - X0))); return u < 0.13 ? 25 * Math.pow(u / 0.13, 0.55) : 25 - 18 * Math.pow((u - 0.13) / 0.87, 1.1); };
+    const top = (x) => c - h(x) * 0.92, bot = (x) => c + h(x);
+    const defs = svgEl('defs', {}, g);
+    const bg = svgEl('linearGradient', { id: id + 'b', x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
+    svgEl('stop', { offset: 0, 'stop-color': '#14305a' }, bg); svgEl('stop', { offset: 1, 'stop-color': '#050b18' }, bg);
+    const gl = svgEl('radialGradient', { id: id + 'g' }, defs);
+    svgEl('stop', { offset: 0, 'stop-color': '#a5f3fc', 'stop-opacity': 0.95 }, gl);
+    svgEl('stop', { offset: 0.35, 'stop-color': '#22d3ee', 'stop-opacity': 0.4 }, gl);
+    svgEl('stop', { offset: 1, 'stop-color': '#22d3ee', 'stop-opacity': 0 }, gl);
+    /* corps */
+    let d = `M${X0} ${c}`;
+    for (let x = X0; x <= X1; x += 5) d += ` L${x} ${top(x).toFixed(1)}`;
+    d += ` L${X1 + 14} ${c - 5} L506 ${c - 26} Q494 ${c} 506 ${c + 26} L${X1 + 14} ${c + 5}`;
+    for (let x = X1; x >= X0; x -= 5) d += ` L${x} ${bot(x).toFixed(1)}`;
+    d += ' Z';
+    /* nageoires arrière */
+    svgEl('path', { d: `M400 ${top(400)} L418 ${top(418) - 14} L430 ${top(430)} Z`, fill: '#0b1a33', stroke: '#1e3a5f' }, g);
+    svgEl('path', { d: `M392 ${bot(392)} L414 ${bot(414) + 13} L426 ${bot(426)} Z`, fill: '#0b1a33', stroke: '#1e3a5f' }, g);
+    /* nageoire dorsale avancée */
+    svgEl('path', { d: `M${X0 + 100} ${top(X0 + 100)} L${X0 + 106} ${top(X0 + 106) - 15} L${X0 + 122} ${top(X0 + 122)} Z`, fill: '#0b1a33', stroke: '#1e3a5f' }, g);
+    svgEl('path', { d: d, fill: `url(#${id}b)`, stroke: o.stroke || '#1e3a5f', 'stroke-width': 1 }, g);
+    svgEl('path', { d: `M${X0 + 52} ${c - 3} Q250 ${c - 1} ${X1} ${c}`, fill: 'none', stroke: '#1e3a5f', 'stroke-dasharray': '3 4' }, g);
+    svgEl('path', { d: `M${X0 + 56} ${c + 12} Q${X0 + 72} ${c + 30} ${X0 + 88} ${c + 27}`, fill: 'none', stroke: '#2d4a6e', 'stroke-width': 1.2 }, g);
+    /* bouche et crocs */
+    svgEl('path', { d: `M${X0 + 1} ${c + 2} L${X0 + 46} ${c + 9}`, stroke: '#2d4a6e', 'stroke-width': 1.2 }, g);
+    [[8, 3, 4, 25, 12, 4], [21, 6, 18, 23, 25, 7], [7, 11, 1, -17, 12, 10], [16, 12, 12, -8, 20, 12]].forEach(([a, b, e, f, k, l]) =>
+      svgEl('path', { d: `M${X0 + a} ${c + b} L${X0 + e} ${c + f} L${X0 + k} ${c + l} Z`, fill: '#e2e8f0', opacity: 0.85 }, g));
+    /* œil */
+    svgEl('circle', { cx: X0 + 25, cy: c - 8, r: 6.5, fill: '#07142a', stroke: '#38bdf8', 'stroke-opacity': 0.7 }, g);
+    svgEl('circle', { cx: X0 + 25, cy: c - 8, r: 2.6, fill: CYAN, opacity: 0.55 }, g);
+    /* rayon dorsal et leurre */
+    const gLure = svgEl('g', { 'data-part': 'lure' }, g);
+    svgEl('path', { d: `M${X0 + 102} ${top(X0 + 102)} C${X0 + 100} ${c - 85} ${X0 + 45} ${c - 88} ${X0 + 22} ${c - 66}`, fill: 'none', stroke: '#2d4a6e', 'stroke-width': 1.2 }, gLure);
+    const halo = (gg, x, y, r, extra = {}) => (o.glow ? svgEl('circle', Object.assign({ cx: x, cy: y, r, fill: `url(#${id}g)` }, extra), gg) : null);
+    halo(gLure, X0 + 22, c - 66, 9, o.pulse ? { class: 'pulse', style: '--d:-1.2s' } : {});
+    svgEl('circle', { cx: X0 + 22, cy: c - 66, r: 3.4, fill: o.colLure || '#34d399' }, gLure);
+    /* organe sous l'œil */
+    const gP = svgEl('g', { 'data-part': 'postorb' }, g);
+    halo(gP, X0 + 33, c + 2, 9);
+    svgEl('ellipse', { cx: X0 + 33, cy: c + 2, rx: 4.5, ry: 2.6, fill: o.colP || '#38bdf8' }, gP);
+    /* photophores des flancs */
+    const gL = svgEl('g', { 'data-part': 'lateral' }, g), L = [];
+    for (let j = 0; j < 18; j++) {
+      const x = X0 + 86 + j * (X1 - 24 - X0 - 86) / 17, y = c + h(x) * 0.22;
+      const hh = halo(gL, x, y, o.haloL || 5, o.pulse ? { class: 'pulse', style: `--d:${(-j * 0.37).toFixed(2)}s`, opacity: 0.5 } : {});
+      L.push({ x, y, halo: hh, core: svgEl('circle', { cx: x, cy: y, r: 1.4, fill: o.colL || '#a5f3fc' }, gL) });
+    }
+    /* rangée ventrale */
+    const gV = svgEl('g', { 'data-part': 'ventral' }, g), V = [];
+    for (let i = 0; i < NV; i++) {
+      const x = X0 + 64 + i * (X1 - 14 - X0 - 64) / (NV - 1), y = bot(x) - 3.4;
+      const hh = halo(gV, x, y, o.haloV || 7, o.pulse ? { class: 'pulse', style: `--d:${(-i * 0.21).toFixed(2)}s` } : {});
+      V.push({ x, y, halo: hh, core: svgEl('circle', { cx: x, cy: y, r: 2.1, fill: o.colV || CYAN }, gV) });
+    }
+    return { V, L, c, X0, X1, top, bot, h };
+  }
+
+  /* ---------- En-tête : neige marine et poisson ---------- */
+  (function hero() {
+    const cv = $('abyssSnow'); if (!cv) return;
+    const svg = $('heroFish');
+    const g = svgEl('g', { class: 'fish-bob' }, svgEl('g', { transform: 'translate(4 128)' }, svg));
+    drawFish(g, { glow: true, pulse: !reduceMotion, haloV: 8 });
+    const ctx = cv.getContext('2d');
+    let w, h, snow = [], sparks = [];
+    const size = () => {
+      const r = cv.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 2);
+      w = r.width; h = r.height; cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      snow = Array.from({ length: 90 }, () => ({ x: Math.random() * w, y: Math.random() * h, r: Math.random() * 1.3 + 0.3, v: Math.random() * 0.22 + 0.06, p: Math.random() * 6, a: Math.random() * 0.35 + 0.12 }));
+    };
+    let t = 0;
+    const draw = () => {
+      ctx.clearRect(0, 0, w, h);
+      t += 1;
+      for (const s of snow) {
+        s.y += s.v; if (s.y > h + 4) { s.y = -4; s.x = Math.random() * w; }
+        ctx.fillStyle = `rgba(186,230,253,${s.a})`;
+        ctx.beginPath(); ctx.arc(s.x + Math.sin(t * 0.01 + s.p) * 3, s.y, s.r, 0, Math.PI * 2); ctx.fill();
+      }
+      /* plancton lumineux : brefs éclats bleus */
+      if (Math.random() < 0.02 && sparks.length < 5) sparks.push({ x: Math.random() * w, y: Math.random() * h, life: 0 });
+      sparks = sparks.filter((s) => s.life < 90);
+      for (const s of sparks) {
+        s.life++;
+        const a = Math.sin(s.life / 90 * Math.PI) * 0.6;
+        const gr = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, 14);
+        gr.addColorStop(0, `rgba(103,232,249,${a})`); gr.addColorStop(1, 'rgba(34,211,238,0)');
+        ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(s.x, s.y, 14, 0, Math.PI * 2); ctx.fill();
+      }
+    };
+    size(); new ResizeObserver(size).observe(cv);
+    draw();
+    if (!reduceMotion) loopWhileVisible(cv, draw);
+  })();
+
+  /* ---------- Figure 1 : anatomie ---------- */
+  (function anatomy() {
+    const svg = $('anatFish');
+    const g = svgEl('g', { transform: 'translate(25 20)' }, svg);
+    const F = drawFish(g, { glow: true, colL: '#a78bfa', colP: '#38bdf8', colLure: '#34d399', haloV: 6, haloL: 4 });
+    /* barre d'échelle : le poisson (≈ 30 cm) occupe 466 unités */
+    const sb = svgEl('g', { class: 'anat-lbl' }, svg);
+    svgEl('line', { x1: 452, x2: 529, y1: 214, y2: 214, stroke: '#8891b8', 'stroke-width': 1.5 }, sb);
+    svgEl('line', { x1: 452, x2: 452, y1: 210, y2: 218, stroke: '#8891b8' }, sb); svgEl('line', { x1: 529, x2: 529, y1: 210, y2: 218, stroke: '#8891b8' }, sb);
+    svgEl('text', { x: 490, y: 205, 'text-anchor': 'middle', fill: '#8891b8', 'font-size': 11, class: 'mono' }, sb).textContent = '5 cm';
+    /* étiquettes (grand écran) */
+    const lab = (x1, y1, x2, y2, tx, anchor, txt, part) => {
+      const gg = svgEl('g', { class: 'anat-lbl', 'data-part': part }, svg);
+      svgEl('line', { x1, y1, x2, y2, stroke: '#475394' }, gg);
+      svgEl('text', { x: tx, y: y2 + 4, 'text-anchor': anchor, fill: '#aab3d6', 'font-size': 12 }, gg).textContent = txt;
+    };
+    const v = F.V[18], l = F.L[9];
+    lab(v.x + 25, v.y + 24, v.x + 25, 208, v.x + 31, 'start', 'Rangée ventrale (≈ 40)', 'ventral');
+    lab(l.x + 25, l.y + 18, l.x + 60, 44, l.x + 66, 'start', 'Photophores des flancs', 'lateral');
+    lab(F.X0 + 58, F.c + 26, F.X0 + 58, 208, F.X0 + 64, 'start', 'Organe sous l\'œil', 'postorb');
+    lab(F.X0 + 55, F.c - 46, F.X0 + 90, 34, F.X0 + 96, 'start', 'Leurre', 'lure');
+    const narrow = () => svg.clientWidth < 480;
+    const setLbl = () => svg.querySelectorAll('.anat-lbl').forEach((e) => { e.style.display = narrow() ? 'none' : ''; });
+    setLbl(); new ResizeObserver(setLbl).observe(svg);
+
+    const DESC = {
+      ventral: '<b>Rangée ventrale.</b> Environ 40 photophores par rangée, sur deux rangées parallèles sous le ventre. Ils brillent en continu vers le bas : ce sont eux que l\'étude a suivis.',
+      lateral: '<b>Photophores des flancs.</b> De petits organes répartis sur les côtés du corps. Ils brillent moins fort que ceux du ventre.',
+      postorb: '<b>Organe sous l\'œil.</b> Il éclaire vers l\'avant, probablement pour repérer les proies dans le noir.',
+      lure: '<b>Leurre dorsal.</b> Le premier rayon de la nageoire dorsale, très allongé, porte une petite lumière qui attire les proies près de la bouche.'
+    };
+    const btns = [...document.querySelectorAll('#fig1 .part')], desc = $('partDesc');
+    const idle = desc.innerHTML;
+    let sel = null;
+    const show = (p) => {
+      svg.classList.toggle('focus', !!p);
+      svg.querySelectorAll('[data-part]').forEach((e) => e.classList.toggle('lit', e.dataset.part === p));
+      btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.part === p)));
+      desc.innerHTML = p ? DESC[p] : idle;
+    };
+    btns.forEach((b) => {
+      b.addEventListener('click', () => { sel = sel === b.dataset.part ? null : b.dataset.part; show(sel); });
+      if (canHover) { b.addEventListener('mouseenter', () => show(b.dataset.part)); b.addEventListener('mouseleave', () => show(sel)); }
+    });
+  })();
+
+  /* ---------- Figure 2 : la réaction dans un photophore ---------- */
+  (function chemistry() {
+    const s = $('photoCut');
+    const defs = svgEl('defs', {}, s);
+    const rg = svgEl('radialGradient', { id: 'cutGlow' }, defs);
+    svgEl('stop', { offset: 0, 'stop-color': '#a5f3fc', 'stop-opacity': 0.9 }, rg); svgEl('stop', { offset: 1, 'stop-color': '#22d3ee', 'stop-opacity': 0 }, rg);
+    const beam = svgEl('linearGradient', { id: 'beam', x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
+    svgEl('stop', { offset: 0, 'stop-color': '#67e8f9', 'stop-opacity': 0.55 }, beam); svgEl('stop', { offset: 1, 'stop-color': '#67e8f9', 'stop-opacity': 0 }, beam);
+    const CX = 150;
+    /* vaisseaux */
+    const vin = svgEl('path', { d: 'M8 26 C60 26 96 60 128 118', fill: 'none', stroke: '#9f1239', 'stroke-width': 7, 'stroke-linecap': 'round', opacity: 0.8 }, s);
+    const vout = svgEl('path', { d: 'M172 118 C204 60 240 26 292 26', fill: 'none', stroke: '#9f1239', 'stroke-width': 7, 'stroke-linecap': 'round', opacity: 0.55 }, s);
+    /* faisceau sous la lentille */
+    const light = svgEl('path', { d: `M${CX - 58} 200 L${CX + 58} 200 L${CX + 80} 262 L${CX - 80} 262 Z`, fill: 'url(#beam)', opacity: 0.2 }, s);
+    /* écran de pigment, réflecteur */
+    svgEl('path', { d: `M${CX - 82} 188 C${CX - 82} 58 ${CX + 82} 58 ${CX + 82} 188`, fill: 'none', stroke: '#0b0f1a', 'stroke-width': 14 }, s);
+    svgEl('path', { d: `M${CX - 82} 188 C${CX - 82} 58 ${CX + 82} 58 ${CX + 82} 188`, fill: 'none', stroke: '#1e293b', 'stroke-width': 1 }, s);
+    svgEl('path', { d: `M${CX - 70} 186 C${CX - 70} 74 ${CX + 70} 74 ${CX + 70} 186`, fill: 'none', stroke: '#cbd5e1', 'stroke-width': 3, opacity: 0.75 }, s);
+    /* cellules lumineuses */
+    const cells = [[-22, 118], [0, 108], [22, 118], [-12, 138], [12, 138], [-30, 150], [30, 150], [0, 158]];
+    const glow = svgEl('circle', { cx: CX, cy: 132, r: 50, fill: 'url(#cutGlow)', opacity: 0 }, s);
+    cells.forEach(([dx, y]) => svgEl('circle', { cx: CX + dx, cy: y, r: 12, fill: '#0e7490', 'fill-opacity': 0.45, stroke: '#22d3ee', 'stroke-opacity': 0.45 }, s));
+    /* lentille */
+    svgEl('ellipse', { cx: CX, cy: 192, rx: 66, ry: 15, fill: 'rgba(186,230,253,.16)', stroke: '#bae6fd', 'stroke-opacity': 0.55 }, s);
+    /* étiquettes */
+    const t = (x, y, a, txt) => { svgEl('text', { x, y, 'text-anchor': a, fill: '#aab3d6', 'font-size': 12 }, s).textContent = txt; };
+    t(8, 14, 'start', 'Vaisseau'); t(CX, 62, 'middle', 'Pigment'); t(292, 200, 'end', 'Réflecteur'); t(CX, 225, 'middle', 'Lentille');
+    t(8, 200, 'start', 'Cellules');
+    svgEl('line', { x1: 64, x2: CX - 34, y1: 196, y2: 156, stroke: '#475394' }, s);
+    svgEl('line', { x1: 250, x2: CX + 70, y1: 188, y2: 170, stroke: '#475394' }, s);
+    svgEl('text', { x: CX, y: 256, 'text-anchor': 'middle', fill: CYAN, 'font-size': 12 }, s).textContent = 'lumière vers le bas';
+    /* acteurs */
+    const mol = svgEl('circle', { r: 5.5, fill: '#fbbf24' }, s);
+    const o2 = svgEl('circle', { r: 3.5, fill: '#e2e8f0', opacity: 0 }, s);
+    const ph = svgEl('circle', { r: 4, fill: '#fff', stroke: CYAN, 'stroke-width': 3, 'stroke-opacity': 0.5, opacity: 0 }, s);
+    const LIN = vin.getTotalLength(), LOUT = vout.getTotalLength();
+    const steps = [...document.querySelectorAll('#chemSteps li')];
+    const DUR = 1.7;
+    let p = 0, playing = !reduceMotion, last = 0;
+    const ease = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+    const render = () => {
+      const k = Math.floor(p), f = p - k, e = ease(Math.min(1, f * 1.25));
+      steps.forEach((li, i) => li.classList.toggle('on', i === k));
+      mol.setAttribute('fill', k === 3 ? '#64748b' : '#fbbf24');
+      if (k === 0) { const q = vin.getPointAtLength(e * LIN); mol.setAttribute('cx', q.x); mol.setAttribute('cy', q.y); mol.setAttribute('opacity', 1); }
+      if (k === 1) { mol.setAttribute('cx', 128 + e * 22); mol.setAttribute('cy', 118 + e * 14); o2.setAttribute('opacity', 1 - Math.max(0, f - 0.8) * 5); o2.setAttribute('cx', 200 - e * 42); o2.setAttribute('cy', 150 - e * 12); }
+      else o2.setAttribute('opacity', 0);
+      if (k === 2) {
+        /* photon : cellule → réflecteur → lentille → dehors */
+        let x, y;
+        if (e < 0.4) { const q = e / 0.4; x = CX + q * 52; y = 132 - q * 26; }
+        else { const q = (e - 0.4) / 0.6; x = CX + 52 - q * 60; y = 106 + q * 150; }
+        ph.setAttribute('cx', x); ph.setAttribute('cy', y); ph.setAttribute('opacity', f > 0.95 ? 0 : 1);
+        glow.setAttribute('opacity', Math.sin(Math.min(1, f * 2) * Math.PI) * 0.9);
+        light.setAttribute('opacity', 0.2 + 0.6 * Math.sin(f * Math.PI));
+        mol.setAttribute('cx', CX); mol.setAttribute('cy', 132);
+      } else { ph.setAttribute('opacity', 0); glow.setAttribute('opacity', 0); light.setAttribute('opacity', 0.2); }
+      if (k === 3) { const q = vout.getPointAtLength((1 - e) * LOUT); mol.setAttribute('cx', f < 0.2 ? CX : q.x); mol.setAttribute('cy', f < 0.2 ? 132 : q.y); mol.setAttribute('opacity', 1 - Math.max(0, f - 0.85) * 6); }
+    };
+    const btn = $('chemPlay');
+    const setBtn = () => { btn.querySelector('i').className = playing ? 'ph-light ph-pause' : 'ph-light ph-play'; btn.querySelector('span').textContent = playing ? 'Pause' : 'Lancer'; };
+    btn.addEventListener('click', () => { playing = !playing; setBtn(); });
+    setBtn();
+    if (reduceMotion) p = 2.5;
+    render();
+    steps.forEach((li) => li.addEventListener('click', () => { p = Number(li.dataset.k) + 0.5; render(); }));
+    loopWhileVisible($('fig2'), (now) => {
+      if (!last) last = now;
+      const dt = Math.min(0.1, (now - last) / 1000); last = now;
+      if (playing) { p = (p + dt / DUR) % 4; render(); }
+    });
+  })();
+
+  /* ---------- Figure 3 : aquarium hyperbare ---------- */
+  (function tank() {
+    const s = $('tank');
+    const defs = svgEl('defs', {}, s);
+    const st = svgEl('linearGradient', { id: 'steel', x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
+    svgEl('stop', { offset: 0, 'stop-color': '#475569' }, st); svgEl('stop', { offset: 0.5, 'stop-color': '#1e293b' }, st); svgEl('stop', { offset: 1, 'stop-color': '#334155' }, st);
+    const wa = svgEl('linearGradient', { id: 'water', x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
+    svgEl('stop', { offset: 0, 'stop-color': '#06193a' }, wa); svgEl('stop', { offset: 1, 'stop-color': '#01050f' }, wa);
+    const T = (x, y, a, txt, o = {}) => { const e = svgEl('text', Object.assign({ x, y, 'text-anchor': a, fill: '#aab3d6', 'font-size': 12.5 }, o), s); e.textContent = txt; return e; };
+    /* équipements latéraux */
+    const side = svgEl('g', { class: 'tank-side' }, s);
+    [[60, 'Refroidisseur', '5 °C', '#38bdf8'], [180, 'Pompe', '80 bar', '#a78bfa']].forEach(([y, a, b, col]) => {
+      svgEl('rect', { x: 24, y, width: 108, height: 56, rx: 10, fill: '#0a1436', stroke: '#1b2555' }, side);
+      svgEl('text', { x: 78, y: y + 24, 'text-anchor': 'middle', fill: '#aab3d6', 'font-size': 12.5 }, side).textContent = a;
+      svgEl('text', { x: 78, y: y + 42, 'text-anchor': 'middle', fill: col, 'font-size': 12.5, class: 'mono' }, side).textContent = b.replace(' ', NBSP);
+      svgEl('path', { d: `M132 ${y + 28} L172 ${y + 28}`, stroke: col, 'stroke-width': 3, class: reduceMotion ? '' : 'flow' }, side);
+    });
+    /* cuve */
+    svgEl('rect', { x: 170, y: 60, width: 292, height: 180, rx: 26, fill: 'url(#steel)', stroke: '#64748b' }, s);
+    svgEl('rect', { x: 184, y: 74, width: 264, height: 152, rx: 16, fill: 'url(#water)' }, s);
+    const r = rng(3);
+    for (let i = 0; i < 26; i++) svgEl('circle', { cx: 190 + r() * 252, cy: 80 + r() * 140, r: 0.6 + r() * 0.9, fill: '#bae6fd', opacity: 0.12 + r() * 0.25 }, s);
+    const fg = svgEl('g', { class: 'fish-bob' }, svgEl('g', { transform: 'translate(214 104) scale(.42)' }, s));
+    drawFish(fg, { glow: true, pulse: !reduceMotion, haloV: 9 });
+    /* sas et manomètre */
+    svgEl('rect', { x: 206, y: 28, width: 34, height: 32, rx: 5, fill: '#0a1436', stroke: '#475394' }, s);
+    svgEl('line', { x1: 206, x2: 240, y1: 44, y2: 44, stroke: '#475394' }, s);
+    const sasL = T(223, 18, 'middle', 'Sas d\'alimentation');
+    svgEl('line', { x1: 316, x2: 316, y1: 50, y2: 60, stroke: '#64748b', 'stroke-width': 3 }, s);
+    svgEl('circle', { cx: 316, cy: 32, r: 19, fill: '#0a1436', stroke: '#94a3b8' }, s);
+    svgEl('line', { x1: 316, y1: 32, x2: 327, y2: 21, stroke: '#f87171', 'stroke-width': 2, class: reduceMotion ? '' : 'needle', style: 'transform-origin:316px 32px' }, s);
+    svgEl('circle', { cx: 316, cy: 32, r: 2.5, fill: '#e2e8f0' }, s);
+    T(343, 37, 'start', '80' + NBSP + 'bar', { fill: '#fff', class: 'mono' });
+    /* hublot + caméra */
+    svgEl('circle', { cx: 462, cy: 150, r: 28, fill: 'rgba(186,230,253,.12)', stroke: '#bae6fd', 'stroke-width': 2 }, s);
+    svgEl('line', { x1: 462, x2: 462, y1: 180, y2: 250, stroke: '#475394' }, s);
+    T(462, 266, 'middle', 'Hublot en saphir');
+    svgEl('rect', { x: 504, y: 136, width: 22, height: 28, rx: 4, fill: '#111c44', stroke: '#475394' }, s);
+    svgEl('rect', { x: 524, y: 118, width: 92, height: 64, rx: 10, fill: '#0a1436', stroke: '#1b2555' }, s);
+    const cnt = T(570, 146, 'middle', '0', { fill: CYAN, class: 'mono', 'font-size': 15 });
+    T(570, 166, 'middle', 'photons/s', { fill: '#8891b8', 'font-size': 11 });
+    const cam1 = T(570, 208, 'middle', 'Caméra à comptage'), cam2 = T(570, 224, 'middle', 'de photons');
+    const phs = Array.from({ length: 6 }, (_, i) => ({ el: svgEl('circle', { r: 2.4, fill: CYAN, opacity: 0 }, s), p: i / 6, y: 140 + (i % 3) * 7 }));
+    const narrow = () => s.clientWidth < 520;
+    const labels = [...s.querySelectorAll(':scope > text')];
+    labels.forEach((e) => { e.dataset.fs = e.getAttribute('font-size'); });
+    const setVB = () => {
+      const n = narrow();
+      s.setAttribute('viewBox', n ? '150 0 486 290' : '0 0 640 290');
+      labels.forEach((e) => e.setAttribute('font-size', n ? Math.round(e.dataset.fs * 1.35) : e.dataset.fs));
+      cam1.textContent = n ? 'Caméra' : 'Caméra à comptage'; cam2.textContent = n ? 'à photons' : 'de photons';
+      cam2.setAttribute('y', n ? 230 : 224);
+      sasL.setAttribute('x', n ? 204 : 223); sasL.setAttribute('text-anchor', n ? 'start' : 'middle');
+      sasL.setAttribute('y', n ? 20 : 18); sasL.textContent = n ? 'Sas' : 'Sas d\'alimentation';
+    };
+    setVB(); new ResizeObserver(setVB).observe(s);
+    let tc = 0;
+    const tick = () => {
+      phs.forEach((q) => { q.p = (q.p + 0.006) % 1; q.el.setAttribute('cx', 410 + q.p * 96); q.el.setAttribute('cy', q.y + (150 - q.y) * q.p); q.el.setAttribute('opacity', Math.sin(q.p * Math.PI)); });
+      if (++tc % 30 === 0) cnt.textContent = fmt(1180 + Math.round((Math.random() - 0.5) * 90)).replace(/\s/g, NBSP);
+    };
+    cnt.textContent = fmt(1180).replace(/\s/g, NBSP);
+    if (!reduceMotion) loopWhileVisible($('fig3'), tick);
+  })();
+
+  /* ---------- Figure 4 : rallumage ---------- */
+  (function relight() {
+    const s = $('relFish');
+    const g = svgEl('g', { transform: 'translate(22 0)' }, s);
+    const front = svgEl('g', { opacity: 0 }, s);
+    const F = drawFish(g, { glow: true, haloV: 10, haloL: 6 });
+    svgEl('line', { y1: 20, y2: 168, stroke: CYAN, 'stroke-dasharray': '3 4', 'stroke-opacity': 0.55 }, front);
+    const ft = svgEl('text', { y: 186, 'text-anchor': 'middle', fill: CYAN, 'font-size': 12 }, front); ft.textContent = 'front';
+    const range = $('relRange'), out = $('relOut'), roT = $('roT'), roN = $('roN'), roV = $('roV');
+    let t = 0, playing = false, last = 0, done = false;
+    const render = () => {
+      F.V.forEach((v, i) => { const I = lumV(i, t); v.halo.setAttribute('opacity', Math.min(1, I * 1.05).toFixed(3)); v.core.setAttribute('opacity', (0.25 + 0.75 * I).toFixed(3)); });
+      F.L.forEach((l, j) => { const I = lumV(Math.round(j * 39 / 17), t) * LAT; l.halo.setAttribute('opacity', Math.min(1, I * 2.2).toFixed(3)); l.core.setAttribute('opacity', (0.2 + 1.6 * I).toFixed(3)); });
+      const fi = (t - 1.5) * 4.2;
+      if (fi > 0 && fi < NV - 1) {
+        const i0 = Math.floor(fi), x = F.V[i0].x + (F.V[i0 + 1].x - F.V[i0].x) * (fi - i0) + 22;
+        front.setAttribute('opacity', 1); front.querySelector('line').setAttribute('x1', x); front.querySelector('line').setAttribute('x2', x); ft.setAttribute('x', x);
+      } else front.setAttribute('opacity', 0);
+      const lab = t === 0 ? 'T0' : 'T+' + fmt(t, t % 1 ? 1 : 0) + NBSP + 'h';
+      out.textContent = lab; roT.textContent = fmt(t, t % 1 ? 1 : 0) + NBSP + 'h';
+      roN.textContent = lit(t) + ' / ' + NV;
+      roV.textContent = Math.round(meanV(t) * 100) + NBSP + '%';
+      range.value = t;
+    };
+    const btn = $('relPlay');
+    const setBtn = () => { btn.querySelector('i').className = playing ? 'ph-light ph-pause' : 'ph-light ph-play'; btn.querySelector('span').textContent = playing ? 'Pause' : (done ? 'Rejouer' : 'Lancer'); };
+    const play = () => { if (t >= 48) t = 0; done = false; playing = true; last = 0; setBtn(); };
+    btn.addEventListener('click', () => { if (playing) { playing = false; setBtn(); } else play(); });
+    range.addEventListener('input', () => { playing = false; t = Number(range.value); done = t >= 48; setBtn(); render(); });
+    render(); setBtn();
+    if (!reduceMotion) onceVisible($('fig4'), play, '0px 0px -30% 0px');
+    loopWhileVisible($('fig4'), (now) => {
+      if (!playing) { last = 0; return; }
+      if (!last) last = now;
+      const dt = Math.min(0.1, (now - last) / 1000); last = now;
+      /* 4 h par seconde jusqu'à 14 h, puis plus vite */
+      t = Math.min(48, t + dt * (t < 14 ? 2.2 : 7));
+      if (t >= 48) { playing = false; done = true; setBtn(); }
+      render();
+    });
+  })();
+
+  /* ---------- Figure 5 : cinétique ---------- */
+  (function kinetics() {
+    const box = $('kin'), tipEl = $('kinTip');
+    const COL = { v: '#0891b2', l: '#9333ea', c: '#d97706' };
+    const LBL = { v: 'Ventre', l: 'Flancs', c: 'Témoins (ventre)' };
+    const TT = [0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 14, 16, 20, 24, 30, 36, 42, 48];
+    const r = rng(21);
+    const ctrl = (t) => 0.14 - 0.012 * t / 48;
+    const DATA = TT.map((t) => {
+      const v = meanV(t) + gauss(r) * 0.008, l = meanV(t) * LAT + gauss(r) * 0.005, c = ctrl(t) + gauss(r) * 0.006;
+      return { t, v: v * 100, l: l * 100, c: c * 100, sv: (0.025 + 0.02 * r()) * 100, sl: (0.012 + 0.01 * r()) * 100, sc: 1.5 };
+    });
+    const narrow = box.clientWidth < 520;
+    const F = frame(box, { x: [0, 48], y: [0, 112], xt: narrow ? [0, 12, 24, 36, 48] : [0, 6, 12, 18, 24, 36, 48], yt: [0, 25, 50, 75, 100], xf: (v) => (v === 0 ? 'T0' : '+' + v + NBSP + 'h'), yf: (v) => v + NBSP + '%', xl: 'Temps après le repas', yl: 'Lumière par photophore', m: { r: narrow ? 14 : 110, l: 52 }, H: narrow ? 300 : 320, aria: 'Courbes de lumière : le ventre remonte de 14 à 96 % en 12 heures, les flancs de 4 à 26 %, les témoins restent à 13 %' });
+    /* référence : avant le jeûne */
+    svgEl('line', { x1: F.x(0), x2: F.x(48), y1: F.y(100), y2: F.y(100), stroke: '#8891b8', 'stroke-dasharray': '4 5', 'stroke-opacity': 0.7 }, F.svg);
+    svgEl('text', { x: F.x(48) - 2, y: F.y(100) - 6, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 11 }, F.svg).textContent = 'avant le jeûne';
+    const line = (fn, col, dash) => {
+      const p = []; for (let t = 0; t <= 48.001; t += 0.25) p.push(`${p.length ? 'L' : 'M'}${F.x(t).toFixed(1)} ${F.y(fn(t) * 100).toFixed(1)}`);
+      const el = svgEl('path', Object.assign({ d: p.join(' '), fill: 'none', stroke: col, 'stroke-width': 2.4, class: 'draw' }, dash ? { 'stroke-dasharray': dash } : {}), F.svg);
+      el.style.setProperty('--len', Math.ceil(el.getTotalLength()));
+      if (dash) { el.classList.remove('draw'); el.classList.add('dot'); }
+      return el;
+    };
+    line(ctrl, COL.c, '6 5'); line((t) => meanV(t) * LAT, COL.l); line(meanV, COL.v);
+    const pts = { v: [], l: [], c: [] };
+    DATA.forEach((d) => ['c', 'l', 'v'].forEach((k) => {
+      svgEl('line', { x1: F.x(d.t), x2: F.x(d.t), y1: F.y(d[k] - d['s' + k]), y2: F.y(d[k] + d['s' + k]), stroke: COL[k], 'stroke-opacity': 0.6, class: 'dot' }, F.svg);
+      pts[k].push(svgEl('circle', { cx: F.x(d.t), cy: F.y(d[k]), r: 3.2, fill: COL[k], stroke: '#070f2b', 'stroke-width': 1.2, class: 'dot' }, F.svg));
+    }));
+    /* rapport ventre / flancs à 12 h */
+    const d12 = DATA.find((d) => d.t === 12), bx = F.x(12) + 12;
+    const br = svgEl('g', { class: 'dot' }, F.svg);
+    svgEl('path', { d: `M${bx - 4} ${F.y(d12.v)} H${bx} V${F.y(d12.l)} H${bx - 4}`, fill: 'none', stroke: '#e6e6e6', 'stroke-opacity': 0.7 }, br);
+    svgEl('text', { x: bx + 6, y: (F.y(d12.v) + F.y(d12.l)) / 2 + 4, fill: '#fff', 'font-size': 13, 'font-weight': 500, class: 'mono' }, br).textContent = '×3,8';
+    /* étiquettes directes */
+    const endY = { v: F.y(meanV(48) * 100), l: F.y(meanV(48) * LAT * 100), c: F.y(ctrl(48) * 100) };
+    ['v', 'l', 'c'].forEach((k) => {
+      const shortLbl = k === 'c' ? 'Témoins' : LBL[k];
+      const e = narrow
+        ? svgEl('text', { x: F.x(48) - 2, y: endY[k] + (k === 'v' ? 18 : k === 'l' ? -8 : 16), 'text-anchor': 'end', fill: COL[k] === '#9333ea' ? '#c084fc' : COL[k] === '#0891b2' ? '#22d3ee' : '#fbbf24', 'font-size': 11.5, 'font-weight': 500, class: 'dot' }, F.svg)
+        : svgEl('text', { x: F.x(48) + 8, y: endY[k] + (k === 'l' ? -4 : k === 'c' ? 8 : 4), fill: '#e6e6e6', 'font-size': 12, class: 'dot' }, F.svg);
+      e.textContent = narrow ? shortLbl : LBL[k];
+    });
+    /* réticule + infobulle */
+    const xh = svgEl('line', { y1: F.m.t, y2: F.H - F.m.b, stroke: '#aab3d6', 'stroke-opacity': 0.5, class: 'xhair' }, F.svg);
+    const hit = F.hit();
+    hit.addEventListener('pointermove', (e) => {
+      const rr = F.svg.getBoundingClientRect(), px = (e.clientX - rr.left) / rr.width * F.W;
+      let i = 0; DATA.forEach((d, k) => { if (Math.abs(F.x(d.t) - px) < Math.abs(F.x(DATA[i].t) - px)) i = k; });
+      const d = DATA[i];
+      xh.setAttribute('x1', F.x(d.t)); xh.setAttribute('x2', F.x(d.t)); xh.classList.add('show');
+      ['v', 'l', 'c'].forEach((k) => pts[k].forEach((c, j) => c.setAttribute('r', j === i ? 5 : 3.2)));
+      tipEl.innerHTML = `<b>${d.t === 0 ? 'T0 (repas)' : 'T+' + d.t + NBSP + 'h'}</b>` + ['v', 'l', 'c'].map((k) => `<div><span style="--lc:${COL[k]}"><i></i>${LBL[k]}</span><em>${fmt(d[k])}${NBSP}%</em></div>`).join('');
+      placeTip(tipEl, box, F.svg, F.W, F.H, F.x(d.t), F.y(d.v));
+    });
+    hit.addEventListener('pointerleave', () => { tipEl.classList.remove('show'); xh.classList.remove('show'); ['v', 'l', 'c'].forEach((k) => pts[k].forEach((c) => c.setAttribute('r', 3.2))); });
+    if (reduceMotion) box.classList.add('drawn'); else onceVisible(box, () => box.classList.add('drawn'), '0px 0px -25% 0px');
+  })();
+
+  /* ---------- Figure 6 : contre-illumination ---------- */
+  (function counterIllum() {
+    const s = $('ciSvg');
+    const defs = svgEl('defs', {}, s);
+    const bgG = svgEl('radialGradient', { id: 'ciBg', cx: 0.5, cy: 0.45, r: 0.75 }, defs);
+    svgEl('stop', { offset: 0, 'stop-color': '#2766aa' }, bgG); svgEl('stop', { offset: 0.55, 'stop-color': '#1d4e89' }, bgG); svgEl('stop', { offset: 1, 'stop-color': '#0b1f3f' }, bgG);
+    const bodyG = svgEl('linearGradient', { id: 'ciBody', x1: 0, y1: 0, x2: 1, y2: 0 }, defs);
+    const blur = svgEl('filter', { id: 'ciBlur', x: '-20%', y: '-50%', width: '140%', height: '200%' }, defs);
+    svgEl('feGaussianBlur', { stdDeviation: 1.6 }, blur);
+    svgEl('rect', { x: 0, y: 0, width: 560, height: 250, fill: 'url(#ciBg)' }, s);
+    /* silhouette vue de dessous : tête à gauche */
+    const X0 = 60, X1 = 470, c = 125;
+    const w = (x) => { const u = Math.min(1, Math.max(0, (x - X0) / (X1 - X0))); return u < 0.12 ? 20 * Math.pow(u / 0.12, 0.6) : 20 - 14 * Math.pow((u - 0.12) / 0.88, 1.1); };
+    let d = `M${X0} ${c}`;
+    for (let x = X0; x <= X1; x += 5) d += ` L${x} ${(c - w(x)).toFixed(1)}`;
+    d += ` L${X1 + 14} ${c - 4} L522 ${c - 22} Q510 ${c} 522 ${c + 22} L${X1 + 14} ${c + 4}`;
+    for (let x = X1; x >= X0; x -= 5) d += ` L${x} ${(c + w(x)).toFixed(1)}`;
+    d += ' Z';
+    svgEl('path', { d: `M112 ${c - 16} L96 ${c - 44} L136 ${c - 18} Z M112 ${c + 16} L96 ${c + 44} L136 ${c + 18} Z`, fill: '#020617', opacity: 0.35 }, s);
+    svgEl('path', { d, fill: 'url(#ciBody)' }, s);
+    const dots = svgEl('g', { filter: 'url(#ciBlur)' }, s), DV = [];
+    for (let i = 0; i < NV; i++) {
+      const x = X0 + 58 + i * (X1 - 14 - X0 - 58) / (NV - 1);
+      [-1, 1].forEach((sg) => DV.push({ i, el: svgEl('circle', { cx: x, cy: c + sg * w(x) * 0.5, r: 2.3, fill: '#bae6fd' }, dots) }));
+    }
+    svgEl('text', { x: 16, y: 30, fill: '#e0f2fe', 'font-size': 16, opacity: 0.85 }, s).textContent = 'Lumière qui descend de la surface';
+    svgEl('text', { x: 16, y: 234, fill: '#e0f2fe', 'font-size': 16, opacity: 0.7 }, s).textContent = 'Vue de dessous';
+    const stops = Array.from({ length: 12 }, (_, k) => svgEl('stop', { offset: k / 11 }, bodyG));
+    const lerp = (a, b, q) => a.map((v, i) => Math.round(v + (b[i] - v) * q));
+    const BLACK = [2, 6, 18], MATCH = [36, 92, 158], BRIGHT = [190, 232, 255];
+    const colAt = (L) => (L <= 1 ? lerp(BLACK, MATCH, L) : lerp(MATCH, BRIGHT, Math.min(1, (L - 1) / 0.5)));
+    const info = $('ciInfo');
+    const TXT = {
+      0: ['Après 6 semaines de jeûne', 'Le ventre ne produit plus que 14 % de la lumière nécessaire. Vu d\'en dessous, le poisson dessine une ombre nette.'],
+      6: ['6 heures après le repas', 'L\'avant du ventre est rallumé et se fond dans le fond ; l\'arrière, encore éteint, reste sombre.'],
+      12: ['12 heures après le repas', 'Toute la rangée ventrale est rallumée. La silhouette a presque disparu.']
+    };
+    let cur = 12, shown = 12, tw = 0;
+    const paint = (t) => {
+      /* couleur du corps : lumière locale des photophores */
+      stops.forEach((st, k) => {
+        const x = X0 + k / 11 * (X1 + 50 - X0);
+        const fi = Math.min(NV - 1, Math.max(0, Math.round((x - X0 - 58) / ((X1 - 14 - X0 - 58) / (NV - 1)))));
+        const col = colAt(lumV(fi, t));
+        st.setAttribute('stop-color', `rgb(${col.join(',')})`);
+      });
+      DV.forEach((p) => p.el.setAttribute('opacity', Math.min(1, lumV(p.i, t)).toFixed(3)));
+    };
+    const setInfo = (t) => {
+      const L = meanV(t), pct = Math.round(L * 100);
+      const [col, lbl, icon] = L < 0.6 ? ['#f87171', 'Bien visible', 'ph-eye'] : L < 0.9 ? ['#fbbf24', 'Encore visible', 'ph-eye'] : ['#34d399', 'Presque invisible', 'ph-eye-slash'];
+      info.innerHTML = `<h4>${TXT[t][0]}</h4><p>${TXT[t][1]}</p><span class="verdict-pill" style="--vc:${col}"><i class="ph-light ${icon}" aria-hidden="true"></i>${lbl}</span>` +
+        `<div class="ci-bar" role="img" aria-label="Lumière du ventre : ${pct} % de la lumière nécessaire"><b></b><i style="left:${Math.min(100, L * 50)}%"></i></div>` +
+        `<div class="ci-scale"><span>Ombre noire</span><span>Invisible</span><span>Trop brillant</span></div>`;
+    };
+    const go = (t) => {
+      cur = t;
+      document.querySelectorAll('#ciSeg [data-t]').forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.t) === t)));
+      setInfo(t);
+      cancelAnimationFrame(tw);
+      const from = shown, t0 = performance.now();
+      const step = (now) => {
+        const q = reduceMotion ? 1 : Math.max(0, Math.min(1, (now - t0) / 700)), e = 1 - Math.pow(1 - q, 3);
+        shown = from + (t - from) * e; paint(shown);
+        if (q < 1) tw = requestAnimationFrame(step);
+      };
+      tw = requestAnimationFrame(step);
+    };
+    document.querySelectorAll('#ciSeg [data-t]').forEach((b) => b.addEventListener('click', () => go(Number(b.dataset.t))));
+    paint(12); setInfo(12);
+    if (!reduceMotion) onceVisible($('fig6'), () => { shown = 0; go(0); setTimeout(() => go(12), 1100); }, '0px 0px -30% 0px');
+  })();
+
+  /* images des articles liés introuvables : on garde le fond coloré */
+  document.querySelectorAll('.rel-img img').forEach((img) => img.addEventListener('error', () => img.remove()));
+})();
 </script>
 </body>
 </html>
