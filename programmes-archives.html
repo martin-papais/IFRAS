@@ -871,9 +871,11 @@ a { color: inherit; }
   gap: 32px;
   align-items: start;
 }
-.period { padding-top: 44px; width: 220px; }
+.period { padding-top: 44px; width: max-content; min-width: 220px; }
 .period strong {
   display: block;
+  white-space: nowrap;
+  padding: 0 .06em .08em 0;
   font-family: "Syne", sans-serif;
   font-size: clamp(30px, 3vw, 40px);
   font-weight: 800; line-height: 1;
@@ -1019,7 +1021,7 @@ a { color: inherit; }
 
 
     <li class="subnav-item subnav-item--end" style="--c:var(--st-archived)">
-      <a class="subnav-trigger" href="#apollox" aria-current="true" aria-haspopup="true" aria-expanded="false">Archivés <span class="subnav-count">3</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
+      <a class="subnav-trigger" href="programmes-archives.html" aria-current="true" aria-haspopup="true" aria-expanded="false">Archivés <span class="subnav-count">3</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
       <div class="dropdown">
         <ul>
           <li><a href="#apollox"><strong>APOLLO-X</strong><span>Cratères polaires lunaires</span></a></li>
@@ -1030,7 +1032,7 @@ a { color: inherit; }
     </li>
 
     <li class="subnav-item subnav-item--end" style="--c:var(--st-aborted)">
-      <a class="subnav-trigger" href="programmes.html#avortes" aria-haspopup="true" aria-expanded="false">Avortés <span class="subnav-count">3</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
+      <a class="subnav-trigger" href="programmes-avortes.html" aria-haspopup="true" aria-expanded="false">Avortés <span class="subnav-count">3</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
       <div class="dropdown">
         <ul>
           <li><a href="programmes-avortes.html#phoenix"><strong>PHOENIX</strong><span>Hypothermie profonde</span></a></li>
