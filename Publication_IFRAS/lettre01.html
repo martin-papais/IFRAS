@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lettre de la Direction scientifique, printemps 2026 | Publications IFRAS</title>
+<meta name="description" content="Lettre N°22 de la Direction scientifique de l'IFRAS : ARTEMIS-9 entre en phase III, PROMETHEUS dépasse son objectif d'efficacité et trois partenariats sont signés.">
+<meta name="theme-color" content="#050b1e">
+<link rel="icon" type="image/png" sizes="1000x1000" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+
+<style>
+/* =========================================================
+   TOKENS (identiques aux autres pages)
+   ========================================================= */
+:root {
+  --bg-main: #050b1e;
+  --bg-dark: #020617;
+  --bg-light: #070f2b;
+  --bg-raise: #0a1436;
+  --accent: #4f6bed;
+  --accent-hover: #3d5adb;
+  --accent-soft: rgba(79,107,237,.14);
+  --accent-line: rgba(79,107,237,.38);
+  --text-main: #e6e6e6;
+  --text-strong: #f5f7ff;
+  --text-soft: #aab3d6;
+  --text-mute: #8891b8;
+  --border: #1b2555;
+
+  /* Une couleur par type de contenu */
+  --t-sci: #60a5fa;
+  --t-ifras: #34d399;
+  --t-event: #f97316;
+  /* Types de publications IFRAS */
+  --t-lettre: #60a5fa;
+  --t-rapport: #34d399;
+  --t-hs: #f97316;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --header-h: 68px;
+  --subnav-h: 48px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 20px); }
+
+body {
+  margin: 0;
+  font-family: "DM Sans", "Segoe UI", system-ui, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+[hidden] { display: none !important; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.skip-link {
+  position: absolute; left: 16px; top: -48px;
+  padding: 10px 16px;
+  background: var(--accent); color: #fff;
+  border-radius: var(--radius-sm);
+  z-index: 3000; text-decoration: none;
+  transition: top 160ms var(--ease-out);
+}
+.skip-link:focus { top: 12px; }
+
+.container { max-width: 1300px; margin: 0 auto; padding: 0 30px; }
+
+/* =========================================================
+   BOUTONS
+   ========================================================= */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 22px;
+  border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 500;
+  text-decoration: none; white-space: nowrap;
+  border: 1px solid transparent;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.btn:active { transform: scale(0.97); }
+.btn i { font-size: 16px; transition: transform 200ms var(--ease-out); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-ghost { border-color: var(--accent-line); color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-ghost:hover { background: var(--accent-soft); border-color: var(--accent); }
+  .btn:hover i { transform: translateX(3px); }
+}
+
+.text-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--text-soft);
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.text-link i { transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .text-link:hover { color: #fff; }
+  .text-link:hover i { transform: translateX(3px); }
+}
+
+/* =========================================================
+   HEADER (opaque)
+   ========================================================= */
+.site-header {
+  position: fixed; inset: 0 0 auto 0;
+  z-index: 2000;
+  height: var(--header-h);
+  background: rgba(5,11,30,.88);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.header-left { display: flex; align-items: center; gap: 44px; }
+.logo-link { display: flex; align-items: center; }
+.logo-link img { height: 44px; width: auto; }
+
+.main-nav { list-style: none; display: flex; gap: 6px; margin: 0; padding: 0; }
+.main-nav a {
+  position: relative; display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--text-soft);
+  font-size: 14px; letter-spacing: .02em;
+  border-radius: 6px;
+  transition: color 160ms ease;
+}
+.main-nav a::after {
+  content: ""; position: absolute;
+  left: 12px; right: 12px; bottom: 2px; height: 1px;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 200ms var(--ease-out);
+}
+.main-nav a[aria-current="page"] { color: #fff; }
+.main-nav a[aria-current="page"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .main-nav a:hover { color: #fff; }
+  .main-nav a:hover::after { transform: scaleX(1); }
+}
+
+.header-right { display: flex; align-items: center; gap: 10px; }
+.header-right .btn { padding: 9px 18px; font-size: 13px; }
+
+.menu-toggle {
+  display: none;
+  width: 42px; height: 42px;
+  align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: #fff; font-size: 20px; cursor: pointer;
+  transition: transform 160ms var(--ease-out);
+}
+.menu-toggle:active { transform: scale(0.95); }
+
+.mobile-panel {
+  position: fixed; top: var(--header-h); left: 12px; right: 12px;
+  z-index: 1999;
+  padding: 10px;
+  background: rgba(7,15,43,.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(2,6,23,.6);
+  transform-origin: top right;
+  opacity: 0; transform: scale(0.96) translateY(-6px);
+  pointer-events: none; visibility: hidden;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s linear 220ms;
+}
+.mobile-panel.is-open {
+  opacity: 1; transform: none; pointer-events: auto; visibility: visible;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s;
+}
+.mobile-panel ul { list-style: none; margin: 0; padding: 0; }
+.mobile-panel a {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px; color: var(--text-main);
+  text-decoration: none; font-size: 16px; border-radius: 10px;
+}
+.mobile-panel a[aria-current="page"] { background: var(--accent-soft); color: #fff; }
+.mobile-panel .btn { width: 100%; justify-content: center; margin-top: 8px; }
+
+/* =========================================================
+   SOUS-NAVIGATION (ancres + section visible)
+   ========================================================= */
+.subnav {
+  position: sticky;
+  top: var(--header-h);
+  margin-top: var(--header-h);
+  z-index: 1500;
+  height: var(--subnav-h);
+  background: rgba(8,18,53,.94);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.subnav-list {
+  height: 100%;
+  list-style: none; margin: 0 auto; padding: 0 30px;
+  max-width: 1300px;
+  display: flex; align-items: stretch; justify-content: space-between;
+}
+.subnav-list li { display: flex; }
+.subnav-link {
+  position: relative;
+  display: flex; align-items: center; gap: 9px;
+  padding: 0 14px;
+  color: var(--text-soft);
+  text-decoration: none;
+  font-size: 14px; font-weight: 500;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.subnav-link i { font-size: 17px; color: var(--c); }
+.subnav-link::after {
+  content: ""; position: absolute;
+  left: 14px; right: 14px; bottom: -1px; height: 2px;
+  background: var(--c);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+.subnav-link[aria-current="true"] { color: #fff; }
+.subnav-link[aria-current="true"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .subnav-link:hover { color: #fff; }
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.site-footer {
+  margin-top: 100px;
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border);
+  padding: 36px 0;
+  font-size: 13px; color: var(--text-mute);
+}
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+/* =========================================================
+   ARTICLE
+   ========================================================= */
+:root {
+  --mono: "DM Mono", ui-monospace, Menlo, Consolas, monospace;
+  --c10: #3b82f6;   /* CMC-10Z */
+  --c20: #059669;   /* CMC-20Z */
+  --c30: #ea580c;   /* CMC-30Z */
+  --hot: #f97316;
+  --ok: #34d399;
+  --warn: #fbbf24;
+  --bad: #f87171;
+  --surface: #070f2b;
+  --line: #13204d;
+}
+html { scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 24px); }
+
+/* barre de lecture sous la sous-navigation */
+.progress {
+  position: fixed; left: 0; right: 0; top: calc(var(--header-h) + var(--subnav-h)); z-index: 1400;
+  height: 2px; background: transparent; pointer-events: none;
+}
+.progress span { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, var(--accent), #fb7185); transform-origin: left; transform: scaleX(0); }
+
+/* ----- En-tête de l'article ----- */
+.art-hero { position: relative; overflow: hidden; isolation: isolate; border-bottom: 1px solid var(--border); }
+.art-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(ellipse 45% 70% at 78% 45%, rgba(249,115,22,.16), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(79,107,237,.14), transparent 60%);
+}
+.art-hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 48px; align-items: center; padding: 48px 0 56px; }
+.crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 26px; padding: 0; list-style: none; font-size: 13px; color: var(--text-mute); }
+.crumbs a { color: var(--text-soft); text-decoration: none; transition: color 160ms ease; }
+.crumbs i { font-size: 11px; opacity: .6; }
+@media (hover: hover) and (pointer: fine) { .crumbs a:hover { color: #fff; } }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 11px; border-radius: 999px; font-size: 12.5px; font-weight: 500;
+  color: var(--b, var(--text-soft));
+  background: color-mix(in srgb, var(--b, var(--text-soft)) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--b, var(--text-soft)) 28%, transparent);
+}
+.badge i { font-size: 14px; }
+.art-title {
+  margin: 0 0 18px; font-family: "Syne", sans-serif; font-weight: 700;
+  font-size: clamp(30px, 3.6vw, 48px); line-height: 1.08; letter-spacing: -0.025em; color: var(--text-strong);
+  text-wrap: balance;
+}
+.art-lede { margin: 0 0 28px; max-width: 60ch; font-size: 18px; line-height: 1.6; color: var(--text-soft); font-weight: 300; }
+.authors { display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 0 0 22px; padding: 0; list-style: none; }
+.author { display: flex; align-items: center; gap: 10px; }
+.author .av { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-family: "Syne", sans-serif; font-size: 12px; font-weight: 700; color: #fff; background: linear-gradient(135deg, hsl(var(--ah) 55% 38%), hsl(var(--ah) 70% 60%)); }
+.author strong { display: block; font-size: 14px; font-weight: 500; color: var(--text-main); }
+.author small { display: block; font-size: 12.5px; color: var(--text-mute); }
+.meta-line { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 13px; color: var(--text-mute); }
+.meta-line span { display: inline-flex; align-items: center; gap: 7px; }
+.meta-line i { font-size: 15px; color: var(--text-soft); }
+.meta-line code { font-family: var(--mono); font-size: 12.5px; color: var(--text-soft); }
+
+.hero-in { opacity: 0; transform: translateY(12px); animation: heroIn 700ms var(--ease-out) forwards; animation-delay: calc(80ms + var(--i, 0) * 90ms); }
+@keyframes heroIn { to { opacity: 1; transform: none; } }
+
+/* illustration : capsule en rentrée */
+.reentry { position: relative; aspect-ratio: 1 / 0.86; max-width: 520px; justify-self: end; width: 100%; }
+.reentry canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.reentry svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.reentry .shock { animation: shock 2.4s var(--ease-in-out) infinite alternate; transform-origin: 62% 50%; }
+@keyframes shock { from { opacity: .75; transform: scale(.985); } to { opacity: 1; transform: scale(1.015); } }
+.reentry .glow { animation: glow 1.6s ease-in-out infinite alternate; }
+@keyframes glow { from { opacity: .55; } to { opacity: .95; } }
+.reentry-tag {
+  position: absolute; display: flex; align-items: center; gap: 8px;
+  padding: 6px 10px; border-radius: 8px; font-family: var(--mono); font-size: 12px; color: var(--text-soft);
+  background: rgba(2,6,23,.7); border: 1px solid var(--border); backdrop-filter: blur(6px);
+}
+.reentry-tag b { color: #fff; font-weight: 500; }
+.reentry-tag i { width: 7px; height: 7px; border-radius: 50%; background: var(--hot); }
+
+/* ----- Mise en page 3 colonnes ----- */
+.art-layout {
+  display: grid; grid-template-columns: 220px minmax(0, 720px) 280px; justify-content: space-between; gap: 48px;
+  padding-top: 48px;
+}
+.toc, .rail { position: sticky; top: calc(var(--header-h) + var(--subnav-h) + 28px); align-self: start; }
+.toc-title, .rail-title { margin: 0 0 14px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.toc ol { position: relative; list-style: none; margin: 0; padding: 0 0 0 14px; border-left: 1px solid var(--border); }
+.toc-ind { list-style: none; position: absolute; left: -1px; top: 0; width: 2px; height: 34px; background: var(--accent); border-radius: 2px; transition: transform 300ms var(--ease-out), height 300ms var(--ease-out); }
+.toc a {
+  display: flex; gap: 10px; padding: 7px 0; font-size: 14px; line-height: 1.35;
+  color: var(--text-mute); text-decoration: none; transition: color 160ms ease;
+}
+.toc a span { font-family: var(--mono); font-size: 12px; padding-top: 1px; color: inherit; opacity: .8; min-width: 16px; }
+.toc a.on { color: #fff; }
+@media (hover: hover) and (pointer: fine) { .toc a:hover { color: var(--text-main); } }
+.toc-time { display: flex; align-items: center; gap: 8px; margin-top: 18px; font-size: 13px; color: var(--text-mute); }
+.toc-time i { font-size: 15px; }
+
+/* ----- Colonne de droite ----- */
+.rail { display: grid; gap: 16px; max-height: calc(100vh - var(--header-h) - var(--subnav-h) - 44px); overflow-y: auto; scrollbar-width: none; overscroll-behavior: contain; }
+.rail::-webkit-scrollbar { display: none; }
+.rail-card { padding: 18px; border-radius: var(--radius); background: var(--bg-light); border: 1px solid var(--border); }
+.cite-text { margin: 0 0 14px; font-size: 13px; line-height: 1.6; color: var(--text-soft); }
+.cite-text em { color: var(--text-main); }
+.rail-actions { display: grid; gap: 8px; }
+.rbtn {
+  display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 40px; border-radius: 10px;
+  border: 1px solid var(--border); background: transparent; color: var(--text-main); font: inherit; font-size: 13.5px; cursor: pointer; text-decoration: none;
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out);
+}
+.rbtn i { font-size: 16px; }
+.rbtn:active { transform: scale(.97); }
+.rbtn.done { border-color: color-mix(in srgb, var(--ok) 45%, transparent); color: var(--ok); }
+@media (hover: hover) and (pointer: fine) { .rbtn:hover { border-color: var(--accent); background: var(--accent-soft); } }
+.fig-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.fig-list a { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: center; padding: 7px 8px; margin: 0 -8px; border-radius: 8px; font-size: 13.5px; color: var(--text-soft); text-decoration: none; transition: background-color 120ms ease, color 120ms ease; }
+.fig-list i { font-size: 17px; color: var(--accent); }
+@media (hover: hover) and (pointer: fine) { .fig-list a:hover { background: var(--bg-raise); color: #fff; } }
+.prog-link { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.prog-link .pi { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; font-size: 19px; color: var(--hot); background: rgba(249,115,22,.12); flex-shrink: 0; }
+.prog-link strong { display: block; font-size: 14px; font-weight: 500; }
+.prog-link small { display: block; font-size: 12.5px; color: var(--text-mute); }
+
+/* ----- Corps de texte ----- */
+.art { min-width: 0; counter-reset: fig; }
+.art p { margin: 0 0 18px; font-size: 17px; line-height: 1.75; color: #c3cae6; font-weight: 300; }
+.art p strong { color: var(--text-main); font-weight: 500; }
+.art h2 {
+  display: flex; align-items: baseline; gap: 14px;
+  margin: 64px 0 18px; font-family: "Syne", sans-serif; font-size: 26px; font-weight: 700; letter-spacing: -0.01em; color: var(--text-strong);
+}
+.art h2 .n { font-family: var(--mono); font-size: 14px; font-weight: 400; color: var(--accent); }
+.art h3 { margin: 34px 0 12px; font-size: 18px; font-weight: 500; color: var(--text-main); }
+sub, sup { line-height: 0; }
+
+/* L'essentiel */
+.essentials { padding: 26px; border-radius: 18px; background: linear-gradient(160deg, var(--bg-raise), var(--bg-light)); border: 1px solid var(--border); }
+.essentials-head { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; }
+.essentials-head i { font-size: 17px; color: var(--hot); }
+.kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 22px; }
+.kpi { padding: 16px; border-radius: 14px; background: rgba(2,6,23,.45); border: 1px solid var(--line); }
+.kpi strong { display: block; font-family: "Syne", sans-serif; font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -0.02em; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.kpi strong small { font-size: .55em; font-weight: 700; margin-left: 2px; color: var(--text-soft); }
+.kpi span { display: block; margin-top: 8px; font-size: 13.5px; line-height: 1.4; color: var(--text-soft); }
+.takeaways { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.takeaways li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 15.5px; line-height: 1.55; color: var(--text-main); }
+.takeaways i { font-size: 18px; color: var(--ok); margin-top: 2px; }
+
+/* Résumé */
+.abstract { margin-top: 28px; padding: 24px 26px; border-radius: 16px; border: 1px solid var(--border); background: rgba(79,107,237,.05); }
+.abstract .label { display: block; margin-bottom: 10px; font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+.abstract p { font-size: 15.5px !important; margin: 0 !important; }
+.kw { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+.kw span { padding: 3px 10px; border-radius: 999px; font-size: 12.5px; color: var(--text-soft); border: 1px solid var(--border); }
+
+/* Termes expliqués (infobulle) */
+.term {
+  position: relative; display: inline; padding: 0; border: 0; background: none; font: inherit; color: var(--text-main); cursor: help;
+  text-decoration: underline dotted color-mix(in srgb, var(--accent) 80%, transparent); text-decoration-thickness: 1.5px; text-underline-offset: 4px;
+}
+.tip {
+  position: absolute; z-index: 1600; width: min(300px, calc(100vw - 32px));
+  padding: 12px 14px; border-radius: 12px;
+  background: #0b1540; border: 1px solid var(--accent-line); box-shadow: 0 18px 50px rgba(0,0,0,.5);
+  font-size: 13.5px; line-height: 1.55; color: var(--text-soft); font-weight: 400;
+  opacity: 0; transform: scale(.97) translateY(4px); pointer-events: none;
+  transition: opacity 140ms ease, transform 160ms var(--ease-out);
+}
+.tip.show { opacity: 1; transform: none; }
+.tip.instant { transition: none; }
+.tip b { display: block; margin-bottom: 3px; color: #fff; font-weight: 500; font-size: 14px; }
+.cite { font-family: var(--mono); font-size: .78em; color: var(--accent); text-decoration: none; vertical-align: .15em; padding: 0 1px; border: 0; background: none; cursor: pointer; }
+
+/* Encadrés */
+.note { display: grid; grid-template-columns: 26px 1fr; gap: 12px; margin: 26px 0; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.note i { font-size: 22px; color: var(--nc, var(--accent)); }
+.note p { margin: 0 !important; font-size: 15.5px !important; color: var(--text-main) !important; }
+.note .nt { display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--nc, var(--accent)); font-weight: 500; }
+
+/* ----- Figures ----- */
+.fig { margin: 34px 0; border-radius: 18px; border: 1px solid var(--border); background: var(--surface); overflow: hidden; counter-increment: fig; scroll-margin-top: calc(var(--header-h) + var(--subnav-h) + 24px); }
+.fig-stage { position: relative; padding: 22px; background: radial-gradient(ellipse at 50% 0%, rgba(79,107,237,.06), transparent 70%); }
+.fig-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin-bottom: 16px; }
+.fig-name { font-size: 14.5px; font-weight: 500; color: var(--text-main); }
+.fig figcaption, .fig .cap { padding: 14px 22px 18px; border-top: 1px solid var(--line); font-size: 14px; line-height: 1.6; color: var(--text-soft); }
+.fig figcaption b, .fig .cap b { font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-right: 8px; }
+.fig svg { display: block; width: 100%; height: auto; overflow: visible; }
+.fig text { font-family: "DM Sans", sans-serif; }
+.fig .mono, .fig text.mono { font-family: var(--mono); }
+.ctrl { display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 12px; border-radius: 9px; border: 1px solid var(--border); background: var(--bg-light); color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out); }
+.ctrl i { font-size: 15px; }
+.ctrl:active { transform: scale(.96); }
+@media (hover: hover) and (pointer: fine) { .ctrl:hover { color: #fff; border-color: var(--accent); } }
+
+/* Fig. 1 trajectoire */
+.readouts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+.readout { padding: 10px 12px; border-radius: 10px; background: rgba(2,6,23,.5); border: 1px solid var(--line); }
+.readout small { display: block; font-size: 12px; color: var(--text-mute); }
+.readout strong { display: block; margin-top: 2px; font-family: var(--mono); font-size: 17px; font-weight: 500; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.readout.hot strong { color: var(--rc, var(--text-strong)); }
+.scrub { display: flex; align-items: center; gap: 12px; margin-top: 14px; }
+.scrub input { flex: 1; accent-color: var(--hot); }
+.scrub output { min-width: 52px; text-align: right; font-family: var(--mono); font-size: 13px; color: var(--text-soft); }
+
+/* Fig. 2 microstructure */
+.parts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.part { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease; }
+.part i { width: 10px; height: 10px; border-radius: 3px; background: var(--pc); }
+.part[aria-pressed="true"] { color: #fff; border-color: var(--pc); background: color-mix(in srgb, var(--pc) 14%, transparent); }
+.art .part-desc { margin: 12px 0 0; min-height: 44px; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+.part-desc b { color: #fff; font-weight: 500; }
+.micro [data-part] { transition: opacity 220ms ease; }
+.micro.focus [data-part] { opacity: .16; }
+.micro.focus [data-part].lit { opacity: 1; }
+
+/* Fig. 3 banc d'essai */
+.bench-v { display: none !important; }
+.flow { stroke-dasharray: 6 10; animation: flow 900ms linear infinite; }
+@keyframes flow { to { stroke-dashoffset: -32; } }
+.flame { animation: glow 900ms ease-in-out infinite alternate; }
+
+/* Tableau */
+.table-wrap { margin: 30px 0; border-radius: 16px; border: 1px solid var(--border); overflow: hidden; background: var(--surface); }
+.table-cap { padding: 14px 20px; font-size: 14px; color: var(--text-soft); border-bottom: 1px solid var(--line); }
+.table-cap b { font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-right: 8px; }
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { padding: 11px 12px; text-align: left; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; background: rgba(2,6,23,.4); border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 11px 12px; color: var(--text-soft); border-bottom: 1px solid var(--line); white-space: nowrap; font-variant-numeric: tabular-nums; }
+tr:last-child td { border-bottom: 0; }
+td:last-child, th:last-child { white-space: normal; }
+td:first-child, th:first-child { padding-left: 18px; }
+td.num { font-family: var(--mono); font-size: 13.5px; color: var(--text-main); }
+th.num, td.num { text-align: right; }
+tbody tr { transition: background-color 120ms ease; }
+@media (hover: hover) and (pointer: fine) { tbody tr:hover { background: rgba(79,107,237,.06); } }
+.mat { display: inline-flex; align-items: center; gap: 8px; color: var(--text-main); }
+.mat i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.state { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--sc); }
+.state i { font-size: 15px; }
+.table-note { padding: 12px 20px; font-size: 13px; color: var(--text-mute); border-top: 1px solid var(--line); background: rgba(2,6,23,.3); }
+
+/* Fig. 4 graphique */
+.legend { display: flex; flex-wrap: wrap; gap: 6px; }
+.lg { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-main); font: inherit; font-size: 13px; cursor: pointer; transition: opacity 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out); }
+.lg:active { transform: scale(.96); }
+.lg i { width: 14px; height: 3px; border-radius: 2px; background: var(--lc); }
+.lg[aria-pressed="false"] { opacity: .45; }
+.lg[aria-pressed="false"] i { background: transparent; border: 1px solid var(--lc); height: 5px; }
+.chart { position: relative; }
+.chart .series { transition: opacity 220ms ease; }
+.chart .series.off { opacity: 0; }
+.chart .draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); }
+.chart.drawn .draw { transition: stroke-dashoffset 1400ms var(--ease-in-out); stroke-dashoffset: 0; }
+.chart .dot { opacity: 0; transition: opacity 300ms ease 1100ms; }
+.chart.drawn .dot { opacity: 1; }
+.hit { fill: transparent; cursor: crosshair; }
+.xhair { opacity: 0; transition: opacity 120ms ease; pointer-events: none; }
+.xhair.show { opacity: 1; }
+.ctip {
+  position: absolute; z-index: 5; pointer-events: none; min-width: 170px;
+  padding: 10px 12px; border-radius: 10px; background: #0b1540; border: 1px solid var(--accent-line);
+  box-shadow: 0 14px 40px rgba(0,0,0,.5); font-size: 13px; color: var(--text-soft);
+  opacity: 0; transform: translateY(4px); transition: opacity 120ms ease, transform 140ms var(--ease-out);
+}
+.ctip.show { opacity: 1; transform: none; }
+.ctip b { display: block; margin-bottom: 6px; color: #fff; font-weight: 500; font-family: var(--mono); }
+.ctip div { display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+.ctip div span { display: inline-flex; align-items: center; gap: 7px; }
+.ctip div span i { width: 8px; height: 8px; border-radius: 50%; background: var(--lc); }
+.ctip div em { font-style: normal; font-family: var(--mono); color: var(--text-main); }
+.data-toggle { margin-top: 12px; }
+.data-table { margin-top: 12px; border-radius: 12px; border: 1px solid var(--line); overflow-x: auto; }
+.data-table[hidden] { display: none; }
+
+/* Fig. 5 carte thermique */
+.thermo { display: grid; grid-template-columns: minmax(0, 1fr) 70px; gap: 18px; align-items: stretch; }
+.thermo-plate { position: relative; aspect-ratio: 1; max-width: 420px; width: 100%; justify-self: center; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); cursor: crosshair; }
+.thermo-plate canvas { width: 100%; height: 100%; display: block; }
+.probe { position: absolute; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.5); pointer-events: none; opacity: 0; transition: opacity 120ms ease; }
+.probe.show { opacity: 1; }
+.probe-read { position: absolute; left: 12px; top: 12px; padding: 6px 10px; border-radius: 8px; background: rgba(2,6,23,.78); font-family: var(--mono); font-size: 13px; color: #fff; pointer-events: none; }
+.scale { display: grid; grid-template-columns: 14px 1fr; gap: 8px; align-self: center; height: min(100%, 420px); aspect-ratio: auto; }
+.scale-bar { display: block; width: 14px; height: 100%; border-radius: 6px; }
+.scale-labels { display: flex; flex-direction: column; justify-content: space-between; font-family: var(--mono); font-size: 12px; color: var(--text-soft); }
+
+/* Fig. 6 couche protectrice */
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.duo-card { border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.4); overflow: hidden; }
+.duo-card h4 { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0; padding: 12px 14px; font-size: 14px; font-weight: 500; color: var(--text-main); border-bottom: 1px solid var(--line); }
+.duo-card h4 span { display: inline-flex; align-items: center; gap: 8px; }
+.duo-card h4 i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.duo-card svg { aspect-ratio: 1.25; }
+.duo-stats { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
+.duo-stats div { padding: 10px 14px; }
+.duo-stats div + div { border-left: 1px solid var(--line); }
+.duo-stats small { display: block; font-size: 12px; color: var(--text-mute); }
+.duo-stats strong { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--text-main); font-variant-numeric: tabular-nums; }
+.verdict { font-size: 12px; font-weight: 500; padding: 2px 8px; border-radius: 999px; color: var(--vc); background: color-mix(in srgb, var(--vc) 14%, transparent); transition: color 200ms ease, background-color 200ms ease; }
+
+/* Équation */
+.eq { margin: 26px 0; padding: 22px; border-radius: 14px; background: rgba(2,6,23,.5); border: 1px solid var(--border); text-align: center; font-family: var(--mono); font-size: 17px; color: #d5dcfb; overflow-x: auto; white-space: nowrap; }
+.eq-parts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: -12px 0 26px; }
+.eq-part { padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-light); font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.eq-part b { display: block; margin-bottom: 2px; font-family: var(--mono); font-weight: 500; color: #fff; }
+
+/* Suite du programme */
+.next { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.next li { position: relative; padding: 16px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.next li::before { content: ""; position: absolute; top: 20px; right: -13px; width: 13px; height: 1px; background: var(--border); }
+.next li:last-child::before { display: none; }
+.next time { font-family: var(--mono); font-size: 12.5px; color: var(--nc, var(--accent)); }
+.next strong { display: block; margin: 6px 0 4px; font-size: 15px; font-weight: 500; color: var(--text-main); }
+.next span { font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.next li.now { border-color: color-mix(in srgb, var(--ok) 45%, var(--border)); }
+
+/* Références */
+.refs { list-style: none; margin: 0; padding: 0; counter-reset: r; display: grid; gap: 4px; }
+.refs li { counter-increment: r; position: relative; display: block; padding: 10px 12px 10px 54px; margin: 0 -12px; border-radius: 10px; font-size: 14px; line-height: 1.6; color: var(--text-soft); transition: background-color 600ms ease; scroll-margin-top: calc(var(--header-h) + var(--subnav-h) + 40px); }
+.refs li::before { content: "[" counter(r) "]"; position: absolute; left: 12px; top: 11px; font-family: var(--mono); font-size: 13px; color: var(--accent); }
+.refs li.flash { background: rgba(79,107,237,.16); transition: none; }
+.refs em { color: var(--text-main); }
+.decl { margin-top: 28px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.35); display: grid; gap: 8px; font-size: 13.5px; line-height: 1.6; color: var(--text-mute); }
+.decl strong { color: var(--text-soft); font-weight: 500; }
+
+/* Articles liés */
+.related { margin-top: 72px; padding-top: 40px; border-top: 1px solid var(--border); }
+.related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
+.rel { display: flex; flex-direction: column; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); background: var(--bg-light); text-decoration: none; transition: border-color 200ms ease, transform 220ms var(--ease-out); }
+.rel-img { aspect-ratio: 16 / 9; overflow: hidden; background: linear-gradient(135deg, color-mix(in srgb, var(--c) 30%, var(--bg-raise)), var(--bg-light)); }
+.rel-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 500ms var(--ease-out); }
+.rel-body { padding: 16px; }
+.rel-body small { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--text-soft); }
+.rel-body small::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c); }
+.rel-body strong { display: block; margin-top: 6px; font-size: 16px; font-weight: 500; line-height: 1.4; color: var(--text-main); }
+.rel:active { transform: scale(.98); }
+@media (hover: hover) and (pointer: fine) {
+  .rel:hover { border-color: color-mix(in srgb, var(--c) 55%, var(--border)); transform: translateY(-3px); }
+  .rel:hover .rel-img img { transform: scale(1.04); }
+}
+.section-title { margin: 0; font-family: "Syne", sans-serif; font-size: 22px; font-weight: 700; color: var(--text-strong); }
+
+/* apparition des figures */
+.js .rv { opacity: 0; transform: translateY(16px); transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
+.js .rv.in { opacity: 1; transform: none; }
+
+.toast {
+  position: fixed; left: 50%; bottom: 24px; z-index: 4000;
+  display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 12px;
+  background: #0b1540; border: 1px solid rgba(52,211,153,.35); color: #a7f3d0; font-size: 14px;
+  box-shadow: 0 16px 40px rgba(0,0,0,.5);
+  transform: translate(-50%, 16px); opacity: 0; pointer-events: none;
+  transition: transform 260ms var(--ease-out), opacity 200ms ease;
+}
+.toast.show { transform: translate(-50%, 0); opacity: 1; }
+.toast i { font-size: 18px; color: var(--ok); }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1320px) {
+  .art-layout { grid-template-columns: minmax(0, 720px) 280px; justify-content: center; }
+  .toc { display: none; }
+}
+@media (max-width: 1060px) {
+  .art-layout { grid-template-columns: minmax(0, 720px); }
+  .rail { position: static; max-height: none; overflow: visible; grid-template-columns: repeat(2, minmax(0, 1fr)); order: 2; }
+  .rail .rail-figs { display: none; }
+  .art-hero-grid { grid-template-columns: 1fr; gap: 10px; padding-bottom: 36px; }
+  .reentry { justify-self: center; max-width: 440px; order: -1; margin-top: -10px; }
+}
+@media (max-width: 860px) {
+  .main-nav, .header-right .btn-desktop { display: none; }
+  .menu-toggle { display: inline-flex; }
+}
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .subnav-list { padding: 0 20px; overflow-x: auto; scrollbar-width: none; }
+  .subnav-link { padding: 0 10px; font-size: 13.5px; }
+  .art-lede { font-size: 16.5px; }
+  .art p { font-size: 16px; }
+  .art h2 { font-size: 22px; margin-top: 52px; }
+  .kpis { grid-template-columns: 1fr; }
+  .kpi { display: flex; align-items: baseline; gap: 14px; }
+  .kpi span { margin: 0; }
+  .essentials { padding: 20px; }
+  .fig-stage { padding: 16px; }
+  .fig figcaption, .fig .cap { padding: 12px 16px 16px; }
+  .readouts { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .readout strong { font-size: 14px; }
+  .thermo { grid-template-columns: 1fr 56px; gap: 10px; }
+  .duo { grid-template-columns: 1fr; }
+  .eq { font-size: 14px; }
+  #trajSvg text { font-size: 22px; }
+  .bench-h { display: none !important; }
+  .bench-v { display: block !important; }
+  .duo-card svg text { font-size: 13px; }
+  .eq-parts { grid-template-columns: 1fr; }
+  .next { grid-template-columns: 1fr; }
+  .next li::before { display: none; }
+  .rail { grid-template-columns: 1fr; }
+  .related-grid { grid-template-columns: 1fr; }
+  .site-footer { margin-top: 72px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
+  .hero-in { opacity: 1; transform: none; }
+}
+
+/* impression / PDF : texte seul, figures conservées */
+@media print {
+  .site-header, .subnav, .mobile-panel, .progress, .toc, .rail, .related, .site-footer, .ctrl, .legend, .scrub, .parts, .skip-link { display: none !important; }
+  body { background: #fff; color: #111; }
+  .art-layout { display: block; padding: 0; }
+  .art p, .art h2, .art h3, .art-title, .art-lede { color: #111 !important; }
+  .fig, .table-wrap, .essentials, .abstract, .note { break-inside: avoid; }
+  .js .rv { opacity: 1; transform: none; }
+}
+
+/* =========================================================
+   ARTICLE 02 : PROPULSION IONIQUE
+   ========================================================= */
+.art-hero--ion::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 82% 45%, rgba(59,130,246,.2), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(249,115,22,.1), transparent 60%);
+}
+.thruster .glow { animation: glow 1.4s ease-in-out infinite alternate; }
+
+.seg { display: inline-flex; padding: 3px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-light); }
+.seg button { height: 30px; padding: 0 12px; border: 0; border-radius: 7px; background: none; color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out); }
+.seg button:active { transform: scale(.96); }
+.seg button[aria-pressed="true"] { background: var(--bg-raise); color: #fff; box-shadow: inset 0 0 0 1px var(--border); }
+@media (hover: hover) and (pointer: fine) { .seg button:hover { color: #fff; } }
+
+.lg.static { cursor: default; }
+#howSvg .zone { transition: opacity 240ms ease; }
+#howSvg.focus .zone { opacity: .22; }
+#howSvg.focus .zone.lit { opacity: 1; }
+
+tr.hi td { background: rgba(59,130,246,.07); }
+td.gain { color: var(--ok); }
+
+.multiples { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.multiples .chart { border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.35); padding: 8px 4px 0; }
+
+.wear { display: grid; grid-template-columns: minmax(0, 1fr) 170px; gap: 16px; align-items: center; }
+.discs { display: grid; gap: 12px; }
+.disc { display: grid; justify-items: center; gap: 4px; padding: 10px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.35); }
+.disc svg { width: 110px; height: 110px; }
+.disc span { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--text-soft); }
+.disc span i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.disc strong { font-family: var(--mono); font-size: 14px; font-weight: 500; color: var(--text-main); }
+.disc.over { border-color: rgba(248,113,113,.5); }
+.disc.over strong { color: var(--bad); }
+
+@media (max-width: 640px) {
+  .multiples { grid-template-columns: 1fr; }
+  .wear { grid-template-columns: 1fr; }
+  .discs { grid-template-columns: 1fr 1fr; }
+  .disc svg { width: 96px; height: 96px; }
+  #howSvg text { display: none; }
+  .readouts { grid-template-columns: 1fr; gap: 6px; }
+  .readout { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 8px 12px; }
+  .readout strong { margin: 0; white-space: nowrap; }
+  #orbitSvg text { font-size: 18px; }
+}
+#gridSvg, #orbitSvg, #howSvg { overflow: hidden; border-radius: 10px; }
+
+/* =========================================================
+   ARTICLE 03 : ASTROBIOLOGIE
+   ========================================================= */
+.art-hero--mars::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 78% 45%, rgba(234,88,12,.18), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(52,211,153,.12), transparent 60%);
+}
+.art-hero--mars .reentry svg { overflow: visible; }
+
+/* jauges Terre / Mars */
+.gauges { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 22px; }
+.gauge { display: grid; gap: 8px; padding: 14px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.4); }
+.gauge-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.gauge-top span { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--text-soft); }
+.gauge-top span i { font-size: 16px; color: var(--text-mute); }
+.gauge-top strong { font-family: var(--mono); font-size: 14.5px; font-weight: 500; color: var(--text-strong); white-space: nowrap; transition: color 200ms ease; }
+.gauge-bar { position: relative; height: 8px; border-radius: 8px; background: linear-gradient(90deg, rgba(52,211,153,.18), rgba(251,191,36,.18) 60%, rgba(248,113,113,.22)); }
+.gauge-fill { position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(90deg, #34d399, #fbbf24 60%, #f87171); transform-origin: left; transform: scaleX(var(--v, 0)); transition: transform 600ms var(--ease-out); clip-path: inset(0 round 8px); }
+.gauge-limit { position: absolute; top: -5px; bottom: -5px; width: 2px; border-radius: 2px; background: #fff; left: var(--l); }
+.gauge-foot { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; color: var(--text-mute); }
+.gauge.beyond .gauge-top strong { color: #fca5a5; }
+
+/* fiches espèces */
+.orgs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 26px 0 12px; }
+.org { position: relative; display: grid; grid-template-columns: 64px 1fr; gap: 14px; padding: 16px; border-radius: 16px; border: 1px solid var(--border); background: var(--bg-light); overflow: hidden; }
+.org::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--oc); }
+.org-pic { width: 64px; height: 64px; border-radius: 14px; background: radial-gradient(circle, color-mix(in srgb, var(--oc) 22%, transparent), rgba(2,6,23,.6)); }
+.org-kind { display: block; font-size: 12px; color: var(--text-mute); }
+.org h4 { margin: 2px 0 6px; font-size: 16px; font-weight: 500; color: var(--text-strong); }
+.art .org p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+.org-state { grid-column: 1 / -1; justify-self: start; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 500; color: var(--sc); background: color-mix(in srgb, var(--sc) 12%, transparent); border: 1px solid color-mix(in srgb, var(--sc) 28%, transparent); }
+.art .small-note { font-size: 14px; color: var(--text-mute); }
+
+/* journal des cultures */
+.dishes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.dish { display: grid; justify-items: center; gap: 6px; padding: 12px 8px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.4); }
+.dish svg { width: 100%; max-width: 132px; aspect-ratio: 1; }
+.dish svg circle.cell { transition: opacity 400ms ease, fill 400ms ease; }
+.dish span { font-size: 12.5px; color: var(--text-soft); text-align: center; }
+.dish strong { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--text-strong); }
+.event { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-items: baseline; margin-top: 14px; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-light); min-height: 78px; }
+.event time { font-family: var(--mono); font-size: 13px; color: var(--ec, var(--accent)); grid-row: span 2; }
+.event strong { font-size: 14.5px; font-weight: 500; color: var(--text-main); }
+.event span { font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.event.swap { animation: evIn 260ms var(--ease-out); }
+@keyframes evIn { from { opacity: 0; transform: translateY(4px); } }
+.scrub { position: relative; }
+.ticks { position: absolute; left: 0; right: 0; top: -6px; height: 6px; pointer-events: none; }
+
+/* comparaison microscope */
+.compare { position: relative; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; background: #000; cursor: ew-resize; touch-action: pan-y; user-select: none; }
+.compare canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+#micB { clip-path: inset(0 0 0 var(--p, 50%)); }
+.cmp-label { position: absolute; top: 12px; padding: 4px 10px; border-radius: 8px; font-family: var(--mono); font-size: 12.5px; color: #fff; background: rgba(0,0,0,.55); pointer-events: none; }
+.cmp-label.l { left: 12px; }
+.cmp-label.r { right: 12px; }
+.cmp-handle { position: absolute; top: 0; bottom: 0; left: var(--p, 50%); width: 2px; margin-left: -1px; background: #fff; pointer-events: none; }
+.cmp-handle i { position: absolute; top: 50%; left: 50%; width: 38px; height: 38px; margin: -19px 0 0 -19px; border-radius: 50%; display: grid; place-items: center; font-size: 18px; color: #050b1e; background: #fff; box-shadow: 0 6px 20px rgba(0,0,0,.5); transition: transform 160ms var(--ease-out); }
+.compare:active .cmp-handle i { transform: scale(.92); }
+.compare:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+#chamberSvg { overflow: hidden; border-radius: 10px; }
+
+@media (max-width: 640px) {
+  .gauges { grid-template-columns: 1fr; }
+  .orgs { grid-template-columns: 1fr; }
+  .dishes { grid-template-columns: 1fr 1fr; }
+  #chamberSvg text { font-size: 15px; }
+  #chamberSvg text.side { display: none; }
+  .compare { aspect-ratio: 4 / 3; }
+}
+
+/* =========================================================
+   ARTICLE 04 : PHYSIQUE QUANTIQUE
+   ========================================================= */
+.art-hero--q::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 78% 40%, rgba(168,85,247,.18), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(59,130,246,.12), transparent 60%);
+}
+.qlink svg { overflow: hidden; -webkit-mask-image: radial-gradient(ellipse 52% 52% at 60% 44%, #000 55%, transparent 100%); mask-image: radial-gradient(ellipse 52% 52% at 60% 44%, #000 55%, transparent 100%); }
+
+/* jeu de Bell */
+.bell { display: grid; grid-template-columns: 150px minmax(0, 1fr) 150px; gap: 16px; align-items: center; }
+.bell-side { display: grid; justify-items: center; gap: 8px; padding: 12px; border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.4); }
+.bell-who { font-size: 13px; color: var(--text-soft); }
+.dial { width: 96px; height: 96px; }
+.dial .needle { transition: transform 260ms var(--ease-out); transform-origin: 50px 50px; }
+.bell-angle { display: grid; gap: 6px; width: 100%; font-size: 12px; color: var(--text-mute); text-align: center; }
+.bell-angle output { font-family: var(--mono); color: var(--text-main); }
+.bell-angle input { width: 100%; accent-color: #a855f7; }
+.bell-mid { display: grid; gap: 14px; min-width: 0; }
+.bell-rows { display: grid; gap: 8px; padding: 14px; border-radius: 12px; background: rgba(2,6,23,.5); border: 1px solid var(--line); overflow: hidden; }
+.bell-row { display: flex; gap: 5px; justify-content: flex-end; height: 16px; }
+.bell-row i { flex: 0 0 16px; height: 16px; border-radius: 4px; border: 2px solid #c084fc; animation: pop 260ms var(--ease-out); }
+.bell-row i.on { background: #c084fc; }
+.bell-row i.diff { border-color: #f87171; }
+.bell-row i.diff.on { background: #f87171; }
+@keyframes pop { from { transform: scale(.6); opacity: 0; } }
+.bell-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.bell-stats div { padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg-light); }
+.bell-stats small { display: block; font-size: 12px; color: var(--text-mute); }
+.bell-stats strong { display: block; margin-top: 2px; font-family: var(--mono); font-size: 18px; font-weight: 500; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+
+/* pertes : gaufre de points */
+.waffle { position: relative; border-radius: 12px; overflow: hidden; background: #03050f; border: 1px solid var(--line); aspect-ratio: 2.2; }
+.waffle canvas { width: 100%; height: 100%; display: block; }
+
+#setupSvg [data-part] { transition: opacity 220ms ease; }
+#setupSvg.focus [data-part] { opacity: .18; }
+#setupSvg.focus [data-part].lit { opacity: 1; }
+#setupSvg, #bellGauge { overflow: visible; }
+
+@media (max-width: 760px) {
+  .bell { grid-template-columns: 1fr 1fr; }
+  .bell-mid { grid-column: 1 / -1; order: 3; }
+}
+@media (max-width: 640px) {
+  .waffle { aspect-ratio: 1.3; }
+  .dial { width: 80px; height: 80px; }
+  #setupSvg text { display: none; }
+}
+
+/* =========================================================
+   LETTRE DE LA DIRECTION SCIENTIFIQUE
+   ========================================================= */
+.lt-hero::before {
+  background:
+    radial-gradient(ellipse 40% 70% at 80% 45%, rgba(96,165,250,.12), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(79,107,237,.1), transparent 60%);
+}
+.lt-grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); }
+.lt-eyebrow { display: inline-flex; align-items: center; gap: 10px; margin: 18px 0 14px; font-family: var(--mono); font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: #93c5fd; }
+.lt-dot { width: 7px; height: 7px; border-radius: 50%; background: #60a5fa; box-shadow: 0 0 0 4px rgba(96,165,250,.18); }
+.lt-season { display: block; margin-top: 8px; font-size: .62em; font-weight: 600; color: #93c5fd; letter-spacing: -.01em; }
+.lt-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+
+/* couverture */
+.lt-cover { position: relative; justify-self: end; width: 100%; max-width: 340px; aspect-ratio: 360 / 460; border-radius: 20px; overflow: hidden; border: 1px solid var(--border); background: linear-gradient(165deg, #0c1a45 0%, #070f2b 55%, #050b1e 100%); box-shadow: 0 30px 80px -30px rgba(0,0,0,.8), 0 0 0 1px rgba(96,165,250,.08) inset; transform: rotate(1.5deg); transition: transform 500ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) { .lt-cover:hover { transform: rotate(0deg) translateY(-4px); } }
+.lt-cover svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.lt-cover-txt { position: absolute; inset: 0; display: flex; flex-direction: column; padding: 28px 26px; }
+.lt-cover-kicker { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: #93c5fd; }
+.lt-cover-num { margin-top: auto; font-family: "Syne", sans-serif; font-size: 76px; font-weight: 800; line-height: .9; color: #fff; letter-spacing: -.03em; }
+.lt-cover-season { margin-top: 6px; font-size: 17px; color: var(--text-soft); }
+.lt-cover-toc { list-style: none; margin: 18px 0 0; padding: 14px 0 0; border-top: 1px solid rgba(147,197,253,.25); display: grid; gap: 6px; font-size: 13px; color: var(--text-soft); }
+.lt-cover-toc li::before { content: "—"; margin-right: 8px; color: #60a5fa; }
+.orbit-a { transform-box: view-box; transform-origin: 250px 150px; animation: orb 60s linear infinite; }
+@keyframes orb { to { transform: rotate(360deg); } }
+
+/* éditorial */
+.edito { padding: 28px 30px; border-radius: 18px; border: 1px solid var(--border); background: linear-gradient(160deg, var(--bg-raise), var(--bg-light)); }
+.edito .label { display: block; margin: 0 0 14px; font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: #93c5fd; }
+.art .edito p { margin: 0 0 14px; }
+.art .edito .edito-lead { font-size: 18px; color: var(--text-strong); }
+.pull { margin: 22px 0; padding: 4px 0 4px 20px; border-left: 2px solid #60a5fa; font-family: "Syne", sans-serif; font-size: 20px; font-weight: 600; line-height: 1.4; color: #fff; }
+.sign { display: flex; align-items: center; gap: 12px; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line); }
+.sign .av { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-family: "Syne", sans-serif; font-size: 13px; font-weight: 700; color: #fff; background: linear-gradient(135deg, hsl(var(--ah) 55% 38%), hsl(var(--ah) 70% 60%)); }
+.sign strong { display: block; font-size: 15.5px; font-weight: 500; color: var(--text-strong); }
+.sign small { display: block; font-size: 13px; color: var(--text-mute); }
+
+/* chiffres */
+.figures { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 18px 0 8px; }
+.fg { padding: 16px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.fg strong { display: block; font-family: "Syne", sans-serif; font-size: 30px; font-weight: 700; line-height: 1; color: #fff; font-variant-numeric: tabular-nums; }
+.fg strong small { font-size: .5em; color: var(--text-soft); }
+.fg span { display: block; margin-top: 8px; font-size: 13px; line-height: 1.4; color: var(--text-soft); }
+
+/* phases */
+.phases { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.phases li { position: relative; padding: 14px; border-radius: 12px; border: 1px solid var(--border); background: rgba(2,6,23,.35); font-size: 13.5px; line-height: 1.45; color: var(--text-soft); }
+.phases li strong { display: block; margin: 4px 0; font-size: 15px; font-weight: 500; color: var(--text-main); }
+.phases .phs-y { font-family: var(--mono); font-size: 12px; color: var(--text-mute); }
+.phases li.done { border-color: rgba(52,211,153,.3); }
+.phases li.done strong::after { content: " ✓"; color: #34d399; }
+.phases li.now { border-color: rgba(96,165,250,.6); background: rgba(96,165,250,.08); }
+.phases li.now strong { color: #fff; }
+.phases li.now::before { content: "En cours"; position: absolute; top: -10px; right: 12px; padding: 1px 8px; border-radius: 99px; font-size: 11px; font-weight: 500; color: #03101f; background: #60a5fa; }
+.phs-track { margin-top: 14px; height: 4px; border-radius: 99px; background: #13204d; overflow: hidden; }
+.phs-track span { display: block; height: 100%; width: 0; border-radius: 99px; background: linear-gradient(90deg, #34d399, #60a5fa); transition: width 1400ms var(--ease-out); }
+
+/* jalons */
+.milestones { list-style: none; margin: 18px 0 8px; padding: 0; display: grid; gap: 0; border-left: 1px solid var(--border); }
+.milestones li { position: relative; display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 14px; padding: 10px 0 14px 20px; }
+.milestones li::before { content: ""; position: absolute; left: -5px; top: 17px; width: 9px; height: 9px; border-radius: 50%; background: var(--bg-main); border: 2px solid #60a5fa; }
+.milestones time { font-family: var(--mono); font-size: 13px; color: #93c5fd; padding-top: 2px; }
+.milestones strong { display: block; font-size: 15px; font-weight: 500; color: var(--text-strong); }
+.milestones span { display: block; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+
+/* Isp */
+.isp { display: grid; gap: 12px; }
+.isp-row { display: grid; grid-template-columns: 170px minmax(0, 1fr) 80px; gap: 12px; align-items: center; }
+.isp-n { font-size: 14px; color: var(--text-main); }
+.isp-n small { display: block; font-size: 12px; color: var(--text-mute); }
+.isp-t { position: relative; height: 22px; border-radius: 6px; background: #0e1838; }
+.isp-t i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 6px; background: var(--bc); transition: width 1100ms var(--ease-out); transition-delay: var(--dl, 0ms); }
+.isp-t i.goal { background: repeating-linear-gradient(45deg, rgba(148,163,184,.35) 0 4px, transparent 4px 8px); border: 1px dashed #94a3b8; }
+.isp.in .isp-t i { width: calc(var(--w) * 100%); }
+.isp-v { font-family: var(--mono); font-size: 14px; color: #fff; text-align: right; font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: reduce) { .isp-t i { transition: none; width: calc(var(--w) * 100%); } }
+
+/* carte de lecture */
+.read-card { display: grid; gap: 4px; margin: 20px 0 8px; padding: 16px 18px; border-radius: 14px; border: 1px solid var(--border); border-left: 3px solid var(--c); background: var(--bg-light); text-decoration: none; transition: border-color 200ms ease, transform 200ms var(--ease-out); }
+.rc-k { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-mute); }
+.read-card strong { font-size: 16px; font-weight: 500; color: var(--text-strong); }
+.rc-m { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--c); }
+.rc-m i { transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) { .read-card:hover { border-color: color-mix(in srgb, var(--c) 50%, var(--border)); } .read-card:hover .rc-m i { transform: translateX(3px); } }
+
+/* partenaires */
+.partners { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 18px 0 8px; }
+.pt { display: flex; flex-direction: column; gap: 4px; padding: 16px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.pt-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.pt-ic { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; font-size: 18px; color: var(--c); background: color-mix(in srgb, var(--c) 12%, transparent); }
+.pt-prog { font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; color: var(--c); }
+.pt strong { font-size: 15px; font-weight: 500; line-height: 1.35; color: var(--text-strong); }
+.pt-type { font-size: 12.5px; color: var(--text-mute); }
+.art .pt p { margin: 8px 0 12px; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+.pt dl { margin: auto 0 0; display: flex; gap: 18px; padding-top: 10px; border-top: 1px solid var(--line); }
+.pt dt { font-size: 11.5px; color: var(--text-mute); }
+.pt dd { margin: 0; font-family: var(--mono); font-size: 13.5px; color: var(--text-main); }
+
+/* publications */
+.pubs { list-style: none; margin: 16px 0 8px; padding: 0; display: grid; gap: 8px; }
+.pubs a { display: grid; grid-template-columns: 96px 150px minmax(0, 1fr) 20px; gap: 12px; align-items: center; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg-light); text-decoration: none; transition: border-color 200ms ease; }
+.pubs time { font-family: var(--mono); font-size: 12.5px; color: var(--text-mute); }
+.pb-d { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--c); }
+.pb-d::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c); }
+.pubs strong { font-size: 14.5px; font-weight: 500; line-height: 1.4; color: var(--text-main); }
+.pubs a i { color: var(--text-mute); transition: transform 200ms var(--ease-out), color 200ms ease; }
+@media (hover: hover) and (pointer: fine) { .pubs a:hover { border-color: color-mix(in srgb, var(--c) 45%, var(--border)); } .pubs a:hover i { color: #fff; transform: translate(2px, -2px); } }
+
+/* brèves */
+.breves { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0 8px; }
+.br { padding: 16px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.br-tag { display: inline-block; margin-bottom: 8px; padding: 2px 9px; border-radius: 99px; font-family: var(--mono); font-size: 11.5px; color: var(--c); border: 1px solid color-mix(in srgb, var(--c) 40%, transparent); background: color-mix(in srgb, var(--c) 10%, transparent); }
+.art .br p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+.br p strong { color: var(--text-strong); font-weight: 500; }
+
+/* colophon */
+.colophon { margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--border); }
+.art .colophon p { font-size: 13px; line-height: 1.6; color: var(--text-mute); }
+.lt-nav { display: flex; justify-content: space-between; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+.lt-nav a { display: inline-flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg-light); color: var(--text-main); text-decoration: none; font-size: 14.5px; transition: border-color 200ms ease; }
+.lt-nav a small { display: block; font-size: 12px; color: var(--text-mute); }
+.lt-all { text-align: right; }
+@media (hover: hover) and (pointer: fine) { .lt-nav a:hover { border-color: #60a5fa; } }
+
+/* rail */
+.agenda { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.agenda li { display: grid; grid-template-columns: 46px minmax(0, 1fr); gap: 10px; align-items: center; }
+.ag-d { display: flex; flex-direction: column; align-items: center; padding: 4px 0; border-radius: 10px; border: 1px solid var(--border); font-size: 11px; color: var(--text-mute); text-transform: uppercase; }
+.ag-d b { font-family: "Syne", sans-serif; font-size: 17px; color: #fff; line-height: 1.1; }
+.agenda strong { display: block; font-size: 13.5px; font-weight: 500; line-height: 1.35; color: var(--text-main); }
+.agenda small { font-size: 12px; color: var(--text-mute); }
+.rail-more { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-size: 13px; color: #93c5fd; text-decoration: none; }
+.progs { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.progs a { display: grid; grid-template-columns: 10px 1fr auto; gap: 10px; align-items: center; padding: 6px 8px; border-radius: 8px; font-size: 13.5px; color: var(--text-main); text-decoration: none; transition: background-color 160ms ease; }
+.progs a i { width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
+.progs small { font-size: 11.5px; color: var(--text-mute); }
+@media (hover: hover) and (pointer: fine) { .progs a:hover { background: rgba(255,255,255,.04); } }
+
+@media (max-width: 1100px) { .lt-grid { grid-template-columns: 1fr; } .lt-cover { justify-self: center; max-width: 280px; order: -1; } }
+@media (max-width: 760px) {
+  .figures { grid-template-columns: 1fr 1fr; }
+  .phases, .partners, .breves { grid-template-columns: 1fr; }
+  .phases li.now::before { top: 10px; }
+  .isp-row { grid-template-columns: 110px minmax(0, 1fr) 64px; gap: 8px; }
+  .pubs a { grid-template-columns: minmax(0, 1fr) 20px; gap: 4px 12px; }
+  .pubs a time, .pubs a .pb-d { grid-column: 1; }
+  .pubs a strong { grid-column: 1; }
+  .pubs a i { grid-column: 2; grid-row: 1 / span 3; }
+  .milestones li { grid-template-columns: 1fr; gap: 2px; }
+  .edito { padding: 22px 20px; }
+  .lt-cover { max-width: 230px; }
+  .lt-cover-num { font-size: 60px; }
+}
+@media print {
+  .lt-actions, .lt-cover, .rail, .toc, .lt-nav { display: none !important; }
+  .art-hero-grid { grid-template-columns: 1fr; }
+}
+
+</style>
+<script>document.documentElement.classList.add('js');</script>
+</head>
+
+<body>
+
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header" id="header">
+  <div class="container header-inner">
+    <div class="header-left">
+      <a href="../index.html" class="logo-link" aria-label="IFRAS, accueil">
+        <img src="../logo.png" alt="Logo IFRAS" width="44" height="44">
+      </a>
+      <nav aria-label="Navigation principale">
+        <ul class="main-nav">
+          <li><a href="../index.html">Accueil</a></li>
+          <li><a href="../recherche.html">Recherche</a></li>
+          <li><a href="../programmes.html">Programmes</a></li>
+          <li><a href="../publications.html" aria-current="page">Publications</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="header-right">
+      <a href="../connexion.html" class="btn btn-ghost btn-desktop">Connexion</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-panel" aria-label="Ouvrir le menu">
+        <i class="ph-light ph-list" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-panel" id="mobile-panel">
+  <ul>
+    <li><a href="../index.html">Accueil <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../recherche.html">Recherche <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../programmes.html">Programmes <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../publications.html" aria-current="page">Publications <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+  </ul>
+  <a href="../connexion.html" class="btn btn-primary">Connexion</a>
+</div>
+
+<!-- ===== SOUS-NAVIGATION (mêmes rubriques que publications.html) ===== -->
+<nav class="subnav" id="subnav" aria-label="Rubriques des publications">
+  <ul class="subnav-list">
+    <li><a class="subnav-link" href="../publications-scientifiques.html" style="--c:var(--t-sci)"><i class="ph-light ph-article" aria-hidden="true"></i>Publications scientifiques</a></li>
+    <li><a class="subnav-link" href="../publications-ifras.html" aria-current="true" style="--c:var(--t-ifras)"><i class="ph-light ph-book-open" aria-hidden="true"></i>Publications IFRAS</a></li>
+    <li><a class="subnav-link" href="../evenements.html" style="--c:var(--t-event)"><i class="ph-light ph-calendar-dots" aria-hidden="true"></i>Événements</a></li>
+  </ul>
+</nav>
+
+<div class="progress" aria-hidden="true"><span id="progress"></span></div>
+
+<main id="contenu">
+
+<!-- ===== EN-TÊTE DE LA LETTRE ===== -->
+<header class="art-hero lt-hero">
+  <div class="container art-hero-grid lt-grid">
+    <div>
+      <ol class="crumbs hero-in" style="--i:0" aria-label="Fil d'Ariane">
+        <li><a href="../publications.html">Publications</a></li>
+        <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+        <li><a href="../publications-ifras.html">Publications IFRAS</a></li>
+        <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+        <li aria-current="page">Lettre N°22</li>
+      </ol>
+      <p class="lt-eyebrow hero-in" style="--i:1"><span class="lt-dot" aria-hidden="true"></span>Lettre trimestrielle · N°22</p>
+      <h1 class="art-title hero-in" style="--i:2">Lettre de la Direction scientifique<span class="lt-season">Printemps 2026</span></h1>
+      <p class="art-lede hero-in" style="--i:3">ARTEMIS-9 entre en phase III, PROMETHEUS livre les premiers résultats de sa phase II et trois nouveaux partenariats sont signés. Le point sur un trimestre décisif pour l'institut.</p>
+      <div class="meta-line hero-in" style="--i:4">
+        <span><i class="ph-light ph-calendar-blank" aria-hidden="true"></i>Parution le 26 janvier 2026</span>
+        <span><i class="ph-light ph-clock" aria-hidden="true"></i>6 min de lecture</span>
+        <span><i class="ph-light ph-hash" aria-hidden="true"></i><code>IFRAS-DS-L22</code></span>
+      </div>
+      <div class="lt-actions hero-in" style="--i:5">
+        <button class="ctrl" type="button" id="ltPrint"><i class="ph-light ph-printer" aria-hidden="true"></i><span>Imprimer</span></button>
+        <button class="ctrl" type="button" id="ltCopy"><i class="ph-light ph-link" aria-hidden="true"></i><span>Copier le lien</span></button>
+      </div>
+    </div>
+
+    <!-- Couverture -->
+    <div class="lt-cover hero-in" style="--i:3" aria-hidden="true">
+      <svg viewBox="0 0 360 460" id="ltCoverSvg"></svg>
+      <div class="lt-cover-txt">
+        <span class="lt-cover-kicker">IFRAS · Direction scientifique</span>
+        <span class="lt-cover-num">N°22</span>
+        <span class="lt-cover-season">Printemps 2026</span>
+        <ul class="lt-cover-toc">
+          <li>ARTEMIS-9 en phase III</li>
+          <li>PROMETHEUS : 12 000 heures</li>
+          <li>Trois partenariats</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container art-layout">
+
+  <!-- Sommaire -->
+  <nav class="toc" aria-label="Sommaire">
+    <p class="toc-title">Dans ce numéro</p>
+    <ol id="toc">
+      <li class="toc-ind" aria-hidden="true"></li>
+      <li><a href="#s-edito"><span>—</span>Éditorial</a></li>
+      <li><a href="#s-artemis"><span>1</span>ARTEMIS-9</a></li>
+      <li><a href="#s-prometheus"><span>2</span>PROMETHEUS</a></li>
+      <li><a href="#s-partenariats"><span>3</span>Partenariats</a></li>
+      <li><a href="#s-publications"><span>4</span>Publications</a></li>
+      <li><a href="#s-breves"><span>5</span>Vie de l'institut</a></li>
+    </ol>
+    <p class="toc-time"><i class="ph-light ph-hourglass-medium" aria-hidden="true"></i><span id="timeLeft">6 min restantes</span></p>
+  </nav>
+
+  <!-- ===== LETTRE ===== -->
+  <article class="art letter" id="article">
+
+    <!-- ÉDITORIAL -->
+    <section id="s-edito" aria-label="Éditorial">
+      <div class="edito rv">
+        <p class="label">Éditorial</p>
+        <p class="edito-lead">Chères collègues, chers collègues,</p>
+        <p>Ce début d'année marque un tournant. Après cinq années de conception et d'essais, ARTEMIS-9 est entré le 12 janvier dans sa phase III : celle où les prototypes deviennent un habitat, et où l'équipage se constitue. Il reste seize mois avant le lancement. Chaque département y contribue, et je mesure l'effort que cela représente.</p>
+        <p>Dans le même temps, PROMETHEUS franchit un cap que beaucoup jugeaient hors de portée il y a trois ans : un propulseur ionique qui dépasse l'objectif d'efficacité fixé au programme, et qui tient 12 000 heures sans faiblir. Ce résultat, publié ce mois-ci, ouvre la voie aux missions lointaines de la décennie.</p>
+        <blockquote class="pull">« Nos programmes avancent parce que nos équipes publient, partagent et se relisent. La qualité de notre science reste notre meilleur atout. »</blockquote>
+        <p>Enfin, trois partenariats signés en janvier viennent renforcer nos compétences là où nous en avions le plus besoin : l'optique quantique, les céramiques techniques et la médecine des environnements extrêmes. Je vous souhaite une bonne lecture, et un excellent printemps.</p>
+        <div class="sign">
+          <span class="av" style="--ah:220" aria-hidden="true">JLR</span>
+          <span><strong>Jean-Luc Rousseau</strong><small>Directeur de la Direction scientifique</small></span>
+        </div>
+      </div>
+
+      <div class="figures rv" aria-label="Le trimestre en chiffres">
+        <div class="fg"><strong data-count="3">3</strong><span>articles scientifiques publiés</span></div>
+        <div class="fg"><strong data-count="12000" data-suffix=" h">12 000<small> h</small></strong><span>d'endurance pour le propulseur NK-125</span></div>
+        <div class="fg"><strong>III</strong><span>nouvelle phase d'ARTEMIS-9</span></div>
+        <div class="fg"><strong data-count="3">3</strong><span>partenariats signés en janvier</span></div>
+      </div>
+    </section>
+
+    <!-- 1. ARTEMIS-9 -->
+    <section id="s-artemis">
+      <h2><span class="n">01</span>ARTEMIS-9 entre en phase III</h2>
+      <p>Le comité de pilotage a validé le 12 janvier le passage d'ARTEMIS-9 en phase III, dite d'<strong>intégration et de qualification</strong>. Les modules de l'habitat martien, jusqu'ici testés séparément, vont être assemblés et éprouvés ensemble. En parallèle, la sélection des six astronautes-chercheurs entre dans sa dernière étape.</p>
+
+      <figure class="fig rv" id="fig1">
+        <div class="fig-stage">
+          <div class="fig-head"><span class="fig-name">Les quatre phases du programme</span></div>
+          <ol class="phases" id="phases">
+            <li data-p="0"><span class="phs-y">2021 – 2023</span><strong>Phase I</strong><span>Conception de l'habitat et des systèmes vitaux</span></li>
+            <li data-p="1"><span class="phs-y">2023 – 2025</span><strong>Phase II</strong><span>Prototypes et essais séparés en chambre</span></li>
+            <li data-p="2" class="now"><span class="phs-y">2026</span><strong>Phase III</strong><span>Intégration, qualification, sélection de l'équipage</span></li>
+            <li data-p="3"><span class="phs-y">T2 2027</span><strong>Lancement</strong><span>Six astronautes-chercheurs, 18 mois sur place</span></li>
+          </ol>
+          <div class="phs-track" aria-hidden="true"><span id="phFill"></span></div>
+        </div>
+        <figcaption><b>Figure 1</b>Calendrier d'ARTEMIS-9. La phase III s'achèvera en décembre 2026 par la revue de qualification, dernière étape avant l'autorisation de lancement.</figcaption>
+      </figure>
+
+      <h3>Les jalons de 2026</h3>
+      <ul class="milestones rv">
+        <li><time>Avril</time><div><strong>Résultats intermédiaires</strong><span>Premières données biologiques et physiologiques de la phase III, présentées lors du séminaire du 8 avril.</span></div></li>
+        <li><time>Juin</time><div><strong>Équipage définitif</strong><span>Six astronautes-chercheurs et trois suppléants retenus parmi les douze finalistes.</span></div></li>
+        <li><time>Septembre</time><div><strong>Essai intégré de 120 jours</strong><span>L'habitat complet et son équipage d'essai isolés dans la chambre martienne du programme ATLAS.</span></div></li>
+        <li><time>Décembre</time><div><strong>Revue de qualification</strong><span>Décision finale sur l'autorisation de lancement.</span></div></li>
+      </ul>
+    </section>
+
+    <!-- 2. PROMETHEUS -->
+    <section id="s-prometheus">
+      <h2><span class="n">02</span>PROMETHEUS : l'objectif d'efficacité est dépassé</h2>
+      <p>Le programme PROMETHEUS s'était fixé en 2020 un objectif ambitieux : tripler l'impulsion spécifique des propulseurs ioniques de référence, c'est-à-dire tirer trois fois plus de poussée de chaque kilogramme de carburant. Les premiers résultats de la phase II montrent que cet objectif est atteint.</p>
+
+      <figure class="fig rv" id="fig2">
+        <div class="fig-stage">
+          <div class="fig-head"><span class="fig-name">Impulsion spécifique : référence, objectif et résultat</span></div>
+          <div class="isp" id="isp"></div>
+        </div>
+        <figcaption><b>Figure 2</b>Impulsion spécifique, en secondes : plus elle est élevée, moins le moteur consomme de carburant pour une même poussée. Le propulseur NK-125 atteint 9 620 s lors de la campagne d'essais TORCH-IV, au-delà de l'objectif de 9 300 s.</figcaption>
+      </figure>
+
+      <p>Au-delà de l'efficacité, c'est l'<strong>endurance</strong> qui marque les esprits : le NK-125 a fonctionné 12 000 heures à 125 kW, et ses grilles en carbure de silicium n'ont perdu que 8 % de leur épaisseur. Quatre de ces moteurs suffiraient à conduire le module PROMETHEUS-2 jusqu'à Jupiter.</p>
+
+      <a class="read-card rv" href="../Publication_scientifiques/publications_scientifiques_02.html" style="--c:#f97316">
+        <span class="rc-k">Lire l'article complet</span>
+        <strong>NK-125 : un propulseur ionique à grilles tri-étages validé à haute puissance</strong>
+        <span class="rc-m">Propulsion · DPET · 21 janvier 2026 <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span>
+      </a>
+    </section>
+
+    <!-- 3. PARTENARIATS -->
+    <section id="s-partenariats">
+      <h2><span class="n">03</span>Trois nouveaux partenariats</h2>
+      <p>Signés en janvier, ces trois accords renforcent directement trois programmes actifs. Ils prévoient l'accueil de chercheurs dans nos laboratoires, l'accès partagé à certains équipements et des thèses co-encadrées.</p>
+
+      <div class="partners rv">
+        <article class="pt" style="--c:#c084fc">
+          <div class="pt-top"><span class="pt-ic"><i class="ph-light ph-atom" aria-hidden="true"></i></span><span class="pt-prog">HERMES</span></div>
+          <strong>Laboratoire LUMEN</strong>
+          <span class="pt-type">Laboratoire universitaire d'optique quantique</span>
+          <p>Développement de sources compactes de photons intriqués, adaptées à l'embarquement sur satellite.</p>
+          <dl><div><dt>Durée</dt><dd>4 ans</dd></div><div><dt>Thèses</dt><dd>2</dd></div></dl>
+        </article>
+        <article class="pt" style="--c:#f97316">
+          <div class="pt-top"><span class="pt-ic"><i class="ph-light ph-hexagon" aria-hidden="true"></i></span><span class="pt-prog">PROMETHEUS</span></div>
+          <strong>Atelier régional de céramiques techniques</strong>
+          <span class="pt-type">Plateforme industrielle de fabrication</span>
+          <p>Production en petite série des grilles en carbure de silicium du NK-125 pour les essais de qualification.</p>
+          <dl><div><dt>Durée</dt><dd>3 ans</dd></div><div><dt>Thèses</dt><dd>1</dd></div></dl>
+        </article>
+        <article class="pt" style="--c:#34d399">
+          <div class="pt-top"><span class="pt-ic"><i class="ph-light ph-heartbeat" aria-hidden="true"></i></span><span class="pt-prog">ARTEMIS-9</span></div>
+          <strong>Pôle de médecine des environnements extrêmes</strong>
+          <span class="pt-type">Service hospitalo-universitaire</span>
+          <p>Suivi médical des astronautes-chercheurs et protocoles de télémédecine pour les 18 mois de mission.</p>
+          <dl><div><dt>Durée</dt><dd>5 ans</dd></div><div><dt>Thèses</dt><dd>2</dd></div></dl>
+        </article>
+      </div>
+    </section>
+
+    <!-- 4. PUBLICATIONS -->
+    <section id="s-publications">
+      <h2><span class="n">04</span>Publié ce trimestre</h2>
+      <p>Trois articles de l'institut sont parus depuis la dernière lettre. Ils sont en accès libre sur la page des publications scientifiques.</p>
+      <ul class="pubs rv">
+        <li><a href="../Publication_scientifiques/publications_scientifiques_02.html" style="--c:#f97316"><time>21 janv. 2026</time><span class="pb-d">Propulsion</span><strong>NK-125 : un propulseur ionique à grilles tri-étages validé à haute puissance</strong><i class="ph-light ph-arrow-up-right" aria-hidden="true"></i></a></li>
+        <li><a href="../Publication_scientifiques/publications_scientifiques_04.html" style="--c:#c084fc"><time>9 déc. 2025</time><span class="pb-d">Physique quantique</span><strong>L'intrication quantique préservée sur une liaison Terre–satellite simulée</strong><i class="ph-light ph-arrow-up-right" aria-hidden="true"></i></a></li>
+        <li><a href="../Publication_scientifiques/publications_scientifiques_05.html" style="--c:#67e8f9"><time>18 nov. 2025</time><span class="pb-d">Astrophysique</span><strong>Une super-Terre au cœur de la zone habitable d'une étoile orange</strong><i class="ph-light ph-arrow-up-right" aria-hidden="true"></i></a></li>
+      </ul>
+    </section>
+
+    <!-- 5. BRÈVES -->
+    <section id="s-breves">
+      <h2><span class="n">05</span>Vie de l'institut</h2>
+      <div class="breves rv">
+        <div class="br"><span class="br-tag" style="--c:#34d399">NOE</span><p><strong>Première unité de vol en assemblage.</strong> Le premier des microsatellites du réseau d'observation du vent solaire est entré en intégration, pour un lancement toujours prévu en 2027.</p></div>
+        <div class="br"><span class="br-tag" style="--c:#f97316">TITAN-0</span><p><strong>Le ballon passe en chambre froide.</strong> Les premiers essais du ballon atmosphérique débutent en mars dans la chambre « Titan » du programme ATLAS. Ils conditionnent la décision de poursuite attendue fin 2026.</p></div>
+        <div class="br"><span class="br-tag" style="--c:#38bdf8">HERA</span><p><strong>Dossier de financement déposé.</strong> Le dossier pluriannuel de la sonde vers Europe a été transmis ; la décision est attendue d'ici la fin de l'année, avant un éventuel passage en phase C.</p></div>
+        <div class="br"><span class="br-tag" style="--c:#a5b4fc">Doctorat</span><p><strong>Neuf nouveaux doctorants.</strong> Ils ont rejoint cinq départements en janvier. Une journée d'accueil commune est organisée le 5 février.</p></div>
+      </div>
+    </section>
+
+    <footer class="colophon rv">
+      <p><strong>Lettre de la Direction scientifique</strong>, N°22, printemps 2026. Directeur de la publication : Jean-Luc Rousseau. Rédaction : service Communication scientifique. Diffusion : personnels et partenaires de l'IFRAS.</p>
+      <nav class="lt-nav" aria-label="Autres numéros">
+        <a href="../publications-ifras.html" class="lt-prev"><i class="ph-light ph-arrow-left" aria-hidden="true"></i><span><small>Numéro précédent</small>N°21 · Hiver 2025</span></a>
+        <a href="../publications-ifras.html" class="lt-all"><span><small>Toutes les publications</small>Publications IFRAS</span><i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
+      </nav>
+    </footer>
+
+  </article>
+
+  <!-- Colonne de droite -->
+  <aside class="rail" aria-label="Agenda et programmes">
+    <div class="rail-card">
+      <p class="rail-title">Agenda</p>
+      <ul class="agenda">
+        <li><span class="ag-d"><b>20</b>mars</span><span><strong>Atelier IA embarquée</strong><small>En ligne · LYNX et ATLAS</small></span></li>
+        <li><span class="ag-d"><b>08</b>avr.</span><span><strong>ARTEMIS-9 : résultats de phase III</strong><small>Séminaire · 14 h</small></span></li>
+        <li><span class="ag-d"><b>15</b>juin</span><span><strong>Colloque IFRAS 2026</strong><small>Sciences aérospatiales et du vivant</small></span></li>
+      </ul>
+      <a class="rail-more" href="../evenements.html">Tous les événements <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
+    </div>
+    <div class="rail-card">
+      <p class="rail-title">Programmes cités</p>
+      <ul class="progs">
+        <li><a href="../programmes-actifs.html#artemis9" style="--c:#34d399"><i></i>ARTEMIS-9<small>Phase III</small></a></li>
+        <li><a href="../programmes-actifs.html#prometheus" style="--c:#f97316"><i></i>PROMETHEUS<small>Phase II</small></a></li>
+        <li><a href="../programmes-actifs.html#hermes" style="--c:#c084fc"><i></i>HERMES<small>Expérimental</small></a></li>
+        <li><a href="../programmes-futurs.html#noe" style="--c:#34d399"><i></i>NOE<small>Phase C</small></a></li>
+        <li><a href="../programmes-futurs.html#hera" style="--c:#38bdf8"><i></i>HERA<small>Phase B</small></a></li>
+        <li><a href="../programmes-futurs.html#titan0" style="--c:#f97316"><i></i>TITAN-0<small>Phase A</small></a></li>
+      </ul>
+    </div>
+  </aside>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© IFRAS, Institut Français de Recherche Aéronautique et Spatiale</span>
+    <span>Document institutionnel, diffusion interne et partenaires</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status"><i class="ph-light ph-check-circle" aria-hidden="true"></i><span></span></div>
+<div class="tip" id="tip" role="tooltip"></div>
+<script>
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const $ = (id) => document.getElementById(id);
+  const NS = 'http://www.w3.org/2000/svg';
+  const fmt = (n, d = 0) => n.toLocaleString('fr-FR', { minimumFractionDigits: d, maximumFractionDigits: d });
+  const svgEl = (tag, attrs = {}, parent) => {
+    const el = document.createElementNS(NS, tag);
+    for (const k in attrs) el.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(el);
+    return el;
+  };
+  /* lance une fonction quand l'élément devient visible (une seule fois) */
+  const onceVisible = (el, fn, margin = '0px 0px -15% 0px') => {
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { io.disconnect(); fn(); } }, { rootMargin: margin });
+    io.observe(el);
+  };
+  /* boucle d'animation suspendue hors écran et onglet masqué */
+  const loopWhileVisible = (el, frame) => {
+    let raf = 0, visible = false;
+    const tick = (t) => { frame(t); raf = requestAnimationFrame(tick); };
+    const sync = () => { cancelAnimationFrame(raf); if (visible && !document.hidden) raf = requestAnimationFrame(tick); };
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; sync(); }).observe(el);
+    document.addEventListener('visibilitychange', sync);
+  };
+
+  /* ---------- Menu mobile ---------- */
+  const toggle = document.querySelector('.menu-toggle');
+  const panel = $('mobile-panel');
+  const setMenu = (open) => {
+    panel.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    toggle.querySelector('i').className = open ? 'ph-light ph-x' : 'ph-light ph-list';
+  };
+  toggle.addEventListener('click', () => setMenu(!panel.classList.contains('is-open')));
+  document.addEventListener('click', (e) => { if (panel.classList.contains('is-open') && !panel.contains(e.target) && !toggle.contains(e.target)) setMenu(false); });
+
+  /* ---------- Apparition au défilement ---------- */
+  const rvIO = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (e.isIntersecting) { e.target.classList.add('in'); rvIO.unobserve(e.target); }
+  }), { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.rv').forEach((el) => rvIO.observe(el));
+
+  /* ---------- Toast ---------- */
+  let toastT;
+  const toast = (msg) => { const t = $('toast'); t.querySelector('span').textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2600); };
+
+  /* ---------- Progression de lecture + sommaire ---------- */
+  const article = $('article');
+  const tocLinks = [...document.querySelectorAll('#toc a')];
+  const sections = tocLinks.map((a) => document.querySelector(a.getAttribute('href')));
+  const ind = document.querySelector('.toc-ind');
+  const WORDS = article.innerText.split(/\s+/).length;
+  let ticking = false;
+  function onScroll() {
+    ticking = false;
+    const r = article.getBoundingClientRect();
+    const total = r.height - window.innerHeight * 0.6;
+    const p = Math.min(1, Math.max(0, -r.top / total));
+    $('progress').style.transform = `scaleX(${p})`;
+    const left = Math.max(0, Math.ceil((WORDS / 220) * (1 - p)));
+    $('timeLeft').textContent = p >= 0.98 ? 'Lecture terminée' : `${left || 1} min restante${left > 1 ? 's' : ''}`;
+    let cur = 0;
+    sections.forEach((s, i) => { if (s && s.getBoundingClientRect().top < window.innerHeight * 0.35) cur = i; });
+    tocLinks.forEach((a, i) => a.classList.toggle('on', i === cur));
+    const a = tocLinks[cur];
+    if (a && ind) { ind.style.transform = `translateY(${a.parentElement.offsetTop}px)`; ind.style.height = a.offsetHeight + 'px'; }
+  }
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  /* ---------- Chiffres clés animés ---------- */
+  document.querySelectorAll('[data-count]').forEach((el) => {
+    const target = Number(el.dataset.count), suffix = el.dataset.suffix || '';
+    const paint = (v) => { el.innerHTML = `${fmt(v)}<small>${suffix}</small>`; };
+    if (reduceMotion) return;
+    paint(0);
+    onceVisible(el, () => {
+      const t0 = performance.now(), dur = 1100;
+      const step = (t) => { const k = Math.min(1, (t - t0) / dur); paint(Math.round(target * (1 - Math.pow(1 - k, 4)))); if (k < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    });
+  });
+
+  /* ---------- Infobulles : termes expliqués ---------- */
+  const TERMS = {};
+  const tip = $('tip');
+  let tipOpenAt = 0, hideT = null, tipOwner = null;
+  function showTip(el) {
+    clearTimeout(hideT);
+    const t = TERMS[el.dataset.term];
+    tip.innerHTML = `<b>${t[0]}</b>${t[1]}`;
+    tip.classList.toggle('instant', Date.now() - tipOpenAt < 400 && tip.classList.contains('show'));
+    const r = el.getBoundingClientRect();
+    tip.style.left = '0px'; tip.style.top = '0px';
+    tip.classList.add('show');
+    const w = tip.offsetWidth, h = tip.offsetHeight;
+    let x = r.left + r.width / 2 - w / 2 + window.scrollX;
+    x = Math.max(16 + window.scrollX, Math.min(x, window.scrollX + document.documentElement.clientWidth - w - 16));
+    let y = r.top + window.scrollY - h - 10, below = false;
+    if (r.top - h - 10 < 130) { y = r.bottom + window.scrollY + 10; below = true; }
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+    tip.style.transformOrigin = `${r.left + r.width / 2 + window.scrollX - x}px ${below ? '0%' : '100%'}`;
+    tipOpenAt = Date.now(); tipOwner = el;
+    el.setAttribute('aria-describedby', 'tip');
+  }
+  function hideTip(delay = 80) {
+    clearTimeout(hideT);
+    hideT = setTimeout(() => { tip.classList.remove('show'); if (tipOwner) tipOwner.removeAttribute('aria-describedby'); tipOwner = null; tipOpenAt = Date.now(); }, delay);
+  }
+  document.querySelectorAll('.term').forEach((el) => {
+    if (canHover) { el.addEventListener('mouseenter', () => showTip(el)); el.addEventListener('mouseleave', () => hideTip()); }
+    el.addEventListener('focus', () => showTip(el));
+    el.addEventListener('blur', () => hideTip(0));
+    el.addEventListener('click', () => { if (!canHover) (tipOwner === el && tip.classList.contains('show')) ? hideTip(0) : showTip(el); });
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { hideTip(0); setMenu(false); } });
+  window.addEventListener('scroll', () => { if (!canHover && tip.classList.contains('show')) hideTip(0); }, { passive: true });
+
+  /* petite infobulle de graphique, placée à côté d'un point */
+  const placeTip = (tipEl, box, svg, W, H, px, py) => {
+    const r = svg.getBoundingClientRect(), bx = box.getBoundingClientRect();
+    const sx = px / W * r.width + (r.left - bx.left), sy = py / H * r.height + (r.top - bx.top);
+    tipEl.classList.add('show');
+    tipEl.style.left = (sx + 14 + tipEl.offsetWidth > bx.width ? sx - 14 - tipEl.offsetWidth : sx + 14) + 'px';
+    tipEl.style.top = Math.max(0, Math.min(bx.height - tipEl.offsetHeight, sy - tipEl.offsetHeight / 2)) + 'px';
+  };
+  const BLUE = '#3b82f6', ORANGE = '#ea580c';
+
+    /* ---------- Couverture ---------- */
+  (function cover() {
+    const s = $('ltCoverSvg'); if (!s) return;
+    const defs = svgEl('defs', {}, s);
+    const g = svgEl('radialGradient', { id: 'ltPl', cx: 0.35, cy: 0.3, r: 0.8 }, defs);
+    svgEl('stop', { offset: 0, 'stop-color': '#93c5fd' }, g); svgEl('stop', { offset: 0.5, 'stop-color': '#1d4ed8' }, g); svgEl('stop', { offset: 1, 'stop-color': '#0b1a45' }, g);
+    [60, 100, 140, 180, 220].forEach((r) => svgEl('circle', { cx: 250, cy: 150, r, fill: 'none', stroke: '#93c5fd', 'stroke-opacity': 0.1 }, s));
+    svgEl('circle', { cx: 250, cy: 150, r: 42, fill: 'url(#ltPl)' }, s);
+    const orb = svgEl('g', { class: reduceMotion ? '' : 'orbit-a' }, s);
+    svgEl('circle', { cx: 390, cy: 150, r: 4, fill: '#fff' }, orb);
+    svgEl('circle', { cx: 150, cy: 150, r: 2.5, fill: '#93c5fd' }, orb);
+  })();
+
+  /* ---------- Phases d'ARTEMIS-9 ---------- */
+  (function phases() {
+    const list = $('phases'), fill = $('phFill'); if (!list) return;
+    [...list.children].forEach((li) => { if (Number(li.dataset.p) < 2) li.classList.add('done'); });
+    const go = () => { fill.style.width = '62%'; };
+    if (reduceMotion) go(); else onceVisible(list, go, '0px 0px -20% 0px');
+  })();
+
+  /* ---------- Impulsion spécifique ---------- */
+  (function isp() {
+    const box = $('isp'); if (!box) return;
+    const R = [
+      ['Propulseurs ioniques de référence', 'moyenne actuelle', 3100, '#64748b', ''],
+      ['Objectif PROMETHEUS', 'trois fois la référence', 9300, '', 'goal'],
+      ['NK-125', 'campagne TORCH-IV, 125 kW', 9620, '#f97316', '']
+    ];
+    box.innerHTML = R.map(([n, sub, v, c, cls], i) => `<div class="isp-row"><span class="isp-n">${n}<small>${sub}</small></span><span class="isp-t"><i class="${cls}" style="--w:${(v / 10000).toFixed(3)};--bc:${c};--dl:${i * 160}ms"></i></span><span class="isp-v">${fmt(v).replace(/\s/g, ' ')} s</span></div>`).join('');
+    if (reduceMotion) box.classList.add('in'); else onceVisible(box, () => box.classList.add('in'), '0px 0px -20% 0px');
+  })();
+
+  /* ---------- Imprimer, copier le lien ---------- */
+  const pr = $('ltPrint'), cp = $('ltCopy');
+  if (pr) pr.addEventListener('click', () => window.print());
+  if (cp) cp.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(location.href); toast('Lien copié dans le presse-papiers'); }
+    catch (e) { toast('Copie impossible : utilisez la barre d\'adresse'); }
+  });
+})();
+</script>
+</body>
+</html>
