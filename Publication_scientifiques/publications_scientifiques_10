@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Passer la nuit lunaire au chaud grâce à une pierre de régolithe | Publications IFRAS</title>
+<meta name="description" content="Un bloc de régolithe fritté, chauffé par le Soleil le jour, a gardé un boîtier électronique au-dessus de −22 °C pendant une nuit lunaire simulée de 354 heures.">
+<meta name="theme-color" content="#050b1e">
+<link rel="icon" type="image/png" sizes="1000x1000" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+
+<style>
+/* =========================================================
+   TOKENS (identiques aux autres pages)
+   ========================================================= */
+:root {
+  --bg-main: #050b1e;
+  --bg-dark: #020617;
+  --bg-light: #070f2b;
+  --bg-raise: #0a1436;
+  --accent: #4f6bed;
+  --accent-hover: #3d5adb;
+  --accent-soft: rgba(79,107,237,.14);
+  --accent-line: rgba(79,107,237,.38);
+  --text-main: #e6e6e6;
+  --text-strong: #f5f7ff;
+  --text-soft: #aab3d6;
+  --text-mute: #8891b8;
+  --border: #1b2555;
+
+  /* Une couleur par type de contenu */
+  --t-sci: #60a5fa;
+  --t-ifras: #34d399;
+  --t-event: #f97316;
+  /* Types de publications IFRAS */
+  --t-lettre: #60a5fa;
+  --t-rapport: #34d399;
+  --t-hs: #f97316;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --header-h: 68px;
+  --subnav-h: 48px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 20px); }
+
+body {
+  margin: 0;
+  font-family: "DM Sans", "Segoe UI", system-ui, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+[hidden] { display: none !important; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.skip-link {
+  position: absolute; left: 16px; top: -48px;
+  padding: 10px 16px;
+  background: var(--accent); color: #fff;
+  border-radius: var(--radius-sm);
+  z-index: 3000; text-decoration: none;
+  transition: top 160ms var(--ease-out);
+}
+.skip-link:focus { top: 12px; }
+
+.container { max-width: 1300px; margin: 0 auto; padding: 0 30px; }
+
+/* =========================================================
+   BOUTONS
+   ========================================================= */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 22px;
+  border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 500;
+  text-decoration: none; white-space: nowrap;
+  border: 1px solid transparent;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.btn:active { transform: scale(0.97); }
+.btn i { font-size: 16px; transition: transform 200ms var(--ease-out); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-ghost { border-color: var(--accent-line); color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-ghost:hover { background: var(--accent-soft); border-color: var(--accent); }
+  .btn:hover i { transform: translateX(3px); }
+}
+
+.text-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--text-soft);
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.text-link i { transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .text-link:hover { color: #fff; }
+  .text-link:hover i { transform: translateX(3px); }
+}
+
+/* =========================================================
+   HEADER (opaque)
+   ========================================================= */
+.site-header {
+  position: fixed; inset: 0 0 auto 0;
+  z-index: 2000;
+  height: var(--header-h);
+  background: rgba(5,11,30,.88);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.header-left { display: flex; align-items: center; gap: 44px; }
+.logo-link { display: flex; align-items: center; }
+.logo-link img { height: 44px; width: auto; }
+
+.main-nav { list-style: none; display: flex; gap: 6px; margin: 0; padding: 0; }
+.main-nav a {
+  position: relative; display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--text-soft);
+  font-size: 14px; letter-spacing: .02em;
+  border-radius: 6px;
+  transition: color 160ms ease;
+}
+.main-nav a::after {
+  content: ""; position: absolute;
+  left: 12px; right: 12px; bottom: 2px; height: 1px;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 200ms var(--ease-out);
+}
+.main-nav a[aria-current="page"] { color: #fff; }
+.main-nav a[aria-current="page"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .main-nav a:hover { color: #fff; }
+  .main-nav a:hover::after { transform: scaleX(1); }
+}
+
+.header-right { display: flex; align-items: center; gap: 10px; }
+.header-right .btn { padding: 9px 18px; font-size: 13px; }
+
+.menu-toggle {
+  display: none;
+  width: 42px; height: 42px;
+  align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: #fff; font-size: 20px; cursor: pointer;
+  transition: transform 160ms var(--ease-out);
+}
+.menu-toggle:active { transform: scale(0.95); }
+
+.mobile-panel {
+  position: fixed; top: var(--header-h); left: 12px; right: 12px;
+  z-index: 1999;
+  padding: 10px;
+  background: rgba(7,15,43,.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(2,6,23,.6);
+  transform-origin: top right;
+  opacity: 0; transform: scale(0.96) translateY(-6px);
+  pointer-events: none; visibility: hidden;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s linear 220ms;
+}
+.mobile-panel.is-open {
+  opacity: 1; transform: none; pointer-events: auto; visibility: visible;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s;
+}
+.mobile-panel ul { list-style: none; margin: 0; padding: 0; }
+.mobile-panel a {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px; color: var(--text-main);
+  text-decoration: none; font-size: 16px; border-radius: 10px;
+}
+.mobile-panel a[aria-current="page"] { background: var(--accent-soft); color: #fff; }
+.mobile-panel .btn { width: 100%; justify-content: center; margin-top: 8px; }
+
+/* =========================================================
+   SOUS-NAVIGATION (ancres + section visible)
+   ========================================================= */
+.subnav {
+  position: sticky;
+  top: var(--header-h);
+  margin-top: var(--header-h);
+  z-index: 1500;
+  height: var(--subnav-h);
+  background: rgba(8,18,53,.94);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.subnav-list {
+  height: 100%;
+  list-style: none; margin: 0 auto; padding: 0 30px;
+  max-width: 1300px;
+  display: flex; align-items: stretch; justify-content: space-between;
+}
+.subnav-list li { display: flex; }
+.subnav-link {
+  position: relative;
+  display: flex; align-items: center; gap: 9px;
+  padding: 0 14px;
+  color: var(--text-soft);
+  text-decoration: none;
+  font-size: 14px; font-weight: 500;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.subnav-link i { font-size: 17px; color: var(--c); }
+.subnav-link::after {
+  content: ""; position: absolute;
+  left: 14px; right: 14px; bottom: -1px; height: 2px;
+  background: var(--c);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+.subnav-link[aria-current="true"] { color: #fff; }
+.subnav-link[aria-current="true"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .subnav-link:hover { color: #fff; }
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.site-footer {
+  margin-top: 100px;
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border);
+  padding: 36px 0;
+  font-size: 13px; color: var(--text-mute);
+}
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+/* =========================================================
+   ARTICLE
+   ========================================================= */
+:root {
+  --mono: "DM Mono", ui-monospace, Menlo, Consolas, monospace;
+  --c10: #3b82f6;   /* CMC-10Z */
+  --c20: #059669;   /* CMC-20Z */
+  --c30: #ea580c;   /* CMC-30Z */
+  --hot: #f97316;
+  --ok: #34d399;
+  --warn: #fbbf24;
+  --bad: #f87171;
+  --surface: #070f2b;
+  --line: #13204d;
+}
+html { scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 24px); }
+
+/* barre de lecture sous la sous-navigation */
+.progress {
+  position: fixed; left: 0; right: 0; top: calc(var(--header-h) + var(--subnav-h)); z-index: 1400;
+  height: 2px; background: transparent; pointer-events: none;
+}
+.progress span { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, var(--accent), #fb7185); transform-origin: left; transform: scaleX(0); }
+
+/* ----- En-tête de l'article ----- */
+.art-hero { position: relative; overflow: hidden; isolation: isolate; border-bottom: 1px solid var(--border); }
+.art-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(ellipse 45% 70% at 78% 45%, rgba(249,115,22,.16), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(79,107,237,.14), transparent 60%);
+}
+.art-hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 48px; align-items: center; padding: 48px 0 56px; }
+.crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 26px; padding: 0; list-style: none; font-size: 13px; color: var(--text-mute); }
+.crumbs a { color: var(--text-soft); text-decoration: none; transition: color 160ms ease; }
+.crumbs i { font-size: 11px; opacity: .6; }
+@media (hover: hover) and (pointer: fine) { .crumbs a:hover { color: #fff; } }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 11px; border-radius: 999px; font-size: 12.5px; font-weight: 500;
+  color: var(--b, var(--text-soft));
+  background: color-mix(in srgb, var(--b, var(--text-soft)) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--b, var(--text-soft)) 28%, transparent);
+}
+.badge i { font-size: 14px; }
+.art-title {
+  margin: 0 0 18px; font-family: "Syne", sans-serif; font-weight: 700;
+  font-size: clamp(30px, 3.6vw, 48px); line-height: 1.08; letter-spacing: -0.025em; color: var(--text-strong);
+  text-wrap: balance;
+}
+.art-lede { margin: 0 0 28px; max-width: 60ch; font-size: 18px; line-height: 1.6; color: var(--text-soft); font-weight: 300; }
+.authors { display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 0 0 22px; padding: 0; list-style: none; }
+.author { display: flex; align-items: center; gap: 10px; }
+.author .av { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-family: "Syne", sans-serif; font-size: 12px; font-weight: 700; color: #fff; background: linear-gradient(135deg, hsl(var(--ah) 55% 38%), hsl(var(--ah) 70% 60%)); }
+.author strong { display: block; font-size: 14px; font-weight: 500; color: var(--text-main); }
+.author small { display: block; font-size: 12.5px; color: var(--text-mute); }
+.meta-line { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 13px; color: var(--text-mute); }
+.meta-line span { display: inline-flex; align-items: center; gap: 7px; }
+.meta-line i { font-size: 15px; color: var(--text-soft); }
+.meta-line code { font-family: var(--mono); font-size: 12.5px; color: var(--text-soft); }
+
+.hero-in { opacity: 0; transform: translateY(12px); animation: heroIn 700ms var(--ease-out) forwards; animation-delay: calc(80ms + var(--i, 0) * 90ms); }
+@keyframes heroIn { to { opacity: 1; transform: none; } }
+
+/* illustration : capsule en rentrée */
+.reentry { position: relative; aspect-ratio: 1 / 0.86; max-width: 520px; justify-self: end; width: 100%; }
+.reentry canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.reentry svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.reentry .shock { animation: shock 2.4s var(--ease-in-out) infinite alternate; transform-origin: 62% 50%; }
+@keyframes shock { from { opacity: .75; transform: scale(.985); } to { opacity: 1; transform: scale(1.015); } }
+.reentry .glow { animation: glow 1.6s ease-in-out infinite alternate; }
+@keyframes glow { from { opacity: .55; } to { opacity: .95; } }
+.reentry-tag {
+  position: absolute; display: flex; align-items: center; gap: 8px;
+  padding: 6px 10px; border-radius: 8px; font-family: var(--mono); font-size: 12px; color: var(--text-soft);
+  background: rgba(2,6,23,.7); border: 1px solid var(--border); backdrop-filter: blur(6px);
+}
+.reentry-tag b { color: #fff; font-weight: 500; }
+.reentry-tag i { width: 7px; height: 7px; border-radius: 50%; background: var(--hot); }
+
+/* ----- Mise en page 3 colonnes ----- */
+.art-layout {
+  display: grid; grid-template-columns: 220px minmax(0, 720px) 280px; justify-content: space-between; gap: 48px;
+  padding-top: 48px;
+}
+.toc, .rail { position: sticky; top: calc(var(--header-h) + var(--subnav-h) + 28px); align-self: start; }
+.toc-title, .rail-title { margin: 0 0 14px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.toc ol { position: relative; list-style: none; margin: 0; padding: 0 0 0 14px; border-left: 1px solid var(--border); }
+.toc-ind { list-style: none; position: absolute; left: -1px; top: 0; width: 2px; height: 34px; background: var(--accent); border-radius: 2px; transition: transform 300ms var(--ease-out), height 300ms var(--ease-out); }
+.toc a {
+  display: flex; gap: 10px; padding: 7px 0; font-size: 14px; line-height: 1.35;
+  color: var(--text-mute); text-decoration: none; transition: color 160ms ease;
+}
+.toc a span { font-family: var(--mono); font-size: 12px; padding-top: 1px; color: inherit; opacity: .8; min-width: 16px; }
+.toc a.on { color: #fff; }
+@media (hover: hover) and (pointer: fine) { .toc a:hover { color: var(--text-main); } }
+.toc-time { display: flex; align-items: center; gap: 8px; margin-top: 18px; font-size: 13px; color: var(--text-mute); }
+.toc-time i { font-size: 15px; }
+
+/* ----- Colonne de droite ----- */
+.rail { display: grid; gap: 16px; max-height: calc(100vh - var(--header-h) - var(--subnav-h) - 44px); overflow-y: auto; scrollbar-width: none; overscroll-behavior: contain; }
+.rail::-webkit-scrollbar { display: none; }
+.rail-card { padding: 18px; border-radius: var(--radius); background: var(--bg-light); border: 1px solid var(--border); }
+.cite-text { margin: 0 0 14px; font-size: 13px; line-height: 1.6; color: var(--text-soft); }
+.cite-text em { color: var(--text-main); }
+.rail-actions { display: grid; gap: 8px; }
+.rbtn {
+  display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 40px; border-radius: 10px;
+  border: 1px solid var(--border); background: transparent; color: var(--text-main); font: inherit; font-size: 13.5px; cursor: pointer; text-decoration: none;
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out);
+}
+.rbtn i { font-size: 16px; }
+.rbtn:active { transform: scale(.97); }
+.rbtn.done { border-color: color-mix(in srgb, var(--ok) 45%, transparent); color: var(--ok); }
+@media (hover: hover) and (pointer: fine) { .rbtn:hover { border-color: var(--accent); background: var(--accent-soft); } }
+.fig-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.fig-list a { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: center; padding: 7px 8px; margin: 0 -8px; border-radius: 8px; font-size: 13.5px; color: var(--text-soft); text-decoration: none; transition: background-color 120ms ease, color 120ms ease; }
+.fig-list i { font-size: 17px; color: var(--accent); }
+@media (hover: hover) and (pointer: fine) { .fig-list a:hover { background: var(--bg-raise); color: #fff; } }
+.prog-link { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.prog-link .pi { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; font-size: 19px; color: var(--hot); background: rgba(249,115,22,.12); flex-shrink: 0; }
+.prog-link strong { display: block; font-size: 14px; font-weight: 500; }
+.prog-link small { display: block; font-size: 12.5px; color: var(--text-mute); }
+
+/* ----- Corps de texte ----- */
+.art { min-width: 0; counter-reset: fig; }
+.art p { margin: 0 0 18px; font-size: 17px; line-height: 1.75; color: #c3cae6; font-weight: 300; }
+.art p strong { color: var(--text-main); font-weight: 500; }
+.art h2 {
+  display: flex; align-items: baseline; gap: 14px;
+  margin: 64px 0 18px; font-family: "Syne", sans-serif; font-size: 26px; font-weight: 700; letter-spacing: -0.01em; color: var(--text-strong);
+}
+.art h2 .n { font-family: var(--mono); font-size: 14px; font-weight: 400; color: var(--accent); }
+.art h3 { margin: 34px 0 12px; font-size: 18px; font-weight: 500; color: var(--text-main); }
+sub, sup { line-height: 0; }
+
+/* L'essentiel */
+.essentials { padding: 26px; border-radius: 18px; background: linear-gradient(160deg, var(--bg-raise), var(--bg-light)); border: 1px solid var(--border); }
+.essentials-head { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; }
+.essentials-head i { font-size: 17px; color: var(--hot); }
+.kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 22px; }
+.kpi { padding: 16px; border-radius: 14px; background: rgba(2,6,23,.45); border: 1px solid var(--line); }
+.kpi strong { display: block; font-family: "Syne", sans-serif; font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -0.02em; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.kpi strong small { font-size: .55em; font-weight: 700; margin-left: 2px; color: var(--text-soft); }
+.kpi span { display: block; margin-top: 8px; font-size: 13.5px; line-height: 1.4; color: var(--text-soft); }
+.takeaways { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.takeaways li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 15.5px; line-height: 1.55; color: var(--text-main); }
+.takeaways i { font-size: 18px; color: var(--ok); margin-top: 2px; }
+
+/* Résumé */
+.abstract { margin-top: 28px; padding: 24px 26px; border-radius: 16px; border: 1px solid var(--border); background: rgba(79,107,237,.05); }
+.abstract .label { display: block; margin-bottom: 10px; font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+.abstract p { font-size: 15.5px !important; margin: 0 !important; }
+.kw { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+.kw span { padding: 3px 10px; border-radius: 999px; font-size: 12.5px; color: var(--text-soft); border: 1px solid var(--border); }
+
+/* Termes expliqués (infobulle) */
+.term {
+  position: relative; display: inline; padding: 0; border: 0; background: none; font: inherit; color: var(--text-main); cursor: help;
+  text-decoration: underline dotted color-mix(in srgb, var(--accent) 80%, transparent); text-decoration-thickness: 1.5px; text-underline-offset: 4px;
+}
+.tip {
+  position: absolute; z-index: 1600; width: min(300px, calc(100vw - 32px));
+  padding: 12px 14px; border-radius: 12px;
+  background: #0b1540; border: 1px solid var(--accent-line); box-shadow: 0 18px 50px rgba(0,0,0,.5);
+  font-size: 13.5px; line-height: 1.55; color: var(--text-soft); font-weight: 400;
+  opacity: 0; transform: scale(.97) translateY(4px); pointer-events: none;
+  transition: opacity 140ms ease, transform 160ms var(--ease-out);
+}
+.tip.show { opacity: 1; transform: none; }
+.tip.instant { transition: none; }
+.tip b { display: block; margin-bottom: 3px; color: #fff; font-weight: 500; font-size: 14px; }
+.cite { font-family: var(--mono); font-size: .78em; color: var(--accent); text-decoration: none; vertical-align: .15em; padding: 0 1px; border: 0; background: none; cursor: pointer; }
+
+/* Encadrés */
+.note { display: grid; grid-template-columns: 26px 1fr; gap: 12px; margin: 26px 0; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.note i { font-size: 22px; color: var(--nc, var(--accent)); }
+.note p { margin: 0 !important; font-size: 15.5px !important; color: var(--text-main) !important; }
+.note .nt { display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--nc, var(--accent)); font-weight: 500; }
+
+/* ----- Figures ----- */
+.fig { margin: 34px 0; border-radius: 18px; border: 1px solid var(--border); background: var(--surface); overflow: hidden; counter-increment: fig; scroll-margin-top: calc(var(--header-h) + var(--subnav-h) + 24px); }
+.fig-stage { position: relative; padding: 22px; background: radial-gradient(ellipse at 50% 0%, rgba(79,107,237,.06), transparent 70%); }
+.fig-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin-bottom: 16px; }
+.fig-name { font-size: 14.5px; font-weight: 500; color: var(--text-main); }
+.fig figcaption, .fig .cap { padding: 14px 22px 18px; border-top: 1px solid var(--line); font-size: 14px; line-height: 1.6; color: var(--text-soft); }
+.fig figcaption b, .fig .cap b { font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-right: 8px; }
+.fig svg { display: block; width: 100%; height: auto; overflow: visible; }
+.fig text { font-family: "DM Sans", sans-serif; }
+.fig .mono, .fig text.mono { font-family: var(--mono); }
+.ctrl { display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 12px; border-radius: 9px; border: 1px solid var(--border); background: var(--bg-light); color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out); }
+.ctrl i { font-size: 15px; }
+.ctrl:active { transform: scale(.96); }
+@media (hover: hover) and (pointer: fine) { .ctrl:hover { color: #fff; border-color: var(--accent); } }
+
+/* Fig. 1 trajectoire */
+.readouts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+.readout { padding: 10px 12px; border-radius: 10px; background: rgba(2,6,23,.5); border: 1px solid var(--line); }
+.readout small { display: block; font-size: 12px; color: var(--text-mute); }
+.readout strong { display: block; margin-top: 2px; font-family: var(--mono); font-size: 17px; font-weight: 500; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.readout.hot strong { color: var(--rc, var(--text-strong)); }
+.scrub { display: flex; align-items: center; gap: 12px; margin-top: 14px; }
+.scrub input { flex: 1; accent-color: var(--hot); }
+.scrub output { min-width: 52px; text-align: right; font-family: var(--mono); font-size: 13px; color: var(--text-soft); }
+
+/* Fig. 2 microstructure */
+.parts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.part { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease; }
+.part i { width: 10px; height: 10px; border-radius: 3px; background: var(--pc); }
+.part[aria-pressed="true"] { color: #fff; border-color: var(--pc); background: color-mix(in srgb, var(--pc) 14%, transparent); }
+.art .part-desc { margin: 12px 0 0; min-height: 44px; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+.part-desc b { color: #fff; font-weight: 500; }
+.micro [data-part] { transition: opacity 220ms ease; }
+.micro.focus [data-part] { opacity: .16; }
+.micro.focus [data-part].lit { opacity: 1; }
+
+/* Fig. 3 banc d'essai */
+.bench-v { display: none !important; }
+.flow { stroke-dasharray: 6 10; animation: flow 900ms linear infinite; }
+@keyframes flow { to { stroke-dashoffset: -32; } }
+.flame { animation: glow 900ms ease-in-out infinite alternate; }
+
+/* Tableau */
+.table-wrap { margin: 30px 0; border-radius: 16px; border: 1px solid var(--border); overflow: hidden; background: var(--surface); }
+.table-cap { padding: 14px 20px; font-size: 14px; color: var(--text-soft); border-bottom: 1px solid var(--line); }
+.table-cap b { font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-right: 8px; }
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { padding: 11px 12px; text-align: left; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; background: rgba(2,6,23,.4); border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 11px 12px; color: var(--text-soft); border-bottom: 1px solid var(--line); white-space: nowrap; font-variant-numeric: tabular-nums; }
+tr:last-child td { border-bottom: 0; }
+td:last-child, th:last-child { white-space: normal; }
+td:first-child, th:first-child { padding-left: 18px; }
+td.num { font-family: var(--mono); font-size: 13.5px; color: var(--text-main); }
+th.num, td.num { text-align: right; }
+tbody tr { transition: background-color 120ms ease; }
+@media (hover: hover) and (pointer: fine) { tbody tr:hover { background: rgba(79,107,237,.06); } }
+.mat { display: inline-flex; align-items: center; gap: 8px; color: var(--text-main); }
+.mat i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.state { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--sc); }
+.state i { font-size: 15px; }
+.table-note { padding: 12px 20px; font-size: 13px; color: var(--text-mute); border-top: 1px solid var(--line); background: rgba(2,6,23,.3); }
+
+/* Fig. 4 graphique */
+.legend { display: flex; flex-wrap: wrap; gap: 6px; }
+.lg { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-main); font: inherit; font-size: 13px; cursor: pointer; transition: opacity 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out); }
+.lg:active { transform: scale(.96); }
+.lg i { width: 14px; height: 3px; border-radius: 2px; background: var(--lc); }
+.lg[aria-pressed="false"] { opacity: .45; }
+.lg[aria-pressed="false"] i { background: transparent; border: 1px solid var(--lc); height: 5px; }
+.chart { position: relative; }
+.chart .series { transition: opacity 220ms ease; }
+.chart .series.off { opacity: 0; }
+.chart .draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); }
+.chart.drawn .draw { transition: stroke-dashoffset 1400ms var(--ease-in-out); stroke-dashoffset: 0; }
+.chart .dot { opacity: 0; transition: opacity 300ms ease 1100ms; }
+.chart.drawn .dot { opacity: 1; }
+.hit { fill: transparent; cursor: crosshair; }
+.xhair { opacity: 0; transition: opacity 120ms ease; pointer-events: none; }
+.xhair.show { opacity: 1; }
+.ctip {
+  position: absolute; z-index: 5; pointer-events: none; min-width: 170px;
+  padding: 10px 12px; border-radius: 10px; background: #0b1540; border: 1px solid var(--accent-line);
+  box-shadow: 0 14px 40px rgba(0,0,0,.5); font-size: 13px; color: var(--text-soft);
+  opacity: 0; transform: translateY(4px); transition: opacity 120ms ease, transform 140ms var(--ease-out);
+}
+.ctip.show { opacity: 1; transform: none; }
+.ctip b { display: block; margin-bottom: 6px; color: #fff; font-weight: 500; font-family: var(--mono); }
+.ctip div { display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+.ctip div span { display: inline-flex; align-items: center; gap: 7px; }
+.ctip div span i { width: 8px; height: 8px; border-radius: 50%; background: var(--lc); }
+.ctip div em { font-style: normal; font-family: var(--mono); color: var(--text-main); }
+.data-toggle { margin-top: 12px; }
+.data-table { margin-top: 12px; border-radius: 12px; border: 1px solid var(--line); overflow-x: auto; }
+.data-table[hidden] { display: none; }
+
+/* Fig. 5 carte thermique */
+.thermo { display: grid; grid-template-columns: minmax(0, 1fr) 70px; gap: 18px; align-items: stretch; }
+.thermo-plate { position: relative; aspect-ratio: 1; max-width: 420px; width: 100%; justify-self: center; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); cursor: crosshair; }
+.thermo-plate canvas { width: 100%; height: 100%; display: block; }
+.probe { position: absolute; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.5); pointer-events: none; opacity: 0; transition: opacity 120ms ease; }
+.probe.show { opacity: 1; }
+.probe-read { position: absolute; left: 12px; top: 12px; padding: 6px 10px; border-radius: 8px; background: rgba(2,6,23,.78); font-family: var(--mono); font-size: 13px; color: #fff; pointer-events: none; }
+.scale { display: grid; grid-template-columns: 14px 1fr; gap: 8px; align-self: center; height: min(100%, 420px); aspect-ratio: auto; }
+.scale-bar { display: block; width: 14px; height: 100%; border-radius: 6px; }
+.scale-labels { display: flex; flex-direction: column; justify-content: space-between; font-family: var(--mono); font-size: 12px; color: var(--text-soft); }
+
+/* Fig. 6 couche protectrice */
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.duo-card { border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.4); overflow: hidden; }
+.duo-card h4 { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0; padding: 12px 14px; font-size: 14px; font-weight: 500; color: var(--text-main); border-bottom: 1px solid var(--line); }
+.duo-card h4 span { display: inline-flex; align-items: center; gap: 8px; }
+.duo-card h4 i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.duo-card svg { aspect-ratio: 1.25; }
+.duo-stats { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
+.duo-stats div { padding: 10px 14px; }
+.duo-stats div + div { border-left: 1px solid var(--line); }
+.duo-stats small { display: block; font-size: 12px; color: var(--text-mute); }
+.duo-stats strong { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--text-main); font-variant-numeric: tabular-nums; }
+.verdict { font-size: 12px; font-weight: 500; padding: 2px 8px; border-radius: 999px; color: var(--vc); background: color-mix(in srgb, var(--vc) 14%, transparent); transition: color 200ms ease, background-color 200ms ease; }
+
+/* Équation */
+.eq { margin: 26px 0; padding: 22px; border-radius: 14px; background: rgba(2,6,23,.5); border: 1px solid var(--border); text-align: center; font-family: var(--mono); font-size: 17px; color: #d5dcfb; overflow-x: auto; white-space: nowrap; }
+.eq-parts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: -12px 0 26px; }
+.eq-part { padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-light); font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.eq-part b { display: block; margin-bottom: 2px; font-family: var(--mono); font-weight: 500; color: #fff; }
+
+/* Suite du programme */
+.next { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.next li { position: relative; padding: 16px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.next li::before { content: ""; position: absolute; top: 20px; right: -13px; width: 13px; height: 1px; background: var(--border); }
+.next li:last-child::before { display: none; }
+.next time { font-family: var(--mono); font-size: 12.5px; color: var(--nc, var(--accent)); }
+.next strong { display: block; margin: 6px 0 4px; font-size: 15px; font-weight: 500; color: var(--text-main); }
+.next span { font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.next li.now { border-color: color-mix(in srgb, var(--ok) 45%, var(--border)); }
+
+/* Références */
+.refs { list-style: none; margin: 0; padding: 0; counter-reset: r; display: grid; gap: 4px; }
+.refs li { counter-increment: r; position: relative; display: block; padding: 10px 12px 10px 54px; margin: 0 -12px; border-radius: 10px; font-size: 14px; line-height: 1.6; color: var(--text-soft); transition: background-color 600ms ease; scroll-margin-top: calc(var(--header-h) + var(--subnav-h) + 40px); }
+.refs li::before { content: "[" counter(r) "]"; position: absolute; left: 12px; top: 11px; font-family: var(--mono); font-size: 13px; color: var(--accent); }
+.refs li.flash { background: rgba(79,107,237,.16); transition: none; }
+.refs em { color: var(--text-main); }
+.decl { margin-top: 28px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.35); display: grid; gap: 8px; font-size: 13.5px; line-height: 1.6; color: var(--text-mute); }
+.decl strong { color: var(--text-soft); font-weight: 500; }
+
+/* Articles liés */
+.related { margin-top: 72px; padding-top: 40px; border-top: 1px solid var(--border); }
+.related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
+.rel { display: flex; flex-direction: column; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); background: var(--bg-light); text-decoration: none; transition: border-color 200ms ease, transform 220ms var(--ease-out); }
+.rel-img { aspect-ratio: 16 / 9; overflow: hidden; background: linear-gradient(135deg, color-mix(in srgb, var(--c) 30%, var(--bg-raise)), var(--bg-light)); }
+.rel-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 500ms var(--ease-out); }
+.rel-body { padding: 16px; }
+.rel-body small { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--text-soft); }
+.rel-body small::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c); }
+.rel-body strong { display: block; margin-top: 6px; font-size: 16px; font-weight: 500; line-height: 1.4; color: var(--text-main); }
+.rel:active { transform: scale(.98); }
+@media (hover: hover) and (pointer: fine) {
+  .rel:hover { border-color: color-mix(in srgb, var(--c) 55%, var(--border)); transform: translateY(-3px); }
+  .rel:hover .rel-img img { transform: scale(1.04); }
+}
+.section-title { margin: 0; font-family: "Syne", sans-serif; font-size: 22px; font-weight: 700; color: var(--text-strong); }
+
+/* apparition des figures */
+.js .rv { opacity: 0; transform: translateY(16px); transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
+.js .rv.in { opacity: 1; transform: none; }
+
+.toast {
+  position: fixed; left: 50%; bottom: 24px; z-index: 4000;
+  display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 12px;
+  background: #0b1540; border: 1px solid rgba(52,211,153,.35); color: #a7f3d0; font-size: 14px;
+  box-shadow: 0 16px 40px rgba(0,0,0,.5);
+  transform: translate(-50%, 16px); opacity: 0; pointer-events: none;
+  transition: transform 260ms var(--ease-out), opacity 200ms ease;
+}
+.toast.show { transform: translate(-50%, 0); opacity: 1; }
+.toast i { font-size: 18px; color: var(--ok); }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1320px) {
+  .art-layout { grid-template-columns: minmax(0, 720px) 280px; justify-content: center; }
+  .toc { display: none; }
+}
+@media (max-width: 1060px) {
+  .art-layout { grid-template-columns: minmax(0, 720px); }
+  .rail { position: static; max-height: none; overflow: visible; grid-template-columns: repeat(2, minmax(0, 1fr)); order: 2; }
+  .rail .rail-figs { display: none; }
+  .art-hero-grid { grid-template-columns: 1fr; gap: 10px; padding-bottom: 36px; }
+  .reentry { justify-self: center; max-width: 440px; order: -1; margin-top: -10px; }
+}
+@media (max-width: 860px) {
+  .main-nav, .header-right .btn-desktop { display: none; }
+  .menu-toggle { display: inline-flex; }
+}
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .subnav-list { padding: 0 20px; overflow-x: auto; scrollbar-width: none; }
+  .subnav-link { padding: 0 10px; font-size: 13.5px; }
+  .art-lede { font-size: 16.5px; }
+  .art p { font-size: 16px; }
+  .art h2 { font-size: 22px; margin-top: 52px; }
+  .kpis { grid-template-columns: 1fr; }
+  .kpi { display: flex; align-items: baseline; gap: 14px; }
+  .kpi span { margin: 0; }
+  .essentials { padding: 20px; }
+  .fig-stage { padding: 16px; }
+  .fig figcaption, .fig .cap { padding: 12px 16px 16px; }
+  .readouts { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .readout strong { font-size: 14px; }
+  .thermo { grid-template-columns: 1fr 56px; gap: 10px; }
+  .duo { grid-template-columns: 1fr; }
+  .eq { font-size: 14px; }
+  #trajSvg text { font-size: 22px; }
+  .bench-h { display: none !important; }
+  .bench-v { display: block !important; }
+  .duo-card svg text { font-size: 13px; }
+  .eq-parts { grid-template-columns: 1fr; }
+  .next { grid-template-columns: 1fr; }
+  .next li::before { display: none; }
+  .rail { grid-template-columns: 1fr; }
+  .related-grid { grid-template-columns: 1fr; }
+  .site-footer { margin-top: 72px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
+  .hero-in { opacity: 1; transform: none; }
+}
+
+/* impression / PDF : texte seul, figures conservées */
+@media print {
+  .site-header, .subnav, .mobile-panel, .progress, .toc, .rail, .related, .site-footer, .ctrl, .legend, .scrub, .parts, .skip-link { display: none !important; }
+  body { background: #fff; color: #111; }
+  .art-layout { display: block; padding: 0; }
+  .art p, .art h2, .art h3, .art-title, .art-lede { color: #111 !important; }
+  .fig, .table-wrap, .essentials, .abstract, .note { break-inside: avoid; }
+  .js .rv { opacity: 1; transform: none; }
+}
+
+/* =========================================================
+   ARTICLE 02 : PROPULSION IONIQUE
+   ========================================================= */
+.art-hero--ion::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 82% 45%, rgba(59,130,246,.2), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(249,115,22,.1), transparent 60%);
+}
+.thruster .glow { animation: glow 1.4s ease-in-out infinite alternate; }
+
+.seg { display: inline-flex; padding: 3px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-light); }
+.seg button { height: 30px; padding: 0 12px; border: 0; border-radius: 7px; background: none; color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out); }
+.seg button:active { transform: scale(.96); }
+.seg button[aria-pressed="true"] { background: var(--bg-raise); color: #fff; box-shadow: inset 0 0 0 1px var(--border); }
+@media (hover: hover) and (pointer: fine) { .seg button:hover { color: #fff; } }
+
+.lg.static { cursor: default; }
+#howSvg .zone { transition: opacity 240ms ease; }
+#howSvg.focus .zone { opacity: .22; }
+#howSvg.focus .zone.lit { opacity: 1; }
+
+tr.hi td { background: rgba(59,130,246,.07); }
+td.gain { color: var(--ok); }
+
+.multiples { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.multiples .chart { border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.35); padding: 8px 4px 0; }
+
+.wear { display: grid; grid-template-columns: minmax(0, 1fr) 170px; gap: 16px; align-items: center; }
+.discs { display: grid; gap: 12px; }
+.disc { display: grid; justify-items: center; gap: 4px; padding: 10px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.35); }
+.disc svg { width: 110px; height: 110px; }
+.disc span { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--text-soft); }
+.disc span i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.disc strong { font-family: var(--mono); font-size: 14px; font-weight: 500; color: var(--text-main); }
+.disc.over { border-color: rgba(248,113,113,.5); }
+.disc.over strong { color: var(--bad); }
+
+@media (max-width: 640px) {
+  .multiples { grid-template-columns: 1fr; }
+  .wear { grid-template-columns: 1fr; }
+  .discs { grid-template-columns: 1fr 1fr; }
+  .disc svg { width: 96px; height: 96px; }
+  #howSvg text { display: none; }
+  .readouts { grid-template-columns: 1fr; gap: 6px; }
+  .readout { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 8px 12px; }
+  .readout strong { margin: 0; white-space: nowrap; }
+  #orbitSvg text { font-size: 18px; }
+}
+#gridSvg, #orbitSvg, #howSvg { overflow: hidden; border-radius: 10px; }
+
+/* =========================================================
+   ARTICLE 03 : ASTROBIOLOGIE
+   ========================================================= */
+.art-hero--mars::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 78% 45%, rgba(234,88,12,.18), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(52,211,153,.12), transparent 60%);
+}
+.art-hero--mars .reentry svg { overflow: visible; }
+
+/* jauges Terre / Mars */
+.gauges { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 22px; }
+.gauge { display: grid; gap: 8px; padding: 14px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.4); }
+.gauge-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.gauge-top span { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--text-soft); }
+.gauge-top span i { font-size: 16px; color: var(--text-mute); }
+.gauge-top strong { font-family: var(--mono); font-size: 14.5px; font-weight: 500; color: var(--text-strong); white-space: nowrap; transition: color 200ms ease; }
+.gauge-bar { position: relative; height: 8px; border-radius: 8px; background: linear-gradient(90deg, rgba(52,211,153,.18), rgba(251,191,36,.18) 60%, rgba(248,113,113,.22)); }
+.gauge-fill { position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(90deg, #34d399, #fbbf24 60%, #f87171); transform-origin: left; transform: scaleX(var(--v, 0)); transition: transform 600ms var(--ease-out); clip-path: inset(0 round 8px); }
+.gauge-limit { position: absolute; top: -5px; bottom: -5px; width: 2px; border-radius: 2px; background: #fff; left: var(--l); }
+.gauge-foot { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; color: var(--text-mute); }
+.gauge.beyond .gauge-top strong { color: #fca5a5; }
+
+/* fiches espèces */
+.orgs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 26px 0 12px; }
+.org { position: relative; display: grid; grid-template-columns: 64px 1fr; gap: 14px; padding: 16px; border-radius: 16px; border: 1px solid var(--border); background: var(--bg-light); overflow: hidden; }
+.org::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--oc); }
+.org-pic { width: 64px; height: 64px; border-radius: 14px; background: radial-gradient(circle, color-mix(in srgb, var(--oc) 22%, transparent), rgba(2,6,23,.6)); }
+.org-kind { display: block; font-size: 12px; color: var(--text-mute); }
+.org h4 { margin: 2px 0 6px; font-size: 16px; font-weight: 500; color: var(--text-strong); }
+.art .org p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+.org-state { grid-column: 1 / -1; justify-self: start; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 500; color: var(--sc); background: color-mix(in srgb, var(--sc) 12%, transparent); border: 1px solid color-mix(in srgb, var(--sc) 28%, transparent); }
+.art .small-note { font-size: 14px; color: var(--text-mute); }
+
+/* journal des cultures */
+.dishes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.dish { display: grid; justify-items: center; gap: 6px; padding: 12px 8px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.4); }
+.dish svg { width: 100%; max-width: 132px; aspect-ratio: 1; }
+.dish svg circle.cell { transition: opacity 400ms ease, fill 400ms ease; }
+.dish span { font-size: 12.5px; color: var(--text-soft); text-align: center; }
+.dish strong { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--text-strong); }
+.event { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-items: baseline; margin-top: 14px; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-light); min-height: 78px; }
+.event time { font-family: var(--mono); font-size: 13px; color: var(--ec, var(--accent)); grid-row: span 2; }
+.event strong { font-size: 14.5px; font-weight: 500; color: var(--text-main); }
+.event span { font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.event.swap { animation: evIn 260ms var(--ease-out); }
+@keyframes evIn { from { opacity: 0; transform: translateY(4px); } }
+.scrub { position: relative; }
+.ticks { position: absolute; left: 0; right: 0; top: -6px; height: 6px; pointer-events: none; }
+
+/* comparaison microscope */
+.compare { position: relative; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; background: #000; cursor: ew-resize; touch-action: pan-y; user-select: none; }
+.compare canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+#micB { clip-path: inset(0 0 0 var(--p, 50%)); }
+.cmp-label { position: absolute; top: 12px; padding: 4px 10px; border-radius: 8px; font-family: var(--mono); font-size: 12.5px; color: #fff; background: rgba(0,0,0,.55); pointer-events: none; }
+.cmp-label.l { left: 12px; }
+.cmp-label.r { right: 12px; }
+.cmp-handle { position: absolute; top: 0; bottom: 0; left: var(--p, 50%); width: 2px; margin-left: -1px; background: #fff; pointer-events: none; }
+.cmp-handle i { position: absolute; top: 50%; left: 50%; width: 38px; height: 38px; margin: -19px 0 0 -19px; border-radius: 50%; display: grid; place-items: center; font-size: 18px; color: #050b1e; background: #fff; box-shadow: 0 6px 20px rgba(0,0,0,.5); transition: transform 160ms var(--ease-out); }
+.compare:active .cmp-handle i { transform: scale(.92); }
+.compare:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+#chamberSvg { overflow: hidden; border-radius: 10px; }
+
+@media (max-width: 640px) {
+  .gauges { grid-template-columns: 1fr; }
+  .orgs { grid-template-columns: 1fr; }
+  .dishes { grid-template-columns: 1fr 1fr; }
+  #chamberSvg text { font-size: 15px; }
+  #chamberSvg text.side { display: none; }
+  .compare { aspect-ratio: 4 / 3; }
+}
+
+/* =========================================================
+   ARTICLE 04 : PHYSIQUE QUANTIQUE
+   ========================================================= */
+.art-hero--q::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 78% 40%, rgba(168,85,247,.18), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(59,130,246,.12), transparent 60%);
+}
+.qlink svg { overflow: hidden; -webkit-mask-image: radial-gradient(ellipse 52% 52% at 60% 44%, #000 55%, transparent 100%); mask-image: radial-gradient(ellipse 52% 52% at 60% 44%, #000 55%, transparent 100%); }
+
+/* jeu de Bell */
+.bell { display: grid; grid-template-columns: 150px minmax(0, 1fr) 150px; gap: 16px; align-items: center; }
+.bell-side { display: grid; justify-items: center; gap: 8px; padding: 12px; border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.4); }
+.bell-who { font-size: 13px; color: var(--text-soft); }
+.dial { width: 96px; height: 96px; }
+.dial .needle { transition: transform 260ms var(--ease-out); transform-origin: 50px 50px; }
+.bell-angle { display: grid; gap: 6px; width: 100%; font-size: 12px; color: var(--text-mute); text-align: center; }
+.bell-angle output { font-family: var(--mono); color: var(--text-main); }
+.bell-angle input { width: 100%; accent-color: #a855f7; }
+.bell-mid { display: grid; gap: 14px; min-width: 0; }
+.bell-rows { display: grid; gap: 8px; padding: 14px; border-radius: 12px; background: rgba(2,6,23,.5); border: 1px solid var(--line); overflow: hidden; }
+.bell-row { display: flex; gap: 5px; justify-content: flex-end; height: 16px; }
+.bell-row i { flex: 0 0 16px; height: 16px; border-radius: 4px; border: 2px solid #c084fc; animation: pop 260ms var(--ease-out); }
+.bell-row i.on { background: #c084fc; }
+.bell-row i.diff { border-color: #f87171; }
+.bell-row i.diff.on { background: #f87171; }
+@keyframes pop { from { transform: scale(.6); opacity: 0; } }
+.bell-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.bell-stats div { padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg-light); }
+.bell-stats small { display: block; font-size: 12px; color: var(--text-mute); }
+.bell-stats strong { display: block; margin-top: 2px; font-family: var(--mono); font-size: 18px; font-weight: 500; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+
+/* pertes : gaufre de points */
+.waffle { position: relative; border-radius: 12px; overflow: hidden; background: #03050f; border: 1px solid var(--line); aspect-ratio: 2.2; }
+.waffle canvas { width: 100%; height: 100%; display: block; }
+
+#setupSvg [data-part] { transition: opacity 220ms ease; }
+#setupSvg.focus [data-part] { opacity: .18; }
+#setupSvg.focus [data-part].lit { opacity: 1; }
+#setupSvg, #bellGauge { overflow: visible; }
+
+@media (max-width: 760px) {
+  .bell { grid-template-columns: 1fr 1fr; }
+  .bell-mid { grid-column: 1 / -1; order: 3; }
+}
+@media (max-width: 640px) {
+  .waffle { aspect-ratio: 1.3; }
+  .dial { width: 80px; height: 80px; }
+  #setupSvg text { display: none; }
+}
+
+/* =========================================================
+   ARTICLE : NUIT LUNAIRE
+   ========================================================= */
+.art-hero--moon::before {
+  background:
+    radial-gradient(ellipse 45% 60% at 78% 40%, rgba(251,191,36,.12), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(79,107,237,.1), transparent 60%);
+}
+.moonart { overflow: hidden; border-radius: 22px; }
+.moonart canvas { -webkit-mask-image: radial-gradient(ellipse 72% 72% at 50% 50%, #000 55%, transparent 96%); mask-image: radial-gradient(ellipse 72% 72% at 50% 50%, #000 55%, transparent 96%); }
+.moonart .reentry-tag { z-index: 2; }
+.moonart .reentry-tag b { font-variant-numeric: tabular-nums; }
+.chart svg { display: block; width: 100%; }
+.scrub-l { font-size: 13px; color: var(--text-soft); white-space: nowrap; }
+.readout.hot strong { color: var(--rc, #fbbf24); }
+#sRange { accent-color: #fbbf24; }
+
+/* Fig. 1 */
+.lunation { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 16px; align-items: center; }
+.lunation > svg { width: 100%; max-width: 150px; justify-self: center; }
+
+/* Fig. 3 système */
+#sys { display: block; width: 100%; border-radius: 12px; background: #020817; border: 1px solid var(--line); }
+#sys [data-part] { transition: opacity 220ms ease; }
+#sys.focus [data-part] { opacity: .2; }
+#sys.focus [data-part].lit { opacity: 1; }
+.hflow { stroke-dasharray: 6 10; animation: hf 900ms linear infinite; }
+@keyframes hf { to { stroke-dashoffset: -32; } }
+.fade-sw { transition: opacity 500ms var(--ease-out); }
+
+/* Fig. 4 frittage */
+.sinter { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 16px; align-items: center; }
+.sinter svg#grains { width: 100%; max-width: 200px; justify-self: center; border-radius: 12px; background: #0b0f1f; border: 1px solid var(--line); }
+#grains circle, #grains path { transition: r 400ms var(--ease-out), opacity 400ms ease; }
+
+@media (max-width: 760px) {
+  .lunation, .sinter { grid-template-columns: 1fr; }
+  .lunation > svg { max-width: 120px; }
+  .sinter svg#grains { max-width: 170px; }
+}
+@media (prefers-reduced-motion: reduce) { .hflow { animation: none; } }
+
+</style>
+<script>document.documentElement.classList.add('js');</script>
+</head>
+
+<body>
+
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header" id="header">
+  <div class="container header-inner">
+    <div class="header-left">
+      <a href="../index.html" class="logo-link" aria-label="IFRAS, accueil">
+        <img src="../logo.png" alt="Logo IFRAS" width="44" height="44">
+      </a>
+      <nav aria-label="Navigation principale">
+        <ul class="main-nav">
+          <li><a href="../index.html">Accueil</a></li>
+          <li><a href="../recherche.html">Recherche</a></li>
+          <li><a href="../programmes.html">Programmes</a></li>
+          <li><a href="../publications.html" aria-current="page">Publications</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="header-right">
+      <a href="../connexion.html" class="btn btn-ghost btn-desktop">Connexion</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-panel" aria-label="Ouvrir le menu">
+        <i class="ph-light ph-list" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-panel" id="mobile-panel">
+  <ul>
+    <li><a href="../index.html">Accueil <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../recherche.html">Recherche <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../programmes.html">Programmes <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../publications.html" aria-current="page">Publications <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+  </ul>
+  <a href="../connexion.html" class="btn btn-primary">Connexion</a>
+</div>
+
+<!-- ===== SOUS-NAVIGATION (mêmes rubriques que publications.html) ===== -->
+<nav class="subnav" id="subnav" aria-label="Rubriques des publications">
+  <ul class="subnav-list">
+    <li><a class="subnav-link" href="../publications-scientifiques.html" aria-current="true" style="--c:var(--t-sci)"><i class="ph-light ph-article" aria-hidden="true"></i>Publications scientifiques</a></li>
+    <li><a class="subnav-link" href="../publications-ifras.html" style="--c:var(--t-ifras)"><i class="ph-light ph-book-open" aria-hidden="true"></i>Publications IFRAS</a></li>
+    <li><a class="subnav-link" href="../evenements.html" style="--c:var(--t-event)"><i class="ph-light ph-calendar-dots" aria-hidden="true"></i>Événements</a></li>
+  </ul>
+</nav>
+
+<div class="progress" aria-hidden="true"><span id="progress"></span></div>
+
+<main id="contenu">
+
+<!-- ===== EN-TÊTE DE L'ARTICLE ===== -->
+<header class="art-hero art-hero--moon">
+  <div class="container art-hero-grid">
+    <div>
+      <ol class="crumbs hero-in" style="--i:0" aria-label="Fil d'Ariane">
+        <li><a href="../publications.html">Publications</a></li>
+        <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+        <li><a href="../publications-scientifiques.html">Publications scientifiques</a></li>
+        <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+        <li aria-current="page">Énergie</li>
+      </ol>
+      <div class="badges hero-in" style="--i:1">
+        <span class="badge" style="--b:#fbbf24"><i class="ph-light ph-thermometer-hot" aria-hidden="true"></i>Énergie · DPET</span>
+        <span class="badge" style="--b:#60a5fa"><i class="ph-light ph-seal-check" aria-hidden="true"></i>Évalué par les pairs</span>
+        <span class="badge" style="--b:#34d399"><i class="ph-light ph-lock-simple-open" aria-hidden="true"></i>Accès libre</span>
+      </div>
+      <h1 class="art-title hero-in" style="--i:2">Passer la nuit lunaire au chaud grâce à une pierre de régolithe</h1>
+      <p class="art-lede hero-in" style="--i:3">Sur la Lune, la nuit dure 354 heures et le sol descend à −170 °C. Un bloc de régolithe fritté, chauffé par le Soleil pendant le jour, a gardé un boîtier électronique au-dessus de −22 °C pendant toute une nuit simulée. Presque tout le matériau est pris sur place.</p>
+      <ul class="authors hero-in" style="--i:4" aria-label="Auteurs">
+        <li class="author"><span class="av" style="--ah:40" aria-hidden="true">MR</span><span><strong>Mathilde Rey</strong><small>Thermique spatiale</small></span></li>
+        <li class="author"><span class="av" style="--ah:200" aria-hidden="true">OH</span><span><strong>Omar Haddad</strong><small>Matériaux lunaires</small></span></li>
+        <li class="author"><span class="av" style="--ah:280" aria-hidden="true">PL</span><span><strong>Pauline Lemaire</strong><small>Essais en vide thermique</small></span></li>
+        <li class="author"><span class="av" style="--ah:130" aria-hidden="true">TG</span><span><strong>Théo Garcia</strong><small>Modélisation thermique</small></span></li>
+      </ul>
+      <div class="meta-line hero-in" style="--i:5">
+        <span><i class="ph-light ph-calendar-blank" aria-hidden="true"></i>Publié le 12 septembre 2023</span>
+        <span><i class="ph-light ph-clock" aria-hidden="true"></i>8 min de lecture</span>
+        <span><i class="ph-light ph-hash" aria-hidden="true"></i><code>IFRAS-DPET-2023-017</code></span>
+      </div>
+    </div>
+
+    <!-- Illustration : horizon lunaire, jour et nuit -->
+    <div class="reentry moonart hero-in" style="--i:3" aria-hidden="true">
+      <canvas id="moonCv"></canvas>
+      <span class="reentry-tag" style="right:2%;top:8%"><i style="background:#fbbf24"></i> Sol <b id="heroT">+110 °C</b></span>
+      <span class="reentry-tag" style="left:2%;bottom:10%"><i style="background:#34d399"></i> Boîtier <b id="heroB">+18 °C</b></span>
+    </div>
+  </div>
+</header>
+
+<div class="container art-layout">
+
+  <!-- Sommaire -->
+  <nav class="toc" aria-label="Sommaire">
+    <p class="toc-title">Sommaire</p>
+    <ol id="toc">
+      <li class="toc-ind" aria-hidden="true"></li>
+      <li><a href="#s-essentiel"><span>—</span>L'essentiel</a></li>
+      <li><a href="#s-intro"><span>1</span>Deux semaines de froid</a></li>
+      <li><a href="#s-principe"><span>2</span>Une bouillotte lunaire</a></li>
+      <li><a href="#s-methodes"><span>3</span>Fritter le régolithe</a></li>
+      <li><a href="#s-resultats"><span>4</span>La nuit simulée</a></li>
+      <li><a href="#s-conclusion"><span>5</span>Conclusion</a></li>
+    </ol>
+    <p class="toc-time"><i class="ph-light ph-hourglass-medium" aria-hidden="true"></i><span id="timeLeft">8 min restantes</span></p>
+  </nav>
+
+  <!-- ===== ARTICLE ===== -->
+  <article class="art" id="article">
+
+    <section id="s-essentiel" aria-label="L'essentiel">
+      <div class="essentials rv">
+        <div class="essentials-head"><i class="ph-light ph-lightning" aria-hidden="true"></i> L'essentiel en 30 secondes</div>
+        <div class="kpis">
+          <div class="kpi"><strong data-count="354" data-suffix=" h">354<small> h</small></strong><span>de nuit simulée, sans aucune source d'énergie électrique</span></div>
+          <div class="kpi"><strong>−22<small> °C</small></strong><span>température la plus basse du boîtier, au-dessus de sa limite de −40 °C</span></div>
+          <div class="kpi"><strong>5,5<small> kg</small></strong><span>à lancer depuis la Terre, contre 18 kg pour des batteries</span></div>
+        </div>
+        <ul class="takeaways">
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>Le jour lunaire, un petit concentrateur solaire chauffe un bloc de régolithe à 280 °C.</li>
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>La nuit, un interrupteur thermique laisse passer juste ce qu'il faut de chaleur vers l'électronique.</li>
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>Fritté à 1 100 °C, le régolithe conduit la chaleur 70 fois mieux que la poussière d'origine.</li>
+        </ul>
+      </div>
+
+      <div class="abstract rv">
+        <span class="label">Résumé</span>
+        <p>La nuit lunaire, longue de 354 heures, est la principale cause de perte des engins posés sur la Lune. Maintenir leur électronique au-dessus de −40 °C demande environ 2 kWh de chaleur, soit près de 18 kg de batteries lancées depuis la Terre. Nous proposons de stocker cette chaleur dans le régolithe lui-même. Un bloc de 40 kg de simulant lunaire LUNA-1, fritté à 1 100 °C, est chauffé à 280 °C par un concentrateur solaire pendant le jour, puis restitue sa chaleur la nuit au travers d'un interrupteur thermique à paraffine. Testé dans la chambre à vide thermique THERMIS-3 sur un cycle jour-nuit complet, le système a maintenu un boîtier électronique entre −22 et +18 °C. Le bloc a stocké 2,5 kWh et en a restitué 2,0 kWh au boîtier (80 %). La masse à lancer se limite à 5,5 kg d'équipements.</p>
+        <div class="kw" aria-label="Mots-clés"><span>Nuit lunaire</span><span>Stockage thermique</span><span>Régolithe fritté</span><span>Vide thermique</span><span>Ressources locales</span></div>
+      </div>
+    </section>
+
+    <!-- 1. CONTEXTE -->
+    <section id="s-intro">
+      <h2><span class="n">01</span>Deux semaines de froid</h2>
+      <p>La Lune tourne sur elle-même en 29,5 jours. En un point de sa surface, le Soleil brille donc pendant environ deux semaines, puis disparaît pendant deux autres. Sans atmosphère pour retenir la chaleur, le sol passe de +120 °C à midi à −170 °C en fin de nuit. Les batteries et l'électronique d'un atterrisseur ne supportent pas de descendre sous −40 °C : la plupart des engins ne survivent pas à leur première nuit.</p>
+
+      <figure class="fig rv" id="fig1">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">Température du sol lunaire au cours d'un mois</span>
+            <button class="ctrl" type="button" id="dayPlay"><i class="ph-light ph-pause" aria-hidden="true"></i><span>Pause</span></button>
+          </div>
+          <div class="lunation">
+            <svg viewBox="0 0 150 150" id="sunDial" aria-hidden="true"></svg>
+            <div class="chart" id="lun"><div class="ctip" id="lunTip"></div></div>
+          </div>
+        </div>
+        <figcaption><b>Figure 1</b>Température de surface à l'équateur lunaire sur une lunaison de 29,5 jours, et position du Soleil vue depuis le site. La bande bleue marque la limite de survie de l'électronique (−40 °C). La nuit, le sol refroidit vite puis plus lentement : il rayonne de moins en moins à mesure qu'il se refroidit.</figcaption>
+      </figure>
+
+      <p>Pour passer la nuit, il faut environ <strong>5,7 W</strong> de chaleur en continu pour un boîtier électronique bien isolé, soit 2,0 kWh sur 354 heures. Trois solutions sont possibles.</p>
+
+      <figure class="fig rv" id="fig2">
+        <div class="fig-stage">
+          <div class="fig-head"><span class="fig-name">Masse à lancer pour 2 kWh de chaleur nocturne</span></div>
+          <div class="chart" id="mass"><div class="ctip" id="massTip"></div></div>
+        </div>
+        <figcaption><b>Figure 2</b>Masse à envoyer depuis la Terre pour chaque solution. Les batteries doivent elles-mêmes être maintenues au chaud et perdent une partie de leur capacité dans le froid. Un stock de cire (paraffine) qui fond et se solidifie est efficace mais lourd. Le bloc de régolithe (hachuré) est trouvé sur place : seuls le concentrateur, l'interrupteur et l'isolant sont lancés.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 2. PRINCIPE -->
+    <section id="s-principe">
+      <h2><span class="n">02</span>Une bouillotte lunaire</h2>
+      <p>Le principe ressemble à celui d'une bouillotte ou d'un radiateur à accumulation. Pendant le jour, un petit <button class="term" type="button" data-term="concentrateur">concentrateur solaire</button> de 0,5 m² chauffe un bloc de régolithe enveloppé d'isolant. La nuit, le bloc rend sa chaleur au boîtier électronique posé contre lui. Tout l'enjeu est de <strong>ne pas tout rendre trop vite</strong> : c'est le rôle de l'<button class="term" type="button" data-term="interrupteur">interrupteur thermique</button>.</p>
+
+      <figure class="fig rv" id="fig3">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">Le système en fonctionnement</span>
+            <div class="seg" role="group" aria-label="Moment" id="dnSeg">
+              <button type="button" data-m="0" aria-pressed="true">Jour</button>
+              <button type="button" data-m="1" aria-pressed="false">Nuit</button>
+            </div>
+          </div>
+          <svg viewBox="0 0 640 280" id="sys" aria-label="Schéma : concentrateur solaire, bloc de régolithe isolé, interrupteur thermique, boîtier électronique"></svg>
+          <div class="parts" role="group" aria-label="Éléments" id="sysParts"></div>
+          <p class="part-desc" id="sysDesc" aria-live="polite"></p>
+        </div>
+        <figcaption><b>Figure 3</b>Le jour, la chaleur concentrée entre dans le bloc (flèches orange) et l'interrupteur reste ouvert pour ne pas surchauffer le boîtier. La nuit, la cire de l'interrupteur se solidifie et se rétracte, un contact se ferme et la chaleur passe du bloc au boîtier (flèches vertes).</figcaption>
+      </figure>
+    </section>
+
+    <!-- 3. FRITTAGE -->
+    <section id="s-methodes">
+      <h2><span class="n">03</span>Fritter le régolithe</h2>
+      <p>Le régolithe brut est une poussière de grains anguleux qui ne se touchent que par des pointes. Dans le vide, sans air entre eux, la chaleur circule très mal : c'est un excellent isolant, pas une réserve utilisable. Chauffé au-delà de 1 000 °C, il se <button class="term" type="button" data-term="frittage">fritte</button> : les grains se soudent par des ponts, sans fondre entièrement.</p>
+
+      <figure class="fig rv" id="fig4">
+        <div class="fig-stage">
+          <div class="fig-head"><span class="fig-name">Effet de la température de frittage</span></div>
+          <div class="sinter">
+            <svg viewBox="0 0 220 220" id="grains" aria-hidden="true"></svg>
+            <div class="chart" id="cond"><div class="ctip" id="condTip"></div></div>
+          </div>
+          <div class="scrub">
+            <label for="sRange" class="scrub-l">Frittage</label>
+            <input type="range" id="sRange" min="0" max="5" value="3" step="1" aria-label="Température de frittage">
+            <output id="sOut" for="sRange">1 100 °C</output>
+          </div>
+          <div class="readouts" aria-live="polite">
+            <div class="readout hot" style="--rc:#fbbf24"><small>Conductivité</small><strong id="roK">0,55 W/m/K</strong></div>
+            <div class="readout"><small>Porosité</small><strong id="roP">22 %</strong></div>
+            <div class="readout"><small>État du bloc</small><strong id="roS">solide, sans fissure</strong></div>
+          </div>
+        </div>
+        <figcaption><b>Figure 4</b>Conductivité thermique du simulant LUNA-1 mesurée sous vide (échelle logarithmique) selon sa température de frittage, et aspect schématique des grains. À 1 100 °C, les ponts entre grains multiplient la conductivité par 70 sans que le bloc se fissure au refroidissement, ce qui arrive au-delà de 1 150 °C.</figcaption>
+      </figure>
+
+      <p>Le bloc d'essai, un cylindre de 40 kg (30 cm de diamètre, 24 cm de haut), a été fritté à 1 100 °C par <button class="term" type="button" data-term="microondes">micro-ondes</button>, un procédé transposable sur la Lune. Il a été placé dans la chambre à vide thermique <strong>THERMIS-3</strong>, dont les parois refroidies à l'azote liquide reproduisent le froid du ciel lunaire, avec le concentrateur, l'interrupteur et un boîtier électronique instrumenté de 28 capteurs de température.</p>
+    </section>
+
+    <!-- 4. RÉSULTATS -->
+    <section id="s-resultats">
+      <h2><span class="n">04</span>Une nuit simulée de 354 heures</h2>
+      <p>Après 60 heures de « jour » qui ont porté le bloc à 280 °C, la chambre a été plongée dans la nuit. Un second boîtier identique, sans stockage, servait de témoin.</p>
+
+      <figure class="fig rv" id="fig5">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">Températures pendant la nuit</span>
+            <button class="ctrl" type="button" id="nightPlay"><i class="ph-light ph-play" aria-hidden="true"></i><span>Rejouer la nuit</span></button>
+          </div>
+          <div class="chart" id="night"><div class="ctip" id="nightTip"></div></div>
+        </div>
+        <figcaption><b>Figure 5</b>Températures mesurées pendant les 354 heures de nuit. Le boîtier témoin passe sous −40 °C après 31 heures. Avec le stockage, l'interrupteur se ferme vers −5 °C et maintient le boîtier autour de −10 °C ; il ne descend à −22 °C qu'en toute fin de nuit, quand le bloc est presque vidé. Survolez pour lire les valeurs.</figcaption>
+      </figure>
+
+      <div class="table-wrap rv">
+        <div class="table-cap"><b>Tableau 1</b>Bilan de l'essai</div>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Grandeur</th><th class="num">Valeur</th><th>Commentaire</th></tr></thead>
+            <tbody>
+              <tr><td>Chaleur stockée dans le bloc</td><td class="num">2,5 kWh</td><td>de 280 à 18 °C</td></tr>
+              <tr><td>Chaleur rendue au boîtier</td><td class="num">2,0 kWh</td><td>5,7 W en moyenne</td></tr>
+              <tr><td>Pertes par l'isolant</td><td class="num">0,5 kWh</td><td>20 % du stock</td></tr>
+              <tr class="hi"><td><strong>Température minimale du boîtier</strong></td><td class="num"><strong>−22 °C</strong></td><td>limite de survie : −40 °C</td></tr>
+              <tr><td>Boîtier témoin sous −40 °C</td><td class="num">après 31 h</td><td>−163 °C en fin de nuit</td></tr>
+              <tr><td>Temps de recharge au jour</td><td class="num">≈ 11 h</td><td>concentrateur de 0,5 m²</td></tr>
+              <tr><td>Masse lancée</td><td class="num">5,5 kg</td><td>concentrateur, interrupteur, isolant</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-note">Masse du bloc : 40 kg de simulant, supposés prélevés sur place. Cycle répété trois fois, écart entre cycles inférieur à 2 °C.</div>
+      </div>
+    </section>
+
+    <!-- 5. CONCLUSION -->
+    <section id="s-conclusion">
+      <h2><span class="n">05</span>Conclusion</h2>
+      <p>Un bloc de régolithe fritté suffit à faire traverser la nuit lunaire à un petit boîtier électronique, avec une marge de 18 °C sur sa limite de survie. En utilisant le sol lui-même comme réserve, la masse à lancer est divisée par plus de trois par rapport à des batteries. Le même principe, à plus grande échelle, pourrait chauffer les habitats d'une base lunaire.</p>
+
+      <div class="note" style="--nc:#fbbf24">
+        <i class="ph-light ph-warning" aria-hidden="true"></i>
+        <p><span class="nt">Limites</span>Le frittage a été réalisé en laboratoire ; le faire sur la Lune demandera environ 60 kWh par bloc et un four adapté. Le simulant reproduit la composition moyenne du régolithe des mers lunaires, mais pas sa fraction de verre, qui pourrait modifier le frittage.</p>
+      </div>
+
+      <ol class="next" aria-label="Prochaines étapes">
+        <li class="now" style="--nc:var(--ok)"><time>Sept. 2023</time><strong>Nuit simulée réussie</strong><span>Trois cycles complets en chambre.</span></li>
+        <li><time>2024</time><strong>Frittage solaire</strong><span>Fritter le bloc avec le concentrateur lui-même.</span></li>
+        <li style="--nc:#fbbf24"><time>2026</time><strong>Démonstrateur</strong><span>Un bloc de 200 kg pour un habitat.</span></li>
+      </ol>
+    </section>
+
+  </article>
+
+  <!-- Colonne de droite -->
+  <aside class="rail" aria-label="Outils de l'article">
+    <div class="rail-card rail-figs">
+      <p class="rail-title">Figures</p>
+      <ul class="fig-list">
+        <li><a href="#fig1"><i class="ph-light ph-sun-horizon" aria-hidden="true"></i>Jour et nuit lunaires</a></li>
+        <li><a href="#fig2"><i class="ph-light ph-scales" aria-hidden="true"></i>Masse à lancer</a></li>
+        <li><a href="#fig3"><i class="ph-light ph-flow-arrow" aria-hidden="true"></i>Le système</a></li>
+        <li><a href="#fig4"><i class="ph-light ph-fire" aria-hidden="true"></i>Frittage</a></li>
+        <li><a href="#fig5"><i class="ph-light ph-chart-line" aria-hidden="true"></i>La nuit simulée</a></li>
+      </ul>
+    </div>
+    <div class="rail-card">
+      <p class="rail-title">Programme lié</p>
+      <a class="prog-link" href="../programmes-actifs.html#atlas">
+        <span class="pi" style="color:#2dd4bf;background:rgba(45,212,191,.12)"><i class="ph-light ph-globe-hemisphere-west" aria-hidden="true"></i></span>
+        <span><strong>ATLAS</strong><small>Simulation d'environnements extraterrestres</small></span>
+      </a>
+    </div>
+  </aside>
+</div>
+
+<!-- Articles liés -->
+<section class="container related" aria-labelledby="relTitle">
+  <h2 class="section-title" id="relTitle">À lire aussi</h2>
+  <div class="related-grid">
+    <a class="rel" href="publications_scientifiques_01.html" style="--c:#fb7185">
+      <div class="rel-img"><img src="../Assets/accueil/alaune01.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Matériaux</small><strong>Un bouclier céramique qui résiste à 2 250 °C pour la rentrée atmosphérique</strong></div>
+    </a>
+    <a class="rel" href="publications_scientifiques_03.html" style="--c:#34d399">
+      <div class="rel-img"><img src="../Assets/publication/mars01.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Astrobiologie</small><strong>Des microbes qui se multiplient en conditions martiennes simulées</strong></div>
+    </a>
+    <a class="rel" href="publications_scientifiques_02.html" style="--c:#f97316">
+      <div class="rel-img"><img src="../Assets/accueil/alaune02.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Propulsion</small><strong>NK-125 : un propulseur ionique à grilles tri-étages validé à haute puissance</strong></div>
+    </a>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© IFRAS, Institut Français de Recherche Aéronautique et Spatiale</span>
+    <span>Publications soumises à validation institutionnelle</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status"><i class="ph-light ph-check-circle" aria-hidden="true"></i><span></span></div>
+<div class="tip" id="tip" role="tooltip"></div>
+<script>
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const $ = (id) => document.getElementById(id);
+  const NS = 'http://www.w3.org/2000/svg';
+  const fmt = (n, d = 0) => n.toLocaleString('fr-FR', { minimumFractionDigits: d, maximumFractionDigits: d });
+  const svgEl = (tag, attrs = {}, parent) => {
+    const el = document.createElementNS(NS, tag);
+    for (const k in attrs) el.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(el);
+    return el;
+  };
+  /* lance une fonction quand l'élément devient visible (une seule fois) */
+  const onceVisible = (el, fn, margin = '0px 0px -15% 0px') => {
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { io.disconnect(); fn(); } }, { rootMargin: margin });
+    io.observe(el);
+  };
+  /* boucle d'animation suspendue hors écran et onglet masqué */
+  const loopWhileVisible = (el, frame) => {
+    let raf = 0, visible = false;
+    const tick = (t) => { frame(t); raf = requestAnimationFrame(tick); };
+    const sync = () => { cancelAnimationFrame(raf); if (visible && !document.hidden) raf = requestAnimationFrame(tick); };
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; sync(); }).observe(el);
+    document.addEventListener('visibilitychange', sync);
+  };
+
+  /* ---------- Menu mobile ---------- */
+  const toggle = document.querySelector('.menu-toggle');
+  const panel = $('mobile-panel');
+  const setMenu = (open) => {
+    panel.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    toggle.querySelector('i').className = open ? 'ph-light ph-x' : 'ph-light ph-list';
+  };
+  toggle.addEventListener('click', () => setMenu(!panel.classList.contains('is-open')));
+  document.addEventListener('click', (e) => { if (panel.classList.contains('is-open') && !panel.contains(e.target) && !toggle.contains(e.target)) setMenu(false); });
+
+  /* ---------- Apparition au défilement ---------- */
+  const rvIO = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (e.isIntersecting) { e.target.classList.add('in'); rvIO.unobserve(e.target); }
+  }), { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.rv').forEach((el) => rvIO.observe(el));
+
+  /* ---------- Toast ---------- */
+  let toastT;
+  const toast = (msg) => { const t = $('toast'); t.querySelector('span').textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2600); };
+
+  /* ---------- Progression de lecture + sommaire ---------- */
+  const article = $('article');
+  const tocLinks = [...document.querySelectorAll('#toc a')];
+  const sections = tocLinks.map((a) => document.querySelector(a.getAttribute('href')));
+  const ind = document.querySelector('.toc-ind');
+  const WORDS = article.innerText.split(/\s+/).length;
+  let ticking = false;
+  function onScroll() {
+    ticking = false;
+    const r = article.getBoundingClientRect();
+    const total = r.height - window.innerHeight * 0.6;
+    const p = Math.min(1, Math.max(0, -r.top / total));
+    $('progress').style.transform = `scaleX(${p})`;
+    const left = Math.max(0, Math.ceil((WORDS / 220) * (1 - p)));
+    $('timeLeft').textContent = p >= 0.98 ? 'Lecture terminée' : `${left || 1} min restante${left > 1 ? 's' : ''}`;
+    let cur = 0;
+    sections.forEach((s, i) => { if (s && s.getBoundingClientRect().top < window.innerHeight * 0.35) cur = i; });
+    tocLinks.forEach((a, i) => a.classList.toggle('on', i === cur));
+    const a = tocLinks[cur];
+    if (a && ind) { ind.style.transform = `translateY(${a.parentElement.offsetTop}px)`; ind.style.height = a.offsetHeight + 'px'; }
+  }
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  /* ---------- Chiffres clés animés ---------- */
+  document.querySelectorAll('[data-count]').forEach((el) => {
+    const target = Number(el.dataset.count), suffix = el.dataset.suffix || '';
+    const paint = (v) => { el.innerHTML = `${fmt(v)}<small>${suffix}</small>`; };
+    if (reduceMotion) return;
+    paint(0);
+    onceVisible(el, () => {
+      const t0 = performance.now(), dur = 1100;
+      const step = (t) => { const k = Math.min(1, (t - t0) / dur); paint(Math.round(target * (1 - Math.pow(1 - k, 4)))); if (k < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    });
+  });
+
+  /* ---------- Infobulles : termes expliqués ---------- */
+  const TERMS = {
+    concentrateur: ['Concentrateur solaire', "Miroir courbe qui rassemble la lumière du Soleil sur une petite surface, comme une loupe. Sur la Lune, sans nuages, il reçoit environ 1 360 W par m²."],
+    interrupteur: ['Interrupteur thermique', "Pièce qui laisse passer la chaleur ou la bloque selon la température, sans électronique. Ici, un vérin de paraffine qui se dilate en fondant."],
+    frittage: ['Frittage', "Chauffer une poudre juste en dessous de sa température de fusion : les grains se soudent par leurs points de contact et forment un solide poreux, comme une céramique."],
+    microondes: ['Frittage par micro-ondes', "Le régolithe contient des minéraux de fer qui absorbent bien les micro-ondes : il chauffe dans la masse, plus vite et avec moins d'énergie qu'un four classique."]
+  };
+  const tip = $('tip');
+  let tipOpenAt = 0, hideT = null, tipOwner = null;
+  function showTip(el) {
+    clearTimeout(hideT);
+    const t = TERMS[el.dataset.term];
+    tip.innerHTML = `<b>${t[0]}</b>${t[1]}`;
+    tip.classList.toggle('instant', Date.now() - tipOpenAt < 400 && tip.classList.contains('show'));
+    const r = el.getBoundingClientRect();
+    tip.style.left = '0px'; tip.style.top = '0px';
+    tip.classList.add('show');
+    const w = tip.offsetWidth, h = tip.offsetHeight;
+    let x = r.left + r.width / 2 - w / 2 + window.scrollX;
+    x = Math.max(16 + window.scrollX, Math.min(x, window.scrollX + document.documentElement.clientWidth - w - 16));
+    let y = r.top + window.scrollY - h - 10, below = false;
+    if (r.top - h - 10 < 130) { y = r.bottom + window.scrollY + 10; below = true; }
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+    tip.style.transformOrigin = `${r.left + r.width / 2 + window.scrollX - x}px ${below ? '0%' : '100%'}`;
+    tipOpenAt = Date.now(); tipOwner = el;
+    el.setAttribute('aria-describedby', 'tip');
+  }
+  function hideTip(delay = 80) {
+    clearTimeout(hideT);
+    hideT = setTimeout(() => { tip.classList.remove('show'); if (tipOwner) tipOwner.removeAttribute('aria-describedby'); tipOwner = null; tipOpenAt = Date.now(); }, delay);
+  }
+  document.querySelectorAll('.term').forEach((el) => {
+    if (canHover) { el.addEventListener('mouseenter', () => showTip(el)); el.addEventListener('mouseleave', () => hideTip()); }
+    el.addEventListener('focus', () => showTip(el));
+    el.addEventListener('blur', () => hideTip(0));
+    el.addEventListener('click', () => { if (!canHover) (tipOwner === el && tip.classList.contains('show')) ? hideTip(0) : showTip(el); });
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { hideTip(0); setMenu(false); } });
+  window.addEventListener('scroll', () => { if (!canHover && tip.classList.contains('show')) hideTip(0); }, { passive: true });
+
+  /* petite infobulle de graphique, placée à côté d'un point */
+  const placeTip = (tipEl, box, svg, W, H, px, py) => {
+    const r = svg.getBoundingClientRect(), bx = box.getBoundingClientRect();
+    const sx = px / W * r.width + (r.left - bx.left), sy = py / H * r.height + (r.top - bx.top);
+    tipEl.classList.add('show');
+    tipEl.style.left = (sx + 14 + tipEl.offsetWidth > bx.width ? sx - 14 - tipEl.offsetWidth : sx + 14) + 'px';
+    tipEl.style.top = Math.max(0, Math.min(bx.height - tipEl.offsetHeight, sy - tipEl.offsetHeight / 2)) + 'px';
+  };
+  const BLUE = '#3b82f6', ORANGE = '#ea580c';
+
+    /* ---------- aide : repère de graphique ---------- */
+  const rng = (seed) => { let s = seed; return () => (s = (s * 16807) % 2147483647) / 2147483647; };
+  function frame(box, o) {
+    const W = Math.round(Math.max(o.minW || 300, Math.min(o.maxW || 680, box.clientWidth))), H = o.H || (W < 520 ? 280 : 300);
+    const m = Object.assign({ l: 50, r: 16, t: 16, b: 40 }, o.m || {});
+    const [x0, x1] = o.x, [y0, y1] = o.y;
+    const x = (v) => m.l + (v - x0) / (x1 - x0) * (W - m.l - m.r);
+    const y = (v) => H - m.b - (v - y0) / (y1 - y0) * (H - m.t - m.b);
+    const svg = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': o.aria || '' });
+    box.prepend(svg);
+    (o.yt || []).forEach((v) => {
+      svgEl('line', { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: '#13204d' }, svg);
+      svgEl('text', { x: m.l - 6, y: y(v) + 4, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 11, class: 'mono' }, svg).textContent = o.yf ? o.yf(v) : fmt(v);
+    });
+    (o.xt || []).forEach((v) => svgEl('text', { x: x(v), y: H - m.b + 18, 'text-anchor': 'middle', fill: '#8891b8', 'font-size': 11, class: 'mono' }, svg).textContent = o.xf ? o.xf(v) : fmt(v));
+    if (o.xl) svgEl('text', { x: W - m.r, y: H - 3, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 11 }, svg).textContent = o.xl;
+    if (o.yl) svgEl('text', { x: m.l + 4, y: m.t + 12, fill: '#8891b8', 'font-size': 11 }, svg).textContent = o.yl;
+    const hit = () => svgEl('rect', { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, class: 'hit' }, svg);
+    return { svg, W, H, m, x, y, hit };
+  }
+  const NBSP = ' ', AMBER = '#fbbf24', DEG = NBSP + '°C';
+  const sgn = (v) => (v > 0 ? '+' : v < 0 ? '−' : '') + fmt(Math.abs(Math.round(v)));
+  /* température de surface (°C) selon la phase de la lunaison (0 = lever du Soleil) */
+  const LUN = 29.53;
+  const surfT = (ph) => {
+    ph = ((ph % 1) + 1) % 1;
+    if (ph < 0.5) return 95 + 295 * Math.pow(Math.sin(Math.PI * ph / 0.5), 0.25) - 273;
+    const n = (ph - 0.5) * LUN;
+    return 95 + 12 * (1 - n / (LUN / 2)) - 273;
+  };
+  /* essai de nuit (t en heures depuis le coucher) */
+  const NIGHT = 354;
+  const blockT = (t) => 280 - 262 * Math.pow(t / NIGHT, 0.92);
+  const boxT = (t) => (t < 12 ? 18 - 28 * Math.pow(t / 12, 0.8) : -10 - 12 * Math.pow(t / NIGHT, 4) + 1.4 * (1 - t / NIGHT) * Math.sin((t - 12) / 3.2));
+  const refT = (t) => -165 + 183 * Math.exp(-t / 79);
+
+  /* ---------- En-tête : horizon lunaire ---------- */
+  (function hero() {
+    const cv = $('moonCv'); if (!cv) return;
+    const ctx = cv.getContext('2d'), tT = $('heroT'), tB = $('heroB');
+    let w, h, stars = [], craters = [];
+    const r = rng(8);
+    const size = () => {
+      const rc = cv.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 2);
+      w = rc.width; h = rc.height; cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      stars = Array.from({ length: 90 }, () => ({ x: r() * w, y: r() * h * 0.62, s: r() * 1.1 + 0.2, p: r() * 6 }));
+      craters = Array.from({ length: 14 }, () => ({ x: r() * w, y: h * (0.72 + r() * 0.26), rx: 8 + r() * 30, k: 0.25 + r() * 0.15 }));
+    };
+    size(); new ResizeObserver(size).observe(cv);
+    let ph = 0.18, last = 0;
+    const draw = (now) => {
+      const dt = last && now ? Math.min(0.05, (now - last) / 1000) : 0; if (now) last = now;
+      ph = (ph + dt / 18) % 1;
+      const day = ph < 0.5, sunA = ph / 0.5 * Math.PI, light = day ? Math.pow(Math.sin(sunA), 0.35) : 0;
+      ctx.clearRect(0, 0, w, h);
+      /* ciel toujours noir, étoiles visibles la nuit */
+      for (const s of stars) { ctx.fillStyle = `rgba(226,232,240,${(0.15 + 0.55 * (1 - light)) * (0.7 + 0.3 * Math.sin(ph * 60 + s.p))})`; ctx.beginPath(); ctx.arc(s.x, s.y, s.s, 0, 6.3); ctx.fill(); }
+      /* Terre */
+      const ex = w * 0.78, ey = h * 0.2, er = Math.max(10, w * 0.035);
+      ctx.fillStyle = '#1e3a8a'; ctx.beginPath(); ctx.arc(ex, ey, er, 0, 6.3); ctx.fill();
+      ctx.fillStyle = '#7dd3fc'; ctx.beginPath(); ctx.arc(ex, ey, er, -Math.PI / 2, Math.PI / 2); ctx.ellipse(ex, ey, er * 0.4, er, 0, Math.PI / 2, -Math.PI / 2, true); ctx.fill();
+      /* Soleil */
+      if (day) {
+        const sx = w * 0.08 + (w * 0.84) * ph / 0.5, sy = h * 0.66 - Math.sin(sunA) * h * 0.5;
+        const g = ctx.createRadialGradient(sx, sy, 0, sx, sy, 40);
+        g.addColorStop(0, 'rgba(255,251,235,1)'); g.addColorStop(0.25, 'rgba(253,230,138,.6)'); g.addColorStop(1, 'rgba(251,191,36,0)');
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(sx, sy, 40, 0, 6.3); ctx.fill();
+      }
+      /* sol */
+      const gy = h * 0.7;
+      const gg = ctx.createLinearGradient(0, gy, 0, h);
+      const L = 30 + 90 * light;
+      gg.addColorStop(0, `rgb(${L + 20},${L + 20},${L + 26})`); gg.addColorStop(1, `rgb(${L * 0.4},${L * 0.4},${L * 0.45 + 6})`);
+      ctx.fillStyle = gg; ctx.beginPath(); ctx.moveTo(0, gy + 8);
+      for (let x = 0; x <= w; x += 20) ctx.lineTo(x, gy + Math.sin(x * 0.02) * 6 + Math.sin(x * 0.07) * 2);
+      ctx.lineTo(w, h); ctx.lineTo(0, h); ctx.fill();
+      for (const c of craters) { ctx.fillStyle = `rgba(0,0,0,${0.15 + 0.2 * light})`; ctx.beginPath(); ctx.ellipse(c.x, c.y, c.rx, c.rx * c.k, 0, 0, 6.3); ctx.fill(); }
+      /* atterrisseur et bloc */
+      const lx = w * 0.42, ly = gy + 4;
+      const nightHeat = day ? 0.25 + 0.5 * Math.sin(sunA) : 0.75 - 0.5 * ((ph - 0.5) / 0.5);
+      ctx.fillStyle = `rgba(234,88,12,${0.25 + 0.55 * nightHeat})`; ctx.beginPath(); ctx.roundRect(lx + 60, ly - 26, 46, 30, 6); ctx.fill();
+      const hg = ctx.createRadialGradient(lx + 83, ly - 11, 0, lx + 83, ly - 11, 60);
+      hg.addColorStop(0, `rgba(251,146,60,${0.35 * nightHeat})`); hg.addColorStop(1, 'rgba(251,146,60,0)');
+      ctx.fillStyle = hg; ctx.beginPath(); ctx.arc(lx + 83, ly - 11, 60, 0, 6.3); ctx.fill();
+      ctx.strokeStyle = `rgba(203,213,225,${0.5 + 0.4 * light})`; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(lx - 30, ly); ctx.lineTo(lx - 12, ly - 26); ctx.moveTo(lx + 30, ly); ctx.lineTo(lx + 12, ly - 26); ctx.stroke();
+      ctx.fillStyle = `rgba(148,163,184,${0.55 + 0.4 * light})`; ctx.beginPath(); ctx.roundRect(lx - 22, ly - 50, 44, 26, 5); ctx.fill();
+      ctx.fillStyle = `rgba(250,204,21,${0.25 + 0.5 * light})`; ctx.fillRect(lx - 60, ly - 62, 34, 20); ctx.fillRect(lx + 26, ly - 62, 34, 20);
+      /* capteurs */
+      const T = surfT(ph), B = day ? 18 : boxT((ph - 0.5) * LUN * 24);
+      tT.textContent = sgn(T) + DEG; tB.textContent = sgn(B) + DEG;
+    };
+    draw(0);
+    if (!reduceMotion) loopWhileVisible(cv, draw);
+  })();
+
+  /* ---------- Figure 1 : lunaison ---------- */
+  (function lunation() {
+    const box = $('lun'), tipEl = $('lunTip'), dial = $('sunDial');
+    const F = frame(box, { x: [0, LUN], y: [-200, 150], xt: [0, 7, 14, 21, 28], yt: [-150, -100, -40, 0, 50, 100, 150], xf: (v) => 'J' + v, yf: (v) => (v > 0 ? '+' : '') + v + DEG.replace(NBSP, ''), xl: 'Jours depuis le lever du Soleil', maxW: 520, minW: 280, m: { l: 54, t: 26 }, aria: 'Température de +117 °C à midi à −178 °C en fin de nuit' });
+    svgEl('rect', { x: F.x(LUN / 2), y: F.m.t, width: F.x(LUN) - F.x(LUN / 2), height: F.H - F.m.t - F.m.b, fill: 'rgba(79,107,237,.07)' }, F.svg);
+    svgEl('rect', { x: F.m.l, y: F.y(-40), width: F.W - F.m.l - F.m.r, height: F.y(-200) - F.y(-40), fill: 'rgba(59,130,246,.08)' }, F.svg);
+    svgEl('line', { x1: F.m.l, x2: F.W - F.m.r, y1: F.y(-40), y2: F.y(-40), stroke: '#60a5fa', 'stroke-dasharray': '5 5' }, F.svg);
+    svgEl('text', { x: F.x(0.4), y: F.y(-40) + 15, fill: '#93c5fd', 'font-size': 11 }, F.svg).textContent = 'limite de l\'électronique';
+    [['Jour', LUN / 4], ['Nuit', LUN * 0.75]].forEach(([t, x]) => svgEl('text', { x: F.x(x), y: F.m.t - 8, 'text-anchor': 'middle', fill: '#aab3d6', 'font-size': 12 }, F.svg).textContent = t);
+    const p = []; for (let d = 0; d <= LUN + 1e-9; d += 0.05) p.push(`${p.length ? 'L' : 'M'}${F.x(d).toFixed(1)} ${F.y(surfT(d / LUN)).toFixed(1)}`);
+    const line = svgEl('path', { d: p.join(' '), fill: 'none', stroke: AMBER, 'stroke-width': 2.4, class: 'draw' }, F.svg);
+    line.style.setProperty('--len', Math.ceil(line.getTotalLength()));
+    const mk = svgEl('circle', { r: 5.5, fill: '#fff', stroke: AMBER, 'stroke-width': 2 }, F.svg);
+    /* cadran : position du Soleil */
+    svgEl('path', { d: 'M15 95 A60 60 0 0 1 135 95', fill: 'none', stroke: '#1b2555', 'stroke-dasharray': '3 5' }, dial);
+    svgEl('line', { x1: 8, x2: 142, y1: 95, y2: 95, stroke: '#64748b', 'stroke-width': 2 }, dial);
+    svgEl('rect', { x: 8, y: 96, width: 134, height: 30, fill: 'rgba(100,116,139,.18)' }, dial);
+    const sun = svgEl('circle', { r: 9, fill: AMBER }, dial);
+    const lab = svgEl('text', { x: 75, y: 145, 'text-anchor': 'middle', fill: '#e6e6e6', 'font-size': 13 }, dial);
+    const tl = svgEl('text', { x: 75, y: 116, 'text-anchor': 'middle', fill: '#fff', 'font-size': 14, class: 'mono' }, dial);
+    let ph = 0.1, playing = !reduceMotion, last = 0;
+    const render = () => {
+      const d = ph * LUN;
+      mk.setAttribute('cx', F.x(d)); mk.setAttribute('cy', F.y(surfT(ph)));
+      const a = Math.PI * (ph / 0.5);
+      if (ph < 0.5) { sun.setAttribute('cx', 75 - Math.cos(a) * 60); sun.setAttribute('cy', 95 - Math.sin(a) * 60); sun.setAttribute('opacity', 1); lab.textContent = 'Jour · J' + fmt(d, 0); }
+      else { sun.setAttribute('opacity', 0); lab.textContent = 'Nuit · J' + fmt(d, 0); }
+      tl.textContent = sgn(surfT(ph)) + DEG;
+    };
+    render();
+    const btn = $('dayPlay');
+    const setBtn = () => { btn.querySelector('i').className = playing ? 'ph-light ph-pause' : 'ph-light ph-play'; btn.querySelector('span').textContent = playing ? 'Pause' : 'Lancer'; };
+    btn.addEventListener('click', () => { playing = !playing; setBtn(); });
+    setBtn();
+    loopWhileVisible($('fig1'), (now) => { const dt = last ? Math.min(0.05, (now - last) / 1000) : 0; last = now; if (playing) { ph = (ph + dt / 14) % 1; render(); } });
+    const hit = F.hit();
+    hit.addEventListener('pointermove', (e) => {
+      const rr = F.svg.getBoundingClientRect(), px = (e.clientX - rr.left) / rr.width * F.W;
+      const d = Math.max(0, Math.min(LUN, (px - F.m.l) / (F.W - F.m.l - F.m.r) * LUN));
+      tipEl.innerHTML = `<b>Jour ${fmt(d, 1)}</b><div><span>${d < LUN / 2 ? 'Soleil levé' : 'Nuit'}</span><em>${sgn(surfT(d / LUN))}${DEG}</em></div>`;
+      placeTip(tipEl, box, F.svg, F.W, F.H, F.x(d), F.y(surfT(d / LUN)));
+      playing = false; setBtn(); ph = d / LUN; render();
+    });
+    hit.addEventListener('pointerleave', () => tipEl.classList.remove('show'));
+    if (reduceMotion) box.classList.add('drawn'); else onceVisible(box, () => box.classList.add('drawn'), '0px 0px -25% 0px');
+  })();
+
+  /* ---------- Figure 2 : masse à lancer ---------- */
+  (function mass() {
+    const box = $('mass'), tipEl = $('massTip');
+    const ROWS = [
+      ['Batteries', '#3b82f6', [['Cellules', 15.4], ['Chauffage et isolant', 2.6]], 0],
+      ['Stock de paraffine', '#d97706', [['Paraffine', 36], ['Réservoir', 4]], 0],
+      ['Bloc de régolithe', '#059669', [['Concentrateur', 1.5], ['Interrupteur', 2.2], ['Isolant', 1.8]], 40]
+    ];
+    const W = Math.round(Math.max(300, Math.min(680, box.clientWidth))), rowH = 64, H = ROWS.length * rowH + 30, ml = 2, mr = 12;
+    const X = (v) => ml + v / 50 * (W - ml - mr);
+    const s = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Masse lancée : batteries 18 kg, paraffine 40 kg, régolithe 5,5 kg plus 40 kg trouvés sur place' }, box);
+    const defs = svgEl('defs', {}, s);
+    const pat = svgEl('pattern', { id: 'loc', width: 7, height: 7, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' }, defs);
+    svgEl('line', { x1: 0, y1: 0, x2: 0, y2: 7, stroke: '#34d399', 'stroke-opacity': 0.5, 'stroke-width': 2 }, pat);
+    [0, 10, 20, 30, 40, 50].forEach((v) => {
+      svgEl('line', { x1: X(v), x2: X(v), y1: 20, y2: H - 22, stroke: '#13204d' }, s);
+      svgEl('text', { x: X(v), y: H - 6, 'text-anchor': v === 0 ? 'start' : v === 50 ? 'end' : 'middle', fill: '#8891b8', 'font-size': 11, class: 'mono' }, s).textContent = v + NBSP + 'kg';
+    });
+    const bars = [];
+    ROWS.forEach(([n, c, parts, local], j) => {
+      const y = 6 + j * rowH, tot = parts.reduce((a, p) => a + p[1], 0);
+      svgEl('text', { x: ml, y: y + 14, fill: '#e6e6e6', 'font-size': 13.5, 'font-weight': j === 2 ? 500 : 400 }, s).textContent = n;
+      const g = svgEl('g', {}, s);
+      const b = svgEl('rect', { x: X(0), y: y + 22, width: 0, height: 22, rx: 5, fill: c }, g);
+      const lb = local ? svgEl('rect', { x: X(tot), y: y + 22, width: 0, height: 22, rx: 5, fill: 'url(#loc)', stroke: '#34d399', 'stroke-opacity': 0.5, 'stroke-dasharray': '3 3' }, g) : null;
+      const t = svgEl('text', { y: y + 38, fill: '#fff', 'font-size': 12.5, class: 'mono', opacity: 0 }, s);
+      t.textContent = local ? `${fmt(tot, 1)} kg lancés + ${local} kg sur place` : `${fmt(tot, 0)} kg`;
+      bars.push({ b, lb, t, tot, local, y });
+      g.addEventListener('pointermove', () => {
+        tipEl.innerHTML = `<b>${n}</b>` + parts.map(([pn, pv]) => `<div><span style="--lc:${c}"><i></i>${pn}</span><em>${fmt(pv, 1)}${NBSP}kg</em></div>`).join('') + (local ? `<div><span style="--lc:#34d399"><i></i>Régolithe (sur place)</span><em>${local}${NBSP}kg</em></div>` : '');
+        placeTip(tipEl, box, s, W, H, X(tot / 2), y + 22);
+      });
+      g.addEventListener('pointerleave', () => tipEl.classList.remove('show'));
+    });
+    const go = () => bars.forEach((r, i) => {
+      const t0 = performance.now() + i * 120;
+      const st = (now) => {
+        const q = reduceMotion ? 1 : Math.max(0, Math.min(1, (now - t0) / 900)), e = 1 - Math.pow(1 - q, 3);
+        r.b.setAttribute('width', (X(r.tot * e) - X(0)).toFixed(1));
+        if (r.lb) { r.lb.setAttribute('width', ((X(r.local) - X(0)) * e).toFixed(1)); }
+        const end = X(r.tot + r.local) * 1, inside = end > W - 190;
+        const tx = r.local ? X(r.tot) + 8 : X(r.tot * e) + 8;
+        r.t.setAttribute('x', Math.min(tx, W - 10)); r.t.setAttribute('text-anchor', tx > W - 60 ? 'end' : 'start');
+        r.t.setAttribute('opacity', q);
+        if (q < 1) requestAnimationFrame(st);
+      };
+      requestAnimationFrame(st);
+    });
+    if (reduceMotion) go(); else onceVisible(box, go, '0px 0px -25% 0px');
+  })();
+
+  /* ---------- Figure 3 : le système ---------- */
+  (function system() {
+    const s = $('sys'), desc = $('sysDesc'), pb = $('sysParts');
+    const defs = svgEl('defs', {}, s);
+    const hot = svgEl('linearGradient', { id: 'blk', x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
+    const st1 = svgEl('stop', { offset: 0, 'stop-color': '#ea580c' }, hot), st2 = svgEl('stop', { offset: 1, 'stop-color': '#7c2d12' }, hot);
+    const hatch = svgEl('pattern', { id: 'ins', width: 6, height: 6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' }, defs);
+    svgEl('line', { x1: 0, y1: 0, x2: 0, y2: 6, stroke: '#e2e8f0', 'stroke-opacity': 0.28, 'stroke-width': 2 }, hatch);
+    const sky = svgEl('rect', { width: 640, height: 244, fill: '#020817' }, s);
+    const stars = svgEl('g', { class: 'fade-sw' }, s);
+    const r = rng(2); for (let i = 0; i < 40; i++) svgEl('circle', { cx: r() * 640, cy: r() * 200, r: r() * 1.1 + 0.3, fill: '#e2e8f0', opacity: 0.6 }, stars);
+    const sunG = svgEl('g', { class: 'fade-sw' }, s);
+    svgEl('circle', { cx: 50, cy: 40, r: 18, fill: AMBER }, sunG);
+    svgEl('circle', { cx: 50, cy: 40, r: 30, fill: AMBER, opacity: 0.18 }, sunG);
+    svgEl('rect', { y: 244, width: 640, height: 36, fill: '#374151' }, s);
+    const P = {};
+    const part = (k) => (P[k] = svgEl('g', { 'data-part': k }, s));
+    /* concentrateur */
+    part('conc');
+    svgEl('path', { d: 'M110 110 L180 60', stroke: '#e2e8f0', 'stroke-width': 5, 'stroke-linecap': 'round' }, P.conc);
+    svgEl('line', { x1: 145, y1: 85, x2: 150, y2: 244, stroke: '#94a3b8', 'stroke-width': 2 }, P.conc);
+    const beam = svgEl('path', { d: 'M112 110 L178 62 L312 150 L270 150 Z', fill: AMBER, opacity: 0.18, class: 'fade-sw' }, P.conc);
+    const rays = svgEl('path', { d: 'M62 50 L140 88 M150 82 L292 150', stroke: AMBER, 'stroke-width': 2.4, fill: 'none', class: 'hflow fade-sw' }, s);
+    /* isolant + bloc */
+    part('ins'); svgEl('rect', { x: 236, y: 146, width: 166, height: 98, rx: 8, fill: 'url(#ins)', stroke: '#64748b' }, P.ins);
+    part('block'); const blk = svgEl('rect', { x: 250, y: 158, width: 138, height: 86, rx: 6, fill: 'url(#blk)' }, P.block);
+    const bT = svgEl('text', { x: 319, y: 206, 'text-anchor': 'middle', fill: '#fff', 'font-size': 17, class: 'mono' }, P.block);
+    /* interrupteur */
+    part('sw');
+    svgEl('rect', { x: 402, y: 178, width: 30, height: 40, rx: 4, fill: '#1e293b', stroke: '#94a3b8' }, P.sw);
+    const plate = svgEl('rect', { x: 412, y: 184, width: 5, height: 28, fill: '#cbd5e1' }, P.sw);
+    /* boîtier */
+    part('box');
+    svgEl('rect', { x: 432, y: 164, width: 120, height: 70, rx: 8, fill: '#0f172a', stroke: '#34d399', 'stroke-width': 1.5 }, P.box);
+    svgEl('path', { d: 'M446 180 h30 M446 190 h50 M446 200 h22', stroke: '#34d399', 'stroke-opacity': 0.5 }, P.box);
+    const xT = svgEl('text', { x: 492, y: 224, 'text-anchor': 'middle', fill: '#fff', 'font-size': 17, class: 'mono' }, P.box);
+    const heat = svgEl('path', { d: 'M388 198 L472 198', stroke: '#34d399', 'stroke-width': 3, fill: 'none', class: 'hflow fade-sw' }, s);
+    const num = [[145, 50, 1], [319, 138, 2], [236, 136, 3], [417, 168, 4], [572, 170, 5]];
+    num.forEach(([x, y, n]) => { svgEl('circle', { cx: x, cy: y, r: 11, fill: '#0a1436', stroke: '#475394' }, s); svgEl('text', { x, y: y + 4, 'text-anchor': 'middle', fill: '#e0e7ff', 'font-size': 12, class: 'mono' }, s).textContent = n; });
+    const moment = svgEl('text', { x: 620, y: 30, 'text-anchor': 'end', fill: '#aab3d6', 'font-size': 15 }, s);
+    const INFO = [
+      ['conc', 'Concentrateur solaire', AMBER, 'Un miroir de 0,5 m² concentre la lumière sur le bloc pendant le jour et le porte à 280 °C en une dizaine d\'heures.'],
+      ['block', 'Bloc de régolithe fritté', '#ea580c', '40 kg de régolithe cuit à 1 100 °C : c\'est la réserve de chaleur, prélevée sur place.'],
+      ['ins', 'Isolant multicouche', '#94a3b8', 'Des feuilles réfléchissantes séparées par du vide limitent les pertes du bloc vers le ciel froid.'],
+      ['sw', 'Interrupteur thermique', '#e2e8f0', 'Un petit vérin de paraffine : chaude, la cire se dilate et écarte une plaque de cuivre ; froide, elle se rétracte et la plaque touche le boîtier.'],
+      ['box', 'Boîtier électronique', '#34d399', 'L\'électronique à protéger, bien isolée : il lui faut 5,7 W en continu pour rester au-dessus de −40 °C.']
+    ];
+    pb.innerHTML = INFO.map(([k, n, c], i) => `<button class="part" type="button" data-part="${k}" aria-pressed="false" style="--pc:${c}"><i></i>${i + 1} · ${n}</button>`).join('');
+    const btns = [...pb.querySelectorAll('.part')];
+    let sel = null;
+    const show = (k) => {
+      s.classList.toggle('focus', !!k);
+      Object.entries(P).forEach(([kk, el]) => el.classList.toggle('lit', kk === k));
+      btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.part === k)));
+      const it = INFO.find((x) => x[0] === k);
+      desc.innerHTML = it ? `<b>${it[1]}.</b> ${it[3]}` : 'Choisissez un élément pour le détailler.';
+    };
+    btns.forEach((b) => {
+      b.addEventListener('click', () => { sel = sel === b.dataset.part ? null : b.dataset.part; show(sel); });
+      if (canHover) { b.addEventListener('mouseenter', () => show(b.dataset.part)); b.addEventListener('mouseleave', () => show(sel)); }
+    });
+    show(null);
+    const set = (night) => {
+      document.querySelectorAll('#dnSeg [data-m]').forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.m) === (night ? 1 : 0))));
+      stars.style.opacity = night ? 1 : 0.15; sunG.style.opacity = night ? 0 : 1; beam.style.opacity = night ? 0 : 0.18; rays.style.opacity = night ? 0 : 1; heat.style.opacity = night ? 1 : 0;
+      st1.setAttribute('stop-color', night ? '#b45309' : '#f97316'); st2.setAttribute('stop-color', night ? '#451a03' : '#9a3412');
+      plate.setAttribute('x', night ? 423 : 410);
+      bT.textContent = night ? '150 °C' : '280 °C';
+      xT.textContent = night ? '−10 °C' : '+18 °C';
+      moment.textContent = night ? 'Nuit, J+7' : 'Jour, midi';
+    };
+    document.querySelectorAll('#dnSeg [data-m]').forEach((b) => b.addEventListener('click', () => set(b.dataset.m === '1')));
+    set(false);
+  })();
+
+  /* ---------- Figure 4 : frittage ---------- */
+  (function sinter() {
+    const S = [
+      ['Brut', 0.008, 45, 'poudre sans tenue'], ['900 °C', 0.02, 40, 'friable'], ['1 000 °C', 0.15, 32, 'fragile'],
+      ['1 100 °C', 0.55, 22, 'solide, sans fissure'], ['1 150 °C', 0.8, 14, 'fissures au refroidissement'], ['1 200 °C', 1.0, 8, 'fissuré, en partie fondu']
+    ];
+    const box = $('cond'), tipEl = $('condTip'), range = $('sRange');
+    const F = frame(box, { x: [0, 5], y: [-2.3, 0.3], xt: [0, 1, 2, 3, 4, 5], yt: [-2, -1, 0], xf: (v) => S[v][0].replace(' °C', '').replace(/\s/g, ''), yf: (v) => fmt(Math.pow(10, v), v < 0 ? -v : 0), xl: 'Frittage (°C)', yl: 'W/m/K', maxW: 460, minW: 280, H: 250, m: { l: 50, t: 20 }, aria: 'La conductivité passe de 0,008 à 1 W/m/K avec la température de frittage' });
+    svgEl('rect', { x: F.x(3.5), y: F.m.t, width: F.x(5) - F.x(3.5), height: F.H - F.m.t - F.m.b, fill: 'rgba(248,113,113,.07)' }, F.svg);
+    svgEl('text', { x: F.x(4.25), y: F.H - F.m.b - 8, 'text-anchor': 'middle', fill: '#fca5a5', 'font-size': 11 }, F.svg).textContent = 'fissures';
+    const p = S.map((st, i) => `${i ? 'L' : 'M'}${F.x(i)} ${F.y(Math.log10(st[1]))}`).join(' ');
+    const ln = svgEl('path', { d: p, fill: 'none', stroke: AMBER, 'stroke-width': 2.4, class: 'draw' }, F.svg);
+    ln.style.setProperty('--len', Math.ceil(ln.getTotalLength()));
+    const pts = S.map((st, i) => svgEl('circle', { cx: F.x(i), cy: F.y(Math.log10(st[1])), r: 4, fill: AMBER, stroke: '#070f2b', 'stroke-width': 1.5, class: 'dot' }, F.svg));
+    /* grains */
+    const g = $('grains');
+    const grains = [], necks = [], cracks = [];
+    const base = [];
+    for (let row = 0; row < 5; row++) for (let col = 0; col < 5; col++) base.push([40 + col * 36 + (row % 2) * 18, 40 + row * 34]);
+    const neckG = svgEl('g', {}, g);
+    base.forEach(([x, y], i) => grains.push({ el: svgEl('circle', { cx: x, cy: y, r: 16, fill: '#8b8680', stroke: '#57534e' }, g), x, y }));
+    base.forEach(([x, y], i) => base.forEach(([x2, y2], j) => { if (j > i && Math.hypot(x2 - x, y2 - y) < 42) necks.push({ el: svgEl('line', { x1: x, y1: y, x2, y2, stroke: '#a8a29e', 'stroke-linecap': 'round', 'stroke-width': 0 }, neckG) }); }));
+    ['M60 20 L80 90 L70 150 L95 205', 'M170 15 L150 80 L175 140 L160 210'].forEach((d) => cracks.push(svgEl('path', { d, stroke: '#f87171', 'stroke-width': 2.2, fill: 'none', opacity: 0 }, g)));
+    const set = (i) => {
+      const [lbl, k, po, state] = S[i];
+      $('sOut').textContent = lbl.replace(/\s/g, NBSP);
+      $('roK').textContent = fmt(k, k < 0.1 ? 3 : 2) + NBSP + 'W/m/K';
+      $('roP').textContent = po + NBSP + '%';
+      $('roS').textContent = state;
+      pts.forEach((c, j) => { c.setAttribute('r', j === i ? 7 : 4); c.setAttribute('fill', j === i ? '#fff' : AMBER); c.setAttribute('stroke', j === i ? AMBER : '#070f2b'); });
+      const sh = 1 - i * 0.018;
+      grains.forEach((gr) => { gr.el.setAttribute('cx', 110 + (gr.x - 110) * sh); gr.el.setAttribute('cy', 108 + (gr.y - 108) * sh); gr.el.setAttribute('r', 12 + i * 1.3); gr.el.setAttribute('fill', i >= 5 ? '#78716c' : '#8b8680'); });
+      necks.forEach((n) => n.el.setAttribute('stroke-width', [0, 4, 8, 13, 17, 21][i]));
+      necks.forEach((n) => { const a = n.el; });
+      cracks.forEach((c, j) => c.setAttribute('opacity', i >= 5 - j ? 0.9 : 0));
+    };
+    /* suivre le rétrécissement des grains pour les ponts */
+    const syncNecks = () => {
+      let m = 0;
+      base.forEach(([x, y], i) => base.forEach(([x2, y2], j) => { if (j > i && Math.hypot(x2 - x, y2 - y) < 42) { const sh = 1 - Number(range.value) * 0.018, n = necks[m++].el; n.setAttribute('x1', 110 + (x - 110) * sh); n.setAttribute('y1', 108 + (y - 108) * sh); n.setAttribute('x2', 110 + (x2 - 110) * sh); n.setAttribute('y2', 108 + (y2 - 108) * sh); } }));
+    };
+    range.addEventListener('input', () => { set(Number(range.value)); syncNecks(); });
+    set(3); syncNecks();
+    const hit = F.hit();
+    hit.addEventListener('pointermove', (e) => {
+      const rr = F.svg.getBoundingClientRect(), px = (e.clientX - rr.left) / rr.width * F.W;
+      const i = Math.max(0, Math.min(5, Math.round((px - F.m.l) / (F.W - F.m.l - F.m.r) * 5)));
+      tipEl.innerHTML = `<b>${S[i][0]}</b><div><span>Conductivité</span><em>${fmt(S[i][1], S[i][1] < 0.1 ? 3 : 2)} W/m/K</em></div><div><span>Porosité</span><em>${S[i][2]} %</em></div>`;
+      placeTip(tipEl, box, F.svg, F.W, F.H, F.x(i), F.y(Math.log10(S[i][1])));
+    });
+    hit.addEventListener('pointerleave', () => tipEl.classList.remove('show'));
+    hit.addEventListener('click', (e) => { const rr = F.svg.getBoundingClientRect(), px = (e.clientX - rr.left) / rr.width * F.W; const i = Math.max(0, Math.min(5, Math.round((px - F.m.l) / (F.W - F.m.l - F.m.r) * 5))); range.value = i; set(i); syncNecks(); });
+    if (reduceMotion) box.classList.add('drawn'); else onceVisible(box, () => box.classList.add('drawn'), '0px 0px -25% 0px');
+  })();
+
+  /* ---------- Figure 5 : la nuit simulée ---------- */
+  (function night() {
+    const box = $('night'), tipEl = $('nightTip');
+    const S = [
+      { n: 'Bloc de régolithe', short: 'Bloc', c: '#ea580c', lc: '#fb923c', f: blockT },
+      { n: 'Boîtier avec stockage', short: 'Avec stockage', c: '#059669', lc: '#34d399', f: boxT },
+      { n: 'Boîtier témoin', short: 'Témoin', c: '#3b82f6', lc: '#60a5fa', f: refT }
+    ];
+    const narrow = box.clientWidth < 520;
+    const F = frame(box, { x: [0, NIGHT], y: [-180, 300], xt: narrow ? [0, 120, 240, 354] : [0, 60, 120, 180, 240, 300, 354], yt: [-150, -40, 0, 100, 200, 300], xf: (v) => v + NBSP + 'h', yf: (v) => (v > 0 ? '+' : '') + v + '°', xl: 'Heures de nuit', H: narrow ? 300 : 320, m: { l: 50, r: narrow ? 12 : 130 }, aria: 'Le bloc passe de 280 à 18 °C, le boîtier protégé reste au-dessus de −22 °C, le témoin chute à −163 °C' });
+    svgEl('rect', { x: F.m.l, y: F.y(-40), width: F.W - F.m.l - F.m.r, height: F.y(-180) - F.y(-40), fill: 'rgba(59,130,246,.07)' }, F.svg);
+    svgEl('line', { x1: F.m.l, x2: F.W - F.m.r, y1: F.y(-40), y2: F.y(-40), stroke: '#60a5fa', 'stroke-dasharray': '5 5' }, F.svg);
+    svgEl('text', { x: F.x(354) - 4, y: F.y(-40) - 6, 'text-anchor': 'end', fill: '#93c5fd', 'font-size': 11 }, F.svg).textContent = '−40 °C';
+    const cp = svgEl('clipPath', { id: 'nightClip' }, svgEl('defs', {}, F.svg));
+    const clipR = svgEl('rect', { x: 0, y: 0, width: F.W, height: F.H }, cp);
+    const lines = svgEl('g', { 'clip-path': 'url(#nightClip)' }, F.svg);
+    S.forEach((sr) => {
+      const p = []; for (let t = 0; t <= NIGHT + 1e-9; t += 1) p.push(`${p.length ? 'L' : 'M'}${F.x(t).toFixed(1)} ${F.y(sr.f(t)).toFixed(1)}`);
+      svgEl('path', { d: p.join(' '), fill: 'none', stroke: sr.c, 'stroke-width': 2.4 }, lines);
+      const ey = F.y(sr.f(NIGHT));
+      if (narrow) svgEl('text', { x: F.x(NIGHT) - 2, y: ey + (sr.short === 'Témoin' ? -8 : sr.short === 'Bloc' ? -8 : -8), 'text-anchor': 'end', fill: sr.lc, 'font-size': 11.5, 'font-weight': 500 }, lines).textContent = sr.short;
+      else svgEl('text', { x: F.x(NIGHT) + 8, y: ey + 4, fill: '#e6e6e6', 'font-size': 12 }, F.svg).textContent = `${sr.short} ${sgn(sr.f(NIGHT))}${DEG}`;
+    });
+    const cross = svgEl('g', { opacity: 0 }, F.svg);
+    svgEl('circle', { cx: F.x(31), cy: F.y(-40), r: 5, fill: '#60a5fa' }, cross);
+    svgEl('text', { x: F.x(31) + 8, y: F.y(-40) + 16, fill: '#93c5fd', 'font-size': 11 }, cross).textContent = '31 h';
+    const head = svgEl('line', { y1: F.m.t, y2: F.H - F.m.b, stroke: '#e6e6e6', 'stroke-opacity': 0.4 }, F.svg);
+    let t = NIGHT, playing = false, last = 0;
+    const render = () => {
+      clipR.setAttribute('width', F.x(t) + 1);
+      head.setAttribute('x1', F.x(t)); head.setAttribute('x2', F.x(t)); head.setAttribute('opacity', t < NIGHT ? 0.5 : 0);
+      cross.setAttribute('opacity', t >= 31 ? 1 : 0);
+    };
+    render();
+    const btn = $('nightPlay');
+    const play = () => { t = 0; playing = true; last = 0; };
+    btn.addEventListener('click', play);
+    if (!reduceMotion) { t = 0; render(); onceVisible(box, play, '0px 0px -30% 0px'); }
+    loopWhileVisible($('fig5'), (now) => {
+      if (!playing) { last = 0; return; }
+      if (!last) last = now;
+      const dt = Math.min(0.05, (now - last) / 1000); last = now;
+      t = Math.min(NIGHT, t + dt * 90); render();
+      if (t >= NIGHT) playing = false;
+    });
+    const xh = svgEl('line', { y1: F.m.t, y2: F.H - F.m.b, stroke: '#aab3d6', 'stroke-opacity': 0.5, class: 'xhair' }, F.svg);
+    const hit = F.hit();
+    hit.addEventListener('pointermove', (e) => {
+      const rr = F.svg.getBoundingClientRect(), px = (e.clientX - rr.left) / rr.width * F.W;
+      const h = Math.round(Math.max(0, Math.min(NIGHT, (px - F.m.l) / (F.W - F.m.l - F.m.r) * NIGHT)));
+      xh.setAttribute('x1', F.x(h)); xh.setAttribute('x2', F.x(h)); xh.classList.add('show');
+      tipEl.innerHTML = `<b>${h} h de nuit</b>` + S.map((sr) => `<div><span style="--lc:${sr.c}"><i></i>${sr.short}</span><em>${sgn(sr.f(h))}${DEG}</em></div>`).join('');
+      placeTip(tipEl, box, F.svg, F.W, F.H, F.x(h), F.y(S[1].f(h)));
+    });
+    hit.addEventListener('pointerleave', () => { tipEl.classList.remove('show'); xh.classList.remove('show'); });
+  })();
+
+  /* images des articles liés introuvables : on garde le fond coloré */
+  document.querySelectorAll('.rel-img img').forEach((img) => img.addEventListener('error', () => img.remove()));
+})();
+</script>
+</body>
+</html>
