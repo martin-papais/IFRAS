@@ -2,918 +2,1481 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
-<title>Événements — IFRAS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<title>Événements | IFRAS</title>
+<meta name="description" content="L'agenda de l'IFRAS : colloques, conférences, séminaires, soutenances et journées portes ouvertes.">
+<meta name="theme-color" content="#050b1e">
+<link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
 
 <style>
-
+/* =========================================================
+   TOKENS (identiques aux autres pages)
+   ========================================================= */
 :root {
   --bg-main: #050b1e;
   --bg-dark: #020617;
   --bg-light: #070f2b;
-  --border: #1b2555;
+  --bg-raise: #0a1436;
   --accent: #4f6bed;
+  --accent-hover: #3d5adb;
+  --accent-soft: rgba(79,107,237,.14);
+  --accent-line: rgba(79,107,237,.38);
   --text-main: #e6e6e6;
+  --text-strong: #f5f7ff;
   --text-soft: #aab3d6;
+  --text-mute: #8891b8;
+  --border: #1b2555;
+
+  /* Une couleur par type de contenu */
+  --t-sci: #60a5fa;
+  --t-ifras: #34d399;
+  --t-event: #f97316;
+  /* Types de publications IFRAS */
+  --t-lettre: #60a5fa;
+  --t-rapport: #34d399;
+  --t-hs: #f97316;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --header-h: 68px;
+  --subnav-h: 48px;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 20px); }
 
 body {
-  font-family: "DM Sans", "Segoe UI", sans-serif;
+  margin: 0;
+  font-family: "DM Sans", "Segoe UI", system-ui, sans-serif;
   background: var(--bg-main);
   color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* ===== HEADER ===== */
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+[hidden] { display: none !important; }
 
-header {
-  position: fixed; top: 0; width: 100%;
-  z-index: 1000;
-  background: rgba(5,11,30,.85);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.skip-link {
+  position: absolute; left: 16px; top: -48px;
+  padding: 10px 16px;
+  background: var(--accent); color: #fff;
+  border-radius: var(--radius-sm);
+  z-index: 3000; text-decoration: none;
+  transition: top 160ms var(--ease-out);
 }
+.skip-link:focus { top: 12px; }
 
-.header-inner {
-  max-width: 1300px; margin: auto;
-  padding: 12px 30px;
-  display: flex; align-items: center; justify-content: space-between;
-}
+.container { max-width: 1300px; margin: 0 auto; padding: 0 30px; }
 
-.header-left { display: flex; align-items: center; gap: 40px; }
-.logo-link img { height: 60px; cursor: pointer; }
-
-.main-nav {
-  list-style: none; display: flex; gap: 32px;
-}
-
-.main-nav a {
-  text-decoration: none; color: var(--text-soft);
-  font-size: 14px; letter-spacing: .05em;
-}
-
-.main-nav a:hover { color: white; }
-
-.header-right .login-btn {
-  padding: 8px 18px; border-radius: 6px;
-  border: 1px solid var(--accent);
-  color: white; text-decoration: none; font-size: 13px;
-}
-
-.header-right .login-btn:hover { background: var(--accent); }
-
-/* ===== SOUS BANDEAU ===== */
-
-.sub-nav {
-  margin-top: 84px;
-  background: var(--bg-light);
-  border-bottom: 1px solid var(--border);
-}
-
-.sub-nav ul {
-  max-width: 1300px; margin: 0 auto;
-  padding: 0 30px; list-style: none;
-  display: flex; justify-content: space-between;
-}
-
-.sub-nav li { padding: 14px 0; }
-
-.sub-nav a {
-  color: var(--text-soft); text-decoration: none;
-  font-size: 14px; letter-spacing: .06em;
-}
-
-.sub-nav a:hover { color: white; }
-.sub-nav a.active {
-  color: white;
-  border-bottom: 2px solid var(--accent);
-  padding-bottom: 12px;
-}
-
-/* ===== INTRO ===== */
-
-.intro-section {
-  max-width: 1300px; margin: 0 auto;
-  padding: 60px 30px 50px;
-  display: grid; grid-template-columns: 1fr auto;
-  gap: 40px; align-items: end;
-  border-bottom: 1px solid var(--border);
-}
-
-.intro-eyebrow {
+/* =========================================================
+   BOUTONS
+   ========================================================= */
+.btn {
   display: inline-flex; align-items: center; gap: 10px;
-  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
-  color: var(--accent); font-weight: 500; margin-bottom: 16px;
-}
-
-.intro-eyebrow::before {
-  content: ''; display: block;
-  width: 24px; height: 1px; background: var(--accent);
-}
-
-.intro-left h1 {
-  font-family: "Syne", sans-serif;
-  font-size: clamp(28px, 3.5vw, 44px);
-  font-weight: 800; letter-spacing: -0.03em;
-  line-height: 1.05; color: white; margin-bottom: 16px;
-}
-
-.intro-left p {
-  font-size: 15px; color: var(--text-soft);
-  line-height: 1.75; font-weight: 300;
-  max-width: 580px;
-}
-
-.intro-stats {
-  display: flex; gap: 32px; align-items: flex-end;
-}
-
-.intro-stat-pill {
-  text-align: center;
-  padding: 18px 24px;
-  background: var(--bg-light);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-}
-
-.intro-stat-pill .val {
-  font-family: "Syne", sans-serif;
-  font-size: 28px; font-weight: 800;
-  color: white; letter-spacing: -0.04em; display: block;
-}
-
-.intro-stat-pill .lbl {
-  font-size: 11px; color: var(--text-soft);
-  font-weight: 300; margin-top: 4px; display: block;
-}
-
-/* ===== FILTRES ===== */
-
-.filters-bar {
-  max-width: 1300px; margin: 0 auto;
-  padding: 22px 30px;
-  display: flex; flex-direction: column; gap: 16px;
-  border-bottom: 1px solid var(--border);
-}
-
-.search-box {
-  display: flex; align-items: center; gap: 10px;
-  background: var(--bg-light); border: 1px solid var(--border);
-  border-radius: 10px; padding: 10px 16px; transition: border-color .2s;
-}
-
-.search-box:focus-within { border-color: rgba(79,107,237,.5); }
-.search-icon { font-size: 14px; opacity: .5; flex-shrink: 0; }
-
-.search-box input {
-  flex: 1; background: transparent; border: none; outline: none;
-  color: var(--text-main); font-family: "DM Sans", sans-serif;
-  font-size: 14px; font-weight: 300;
-}
-
-.search-box input::placeholder { color: rgba(170,179,214,.45); }
-
-.search-clear {
-  background: transparent; border: none; color: var(--text-soft);
-  cursor: pointer; font-size: 13px; padding: 2px 4px;
-  display: none; align-items: center; transition: color .2s;
-}
-
-.search-clear:hover { color: white; }
-
-.filters-right {
-  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-}
-
-.filter-label {
-  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--text-soft); font-weight: 500; flex-shrink: 0;
-}
-
-.filter-group { display: flex; gap: 8px; flex-wrap: wrap; flex: 1; }
-
-.filter-btn {
-  padding: 6px 14px; border-radius: 20px;
-  border: 1px solid var(--border); background: transparent;
-  color: var(--text-soft); font-size: 12px; cursor: pointer;
-  font-family: "DM Sans", sans-serif; transition: .2s; white-space: nowrap;
-}
-
-.filter-btn:hover, .filter-btn.active {
-  background: rgba(79,107,237,.12);
-  border-color: rgba(79,107,237,.35); color: white;
-}
-
-.sort-box {
-  display: flex; align-items: center; gap: 8px;
-  margin-left: auto; flex-shrink: 0;
-}
-
-.sort-box select {
-  background: var(--bg-light); border: 1px solid var(--border);
-  border-radius: 8px; color: var(--text-soft);
-  font-family: "DM Sans", sans-serif; font-size: 12px;
-  padding: 6px 12px; cursor: pointer; outline: none; transition: border-color .2s;
-}
-
-.sort-box select:focus { border-color: rgba(79,107,237,.4); color: white; }
-
-.results-bar {
-  max-width: 1300px; margin: 0 auto; padding: 14px 30px;
-  display: flex; align-items: center; justify-content: space-between;
-  border-bottom: 1px solid var(--border);
-}
-
-#results-count { font-size: 13px; color: var(--text-soft); font-weight: 300; }
-
-.reset-btn {
-  display: none; align-items: center; gap: 6px;
-  font-size: 12px; color: var(--accent);
-  background: transparent; border: 1px solid rgba(79,107,237,.25);
-  border-radius: 20px; padding: 5px 14px; cursor: pointer;
-  font-family: "DM Sans", sans-serif; transition: .2s;
-}
-
-.reset-btn:hover { background: rgba(79,107,237,.1); color: white; }
-
-/* ===== LISTE ÉVÉNEMENTS ===== */
-
-.evt-list {
-  max-width: 1300px; margin: 0 auto;
-  padding: 50px 30px 60px;
-  display: block;
-}
-
-.evt-card {
-  margin-bottom: 16px;
-}
-
-/* ===== CARTE ÉVÉNEMENT ===== */
-
-.evt-card {
-  display: grid;
-  grid-template-columns: 93px 1fr;
-  align-items: stretch;
-  gap: 0;
-  background: var(--bg-light);
-  border: 1px solid var(--border);
-  border-radius: 14px; overflow: hidden;
-  text-decoration: none; color: inherit;
-  transition: border-color .3s, transform .25s, box-shadow .3s;
-  animation: fadeUp .45s ease both;
-}
-
-.evt-card:hover {
-  border-color: rgba(79,107,237,.4);
-  transform: translateY(-3px);
-  box-shadow: 0 16px 44px rgba(0,0,10,.5);
-}
-
-/* Bloc date */
-.evt-date-block {
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  padding: 24px 0;
-  border-right: 1px solid var(--border);
-  background: rgba(0,0,0,.15);
-  gap: 2px; flex-shrink: 0;
-  border-left: 3px solid transparent;
-  transition: border-left-color .3s;
-}
-
-.evt-card:hover .evt-date-block {
-  border-left-color: var(--evt-color, var(--accent));
-}
-
-.evt-day {
-  font-family: "Syne", sans-serif;
-  font-size: 30px; font-weight: 800;
-  line-height: 1; color: white;
-  letter-spacing: -0.04em;
-}
-
-.evt-month {
-  font-size: 11px; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--text-soft); font-weight: 300;
-}
-
-.evt-year {
-  font-size: 11px; color: rgba(170,179,214,.4); font-weight: 300;
-}
-
-/* Corps */
-.evt-body {
-  padding: 22px 28px;
-  display: flex; flex-direction: column; justify-content: center; gap: 8px;
-}
-
-.evt-top-row {
-  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-}
-
-.evt-type-tag {
-  font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
-  font-weight: 600; padding: 3px 10px; border-radius: 20px;
-}
-
-.evt-status {
-  font-size: 11px; font-weight: 500;
-  padding: 3px 10px; border-radius: 20px;
-}
-
-.evt-status--open {
-  background: rgba(52,211,153,.1);
-  border: 1px solid rgba(52,211,153,.3); color: #34d399;
-}
-
-.evt-status--soon {
-  background: rgba(251,146,60,.1);
-  border: 1px solid rgba(251,146,60,.3); color: #fb923c;
-}
-
-.evt-status--online {
-  background: rgba(96,165,250,.1);
-  border: 1px solid rgba(96,165,250,.3); color: #60a5fa;
-}
-
-.evt-status--full {
-  background: rgba(255,255,255,.05);
-  border: 1px solid rgba(255,255,255,.1); color: rgba(170,179,214,.5);
-}
-
-.evt-status--past {
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(255,255,255,.07); color: rgba(170,179,214,.35);
-}
-
-.evt-title {
-  font-family: "Syne", sans-serif; font-size: 17px;
-  font-weight: 700; color: white; line-height: 1.3;
-}
-
-.evt-desc {
-  font-size: 13px; color: var(--text-soft);
-  line-height: 1.65; font-weight: 300;
-}
-
-.evt-meta-row {
-  display: flex; gap: 18px; flex-wrap: wrap; margin-top: 4px;
-}
-
-.evt-meta-item {
-  display: flex; align-items: center; gap: 5px;
-  font-size: 12px; color: rgba(170,179,214,.55); font-weight: 300;
-}
-
-.evt-meta-item span:first-child { font-size: 13px; }
-
-/* Panneau droit — compact, collé en bas à droite de la carte */
-.evt-right {
-  padding: 16px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: flex-end;
-  gap: 10px;
-  border-left: 1px solid var(--border);
-  overflow: hidden;
-}
-
-.evt-duration {
-  font-size: 12px; color: var(--text-soft); font-weight: 300;
-  text-align: right; line-height: 1.5;
-}
-
-.evt-duration strong {
-  display: block; font-family: "Syne", sans-serif;
-  font-size: 15px; font-weight: 700; color: white;
-  letter-spacing: -0.01em;
-}
-
-.evt-cta {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 9px 18px; border-radius: 8px;
-  border: 1px solid rgba(79,107,237,.3);
-  background: transparent; color: white;
-  font-family: "DM Sans", sans-serif; font-size: 12px;
-  font-weight: 500; cursor: pointer; transition: .25s;
+  padding: 13px 22px;
+  border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 500;
   text-decoration: none; white-space: nowrap;
+  border: 1px solid transparent;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.btn:active { transform: scale(0.97); }
+.btn i { font-size: 16px; transition: transform 200ms var(--ease-out); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-ghost { border-color: var(--accent-line); color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-ghost:hover { background: var(--accent-soft); border-color: var(--accent); }
+  .btn:hover i { transform: translateX(3px); }
 }
 
-.evt-cta:hover { background: rgba(79,107,237,.15); }
-
-.evt-cta--disabled {
-  border-color: rgba(255,255,255,.08);
-  color: rgba(170,179,214,.35); cursor: default;
+.text-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--text-soft);
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.text-link i { transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .text-link:hover { color: #fff; }
+  .text-link:hover i { transform: translateX(3px); }
 }
 
-.evt-cta--disabled:hover { background: transparent; }
+/* =========================================================
+   HEADER (opaque)
+   ========================================================= */
+.site-header {
+  position: fixed; inset: 0 0 auto 0;
+  z-index: 2000;
+  height: var(--header-h);
+  background: rgba(5,11,30,.88);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.header-left { display: flex; align-items: center; gap: 44px; }
+.logo-link { display: flex; align-items: center; }
+.logo-link img { height: 44px; width: auto; }
 
-/* Carte passée — atténuée */
-.evt-card.is-past { opacity: .55; }
-.evt-card.is-past:hover { opacity: .8; }
-
-/* ===== SÉPARATEUR "ÉVÉNEMENTS PASSÉS" ===== */
-
-.section-sep {
-  max-width: 1300px; margin: 0 auto;
-  padding: 10px 30px 0;
-  display: flex; align-items: center; gap: 16px;
+.main-nav { list-style: none; display: flex; gap: 6px; margin: 0; padding: 0; }
+.main-nav a {
+  position: relative; display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--text-soft);
+  font-size: 14px; letter-spacing: .02em;
+  border-radius: 6px;
+  transition: color 160ms ease;
+}
+.main-nav a::after {
+  content: ""; position: absolute;
+  left: 12px; right: 12px; bottom: 2px; height: 1px;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 200ms var(--ease-out);
+}
+.main-nav a[aria-current="page"] { color: #fff; }
+.main-nav a[aria-current="page"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .main-nav a:hover { color: #fff; }
+  .main-nav a:hover::after { transform: scaleX(1); }
 }
 
-.section-sep-label {
-  font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
-  color: rgba(170,179,214,.35); font-weight: 500; white-space: nowrap;
+.header-right { display: flex; align-items: center; gap: 10px; }
+.header-right .btn { padding: 9px 18px; font-size: 13px; }
+
+.menu-toggle {
+  display: none;
+  width: 42px; height: 42px;
+  align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: #fff; font-size: 20px; cursor: pointer;
+  transition: transform 160ms var(--ease-out);
+}
+.menu-toggle:active { transform: scale(0.95); }
+
+.mobile-panel {
+  position: fixed; top: var(--header-h); left: 12px; right: 12px;
+  z-index: 1999;
+  padding: 10px;
+  background: rgba(7,15,43,.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(2,6,23,.6);
+  transform-origin: top right;
+  opacity: 0; transform: scale(0.96) translateY(-6px);
+  pointer-events: none; visibility: hidden;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s linear 220ms;
+}
+.mobile-panel.is-open {
+  opacity: 1; transform: none; pointer-events: auto; visibility: visible;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s;
+}
+.mobile-panel ul { list-style: none; margin: 0; padding: 0; }
+.mobile-panel a {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px; color: var(--text-main);
+  text-decoration: none; font-size: 16px; border-radius: 10px;
+}
+.mobile-panel a[aria-current="page"] { background: var(--accent-soft); color: #fff; }
+.mobile-panel .btn { width: 100%; justify-content: center; margin-top: 8px; }
+
+/* =========================================================
+   SOUS-NAVIGATION (ancres + section visible)
+   ========================================================= */
+.subnav {
+  position: sticky;
+  top: var(--header-h);
+  margin-top: var(--header-h);
+  z-index: 1500;
+  height: var(--subnav-h);
+  background: rgba(8,18,53,.94);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.subnav-list {
+  height: 100%;
+  list-style: none; margin: 0 auto; padding: 0 30px;
+  max-width: 1300px;
+  display: flex; align-items: stretch; justify-content: space-between;
+}
+.subnav-list li { display: flex; }
+.subnav-link {
+  position: relative;
+  display: flex; align-items: center; gap: 9px;
+  padding: 0 14px;
+  color: var(--text-soft);
+  text-decoration: none;
+  font-size: 14px; font-weight: 500;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.subnav-link i { font-size: 17px; color: var(--c); }
+.subnav-link::after {
+  content: ""; position: absolute;
+  left: 14px; right: 14px; bottom: -1px; height: 2px;
+  background: var(--c);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+.subnav-link[aria-current="true"] { color: #fff; }
+.subnav-link[aria-current="true"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .subnav-link:hover { color: #fff; }
 }
 
-.section-sep-line {
-  flex: 1; height: 1px; background: rgba(27,37,85,.8);
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero {
+  position: relative;
+  padding: 80px 0 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+/* réseau de connaissances animé (canvas) */
+.network {
+  position: absolute; inset: 0; z-index: -2;
+  width: 100%; height: 100%;
+  opacity: 0;
+  transition: opacity 1200ms ease;
+}
+.network.is-ready { opacity: 1; }
+.hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(ellipse 55% 60% at 25% 40%, rgba(5,11,30,.85) 0%, transparent 70%),
+    linear-gradient(180deg, transparent 70%, var(--bg-main) 100%);
+  pointer-events: none;
 }
 
-/* ===== NOTICE ===== */
-
-.archive-notice {
-  max-width: 1300px; margin: 0 auto; padding: 0 30px 80px;
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+  align-items: center;
 }
 
-.archive-notice-inner {
-  display: flex; align-items: center; gap: 20px;
-  background: rgba(79,107,237,.05);
-  border: 1px solid rgba(79,107,237,.15);
-  border-radius: 12px; padding: 22px 28px;
+.kicker {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--accent); font-weight: 500;
+  margin-bottom: 22px;
+}
+.kicker::before { content: ""; width: 24px; height: 1px; background: currentColor; }
+
+.hero h1 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(44px, 6.2vw, 84px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--text-strong);
+  margin: 0 0 28px;
+}
+.hero h1 .line { display: block; overflow: hidden; padding-bottom: .14em; margin-bottom: -.14em; }
+.hero h1 .line > span {
+  display: block;
+  transform: translateY(105%);
+  animation: lineUp 900ms var(--ease-out) forwards;
+  animation-delay: calc(120ms + var(--i, 0) * 110ms);
+}
+.hero h1 .line--soft { color: #8fa2ff; font-weight: 600; }
+@keyframes lineUp { to { transform: none; } }
+
+.hero-desc {
+  max-width: 46ch;
+  color: var(--text-soft);
+  font-size: 17px; line-height: 1.7;
+  margin: 0;
+  font-weight: 300;
 }
 
-.archive-icon { font-size: 28px; flex-shrink: 0; opacity: .7; }
-.archive-text { flex: 1; }
+.hero-in {
+  opacity: 0;
+  animation: heroIn 700ms var(--ease-out) forwards;
+  animation-delay: calc(100ms + var(--i, 0) * 80ms);
+}
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(14px); filter: blur(4px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+.finder-field { position: relative; }
+.finder-field > i {
+  position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+  font-size: 19px; color: var(--text-mute); pointer-events: none;
+}
+.finder-field input {
+  width: 100%; height: 50px;
+  padding: 0 44px;
+  background: rgba(2,6,23,.6);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: #fff; font: inherit; font-size: 15px;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+.finder-field input::placeholder { color: var(--text-mute); }
+.finder-field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(79,107,237,.2); }
+.finder-field input::-webkit-search-cancel-button { display: none; }
+.finder-clear {
+  position: absolute; right: 9px; top: 50%; transform: translateY(-50%);
+  width: 32px; height: 32px;
+  display: grid; place-items: center;
+  border: 0; border-radius: 8px;
+  background: transparent; color: var(--text-soft);
+  font-size: 16px; cursor: pointer;
+  opacity: 0; pointer-events: none;
+  transition: opacity 120ms ease;
+}
+.finder-panel.has-value .finder-clear { opacity: 1; pointer-events: auto; }
 
-.archive-text strong {
-  display: block; font-size: 14px; font-weight: 600;
-  color: white; margin-bottom: 4px;
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; }
+.chip {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-soft);
+  font: inherit; font-size: 13px;
+  cursor: pointer;
+  transition: color 120ms ease, border-color 120ms ease, background-color 120ms ease, transform 160ms var(--ease-out);
+}
+.chip:active { transform: scale(0.96); }
+.chip[aria-pressed="true"] { color: #fff; border-color: var(--accent); background: var(--accent-soft); }
+@media (hover: hover) and (pointer: fine) {
+  .chip:hover { color: #fff; border-color: var(--accent-line); }
+}
+.segmented {
+  position: relative;
+  display: inline-flex;
+  padding: 4px;
+  border-radius: 12px;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+}
+.segmented-indicator {
+  position: absolute; top: 4px; bottom: 4px; left: 0;
+  width: var(--w, 0px);
+  transform: translateX(var(--x, 4px));
+  border-radius: 9px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+  transition: transform 260ms var(--ease-out), width 260ms var(--ease-out);
+  pointer-events: none;
+}
+.segmented button {
+  position: relative; z-index: 1;
+  padding: 8px 14px;
+  border: 0; background: transparent;
+  color: var(--text-soft);
+  font: inherit; font-size: 13.5px; font-weight: 500;
+  border-radius: 9px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.segmented button[aria-pressed="true"] { color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .segmented button:hover { color: #fff; }
+}
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12.5px; font-weight: 500;
+  padding: 5px 12px; border-radius: 999px;
+  color: var(--b);
+  background: color-mix(in srgb, var(--b) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--b) 26%, transparent);
+  white-space: nowrap;
+}
+.badge--open { --b: #34d399; }
+.badge--soon { --b: #facc15; }
+.badge--full { --b: #9ca3af; }
+.badge--online { --b: #60a5fa; }
+.badge--past { --b: #8891b8; }
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.site-footer {
+  margin-top: 100px;
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border);
+  padding: 36px 0;
+  font-size: 13px; color: var(--text-mute);
+}
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+/* =========================================================
+   APPARITION AU DÉFILEMENT
+   ========================================================= */
+.js .reveal {
+  opacity: 0; transform: translateY(16px);
+  transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 60ms);
+}
+.js .reveal.is-visible { opacity: 1; transform: none; }
+.js .sci-card.reveal.is-visible,
+.js .ifras-card.reveal.is-visible,
+.js .event-card.reveal.is-visible {
+  transition: border-color 200ms ease, transform 200ms var(--ease-out), box-shadow 200ms ease, background-color 200ms ease, opacity 700ms var(--ease-out);
+  transition-delay: 0ms;
+}
+/* carte qui réapparaît après un filtre */
+.pop-in { animation: popIn 260ms var(--ease-out); }
+@keyframes popIn { from { opacity: 0; transform: scale(.98); } to { opacity: 1; transform: none; } }
+
+/* =========================================================
+   SPÉCIFIQUE : ÉVÉNEMENTS
+   ========================================================= */
+.hero { padding: 64px 0 80px; }
+.hero h1 .line--soft { color: #fdba74; }
+.hero-desc { margin-bottom: 28px; }
+.hero-grid > * { min-width: 0; }
+.hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(ellipse 50% 60% at 25% 40%, rgba(5,11,30,.85) 0%, transparent 70%),
+    linear-gradient(180deg, transparent 70%, var(--bg-main) 100%);
+  pointer-events: none;
+}
+.dial {
+  position: absolute; inset: 0; z-index: -2;
+  width: 100%; height: 100%;
+  opacity: 0; transition: opacity 1200ms ease;
+}
+.dial.is-ready { opacity: 1; }
+
+.breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  margin: 0 0 26px; padding: 0; list-style: none;
+  font-size: 13px; color: var(--text-mute);
+}
+.breadcrumb a { color: var(--text-soft); text-decoration: none; transition: color 160ms ease; }
+.breadcrumb i { font-size: 11px; }
+@media (hover: hover) and (pointer: fine) { .breadcrumb a:hover { color: #fff; } }
+
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 0; padding: 0; list-style: none; }
+.legend li { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-soft); }
+.legend li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 18%, transparent); }
+
+/* ----- Prochain rendez-vous ----- */
+.next {
+  position: relative;
+  padding: 26px;
+  border-radius: 20px;
+  background:
+    radial-gradient(ellipse 70% 80% at 100% 0%, color-mix(in srgb, var(--c, var(--t-event)) 16%, transparent), transparent 60%),
+    rgba(7,15,43,.78);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  box-shadow: 0 30px 80px rgba(2,6,23,.55), inset 0 1px 0 rgba(255,255,255,.04);
+}
+.next-label { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: var(--c, var(--t-event)); margin-bottom: 12px; }
+.next-label .dot { position: relative; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.next-label .dot::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 1px solid currentColor; animation: pulse 2400ms var(--ease-out) infinite; }
+@keyframes pulse { 0% { transform: scale(.6); opacity: .9; } 70%, 100% { transform: scale(1.9); opacity: 0; } }
+.next h2 { font-family: "Syne", sans-serif; font-size: 21px; font-weight: 700; color: #fff; margin: 0 0 10px; line-height: 1.3; text-wrap: balance; }
+.next-meta { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13.5px; color: var(--text-soft); margin-bottom: 20px; }
+.next-meta span { display: inline-flex; align-items: center; gap: 6px; }
+.next-meta i { color: var(--text-mute); font-size: 15px; }
+
+.countdown { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+.cd-unit {
+  padding: 14px 10px 12px;
+  border-radius: 12px;
+  background: rgba(2,6,23,.55);
+  border: 1px solid var(--border);
+  text-align: center;
+}
+.cd-val {
+  display: block;
+  font-family: "Syne", sans-serif; font-size: 34px; font-weight: 800;
+  color: #fff; line-height: 1; letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+.cd-val.tick { animation: tick 360ms var(--ease-out); }
+@keyframes tick { from { opacity: .3; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+.cd-lbl { display: block; margin-top: 6px; font-size: 12px; color: var(--text-mute); }
+.next-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.next-actions .btn { padding: 11px 18px; font-size: 13.5px; }
+button.btn { font: inherit; font-size: 13.5px; cursor: pointer; }
+button.btn-ghost { background: transparent; }
+.next-empty { color: var(--text-soft); font-size: 15px; margin: 0; }
+
+/* =========================================================
+   BARRE DE FILTRES
+   ========================================================= */
+.toolbar {
+  display: grid;
+  grid-template-columns: minmax(240px, 360px) 1fr auto;
+  align-items: center; gap: 16px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+.finder-field input { height: 44px; }
+.kbd {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  min-width: 24px; height: 24px; padding: 0 7px;
+  display: grid; place-items: center;
+  font: 500 12px/1 "DM Sans", sans-serif; color: var(--text-mute);
+  border: 1px solid var(--border); border-radius: 6px;
+  background: rgba(255,255,255,.03);
+  pointer-events: none; transition: opacity 120ms ease;
+}
+.toolbar.has-value .kbd, .finder-field input:focus ~ .kbd { opacity: 0; }
+.toolbar.has-value .finder-clear { opacity: 1; pointer-events: auto; }
+.chips { margin: 0; }
+.chip { display: inline-flex; align-items: center; gap: 8px; }
+.chip::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c, var(--accent)); }
+.chip[data-type="tous"]::before { display: none; }
+.chip[aria-pressed="true"] {
+  border-color: color-mix(in srgb, var(--c, var(--accent)) 60%, transparent);
+  background: color-mix(in srgb, var(--c, var(--accent)) 14%, transparent);
+}
+.segmented button small { font-size: 11.5px; color: var(--text-mute); margin-left: 4px; font-variant-numeric: tabular-nums; }
+.segmented button[aria-pressed="true"] small { color: var(--text-soft); }
+
+.count-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 0 0; }
+.count { margin: 0; font-size: 14px; color: var(--text-soft); }
+.count strong { color: #fff; font-weight: 500; }
+.reset {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 12px;
+  border: 1px solid var(--border); border-radius: 999px;
+  background: transparent; color: var(--text-soft);
+  font: inherit; font-size: 13px; cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.reset:active { transform: scale(.96); }
+.reset[hidden] { display: none !important; }
+@media (hover: hover) and (pointer: fine) { .reset:hover { color: #fff; border-color: var(--accent-line); } }
+mark { padding: 0; border-radius: 2px; box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 35%, transparent); }
+
+/* =========================================================
+   AGENDA PAR MOIS
+   ========================================================= */
+.agenda { padding: 6px 0 10px; }
+.month {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: 30px;
+  border-bottom: 1px solid var(--border);
+}
+.month:last-child { border-bottom: 0; }
+.month-label {
+  position: sticky;
+  top: calc(var(--header-h) + var(--subnav-h) + 28px);
+  align-self: start;
+  padding: 30px 0;
+  font-family: "Syne", sans-serif;
+  font-size: 26px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.05;
+  color: #fff;
+}
+.month-label small { display: block; margin-top: 6px; font-family: "DM Sans", sans-serif; font-size: 13px; font-weight: 400; letter-spacing: 0; color: var(--text-mute); }
+.month-items { display: flex; flex-direction: column; gap: 12px; padding: 24px 0; min-width: 0; }
+
+.evt {
+  position: relative;
+  display: grid;
+  grid-template-columns: 84px 1fr auto;
+  align-items: center; gap: 24px;
+  padding: 20px 24px;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color 200ms ease, transform 200ms var(--ease-out), opacity 200ms ease;
+}
+.evt:active { transform: scale(.995); }
+@media (hover: hover) and (pointer: fine) {
+  .evt:hover { border-color: color-mix(in srgb, var(--c) 40%, transparent); transform: translateX(3px); }
+}
+.evt-date {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  padding: 11px 6px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--c) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c) 25%, transparent);
+}
+.evt-wday { font-size: 11.5px; color: var(--text-mute); text-transform: capitalize; }
+.evt-day { font-family: "Syne", sans-serif; font-size: 28px; font-weight: 800; color: #fff; line-height: 1; letter-spacing: -0.03em; }
+.evt-month { font-size: 11.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--c); font-weight: 500; }
+
+.evt-main { min-width: 0; }
+.evt-top { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; margin-bottom: 6px; }
+.evt-type { font-size: 13px; font-weight: 500; color: var(--c); }
+.evt-when { font-size: 12.5px; color: var(--text-mute); }
+.evt-when.is-soon { color: #fff; }
+.evt-title { font-family: "Syne", sans-serif; font-size: 17px; font-weight: 700; color: #fff; margin: 0 0 6px; line-height: 1.3; text-wrap: balance; }
+.evt-title a { color: inherit; text-decoration: none; }
+/* toute la carte est cliquable, sans imbriquer de liens */
+.evt-title a::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.evt-desc { margin: 0 0 10px; font-size: 14px; line-height: 1.6; color: var(--text-soft); font-weight: 300; max-width: 64ch; }
+.evt-meta { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; color: var(--text-soft); font-weight: 300; }
+.evt-meta span { display: inline-flex; align-items: center; gap: 6px; }
+.evt-meta i { color: var(--text-mute); font-size: 15px; }
+
+.evt-side { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; position: relative; z-index: 1; }
+.badge--past { --b: #8891b8; }
+.ics {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 12px;
+  border: 1px solid var(--border); border-radius: 8px;
+  background: transparent; color: var(--text-soft);
+  font: inherit; font-size: 12.5px; cursor: pointer; white-space: nowrap;
+  transition: color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.ics i { font-size: 15px; }
+.ics:active { transform: scale(.96); }
+@media (hover: hover) and (pointer: fine) { .ics:hover { color: #fff; border-color: color-mix(in srgb, var(--c) 50%, transparent); } }
+
+.evt.flash { animation: flash 1800ms var(--ease-out) 400ms; }
+@keyframes flash { 0%, 30% { border-color: var(--c); box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 18%, transparent); } 100% { border-color: var(--border); box-shadow: 0 0 0 0 transparent; } }
+.evt.is-past { opacity: .62; }
+.evt.is-past .evt-date { filter: grayscale(.6); }
+.evt.is-past .ics { display: none; }
+@media (hover: hover) and (pointer: fine) { .evt.is-past:hover { opacity: 1; } }
+
+.list-empty {
+  margin: 30px 0;
+  padding: 40px 26px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+  color: var(--text-soft); font-size: 15px;
+}
+.list-empty i { display: block; font-size: 30px; color: var(--text-mute); margin-bottom: 10px; }
+.list-empty button { margin-top: 14px; background: none; border: 0; padding: 0; font: inherit; color: #9fb0ff; cursor: pointer; }
+
+/* toast discret après ajout au calendrier */
+.toast {
+  position: fixed; left: 50%; bottom: 24px; z-index: 3000;
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: rgba(7,15,43,.96);
+  border: 1px solid var(--border);
+  box-shadow: 0 20px 50px rgba(2,6,23,.6);
+  font-size: 14px; color: #fff;
+  transform: translate(-50%, 20px); opacity: 0;
+  transition: transform 260ms var(--ease-out), opacity 200ms ease;
+  pointer-events: none;
+}
+.toast i { color: #34d399; font-size: 18px; }
+.toast.is-on { transform: translate(-50%, 0); opacity: 1; }
+
+/* =========================================================
+   BANDEAU ARCHIVES
+   ========================================================= */
+.cta-band {
+  margin: 60px 0 0;
+  padding: 44px 48px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: radial-gradient(ellipse 50% 90% at 100% 0%, rgba(249,115,22,.14), transparent 60%), var(--bg-light);
+  display: grid; grid-template-columns: auto 1fr auto; gap: 28px; align-items: center;
+}
+.cta-icon { width: 56px; height: 56px; border-radius: 14px; display: grid; place-items: center; font-size: 26px; color: var(--t-event); background: rgba(249,115,22,.1); border: 1px solid rgba(249,115,22,.25); }
+.cta-band h2 { font-family: "Syne", sans-serif; font-size: clamp(20px, 2vw, 26px); font-weight: 700; color: #fff; margin: 0 0 8px; letter-spacing: -0.02em; }
+.cta-band p { margin: 0; color: var(--text-soft); font-size: 15px; line-height: 1.6; font-weight: 300; max-width: 60ch; }
+.cta-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.footer-inner span:last-child { display: inline-flex; align-items: center; gap: 6px; }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1100px) {
+  .toolbar { grid-template-columns: 1fr auto; }
+  .toolbar .chips { grid-column: 1 / -1; grid-row: 2; }
+  .month { grid-template-columns: 130px 1fr; gap: 20px; }
+}
+@media (max-width: 960px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+  .subnav-list { justify-content: flex-start; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+  .subnav-list::-webkit-scrollbar { display: none; }
+  .month { grid-template-columns: 1fr; gap: 0; }
+  .month-label {
+    z-index: 5; top: calc(var(--header-h) + var(--subnav-h));
+    margin: 0 -20px; padding: 12px 20px;
+    font-size: 20px;
+    background: rgba(5,11,30,.92);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    display: flex; align-items: baseline; gap: 10px;
+  }
+  .month-label small { display: inline; margin: 0; }
+  .month-items { padding: 12px 0 24px; }
+  .evt { grid-template-columns: 72px 1fr; }
+  .evt-side { grid-column: 2; flex-direction: row; align-items: center; justify-content: flex-start; flex-wrap: wrap; }
+  .cta-band { grid-template-columns: 1fr; padding: 32px; }
+}
+@media (max-width: 860px) {
+  .main-nav, .header-right .btn-desktop { display: none; }
+  .menu-toggle { display: inline-flex; }
+}
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .subnav-list { padding: 0 20px; }
+  .subnav-link { padding: 0 10px; font-size: 13.5px; }
+  .hero { padding: 40px 0 56px; }
+  .hero-desc { font-size: 16px; }
+  .next { padding: 20px; }
+  .cd-val { font-size: 28px; }
+  .kbd { display: none; }
+  .toolbar { grid-template-columns: 1fr; }
+  .toolbar .chips {
+    grid-row: auto;
+    flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+    margin: 0 -20px; padding: 0 20px 2px;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+  }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip { white-space: nowrap; }
+  .segmented { width: 100%; }
+  .segmented button { flex: 1; }
+  .evt { grid-template-columns: 62px 1fr; gap: 16px; padding: 18px; }
+  .evt-day { font-size: 24px; }
+  .cta-band { padding: 26px 22px; border-radius: var(--radius); }
+  .cta-actions .btn { flex: 1 1 100%; justify-content: center; }
+  .site-footer { margin-top: 72px; }
 }
 
-.archive-text p {
-  font-size: 13px; color: var(--text-soft);
-  line-height: 1.6; margin: 0; font-weight: 300;
+/* =========================================================
+   MOUVEMENT RÉDUIT
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-in { animation: fadeOnly 300ms ease forwards; }
+  .hero h1 .line > span { animation: none; transform: none; }
+  .js .reveal { transform: none; transition: opacity 300ms ease; transition-delay: 0ms; }
+  .pop-in, .cd-val.tick, .next-label .dot::after { animation: none; }
+  .segmented-indicator, .toast { transition: none; }
 }
-
-.archive-text a { color: var(--accent); text-decoration: none; }
-.archive-text a:hover { text-decoration: underline; }
-
-.archive-cta {
-  flex-shrink: 0; padding: 9px 18px; border-radius: 8px;
-  border: 1px solid rgba(79,107,237,.3); color: white;
-  text-decoration: none; font-size: 12px; font-weight: 500;
-  transition: .2s; white-space: nowrap;
-}
-
-.archive-cta:hover { background: rgba(79,107,237,.15); }
-
-/* ===== FOOTER ===== */
-
-footer {
-  background: var(--bg-dark); border-top: 1px solid var(--border);
-  padding: 40px 30px; text-align: center;
-  font-size: 12px; color: #6b7280;
-}
-
-/* ===== NO RESULTS ===== */
-
-.no-results {
-  text-align: center; padding: 60px 0;
-  color: var(--text-soft); font-size: 14px;
-  font-weight: 300; display: none;
-}
-
-.no-results strong {
-  display: block; font-family: "Syne", sans-serif;
-  font-size: 18px; color: white; margin-bottom: 8px;
-}
-
-/* ===== ANIMATIONS ===== */
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.evt-card:nth-child(1)  { animation-delay: .04s; }
-.evt-card:nth-child(2)  { animation-delay: .08s; }
-.evt-card:nth-child(3)  { animation-delay: .12s; }
-.evt-card:nth-child(4)  { animation-delay: .16s; }
-.evt-card:nth-child(5)  { animation-delay: .20s; }
-.evt-card:nth-child(6)  { animation-delay: .24s; }
-.evt-card:nth-child(7)  { animation-delay: .28s; }
-.evt-card:nth-child(8)  { animation-delay: .32s; }
-.evt-card:nth-child(9)  { animation-delay: .36s; }
-
+@keyframes fadeOnly { to { opacity: 1; } }
 </style>
+
+<script>document.documentElement.classList.add('js');</script>
 </head>
+
 
 <body>
 
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+
 <!-- ===== HEADER ===== -->
-<header>
-  <div class="header-inner">
+<header class="site-header" id="header">
+  <div class="container header-inner">
     <div class="header-left">
-      <a href="index.html" class="logo-link"><img src="logo.png" alt="Logo IFRAS"></a>
-      <nav>
+      <a href="index.html" class="logo-link" aria-label="IFRAS, accueil">
+        <img src="logo.png" alt="Logo IFRAS" width="44" height="44">
+      </a>
+      <nav aria-label="Navigation principale">
         <ul class="main-nav">
           <li><a href="index.html">Accueil</a></li>
           <li><a href="recherche.html">Recherche</a></li>
           <li><a href="programmes.html">Programmes</a></li>
-          <li><a href="publications.html">Publications</a></li>
+          <li><a href="publications.html" aria-current="page">Publications</a></li>
         </ul>
       </nav>
     </div>
     <div class="header-right">
-      <a href="connexion.html" class="login-btn">Connexion</a>
+      <a href="connexion.html" class="btn btn-ghost btn-desktop">Connexion</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-panel" aria-label="Ouvrir le menu">
+        <i class="ph-light ph-list" aria-hidden="true"></i>
+      </button>
     </div>
   </div>
 </header>
 
-<!-- ===== SOUS BANDEAU ===== -->
-<div class="sub-nav">
+<div class="mobile-panel" id="mobile-panel">
   <ul>
-    <li><a href="publications-scientifiques.html">Publications scientifiques</a></li>
-    <li><a href="publications-ifras.html">Publications IFRAS</a></li>
-    <li><a href="evenements.html" class="active">Événements</a></li>
+    <li><a href="index.html">Accueil <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="recherche.html">Recherche <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="programmes.html">Programmes <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="publications.html" aria-current="page">Publications <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
   </ul>
+  <a href="connexion.html" class="btn btn-primary">Connexion</a>
 </div>
 
-<!-- ===== INTRO ===== -->
-<div class="intro-section">
-  <div class="intro-left">
-    <div class="intro-eyebrow">Agenda scientifique</div>
-    <h1>Événements</h1>
-    <p>Colloques, conférences, séminaires, journées portes ouvertes et soutenances de thèse organisés ou co-organisés par l'IFRAS. Retrouvez ici l'intégralité du calendrier scientifique de l'institut, du plus récent au plus ancien.</p>
+<!-- ===== SOUS-NAVIGATION (mêmes rubriques que publications.html) ===== -->
+<nav class="subnav" id="subnav" aria-label="Rubriques des publications">
+  <ul class="subnav-list">
+    <li><a class="subnav-link" href="publications-scientifiques.html" style="--c:var(--t-sci)"><i class="ph-light ph-article" aria-hidden="true"></i>Publications scientifiques</a></li>
+    <li><a class="subnav-link" href="publications-ifras.html" style="--c:var(--t-ifras)"><i class="ph-light ph-book-open" aria-hidden="true"></i>Publications IFRAS</a></li>
+    <li><a class="subnav-link" href="evenements.html" aria-current="true" style="--c:var(--t-event)"><i class="ph-light ph-calendar-dots" aria-hidden="true"></i>Événements</a></li>
+  </ul>
+</nav>
+
+<main id="contenu">
+
+<!-- ===== HERO ===== -->
+<section class="hero" aria-labelledby="hero-title">
+  <canvas class="dial" id="dial" aria-hidden="true"></canvas>
+  <div class="container">
+    <div class="hero-grid">
+
+      <div class="hero-left">
+        <ol class="breadcrumb hero-in" style="--i:0" aria-label="Fil d'Ariane">
+          <li><a href="publications.html">Publications</a></li>
+          <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+          <li aria-current="page">Événements</li>
+        </ol>
+        <h1 id="hero-title"><span class="line"><span style="--i:0">Agenda</span></span><span class="line line--soft"><span style="--i:1">scientifique</span></span></h1>
+        <p class="hero-desc hero-in" style="--i:2">Colloques, conférences, séminaires, soutenances de thèse et portes ouvertes : tous les rendez-vous organisés par l'IFRAS.</p>
+        <ul class="legend hero-in" style="--i:3" aria-label="Types d'événements">
+          <li style="--c:#818cf8">Colloque</li>
+          <li style="--c:#a78bfa">Conférence</li>
+          <li style="--c:#f97316">Séminaire</li>
+          <li style="--c:#34d399">Portes ouvertes</li>
+          <li style="--c:#fb7185">Soutenance</li>
+          <li style="--c:#38bdf8">Atelier</li>
+        </ul>
+      </div>
+
+      <aside class="next hero-in" style="--i:3" id="next" aria-labelledby="next-title">
+        <div class="next-label"><span class="dot" aria-hidden="true"></span> Prochain rendez-vous</div>
+        <h2 id="next-title"></h2>
+        <div class="next-meta" id="next-meta"></div>
+        <div class="countdown" id="countdown" aria-label="Temps restant">
+          <div class="cd-unit"><span class="cd-val" data-u="d">00</span><span class="cd-lbl">jours</span></div>
+          <div class="cd-unit"><span class="cd-val" data-u="h">00</span><span class="cd-lbl">heures</span></div>
+          <div class="cd-unit"><span class="cd-val" data-u="m">00</span><span class="cd-lbl">minutes</span></div>
+        </div>
+        <div class="next-actions">
+          <a class="btn btn-primary" id="next-go" href="#agenda">Voir le détail <i class="ph-light ph-arrow-down" aria-hidden="true"></i></a>
+          <button class="btn btn-ghost" id="next-ics" type="button"><i class="ph-light ph-calendar-plus" aria-hidden="true"></i> Ajouter à l'agenda</button>
+        </div>
+      </aside>
+
+    </div>
   </div>
-  <div class="intro-stats">
-    <div class="intro-stat-pill">
-      <span class="val">4</span>
-      <span class="lbl">Événements à venir</span>
+</section>
+
+<!-- ===== AGENDA ===== -->
+<section id="agenda" aria-label="Agenda">
+  <div class="container">
+    <div class="toolbar" id="toolbar">
+      <div class="finder-field">
+        <i class="ph-light ph-magnifying-glass" aria-hidden="true"></i>
+        <input id="finder-input" type="search" placeholder="Titre, lieu, programme…" autocomplete="off" aria-controls="agenda-list">
+        <button class="finder-clear" type="button" aria-label="Effacer la recherche"><i class="ph-light ph-x" aria-hidden="true"></i></button>
+        <kbd class="kbd" aria-hidden="true">/</kbd>
+      </div>
+      <ul class="chips" aria-label="Filtrer par type">
+          <li><button class="chip" type="button" aria-pressed="true" data-type="tous">Tous</button></li>
+          <li><button class="chip" type="button" aria-pressed="false" data-type="Colloque" style="--c:#818cf8">Colloque</button></li>
+          <li><button class="chip" type="button" aria-pressed="false" data-type="Conférence" style="--c:#a78bfa">Conférence</button></li>
+          <li><button class="chip" type="button" aria-pressed="false" data-type="Séminaire" style="--c:#f97316">Séminaire</button></li>
+          <li><button class="chip" type="button" aria-pressed="false" data-type="Portes ouvertes" style="--c:#34d399">Portes ouvertes</button></li>
+          <li><button class="chip" type="button" aria-pressed="false" data-type="Soutenance" style="--c:#fb7185">Soutenance</button></li>
+          <li><button class="chip" type="button" aria-pressed="false" data-type="Atelier" style="--c:#38bdf8">Atelier</button></li>
+      </ul>
+      <div class="segmented" id="segmented" role="group" aria-label="Période">
+        <span class="segmented-indicator" aria-hidden="true"></span>
+        <button type="button" aria-pressed="true" data-when="upcoming">À venir <small></small></button>
+        <button type="button" aria-pressed="false" data-when="past">Passés <small></small></button>
+        <button type="button" aria-pressed="false" data-when="all">Tout</button>
+      </div>
     </div>
-    <div class="intro-stat-pill">
-      <span class="val">3</span>
-      <span class="lbl">Événements passés</span>
+    <div class="count-row">
+      <p class="count" id="count" aria-live="polite"></p>
+      <button class="reset" id="reset" type="button" hidden><i class="ph-light ph-arrow-counter-clockwise" aria-hidden="true"></i> Réinitialiser</button>
     </div>
-    <div class="intro-stat-pill">
-      <span class="val">6</span>
-      <span class="lbl">Types d'événements</span>
+
+    <div class="agenda" id="agenda-list">
+        <article class="evt" data-start="2026-10-07" data-end="2026-10-07" data-type="Conférence" data-place="En ligne" style="--c:#a78bfa">
+          <div class="evt-date" aria-hidden="true"><span class="evt-wday"></span><span class="evt-day">07</span><span class="evt-month">Oct.</span></div>
+          <div class="evt-main">
+            <div class="evt-top"><span class="evt-type">Conférence</span><span class="evt-when"></span></div>
+            <h3 class="evt-title"><a href="#">Les résultats du trimestre, en accès libre</a></h3>
+            <p class="evt-desc">Une heure pour découvrir les derniers résultats de l'institut, présentés par leurs auteurs, suivie de questions en direct.</p>
+            <div class="evt-meta">
+              <span><i class="ph-light ph-clock" aria-hidden="true"></i> 18h00 → 19h00</span>
+              <span><i class="ph-light ph-globe" aria-hidden="true"></i> En ligne</span>
+              <span><i class="ph-light ph-users-three" aria-hidden="true"></i> Grand public, inscription gratuite</span>
+            </div>
+          </div>
+          <div class="evt-side">
+            <span class="badge badge--online"><i class="ph-light ph-broadcast" aria-hidden="true"></i> En ligne</span>
+            <button class="ics" type="button"><i class="ph-light ph-calendar-plus" aria-hidden="true"></i> Ajouter à l'agenda</button>
+          </div>
+        </article>
+        <article class="evt" data-start="2026-10-22" data-end="2026-10-22" data-type="Soutenance" data-place="Salle des thèses, bâtiment A" style="--c:#fb7185">
+          <div class="evt-date" aria-hidden="true"><span class="evt-wday"></span><span class="evt-day">22</span><span class="evt-month">Oct.</span></div>
+          <div class="evt-main">
+            <div class="evt-top"><span class="evt-type">Soutenance</span><span class="evt-when"></span></div>
+            <h3 class="evt-title"><a href="#">Soutenance de thèse : la propulsion à plasma froid</a></h3>
+            <p class="evt-desc">Modéliser l'érosion des grilles d'extraction pour prolonger la vie des propulseurs ioniques. Une thèse menée au DPET dans le cadre de PROMETHEUS.</p>
+            <div class="evt-meta">
+              <span><i class="ph-light ph-clock" aria-hidden="true"></i> 14h00 → 17h00</span>
+              <span><i class="ph-light ph-map-pin" aria-hidden="true"></i> Salle des thèses, bâtiment A</span>
+              <span><i class="ph-light ph-users-three" aria-hidden="true"></i> Ouvert au public</span>
+            </div>
+          </div>
+          <div class="evt-side">
+            <span class="badge badge--open">Inscriptions ouvertes</span>
+            <button class="ics" type="button"><i class="ph-light ph-calendar-plus" aria-hidden="true"></i> Ajouter à l'agenda</button>
+          </div>
+        </article>
+        <article class="evt" data-start="2026-11-20" data-end="2026-11-20" data-type="Portes ouvertes" data-place="Campus IFRAS" style="--c:#34d399">
+          <div class="evt-date" aria-hidden="true"><span class="evt-wday"></span><span class="evt-day">20</span><span class="evt-month">Nov.</span></div>
+          <div class="evt-main">
+            <div class="evt-top"><span class="evt-type">Portes ouvertes</span><span class="evt-when"></span></div>
+            <h3 class="evt-title"><a href="#">Journée portes ouvertes 2026</a></h3>
+            <p class="evt-desc">Laboratoires, plateaux techniques et simulateurs ouverts à tous : visites guidées, démonstrations et rencontres avec les chercheurs des huit départements.</p>
+            <div class="evt-meta">
+              <span><i class="ph-light ph-clock" aria-hidden="true"></i> 9h00 → 18h00</span>
+              <span><i class="ph-light ph-map-pin" aria-hidden="true"></i> Campus IFRAS</span>
+              <span><i class="ph-light ph-users-three" aria-hidden="true"></i> Grand public, entrée libre</span>
+            </div>
+          </div>
+          <div class="evt-side">
+            <span class="badge badge--full">Complet</span>
+            <button class="ics" type="button"><i class="ph-light ph-calendar-plus" aria-hidden="true"></i> Ajouter à l'agenda</button>
+          </div>
+        </article>
+        <article class="evt" data-start="2026-12-10" data-end="2026-12-10" data-type="Séminaire" data-place="Salle Laplace, bâtiment B" style="--c:#f97316">
+          <div class="evt-date" aria-hidden="true"><span class="evt-wday"></span><span class="evt-day">10</span><span class="evt-month">Déc.</span></div>
+          <div class="evt-main">
+            <div class="evt-top"><span class="evt-type">Séminaire</span><span class="evt-when"></span></div>
+            <h3 class="evt-title"><a href="#">Séminaire ORION-3 : bilan de l'année</a></h3>
+            <p class="evt-desc">Les équipes du DAI et du DOL présentent l'avancée de la recherche de biosignatures et les cibles retenues pour l'an prochain.</p>
+            <div class="evt-meta">
+              <span><i class="ph-light ph-clock" aria-hidden="true"></i> 14h00 → 18h00</span>
+              <span><i class="ph-light ph-map-pin" aria-hidden="true"></i> Salle Laplace, bâtiment B</span>
+              <span><i class="ph-light ph-users-three" aria-hidden="true"></i> Accréditation requise</span>
+            </div>
+          </div>
+          <div class="evt-side">
+            <span class="badge badge--soon">Bientôt complet</span>
+            <button class="ics" type="button"><i class="ph-light ph-calendar-plus" aria-hidden="true"></i> Ajouter à l'agenda</button>
+          </div>
+        </article>
+        <article class="evt" data-start="2026-09-18" data-end="2026-09-18" data-type="Conférence" data-place="Amphithéâtre Gagarine" style="--c:#a78bfa">
+          <div class="evt-date" aria-hidden="true"><span class="evt-wday"></span><span class="evt-day">18</span><span class="evt-month">Sept.</span></div>
+          <div class="evt-main">
+            <div class="evt-top"><span class="evt-type">Conférence</span><span class="evt-when"></span></div>
+            <h3 class="evt-title"><a href="#">Propulsion 2026 : nouvelles architectures ioniques</a></h3>
+            <p class="evt-desc">Journée consacrée aux propulseurs de nouvelle génération, du banc d'essai aux futures missions lointaines.</p>
+            <div class="evt-meta">
+              <span><i class="ph-light ph-clock" aria-hidden="true"></i> Journée entière</span>
+              <span><i class="ph-light ph-map-pin" aria-hidden="true"></i> Amphithéâtre Gagarine</span>
+              <span><i class="ph-light ph-users-three" aria-hidden="true"></i> Ouvert aux partenaires</span>
+            </div>
+          </div>
+          <div class="evt-side">
+            <span class="badge badge--open">Inscriptions ouvertes</span>
+            <button class="ics" type="button"><i class="ph-light ph-calendar-plus" aria-hidden="true"></i> Ajouter à l'agenda</button>
+          </div>
+        </article>
+        <article class="evt" data-start="2026-06-15" data-end="2026-06-17" data-type="Colloque" data-place="Amphithéâtre Gagarine" style="--c:#818cf8">
+          <div class="evt-date" aria-hidden="true"><span class="evt-wday"></span><span class="evt-day">15</span><span class="evt-month">Juin</span></div>
+          <div class="evt-main">
+            <div class="evt-top"><span class="evt-type">Colloque</span><span class="evt-when"></span></div>
+            <h3 class="evt-title"><a href="#">Colloque IFRAS 2026 : sciences aérospatiales et du vivant</a></h3>
+            <p class="evt-desc">Le grand rendez-vous annuel de l'institut : biologie spatiale, propulsion et systèmes autonomes, avec des délégations de nos partenaires internationaux.</p>
+            <div class="evt-meta">
+              <span><i class="ph-light ph-clock" aria-hidden="true"></i> 3 jours</span>
+              <span><i class="ph-light ph-map-pin" aria-hidden="true"></i> Amphithéâtre Gagarine</span>
+              <span><i class="ph-light ph-users-three" aria-hidden="true"></i> Retransmis en ligne</span>
+            </div>
+          </div>
+          <div class="evt-side">
+            <span class="badge badge--open">Inscriptions ouvertes</span>
+            <button class="ics" type="button"><i class="ph-light ph-calendar-plus" aria-hidden="true"></i> Ajouter à l'agenda</button>
+          </div>
+        </article>
+        <article class="evt" data-start="2026-04-08" data-end="2026-04-08" data-type="Séminaire" data-place="Salle Laplace, bâtiment B" style="--c:#f97316">
+          <div class="evt-date" aria-hidden="true"><span class="evt-wday"></span><span class="evt-day">08</span><span class="evt-month">Avr.</span></div>
+          <div class="evt-main">
+            <div class="evt-top"><span class="evt-type">Séminaire</span><span class="evt-when"></span></div>
+            <h3 class="evt-title"><a href="#">ARTEMIS-9 : résultats intermédiaires de la phase III</a></h3>
+            <p class="evt-desc">Premières données biologiques et physiologiques de la phase III, présentées par les équipes du DSVT et du DOL.</p>
+            <div class="evt-meta">
+              <span><i class="ph-light ph-clock" aria-hidden="true"></i> 14h00 → 18h30</span>
+              <span><i class="ph-light ph-map-pin" aria-hidden="true"></i> Salle Laplace, bâtiment B</span>
+              <span><i class="ph-light ph-users-three" aria-hidden="true"></i> Accréditation requise</span>
+            </div>
+          </div>
+          <div class="evt-side">
+            <span class="badge badge--soon">Bientôt complet</span>
+            <button class="ics" type="button"><i class="ph-light ph-calendar-plus" aria-hidden="true"></i> Ajouter à l'agenda</button>
+          </div>
+        </article>
+        <article class="evt" data-start="2026-03-20" data-end="2026-03-20" data-type="Atelier" data-place="En ligne" style="--c:#38bdf8">
+          <div class="evt-date" aria-hidden="true"><span class="evt-wday"></span><span class="evt-day">20</span><span class="evt-month">Mars</span></div>
+          <div class="evt-main">
+            <div class="evt-top"><span class="evt-type">Atelier</span><span class="evt-when"></span></div>
+            <h3 class="evt-title"><a href="#">Atelier : IA embarquée et systèmes autonomes</a></h3>
+            <p class="evt-desc">Architectures d'IA à bord des engins spatiaux, exercices pratiques et retours d'expérience de LYNX et d'ATLAS.</p>
+            <div class="evt-meta">
+              <span><i class="ph-light ph-clock" aria-hidden="true"></i> 9h30 → 17h00</span>
+              <span><i class="ph-light ph-globe" aria-hidden="true"></i> En ligne</span>
+              <span><i class="ph-light ph-users-three" aria-hidden="true"></i> Accès libre sur inscription</span>
+            </div>
+          </div>
+          <div class="evt-side">
+            <span class="badge badge--online"><i class="ph-light ph-broadcast" aria-hidden="true"></i> En ligne</span>
+            <button class="ics" type="button"><i class="ph-light ph-calendar-plus" aria-hidden="true"></i> Ajouter à l'agenda</button>
+          </div>
+        </article>
+        <article class="evt" data-start="2025-11-14" data-end="2025-11-14" data-type="Conférence" data-place="Amphithéâtre Gagarine" style="--c:#a78bfa">
+          <div class="evt-date" aria-hidden="true"><span class="evt-wday"></span><span class="evt-day">14</span><span class="evt-month">Nov.</span></div>
+          <div class="evt-main">
+            <div class="evt-top"><span class="evt-type">Conférence</span><span class="evt-when"></span></div>
+            <h3 class="evt-title"><a href="#">PROMETHEUS : un propulseur ionique record</a></h3>
+            <p class="evt-desc">Les résultats obtenus en chambre d'essai sur le propulseur à plasma froid, présentés par l'équipe du programme.</p>
+            <div class="evt-meta">
+              <span><i class="ph-light ph-clock" aria-hidden="true"></i> Journée entière</span>
+              <span><i class="ph-light ph-map-pin" aria-hidden="true"></i> Amphithéâtre Gagarine</span>
+              <span><i class="ph-light ph-users-three" aria-hidden="true"></i> Retransmis en ligne</span>
+            </div>
+          </div>
+          <div class="evt-side">
+            <span class="badge badge--open">Inscriptions ouvertes</span>
+            <button class="ics" type="button"><i class="ph-light ph-calendar-plus" aria-hidden="true"></i> Ajouter à l'agenda</button>
+          </div>
+        </article>
+        <article class="evt" data-start="2025-09-26" data-end="2025-09-26" data-type="Soutenance" data-place="Salle des thèses, bâtiment A" style="--c:#fb7185">
+          <div class="evt-date" aria-hidden="true"><span class="evt-wday"></span><span class="evt-day">26</span><span class="evt-month">Sept.</span></div>
+          <div class="evt-main">
+            <div class="evt-top"><span class="evt-type">Soutenance</span><span class="evt-when"></span></div>
+            <h3 class="evt-title"><a href="#">Soutenance de thèse : l'immunité en microgravité</a></h3>
+            <p class="evt-desc">« Dynamiques immunitaires en microgravité prolongée : modélisation et prédiction », une thèse de Claire Fontaine au DSVT.</p>
+            <div class="evt-meta">
+              <span><i class="ph-light ph-clock" aria-hidden="true"></i> 14h00 → 17h00</span>
+              <span><i class="ph-light ph-map-pin" aria-hidden="true"></i> Salle des thèses, bâtiment A</span>
+              <span><i class="ph-light ph-users-three" aria-hidden="true"></i> Ouvert au public</span>
+            </div>
+          </div>
+          <div class="evt-side">
+            <span class="badge badge--open">Inscriptions ouvertes</span>
+            <button class="ics" type="button"><i class="ph-light ph-calendar-plus" aria-hidden="true"></i> Ajouter à l'agenda</button>
+          </div>
+        </article>
+        <article class="evt" data-start="2025-06-03" data-end="2025-06-03" data-type="Séminaire" data-place="Centre de conférences IFRAS" style="--c:#f97316">
+          <div class="evt-date" aria-hidden="true"><span class="evt-wday"></span><span class="evt-day">03</span><span class="evt-month">Juin</span></div>
+          <div class="evt-main">
+            <div class="evt-top"><span class="evt-type">Séminaire</span><span class="evt-when"></span></div>
+            <h3 class="evt-title"><a href="#">Séminaire annuel DSMR : matériaux extrêmes</a></h3>
+            <p class="evt-desc">État de l'art des composites céramiques et alliages réfractaires, et perspectives pour les boucliers de rentrée de nouvelle génération.</p>
+            <div class="evt-meta">
+              <span><i class="ph-light ph-clock" aria-hidden="true"></i> Journée entière</span>
+              <span><i class="ph-light ph-map-pin" aria-hidden="true"></i> Centre de conférences IFRAS</span>
+              <span><i class="ph-light ph-users-three" aria-hidden="true"></i> Personnel IFRAS</span>
+            </div>
+          </div>
+          <div class="evt-side">
+            <span class="badge badge--open">Inscriptions ouvertes</span>
+            <button class="ics" type="button"><i class="ph-light ph-calendar-plus" aria-hidden="true"></i> Ajouter à l'agenda</button>
+          </div>
+        </article>
+    </div>
+
+    <div class="list-empty" id="list-empty" hidden>
+      <i class="ph-light ph-calendar-x" aria-hidden="true"></i>
+      <span id="empty-text">Aucun événement ne correspond à votre recherche.</span><br>
+      <button type="button">Réinitialiser les filtres</button>
+    </div>
+
+    <div class="cta-band reveal">
+      <span class="cta-icon" aria-hidden="true"><i class="ph-light ph-archive"></i></span>
+      <div>
+        <h2>Événements antérieurs à 2025</h2>
+        <p>Comptes rendus, supports de présentation et enregistrements sont consultables sur demande auprès du service Archives &amp; Documentation. Certains contenus sont soumis à accréditation.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="mailto:archives@ifras.fr" class="btn btn-primary">Contacter les archives <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
+        <a href="publications-ifras.html" class="btn btn-ghost">Publications IFRAS</a>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ===== FILTRES ===== -->
-<div class="filters-bar">
-  <div class="search-box">
-    <span class="search-icon">🔍</span>
-    <input type="text" id="search-input" placeholder="Rechercher par titre, lieu, type, programme…">
-    <button class="search-clear" id="search-clear" title="Effacer">✕</button>
+</main>
+
+<div class="toast" id="toast" role="status"><i class="ph-light ph-check-circle" aria-hidden="true"></i> <span></span></div>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© IFRAS, Institut Français de Recherche Aéronautique et Spatiale</span>
+    <span><i class="ph-light ph-calendar-dots" aria-hidden="true"></i> Agenda mis à jour chaque mois</span>
   </div>
-  <div class="filters-right">
-    <span class="filter-label">Type :</span>
-    <div class="filter-group">
-      <button class="filter-btn active" data-filter="tous">Tous</button>
-      <button class="filter-btn" data-filter="Colloque">Colloque</button>
-      <button class="filter-btn" data-filter="Conférence">Conférence</button>
-      <button class="filter-btn" data-filter="Séminaire">Séminaire</button>
-      <button class="filter-btn" data-filter="Portes ouvertes">Portes ouvertes</button>
-      <button class="filter-btn" data-filter="Soutenance">Soutenance</button>
-      <button class="filter-btn" data-filter="Atelier">Atelier</button>
-    </div>
-    <div class="sort-box">
-      <span class="filter-label">Trier :</span>
-      <select id="sort-select">
-        <option value="recent">Plus récent d'abord</option>
-        <option value="ancien">Plus ancien d'abord</option>
-      </select>
-    </div>
-  </div>
-</div>
-
-<div class="results-bar">
-  <span id="results-count">7 événements</span>
-  <button class="reset-btn" id="reset-btn">Réinitialiser les filtres</button>
-</div>
-
-<!-- ===== LISTE ===== -->
-<div class="evt-list" id="evt-list">
-
-  <!-- 1 · Colloque ISABS 2026 -->
-  <a class="evt-card" href="#"
-     style="--evt-color:#4f6bed"
-     data-date="2026-06-15" data-type="Colloque">
-    <div class="evt-date-block">
-      <div class="evt-day">15</div>
-      <div class="evt-month">Juin</div>
-      <div class="evt-year">2026</div>
-    </div>
-    <div class="evt-body">
-      <div class="evt-top-row">
-        <span class="evt-type-tag" style="background:rgba(79,107,237,.1);border:1px solid rgba(79,107,237,.3);color:#818cf8">Colloque</span>
-        <span class="evt-status evt-status--open">Inscriptions ouvertes</span>
-      </div>
-      <div class="evt-title">ISABS 2026 — Colloque International des Sciences Aérospatiales et Biologiques</div>
-      <p class="evt-desc">Grand colloque annuel de l'IFRAS réunissant chercheurs, ingénieurs et partenaires institutionnels autour des thématiques de biologie spatiale, propulsion et systèmes autonomes. Accueil de délégations ESA, NASA, JAXA et ISRO.</p>
-      <div class="evt-meta-row">
-        <span class="evt-meta-item"><span>⏱</span> 3 jours · 15 → 17 juin</span>
-        <span class="evt-meta-item"><span>📍</span> IFRAS — Amphithéâtre Gagarine, Toulouse</span>
-        <span class="evt-meta-item"><span>👥</span> 420 participants attendus</span>
-        <span class="evt-meta-item"><span>🌐</span> Retransmission en ligne</span>
-      </div>
-    </div>
-  </a>
-
-  <!-- 2 · Portes ouvertes -->
-  <a class="evt-card" href="#"
-     style="--evt-color:#34d399"
-     data-date="2026-05-23" data-type="Portes ouvertes">
-    <div class="evt-date-block">
-      <div class="evt-day">23</div>
-      <div class="evt-month">Mai</div>
-      <div class="evt-year">2026</div>
-    </div>
-    <div class="evt-body">
-      <div class="evt-top-row">
-        <span class="evt-type-tag" style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);color:#34d399">Portes ouvertes</span>
-        <span class="evt-status evt-status--open">Inscriptions ouvertes</span>
-      </div>
-      <div class="evt-title">Journée Portes Ouvertes IFRAS 2026</div>
-      <p class="evt-desc">Découvrez les laboratoires, plateaux techniques et simulateurs de l'IFRAS. Visites guidées, démonstrations en direct et rencontres avec les chercheurs des 8 départements. Ouvert au grand public et aux lycéens.</p>
-      <div class="evt-meta-row">
-        <span class="evt-meta-item"><span>⏱</span> 1 jour · 9h00 → 18h00</span>
-        <span class="evt-meta-item"><span>📍</span> Campus IFRAS, Toulouse</span>
-        <span class="evt-meta-item"><span>👥</span> Grand public — entrée libre</span>
-      </div>
-    </div>
-  </a>
-
-  <!-- 3 · Séminaire ARTEMIS -->
-  <a class="evt-card" href="#"
-     style="--evt-color:#f97316"
-     data-date="2026-04-08" data-type="Séminaire">
-    <div class="evt-date-block">
-      <div class="evt-day">08</div>
-      <div class="evt-month">Avr.</div>
-      <div class="evt-year">2026</div>
-    </div>
-    <div class="evt-body">
-      <div class="evt-top-row">
-        <span class="evt-type-tag" style="background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.3);color:#f97316">Séminaire</span>
-        <span class="evt-status evt-status--soon">Bientôt complet</span>
-      </div>
-      <div class="evt-title">Séminaire ARTEMIS-9 — Résultats intermédiaires de la Phase III</div>
-      <p class="evt-desc">Présentation des données biologiques et physiologiques collectées lors des 120 premiers jours de la phase III. Interventions des équipes DSVT et DOL, suivi de questions ouvertes. Réservé aux membres accrédités IFRAS et partenaires.</p>
-      <div class="evt-meta-row">
-        <span class="evt-meta-item"><span>⏱</span> ½ journée · 14h00 → 18h30</span>
-        <span class="evt-meta-item"><span>📍</span> Salle Laplace, Bâtiment B — IFRAS</span>
-        <span class="evt-meta-item"><span>👥</span> 80 places · Accréditation requise</span>
-      </div>
-    </div>
-  </a>
-
-  <!-- 4 · Atelier IA embarquée -->
-  <a class="evt-card" href="#"
-     style="--evt-color:#38bdf8"
-     data-date="2026-03-20" data-type="Atelier">
-    <div class="evt-date-block">
-      <div class="evt-day">20</div>
-      <div class="evt-month">Mars</div>
-      <div class="evt-year">2026</div>
-    </div>
-    <div class="evt-body">
-      <div class="evt-top-row">
-        <span class="evt-type-tag" style="background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.3);color:#38bdf8">Atelier</span>
-        <span class="evt-status evt-status--online">En ligne</span>
-      </div>
-      <div class="evt-title">Atelier : IA embarquée et systèmes autonomes spatiaux</div>
-      <p class="evt-desc">Atelier technique animé par le département DSTI sur les architectures d'IA déployées sur systèmes autonomes à bord d'engins spatiaux. Exercices pratiques, retours d'expérience LYNX et ATLAS. Accès libre sur inscription.</p>
-      <div class="evt-meta-row">
-        <span class="evt-meta-item"><span>⏱</span> 1 journée · 9h30 → 17h00</span>
-        <span class="evt-meta-item"><span>🖥</span> Webinaire — lien envoyé à l'inscription</span>
-        <span class="evt-meta-item"><span>👥</span> 200 places disponibles</span>
-      </div>
-    </div>
-  </a>
-
-  <!-- ───── SÉPARATEUR PASSÉS ───── -->
-  <div class="section-sep" id="past-sep">
-    <span class="section-sep-label">Événements passés</span>
-    <div class="section-sep-line"></div>
-  </div>
-
-  <!-- 5 · Conférence propulsion (passé) -->
-  <a class="evt-card is-past" href="#"
-     style="--evt-color:#a78bfa"
-     data-date="2025-11-14" data-type="Conférence">
-    <div class="evt-date-block">
-      <div class="evt-day">14</div>
-      <div class="evt-month">Nov.</div>
-      <div class="evt-year">2025</div>
-    </div>
-    <div class="evt-body">
-      <div class="evt-top-row">
-        <span class="evt-type-tag" style="background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.3);color:#a78bfa">Conférence</span>
-        <span class="evt-status evt-status--past">Terminé</span>
-      </div>
-      <div class="evt-title">Conférence PROMETHEUS — Validation expérimentale du propulseur ionique à 6 800 s</div>
-      <p class="evt-desc">Présentation des résultats records obtenus en chambre d'essai sur le propulseur à plasma froid du programme PROMETHEUS. Conférence ouverte, retransmise en ligne.</p>
-      <div class="evt-meta-row">
-        <span class="evt-meta-item"><span>⏱</span> 1 jour · 14 novembre 2025</span>
-        <span class="evt-meta-item"><span>📍</span> Amphithéâtre Gagarine, IFRAS</span>
-        <span class="evt-meta-item"><span>👥</span> 340 participants</span>
-      </div>
-    </div>
-  </a>
-
-  <!-- 6 · Soutenance (passé) -->
-  <a class="evt-card is-past" href="#"
-     style="--evt-color:#fb7185"
-     data-date="2025-09-26" data-type="Soutenance">
-    <div class="evt-date-block">
-      <div class="evt-day">26</div>
-      <div class="evt-month">Sep.</div>
-      <div class="evt-year">2025</div>
-    </div>
-    <div class="evt-body">
-      <div class="evt-top-row">
-        <span class="evt-type-tag" style="background:rgba(251,113,133,.1);border:1px solid rgba(251,113,133,.3);color:#fb7185">Soutenance</span>
-        <span class="evt-status evt-status--past">Terminé</span>
-      </div>
-      <div class="evt-title">Soutenance de thèse — Claire Fontaine, Département DSVT</div>
-      <p class="evt-desc">Soutenance de la thèse de doctorat de Claire Fontaine intitulée « Dynamiques immunitaires en microgravité prolongée : modélisation et prédiction ». Jury composé de 6 membres, dont deux représentants du CNES.</p>
-      <div class="evt-meta-row">
-        <span class="evt-meta-item"><span>⏱</span> 3 h · 14h00 → 17h00</span>
-        <span class="evt-meta-item"><span>📍</span> Salle des thèses, Bâtiment A — IFRAS</span>
-        <span class="evt-meta-item"><span>👥</span> Ouvert au public</span>
-      </div>
-    </div>
-  </a>
-
-  <!-- 7 · Séminaire annuel DMA (passé) -->
-  <a class="evt-card is-past" href="#"
-     style="--evt-color:#facc15"
-     data-date="2025-06-03" data-type="Séminaire">
-    <div class="evt-date-block">
-      <div class="evt-day">03</div>
-      <div class="evt-month">Juin</div>
-      <div class="evt-year">2025</div>
-    </div>
-    <div class="evt-body">
-      <div class="evt-top-row">
-        <span class="evt-type-tag" style="background:rgba(250,204,21,.08);border:1px solid rgba(250,204,21,.3);color:#facc15">Séminaire</span>
-        <span class="evt-status evt-status--past">Terminé</span>
-      </div>
-      <div class="evt-title">Séminaire annuel DMA — Matériaux extrêmes : état de l'art et perspectives</div>
-      <p class="evt-desc">Bilan des travaux du département DMA sur les composites céramiques et alliages réfractaires pour l'espace. Présentations des 4 équipes internes et discussion prospective sur les matériaux de rentrée atmosphérique de nouvelle génération.</p>
-      <div class="evt-meta-row">
-        <span class="evt-meta-item"><span>⏱</span> 1 jour · 3 juin 2025</span>
-        <span class="evt-meta-item"><span>📍</span> Centre de conférences IFRAS, Toulouse</span>
-        <span class="evt-meta-item"><span>👥</span> 110 participants</span>
-      </div>
-    </div>
-  </a>
-
-  <div class="no-results" id="no-results">
-    <strong>Aucun résultat</strong>
-    Aucun événement ne correspond à votre recherche.
-  </div>
-
-</div>
-
-<!-- ===== NOTICE ===== -->
-<div class="archive-notice">
-  <div class="archive-notice-inner">
-    <div class="archive-icon">📅</div>
-    <div class="archive-text">
-      <strong>Événements antérieurs à 2025</strong>
-      <p>Les comptes-rendus, supports de présentation et enregistrements des événements passés sont consultables sur demande auprès du <a href="/cdn-cgi/l/email-protection#dbbaa9b8b3b2adbea89bb2bda9baa8f5bda9">Service Archives &amp; Documentation</a>. Certains contenus sont soumis à accréditation.</p>
-    </div>
-    <a href="/cdn-cgi/l/email-protection#09687b6a61607f6c7a49606f7b687a276f7b" class="archive-cta">Contacter les archives →</a>
-  </div>
-</div>
-
-<footer>
-  © IFRAS — Institut Français de Recherche Aéronautique et Spatiale<br>
-  Agenda scientifique mis à jour mensuellement
 </footer>
 
 <script>
-// ─── Init ────────────────────────────────────────────────────────────────────
-const evtCards   = Array.from(document.querySelectorAll('.evt-card'));
-const list       = document.getElementById('evt-list');
-const pastSep    = document.getElementById('past-sep');
-const noResults  = document.getElementById('no-results');
-const searchInput  = document.getElementById('search-input');
-const searchClear  = document.getElementById('search-clear');
-const sortSelect   = document.getElementById('sort-select');
-const filterBtns   = document.querySelectorAll('.filter-btn');
-const resultsCount = document.getElementById('results-count');
-const resetBtn     = document.getElementById('reset-btn');
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// Pré-calculer le texte de recherche sur chaque carte
-evtCards.forEach(card => {
-  card.dataset.searchText = card.textContent.toLowerCase();
-});
-
-let activeFilter = 'tous';
-let searchQuery  = '';
-let sortOrder    = 'recent';
-
-// ─── Normalisation (accents) ─────────────────────────────────────────────────
-function norm(str) {
-  return (str || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-}
-
-// ─── Logique principale ───────────────────────────────────────────────────────
-function applyAll() {
-
-  // 1. Trier par date
-  const sorted = [...evtCards].sort((a, b) => {
-    const da = new Date(a.dataset.date).getTime();
-    const db = new Date(b.dataset.date).getTime();
-    return sortOrder === 'recent' ? db - da : da - db;
+  /* ---------- Menu mobile ---------- */
+  const toggle = document.querySelector('.menu-toggle');
+  const panel = document.getElementById('mobile-panel');
+  const icon = toggle.querySelector('i');
+  const setMenu = (open) => {
+    panel.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    icon.className = open ? 'ph-light ph-x' : 'ph-light ph-list';
+  };
+  toggle.addEventListener('click', () => setMenu(!panel.classList.contains('is-open')));
+  document.addEventListener('click', (e) => {
+    if (panel.classList.contains('is-open') && !panel.contains(e.target) && !toggle.contains(e.target)) setMenu(false);
   });
+  window.addEventListener('pageshow', () => setMenu(false));
 
-  // 2. Réordonner dans le DOM : futurs → séparateur → passés → no-results
-  const future = sorted.filter(c => !c.classList.contains('is-past'));
-  const past   = sorted.filter(c =>  c.classList.contains('is-past'));
+  /* ---------- Apparition au défilement ---------- */
+  const revealIO = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      revealIO.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach((el) => revealIO.observe(el));
 
-  future.forEach(c => list.insertBefore(c, pastSep));
-  list.insertBefore(pastSep, noResults);
-  past.forEach(c => list.insertBefore(c, noResults));
+  /* ---------- Dates : tout est calculé à partir du jour courant ---------- */
+  const DAY = 86400000;
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const parse = (s) => new Date(s + 'T00:00:00');
+  const MONTHS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+  const WDAY = new Intl.DateTimeFormat('fr-FR', { weekday: 'short' });
+  const LONG = new Intl.DateTimeFormat('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+  const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
 
-  // 3. Filtrer visibilité
-  let visible = 0;
-  sorted.forEach(card => {
-    const matchType   = activeFilter === 'tous' ||
-                        norm(card.dataset.type) === norm(activeFilter);
-    const matchSearch = searchQuery === '' ||
-                        card.dataset.searchText.includes(searchQuery);
+  const relative = (start, end) => {
+    const ds = Math.round((start - today) / DAY), de = Math.round((end - today) / DAY);
+    if (ds <= 0 && de >= 0) return ['En cours', true];
+    if (ds === 1) return ['Demain', true];
+    if (ds > 1) return [ds < 14 ? `Dans ${ds} jours` : ds < 60 ? `Dans ${Math.round(ds / 7)} semaines` : `Dans ${Math.round(ds / 30)} mois`, ds < 14];
+    const ago = -de;
+    return [ago < 14 ? `Il y a ${ago} jour${ago > 1 ? 's' : ''}` : ago < 60 ? `Il y a ${Math.round(ago / 7)} semaines` : `Il y a ${Math.round(ago / 30)} mois`, false];
+  };
 
-    if (matchType && matchSearch) {
-      card.style.display = '';
-      visible++;
-    } else {
-      card.style.display = 'none';
+  const list = document.getElementById('agenda-list');
+  const events = [...list.querySelectorAll('.evt')].map((el) => {
+    const start = parse(el.dataset.start), end = parse(el.dataset.end);
+    const past = end < today;
+    el.classList.toggle('is-past', past);
+    el.querySelector('.evt-wday').textContent = WDAY.format(start).replace('.', '');
+    const [txt, soon] = relative(start, end);
+    const when = el.querySelector('.evt-when');
+    when.textContent = txt; when.classList.toggle('is-soon', soon);
+    if (past) {
+      const b = el.querySelector('.badge');
+      b.className = 'badge badge--past'; b.textContent = 'Terminé';
     }
+    const hl = [...el.querySelectorAll('.evt-title a, .evt-desc')];
+    return {
+      el, start, end, past,
+      type: el.dataset.type,
+      title: el.querySelector('.evt-title').textContent.trim(),
+      place: el.dataset.place,
+      text: norm(el.textContent),
+      hl: hl.map((node) => ({ node, html: node.innerHTML }))
+    };
   });
 
-  // 4. Séparateur visible seulement si au moins un passé affiché
-  pastSep.style.display = past.some(c => c.style.display !== 'none') ? '' : 'none';
+  /* ---------- Fichier .ics : l'événement s'ajoute à n'importe quel agenda ---------- */
+  const toast = document.getElementById('toast');
+  let toastTimer = 0;
+  const showToast = (msg) => {
+    toast.querySelector('span').textContent = msg;
+    toast.classList.add('is-on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('is-on'), 2600);
+  };
+  const ymd = (d) => `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
+  const downloadIcs = (ev) => {
+    const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
+    const ics = [
+      'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//IFRAS//Agenda//FR', 'BEGIN:VEVENT',
+      `UID:${ymd(ev.start)}-${norm(ev.title).replace(/[^a-z0-9]+/g, '-')}@ifras.fr`,
+      `DTSTAMP:${stamp}`,
+      `DTSTART;VALUE=DATE:${ymd(ev.start)}`,
+      `DTEND;VALUE=DATE:${ymd(new Date(ev.end.getTime() + DAY))}`,
+      `SUMMARY:${ev.title}`, `LOCATION:${ev.place}`,
+      'END:VEVENT', 'END:VCALENDAR'
+    ].join('\r\n');
+    const url = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
+    const a = Object.assign(document.createElement('a'), { href: url, download: `ifras-${ymd(ev.start)}.ics` });
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    showToast('Fichier téléchargé : ouvrez-le pour ajouter l’événement à votre agenda.');
+  };
+  events.forEach((ev) => ev.el.querySelector('.ics').addEventListener('click', () => downloadIcs(ev)));
 
-  // 5. Mise à jour compteur & boutons
-  noResults.style.display    = visible === 0 ? 'block' : 'none';
-  resultsCount.textContent   = visible === 0 ? 'Aucun résultat'
-                               : `${visible} événement${visible > 1 ? 's' : ''}`;
-  resetBtn.style.display     = (activeFilter !== 'tous' || searchQuery !== '')
-                               ? 'inline-flex' : 'none';
-  searchClear.style.display  = searchQuery !== '' ? 'flex' : 'none';
-}
+  /* ---------- Surlignage (insensible aux accents) ---------- */
+  const highlight = (entry, q) => {
+    entry.hl.forEach(({ node, html }) => {
+      node.innerHTML = html;
+      if (!q) return;
+      const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
+      const texts = [];
+      while (walker.nextNode()) texts.push(walker.currentNode);
+      texts.forEach((t) => {
+        const flat = [...t.nodeValue].map((c) => norm(c)[0] || c).join('');
+        const i = flat.indexOf(q);
+        if (i < 0) return;
+        const after = t.splitText(i); after.splitText(q.length);
+        const mark = document.createElement('mark'); mark.textContent = after.nodeValue;
+        after.replaceWith(mark);
+      });
+    });
+  };
 
-// ─── Listeners ───────────────────────────────────────────────────────────────
-filterBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    filterBtns.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeFilter = btn.dataset.filter;
-    applyAll();
+  /* ---------- État + rendu groupé par mois ---------- */
+  const toolbar = document.getElementById('toolbar');
+  const input = document.getElementById('finder-input');
+  const chips = [...document.querySelectorAll('.chip')];
+  const count = document.getElementById('count');
+  const reset = document.getElementById('reset');
+  const empty = document.getElementById('list-empty');
+  const emptyText = document.getElementById('empty-text');
+  const emptyBtn = document.querySelector('#list-empty button');
+  const seg = document.getElementById('segmented');
+  const segBtns = [...seg.querySelectorAll('button')];
+  const state = { q: '', type: 'tous', when: 'upcoming' };
+
+  const upcomingCount = events.filter((e) => !e.past).length;
+  seg.querySelector('[data-when="upcoming"] small').textContent = upcomingCount;
+  seg.querySelector('[data-when="past"] small').textContent = events.length - upcomingCount;
+  /* rien à venir : on ouvre directement sur l'historique */
+  if (!upcomingCount) state.when = 'all';
+
+  const render = () => {
+    const q = norm(state.q.trim());
+    toolbar.classList.toggle('has-value', q.length > 0);
+    const visible = events
+      .filter((e) => state.when === 'all' || (state.when === 'past') === e.past)
+      .filter((e) => (state.type === 'tous' || e.type === state.type) && (!q || e.text.includes(q)))
+      /* à venir : le plus proche d'abord ; passés : le plus récent d'abord */
+      .sort((a, b) => (a.past - b.past) || (a.past ? b.start - a.start : a.start - b.start));
+
+    const prev = new Set(events.filter((e) => e.el.isConnected).map((e) => e.el));
+    list.querySelectorAll('.month').forEach((g) => g.remove());
+    const groups = new Map();
+    visible.forEach((e) => {
+      const key = `${e.start.getFullYear()}-${e.start.getMonth()}`;
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(e);
+    });
+    groups.forEach((items) => {
+      const d = items[0].start;
+      const g = document.createElement('section');
+      g.className = 'month';
+      const name = MONTHS[d.getMonth()];
+      g.setAttribute('aria-label', `${name} ${d.getFullYear()}`);
+      g.innerHTML = `<div class="month-label">${name[0].toUpperCase() + name.slice(1)}<small>${d.getFullYear()}</small></div><div class="month-items"></div>`;
+      items.forEach((e) => {
+        highlight(e, q);
+        g.lastElementChild.appendChild(e.el);
+        if (!prev.has(e.el) && !reduceMotion) { e.el.classList.remove('pop-in'); void e.el.offsetWidth; e.el.classList.add('pop-in'); }
+      });
+      list.appendChild(g);
+    });
+    events.filter((e) => !visible.includes(e)).forEach((e) => e.el.remove());
+
+    empty.hidden = visible.length > 0;
+    /* rien à venir pour ce filtre : on propose de regarder aussi le passé */
+    const inPast = state.when === 'upcoming' && events.some((e) => e.past && (state.type === 'tous' || e.type === state.type) && (!q || e.text.includes(q)));
+    emptyText.textContent = inPast
+      ? `Aucun${state.type === 'tous' ? ' événement' : 'e date'} à venir${state.type === 'tous' ? '' : ' pour « ' + state.type + ' »'}.`
+      : 'Aucun événement ne correspond à votre recherche.';
+    emptyBtn.textContent = inPast ? 'Voir les événements passés' : 'Réinitialiser les filtres';
+    emptyBtn.dataset.action = inPast ? 'past' : 'reset';
+    const label = { upcoming: 'à venir', past: 'passé', all: '' }[state.when];
+    const plural = visible.length > 1 ? 's' : '';
+    count.innerHTML = `<strong>${visible.length}</strong> événement${plural}${label ? ' ' + label + (state.when === 'past' ? plural : '') : ''}`;
+    reset.hidden = !q && state.type === 'tous';
+  };
+
+  const moveIndicator = (btn) => {
+    seg.style.setProperty('--x', `${btn.offsetLeft}px`);
+    seg.style.setProperty('--w', `${btn.offsetWidth}px`);
+  };
+  const setWhen = (w) => {
+    state.when = w;
+    segBtns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.when === w)));
+    moveIndicator(seg.querySelector(`[data-when="${w}"]`));
+  };
+  segBtns.forEach((btn) => btn.addEventListener('click', () => { setWhen(btn.dataset.when); render(); }));
+  setWhen(state.when);
+  window.addEventListener('resize', () => moveIndicator(seg.querySelector('[aria-pressed="true"]')));
+  document.fonts?.ready.then(() => moveIndicator(seg.querySelector('[aria-pressed="true"]')));
+
+  input.addEventListener('input', () => {
+    state.q = input.value;
+    /* une recherche porte sur tout l'agenda, passé compris */
+    if (state.q && state.when !== 'all') setWhen('all');
+    render();
   });
-});
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && input.value) { e.stopPropagation(); input.value = ''; state.q = ''; render(); }
+  });
+  toolbar.querySelector('.finder-clear').addEventListener('click', () => { input.value = ''; state.q = ''; render(); input.focus(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === '/' && !/input|textarea|select/i.test(document.activeElement.tagName)) { e.preventDefault(); input.focus(); }
+  });
+  chips.forEach((chip) => chip.addEventListener('click', () => {
+    state.type = chip.dataset.type;
+    chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+    render();
+  }));
+  const doReset = () => {
+    state.q = ''; state.type = 'tous'; input.value = '';
+    chips.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.type === 'tous')));
+    setWhen(upcomingCount ? 'upcoming' : 'all');
+    render();
+  };
+  reset.addEventListener('click', doReset);
+  emptyBtn.addEventListener('click', () => {
+    if (emptyBtn.dataset.action === 'past') { setWhen('past'); render(); } else doReset();
+  });
 
-searchInput.addEventListener('input', () => {
-  searchQuery = searchInput.value.toLowerCase().trim();
-  applyAll();
-});
+  render();
 
-searchClear.addEventListener('click', () => {
-  searchInput.value = '';
-  searchQuery = '';
-  applyAll();
-  searchInput.focus();
-});
+  /* ---------- Prochain rendez-vous + compte à rebours ---------- */
+  const nextBox = document.getElementById('next');
+  const next = events.filter((e) => e.end >= today).sort((a, b) => a.start - b.start)[0];
+  if (next) {
+    nextBox.style.setProperty('--c', next.el.style.getPropertyValue('--c'));
+    document.getElementById('next-title').textContent = next.title;
+    document.getElementById('next-meta').innerHTML =
+      `<span><i class="ph-light ph-calendar-blank" aria-hidden="true"></i> ${LONG.format(next.start)}</span>` +
+      `<span><i class="ph-light ph-map-pin" aria-hidden="true"></i> ${next.place}</span>` +
+      `<span style="color:var(--c)">${next.type}</span>`;
+    document.getElementById('next-ics').addEventListener('click', () => downloadIcs(next));
+    document.getElementById('next-go').addEventListener('click', (e) => {
+      e.preventDefault();
+      next.el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+      next.el.classList.remove('flash'); void next.el.offsetWidth; next.el.classList.add('flash');
+    });
+    const vals = [...nextBox.querySelectorAll('.cd-val')];
+    const target = new Date(next.start); target.setHours(9, 0, 0, 0);   /* ouverture des portes à 9 h */
+    const tickCd = () => {
+      const ms = Math.max(0, target - new Date());
+      const parts = { d: Math.floor(ms / DAY), h: Math.floor(ms / 3600000) % 24, m: Math.floor(ms / 60000) % 60 };
+      vals.forEach((v) => {
+        const txt = String(parts[v.dataset.u]).padStart(2, '0');
+        if (v.textContent !== txt) {
+          v.textContent = txt;
+          if (!reduceMotion) { v.classList.remove('tick'); void v.offsetWidth; v.classList.add('tick'); }
+        }
+      });
+    };
+    tickCd();
+    setInterval(tickCd, 15000);
+  } else {
+    nextBox.querySelector('.countdown').remove();
+    nextBox.querySelector('.next-actions').remove();
+    nextBox.querySelector('.next-meta').remove();
+    document.getElementById('next-title').innerHTML = '<p class="next-empty">Aucun événement programmé pour le moment. Revenez bientôt.</p>';
+  }
 
-sortSelect.addEventListener('change', () => {
-  sortOrder = sortSelect.value;
-  applyAll();
-});
+  /* ---------- Cadran annuel (fond du hero) ----------
+     Douze mois autour d'un cercle ; l'aiguille marque aujourd'hui,
+     chaque événement est un point coloré à sa date. */
+  const canvas = document.getElementById('dial');
+  const ctx = canvas.getContext('2d');
+  const hero = document.querySelector('.hero');
+  let w = 0, h = 0, cx = 0, cy = 0, R = 0, running = false, raf = 0, t0 = 0;
+  const yearStart = new Date(today.getFullYear(), 0, 1);
+  const angleOf = (d) => ((d - yearStart) / (365.25 * DAY)) * Math.PI * 2 - Math.PI / 2;
+  const marks = events.map((e) => ({ a: angleOf(e.start), c: e.el.style.getPropertyValue('--c').trim(), past: e.past, next: e === next }));
 
-resetBtn.addEventListener('click', () => {
-  activeFilter = 'tous';
-  searchQuery  = '';
-  sortOrder    = 'recent';
-  searchInput.value  = '';
-  sortSelect.value   = 'recent';
-  filterBtns.forEach(b => b.classList.remove('active'));
-  document.querySelector('[data-filter="tous"]').classList.add('active');
-  applyAll();
-});
+  const size = () => {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = hero.clientWidth; h = hero.clientHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const wide = w > 960;
+    cx = wide ? w * .72 : w * .5; cy = h * .5;
+    R = wide ? Math.min(h * .62, w * .34) : Math.min(w * .7, h * .42);
+  };
 
-// ─── Lancement initial ────────────────────────────────────────────────────────
-applyAll();
+  const draw = (t) => {
+    ctx.clearRect(0, 0, w, h);
+    const spin = reduceMotion ? 0 : t * .000004;
+    ctx.lineWidth = 1;
+    /* anneaux */
+    [1, .82, .64].forEach((k, i) => {
+      ctx.strokeStyle = `rgba(143,162,255,${.1 - i * .025})`;
+      ctx.setLineDash(i === 1 ? [2, 8] : []);
+      ctx.beginPath(); ctx.arc(cx, cy, R * k, 0, Math.PI * 2); ctx.stroke();
+    });
+    ctx.setLineDash([]);
+    /* graduations : 12 mois + jours */
+    for (let i = 0; i < 365; i += 5) {
+      const a = (i / 365) * Math.PI * 2 - Math.PI / 2 + spin;
+      const month = i % 30 === 0;
+      const r1 = R * (month ? .93 : .97);
+      ctx.strokeStyle = month ? 'rgba(170,179,214,.28)' : 'rgba(170,179,214,.09)';
+      ctx.beginPath(); ctx.moveTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1); ctx.lineTo(cx + Math.cos(a) * R, cy + Math.sin(a) * R); ctx.stroke();
+    }
+    ctx.font = '500 11px "DM Sans", system-ui, sans-serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = 'rgba(170,179,214,.35)';
+    ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'].forEach((m, i) => {
+      const a = ((i + .5) / 12) * Math.PI * 2 - Math.PI / 2 + spin;
+      ctx.fillText(m, cx + Math.cos(a) * R * 1.07, cy + Math.sin(a) * R * 1.07);
+    });
+    /* arc de l'année écoulée + aiguille d'aujourd'hui */
+    const now = angleOf(today) + spin;
+    const g = ctx.createLinearGradient(cx - R, cy, cx + R, cy);
+    g.addColorStop(0, 'rgba(249,115,22,.05)'); g.addColorStop(1, 'rgba(249,115,22,.35)');
+    ctx.strokeStyle = g; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(cx, cy, R * .82, -Math.PI / 2 + spin, now); ctx.stroke();
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(253,186,116,.55)';
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(now) * R * .9, cy + Math.sin(now) * R * .9); ctx.stroke();
+    ctx.fillStyle = '#fdba74';
+    ctx.beginPath(); ctx.arc(cx, cy, 3, 0, Math.PI * 2); ctx.fill();
+    /* événements de l'année */
+    marks.forEach((m) => {
+      if (m.a < -Math.PI / 2 - .01 || m.a > Math.PI * 1.5) return;   /* hors de l'année en cours */
+      const a = m.a + spin, x = cx + Math.cos(a) * R * .82, y = cy + Math.sin(a) * R * .82;
+      if (m.next && !reduceMotion) {
+        const p = (t % 2400) / 2400;
+        ctx.strokeStyle = m.c; ctx.globalAlpha = 1 - p;
+        ctx.beginPath(); ctx.arc(x, y, 5 + p * 14, 0, Math.PI * 2); ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+      ctx.globalAlpha = m.past ? .35 : 1;
+      ctx.fillStyle = m.c;
+      ctx.beginPath(); ctx.arc(x, y, m.next ? 5 : 3.5, 0, Math.PI * 2); ctx.fill();
+      ctx.globalAlpha = 1;
+    });
+  };
+
+  const loop = (t) => { draw(t); if (running) raf = requestAnimationFrame(loop); };
+  const start = () => { if (running || reduceMotion) return; running = true; raf = requestAnimationFrame(loop); };
+  const stop = () => { running = false; cancelAnimationFrame(raf); };
+  size(); draw(0); canvas.classList.add('is-ready');
+  let heroVisible = true;
+  new IntersectionObserver(([entry]) => {
+    heroVisible = entry.isIntersecting;
+    heroVisible && !document.hidden ? start() : stop();
+  }).observe(hero);
+  document.addEventListener('visibilitychange', () => { document.hidden ? stop() : heroVisible && start(); });
+  let rt = 0;
+  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { size(); draw(performance.now()); }, 150); });
+})();
 </script>
 
 </body>
