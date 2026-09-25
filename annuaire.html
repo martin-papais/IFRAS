@@ -1248,7 +1248,8 @@ function clearancePill(p) {
   const lvl = getClearanceLevel(p.clearance);
   return `<span class="pill" style="--p:${LEVEL_COLORS[lvl] || 'var(--text-soft)'}"><i class="ph-light ph-shield-check" aria-hidden="true"></i>${esc(p.clearance)}</span>`;
 }
-const isMe = (p) => !p._ghost && (p.id === userId || (p.email && p.email === userEmail));
+const mailKey = (e) => String(e || '').trim().toLowerCase();
+const isMe = (p) => !p._ghost && (p.id === userId || (p.email && mailKey(p.email) === mailKey(userEmail)));
 
 /* ---------- filtres ---------- */
 function matches(p) {
@@ -1455,7 +1456,7 @@ function openSheet(idx, from) {
   $('shDept').textContent = p._ghost ? 'Externe' : (p.department || '—');
   $('shProf').textContent = p._ghost ? 'Contact externe' : (p.profession || '—');
   $('shEmail').textContent = p.email || '—';
-  const ex = exchanges.get(p.email) || 0;
+  const ex = p._ex || 0;
   $('shEx').textContent = isMe(p) ? '—' : ex ? `${ex} message${ex > 1 ? 's' : ''} avec vous` : 'Aucun pour le moment';
 
   const note = $('shNote');
@@ -1547,11 +1548,10 @@ document.addEventListener('keydown', (e) => {
 
 /* ---------- correspondants fréquents ---------- */
 function renderPeers() {
-  const top = [...exchanges].sort((a, b) => b[1] - a[1]).slice(0, 5);
+  const top = allProfiles.filter((p) => p._ex > 0).sort((a, b) => b._ex - a._ex).slice(0, 5);
   if (!top.length) { $('peers').innerHTML = '<li><p class="side-empty">Aucun échange pour le moment.</p></li>'; return; }
-  $('peers').innerHTML = top.map(([email, n]) => {
-    const p = allProfiles.find((x) => x.email === email);
-    if (!p) return '';
+  $('peers').innerHTML = top.map((p) => {
+    const n = p._ex;
     return `<li><button type="button" class="peer${p._ghost ? ' is-ghost' : ''}" data-idx="${allProfiles.indexOf(p)}" style="--ah:${hueOf(p.email)}">
       <span class="ag-avatar">${avatarHTML(p)}</span>
       <span style="min-width:0"><strong>${esc(fullName(p))}</strong><small>${esc(p._ghost ? 'Contact externe' : (p.department || p.profession || '—'))}</small></span>
@@ -1643,7 +1643,7 @@ async function loadDirectory() {
   $('userAvatar').style.setProperty('--ah', hueOf(user.email));
   $('userLabel').textContent = user.email.split('@')[0];
 
-  const { data: profiles, error } = await _sb.from('profiles').select('*');
+  let { data: profiles, error } = await _sb.from('profiles').select('*');
   if (error || !profiles) {
     $('directory').innerHTML = '<div class="empty"><i class="ph-light ph-cloud-slash" aria-hidden="true"></i>Impossible de charger l\'annuaire pour le moment.</div>';
     $('countChip').innerHTML = '<i class="ph-light ph-warning-circle" aria-hidden="true"></i> Annuaire indisponible';
@@ -1656,13 +1656,49 @@ async function loadDirectory() {
     _sb.from('email').select('sender, receiver').eq('receiver', userEmail),
     _sb.from('email').select('sender, receiver').eq('sender', userEmail)
   ]);
+  /* adresses comparées sans tenir compte des majuscules ni des espaces */
+  const me = mailKey(userEmail);
   exchanges = new Map();
-  (received || []).forEach((m) => { if (m.sender && m.sender !== userEmail) exchanges.set(m.sender, (exchanges.get(m.sender) || 0) + 1); });
-  (sent || []).forEach((m) => { if (m.receiver && m.receiver !== userEmail) exchanges.set(m.receiver, (exchanges.get(m.receiver) || 0) + 1); });
+  const add = (e) => { const k = mailKey(e); if (k && k !== me) exchanges.set(k, (exchanges.get(k) || 0) + 1); };
+  (received || []).forEach((m) => add(m.sender));
+  (sent || []).forEach((m) => add(m.receiver));
 
-  const profileByEmail = new Map();
-  profiles.forEach((p) => { if (p.email) profileByEmail.set(p.email, p); });
-  const ghosts = [...exchanges.keys()].filter((e) => !profileByEmail.has(e)).map(ghostProfile);
+  /* une seule fiche par agent (au cas où la table renverrait un doublon) */
+  const seenIds = new Set(), seenMails = new Set();
+  const agents = profiles.filter((p) => {
+    const k = mailKey(p.email);
+    if ((p.id && seenIds.has(p.id)) || (k && seenMails.has(k))) return false;
+    if (p.id) seenIds.add(p.id);
+    if (k) seenMails.add(k);
+    return true;
+  });
+  /* son propre profil sans email renseigné : on lui rattache celui de la session */
+  agents.forEach((p) => { p._ex = 0; if (!p.email && p.id === userId) p.email = userEmail; });
+
+  /* rattache chaque correspondant à sa fiche : même adresse, sinon même identifiant avant « @ »,
+     sinon nom reconnu dans l'adresse (ex. claire.durignan@… → Claire Durignan) */
+  const byMail = new Map(agents.filter((p) => p.email).map((p) => [mailKey(p.email), p]));
+  const local = (e) => mailKey(e).split('@')[0];
+  function findAgent(k) {
+    if (byMail.has(k)) return byMail.get(k);
+    let c = agents.filter((p) => p.email && local(p.email) === local(k));
+    if (c.length === 1) return c[0];
+    const parts = norm(local(k)).split(/[._\-0-9]+/).filter((w) => w.length > 1);
+    if (!parts.length) return null;
+    c = agents.filter((p) => {
+      const names = norm(`${p.first_name || ''} ${p.last_name || ''}`).split(/[\s-]+/).filter(Boolean);
+      return names.length && parts.every((w) => names.includes(w));
+    });
+    return c.length === 1 ? c[0] : null;
+  }
+  const ghosts = [];
+  exchanges.forEach((n, k) => {
+    const a = findAgent(k);
+    if (a) { if (!isMe(a)) a._ex += n; }
+    else { const g = ghostProfile(k); g._ex = n; ghosts.push(g); }
+  });
+  const peers = agents.filter((p) => p._ex > 0).length + ghosts.length;
+  profiles = agents;
 
   const byName = (a, b) => `${a.last_name || ''} ${a.first_name || ''}`.localeCompare(`${b.last_name || ''} ${b.first_name || ''}`, 'fr');
   allProfiles = [...profiles, ...ghosts].sort(byName);
@@ -1673,7 +1709,7 @@ async function loadDirectory() {
   countTo($('stAgents'), real);
   countTo($('stActive'), profiles.filter((p) => statusClass(p) === 'active').length);
   countTo($('stDepts'), new Set(profiles.map((p) => p.department).filter(Boolean)).size);
-  countTo($('stPeers'), exchanges.size);
+  countTo($('stPeers'), peers);
 
   buildChips();
   syncPressed();
