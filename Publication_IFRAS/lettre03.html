@@ -1,0 +1,1846 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biologie humaine en microgravité | Hors-série N°1 | Publications IFRAS</title>
+<meta name="description" content="Hors-série N°1 de l'IFRAS : ce que l'impesanteur fait au corps humain et comment l'institut prépare les équipages d'ARTEMIS-9.">
+<meta name="theme-color" content="#050b1e">
+<link rel="icon" type="image/png" sizes="1000x1000" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+
+<style>
+/* =========================================================
+   TOKENS (identiques aux autres pages)
+   ========================================================= */
+:root {
+  --bg-main: #050b1e;
+  --bg-dark: #020617;
+  --bg-light: #070f2b;
+  --bg-raise: #0a1436;
+  --accent: #4f6bed;
+  --accent-hover: #3d5adb;
+  --accent-soft: rgba(79,107,237,.14);
+  --accent-line: rgba(79,107,237,.38);
+  --text-main: #e6e6e6;
+  --text-strong: #f5f7ff;
+  --text-soft: #aab3d6;
+  --text-mute: #8891b8;
+  --border: #1b2555;
+
+  /* Une couleur par type de contenu */
+  --t-sci: #60a5fa;
+  --t-ifras: #34d399;
+  --t-event: #f97316;
+  /* Types de publications IFRAS */
+  --t-lettre: #60a5fa;
+  --t-rapport: #34d399;
+  --t-hs: #f97316;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --header-h: 68px;
+  --subnav-h: 48px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 20px); }
+
+body {
+  margin: 0;
+  font-family: "DM Sans", "Segoe UI", system-ui, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+[hidden] { display: none !important; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.skip-link {
+  position: absolute; left: 16px; top: -48px;
+  padding: 10px 16px;
+  background: var(--accent); color: #fff;
+  border-radius: var(--radius-sm);
+  z-index: 3000; text-decoration: none;
+  transition: top 160ms var(--ease-out);
+}
+.skip-link:focus { top: 12px; }
+
+.container { max-width: 1300px; margin: 0 auto; padding: 0 30px; }
+
+/* =========================================================
+   BOUTONS
+   ========================================================= */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 22px;
+  border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 500;
+  text-decoration: none; white-space: nowrap;
+  border: 1px solid transparent;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.btn:active { transform: scale(0.97); }
+.btn i { font-size: 16px; transition: transform 200ms var(--ease-out); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-ghost { border-color: var(--accent-line); color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-ghost:hover { background: var(--accent-soft); border-color: var(--accent); }
+  .btn:hover i { transform: translateX(3px); }
+}
+
+.text-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--text-soft);
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.text-link i { transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .text-link:hover { color: #fff; }
+  .text-link:hover i { transform: translateX(3px); }
+}
+
+/* =========================================================
+   HEADER (opaque)
+   ========================================================= */
+.site-header {
+  position: fixed; inset: 0 0 auto 0;
+  z-index: 2000;
+  height: var(--header-h);
+  background: rgba(5,11,30,.88);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.header-left { display: flex; align-items: center; gap: 44px; }
+.logo-link { display: flex; align-items: center; }
+.logo-link img { height: 44px; width: auto; }
+
+.main-nav { list-style: none; display: flex; gap: 6px; margin: 0; padding: 0; }
+.main-nav a {
+  position: relative; display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--text-soft);
+  font-size: 14px; letter-spacing: .02em;
+  border-radius: 6px;
+  transition: color 160ms ease;
+}
+.main-nav a::after {
+  content: ""; position: absolute;
+  left: 12px; right: 12px; bottom: 2px; height: 1px;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 200ms var(--ease-out);
+}
+.main-nav a[aria-current="page"] { color: #fff; }
+.main-nav a[aria-current="page"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .main-nav a:hover { color: #fff; }
+  .main-nav a:hover::after { transform: scaleX(1); }
+}
+
+.header-right { display: flex; align-items: center; gap: 10px; }
+.header-right .btn { padding: 9px 18px; font-size: 13px; }
+
+.menu-toggle {
+  display: none;
+  width: 42px; height: 42px;
+  align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: #fff; font-size: 20px; cursor: pointer;
+  transition: transform 160ms var(--ease-out);
+}
+.menu-toggle:active { transform: scale(0.95); }
+
+.mobile-panel {
+  position: fixed; top: var(--header-h); left: 12px; right: 12px;
+  z-index: 1999;
+  padding: 10px;
+  background: rgba(7,15,43,.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(2,6,23,.6);
+  transform-origin: top right;
+  opacity: 0; transform: scale(0.96) translateY(-6px);
+  pointer-events: none; visibility: hidden;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s linear 220ms;
+}
+.mobile-panel.is-open {
+  opacity: 1; transform: none; pointer-events: auto; visibility: visible;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s;
+}
+.mobile-panel ul { list-style: none; margin: 0; padding: 0; }
+.mobile-panel a {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px; color: var(--text-main);
+  text-decoration: none; font-size: 16px; border-radius: 10px;
+}
+.mobile-panel a[aria-current="page"] { background: var(--accent-soft); color: #fff; }
+.mobile-panel .btn { width: 100%; justify-content: center; margin-top: 8px; }
+
+/* =========================================================
+   SOUS-NAVIGATION (ancres + section visible)
+   ========================================================= */
+.subnav {
+  position: sticky;
+  top: var(--header-h);
+  margin-top: var(--header-h);
+  z-index: 1500;
+  height: var(--subnav-h);
+  background: rgba(8,18,53,.94);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.subnav-list {
+  height: 100%;
+  list-style: none; margin: 0 auto; padding: 0 30px;
+  max-width: 1300px;
+  display: flex; align-items: stretch; justify-content: space-between;
+}
+.subnav-list li { display: flex; }
+.subnav-link {
+  position: relative;
+  display: flex; align-items: center; gap: 9px;
+  padding: 0 14px;
+  color: var(--text-soft);
+  text-decoration: none;
+  font-size: 14px; font-weight: 500;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.subnav-link i { font-size: 17px; color: var(--c); }
+.subnav-link::after {
+  content: ""; position: absolute;
+  left: 14px; right: 14px; bottom: -1px; height: 2px;
+  background: var(--c);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+.subnav-link[aria-current="true"] { color: #fff; }
+.subnav-link[aria-current="true"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .subnav-link:hover { color: #fff; }
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.site-footer {
+  margin-top: 100px;
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border);
+  padding: 36px 0;
+  font-size: 13px; color: var(--text-mute);
+}
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+/* =========================================================
+   ARTICLE
+   ========================================================= */
+:root {
+  --mono: "DM Mono", ui-monospace, Menlo, Consolas, monospace;
+  --c10: #3b82f6;   /* CMC-10Z */
+  --c20: #059669;   /* CMC-20Z */
+  --c30: #ea580c;   /* CMC-30Z */
+  --hot: #f97316;
+  --ok: #34d399;
+  --warn: #fbbf24;
+  --bad: #f87171;
+  --surface: #070f2b;
+  --line: #13204d;
+}
+html { scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 24px); }
+
+/* barre de lecture sous la sous-navigation */
+.progress {
+  position: fixed; left: 0; right: 0; top: calc(var(--header-h) + var(--subnav-h)); z-index: 1400;
+  height: 2px; background: transparent; pointer-events: none;
+}
+.progress span { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, var(--accent), #fb7185); transform-origin: left; transform: scaleX(0); }
+
+/* ----- En-tête de l'article ----- */
+.art-hero { position: relative; overflow: hidden; isolation: isolate; border-bottom: 1px solid var(--border); }
+.art-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(ellipse 45% 70% at 78% 45%, rgba(249,115,22,.16), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(79,107,237,.14), transparent 60%);
+}
+.art-hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 48px; align-items: center; padding: 48px 0 56px; }
+.crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 26px; padding: 0; list-style: none; font-size: 13px; color: var(--text-mute); }
+.crumbs a { color: var(--text-soft); text-decoration: none; transition: color 160ms ease; }
+.crumbs i { font-size: 11px; opacity: .6; }
+@media (hover: hover) and (pointer: fine) { .crumbs a:hover { color: #fff; } }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 11px; border-radius: 999px; font-size: 12.5px; font-weight: 500;
+  color: var(--b, var(--text-soft));
+  background: color-mix(in srgb, var(--b, var(--text-soft)) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--b, var(--text-soft)) 28%, transparent);
+}
+.badge i { font-size: 14px; }
+.art-title {
+  margin: 0 0 18px; font-family: "Syne", sans-serif; font-weight: 700;
+  font-size: clamp(30px, 3.6vw, 48px); line-height: 1.08; letter-spacing: -0.025em; color: var(--text-strong);
+  text-wrap: balance;
+}
+.art-lede { margin: 0 0 28px; max-width: 60ch; font-size: 18px; line-height: 1.6; color: var(--text-soft); font-weight: 300; }
+.authors { display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 0 0 22px; padding: 0; list-style: none; }
+.author { display: flex; align-items: center; gap: 10px; }
+.author .av { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-family: "Syne", sans-serif; font-size: 12px; font-weight: 700; color: #fff; background: linear-gradient(135deg, hsl(var(--ah) 55% 38%), hsl(var(--ah) 70% 60%)); }
+.author strong { display: block; font-size: 14px; font-weight: 500; color: var(--text-main); }
+.author small { display: block; font-size: 12.5px; color: var(--text-mute); }
+.meta-line { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 13px; color: var(--text-mute); }
+.meta-line span { display: inline-flex; align-items: center; gap: 7px; }
+.meta-line i { font-size: 15px; color: var(--text-soft); }
+.meta-line code { font-family: var(--mono); font-size: 12.5px; color: var(--text-soft); }
+
+.hero-in { opacity: 0; transform: translateY(12px); animation: heroIn 700ms var(--ease-out) forwards; animation-delay: calc(80ms + var(--i, 0) * 90ms); }
+@keyframes heroIn { to { opacity: 1; transform: none; } }
+
+/* illustration : capsule en rentrée */
+.reentry { position: relative; aspect-ratio: 1 / 0.86; max-width: 520px; justify-self: end; width: 100%; }
+.reentry canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.reentry svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.reentry .shock { animation: shock 2.4s var(--ease-in-out) infinite alternate; transform-origin: 62% 50%; }
+@keyframes shock { from { opacity: .75; transform: scale(.985); } to { opacity: 1; transform: scale(1.015); } }
+.reentry .glow { animation: glow 1.6s ease-in-out infinite alternate; }
+@keyframes glow { from { opacity: .55; } to { opacity: .95; } }
+.reentry-tag {
+  position: absolute; display: flex; align-items: center; gap: 8px;
+  padding: 6px 10px; border-radius: 8px; font-family: var(--mono); font-size: 12px; color: var(--text-soft);
+  background: rgba(2,6,23,.7); border: 1px solid var(--border); backdrop-filter: blur(6px);
+}
+.reentry-tag b { color: #fff; font-weight: 500; }
+.reentry-tag i { width: 7px; height: 7px; border-radius: 50%; background: var(--hot); }
+
+/* ----- Mise en page 3 colonnes ----- */
+.art-layout {
+  display: grid; grid-template-columns: 220px minmax(0, 720px) 280px; justify-content: space-between; gap: 48px;
+  padding-top: 48px;
+}
+.toc, .rail { position: sticky; top: calc(var(--header-h) + var(--subnav-h) + 28px); align-self: start; }
+.toc-title, .rail-title { margin: 0 0 14px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.toc ol { position: relative; list-style: none; margin: 0; padding: 0 0 0 14px; border-left: 1px solid var(--border); }
+.toc-ind { list-style: none; position: absolute; left: -1px; top: 0; width: 2px; height: 34px; background: var(--accent); border-radius: 2px; transition: transform 300ms var(--ease-out), height 300ms var(--ease-out); }
+.toc a {
+  display: flex; gap: 10px; padding: 7px 0; font-size: 14px; line-height: 1.35;
+  color: var(--text-mute); text-decoration: none; transition: color 160ms ease;
+}
+.toc a span { font-family: var(--mono); font-size: 12px; padding-top: 1px; color: inherit; opacity: .8; min-width: 16px; }
+.toc a.on { color: #fff; }
+@media (hover: hover) and (pointer: fine) { .toc a:hover { color: var(--text-main); } }
+.toc-time { display: flex; align-items: center; gap: 8px; margin-top: 18px; font-size: 13px; color: var(--text-mute); }
+.toc-time i { font-size: 15px; }
+
+/* ----- Colonne de droite ----- */
+.rail { display: grid; gap: 16px; max-height: calc(100vh - var(--header-h) - var(--subnav-h) - 44px); overflow-y: auto; scrollbar-width: none; overscroll-behavior: contain; }
+.rail::-webkit-scrollbar { display: none; }
+.rail-card { padding: 18px; border-radius: var(--radius); background: var(--bg-light); border: 1px solid var(--border); }
+.cite-text { margin: 0 0 14px; font-size: 13px; line-height: 1.6; color: var(--text-soft); }
+.cite-text em { color: var(--text-main); }
+.rail-actions { display: grid; gap: 8px; }
+.rbtn {
+  display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 40px; border-radius: 10px;
+  border: 1px solid var(--border); background: transparent; color: var(--text-main); font: inherit; font-size: 13.5px; cursor: pointer; text-decoration: none;
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out);
+}
+.rbtn i { font-size: 16px; }
+.rbtn:active { transform: scale(.97); }
+.rbtn.done { border-color: color-mix(in srgb, var(--ok) 45%, transparent); color: var(--ok); }
+@media (hover: hover) and (pointer: fine) { .rbtn:hover { border-color: var(--accent); background: var(--accent-soft); } }
+.fig-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.fig-list a { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: center; padding: 7px 8px; margin: 0 -8px; border-radius: 8px; font-size: 13.5px; color: var(--text-soft); text-decoration: none; transition: background-color 120ms ease, color 120ms ease; }
+.fig-list i { font-size: 17px; color: var(--accent); }
+@media (hover: hover) and (pointer: fine) { .fig-list a:hover { background: var(--bg-raise); color: #fff; } }
+.prog-link { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.prog-link .pi { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; font-size: 19px; color: var(--hot); background: rgba(249,115,22,.12); flex-shrink: 0; }
+.prog-link strong { display: block; font-size: 14px; font-weight: 500; }
+.prog-link small { display: block; font-size: 12.5px; color: var(--text-mute); }
+
+/* ----- Corps de texte ----- */
+.art { min-width: 0; counter-reset: fig; }
+.art p { margin: 0 0 18px; font-size: 17px; line-height: 1.75; color: #c3cae6; font-weight: 300; }
+.art p strong { color: var(--text-main); font-weight: 500; }
+.art h2 {
+  display: flex; align-items: baseline; gap: 14px;
+  margin: 64px 0 18px; font-family: "Syne", sans-serif; font-size: 26px; font-weight: 700; letter-spacing: -0.01em; color: var(--text-strong);
+}
+.art h2 .n { font-family: var(--mono); font-size: 14px; font-weight: 400; color: var(--accent); }
+.art h3 { margin: 34px 0 12px; font-size: 18px; font-weight: 500; color: var(--text-main); }
+sub, sup { line-height: 0; }
+
+/* L'essentiel */
+.essentials { padding: 26px; border-radius: 18px; background: linear-gradient(160deg, var(--bg-raise), var(--bg-light)); border: 1px solid var(--border); }
+.essentials-head { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; }
+.essentials-head i { font-size: 17px; color: var(--hot); }
+.kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 22px; }
+.kpi { padding: 16px; border-radius: 14px; background: rgba(2,6,23,.45); border: 1px solid var(--line); }
+.kpi strong { display: block; font-family: "Syne", sans-serif; font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -0.02em; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.kpi strong small { font-size: .55em; font-weight: 700; margin-left: 2px; color: var(--text-soft); }
+.kpi span { display: block; margin-top: 8px; font-size: 13.5px; line-height: 1.4; color: var(--text-soft); }
+.takeaways { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.takeaways li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 15.5px; line-height: 1.55; color: var(--text-main); }
+.takeaways i { font-size: 18px; color: var(--ok); margin-top: 2px; }
+
+/* Résumé */
+.abstract { margin-top: 28px; padding: 24px 26px; border-radius: 16px; border: 1px solid var(--border); background: rgba(79,107,237,.05); }
+.abstract .label { display: block; margin-bottom: 10px; font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+.abstract p { font-size: 15.5px !important; margin: 0 !important; }
+.kw { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+.kw span { padding: 3px 10px; border-radius: 999px; font-size: 12.5px; color: var(--text-soft); border: 1px solid var(--border); }
+
+/* Termes expliqués (infobulle) */
+.term {
+  position: relative; display: inline; padding: 0; border: 0; background: none; font: inherit; color: var(--text-main); cursor: help;
+  text-decoration: underline dotted color-mix(in srgb, var(--accent) 80%, transparent); text-decoration-thickness: 1.5px; text-underline-offset: 4px;
+}
+.tip {
+  position: absolute; z-index: 1600; width: min(300px, calc(100vw - 32px));
+  padding: 12px 14px; border-radius: 12px;
+  background: #0b1540; border: 1px solid var(--accent-line); box-shadow: 0 18px 50px rgba(0,0,0,.5);
+  font-size: 13.5px; line-height: 1.55; color: var(--text-soft); font-weight: 400;
+  opacity: 0; transform: scale(.97) translateY(4px); pointer-events: none;
+  transition: opacity 140ms ease, transform 160ms var(--ease-out);
+}
+.tip.show { opacity: 1; transform: none; }
+.tip.instant { transition: none; }
+.tip b { display: block; margin-bottom: 3px; color: #fff; font-weight: 500; font-size: 14px; }
+.cite { font-family: var(--mono); font-size: .78em; color: var(--accent); text-decoration: none; vertical-align: .15em; padding: 0 1px; border: 0; background: none; cursor: pointer; }
+
+/* Encadrés */
+.note { display: grid; grid-template-columns: 26px 1fr; gap: 12px; margin: 26px 0; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.note i { font-size: 22px; color: var(--nc, var(--accent)); }
+.note p { margin: 0 !important; font-size: 15.5px !important; color: var(--text-main) !important; }
+.note .nt { display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--nc, var(--accent)); font-weight: 500; }
+
+/* ----- Figures ----- */
+.fig { margin: 34px 0; border-radius: 18px; border: 1px solid var(--border); background: var(--surface); overflow: hidden; counter-increment: fig; scroll-margin-top: calc(var(--header-h) + var(--subnav-h) + 24px); }
+.fig-stage { position: relative; padding: 22px; background: radial-gradient(ellipse at 50% 0%, rgba(79,107,237,.06), transparent 70%); }
+.fig-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin-bottom: 16px; }
+.fig-name { font-size: 14.5px; font-weight: 500; color: var(--text-main); }
+.fig figcaption, .fig .cap { padding: 14px 22px 18px; border-top: 1px solid var(--line); font-size: 14px; line-height: 1.6; color: var(--text-soft); }
+.fig figcaption b, .fig .cap b { font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-right: 8px; }
+.fig svg { display: block; width: 100%; height: auto; overflow: visible; }
+.fig text { font-family: "DM Sans", sans-serif; }
+.fig .mono, .fig text.mono { font-family: var(--mono); }
+.ctrl { display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 12px; border-radius: 9px; border: 1px solid var(--border); background: var(--bg-light); color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out); }
+.ctrl i { font-size: 15px; }
+.ctrl:active { transform: scale(.96); }
+@media (hover: hover) and (pointer: fine) { .ctrl:hover { color: #fff; border-color: var(--accent); } }
+
+/* Fig. 1 trajectoire */
+.readouts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+.readout { padding: 10px 12px; border-radius: 10px; background: rgba(2,6,23,.5); border: 1px solid var(--line); }
+.readout small { display: block; font-size: 12px; color: var(--text-mute); }
+.readout strong { display: block; margin-top: 2px; font-family: var(--mono); font-size: 17px; font-weight: 500; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.readout.hot strong { color: var(--rc, var(--text-strong)); }
+.scrub { display: flex; align-items: center; gap: 12px; margin-top: 14px; }
+.scrub input { flex: 1; accent-color: var(--hot); }
+.scrub output { min-width: 52px; text-align: right; font-family: var(--mono); font-size: 13px; color: var(--text-soft); }
+
+/* Fig. 2 microstructure */
+.parts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.part { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease; }
+.part i { width: 10px; height: 10px; border-radius: 3px; background: var(--pc); }
+.part[aria-pressed="true"] { color: #fff; border-color: var(--pc); background: color-mix(in srgb, var(--pc) 14%, transparent); }
+.art .part-desc { margin: 12px 0 0; min-height: 44px; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+.part-desc b { color: #fff; font-weight: 500; }
+.micro [data-part] { transition: opacity 220ms ease; }
+.micro.focus [data-part] { opacity: .16; }
+.micro.focus [data-part].lit { opacity: 1; }
+
+/* Fig. 3 banc d'essai */
+.bench-v { display: none !important; }
+.flow { stroke-dasharray: 6 10; animation: flow 900ms linear infinite; }
+@keyframes flow { to { stroke-dashoffset: -32; } }
+.flame { animation: glow 900ms ease-in-out infinite alternate; }
+
+/* Tableau */
+.table-wrap { margin: 30px 0; border-radius: 16px; border: 1px solid var(--border); overflow: hidden; background: var(--surface); }
+.table-cap { padding: 14px 20px; font-size: 14px; color: var(--text-soft); border-bottom: 1px solid var(--line); }
+.table-cap b { font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-right: 8px; }
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { padding: 11px 12px; text-align: left; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; background: rgba(2,6,23,.4); border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 11px 12px; color: var(--text-soft); border-bottom: 1px solid var(--line); white-space: nowrap; font-variant-numeric: tabular-nums; }
+tr:last-child td { border-bottom: 0; }
+td:last-child, th:last-child { white-space: normal; }
+td:first-child, th:first-child { padding-left: 18px; }
+td.num { font-family: var(--mono); font-size: 13.5px; color: var(--text-main); }
+th.num, td.num { text-align: right; }
+tbody tr { transition: background-color 120ms ease; }
+@media (hover: hover) and (pointer: fine) { tbody tr:hover { background: rgba(79,107,237,.06); } }
+.mat { display: inline-flex; align-items: center; gap: 8px; color: var(--text-main); }
+.mat i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.state { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--sc); }
+.state i { font-size: 15px; }
+.table-note { padding: 12px 20px; font-size: 13px; color: var(--text-mute); border-top: 1px solid var(--line); background: rgba(2,6,23,.3); }
+
+/* Fig. 4 graphique */
+.legend { display: flex; flex-wrap: wrap; gap: 6px; }
+.lg { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-main); font: inherit; font-size: 13px; cursor: pointer; transition: opacity 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out); }
+.lg:active { transform: scale(.96); }
+.lg i { width: 14px; height: 3px; border-radius: 2px; background: var(--lc); }
+.lg[aria-pressed="false"] { opacity: .45; }
+.lg[aria-pressed="false"] i { background: transparent; border: 1px solid var(--lc); height: 5px; }
+.chart { position: relative; }
+.chart .series { transition: opacity 220ms ease; }
+.chart .series.off { opacity: 0; }
+.chart .draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); }
+.chart.drawn .draw { transition: stroke-dashoffset 1400ms var(--ease-in-out); stroke-dashoffset: 0; }
+.chart .dot { opacity: 0; transition: opacity 300ms ease 1100ms; }
+.chart.drawn .dot { opacity: 1; }
+.hit { fill: transparent; cursor: crosshair; }
+.xhair { opacity: 0; transition: opacity 120ms ease; pointer-events: none; }
+.xhair.show { opacity: 1; }
+.ctip {
+  position: absolute; z-index: 5; pointer-events: none; min-width: 170px;
+  padding: 10px 12px; border-radius: 10px; background: #0b1540; border: 1px solid var(--accent-line);
+  box-shadow: 0 14px 40px rgba(0,0,0,.5); font-size: 13px; color: var(--text-soft);
+  opacity: 0; transform: translateY(4px); transition: opacity 120ms ease, transform 140ms var(--ease-out);
+}
+.ctip.show { opacity: 1; transform: none; }
+.ctip b { display: block; margin-bottom: 6px; color: #fff; font-weight: 500; font-family: var(--mono); }
+.ctip div { display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+.ctip div span { display: inline-flex; align-items: center; gap: 7px; }
+.ctip div span i { width: 8px; height: 8px; border-radius: 50%; background: var(--lc); }
+.ctip div em { font-style: normal; font-family: var(--mono); color: var(--text-main); }
+.data-toggle { margin-top: 12px; }
+.data-table { margin-top: 12px; border-radius: 12px; border: 1px solid var(--line); overflow-x: auto; }
+.data-table[hidden] { display: none; }
+
+/* Fig. 5 carte thermique */
+.thermo { display: grid; grid-template-columns: minmax(0, 1fr) 70px; gap: 18px; align-items: stretch; }
+.thermo-plate { position: relative; aspect-ratio: 1; max-width: 420px; width: 100%; justify-self: center; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); cursor: crosshair; }
+.thermo-plate canvas { width: 100%; height: 100%; display: block; }
+.probe { position: absolute; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.5); pointer-events: none; opacity: 0; transition: opacity 120ms ease; }
+.probe.show { opacity: 1; }
+.probe-read { position: absolute; left: 12px; top: 12px; padding: 6px 10px; border-radius: 8px; background: rgba(2,6,23,.78); font-family: var(--mono); font-size: 13px; color: #fff; pointer-events: none; }
+.scale { display: grid; grid-template-columns: 14px 1fr; gap: 8px; align-self: center; height: min(100%, 420px); aspect-ratio: auto; }
+.scale-bar { display: block; width: 14px; height: 100%; border-radius: 6px; }
+.scale-labels { display: flex; flex-direction: column; justify-content: space-between; font-family: var(--mono); font-size: 12px; color: var(--text-soft); }
+
+/* Fig. 6 couche protectrice */
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.duo-card { border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.4); overflow: hidden; }
+.duo-card h4 { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0; padding: 12px 14px; font-size: 14px; font-weight: 500; color: var(--text-main); border-bottom: 1px solid var(--line); }
+.duo-card h4 span { display: inline-flex; align-items: center; gap: 8px; }
+.duo-card h4 i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.duo-card svg { aspect-ratio: 1.25; }
+.duo-stats { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
+.duo-stats div { padding: 10px 14px; }
+.duo-stats div + div { border-left: 1px solid var(--line); }
+.duo-stats small { display: block; font-size: 12px; color: var(--text-mute); }
+.duo-stats strong { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--text-main); font-variant-numeric: tabular-nums; }
+.verdict { font-size: 12px; font-weight: 500; padding: 2px 8px; border-radius: 999px; color: var(--vc); background: color-mix(in srgb, var(--vc) 14%, transparent); transition: color 200ms ease, background-color 200ms ease; }
+
+/* Équation */
+.eq { margin: 26px 0; padding: 22px; border-radius: 14px; background: rgba(2,6,23,.5); border: 1px solid var(--border); text-align: center; font-family: var(--mono); font-size: 17px; color: #d5dcfb; overflow-x: auto; white-space: nowrap; }
+.eq-parts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: -12px 0 26px; }
+.eq-part { padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-light); font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.eq-part b { display: block; margin-bottom: 2px; font-family: var(--mono); font-weight: 500; color: #fff; }
+
+/* Suite du programme */
+.next { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.next li { position: relative; padding: 16px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.next li::before { content: ""; position: absolute; top: 20px; right: -13px; width: 13px; height: 1px; background: var(--border); }
+.next li:last-child::before { display: none; }
+.next time { font-family: var(--mono); font-size: 12.5px; color: var(--nc, var(--accent)); }
+.next strong { display: block; margin: 6px 0 4px; font-size: 15px; font-weight: 500; color: var(--text-main); }
+.next span { font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.next li.now { border-color: color-mix(in srgb, var(--ok) 45%, var(--border)); }
+
+/* Références */
+.refs { list-style: none; margin: 0; padding: 0; counter-reset: r; display: grid; gap: 4px; }
+.refs li { counter-increment: r; position: relative; display: block; padding: 10px 12px 10px 54px; margin: 0 -12px; border-radius: 10px; font-size: 14px; line-height: 1.6; color: var(--text-soft); transition: background-color 600ms ease; scroll-margin-top: calc(var(--header-h) + var(--subnav-h) + 40px); }
+.refs li::before { content: "[" counter(r) "]"; position: absolute; left: 12px; top: 11px; font-family: var(--mono); font-size: 13px; color: var(--accent); }
+.refs li.flash { background: rgba(79,107,237,.16); transition: none; }
+.refs em { color: var(--text-main); }
+.decl { margin-top: 28px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.35); display: grid; gap: 8px; font-size: 13.5px; line-height: 1.6; color: var(--text-mute); }
+.decl strong { color: var(--text-soft); font-weight: 500; }
+
+/* Articles liés */
+.related { margin-top: 72px; padding-top: 40px; border-top: 1px solid var(--border); }
+.related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
+.rel { display: flex; flex-direction: column; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); background: var(--bg-light); text-decoration: none; transition: border-color 200ms ease, transform 220ms var(--ease-out); }
+.rel-img { aspect-ratio: 16 / 9; overflow: hidden; background: linear-gradient(135deg, color-mix(in srgb, var(--c) 30%, var(--bg-raise)), var(--bg-light)); }
+.rel-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 500ms var(--ease-out); }
+.rel-body { padding: 16px; }
+.rel-body small { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--text-soft); }
+.rel-body small::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c); }
+.rel-body strong { display: block; margin-top: 6px; font-size: 16px; font-weight: 500; line-height: 1.4; color: var(--text-main); }
+.rel:active { transform: scale(.98); }
+@media (hover: hover) and (pointer: fine) {
+  .rel:hover { border-color: color-mix(in srgb, var(--c) 55%, var(--border)); transform: translateY(-3px); }
+  .rel:hover .rel-img img { transform: scale(1.04); }
+}
+.section-title { margin: 0; font-family: "Syne", sans-serif; font-size: 22px; font-weight: 700; color: var(--text-strong); }
+
+/* apparition des figures */
+.js .rv { opacity: 0; transform: translateY(16px); transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
+.js .rv.in { opacity: 1; transform: none; }
+
+.toast {
+  position: fixed; left: 50%; bottom: 24px; z-index: 4000;
+  display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 12px;
+  background: #0b1540; border: 1px solid rgba(52,211,153,.35); color: #a7f3d0; font-size: 14px;
+  box-shadow: 0 16px 40px rgba(0,0,0,.5);
+  transform: translate(-50%, 16px); opacity: 0; pointer-events: none;
+  transition: transform 260ms var(--ease-out), opacity 200ms ease;
+}
+.toast.show { transform: translate(-50%, 0); opacity: 1; }
+.toast i { font-size: 18px; color: var(--ok); }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1320px) {
+  .art-layout { grid-template-columns: minmax(0, 720px) 280px; justify-content: center; }
+  .toc { display: none; }
+}
+@media (max-width: 1060px) {
+  .art-layout { grid-template-columns: minmax(0, 720px); }
+  .rail { position: static; max-height: none; overflow: visible; grid-template-columns: repeat(2, minmax(0, 1fr)); order: 2; }
+  .rail .rail-figs { display: none; }
+  .art-hero-grid { grid-template-columns: 1fr; gap: 10px; padding-bottom: 36px; }
+  .reentry { justify-self: center; max-width: 440px; order: -1; margin-top: -10px; }
+}
+@media (max-width: 860px) {
+  .main-nav, .header-right .btn-desktop { display: none; }
+  .menu-toggle { display: inline-flex; }
+}
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .subnav-list { padding: 0 20px; overflow-x: auto; scrollbar-width: none; }
+  .subnav-link { padding: 0 10px; font-size: 13.5px; }
+  .art-lede { font-size: 16.5px; }
+  .art p { font-size: 16px; }
+  .art h2 { font-size: 22px; margin-top: 52px; }
+  .kpis { grid-template-columns: 1fr; }
+  .kpi { display: flex; align-items: baseline; gap: 14px; }
+  .kpi span { margin: 0; }
+  .essentials { padding: 20px; }
+  .fig-stage { padding: 16px; }
+  .fig figcaption, .fig .cap { padding: 12px 16px 16px; }
+  .readouts { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .readout strong { font-size: 14px; }
+  .thermo { grid-template-columns: 1fr 56px; gap: 10px; }
+  .duo { grid-template-columns: 1fr; }
+  .eq { font-size: 14px; }
+  #trajSvg text { font-size: 22px; }
+  .bench-h { display: none !important; }
+  .bench-v { display: block !important; }
+  .duo-card svg text { font-size: 13px; }
+  .eq-parts { grid-template-columns: 1fr; }
+  .next { grid-template-columns: 1fr; }
+  .next li::before { display: none; }
+  .rail { grid-template-columns: 1fr; }
+  .related-grid { grid-template-columns: 1fr; }
+  .site-footer { margin-top: 72px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
+  .hero-in { opacity: 1; transform: none; }
+}
+
+/* impression / PDF : texte seul, figures conservées */
+@media print {
+  .site-header, .subnav, .mobile-panel, .progress, .toc, .rail, .related, .site-footer, .ctrl, .legend, .scrub, .parts, .skip-link { display: none !important; }
+  body { background: #fff; color: #111; }
+  .art-layout { display: block; padding: 0; }
+  .art p, .art h2, .art h3, .art-title, .art-lede { color: #111 !important; }
+  .fig, .table-wrap, .essentials, .abstract, .note { break-inside: avoid; }
+  .js .rv { opacity: 1; transform: none; }
+}
+
+/* =========================================================
+   ARTICLE 02 : PROPULSION IONIQUE
+   ========================================================= */
+.art-hero--ion::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 82% 45%, rgba(59,130,246,.2), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(249,115,22,.1), transparent 60%);
+}
+.thruster .glow { animation: glow 1.4s ease-in-out infinite alternate; }
+
+.seg { display: inline-flex; padding: 3px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-light); }
+.seg button { height: 30px; padding: 0 12px; border: 0; border-radius: 7px; background: none; color: var(--text-soft); font: inherit; font-size: 13px; cursor: pointer; transition: background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out); }
+.seg button:active { transform: scale(.96); }
+.seg button[aria-pressed="true"] { background: var(--bg-raise); color: #fff; box-shadow: inset 0 0 0 1px var(--border); }
+@media (hover: hover) and (pointer: fine) { .seg button:hover { color: #fff; } }
+
+.lg.static { cursor: default; }
+#howSvg .zone { transition: opacity 240ms ease; }
+#howSvg.focus .zone { opacity: .22; }
+#howSvg.focus .zone.lit { opacity: 1; }
+
+tr.hi td { background: rgba(59,130,246,.07); }
+td.gain { color: var(--ok); }
+
+.multiples { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.multiples .chart { border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.35); padding: 8px 4px 0; }
+
+.wear { display: grid; grid-template-columns: minmax(0, 1fr) 170px; gap: 16px; align-items: center; }
+.discs { display: grid; gap: 12px; }
+.disc { display: grid; justify-items: center; gap: 4px; padding: 10px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.35); }
+.disc svg { width: 110px; height: 110px; }
+.disc span { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--text-soft); }
+.disc span i { width: 9px; height: 9px; border-radius: 3px; background: var(--mc); }
+.disc strong { font-family: var(--mono); font-size: 14px; font-weight: 500; color: var(--text-main); }
+.disc.over { border-color: rgba(248,113,113,.5); }
+.disc.over strong { color: var(--bad); }
+
+@media (max-width: 640px) {
+  .multiples { grid-template-columns: 1fr; }
+  .wear { grid-template-columns: 1fr; }
+  .discs { grid-template-columns: 1fr 1fr; }
+  .disc svg { width: 96px; height: 96px; }
+  #howSvg text { display: none; }
+  .readouts { grid-template-columns: 1fr; gap: 6px; }
+  .readout { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 8px 12px; }
+  .readout strong { margin: 0; white-space: nowrap; }
+  #orbitSvg text { font-size: 18px; }
+}
+#gridSvg, #orbitSvg, #howSvg { overflow: hidden; border-radius: 10px; }
+
+/* =========================================================
+   ARTICLE 03 : ASTROBIOLOGIE
+   ========================================================= */
+.art-hero--mars::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 78% 45%, rgba(234,88,12,.18), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(52,211,153,.12), transparent 60%);
+}
+.art-hero--mars .reentry svg { overflow: visible; }
+
+/* jauges Terre / Mars */
+.gauges { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 22px; }
+.gauge { display: grid; gap: 8px; padding: 14px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.4); }
+.gauge-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.gauge-top span { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--text-soft); }
+.gauge-top span i { font-size: 16px; color: var(--text-mute); }
+.gauge-top strong { font-family: var(--mono); font-size: 14.5px; font-weight: 500; color: var(--text-strong); white-space: nowrap; transition: color 200ms ease; }
+.gauge-bar { position: relative; height: 8px; border-radius: 8px; background: linear-gradient(90deg, rgba(52,211,153,.18), rgba(251,191,36,.18) 60%, rgba(248,113,113,.22)); }
+.gauge-fill { position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(90deg, #34d399, #fbbf24 60%, #f87171); transform-origin: left; transform: scaleX(var(--v, 0)); transition: transform 600ms var(--ease-out); clip-path: inset(0 round 8px); }
+.gauge-limit { position: absolute; top: -5px; bottom: -5px; width: 2px; border-radius: 2px; background: #fff; left: var(--l); }
+.gauge-foot { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; color: var(--text-mute); }
+.gauge.beyond .gauge-top strong { color: #fca5a5; }
+
+/* fiches espèces */
+.orgs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 26px 0 12px; }
+.org { position: relative; display: grid; grid-template-columns: 64px 1fr; gap: 14px; padding: 16px; border-radius: 16px; border: 1px solid var(--border); background: var(--bg-light); overflow: hidden; }
+.org::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--oc); }
+.org-pic { width: 64px; height: 64px; border-radius: 14px; background: radial-gradient(circle, color-mix(in srgb, var(--oc) 22%, transparent), rgba(2,6,23,.6)); }
+.org-kind { display: block; font-size: 12px; color: var(--text-mute); }
+.org h4 { margin: 2px 0 6px; font-size: 16px; font-weight: 500; color: var(--text-strong); }
+.art .org p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+.org-state { grid-column: 1 / -1; justify-self: start; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 500; color: var(--sc); background: color-mix(in srgb, var(--sc) 12%, transparent); border: 1px solid color-mix(in srgb, var(--sc) 28%, transparent); }
+.art .small-note { font-size: 14px; color: var(--text-mute); }
+
+/* journal des cultures */
+.dishes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.dish { display: grid; justify-items: center; gap: 6px; padding: 12px 8px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.4); }
+.dish svg { width: 100%; max-width: 132px; aspect-ratio: 1; }
+.dish svg circle.cell { transition: opacity 400ms ease, fill 400ms ease; }
+.dish span { font-size: 12.5px; color: var(--text-soft); text-align: center; }
+.dish strong { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--text-strong); }
+.event { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-items: baseline; margin-top: 14px; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-light); min-height: 78px; }
+.event time { font-family: var(--mono); font-size: 13px; color: var(--ec, var(--accent)); grid-row: span 2; }
+.event strong { font-size: 14.5px; font-weight: 500; color: var(--text-main); }
+.event span { font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+.event.swap { animation: evIn 260ms var(--ease-out); }
+@keyframes evIn { from { opacity: 0; transform: translateY(4px); } }
+.scrub { position: relative; }
+.ticks { position: absolute; left: 0; right: 0; top: -6px; height: 6px; pointer-events: none; }
+
+/* comparaison microscope */
+.compare { position: relative; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; background: #000; cursor: ew-resize; touch-action: pan-y; user-select: none; }
+.compare canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+#micB { clip-path: inset(0 0 0 var(--p, 50%)); }
+.cmp-label { position: absolute; top: 12px; padding: 4px 10px; border-radius: 8px; font-family: var(--mono); font-size: 12.5px; color: #fff; background: rgba(0,0,0,.55); pointer-events: none; }
+.cmp-label.l { left: 12px; }
+.cmp-label.r { right: 12px; }
+.cmp-handle { position: absolute; top: 0; bottom: 0; left: var(--p, 50%); width: 2px; margin-left: -1px; background: #fff; pointer-events: none; }
+.cmp-handle i { position: absolute; top: 50%; left: 50%; width: 38px; height: 38px; margin: -19px 0 0 -19px; border-radius: 50%; display: grid; place-items: center; font-size: 18px; color: #050b1e; background: #fff; box-shadow: 0 6px 20px rgba(0,0,0,.5); transition: transform 160ms var(--ease-out); }
+.compare:active .cmp-handle i { transform: scale(.92); }
+.compare:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+#chamberSvg { overflow: hidden; border-radius: 10px; }
+
+@media (max-width: 640px) {
+  .gauges { grid-template-columns: 1fr; }
+  .orgs { grid-template-columns: 1fr; }
+  .dishes { grid-template-columns: 1fr 1fr; }
+  #chamberSvg text { font-size: 15px; }
+  #chamberSvg text.side { display: none; }
+  .compare { aspect-ratio: 4 / 3; }
+}
+
+/* =========================================================
+   ARTICLE 04 : PHYSIQUE QUANTIQUE
+   ========================================================= */
+.art-hero--q::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 78% 40%, rgba(168,85,247,.18), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(59,130,246,.12), transparent 60%);
+}
+.qlink svg { overflow: hidden; -webkit-mask-image: radial-gradient(ellipse 52% 52% at 60% 44%, #000 55%, transparent 100%); mask-image: radial-gradient(ellipse 52% 52% at 60% 44%, #000 55%, transparent 100%); }
+
+/* jeu de Bell */
+.bell { display: grid; grid-template-columns: 150px minmax(0, 1fr) 150px; gap: 16px; align-items: center; }
+.bell-side { display: grid; justify-items: center; gap: 8px; padding: 12px; border-radius: 14px; border: 1px solid var(--line); background: rgba(2,6,23,.4); }
+.bell-who { font-size: 13px; color: var(--text-soft); }
+.dial { width: 96px; height: 96px; }
+.dial .needle { transition: transform 260ms var(--ease-out); transform-origin: 50px 50px; }
+.bell-angle { display: grid; gap: 6px; width: 100%; font-size: 12px; color: var(--text-mute); text-align: center; }
+.bell-angle output { font-family: var(--mono); color: var(--text-main); }
+.bell-angle input { width: 100%; accent-color: #a855f7; }
+.bell-mid { display: grid; gap: 14px; min-width: 0; }
+.bell-rows { display: grid; gap: 8px; padding: 14px; border-radius: 12px; background: rgba(2,6,23,.5); border: 1px solid var(--line); overflow: hidden; }
+.bell-row { display: flex; gap: 5px; justify-content: flex-end; height: 16px; }
+.bell-row i { flex: 0 0 16px; height: 16px; border-radius: 4px; border: 2px solid #c084fc; animation: pop 260ms var(--ease-out); }
+.bell-row i.on { background: #c084fc; }
+.bell-row i.diff { border-color: #f87171; }
+.bell-row i.diff.on { background: #f87171; }
+@keyframes pop { from { transform: scale(.6); opacity: 0; } }
+.bell-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.bell-stats div { padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg-light); }
+.bell-stats small { display: block; font-size: 12px; color: var(--text-mute); }
+.bell-stats strong { display: block; margin-top: 2px; font-family: var(--mono); font-size: 18px; font-weight: 500; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+
+/* pertes : gaufre de points */
+.waffle { position: relative; border-radius: 12px; overflow: hidden; background: #03050f; border: 1px solid var(--line); aspect-ratio: 2.2; }
+.waffle canvas { width: 100%; height: 100%; display: block; }
+
+#setupSvg [data-part] { transition: opacity 220ms ease; }
+#setupSvg.focus [data-part] { opacity: .18; }
+#setupSvg.focus [data-part].lit { opacity: 1; }
+#setupSvg, #bellGauge { overflow: visible; }
+
+@media (max-width: 760px) {
+  .bell { grid-template-columns: 1fr 1fr; }
+  .bell-mid { grid-column: 1 / -1; order: 3; }
+}
+@media (max-width: 640px) {
+  .waffle { aspect-ratio: 1.3; }
+  .dial { width: 80px; height: 80px; }
+  #setupSvg text { display: none; }
+}
+
+/* =========================================================
+   LETTRE DE LA DIRECTION SCIENTIFIQUE
+   ========================================================= */
+.lt-hero::before {
+  background:
+    radial-gradient(ellipse 40% 70% at 80% 45%, rgba(96,165,250,.12), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(79,107,237,.1), transparent 60%);
+}
+.lt-grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); }
+.lt-eyebrow { display: inline-flex; align-items: center; gap: 10px; margin: 18px 0 14px; font-family: var(--mono); font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: #93c5fd; }
+.lt-dot { width: 7px; height: 7px; border-radius: 50%; background: #60a5fa; box-shadow: 0 0 0 4px rgba(96,165,250,.18); }
+.lt-season { display: block; margin-top: 8px; font-size: .62em; font-weight: 600; color: #93c5fd; letter-spacing: -.01em; }
+.lt-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+
+/* couverture */
+.lt-cover { position: relative; justify-self: end; width: 100%; max-width: 340px; aspect-ratio: 360 / 460; border-radius: 20px; overflow: hidden; border: 1px solid var(--border); background: linear-gradient(165deg, #0c1a45 0%, #070f2b 55%, #050b1e 100%); box-shadow: 0 30px 80px -30px rgba(0,0,0,.8), 0 0 0 1px rgba(96,165,250,.08) inset; transform: rotate(1.5deg); transition: transform 500ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) { .lt-cover:hover { transform: rotate(0deg) translateY(-4px); } }
+.lt-cover svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.lt-cover-txt { position: absolute; inset: 0; display: flex; flex-direction: column; padding: 28px 26px; }
+.lt-cover-kicker { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: #93c5fd; }
+.lt-cover-num { margin-top: auto; font-family: "Syne", sans-serif; font-size: 76px; font-weight: 800; line-height: .9; color: #fff; letter-spacing: -.03em; }
+.lt-cover-season { margin-top: 6px; font-size: 17px; color: var(--text-soft); }
+.lt-cover-toc { list-style: none; margin: 18px 0 0; padding: 14px 0 0; border-top: 1px solid rgba(147,197,253,.25); display: grid; gap: 6px; font-size: 13px; color: var(--text-soft); }
+.lt-cover-toc li::before { content: "—"; margin-right: 8px; color: #60a5fa; }
+.orbit-a { transform-box: view-box; transform-origin: 250px 150px; animation: orb 60s linear infinite; }
+@keyframes orb { to { transform: rotate(360deg); } }
+
+/* éditorial */
+.edito { padding: 28px 30px; border-radius: 18px; border: 1px solid var(--border); background: linear-gradient(160deg, var(--bg-raise), var(--bg-light)); }
+.edito .label { display: block; margin: 0 0 14px; font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: #93c5fd; }
+.art .edito p { margin: 0 0 14px; }
+.art .edito .edito-lead { font-size: 18px; color: var(--text-strong); }
+.pull { margin: 22px 0; padding: 4px 0 4px 20px; border-left: 2px solid #60a5fa; font-family: "Syne", sans-serif; font-size: 20px; font-weight: 600; line-height: 1.4; color: #fff; }
+.sign { display: flex; align-items: center; gap: 12px; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line); }
+.sign .av { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-family: "Syne", sans-serif; font-size: 13px; font-weight: 700; color: #fff; background: linear-gradient(135deg, hsl(var(--ah) 55% 38%), hsl(var(--ah) 70% 60%)); }
+.sign strong { display: block; font-size: 15.5px; font-weight: 500; color: var(--text-strong); }
+.sign small { display: block; font-size: 13px; color: var(--text-mute); }
+
+/* chiffres */
+.figures { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 18px 0 8px; }
+.fg { padding: 16px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.fg strong { display: block; font-family: "Syne", sans-serif; font-size: 30px; font-weight: 700; line-height: 1; color: #fff; font-variant-numeric: tabular-nums; }
+.fg strong small { font-size: .5em; color: var(--text-soft); }
+.fg span { display: block; margin-top: 8px; font-size: 13px; line-height: 1.4; color: var(--text-soft); }
+
+/* phases */
+.phases { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.phases li { position: relative; padding: 14px; border-radius: 12px; border: 1px solid var(--border); background: rgba(2,6,23,.35); font-size: 13.5px; line-height: 1.45; color: var(--text-soft); }
+.phases li strong { display: block; margin: 4px 0; font-size: 15px; font-weight: 500; color: var(--text-main); }
+.phases .phs-y { font-family: var(--mono); font-size: 12px; color: var(--text-mute); }
+.phases li.done { border-color: rgba(52,211,153,.3); }
+.phases li.done strong::after { content: " ✓"; color: #34d399; }
+.phases li.now { border-color: rgba(96,165,250,.6); background: rgba(96,165,250,.08); }
+.phases li.now strong { color: #fff; }
+.phases li.now::before { content: "En cours"; position: absolute; top: -10px; right: 12px; padding: 1px 8px; border-radius: 99px; font-size: 11px; font-weight: 500; color: #03101f; background: #60a5fa; }
+.phs-track { margin-top: 14px; height: 4px; border-radius: 99px; background: #13204d; overflow: hidden; }
+.phs-track span { display: block; height: 100%; width: 0; border-radius: 99px; background: linear-gradient(90deg, #34d399, #60a5fa); transition: width 1400ms var(--ease-out); }
+
+/* jalons */
+.milestones { list-style: none; margin: 18px 0 8px; padding: 0; display: grid; gap: 0; border-left: 1px solid var(--border); }
+.milestones li { position: relative; display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 14px; padding: 10px 0 14px 20px; }
+.milestones li::before { content: ""; position: absolute; left: -5px; top: 17px; width: 9px; height: 9px; border-radius: 50%; background: var(--bg-main); border: 2px solid #60a5fa; }
+.milestones time { font-family: var(--mono); font-size: 13px; color: #93c5fd; padding-top: 2px; }
+.milestones strong { display: block; font-size: 15px; font-weight: 500; color: var(--text-strong); }
+.milestones span { display: block; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+
+/* Isp */
+.isp { display: grid; gap: 12px; }
+.isp-row { display: grid; grid-template-columns: 170px minmax(0, 1fr) 80px; gap: 12px; align-items: center; }
+.isp-n { font-size: 14px; color: var(--text-main); }
+.isp-n small { display: block; font-size: 12px; color: var(--text-mute); }
+.isp-t { position: relative; height: 22px; border-radius: 6px; background: #0e1838; }
+.isp-t i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 6px; background: var(--bc); transition: width 1100ms var(--ease-out); transition-delay: var(--dl, 0ms); }
+.isp-t i.goal { background: repeating-linear-gradient(45deg, rgba(148,163,184,.35) 0 4px, transparent 4px 8px); border: 1px dashed #94a3b8; }
+.isp.in .isp-t i { width: calc(var(--w) * 100%); }
+.isp-v { font-family: var(--mono); font-size: 14px; color: #fff; text-align: right; font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: reduce) { .isp-t i { transition: none; width: calc(var(--w) * 100%); } }
+
+/* carte de lecture */
+.read-card { display: grid; gap: 4px; margin: 20px 0 8px; padding: 16px 18px; border-radius: 14px; border: 1px solid var(--border); border-left: 3px solid var(--c); background: var(--bg-light); text-decoration: none; transition: border-color 200ms ease, transform 200ms var(--ease-out); }
+.rc-k { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-mute); }
+.read-card strong { font-size: 16px; font-weight: 500; color: var(--text-strong); }
+.rc-m { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--c); }
+.rc-m i { transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) { .read-card:hover { border-color: color-mix(in srgb, var(--c) 50%, var(--border)); } .read-card:hover .rc-m i { transform: translateX(3px); } }
+
+/* partenaires */
+.partners { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 18px 0 8px; }
+.pt { display: flex; flex-direction: column; gap: 4px; padding: 16px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.pt-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.pt-ic { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; font-size: 18px; color: var(--c); background: color-mix(in srgb, var(--c) 12%, transparent); }
+.pt-prog { font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; color: var(--c); }
+.pt strong { font-size: 15px; font-weight: 500; line-height: 1.35; color: var(--text-strong); }
+.pt-type { font-size: 12.5px; color: var(--text-mute); }
+.art .pt p { margin: 8px 0 12px; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+.pt dl { margin: auto 0 0; display: flex; gap: 18px; padding-top: 10px; border-top: 1px solid var(--line); }
+.pt dt { font-size: 11.5px; color: var(--text-mute); }
+.pt dd { margin: 0; font-family: var(--mono); font-size: 13.5px; color: var(--text-main); }
+
+/* publications */
+.pubs { list-style: none; margin: 16px 0 8px; padding: 0; display: grid; gap: 8px; }
+.pubs a { display: grid; grid-template-columns: 96px 150px minmax(0, 1fr) 20px; gap: 12px; align-items: center; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg-light); text-decoration: none; transition: border-color 200ms ease; }
+.pubs time { font-family: var(--mono); font-size: 12.5px; color: var(--text-mute); }
+.pb-d { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--c); }
+.pb-d::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c); }
+.pubs strong { font-size: 14.5px; font-weight: 500; line-height: 1.4; color: var(--text-main); }
+.pubs a i { color: var(--text-mute); transition: transform 200ms var(--ease-out), color 200ms ease; }
+@media (hover: hover) and (pointer: fine) { .pubs a:hover { border-color: color-mix(in srgb, var(--c) 45%, var(--border)); } .pubs a:hover i { color: #fff; transform: translate(2px, -2px); } }
+
+/* brèves */
+.breves { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0 8px; }
+.br { padding: 16px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.br-tag { display: inline-block; margin-bottom: 8px; padding: 2px 9px; border-radius: 99px; font-family: var(--mono); font-size: 11.5px; color: var(--c); border: 1px solid color-mix(in srgb, var(--c) 40%, transparent); background: color-mix(in srgb, var(--c) 10%, transparent); }
+.art .br p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+.br p strong { color: var(--text-strong); font-weight: 500; }
+
+/* colophon */
+.colophon { margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--border); }
+.art .colophon p { font-size: 13px; line-height: 1.6; color: var(--text-mute); }
+.lt-nav { display: flex; justify-content: space-between; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+.lt-nav a { display: inline-flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg-light); color: var(--text-main); text-decoration: none; font-size: 14.5px; transition: border-color 200ms ease; }
+.lt-nav a small { display: block; font-size: 12px; color: var(--text-mute); }
+.lt-all { text-align: right; }
+@media (hover: hover) and (pointer: fine) { .lt-nav a:hover { border-color: #60a5fa; } }
+
+/* rail */
+.agenda { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.agenda li { display: grid; grid-template-columns: 46px minmax(0, 1fr); gap: 10px; align-items: center; }
+.ag-d { display: flex; flex-direction: column; align-items: center; padding: 4px 0; border-radius: 10px; border: 1px solid var(--border); font-size: 11px; color: var(--text-mute); text-transform: uppercase; }
+.ag-d b { font-family: "Syne", sans-serif; font-size: 17px; color: #fff; line-height: 1.1; }
+.agenda strong { display: block; font-size: 13.5px; font-weight: 500; line-height: 1.35; color: var(--text-main); }
+.agenda small { font-size: 12px; color: var(--text-mute); }
+.rail-more { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-size: 13px; color: #93c5fd; text-decoration: none; }
+.progs { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.progs a { display: grid; grid-template-columns: 10px 1fr auto; gap: 10px; align-items: center; padding: 6px 8px; border-radius: 8px; font-size: 13.5px; color: var(--text-main); text-decoration: none; transition: background-color 160ms ease; }
+.progs a i { width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
+.progs small { font-size: 11.5px; color: var(--text-mute); }
+@media (hover: hover) and (pointer: fine) { .progs a:hover { background: rgba(255,255,255,.04); } }
+
+@media (max-width: 1100px) { .lt-grid { grid-template-columns: 1fr; } .lt-cover { justify-self: center; max-width: 280px; order: -1; } }
+@media (max-width: 760px) {
+  .figures { grid-template-columns: 1fr 1fr; }
+  .phases, .partners, .breves { grid-template-columns: 1fr; }
+  .phases li.now::before { top: 10px; }
+  .isp-row { grid-template-columns: 110px minmax(0, 1fr) 64px; gap: 8px; }
+  .pubs a { grid-template-columns: minmax(0, 1fr) 20px; gap: 4px 12px; }
+  .pubs a time, .pubs a .pb-d { grid-column: 1; }
+  .pubs a strong { grid-column: 1; }
+  .pubs a i { grid-column: 2; grid-row: 1 / span 3; }
+  .milestones li { grid-template-columns: 1fr; gap: 2px; }
+  .edito { padding: 22px 20px; }
+  .lt-cover { max-width: 230px; }
+  .lt-cover-num { font-size: 60px; }
+}
+@media print {
+  .lt-actions, .lt-cover, .rail, .toc, .lt-nav { display: none !important; }
+  .art-hero-grid { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   HORS-SÉRIE N°1
+   ========================================================= */
+.hs-hero::before {
+  background:
+    radial-gradient(ellipse 40% 70% at 80% 45%, rgba(249,115,22,.10), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(79,107,237,.09), transparent 60%);
+}
+.hs-eyebrow { color: #fdba74; }
+.hs-eyebrow .lt-dot { background: #f97316; box-shadow: 0 0 0 4px rgba(249,115,22,.18); }
+.hs-hero .lt-season { color: #fdba74; }
+.hs-cover { background: linear-gradient(165deg, #22150f 0%, #0d1026 55%, #050b1e 100%); }
+.hs-cover .lt-cover-kicker { color: #fdba74; }
+.hs-cover .lt-cover-season { font-size: 15px; line-height: 1.35; max-width: 16ch; }
+.hs-cover .lt-cover-toc { border-top-color: rgba(253,186,116,.25); }
+.hs-cover .lt-cover-toc li::before { content: ""; display: inline-block; width: 12px; height: 1px; margin-right: 10px; vertical-align: middle; background: #fb923c; }
+.hs .edito .label { color: #fdba74; }
+.hs .pull { border-left-color: #f97316; }
+a.ctrl { text-decoration: none; }
+.hs .after { font-size: 15.5px; color: var(--text-soft); }
+
+/* ---------- La mission, étape par étape ---------- */
+.mission { margin: 22px 0 18px; padding: 18px; border-radius: 18px; border: 1px solid var(--border); background: var(--surface); }
+.ms-bar { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; }
+.ms-seg { display: flex; flex-direction: column; gap: 3px; min-width: 0; padding: 11px 12px 10px; border-radius: 10px; border: 1px solid var(--border); background: rgba(255,255,255,.02); color: var(--text-soft); font: inherit; font-size: 13.5px; line-height: 1.3; text-align: left; cursor: pointer; transition: background-color 160ms ease, border-color 160ms ease, transform 140ms var(--ease-out); }
+.ms-seg b { font-weight: 500; color: var(--text-main); }
+.ms-seg small { font-family: var(--mono); font-size: 11.5px; color: var(--text-mute); white-space: nowrap; }
+.ms-seg[aria-selected="true"] { border-color: rgba(249,115,22,.6); background: rgba(249,115,22,.09); }
+.ms-seg[aria-selected="true"] b { color: #fff; }
+.ms-seg:active { transform: scale(.97); }
+.ms-seg:focus-visible { outline: 2px solid #fb923c; outline-offset: 2px; }
+@media (hover: hover) and (pointer: fine) { .ms-seg:hover { background: rgba(255,255,255,.045); } .ms-seg[aria-selected="true"]:hover { background: rgba(249,115,22,.12); } }
+/* frise proportionnelle à la durée */
+.ms-time { display: flex; gap: 3px; margin-top: 10px; }
+.ms-time span { flex: var(--w) 1 0; min-width: 22px; position: relative; height: 22px; cursor: pointer; }
+.ms-time span::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 5px; border-radius: 3px; background: var(--g); opacity: .35; transition: opacity 180ms ease, transform 180ms var(--ease-out); transform-origin: top; }
+.ms-time span.on::before { opacity: 1; transform: scaleY(1.4); }
+.ms-time em { position: absolute; left: 0; top: 9px; font-style: normal; font-family: var(--mono); font-size: 10.5px; color: var(--text-mute); white-space: nowrap; }
+.ms-time span.on em { color: #fdba74; }
+.ms-time span:first-child em { display: none; }
+.ms-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; align-items: baseline; margin: 20px 2px 14px; }
+.ms-head h3 { margin: 0; font-family: "Syne", sans-serif; font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -.01em; }
+.ms-head .ms-meta { font-family: var(--mono); font-size: 12.5px; color: #fdba74; white-space: nowrap; }
+.art .ms-head p { grid-column: 1 / -1; margin: 2px 0 0; font-size: 15px; line-height: 1.6; color: var(--text-soft); }
+
+.ms-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; transition: opacity 180ms ease, filter 180ms ease; }
+.ms-grid.out { opacity: .35; filter: blur(2px); transition-duration: 110ms; }
+.sys { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 4px 12px; padding: 14px; border-radius: 12px; border: 1px solid var(--line); background: rgba(2,6,23,.35); }
+.sys > i { grid-row: span 2; font-size: 22px; color: #fdba74; padding-top: 1px; }
+.sys-h { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.sys-h strong { font-size: 14.5px; font-weight: 500; color: var(--text-main); }
+.lvl { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-mute); white-space: nowrap; }
+.pips { display: inline-flex; gap: 3px; }
+.pips i { width: 7px; height: 7px; border-radius: 2px; background: #1c2a5c; transition: background-color 200ms ease; }
+.lvl[data-l="1"] .pips i:nth-child(-n+1) { background: #fed7aa; }
+.lvl[data-l="2"] .pips i:nth-child(-n+2) { background: #fb923c; }
+.lvl[data-l="3"] .pips i { background: #ea580c; }
+.lvl[data-l="1"] { color: #fed7aa; } .lvl[data-l="2"] { color: #fdba74; } .lvl[data-l="3"] { color: #fb923c; }
+.art .sys p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+.ms-leg { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 14px 2px 0 !important; font-size: 12.5px !important; color: var(--text-mute) !important; }
+.ms-leg span { display: inline-flex; align-items: center; gap: 7px; }
+.ms-leg .lv { width: 7px; height: 7px; border-radius: 2px; }
+.nw { white-space: nowrap; }
+.lv0 { background: #1c2a5c; } .lv1 { background: #fed7aa; } .lv2 { background: #fb923c; } .lv3 { background: #ea580c; }
+
+/* ---------- Légende de figure ---------- */
+.fig-leg { display: inline-flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12.5px; color: var(--text-soft); }
+.fig-leg span { display: inline-flex; align-items: center; gap: 7px; }
+.fig-leg i { width: 14px; height: 3px; border-radius: 2px; background: var(--lc); }
+.ph-band { fill: rgba(255,255,255,.025); }
+.ph-band.alt { fill: rgba(249,115,22,.05); }
+
+/* ---------- Doses ---------- */
+.dose { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 22px 0 24px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.ds { padding: 16px 14px 16px 0; }
+.ds + .ds { padding-left: 16px; border-left: 1px solid var(--line); }
+.ds strong { display: block; font-family: var(--mono); font-size: 19px; font-weight: 500; color: var(--text-main); white-space: nowrap; }
+.ds strong small { font-size: .62em; color: var(--text-mute); }
+.ds span { display: block; margin-top: 6px; font-size: 13px; line-height: 1.4; color: var(--text-soft); }
+.ds-hi strong { color: #fdba74; }
+
+/* ---------- Tableau des contre-mesures ---------- */
+.cm-table { width: 100%; }
+.cm-table td, .cm-table th { white-space: normal; vertical-align: top; }
+.cm-table td:first-child { min-width: 220px; }
+.cm-table td strong { display: block; font-weight: 500; color: var(--text-main); }
+.cm-table td small { display: block; margin-top: 2px; font-size: 12.5px; color: var(--text-mute); }
+.eff, .st { display: inline-block; font-size: 12.5px; white-space: nowrap; }
+.eff::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 7px; border-radius: 50%; vertical-align: 1px; background: currentColor; }
+.e3 { color: #6ee7b7; } .e2 { color: #fcd34d; } .e1 { color: var(--text-mute); }
+.st { padding: 3px 9px; border-radius: 99px; border: 1px solid; }
+.st-ok { color: #6ee7b7; border-color: rgba(110,231,183,.35); background: rgba(16,185,129,.08); }
+.st-wip { color: #fcd34d; border-color: rgba(252,211,77,.3); background: rgba(245,158,11,.07); }
+.st-no { color: var(--text-soft); border-color: var(--border); }
+
+/* ---------- Entretien ---------- */
+.qa-who { display: flex; align-items: center; gap: 14px; margin: 16px 0 22px; padding: 14px 16px; border-radius: 14px; background: var(--bg-light); border: 1px solid var(--border); }
+.qa-who .av { flex: none; }
+.art .qa-who p { margin: 0; font-size: 14px; line-height: 1.5; color: var(--text-soft); }
+.qa-who p strong { display: block; font-size: 15.5px; color: #fff; }
+.qa { margin: 0; }
+.qa dt { position: relative; margin: 0 0 8px; padding-left: 16px; font-size: 17px; font-weight: 500; line-height: 1.45; color: #fff; }
+.qa dt::before { content: ""; position: absolute; left: 0; top: 4px; bottom: 4px; width: 2px; border-radius: 2px; background: #f97316; }
+.qa dd { margin: 0 0 26px; padding-left: 16px; font-size: 17px; line-height: 1.75; font-weight: 300; color: #c3cae6; }
+
+/* ---------- Questions ouvertes ---------- */
+.openq { list-style: none; counter-reset: q; margin: 18px 0 8px; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.openq li { counter-increment: q; padding: 18px; border-radius: 14px; border: 1px solid var(--border); background: linear-gradient(160deg, rgba(249,115,22,.06), transparent 60%), var(--bg-light); }
+.openq li::before { content: "Q" counter(q); display: block; margin-bottom: 10px; font-family: var(--mono); font-size: 12px; color: #fdba74; }
+.openq strong { display: block; font-size: 15.5px; font-weight: 500; color: #fff; }
+.openq span { display: block; margin-top: 6px; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+
+/* ---------- Rail ---------- */
+.facts { margin: 0; display: grid; gap: 10px; }
+.facts dt { font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-mute); }
+.facts dd { margin: 2px 0 0; font-size: 13.5px; line-height: 1.45; color: var(--text-main); }
+.coll { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.coll li > a, .coll li.cur { display: grid; grid-template-columns: 34px 1fr; gap: 8px; padding: 8px; border-radius: 8px; font-size: 13.5px; line-height: 1.35; color: var(--text-main); text-decoration: none; transition: background-color 160ms ease; }
+.coll li span:first-child { font-family: var(--mono); font-size: 12px; color: var(--text-mute); padding-top: 1px; }
+.coll small { display: block; font-size: 12px; color: var(--text-mute); }
+.coll li.cur { background: rgba(249,115,22,.08); }
+.coll li.cur span:first-child { color: #fdba74; }
+@media (hover: hover) and (pointer: fine) { .coll li > a:hover { background: rgba(255,255,255,.04); } }
+.docs { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.docs a { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: center; padding: 8px; border-radius: 8px; color: var(--text-main); text-decoration: none; font-size: 13.5px; line-height: 1.35; transition: background-color 160ms ease; }
+.docs a i { font-size: 18px; color: #fdba74; }
+.docs small { display: block; font-size: 12px; color: var(--text-mute); }
+@media (hover: hover) and (pointer: fine) { .docs a:hover { background: rgba(255,255,255,.04); } }
+
+@media (prefers-reduced-motion: reduce) { .ms-grid, .ms-seg { transition: none; } }
+
+@media (max-width: 760px) {
+  .ms-bar { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin: 0 -14px; padding: 0 14px; }
+  .ms-bar::-webkit-scrollbar { display: none; }
+  .ms-seg { flex: 0 0 auto; scroll-snap-align: start; }
+  .ms-time em { display: none; }
+  .ms-grid { grid-template-columns: 1fr; }
+  .ms-head { grid-template-columns: 1fr; }
+  .dose { grid-template-columns: 1fr 1fr; }
+  .ds:nth-child(3) { padding-left: 0; border-left: 0; }
+  .ds:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .openq { grid-template-columns: 1fr; }
+  .qa dt, .qa dd { font-size: 16px; }
+}
+@media (max-width: 560px) {
+  .hs-cover { display: none; }
+  .hs-hero { padding-top: 28px; padding-bottom: 40px; }
+  .mission { padding: 14px; }
+}
+@media print {
+  .ms-bar, .ms-leg { display: none !important; }
+}
+@media (max-width: 640px) {
+  .cm-table thead { display: none; }
+  .cm-table, .cm-table tbody { display: block; }
+  .cm-table tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 6px 12px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+  .cm-table tr:last-child { border-bottom: 0; }
+  .cm-table td { display: block; padding: 0 !important; border: 0 !important; min-width: 0 !important; }
+  .cm-table td:first-child, .cm-table td:nth-child(2) { grid-column: 1 / -1; }
+  .cm-table td:nth-child(2) { font-size: 13px; color: var(--text-soft); }
+  .cm-table td:nth-child(2)::before { content: "Protège : "; color: var(--text-mute); }
+}
+
+</style>
+<script>document.documentElement.classList.add('js');</script>
+</head>
+
+<body>
+
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header" id="header">
+  <div class="container header-inner">
+    <div class="header-left">
+      <a href="../index.html" class="logo-link" aria-label="IFRAS, accueil">
+        <img src="../logo.png" alt="Logo IFRAS" width="44" height="44">
+      </a>
+      <nav aria-label="Navigation principale">
+        <ul class="main-nav">
+          <li><a href="../index.html">Accueil</a></li>
+          <li><a href="../recherche.html">Recherche</a></li>
+          <li><a href="../programmes.html">Programmes</a></li>
+          <li><a href="../publications.html" aria-current="page">Publications</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="header-right">
+      <a href="../connexion.html" class="btn btn-ghost btn-desktop">Connexion</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-panel" aria-label="Ouvrir le menu">
+        <i class="ph-light ph-list" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-panel" id="mobile-panel">
+  <ul>
+    <li><a href="../index.html">Accueil <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../recherche.html">Recherche <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../programmes.html">Programmes <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+    <li><a href="../publications.html" aria-current="page">Publications <i class="ph-light ph-caret-right" aria-hidden="true"></i></a></li>
+  </ul>
+  <a href="../connexion.html" class="btn btn-primary">Connexion</a>
+</div>
+
+<!-- ===== SOUS-NAVIGATION (mêmes rubriques que publications.html) ===== -->
+<nav class="subnav" id="subnav" aria-label="Rubriques des publications">
+  <ul class="subnav-list">
+    <li><a class="subnav-link" href="../publications-scientifiques.html" style="--c:var(--t-sci)"><i class="ph-light ph-article" aria-hidden="true"></i>Publications scientifiques</a></li>
+    <li><a class="subnav-link" href="../publications-ifras.html" aria-current="true" style="--c:var(--t-ifras)"><i class="ph-light ph-book-open" aria-hidden="true"></i>Publications IFRAS</a></li>
+    <li><a class="subnav-link" href="../evenements.html" style="--c:var(--t-event)"><i class="ph-light ph-calendar-dots" aria-hidden="true"></i>Événements</a></li>
+  </ul>
+</nav>
+
+<div class="progress" aria-hidden="true"><span id="progress"></span></div>
+
+<main id="contenu">
+
+<!-- ===== EN-TÊTE DU HORS-SÉRIE ===== -->
+<header class="art-hero lt-hero hs-hero">
+  <div class="container art-hero-grid lt-grid">
+    <div>
+      <ol class="crumbs hero-in" style="--i:0" aria-label="Fil d'Ariane">
+        <li><a href="../publications.html">Publications</a></li>
+        <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+        <li><a href="../publications-ifras.html">Publications IFRAS</a></li>
+        <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
+        <li aria-current="page">Hors-série N°1</li>
+      </ol>
+      <p class="lt-eyebrow hs-eyebrow hero-in" style="--i:1"><span class="lt-dot" aria-hidden="true"></span>Hors-série N°1 · Janvier 2024</p>
+      <h1 class="art-title hero-in" style="--i:2">Biologie humaine en microgravité<span class="lt-season">Le corps face au voyage martien</span></h1>
+      <p class="art-lede hero-in" style="--i:3">Ce que l'impesanteur fait au cœur, aux os, aux yeux et au cerveau, et comment l'IFRAS prépare les six astronautes-chercheurs d'<span class="nw">ARTEMIS-9</span> à trente mois loin de la Terre.</p>
+      <div class="meta-line hero-in" style="--i:4">
+        <span><i class="ph-light ph-calendar-blank" aria-hidden="true"></i>Publié le 24 janvier 2024</span>
+        <span><i class="ph-light ph-clock" aria-hidden="true"></i>16 min de lecture</span>
+        <span><i class="ph-light ph-hash" aria-hidden="true"></i><code>IFRAS-HS-01</code></span>
+      </div>
+      <div class="lt-actions hero-in" style="--i:5">
+        <a class="ctrl" href="mailto:archives@ifras.fr?subject=Hors-s%C3%A9rie%20N%C2%B01%20%3A%20version%20imprim%C3%A9e"><i class="ph-light ph-book-open-text" aria-hidden="true"></i><span>Version imprimée, 80 pages</span></a>
+        <button class="ctrl" type="button" id="ltPrint"><i class="ph-light ph-printer" aria-hidden="true"></i><span>Imprimer</span></button>
+        <button class="ctrl" type="button" id="ltCopy"><i class="ph-light ph-link" aria-hidden="true"></i><span>Copier le lien</span></button>
+      </div>
+    </div>
+
+    <!-- Couverture -->
+    <div class="lt-cover hs-cover hero-in" style="--i:3" aria-hidden="true">
+      <svg viewBox="0 0 360 460" id="ltCoverSvg"></svg>
+      <div class="lt-cover-txt">
+        <span class="lt-cover-kicker">IFRAS · Hors-série</span>
+        <span class="lt-cover-num">N°1</span>
+        <span class="lt-cover-season">Biologie humaine en microgravité</span>
+        <ul class="lt-cover-toc">
+          <li>Six systèmes du corps</li>
+          <li>Les contre-mesures</li>
+          <li>Entretien avec le DSVT</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container art-layout">
+
+  <!-- Sommaire -->
+  <nav class="toc" aria-label="Sommaire">
+    <p class="toc-title">Sommaire</p>
+    <ol id="toc">
+      <li class="toc-ind" aria-hidden="true"></li>
+      <li><a href="#s-avant"><span>·</span>Avant-propos</a></li>
+      <li><a href="#s-intro"><span>1</span>Un corps réglé pour la gravité</a></li>
+      <li><a href="#s-mission"><span>2</span>Au fil de la mission</a></li>
+      <li><a href="#s-coeur"><span>3</span>Fluides et cœur</a></li>
+      <li><a href="#s-os"><span>4</span>Os et muscles</a></li>
+      <li><a href="#s-vision"><span>5</span>Vision et équilibre</a></li>
+      <li><a href="#s-immunite"><span>6</span>Immunité et rayonnements</a></li>
+      <li><a href="#s-contre"><span>7</span>Les contre-mesures</a></li>
+      <li><a href="#s-entretien"><span>8</span>Entretien</a></li>
+      <li><a href="#s-questions"><span>9</span>Questions ouvertes</a></li>
+    </ol>
+    <p class="toc-time"><i class="ph-light ph-hourglass-medium" aria-hidden="true"></i><span id="timeLeft">16 min restantes</span></p>
+  </nav>
+
+  <!-- ===== HORS-SÉRIE ===== -->
+  <article class="art letter hs" id="article">
+
+    <!-- AVANT-PROPOS -->
+    <section id="s-avant" aria-label="Avant-propos">
+      <div class="edito rv">
+        <p class="label">Avant-propos</p>
+        <p class="edito-lead">Une collection pour partager ce que nous savons.</p>
+        <p>Avec ce numéro, l'IFRAS ouvre une collection de hors-séries. Chaque volume fera le point, pour l'ensemble des personnels et de nos partenaires, sur un domaine où l'institut travaille : ce que l'on sait, ce que l'on ignore encore, et ce que nos équipes font pour avancer.</p>
+        <p>Il était naturel de commencer par le corps humain. <span class="nw">ARTEMIS-9</span> enverra six femmes et hommes vivre dix-huit mois sur Mars, après six mois de voyage, et les ramènera par le même chemin. Aucun équipage n'est jamais resté aussi longtemps loin de la Terre. Les ingénieurs savent construire l'habitat ; la question qui reste la plus ouverte est celle de l'organisme qui l'habitera.</p>
+        <blockquote class="pull">« Un habitat se qualifie en chambre d'essai. Un corps humain, lui, ne se remplace pas : c'est à nous de le comprendre avant le départ. »</blockquote>
+        <p>Ce hors-série a été préparé par le département Sciences du Vivant et de la Terre, avec le concours des médecins du programme. Il est écrit pour être lu par tous, biologistes ou non. Je remercie les équipes qui ont accepté de rendre leurs travaux accessibles, sans rien céder sur la rigueur.</p>
+        <div class="sign">
+          <span class="av" style="--ah:220" aria-hidden="true">JLR</span>
+          <span><strong>Jean-Luc Rousseau</strong><small>Directeur de la Direction scientifique</small></span>
+        </div>
+      </div>
+
+      <div class="figures rv" aria-label="Le hors-série en chiffres">
+        <div class="fg"><strong data-count="900" data-suffix=" j">900<small> j</small></strong><span>de mission prévus pour <span class="nw">ARTEMIS-9</span></span></div>
+        <div class="fg"><strong>2<small> L</small></strong><span>de fluides remontent vers le haut du corps</span></div>
+        <div class="fg"><strong>1 à 1,5<small> %</small></strong><span>de densité osseuse perdue par mois, sans protection</span></div>
+        <div class="fg"><strong>≈ 1<small> Sv</small></strong><span>de rayonnement cumulé sur l'ensemble du voyage</span></div>
+      </div>
+    </section>
+
+    <!-- 1. INTRODUCTION -->
+    <section id="s-intro">
+      <h2><span class="n">01</span>Un corps réglé pour la gravité</h2>
+      <p>Tout, dans notre organisme, a été façonné par un champ de pesanteur constant. Le cœur pompe contre une colonne de sang d'un mètre et demi. Les os se renforcent là où ils portent du poids. L'oreille interne se sert de la direction du « bas » pour nous tenir debout. Retirer la gravité, c'est retirer une référence dont chaque système s'est servi depuis la naissance.</p>
+      <p>Dans un vaisseau en orbite ou en route vers Mars, la gravité n'a pas disparu : l'équipage et le vaisseau tombent ensemble, si bien que rien ne pèse plus sur rien. C'est l'<span class="term" tabindex="0" data-term="impesanteur">impesanteur</span>. Les biologistes parlent de <span class="term" tabindex="0" data-term="micro">microgravité</span>, parce que de petites accélérations résiduelles subsistent, environ un millionième de la pesanteur terrestre.</p>
+      <p>Le corps réagit en quelques heures pour certains systèmes, en plusieurs mois pour d'autres. Ces adaptations ne sont pas des maladies : elles sont logiques dans l'espace. Elles deviennent un problème au moment de revenir sous une gravité, qu'il s'agisse de poser le pied sur Mars ou de rentrer sur Terre.</p>
+      <p>Une mission martienne ajoute deux difficultés que l'orbite terrestre ne pose pas. La première est la durée : environ 900 jours, contre six mois pour une mission orbitale classique. La seconde est l'éloignement : aucune évacuation n'est possible, et un message met jusqu'à vingt minutes pour arriver. L'équipage devra se soigner seul.</p>
+    </section>
+
+    <!-- 2. LA MISSION -->
+    <section id="s-mission">
+      <h2><span class="n">02</span>Le corps au fil de la mission</h2>
+      <p>Les effets ne se présentent pas tous en même temps. Choisissez une étape du voyage pour voir comment évolue chacun des six grands systèmes, du lancement au retour sur Terre.</p>
+
+      <div class="mission rv" id="mission">
+        <div class="ms-bar" role="tablist" aria-label="Étapes de la mission" id="msTabs"></div>
+        <div class="ms-head" id="msHead" aria-live="polite"></div>
+        <div class="ms-grid" id="msGrid"></div>
+        <p class="ms-leg" aria-hidden="true"><span><i class="lv lv0"></i>Stable</span><span><i class="lv lv1"></i>Adaptation</span><span><i class="lv lv2"></i>Vigilance</span><span><i class="lv lv3"></i>Risque élevé</span></p>
+      </div>
+      <p class="after">Les deux moments les plus délicats sont les changements de gravité : l'arrivée sur Mars et le retour sur Terre. Entre les deux, le corps trouve un nouvel équilibre, mais un équilibre qui s'use lentement.</p>
+    </section>
+
+    <!-- 3. FLUIDES ET CŒUR -->
+    <section id="s-coeur">
+      <h2><span class="n">03</span>Fluides et cœur : le sang monte à la tête</h2>
+      <p>Sur Terre, la gravité tire le sang et les liquides des tissus vers les jambes. Le cœur et les vaisseaux compensent en permanence. En impesanteur, cette traction disparaît : dès les premières heures, environ <strong>deux litres de fluides</strong> se déplacent des membres inférieurs vers le thorax et la tête. Le visage gonfle, les jambes s'affinent, le nez se bouche. Les astronautes décrivent une sensation de rhume permanent.</p>
+      <p>Le corps interprète cet afflux comme un excès de liquide. Il élimine davantage d'eau et de sel, et le volume de plasma baisse de 10 à 15 % en quelques jours. Le cœur, qui travaille moins, perd un peu de masse au fil des mois. Rien de tout cela n'est gênant en vol.</p>
+      <p>La difficulté survient à l'arrivée sous gravité. Avec moins de sang et des vaisseaux déshabitués à se contracter, le sang retombe vers les jambes et le cerveau en manque : c'est l'<span class="term" tabindex="0" data-term="ortho">intolérance orthostatique</span>. Sur Terre, près des deux tiers des astronautes de longue durée ont du mal à rester debout dix minutes à leur retour. Sur Mars, l'équipage devra pourtant sortir du véhicule, vérifier l'habitat et travailler sans aide extérieure.</p>
+      <div class="note" style="--nc:#fdba74">
+        <i class="ph-light ph-drop" aria-hidden="true"></i>
+        <p><span class="nt">Ce que prévoit <span class="nw">ARTEMIS-9</span></span>Une recharge en eau salée dans les heures précédant l'atterrissage, des vêtements de compression pour les jambes et trois jours d'activité réduite avant la première sortie. Ce protocole sera testé au sol en 2024.</p>
+      </div>
+    </section>
+
+    <!-- 4. OS ET MUSCLES -->
+    <section id="s-os">
+      <h2><span class="n">04</span>Os et muscles : ce qui ne porte plus s'affaiblit</h2>
+      <p>L'os est un tissu vivant, sans cesse détruit et reconstruit. Les contraintes mécaniques lui indiquent où se renforcer. Privé de charge, il se résorbe plus vite qu'il ne se reforme. En impesanteur, les zones qui portent le poids du corps sur Terre, hanches, col du fémur et colonne lombaire, perdent <strong>1 à 1,5 % de leur densité minérale par mois</strong> en l'absence de protection. Le calcium libéré est éliminé par les reins, avec un risque accru de calculs rénaux.</p>
+      <p>Les muscles suivent le même chemin. Ceux qui nous maintiennent debout, les mollets, les cuisses et les muscles du dos, fondent les premiers. Sans entraînement, un astronaute peut perdre jusqu'à 20 % du volume de ses mollets en quelques mois, et davantage encore de sa force.</p>
+
+      <figure class="fig rv" id="fig1">
+        <div class="fig-stage">
+          <div class="fig-head">
+            <span class="fig-name">Densité osseuse de la hanche au fil de la mission</span>
+            <span class="fig-leg"><span style="--lc:#fb923c"><i></i>Sans protection</span><span style="--lc:#3b82f6"><i></i>Avec les contre-mesures actuelles</span></span>
+          </div>
+          <div class="chart" id="bone"><div class="ctip" id="boneTip"></div></div>
+        </div>
+        <figcaption><b>Figure 1</b>Évolution estimée, en pourcentage de la valeur avant le départ. Les pertes en impesanteur sont bien connues grâce aux missions orbitales. Sur Mars, sous 0,38 g, personne ne les a jamais mesurées : la zone claire indique l'incertitude. Survolez la courbe pour lire les valeurs.</figcaption>
+      </figure>
+
+      <p>La figure résume l'enjeu. Avec les contre-mesures actuelles, un équipage en orbite perd peu de masse osseuse sur six mois. Mais personne ne sait ce que fait une gravité partielle sur dix-huit mois. Si 0,38 g protège bien l'os, le bilan d'<span class="nw">ARTEMIS-9</span> sera comparable à celui d'une longue mission orbitale. S'il protège mal, la perte cumulée pourrait dépasser le seuil au-delà duquel le risque de fracture augmente nettement.</p>
+      <p>La récupération, elle, est lente. Il faut en général deux à trois ans pour que l'os retrouve sa densité après une mission de six mois, et sa structure interne ne redevient pas toujours identique. C'est l'une des raisons pour lesquelles le suivi médical des équipages d'<span class="nw">ARTEMIS-9</span> durera au moins cinq ans après leur retour.</p>
+    </section>
+
+    <!-- 5. VISION ET ÉQUILIBRE -->
+    <section id="s-vision">
+      <h2><span class="n">05</span>Vision et équilibre : le cerveau réapprend</h2>
+      <p>C'est l'effet le plus récemment découvert, et l'un des moins bien compris. Chez une majorité d'astronautes restés plusieurs mois en orbite, l'examen des yeux montre des changements : léger aplatissement de l'arrière du globe oculaire, plis de la membrane qui tapisse le fond de l'œil, gonflement du nerf optique. On regroupe ces signes sous le nom de <span class="term" tabindex="0" data-term="sans">syndrome neuro-oculaire du vol spatial</span>.</p>
+      <p>La cause la plus probable est la remontée des fluides décrite plus haut : une pression légèrement plus élevée autour du cerveau et du nerf optique, jour et nuit, pendant des mois. La vue de près baisse souvent un peu. Certains signes disparaissent au retour, d'autres persistent des années. Sur une mission de 900 jours, ce syndrome est aujourd'hui l'un des risques médicaux les plus surveillés.</p>
+      <p>L'équilibre pose un problème différent. L'<span class="term" tabindex="0" data-term="vestib">oreille interne</span> détecte les accélérations et la direction de la gravité. En impesanteur, ses signaux ne correspondent plus à ce que voient les yeux. Pendant les deux à quatre premiers jours, 60 à 70 % des voyageurs souffrent du mal de l'espace : nausées, maux de tête, désorientation. Puis le cerveau apprend à se fier davantage à la vue.</p>
+      <p>Ce réapprentissage doit se refaire dans l'autre sens à chaque changement de gravité. À l'arrivée sur Mars, les premiers pas seront hésitants et les mouvements de tête pourront provoquer des vertiges. Les équipes de l'Unité Neurosciences et Comportement du DSVT conçoivent un entraînement de quelques minutes par jour, en fin de transit, pour raccourcir cette phase.</p>
+    </section>
+
+    <!-- 6. IMMUNITÉ ET RAYONNEMENTS -->
+    <section id="s-immunite">
+      <h2><span class="n">06</span>Immunité et rayonnements : deux menaces discrètes</h2>
+      <p>Le système immunitaire des astronautes change en vol. Certaines défenses s'affaiblissent, d'autres s'emballent. Des virus dormants, comme celui de la varicelle, se réactivent sans forcément rendre malade. Le stress, le sommeil perturbé et le confinement jouent sans doute autant que l'impesanteur. Dans un habitat fermé, les microbes évoluent eux aussi : le DSVT étudie comment ils se comportent en conditions martiennes simulées.</p>
+      <p>Au-delà du champ magnétique terrestre, l'équipage n'est plus protégé des <span class="term" tabindex="0" data-term="gcr">rayons cosmiques</span>. Ces particules très énergétiques traversent les parois et peuvent endommager l'ADN des cellules. La dose attendue pour <span class="nw">ARTEMIS-9</span> est de l'ordre d'<strong>un sievert</strong> sur l'ensemble du voyage, dont environ deux tiers pendant les transits.</p>
+
+      <div class="dose rv" aria-label="Ordres de grandeur des doses de rayonnement">
+        <div class="ds"><strong>0,02<small> mSv</small></strong><span>une radiographie du thorax</span></div>
+        <div class="ds"><strong>4,5<small> mSv</small></strong><span>une année d'exposition naturelle en France</span></div>
+        <div class="ds"><strong>≈ 80<small> mSv</small></strong><span>six mois en orbite basse</span></div>
+        <div class="ds ds-hi"><strong>≈ 1 000<small> mSv</small></strong><span>la mission <span class="nw">ARTEMIS-9</span> complète</span></div>
+      </div>
+
+      <p>Cette dose ne provoque pas de symptômes immédiats. Elle augmente le risque de cancer sur le reste de la vie, de quelques points de pourcentage selon l'âge et le sexe, et pourrait affecter le système nerveux et le cœur à long terme. Les éruptions solaires, plus rares, sont plus brutales : l'habitat et le vaisseau disposeront d'un abri renforcé où l'équipage pourra se réfugier quelques heures.</p>
+    </section>
+
+    <!-- 7. CONTRE-MESURES -->
+    <section id="s-contre">
+      <h2><span class="n">07</span>Les contre-mesures</h2>
+      <p>Aucune solution ne protège de tout. La stratégie d'<span class="nw">ARTEMIS-9</span> combine plusieurs protections, chacune ciblant un ou deux systèmes. Certaines ont fait leurs preuves en orbite ; d'autres n'existent encore que dans les laboratoires.</p>
+
+      <div class="table-wrap rv">
+        <div class="table-cap"><b>Tableau 1</b>Contre-mesures envisagées pour <span class="nw">ARTEMIS-9</span></div>
+        <div class="table-scroll">
+          <table class="cm-table">
+            <thead><tr><th>Contre-mesure</th><th>Systèmes protégés</th><th>Efficacité connue</th><th>Statut</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Exercice contre résistance</strong><small>Squats, soulevés, 1 h par jour</small></td><td>Os, muscles</td><td><span class="eff e3">Élevée</span></td><td><span class="st st-ok">Retenue</span></td></tr>
+              <tr><td><strong>Exercice d'endurance</strong><small>Vélo, tapis harnaché, 1 h par jour</small></td><td>Cœur, muscles</td><td><span class="eff e3">Élevée</span></td><td><span class="st st-ok">Retenue</span></td></tr>
+              <tr><td><strong>Alimentation adaptée</strong><small>Vitamine D, protéines, sel réduit</small></td><td>Os</td><td><span class="eff e2">Modérée</span></td><td><span class="st st-ok">Retenue</span></td></tr>
+              <tr><td><strong>Médicament contre la résorption osseuse</strong><small>Une prise avant le départ</small></td><td>Os</td><td><span class="eff e3">Élevée sur 6 mois</span></td><td><span class="st st-wip">À l'étude</span></td></tr>
+              <tr><td><strong>Dépression sur le bas du corps</strong><small>Caisson autour des jambes, quelques heures par jour</small></td><td>Fluides, vision</td><td><span class="eff e2">Prometteuse</span></td><td><span class="st st-wip">Prototype</span></td></tr>
+              <tr><td><strong>Gravité artificielle à bras court</strong><small>Centrifugeuse de 2 m de rayon</small></td><td>Tous</td><td><span class="eff e1">Inconnue sur la durée</span></td><td><span class="st st-no">Études au sol</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-note">« Retenue » : intégrée à la conception actuelle de l'habitat et du vaisseau. Les autres mesures seront arbitrées lors de la revue de fin de phase II.</div>
+      </div>
+
+      <p>L'exercice reste la protection de base : environ deux heures par jour, sept jours sur sept. Sur un vaisseau où chaque kilo compte, les appareils doivent être compacts et ne pas faire vibrer la structure. L'habitat martien, plus spacieux, pourra accueillir un équipement plus complet.</p>
+      <p>Pour étudier ces effets sans quitter le sol, l'IFRAS lance cette année deux campagnes sur son site de Toulouse. La première est une <span class="term" tabindex="0" data-term="hdt">étude d'alitement tête déclive</span> : vingt-quatre volontaires resteront allongés soixante jours, la tête légèrement plus basse que les pieds, ce qui reproduit bien la remontée des fluides et la perte osseuse. La seconde, plus courte, utilise l'<span class="term" tabindex="0" data-term="dry">immersion sèche</span> pour étudier les premiers jours d'adaptation.</p>
+    </section>
+
+    <!-- 8. ENTRETIEN -->
+    <section id="s-entretien">
+      <h2><span class="n">08</span>Entretien avec Élise Sauvage</h2>
+      <div class="qa-who rv">
+        <span class="av" style="--ah:150" aria-hidden="true">ES</span>
+        <p><strong>Élise Sauvage</strong>Directrice du département Sciences du Vivant et de la Terre, responsable scientifique du volet biologique d'<span class="nw">ARTEMIS-9</span>.</p>
+      </div>
+      <dl class="qa">
+        <dt>Qu'est-ce qui vous inquiète le plus pour l'équipage ?</dt>
+        <dd>Pas un effet en particulier, mais leur combinaison. On connaît assez bien chaque problème pris isolément, grâce aux missions en orbite. On connaît beaucoup moins ce qui se passe quand on cumule trente mois d'isolement, une gravité partielle, des rayonnements et un sommeil décalé. Nos études au sol servent d'abord à cela : observer les interactions.</dd>
+        <dt>Pourquoi ne pas simplement créer une gravité artificielle ?</dt>
+        <dd>C'est une piste sérieuse, et nous l'étudions. Mais un vaisseau entier en rotation est un défi d'ingénierie considérable. Une petite centrifugeuse à bord est plus réaliste ; il faut encore savoir combien de temps par jour, à quelle vitesse, et si l'oreille interne le tolère. Nous n'aurons pas toutes les réponses avant 2027. Nous préparons donc l'équipage à s'en passer.</dd>
+        <dt>Que retiendra-t-on de cette mission pour la médecine sur Terre ?</dt>
+        <dd>Beaucoup. La perte osseuse des astronautes ressemble à une ostéoporose accélérée ; la perte musculaire, à celle des patients alités ou des personnes âgées. Chaque contre-mesure que nous validons pour l'espace peut servir à l'hôpital. C'est aussi pour cela que nous publierons tous nos résultats.</dd>
+      </dl>
+    </section>
+
+    <!-- 9. QUESTIONS OUVERTES -->
+    <section id="s-questions">
+      <h2><span class="n">09</span>Questions ouvertes</h2>
+      <p>Ce hors-série fait le point sur ce que l'on sait. Il serait incomplet sans ce que l'on ignore. Quatre questions orienteront les travaux du DSVT jusqu'au lancement.</p>
+      <ol class="openq rv">
+        <li><strong>La gravité martienne suffit-elle ?</strong><span>0,38 g ralentit-il les pertes osseuses et musculaires, et dans quelle proportion ? Aucune mesure humaine n'existe entre 0 et 1 g.</span></li>
+        <li><strong>Les effets s'additionnent-ils ?</strong><span>Rayonnements, confinement et impesanteur pourraient se renforcer mutuellement, notamment sur le système nerveux.</span></li>
+        <li><strong>Pourquoi sommes-nous inégaux ?</strong><span>Certains astronautes perdent deux fois plus d'os que d'autres. Comprendre pourquoi aiderait à adapter les protections à chacun.</span></li>
+        <li><strong>Comment revient-on de 900 jours ?</strong><span>Le plus long séjour humain dans l'espace reste bien inférieur. La réadaptation au retour devra être inventée.</span></li>
+      </ol>
+    </section>
+
+    <footer class="colophon rv">
+      <p><strong>Hors-série N°1, janvier 2024.</strong> Directeur de la publication : Jean-Luc Rousseau. Coordination scientifique : Élise Sauvage. Contributions : Laboratoire de Biologie Spatiale et Unité Neurosciences et Comportement du DSVT, service Communication scientifique. La version imprimée (80 pages) comprend les fiches détaillées de chaque système et le protocole des études au sol.</p>
+      <nav class="lt-nav" aria-label="Autres publications">
+        <a href="../publications-ifras.html" class="lt-prev"><i class="ph-light ph-arrow-left" aria-hidden="true"></i><span><small>Toutes les publications</small>Publications IFRAS</span></a>
+        <a href="../publications-ifras.html" class="lt-all"><span><small>Hors-série suivant</small>N°2 · Matériaux extrêmes</span><i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
+      </nav>
+    </footer>
+
+  </article>
+
+  <!-- Colonne de droite -->
+  <aside class="rail" aria-label="Repères">
+    <div class="rail-card">
+      <p class="rail-title">La mission en bref</p>
+      <dl class="facts">
+        <div><dt>Programme</dt><dd><span class="nw">ARTEMIS-9</span>, mission habitée sur Mars</dd></div>
+        <div><dt>Équipage</dt><dd>6 astronautes-chercheurs</dd></div>
+        <div><dt>Voyage</dt><dd>2 × 6 mois de transit</dd></div>
+        <div><dt>Séjour</dt><dd>18 mois sous 0,38 g</dd></div>
+        <div><dt>Lancement prévu</dt><dd>2027</dd></div>
+      </dl>
+    </div>
+    <div class="rail-card">
+      <p class="rail-title">Dans la collection</p>
+      <ol class="coll">
+        <li class="cur"><span>N°1</span><span>Biologie humaine en microgravité<small>Janvier 2024</small></span></li>
+        <li><a href="../publications-ifras.html"><span>N°2</span><span>Matériaux extrêmes pour l'espace<small>Octobre 2024</small></span></a></li>
+        <li><a href="../publications-ifras.html"><span>N°3</span><span>Intelligence artificielle embarquée<small>Mars 2025</small></span></a></li>
+        <li><a href="../publications-ifras.html"><span>N°4</span><span>Propulsion du futur<small>Septembre 2025</small></span></a></li>
+      </ol>
+    </div>
+    <div class="rail-card">
+      <p class="rail-title">À lire aussi</p>
+      <ul class="docs">
+        <li><a href="../Publication_scientifiques/publications_scientifiques_07.html"><i class="ph-light ph-article" aria-hidden="true"></i><span>Résilience microbienne en conditions extrêmes simulées<small>DSVT · Janvier 2024</small></span></a></li>
+        <li><a href="../DSVT.html"><i class="ph-light ph-dna" aria-hidden="true"></i><span>Le département DSVT<small>Sciences du Vivant et de la Terre</small></span></a></li>
+        <li><a href="../programmes-actifs.html"><i class="ph-light ph-planet" aria-hidden="true"></i><span>Le programme <span class="nw">ARTEMIS-9</span><small>Programmes actifs</small></span></a></li>
+      </ul>
+    </div>
+  </aside>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© IFRAS, Institut Français de Recherche Aéronautique et Spatiale</span>
+    <span>Document institutionnel</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status"><i class="ph-light ph-check-circle" aria-hidden="true"></i><span></span></div>
+<div class="tip" id="tip" role="tooltip"></div>
+<script>
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const $ = (id) => document.getElementById(id);
+  const NS = 'http://www.w3.org/2000/svg';
+  const fmt = (n, d = 0) => n.toLocaleString('fr-FR', { minimumFractionDigits: d, maximumFractionDigits: d });
+  const svgEl = (tag, attrs = {}, parent) => {
+    const el = document.createElementNS(NS, tag);
+    for (const k in attrs) el.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(el);
+    return el;
+  };
+  /* lance une fonction quand l'élément devient visible (une seule fois) */
+  const onceVisible = (el, fn, margin = '0px 0px -15% 0px') => {
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { io.disconnect(); fn(); } }, { rootMargin: margin });
+    io.observe(el);
+  };
+  /* boucle d'animation suspendue hors écran et onglet masqué */
+  const loopWhileVisible = (el, frame) => {
+    let raf = 0, visible = false;
+    const tick = (t) => { frame(t); raf = requestAnimationFrame(tick); };
+    const sync = () => { cancelAnimationFrame(raf); if (visible && !document.hidden) raf = requestAnimationFrame(tick); };
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; sync(); }).observe(el);
+    document.addEventListener('visibilitychange', sync);
+  };
+
+  /* ---------- Menu mobile ---------- */
+  const toggle = document.querySelector('.menu-toggle');
+  const panel = $('mobile-panel');
+  const setMenu = (open) => {
+    panel.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    toggle.querySelector('i').className = open ? 'ph-light ph-x' : 'ph-light ph-list';
+  };
+  toggle.addEventListener('click', () => setMenu(!panel.classList.contains('is-open')));
+  document.addEventListener('click', (e) => { if (panel.classList.contains('is-open') && !panel.contains(e.target) && !toggle.contains(e.target)) setMenu(false); });
+
+  /* ---------- Apparition au défilement ---------- */
+  const rvIO = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (e.isIntersecting) { e.target.classList.add('in'); rvIO.unobserve(e.target); }
+  }), { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.rv').forEach((el) => rvIO.observe(el));
+
+  /* ---------- Toast ---------- */
+  let toastT;
+  const toast = (msg) => { const t = $('toast'); t.querySelector('span').textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2600); };
+
+  /* ---------- Progression de lecture + sommaire ---------- */
+  const article = $('article');
+  const tocLinks = [...document.querySelectorAll('#toc a')];
+  const sections = tocLinks.map((a) => document.querySelector(a.getAttribute('href')));
+  const ind = document.querySelector('.toc-ind');
+  const WORDS = article.innerText.split(/\s+/).length;
+  let ticking = false;
+  function onScroll() {
+    ticking = false;
+    const r = article.getBoundingClientRect();
+    const total = r.height - window.innerHeight * 0.6;
+    const p = Math.min(1, Math.max(0, -r.top / total));
+    $('progress').style.transform = `scaleX(${p})`;
+    const left = Math.max(0, Math.ceil((WORDS / 220) * (1 - p)));
+    $('timeLeft').textContent = p >= 0.98 ? 'Lecture terminée' : `${left || 1} min restante${left > 1 ? 's' : ''}`;
+    let cur = 0;
+    sections.forEach((s, i) => { if (s && s.getBoundingClientRect().top < window.innerHeight * 0.35) cur = i; });
+    tocLinks.forEach((a, i) => a.classList.toggle('on', i === cur));
+    const a = tocLinks[cur];
+    if (a && ind) { ind.style.transform = `translateY(${a.parentElement.offsetTop}px)`; ind.style.height = a.offsetHeight + 'px'; }
+  }
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  /* ---------- Chiffres clés animés ---------- */
+  document.querySelectorAll('[data-count]').forEach((el) => {
+    const target = Number(el.dataset.count), suffix = el.dataset.suffix || '';
+    const paint = (v) => { el.innerHTML = `${fmt(v)}<small>${suffix}</small>`; };
+    if (reduceMotion) return;
+    paint(0);
+    onceVisible(el, () => {
+      const t0 = performance.now(), dur = 1100;
+      const step = (t) => { const k = Math.min(1, (t - t0) / dur); paint(Math.round(target * (1 - Math.pow(1 - k, 4)))); if (k < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    });
+  });
+
+  /* ---------- Infobulles : termes expliqués ---------- */
+  const TERMS = {
+    impesanteur: ['Impesanteur', 'État d\'un corps en chute libre : il subit la gravité mais rien ne pèse sur rien. C\'est la situation d\'un équipage en orbite ou en route vers Mars.'],
+    micro: ['Microgravité', 'Terme utilisé par les biologistes : de petites accélérations résiduelles subsistent à bord, de l\'ordre d\'un millionième de la pesanteur terrestre.'],
+    ortho: ['Intolérance orthostatique', 'Difficulté à rester debout : le sang descend vers les jambes, la tension chute au niveau du cerveau, avec vertiges voire malaise.'],
+    sans: ['Syndrome neuro-oculaire', 'Ensemble de modifications de l\'œil et du nerf optique observées après plusieurs mois dans l\'espace, probablement liées à la remontée des fluides.'],
+    vestib: ['Oreille interne', 'Le système vestibulaire, dans l\'oreille interne, mesure les rotations et les accélérations. Il indique au cerveau où se trouve le « bas ».'],
+    gcr: ['Rayons cosmiques', 'Noyaux d\'atomes accélérés à des vitesses proches de celle de la lumière, venus de l\'extérieur du système solaire. Difficiles à arrêter par un blindage.'],
+    hdt: ['Alitement tête déclive', 'Des volontaires restent allongés, tête inclinée de 6° vers le bas, pendant des semaines. Méthode de référence pour simuler l\'impesanteur au sol.'],
+    dry: ['Immersion sèche', 'Le volontaire flotte dans une cuve d\'eau, séparé de l\'eau par un film souple. Il ne supporte plus son poids, comme en impesanteur.']
+  };
+  const tip = $('tip');
+  let tipOpenAt = 0, hideT = null, tipOwner = null;
+  function showTip(el) {
+    clearTimeout(hideT);
+    const t = TERMS[el.dataset.term];
+    tip.innerHTML = `<b>${t[0]}</b>${t[1]}`;
+    tip.classList.toggle('instant', Date.now() - tipOpenAt < 400 && tip.classList.contains('show'));
+    const r = el.getBoundingClientRect();
+    tip.style.left = '0px'; tip.style.top = '0px';
+    tip.classList.add('show');
+    const w = tip.offsetWidth, h = tip.offsetHeight;
+    let x = r.left + r.width / 2 - w / 2 + window.scrollX;
+    x = Math.max(16 + window.scrollX, Math.min(x, window.scrollX + document.documentElement.clientWidth - w - 16));
+    let y = r.top + window.scrollY - h - 10, below = false;
+    if (r.top - h - 10 < 130) { y = r.bottom + window.scrollY + 10; below = true; }
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+    tip.style.transformOrigin = `${r.left + r.width / 2 + window.scrollX - x}px ${below ? '0%' : '100%'}`;
+    tipOpenAt = Date.now(); tipOwner = el;
+    el.setAttribute('aria-describedby', 'tip');
+  }
+  function hideTip(delay = 80) {
+    clearTimeout(hideT);
+    hideT = setTimeout(() => { tip.classList.remove('show'); if (tipOwner) tipOwner.removeAttribute('aria-describedby'); tipOwner = null; tipOpenAt = Date.now(); }, delay);
+  }
+  document.querySelectorAll('.term').forEach((el) => {
+    if (canHover) { el.addEventListener('mouseenter', () => showTip(el)); el.addEventListener('mouseleave', () => hideTip()); }
+    el.addEventListener('focus', () => showTip(el));
+    el.addEventListener('blur', () => hideTip(0));
+    el.addEventListener('click', () => { if (!canHover) (tipOwner === el && tip.classList.contains('show')) ? hideTip(0) : showTip(el); });
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { hideTip(0); setMenu(false); } });
+  window.addEventListener('scroll', () => { if (!canHover && tip.classList.contains('show')) hideTip(0); }, { passive: true });
+
+  /* petite infobulle de graphique, placée à côté d'un point */
+  const placeTip = (tipEl, box, svg, W, H, px, py) => {
+    const r = svg.getBoundingClientRect(), bx = box.getBoundingClientRect();
+    const sx = px / W * r.width + (r.left - bx.left), sy = py / H * r.height + (r.top - bx.top);
+    tipEl.classList.add('show');
+    tipEl.style.left = (sx + 14 + tipEl.offsetWidth > bx.width ? sx - 14 - tipEl.offsetWidth : sx + 14) + 'px';
+    tipEl.style.top = Math.max(0, Math.min(bx.height - tipEl.offsetHeight, sy - tipEl.offsetHeight / 2)) + 'px';
+  };
+  const BLUE = '#3b82f6', ORANGE = '#ea580c';
+
+    const NB = ' ';
+  /* ---------- aide : repère de graphique ---------- */
+  function frame(box, o) {
+    const W = Math.round(Math.max(o.minW || 300, Math.min(o.maxW || 680, box.clientWidth))), H = o.H || (W < 520 ? 280 : 300);
+    const m = Object.assign({ l: 50, r: 16, t: 16, b: 40 }, o.m || {});
+    const [x0, x1] = o.x, [y0, y1] = o.y;
+    const x = (v) => m.l + (v - x0) / (x1 - x0) * (W - m.l - m.r);
+    const y = (v) => H - m.b - (v - y0) / (y1 - y0) * (H - m.t - m.b);
+    const svg = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': o.aria || '' });
+    box.prepend(svg);
+    const under = svgEl('g', {}, svg);
+    (o.yt || []).forEach((v) => {
+      svgEl('line', { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: v === 0 ? '#26366e' : '#13204d' }, svg);
+      svgEl('text', { x: m.l - 6, y: y(v) + 4, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 11, class: 'mono' }, svg).textContent = o.yf ? o.yf(v) : fmt(v);
+    });
+    (o.xt || []).forEach((v) => svgEl('text', { x: x(v), y: H - m.b + 18, 'text-anchor': 'middle', fill: '#8891b8', 'font-size': 11, class: 'mono' }, svg).textContent = o.xf ? o.xf(v) : fmt(v));
+    if (o.xl) svgEl('text', { x: W - m.r, y: H - 3, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 11 }, svg).textContent = o.xl;
+    const hit = () => svgEl('rect', { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, class: 'hit' }, svg);
+    return { svg, under, W, H, m, x, y, hit };
+  }
+
+  /* ---------- Couverture ---------- */
+  (function cover() {
+    const s = $('ltCoverSvg'); if (!s) return;
+    const defs = svgEl('defs', {}, s);
+    const g = svgEl('radialGradient', { id: 'hsPl', cx: 0.35, cy: 0.3, r: 0.8 }, defs);
+    svgEl('stop', { offset: 0, 'stop-color': '#fed7aa' }, g); svgEl('stop', { offset: 0.5, 'stop-color': '#ea580c' }, g); svgEl('stop', { offset: 1, 'stop-color': '#431407' }, g);
+    [60, 100, 140, 180, 220].forEach((r) => svgEl('circle', { cx: 250, cy: 150, r, fill: 'none', stroke: '#fdba74', 'stroke-opacity': 0.09 }, s));
+    svgEl('circle', { cx: 250, cy: 150, r: 38, fill: 'url(#hsPl)' }, s);
+    const orb = svgEl('g', { class: reduceMotion ? '' : 'orbit-a' }, s);
+    svgEl('circle', { cx: 390, cy: 150, r: 4, fill: '#fff' }, orb);
+    svgEl('circle', { cx: 150, cy: 150, r: 2.5, fill: '#fdba74' }, orb);
+  })();
+
+  /* ---------- Le corps au fil de la mission ---------- */
+  const SYS = [
+    ['ph-heartbeat', 'Fluides et cœur'],
+    ['ph-bone', 'Os'],
+    ['ph-barbell', 'Muscles'],
+    ['ph-eye', 'Vision'],
+    ['ph-compass', 'Équilibre'],
+    ['ph-shield-plus', 'Immunité et ADN']
+  ];
+  const LV = ['Stable', 'Adaptation', 'Vigilance', 'Risque élevé'];
+  const PHASES = [
+    { id: 'j1', n: 'Premiers jours', d: 'J1 à J14', g: '0 g', w: 2, gc: '#64748b',
+      s: 'Le corps découvre l\'impesanteur. Les effets sont rapides, parfois désagréables, mais passagers.',
+      v: [[2, 'Deux litres de fluides remontent vers la tête : visage gonflé, nez bouché. Le volume de plasma chute.'],
+          [0, 'Rien de visible, mais le calcium éliminé par les reins augmente dès la première semaine.'],
+          [1, 'Les muscles posturaux, qui ne portent plus rien, commencent à s\'affaiblir.'],
+          [0, 'Pas de changement mesurable à ce stade.'],
+          [3, 'Mal de l\'espace chez 60 à 70 % des voyageurs pendant deux à quatre jours : nausées, désorientation.'],
+          [1, 'Le stress du lancement perturbe l\'immunité ; le sommeil est souvent court et fragmenté.']] },
+    { id: 'aller', n: 'Transit aller', d: '6 mois', g: '0 g', w: 6, gc: '#64748b',
+      s: 'Un nouvel équilibre s\'installe. Les pertes sont lentes et silencieuses, d\'où l\'importance de l\'exercice quotidien.',
+      v: [[1, 'Équilibre atteint. Le cœur, qui travaille moins, perd un peu de masse.'],
+          [2, 'Sans protection, 1 à 1,5 % de densité perdue par mois aux hanches et à la colonne.'],
+          [2, 'Mollets, cuisses et dos s\'atrophient si l\'entraînement faiblit.'],
+          [1, 'Premiers signes possibles au fond de l\'œil après quelques mois.'],
+          [0, 'Le cerveau s\'est adapté : il se fie surtout à la vue.'],
+          [2, 'Les rayonnements s\'accumulent, sans la protection du champ magnétique terrestre.']] },
+    { id: 'mars', n: 'Séjour martien', d: '18 mois', g: '0,38 g', w: 18, gc: '#ea580c',
+      s: 'L\'atterrissage est le premier moment critique. Ensuite, la gravité partielle protège sans doute un peu, mais personne ne sait combien.',
+      v: [[2, 'À l\'arrivée, se tenir debout peut provoquer des malaises. Trois jours d\'activité réduite sont prévus.'],
+          [2, 'La perte ralentit probablement sous 0,38 g. Son ampleur réelle est la grande inconnue.'],
+          [1, 'Marcher et travailler en surface entretiennent les muscles, avec l\'entraînement.'],
+          [2, 'Personne ne sait si le syndrome oculaire régresse ou persiste en gravité partielle.'],
+          [2, 'Premiers pas hésitants, vertiges aux mouvements de tête : le cerveau réapprend le « bas ».'],
+          [2, 'Le sol et l\'habitat protègent en partie, mais la dose continue de s\'accumuler.']] },
+    { id: 'retour', n: 'Transit retour', d: '6 mois', g: '0 g', w: 6, gc: '#64748b',
+      s: 'Retour en impesanteur, après deux ans loin de la Terre. Les pertes reprennent sur un organisme déjà éprouvé.',
+      v: [[1, 'Les fluides remontent à nouveau ; l\'adaptation est plus rapide la seconde fois.'],
+          [2, 'Les pertes reprennent au rythme de l\'aller et s\'ajoutent aux précédentes.'],
+          [2, 'L\'entraînement doit préparer la force nécessaire à l\'arrivée sur Terre.'],
+          [2, 'Exposition cumulée la plus longue jamais observée : suivi hebdomadaire de l\'œil.'],
+          [1, 'Adaptation rapide à l\'impesanteur, puis entraînement à la réentrée.'],
+          [2, 'Environ deux tiers de la dose totale auront été reçus pendant les transits.']] },
+    { id: 'terre', n: 'Retour sur Terre', d: 'Réadaptation', g: '1 g', w: 6, gc: '#059669',
+      s: 'Le plus dur est de retrouver une gravité trois fois plus forte que celle de Mars. La réadaptation se compte en mois, parfois en années.',
+      v: [[2, 'Intolérance orthostatique : rester debout dix minutes est difficile les premiers jours.'],
+          [3, 'Risque de fracture accru. L\'os met deux à trois ans à se reconstruire, parfois incomplètement.'],
+          [2, 'Force et endurance à reconstruire : plusieurs semaines de rééducation encadrée.'],
+          [1, 'Certains signes disparaissent, d\'autres persistent des années.'],
+          [2, 'Démarche instable et vertiges pendant quelques jours à quelques semaines.'],
+          [1, 'Suivi médical d\'au moins cinq ans, notamment pour les effets des rayonnements.']] }
+  ];
+  (function mission() {
+    const tabs = $('msTabs'), head = $('msHead'), grid = $('msGrid'); if (!tabs) return;
+    tabs.innerHTML = PHASES.map((p, i) => `<button class="ms-seg" type="button" role="tab" id="ms-${p.id}" aria-controls="msGrid" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}"><b>${p.n}</b><small>${p.d}</small></button>`).join('');
+    const tl = document.createElement('div'); tl.className = 'ms-time'; tl.setAttribute('aria-hidden', 'true');
+    tl.innerHTML = PHASES.map((p) => `<span style="--w:${p.w};--g:${p.gc}"><em>${p.g}</em></span>`).join('');
+    tabs.after(tl);
+    const segs = [...tl.children];
+    segs.forEach((s, k) => s.addEventListener('click', () => select(k)));
+    grid.setAttribute('role', 'tabpanel');
+    const btns = [...tabs.children];
+    let cur = -1, swapT = null;
+    const paint = (i) => {
+      const p = PHASES[i];
+      head.innerHTML = `<h3>${p.n}</h3><span class="ms-meta">${p.d} · ${p.g}</span><p>${p.s}</p>`;
+      grid.innerHTML = SYS.map(([ic, n], k) => {
+        const [l, t] = p.v[k];
+        return `<div class="sys"><i class="ph-light ${ic}" aria-hidden="true"></i><div class="sys-h"><strong>${n}</strong><span class="lvl" data-l="${l}"><span class="pips" aria-hidden="true"><i></i><i></i><i></i></span>${LV[l]}</span></div><p>${t}</p></div>`;
+      }).join('');
+      grid.setAttribute('aria-labelledby', 'ms-' + p.id);
+    };
+    const select = (i, focus) => {
+      if (i === cur) return;
+      btns.forEach((b, k) => { b.setAttribute('aria-selected', k === i); b.tabIndex = k === i ? 0 : -1; });
+      segs.forEach((s, k) => s.classList.toggle('on', k === i));
+      if (focus) btns[i].focus();
+      const first = cur < 0; cur = i;
+      clearTimeout(swapT);
+      if (first || reduceMotion) { paint(i); return; }
+      grid.classList.add('out');
+      swapT = setTimeout(() => { paint(i); grid.classList.remove('out'); }, 110);
+    };
+    btns.forEach((b, i) => b.addEventListener('click', () => select(i)));
+    tabs.addEventListener('keydown', (e) => {
+      const k = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+      if (k) { e.preventDefault(); select((cur + k + PHASES.length) % PHASES.length, true); }
+      else if (e.key === 'Home') { e.preventDefault(); select(0, true); }
+      else if (e.key === 'End') { e.preventDefault(); select(PHASES.length - 1, true); }
+    });
+    select(0);
+  })();
+
+  /* ---------- Figure 1 : densité osseuse ---------- */
+  (function bone() {
+    const box = $('bone'), tipEl = $('boneTip'); if (!box) return;
+    // mois 0-6 transit, 6-24 Mars, 24-30 transit, 30-42 Terre
+    const SEG = [[0, 6, 0], [6, 24, 1], [24, 30, 0], [30, 42, 2]];
+    const rate = { none: [-1.2, -0.55, -1.2, 0.32], cm: [-0.35, -0.15, -0.35, 0.18] };
+    const unc = { none: 0.35, cm: 0.15 }; // ± taux sur Mars (%/mois)
+    const val = (k, t, du = 0) => {
+      let v = 0;
+      for (const [i, [a, b, g]] of SEG.entries()) {
+        if (t <= a) break;
+        const dt = Math.min(t, b) - a, r = rate[k][i] + (g === 1 ? du * unc[k] : 0);
+        v = g === 2 ? Math.min(0, v + r * dt) : v + r * dt;
+      }
+      return v;
+    };
+    const narrow = box.clientWidth < 520;
+    const F = frame(box, { x: [0, 42], y: [-32, 2], xt: narrow ? [0, 6, 24, 30, 42] : [0, 6, 12, 18, 24, 30, 36, 42], yt: [0, -10, -20, -30], xf: (v) => 'M' + v, yf: (v) => (v > 0 ? '+' : '') + v + NB + '%', xl: 'Mois depuis le départ', H: narrow ? 300 : 320, m: { l: 50, t: 30, r: narrow ? 12 : 16 }, aria: 'Sans protection, la densité osseuse de la hanche pourrait perdre plus de 20 % sur la mission ; avec les contre-mesures actuelles, la perte reste inférieure à 10 %' });
+    const LAB = narrow ? ['0 g', 'Mars · 0,38 g', '0 g', 'Terre'] : ['Transit · 0 g', 'Séjour martien · 0,38 g', 'Transit · 0 g', 'Retour sur Terre · 1 g'];
+    SEG.forEach(([a, b, g], i) => {
+      svgEl('rect', { x: F.x(a), y: F.m.t - 14, width: F.x(b) - F.x(a), height: F.H - F.m.b - F.m.t + 14, class: 'ph-band' + (g === 1 ? ' alt' : '') }, F.under);
+      svgEl('text', { x: (F.x(a) + F.x(b)) / 2, y: F.m.t - 2, 'text-anchor': 'middle', fill: g === 1 ? '#fdba74' : '#8891b8', 'font-size': 11 }, F.svg).textContent = LAB[i];
+    });
+    // seuil
+    svgEl('line', { x1: F.x(0), x2: F.x(42), y1: F.y(-10), y2: F.y(-10), stroke: '#fcd34d', 'stroke-dasharray': '4 5', 'stroke-opacity': 0.6 }, F.svg);
+    svgEl('text', { x: F.x(narrow ? 0.4 : 0.6), y: F.y(-10) + 15, fill: '#fcd34d', 'font-size': 11 }, F.svg).textContent = 'seuil de vigilance médicale';
+    const S = [{ k: 'none', n: 'Sans protection', c: '#ea580c', band: 'rgba(234,88,12,.16)' }, { k: 'cm', n: 'Contre-mesures actuelles', c: '#3b82f6', band: 'rgba(59,130,246,.18)' }];
+    S.forEach((sr) => {
+      const up = [], dn = [];
+      for (let t = 6; t <= 42; t += 0.5) { up.push([F.x(t), F.y(val(sr.k, t, 1))]); dn.unshift([F.x(t), F.y(val(sr.k, t, -1))]); }
+      svgEl('path', { d: 'M' + up.concat(dn).map((p) => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' L') + 'Z', fill: sr.band, class: 'dot' }, F.svg);
+    });
+    S.forEach((sr) => {
+      const p = []; for (let t = 0; t <= 42; t += 0.5) p.push(`${p.length ? 'L' : 'M'}${F.x(t).toFixed(1)} ${F.y(val(sr.k, t)).toFixed(1)}`);
+      const el = svgEl('path', { d: p.join(' '), fill: 'none', stroke: sr.c, 'stroke-width': 2.6, 'stroke-linejoin': 'round', class: 'draw' }, F.svg);
+      el.style.setProperty('--len', Math.ceil(el.getTotalLength()));
+      const v30 = val(sr.k, 30);
+      svgEl('circle', { cx: F.x(30), cy: F.y(v30), r: 5, fill: sr.c, stroke: '#070f2b', 'stroke-width': 2, class: 'dot' }, F.svg);
+      svgEl('text', { x: F.x(30) + 9, y: F.y(v30) + (sr.k === 'none' ? 16 : -9), fill: sr.k === 'none' ? '#fb923c' : '#93c5fd', 'font-size': 12, 'font-weight': 500, class: 'mono dot' }, F.svg).textContent = fmt(v30, 0) + NB + '%';
+    });
+    const xh = svgEl('line', { y1: F.m.t, y2: F.H - F.m.b, stroke: '#aab3d6', 'stroke-opacity': 0.5, class: 'xhair' }, F.svg);
+    const hit = F.hit();
+    const phaseOf = (t) => (t <= 6 ? 'Transit aller' : t <= 24 ? 'Séjour martien' : t <= 30 ? 'Transit retour' : 'Retour sur Terre');
+    hit.addEventListener('pointermove', (e) => {
+      const rr = F.svg.getBoundingClientRect(), px = (e.clientX - rr.left) / rr.width * F.W;
+      const t = Math.round(Math.max(0, Math.min(42, (px - F.m.l) / (F.W - F.m.l - F.m.r) * 42)));
+      xh.setAttribute('x1', F.x(t)); xh.setAttribute('x2', F.x(t)); xh.classList.add('show');
+      const r = (k) => { const v = val(k, t); return fmt(v, 1) + NB + '%' + (t > 6 ? `<small style="color:var(--text-mute)"> (${fmt(val(k, t, 1), 0)} à ${fmt(val(k, t, -1), 0)})</small>` : ''); };
+      tipEl.innerHTML = `<b>Mois ${t} · ${phaseOf(t)}</b>` + S.map((sr) => `<div><span style="--lc:${sr.c}"><i></i>${sr.n}</span><em>${r(sr.k)}</em></div>`).join('');
+      placeTip(tipEl, box, F.svg, F.W, F.H, F.x(t), F.y(val('cm', t)));
+    });
+    hit.addEventListener('pointerleave', () => { tipEl.classList.remove('show'); xh.classList.remove('show'); });
+    if (reduceMotion) box.classList.add('drawn'); else onceVisible(box, () => box.classList.add('drawn'), '0px 0px -25% 0px');
+  })();
+
+  /* ---------- Imprimer, copier le lien ---------- */
+  const pr = $('ltPrint'), cp = $('ltCopy');
+  if (pr) pr.addEventListener('click', () => window.print());
+  if (cp) cp.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(location.href); toast('Lien copié dans le presse-papiers'); }
+    catch (e) { toast('Copie impossible : utilisez la barre d\'adresse'); }
+  });
+})();
+</script>
+</body>
+</html>
