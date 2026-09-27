@@ -1034,7 +1034,7 @@ a.ctrl { text-decoration: none; }
 
 /* ---------- La mission, étape par étape ---------- */
 .mission { margin: 22px 0 18px; padding: 18px; border-radius: 18px; border: 1px solid var(--border); background: var(--surface); }
-.ms-bar { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; }
+.ms-bar { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }
 .ms-seg { display: flex; flex-direction: column; gap: 3px; min-width: 0; padding: 11px 12px 10px; border-radius: 10px; border: 1px solid var(--border); background: rgba(255,255,255,.02); color: var(--text-soft); font: inherit; font-size: 13.5px; line-height: 1.3; text-align: left; cursor: pointer; transition: background-color 160ms ease, border-color 160ms ease, transform 140ms var(--ease-out); }
 .ms-seg b { font-weight: 500; color: var(--text-main); }
 .ms-seg small { font-family: var(--mono); font-size: 11.5px; color: var(--text-mute); white-space: nowrap; }
@@ -1089,7 +1089,7 @@ a.ctrl { text-decoration: none; }
 .ds + .ds { padding-left: 16px; border-left: 1px solid var(--line); }
 .ds strong { display: block; font-family: var(--mono); font-size: 19px; font-weight: 500; color: var(--text-main); white-space: nowrap; }
 .ds strong small { font-size: .62em; color: var(--text-mute); }
-.ds span { display: block; margin-top: 6px; font-size: 13px; line-height: 1.4; color: var(--text-soft); }
+.ds > span { display: block; margin-top: 6px; font-size: 13px; line-height: 1.4; color: var(--text-soft); }
 .ds-hi strong { color: #fdba74; }
 
 /* ---------- Tableau des contre-mesures ---------- */
@@ -1120,8 +1120,8 @@ a.ctrl { text-decoration: none; }
 .openq { list-style: none; counter-reset: q; margin: 18px 0 8px; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .openq li { counter-increment: q; padding: 18px; border-radius: 14px; border: 1px solid var(--border); background: linear-gradient(160deg, rgba(249,115,22,.06), transparent 60%), var(--bg-light); }
 .openq li::before { content: "Q" counter(q); display: block; margin-bottom: 10px; font-family: var(--mono); font-size: 12px; color: #fdba74; }
-.openq strong { display: block; font-size: 15.5px; font-weight: 500; color: #fff; }
-.openq span { display: block; margin-top: 6px; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+.openq li > strong { display: block; font-size: 15.5px; font-weight: 500; color: #fff; }
+.openq li > span { display: block; margin-top: 6px; font-size: 14px; line-height: 1.55; color: var(--text-soft); }
 
 /* ---------- Rail ---------- */
 .facts { margin: 0; display: grid; gap: 10px; }
@@ -1243,7 +1243,7 @@ a.ctrl { text-decoration: none; }
       </ol>
       <p class="lt-eyebrow hs-eyebrow hero-in" style="--i:1"><span class="lt-dot" aria-hidden="true"></span>Hors-série N°1 · Janvier 2024</p>
       <h1 class="art-title hero-in" style="--i:2">Biologie humaine en microgravité<span class="lt-season">Le corps face au voyage martien</span></h1>
-      <p class="art-lede hero-in" style="--i:3">Ce que l'impesanteur fait au cœur, aux os, aux yeux et au cerveau, et comment l'IFRAS prépare les six astronautes-chercheurs d'<span class="nw">ARTEMIS-9</span> à trente mois loin de la Terre.</p>
+      <p class="art-lede hero-in" style="--i:3">Ce que l'impesanteur fait au cœur, aux os, aux yeux et au cerveau, et comment l'IFRAS prépare les quarante membres d'équipage d'<span class="nw">ARTEMIS-9</span> à une vie entière loin de la Terre.</p>
       <div class="meta-line hero-in" style="--i:4">
         <span><i class="ph-light ph-calendar-blank" aria-hidden="true"></i>Publié le 24 janvier 2024</span>
         <span><i class="ph-light ph-clock" aria-hidden="true"></i>16 min de lecture</span>
@@ -1303,7 +1303,7 @@ a.ctrl { text-decoration: none; }
         <p class="label">Avant-propos</p>
         <p class="edito-lead">Une collection pour partager ce que nous savons.</p>
         <p>Avec ce numéro, l'IFRAS ouvre une collection de hors-séries. Chaque volume fera le point, pour l'ensemble des personnels et de nos partenaires, sur un domaine où l'institut travaille : ce que l'on sait, ce que l'on ignore encore, et ce que nos équipes font pour avancer.</p>
-        <p>Il était naturel de commencer par le corps humain. <span class="nw">ARTEMIS-9</span> enverra six femmes et hommes vivre dix-huit mois sur Mars, après six mois de voyage, et les ramènera par le même chemin. Aucun équipage n'est jamais resté aussi longtemps loin de la Terre. Les ingénieurs savent construire l'habitat ; la question qui reste la plus ouverte est celle de l'organisme qui l'habitera.</p>
+        <p>Il était naturel de commencer par le corps humain. <span class="nw">ARTEMIS-9</span> enverra quarante femmes et hommes s'installer définitivement sur Mars, après six mois de voyage. Il n'est pas prévu de retour. Aucun être humain n'a jamais vécu durablement loin de la Terre. Les ingénieurs savent construire l'habitat ; la question qui reste la plus ouverte est celle de l'organisme qui l'habitera.</p>
         <blockquote class="pull">« Un habitat se qualifie en chambre d'essai. Un corps humain, lui, ne se remplace pas : c'est à nous de le comprendre avant le départ. »</blockquote>
         <p>Ce hors-série a été préparé par le département Sciences du Vivant et de la Terre, avec le concours des médecins du programme. Il est écrit pour être lu par tous, biologistes ou non. Je remercie les équipes qui ont accepté de rendre leurs travaux accessibles, sans rien céder sur la rigueur.</p>
         <div class="sign">
@@ -1313,10 +1313,10 @@ a.ctrl { text-decoration: none; }
       </div>
 
       <div class="figures rv" aria-label="Le hors-série en chiffres">
-        <div class="fg"><strong data-count="900" data-suffix=" j">900<small> j</small></strong><span>de mission prévus pour <span class="nw">ARTEMIS-9</span></span></div>
+        <div class="fg"><strong data-count="40">40</strong><span>membres d'équipage pour <span class="nw">ARTEMIS-9</span></span></div>
         <div class="fg"><strong>2<small> L</small></strong><span>de fluides remontent vers le haut du corps</span></div>
         <div class="fg"><strong>1 à 1,5<small> %</small></strong><span>de densité osseuse perdue par mois, sans protection</span></div>
-        <div class="fg"><strong>≈ 1<small> Sv</small></strong><span>de rayonnement cumulé sur l'ensemble du voyage</span></div>
+        <div class="fg"><strong>≈ 1<small> Sv</small></strong><span>de rayonnement cumulé en quatre ans, transit compris</span></div>
       </div>
     </section>
 
@@ -1326,13 +1326,13 @@ a.ctrl { text-decoration: none; }
       <p>Tout, dans notre organisme, a été façonné par un champ de pesanteur constant. Le cœur pompe contre une colonne de sang d'un mètre et demi. Les os se renforcent là où ils portent du poids. L'oreille interne se sert de la direction du « bas » pour nous tenir debout. Retirer la gravité, c'est retirer une référence dont chaque système s'est servi depuis la naissance.</p>
       <p>Dans un vaisseau en orbite ou en route vers Mars, la gravité n'a pas disparu : l'équipage et le vaisseau tombent ensemble, si bien que rien ne pèse plus sur rien. C'est l'<span class="term" tabindex="0" data-term="impesanteur">impesanteur</span>. Les biologistes parlent de <span class="term" tabindex="0" data-term="micro">microgravité</span>, parce que de petites accélérations résiduelles subsistent, environ un millionième de la pesanteur terrestre.</p>
       <p>Le corps réagit en quelques heures pour certains systèmes, en plusieurs mois pour d'autres. Ces adaptations ne sont pas des maladies : elles sont logiques dans l'espace. Elles deviennent un problème au moment de revenir sous une gravité, qu'il s'agisse de poser le pied sur Mars ou de rentrer sur Terre.</p>
-      <p>Une mission martienne ajoute deux difficultés que l'orbite terrestre ne pose pas. La première est la durée : environ 900 jours, contre six mois pour une mission orbitale classique. La seconde est l'éloignement : aucune évacuation n'est possible, et un message met jusqu'à vingt minutes pour arriver. L'équipage devra se soigner seul.</p>
+      <p>Une mission martienne ajoute deux difficultés que l'orbite terrestre ne pose pas. La première est la durée : la mission est sans retour, contre six mois pour une mission orbitale classique. La seconde est l'éloignement : aucune évacuation n'est possible, et un message met jusqu'à vingt minutes pour arriver. L'équipage devra se soigner seul.</p>
     </section>
 
     <!-- 2. LA MISSION -->
     <section id="s-mission">
       <h2><span class="n">02</span>Le corps au fil de la mission</h2>
-      <p>Les effets ne se présentent pas tous en même temps. Choisissez une étape du voyage pour voir comment évolue chacun des six grands systèmes, du lancement au retour sur Terre.</p>
+      <p>Les effets ne se présentent pas tous en même temps. Choisissez une étape de la mission pour voir comment évolue chacun des six grands systèmes, du départ à la vie durable sur Mars.</p>
 
       <div class="mission rv" id="mission">
         <div class="ms-bar" role="tablist" aria-label="Étapes de la mission" id="msTabs"></div>
@@ -1340,26 +1340,26 @@ a.ctrl { text-decoration: none; }
         <div class="ms-grid" id="msGrid"></div>
         <p class="ms-leg" aria-hidden="true"><span><i class="lv lv0"></i>Stable</span><span><i class="lv lv1"></i>Adaptation</span><span><i class="lv lv2"></i>Vigilance</span><span><i class="lv lv3"></i>Risque élevé</span></p>
       </div>
-      <p class="after">Les deux moments les plus délicats sont les changements de gravité : l'arrivée sur Mars et le retour sur Terre. Entre les deux, le corps trouve un nouvel équilibre, mais un équilibre qui s'use lentement.</p>
+      <p class="after">Le moment le plus délicat est le changement de gravité à l'arrivée sur Mars. Ensuite, le corps doit trouver un nouvel équilibre et le tenir pendant des années : personne ne sait encore s'il se stabilise ou s'use lentement.</p>
     </section>
 
     <!-- 3. FLUIDES ET CŒUR -->
     <section id="s-coeur">
       <h2><span class="n">03</span>Fluides et cœur : le sang monte à la tête</h2>
       <p>Sur Terre, la gravité tire le sang et les liquides des tissus vers les jambes. Le cœur et les vaisseaux compensent en permanence. En impesanteur, cette traction disparaît : dès les premières heures, environ <strong>deux litres de fluides</strong> se déplacent des membres inférieurs vers le thorax et la tête. Le visage gonfle, les jambes s'affinent, le nez se bouche. Les astronautes décrivent une sensation de rhume permanent.</p>
-      <p>Le corps interprète cet afflux comme un excès de liquide. Il élimine davantage d'eau et de sel, et le volume de plasma baisse de 10 à 15 % en quelques jours. Le cœur, qui travaille moins, perd un peu de masse au fil des mois. Rien de tout cela n'est gênant en vol.</p>
+      <p>Le corps interprète cet afflux comme un excès de liquide. Il élimine davantage d'eau et de sel, et le volume de plasma baisse de 10 à 15 % en quelques jours. Le cœur, qui travaille moins, perd un peu de masse au fil des mois. Rien de tout cela n'est gênant en vol.</p>
       <p>La difficulté survient à l'arrivée sous gravité. Avec moins de sang et des vaisseaux déshabitués à se contracter, le sang retombe vers les jambes et le cerveau en manque : c'est l'<span class="term" tabindex="0" data-term="ortho">intolérance orthostatique</span>. Sur Terre, près des deux tiers des astronautes de longue durée ont du mal à rester debout dix minutes à leur retour. Sur Mars, l'équipage devra pourtant sortir du véhicule, vérifier l'habitat et travailler sans aide extérieure.</p>
       <div class="note" style="--nc:#fdba74">
         <i class="ph-light ph-drop" aria-hidden="true"></i>
-        <p><span class="nt">Ce que prévoit <span class="nw">ARTEMIS-9</span></span>Une recharge en eau salée dans les heures précédant l'atterrissage, des vêtements de compression pour les jambes et trois jours d'activité réduite avant la première sortie. Ce protocole sera testé au sol en 2024.</p>
+        <p><span class="nt">Ce que prévoit <span class="nw">ARTEMIS-9</span></span>Une recharge en eau salée dans les heures précédant l'atterrissage, des vêtements de compression pour les jambes et trois jours d'activité réduite avant la première sortie. Ce protocole sera testé au sol pendant la formation de l'équipage, de février à juin 2024.</p>
       </div>
     </section>
 
     <!-- 4. OS ET MUSCLES -->
     <section id="s-os">
       <h2><span class="n">04</span>Os et muscles : ce qui ne porte plus s'affaiblit</h2>
-      <p>L'os est un tissu vivant, sans cesse détruit et reconstruit. Les contraintes mécaniques lui indiquent où se renforcer. Privé de charge, il se résorbe plus vite qu'il ne se reforme. En impesanteur, les zones qui portent le poids du corps sur Terre, hanches, col du fémur et colonne lombaire, perdent <strong>1 à 1,5 % de leur densité minérale par mois</strong> en l'absence de protection. Le calcium libéré est éliminé par les reins, avec un risque accru de calculs rénaux.</p>
-      <p>Les muscles suivent le même chemin. Ceux qui nous maintiennent debout, les mollets, les cuisses et les muscles du dos, fondent les premiers. Sans entraînement, un astronaute peut perdre jusqu'à 20 % du volume de ses mollets en quelques mois, et davantage encore de sa force.</p>
+      <p>L'os est un tissu vivant, sans cesse détruit et reconstruit. Les contraintes mécaniques lui indiquent où se renforcer. Privé de charge, il se résorbe plus vite qu'il ne se reforme. En impesanteur, les zones qui portent le poids du corps sur Terre, hanches, col du fémur et colonne lombaire, perdent <strong>1 à 1,5 % de leur densité minérale par mois</strong> en l'absence de protection. Le calcium libéré est éliminé par les reins, avec un risque accru de calculs rénaux.</p>
+      <p>Les muscles suivent le même chemin. Ceux qui nous maintiennent debout, les mollets, les cuisses et les muscles du dos, fondent les premiers. Sans entraînement, un astronaute peut perdre jusqu'à 20 % du volume de ses mollets en quelques mois, et davantage encore de sa force.</p>
 
       <figure class="fig rv" id="fig1">
         <div class="fig-stage">
@@ -1369,19 +1369,19 @@ a.ctrl { text-decoration: none; }
           </div>
           <div class="chart" id="bone"><div class="ctip" id="boneTip"></div></div>
         </div>
-        <figcaption><b>Figure 1</b>Évolution estimée, en pourcentage de la valeur avant le départ. Les pertes en impesanteur sont bien connues grâce aux missions orbitales. Sur Mars, sous 0,38 g, personne ne les a jamais mesurées : la zone claire indique l'incertitude. Survolez la courbe pour lire les valeurs.</figcaption>
+        <figcaption><b>Figure 1</b>Évolution estimée sur les quatre premières années, en pourcentage de la valeur avant le départ. Les pertes en impesanteur sont bien connues grâce aux missions orbitales. Sur Mars, sous 0,38 g, personne ne les a jamais mesurées : la zone claire indique l'incertitude. Survolez la courbe pour lire les valeurs.</figcaption>
       </figure>
 
-      <p>La figure résume l'enjeu. Avec les contre-mesures actuelles, un équipage en orbite perd peu de masse osseuse sur six mois. Mais personne ne sait ce que fait une gravité partielle sur dix-huit mois. Si 0,38 g protège bien l'os, le bilan d'<span class="nw">ARTEMIS-9</span> sera comparable à celui d'une longue mission orbitale. S'il protège mal, la perte cumulée pourrait dépasser le seuil au-delà duquel le risque de fracture augmente nettement.</p>
-      <p>La récupération, elle, est lente. Il faut en général deux à trois ans pour que l'os retrouve sa densité après une mission de six mois, et sa structure interne ne redevient pas toujours identique. C'est l'une des raisons pour lesquelles le suivi médical des équipages d'<span class="nw">ARTEMIS-9</span> durera au moins cinq ans après leur retour.</p>
+      <p>La figure résume l'enjeu. Avec les contre-mesures actuelles, un équipage en orbite perd peu de masse osseuse sur six mois. Mais personne ne sait ce que fait une gravité partielle sur plusieurs années. Si 0,38 g protège bien l'os, la perte se stabilisera après l'arrivée. S'il protège mal, elle se poursuivra et pourrait dépasser le seuil au-delà duquel le risque de fracture augmente nettement.</p>
+      <p>Sur Terre, la récupération est lente : il faut en général deux à trois ans pour que l'os retrouve sa densité après une mission de six mois. Sur Mars, il n'y aura jamais de retour sous 1 g pour la favoriser. Le suivi médical de l'équipage d'<span class="nw">ARTEMIS-9</span> se fera donc sur place, toute sa vie, par les médecins de la colonie et en télémédecine avec l'IFRAS.</p>
     </section>
 
     <!-- 5. VISION ET ÉQUILIBRE -->
     <section id="s-vision">
       <h2><span class="n">05</span>Vision et équilibre : le cerveau réapprend</h2>
       <p>C'est l'effet le plus récemment découvert, et l'un des moins bien compris. Chez une majorité d'astronautes restés plusieurs mois en orbite, l'examen des yeux montre des changements : léger aplatissement de l'arrière du globe oculaire, plis de la membrane qui tapisse le fond de l'œil, gonflement du nerf optique. On regroupe ces signes sous le nom de <span class="term" tabindex="0" data-term="sans">syndrome neuro-oculaire du vol spatial</span>.</p>
-      <p>La cause la plus probable est la remontée des fluides décrite plus haut : une pression légèrement plus élevée autour du cerveau et du nerf optique, jour et nuit, pendant des mois. La vue de près baisse souvent un peu. Certains signes disparaissent au retour, d'autres persistent des années. Sur une mission de 900 jours, ce syndrome est aujourd'hui l'un des risques médicaux les plus surveillés.</p>
-      <p>L'équilibre pose un problème différent. L'<span class="term" tabindex="0" data-term="vestib">oreille interne</span> détecte les accélérations et la direction de la gravité. En impesanteur, ses signaux ne correspondent plus à ce que voient les yeux. Pendant les deux à quatre premiers jours, 60 à 70 % des voyageurs souffrent du mal de l'espace : nausées, maux de tête, désorientation. Puis le cerveau apprend à se fier davantage à la vue.</p>
+      <p>La cause la plus probable est la remontée des fluides décrite plus haut : une pression légèrement plus élevée autour du cerveau et du nerf optique, jour et nuit, pendant des mois. La vue de près baisse souvent un peu. Certains signes disparaissent au retour, d'autres persistent des années. Sur une mission sans retour, ce syndrome est aujourd'hui l'un des risques médicaux les plus surveillés.</p>
+      <p>L'équilibre pose un problème différent. L'<span class="term" tabindex="0" data-term="vestib">oreille interne</span> détecte les accélérations et la direction de la gravité. En impesanteur, ses signaux ne correspondent plus à ce que voient les yeux. Pendant les deux à quatre premiers jours, 60 à 70 % des voyageurs souffrent du mal de l'espace : nausées, maux de tête, désorientation. Puis le cerveau apprend à se fier davantage à la vue.</p>
       <p>Ce réapprentissage doit se refaire dans l'autre sens à chaque changement de gravité. À l'arrivée sur Mars, les premiers pas seront hésitants et les mouvements de tête pourront provoquer des vertiges. Les équipes de l'Unité Neurosciences et Comportement du DSVT conçoivent un entraînement de quelques minutes par jour, en fin de transit, pour raccourcir cette phase.</p>
     </section>
 
@@ -1389,13 +1389,13 @@ a.ctrl { text-decoration: none; }
     <section id="s-immunite">
       <h2><span class="n">06</span>Immunité et rayonnements : deux menaces discrètes</h2>
       <p>Le système immunitaire des astronautes change en vol. Certaines défenses s'affaiblissent, d'autres s'emballent. Des virus dormants, comme celui de la varicelle, se réactivent sans forcément rendre malade. Le stress, le sommeil perturbé et le confinement jouent sans doute autant que l'impesanteur. Dans un habitat fermé, les microbes évoluent eux aussi : le DSVT étudie comment ils se comportent en conditions martiennes simulées.</p>
-      <p>Au-delà du champ magnétique terrestre, l'équipage n'est plus protégé des <span class="term" tabindex="0" data-term="gcr">rayons cosmiques</span>. Ces particules très énergétiques traversent les parois et peuvent endommager l'ADN des cellules. La dose attendue pour <span class="nw">ARTEMIS-9</span> est de l'ordre d'<strong>un sievert</strong> sur l'ensemble du voyage, dont environ deux tiers pendant les transits.</p>
+      <p>Au-delà du champ magnétique terrestre, l'équipage n'est plus protégé des <span class="term" tabindex="0" data-term="gcr">rayons cosmiques</span>. Ces particules très énergétiques traversent les parois et peuvent endommager l'ADN des cellules. La dose attendue pour <span class="nw">ARTEMIS-9</span> est d'environ 0,3 sievert pendant le transit, puis de 0,2 à 0,25 sievert par an à la surface, où le sol et l'habitat protègent en partie : de l'ordre d'<strong>un sievert</strong> en quatre ans.</p>
 
       <div class="dose rv" aria-label="Ordres de grandeur des doses de rayonnement">
         <div class="ds"><strong>0,02<small> mSv</small></strong><span>une radiographie du thorax</span></div>
         <div class="ds"><strong>4,5<small> mSv</small></strong><span>une année d'exposition naturelle en France</span></div>
         <div class="ds"><strong>≈ 80<small> mSv</small></strong><span>six mois en orbite basse</span></div>
-        <div class="ds ds-hi"><strong>≈ 1 000<small> mSv</small></strong><span>la mission <span class="nw">ARTEMIS-9</span> complète</span></div>
+        <div class="ds ds-hi"><strong>≈ 1 000<small> mSv</small></strong><span>quatre ans pour <span class="nw">ARTEMIS-9</span>, transit compris</span></div>
       </div>
 
       <p>Cette dose ne provoque pas de symptômes immédiats. Elle augmente le risque de cancer sur le reste de la vie, de quelques points de pourcentage selon l'âge et le sexe, et pourrait affecter le système nerveux et le cœur à long terme. Les éruptions solaires, plus rares, sont plus brutales : l'habitat et le vaisseau disposeront d'un abri renforcé où l'équipage pourra se réfugier quelques heures.</p>
@@ -1430,16 +1430,16 @@ a.ctrl { text-decoration: none; }
 
     <!-- 8. ENTRETIEN -->
     <section id="s-entretien">
-      <h2><span class="n">08</span>Entretien avec Élise Sauvage</h2>
+      <h2><span class="n">08</span>Entretien avec Anne Rotassin</h2>
       <div class="qa-who rv">
-        <span class="av" style="--ah:150" aria-hidden="true">ES</span>
-        <p><strong>Élise Sauvage</strong>Directrice du département Sciences du Vivant et de la Terre, responsable scientifique du volet biologique d'<span class="nw">ARTEMIS-9</span>.</p>
+        <span class="av" style="--ah:150" aria-hidden="true">AR</span>
+        <p><strong>Anne Rotassin</strong>Directrice du département Sciences du Vivant et de la Terre, responsable scientifique du volet biologique d'<span class="nw">ARTEMIS-9</span>.</p>
       </div>
       <dl class="qa">
         <dt>Qu'est-ce qui vous inquiète le plus pour l'équipage ?</dt>
-        <dd>Pas un effet en particulier, mais leur combinaison. On connaît assez bien chaque problème pris isolément, grâce aux missions en orbite. On connaît beaucoup moins ce qui se passe quand on cumule trente mois d'isolement, une gravité partielle, des rayonnements et un sommeil décalé. Nos études au sol servent d'abord à cela : observer les interactions.</dd>
+        <dd>Pas un effet en particulier, mais leur combinaison. On connaît assez bien chaque problème pris isolément, grâce aux missions en orbite. On connaît beaucoup moins ce qui se passe quand on cumule des années d'isolement, une gravité partielle, des rayonnements et un sommeil décalé. Nos études au sol servent d'abord à cela : observer les interactions.</dd>
         <dt>Pourquoi ne pas simplement créer une gravité artificielle ?</dt>
-        <dd>C'est une piste sérieuse, et nous l'étudions. Mais un vaisseau entier en rotation est un défi d'ingénierie considérable. Une petite centrifugeuse à bord est plus réaliste ; il faut encore savoir combien de temps par jour, à quelle vitesse, et si l'oreille interne le tolère. Nous n'aurons pas toutes les réponses avant 2027. Nous préparons donc l'équipage à s'en passer.</dd>
+        <dd>C'est une piste sérieuse, et nous l'étudions. Mais un vaisseau entier en rotation est un défi d'ingénierie considérable. Une petite centrifugeuse à bord est plus réaliste ; il faut encore savoir combien de temps par jour, à quelle vitesse, et si l'oreille interne le tolère. Nous n'aurons pas toutes les réponses avant le départ, en juillet. Nous préparons donc l'équipage à s'en passer.</dd>
         <dt>Que retiendra-t-on de cette mission pour la médecine sur Terre ?</dt>
         <dd>Beaucoup. La perte osseuse des astronautes ressemble à une ostéoporose accélérée ; la perte musculaire, à celle des patients alités ou des personnes âgées. Chaque contre-mesure que nous validons pour l'espace peut servir à l'hôpital. C'est aussi pour cela que nous publierons tous nos résultats.</dd>
       </dl>
@@ -1453,12 +1453,12 @@ a.ctrl { text-decoration: none; }
         <li><strong>La gravité martienne suffit-elle ?</strong><span>0,38 g ralentit-il les pertes osseuses et musculaires, et dans quelle proportion ? Aucune mesure humaine n'existe entre 0 et 1 g.</span></li>
         <li><strong>Les effets s'additionnent-ils ?</strong><span>Rayonnements, confinement et impesanteur pourraient se renforcer mutuellement, notamment sur le système nerveux.</span></li>
         <li><strong>Pourquoi sommes-nous inégaux ?</strong><span>Certains astronautes perdent deux fois plus d'os que d'autres. Comprendre pourquoi aiderait à adapter les protections à chacun.</span></li>
-        <li><strong>Comment revient-on de 900 jours ?</strong><span>Le plus long séjour humain dans l'espace reste bien inférieur. La réadaptation au retour devra être inventée.</span></li>
+        <li><strong>Peut-on vivre toute une vie sous 0,38 g ?</strong><span>Aucune donnée n'existe au-delà de quelques mois en gravité réduite. La médecine de la colonie devra être inventée sur place.</span></li>
       </ol>
     </section>
 
     <footer class="colophon rv">
-      <p><strong>Hors-série N°1, janvier 2024.</strong> Directeur de la publication : Jean-Luc Rousseau. Coordination scientifique : Élise Sauvage. Contributions : Laboratoire de Biologie Spatiale et Unité Neurosciences et Comportement du DSVT, service Communication scientifique. La version imprimée (80 pages) comprend les fiches détaillées de chaque système et le protocole des études au sol.</p>
+      <p><strong>Hors-série N°1, janvier 2024.</strong> Directeur de la publication : Jean-Luc Rousseau. Coordination scientifique : Anne Rotassin. Contributions : Laboratoire de Biologie Spatiale et Unité Neurosciences et Comportement du DSVT, service Communication scientifique. La version imprimée (80 pages) comprend les fiches détaillées de chaque système et le protocole des études au sol.</p>
       <nav class="lt-nav" aria-label="Autres publications">
         <a href="../publications-ifras.html" class="lt-prev"><i class="ph-light ph-arrow-left" aria-hidden="true"></i><span><small>Toutes les publications</small>Publications IFRAS</span></a>
         <a href="../publications-ifras.html" class="lt-all"><span><small>Hors-série suivant</small>N°2 · Matériaux extrêmes</span><i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
@@ -1473,10 +1473,10 @@ a.ctrl { text-decoration: none; }
       <p class="rail-title">La mission en bref</p>
       <dl class="facts">
         <div><dt>Programme</dt><dd><span class="nw">ARTEMIS-9</span>, mission habitée sur Mars</dd></div>
-        <div><dt>Équipage</dt><dd>6 astronautes-chercheurs</dd></div>
-        <div><dt>Voyage</dt><dd>2 × 6 mois de transit</dd></div>
-        <div><dt>Séjour</dt><dd>18 mois sous 0,38 g</dd></div>
-        <div><dt>Lancement prévu</dt><dd>2027</dd></div>
+        <div><dt>Équipage</dt><dd>40 membres</dd></div>
+        <div><dt>Voyage</dt><dd>6 mois de transit, sans retour</dd></div>
+        <div><dt>Séjour</dt><dd>Permanent, sous 0,38 g</dd></div>
+        <div><dt>Départ prévu</dt><dd>14 juillet 2024</dd></div>
       </dl>
     </div>
     <div class="rail-card">
@@ -1712,30 +1712,22 @@ a.ctrl { text-decoration: none; }
           [1, 'Premiers signes possibles au fond de l\'œil après quelques mois.'],
           [0, 'Le cerveau s\'est adapté : il se fie surtout à la vue.'],
           [2, 'Les rayonnements s\'accumulent, sans la protection du champ magnétique terrestre.']] },
-    { id: 'mars', n: 'Séjour martien', d: '18 mois', g: '0,38 g', w: 18, gc: '#ea580c',
-      s: 'L\'atterrissage est le premier moment critique. Ensuite, la gravité partielle protège sans doute un peu, mais personne ne sait combien.',
+    { id: 'mars', n: 'Arrivée sur Mars', d: '6 premiers mois', g: '0,38 g', w: 6, gc: '#ea580c',
+      s: 'L\'atterrissage est le premier moment critique. Le corps doit retrouver une gravité, plus faible que sur Terre, tout en bâtissant la colonie.',
       v: [[2, 'À l\'arrivée, se tenir debout peut provoquer des malaises. Trois jours d\'activité réduite sont prévus.'],
           [2, 'La perte ralentit probablement sous 0,38 g. Son ampleur réelle est la grande inconnue.'],
           [1, 'Marcher et travailler en surface entretiennent les muscles, avec l\'entraînement.'],
           [2, 'Personne ne sait si le syndrome oculaire régresse ou persiste en gravité partielle.'],
           [2, 'Premiers pas hésitants, vertiges aux mouvements de tête : le cerveau réapprend le « bas ».'],
           [2, 'Le sol et l\'habitat protègent en partie, mais la dose continue de s\'accumuler.']] },
-    { id: 'retour', n: 'Transit retour', d: '6 mois', g: '0 g', w: 6, gc: '#64748b',
-      s: 'Retour en impesanteur, après deux ans loin de la Terre. Les pertes reprennent sur un organisme déjà éprouvé.',
-      v: [[1, 'Les fluides remontent à nouveau ; l\'adaptation est plus rapide la seconde fois.'],
-          [2, 'Les pertes reprennent au rythme de l\'aller et s\'ajoutent aux précédentes.'],
-          [2, 'L\'entraînement doit préparer la force nécessaire à l\'arrivée sur Terre.'],
-          [2, 'Exposition cumulée la plus longue jamais observée : suivi hebdomadaire de l\'œil.'],
-          [1, 'Adaptation rapide à l\'impesanteur, puis entraînement à la réentrée.'],
-          [2, 'Environ deux tiers de la dose totale auront été reçus pendant les transits.']] },
-    { id: 'terre', n: 'Retour sur Terre', d: 'Réadaptation', g: '1 g', w: 6, gc: '#059669',
-      s: 'Le plus dur est de retrouver une gravité trois fois plus forte que celle de Mars. La réadaptation se compte en mois, parfois en années.',
-      v: [[2, 'Intolérance orthostatique : rester debout dix minutes est difficile les premiers jours.'],
-          [3, 'Risque de fracture accru. L\'os met deux à trois ans à se reconstruire, parfois incomplètement.'],
-          [2, 'Force et endurance à reconstruire : plusieurs semaines de rééducation encadrée.'],
-          [1, 'Certains signes disparaissent, d\'autres persistent des années.'],
-          [2, 'Démarche instable et vertiges pendant quelques jours à quelques semaines.'],
-          [1, 'Suivi médical d\'au moins cinq ans, notamment pour les effets des rayonnements.']] }
+    { id: 'vie', n: 'Vie sur Mars', d: 'Années suivantes', g: '0,38 g', w: 18, gc: '#ea580c',
+      s: 'Aucun retour n\'est prévu : l\'organisme doit trouver un équilibre durable sous 0,38 g. C\'est la question que personne ne peut encore trancher.',
+      v: [[1, 'Le cœur s\'adapte à une charge plus faible ; on ignore s\'il se stabilise ou continue de s\'affaiblir.'],
+          [3, 'Si la gravité partielle ne suffit pas, la perte se poursuit année après année, sans récupération possible sous 1 g.'],
+          [1, 'Le travail en surface et l\'entraînement quotidien entretiennent la force.'],
+          [2, 'Exposition la plus longue jamais envisagée : suivi régulier du fond de l\'œil par les médecins de la colonie.'],
+          [1, 'Le cerveau s\'est adapté au « bas » martien. L\'isolement devient le principal enjeu psychologique.'],
+          [2, 'La dose s\'accumule lentement ; habitat enterré et abris réduisent l\'exposition.']] }
   ];
   (function mission() {
     const tabs = $('msTabs'), head = $('msHead'), grid = $('msGrid'); if (!tabs) return;
@@ -1781,10 +1773,10 @@ a.ctrl { text-decoration: none; }
   /* ---------- Figure 1 : densité osseuse ---------- */
   (function bone() {
     const box = $('bone'), tipEl = $('boneTip'); if (!box) return;
-    // mois 0-6 transit, 6-24 Mars, 24-30 transit, 30-42 Terre
-    const SEG = [[0, 6, 0], [6, 24, 1], [24, 30, 0], [30, 42, 2]];
-    const rate = { none: [-1.2, -0.55, -1.2, 0.32], cm: [-0.35, -0.15, -0.35, 0.18] };
-    const unc = { none: 0.35, cm: 0.15 }; // ± taux sur Mars (%/mois)
+    // mois 0-6 transit, puis vie sur Mars (sans retour)
+    const SEG = [[0, 6, 0], [6, 48, 1]];
+    const rate = { none: [-1.2, -0.55], cm: [-0.35, -0.15] };
+    const unc = { none: 0.2, cm: 0.15 }; // ± taux sur Mars (%/mois)
     const val = (k, t, du = 0) => {
       let v = 0;
       for (const [i, [a, b, g]] of SEG.entries()) {
@@ -1795,35 +1787,35 @@ a.ctrl { text-decoration: none; }
       return v;
     };
     const narrow = box.clientWidth < 520;
-    const F = frame(box, { x: [0, 42], y: [-32, 2], xt: narrow ? [0, 6, 24, 30, 42] : [0, 6, 12, 18, 24, 30, 36, 42], yt: [0, -10, -20, -30], xf: (v) => 'M' + v, yf: (v) => (v > 0 ? '+' : '') + v + NB + '%', xl: 'Mois depuis le départ', H: narrow ? 300 : 320, m: { l: 50, t: 30, r: narrow ? 12 : 16 }, aria: 'Sans protection, la densité osseuse de la hanche pourrait perdre plus de 20 % sur la mission ; avec les contre-mesures actuelles, la perte reste inférieure à 10 %' });
-    const LAB = narrow ? ['0 g', 'Mars · 0,38 g', '0 g', 'Terre'] : ['Transit · 0 g', 'Séjour martien · 0,38 g', 'Transit · 0 g', 'Retour sur Terre · 1 g'];
+    const F = frame(box, { x: [0, 48], y: [-40, 2], xt: narrow ? [0, 6, 24, 48] : [0, 6, 12, 18, 24, 30, 36, 42, 48], yt: [0, -10, -20, -30, -40], xf: (v) => 'M' + v, yf: (v) => (v > 0 ? '+' : '') + v + NB + '%', xl: 'Mois depuis le départ', H: narrow ? 300 : 320, m: { l: 50, t: 30, r: narrow ? 12 : 16 }, aria: 'Sans protection, la densité osseuse de la hanche pourrait perdre près de 30 % en quatre ans ; avec les contre-mesures actuelles, la perte resterait proche de 8 %, avec une forte incertitude sur Mars' });
+    const LAB = narrow ? ['0 g', 'Mars · 0,38 g'] : ['Transit · 0 g', 'Vie sur Mars · 0,38 g'];
     SEG.forEach(([a, b, g], i) => {
       svgEl('rect', { x: F.x(a), y: F.m.t - 14, width: F.x(b) - F.x(a), height: F.H - F.m.b - F.m.t + 14, class: 'ph-band' + (g === 1 ? ' alt' : '') }, F.under);
       svgEl('text', { x: (F.x(a) + F.x(b)) / 2, y: F.m.t - 2, 'text-anchor': 'middle', fill: g === 1 ? '#fdba74' : '#8891b8', 'font-size': 11 }, F.svg).textContent = LAB[i];
     });
     // seuil
-    svgEl('line', { x1: F.x(0), x2: F.x(42), y1: F.y(-10), y2: F.y(-10), stroke: '#fcd34d', 'stroke-dasharray': '4 5', 'stroke-opacity': 0.6 }, F.svg);
+    svgEl('line', { x1: F.x(0), x2: F.x(48), y1: F.y(-10), y2: F.y(-10), stroke: '#fcd34d', 'stroke-dasharray': '4 5', 'stroke-opacity': 0.6 }, F.svg);
     svgEl('text', { x: F.x(narrow ? 0.4 : 0.6), y: F.y(-10) + 15, fill: '#fcd34d', 'font-size': 11 }, F.svg).textContent = 'seuil de vigilance médicale';
     const S = [{ k: 'none', n: 'Sans protection', c: '#ea580c', band: 'rgba(234,88,12,.16)' }, { k: 'cm', n: 'Contre-mesures actuelles', c: '#3b82f6', band: 'rgba(59,130,246,.18)' }];
     S.forEach((sr) => {
       const up = [], dn = [];
-      for (let t = 6; t <= 42; t += 0.5) { up.push([F.x(t), F.y(val(sr.k, t, 1))]); dn.unshift([F.x(t), F.y(val(sr.k, t, -1))]); }
+      for (let t = 6; t <= 48; t += 0.5) { up.push([F.x(t), F.y(val(sr.k, t, 1))]); dn.unshift([F.x(t), F.y(val(sr.k, t, -1))]); }
       svgEl('path', { d: 'M' + up.concat(dn).map((p) => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' L') + 'Z', fill: sr.band, class: 'dot' }, F.svg);
     });
     S.forEach((sr) => {
-      const p = []; for (let t = 0; t <= 42; t += 0.5) p.push(`${p.length ? 'L' : 'M'}${F.x(t).toFixed(1)} ${F.y(val(sr.k, t)).toFixed(1)}`);
+      const p = []; for (let t = 0; t <= 48; t += 0.5) p.push(`${p.length ? 'L' : 'M'}${F.x(t).toFixed(1)} ${F.y(val(sr.k, t)).toFixed(1)}`);
       const el = svgEl('path', { d: p.join(' '), fill: 'none', stroke: sr.c, 'stroke-width': 2.6, 'stroke-linejoin': 'round', class: 'draw' }, F.svg);
       el.style.setProperty('--len', Math.ceil(el.getTotalLength()));
-      const v30 = val(sr.k, 30);
-      svgEl('circle', { cx: F.x(30), cy: F.y(v30), r: 5, fill: sr.c, stroke: '#070f2b', 'stroke-width': 2, class: 'dot' }, F.svg);
-      svgEl('text', { x: F.x(30) + 9, y: F.y(v30) + (sr.k === 'none' ? 16 : -9), fill: sr.k === 'none' ? '#fb923c' : '#93c5fd', 'font-size': 12, 'font-weight': 500, class: 'mono dot' }, F.svg).textContent = fmt(v30, 0) + NB + '%';
+      const v30 = val(sr.k, 48);
+      svgEl('circle', { cx: F.x(48), cy: F.y(v30), r: 5, fill: sr.c, stroke: '#070f2b', 'stroke-width': 2, class: 'dot' }, F.svg);
+      svgEl('text', { x: F.x(48) - 10, 'text-anchor': 'end', y: F.y(v30) + (sr.k === 'none' ? 20 : -12), fill: sr.k === 'none' ? '#fb923c' : '#93c5fd', 'font-size': 12, 'font-weight': 500, class: 'mono dot' }, F.svg).textContent = fmt(v30, 0) + NB + '%';
     });
     const xh = svgEl('line', { y1: F.m.t, y2: F.H - F.m.b, stroke: '#aab3d6', 'stroke-opacity': 0.5, class: 'xhair' }, F.svg);
     const hit = F.hit();
-    const phaseOf = (t) => (t <= 6 ? 'Transit aller' : t <= 24 ? 'Séjour martien' : t <= 30 ? 'Transit retour' : 'Retour sur Terre');
+    const phaseOf = (t) => (t <= 6 ? 'Transit aller' : t <= 12 ? 'Arrivée sur Mars' : 'Vie sur Mars');
     hit.addEventListener('pointermove', (e) => {
       const rr = F.svg.getBoundingClientRect(), px = (e.clientX - rr.left) / rr.width * F.W;
-      const t = Math.round(Math.max(0, Math.min(42, (px - F.m.l) / (F.W - F.m.l - F.m.r) * 42)));
+      const t = Math.round(Math.max(0, Math.min(48, (px - F.m.l) / (F.W - F.m.l - F.m.r) * 48)));
       xh.setAttribute('x1', F.x(t)); xh.setAttribute('x2', F.x(t)); xh.classList.add('show');
       const r = (k) => { const v = val(k, t); return fmt(v, 1) + NB + '%' + (t > 6 ? `<small style="color:var(--text-mute)"> (${fmt(val(k, t, 1), 0)} à ${fmt(val(k, t, -1), 0)})</small>` : ''); };
       tipEl.innerHTML = `<b>Mois ${t} · ${phaseOf(t)}</b>` + S.map((sr) => `<div><span style="--lc:${sr.c}"><i></i>${sr.n}</span><em>${r(sr.k)}</em></div>`).join('');
