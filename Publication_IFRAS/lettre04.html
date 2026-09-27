@@ -1205,7 +1205,7 @@ a.ctrl { text-decoration: none; }
 .tm-row[data-s="lim"] .tm-bar { background: repeating-linear-gradient(135deg, #b45309 0 5px, #78350f 5px 9px); }
 .tm-row[data-s="lim"] .tm-st { color: #fcd34d; }
 .tm-row[data-s="no"] { opacity: .5; }
-.tm-mark { position: absolute; top: 0; bottom: 0; left: var(--lab); right: var(--st); pointer-events: none; }
+.tm-mark { position: absolute; top: 0; bottom: 0; left: var(--lab); right: var(--st); pointer-events: none; overflow-x: clip; overflow-clip-margin: 4px; }
 .tm-mark span { position: absolute; top: 20px; bottom: 0; left: 0; width: 100%; transform-origin: left; transition: transform 320ms var(--ease-in-out); }
 .tm-mark .bd { background: rgba(253,186,116,.12); }
 .tm-mark .ln::before { content: ""; position: absolute; left: -1px; top: 0; bottom: 0; width: 2px; background: #fdba74; }
@@ -1381,8 +1381,8 @@ a.ctrl { text-decoration: none; }
         <blockquote class="pull">« Un matériau n'est jamais bon dans l'absolu. Il est bon pour une température, une durée, une charge. Tout notre métier consiste à préciser ce “pour”. »</blockquote>
         <p>Je remercie les trois pôles du département, et nos collègues du DPET et du DSTI, dont les calculs et les mesures thermiques irriguent une grande partie de ces pages.</p>
         <div class="sign">
-          <span class="av" style="--ah:10" aria-hidden="true">AL</span>
-          <span><strong>Arnaud Lecomte</strong><small>Directeur du département DSMR</small></span>
+          <span class="av" style="--ah:10" aria-hidden="true">NG</span>
+          <span><strong>Nathalie Garnier</strong><small>Directrice du département DSMR</small></span>
         </div>
       </div>
 
@@ -1445,14 +1445,14 @@ a.ctrl { text-decoration: none; }
       <h2><span class="n">05</span>Rentrée atmosphérique : le bouclier qui se consume</h2>
       <p>Une capsule qui revient d'orbite basse entre dans l'atmosphère à près de 8 km/s. L'air, comprimé devant elle, devient un plasma, et la surface du bouclier dépasse 1 500 °C. Au retour de Mars, la vitesse d'entrée atteint 11 à 12 km/s. Or le flux de chaleur croît à peu près comme le cube de la vitesse : il est trois à quatre fois plus intense.</p>
       <p>Il existe deux stratégies. Les protections réutilisables, en céramique ou en composite, supportent la chaleur et la rayonnent. Elles conviennent aux rentrées depuis l'orbite. Les <span class="term" tabindex="0" data-term="ablatif">protections ablatives</span> se consument volontairement : en se décomposant, elles absorbent l'énergie et forment une couche de gaz qui éloigne le plasma de la paroi. Elles ne servent qu'une fois, mais ce sont les seules à supporter un retour interplanétaire.</p>
-      <p>C'est le choix retenu pour la capsule de retour d'<span class="nw">ARTEMIS-9</span>. Le DSMR y travaille avec le DPET, qui modélise l'écoulement et les échanges de chaleur, et le DSTI, qui simule la dégradation du matériau au fil de la descente.</p>
+      <p>C'est aussi le choix retenu pour les capsules de descente d'<span class="nw">ARTEMIS-9</span>, qui déposeront l'équipage et le matériel à la surface de Mars. Le DSMR y travaille avec le DPET, qui modélise l'écoulement et les échanges de chaleur, et le DSTI, qui simule la dégradation du matériau au fil de la descente.</p>
     </section>
 
     <!-- 6. DÉBRIS -->
     <section id="s-debris">
       <h2><span class="n">06</span>Débris et orbite : l'usure invisible</h2>
       <p>En orbite, un éclat d'un centimètre frappe avec l'énergie d'une voiture lancée en ville. Les débris de quelques millimètres sont trop petits pour être suivis depuis le sol et trop nombreux pour être évités. Il faut donc blinder. Le principe est contre-intuitif : plutôt qu'une paroi épaisse, on place une tôle mince à distance de la structure. Elle pulvérise le projectile, et le nuage de fragments s'étale avant d'atteindre la paroi principale.</p>
-      <p>En février 2023, le DSMR a montré au canon à gaz léger CHOC-2 qu'un bouclier glissant deux tissus techniques entre deux tôles arrête des projectiles <strong>2,7 fois plus lourds</strong> qu'un bouclier classique de même masse. Ce concept est aujourd'hui dimensionné pour les modules d'habitation d'<span class="nw">ARTEMIS-9</span>.</p>
+      <p>En février 2023, le DSMR a montré au canon à gaz léger CHOC-2 qu'un bouclier glissant deux tissus techniques entre deux tôles arrête des projectiles <strong>2,7 fois plus lourds</strong> qu'un bouclier classique de même masse. Ce concept protège aujourd'hui les modules d'habitation d'<span class="nw">ARTEMIS-9</span>, partis le 14 juillet.</p>
       <p>L'orbite use aussi les matériaux sans les percer. L'<span class="term" tabindex="0" data-term="oxa">oxygène atomique</span>, présent en orbite basse, ronge les films polymères et les résines. Les ultraviolets jaunissent les revêtements et modifient leur capacité à rejeter la chaleur. Le pôle Fatigue et rupture suit ce vieillissement sur des échantillons exposés plusieurs années.</p>
     </section>
 
@@ -1480,7 +1480,7 @@ a.ctrl { text-decoration: none; }
               <tr><td><strong>Four haute température</strong><small>Bordeaux</small></td><td>Le vieillissement et l'oxydation à chaud, sous air ou sous vide.</td><td class="num">jusqu'à 2 000 °C</td></tr>
               <tr><td><strong>Machine d'essais biaxiaux</strong><small>Toulouse</small></td><td>Les efforts combinés que subit une structure : traction, compression, cisaillement.</td><td class="num">charge dans deux directions</td></tr>
               <tr><td><strong>Tour de choc instrumentée</strong><small>Toulouse</small></td><td>Les chocs de séparation d'étage et d'atterrissage.</td><td class="num">chocs de plusieurs milliers de g</td></tr>
-              <tr><td><strong>Banc vibro-acoustique</strong><small>Toulouse</small></td><td>Le bruit et les vibrations du lancement.</td><td class="num">jusqu'à 150 dB</td></tr>
+              <tr><td><strong>Banc vibro-acoustique</strong><small>Toulouse</small></td><td>Le bruit et les vibrations du lancement.</td><td class="num">jusqu'à 150 dB</td></tr>
             </tbody>
           </table>
         </div>
@@ -1508,18 +1508,18 @@ a.ctrl { text-decoration: none; }
     <!-- 10. FEUILLE DE ROUTE -->
     <section id="s-route">
       <h2><span class="n">10</span>Feuille de route</h2>
-      <p>Les travaux présentés ici convergent vers la qualification des matériaux d'<span class="nw">ARTEMIS-9</span>. Les prochaines étapes, telles qu'elles sont prévues à la date de parution :</p>
+      <p>Les travaux présentés ici ont servi à qualifier les matériaux d'<span class="nw">ARTEMIS-9</span>, parti en juillet, et préparent ceux qui permettront d'étendre la colonie. Les prochaines étapes, telles qu'elles sont prévues à la date de parution :</p>
       <ol class="road rv">
         <li class="done"><time>Juin 2024</time><strong>Lancement de la campagne HÉLIOS-3</strong><span>Cycles de chauffage d'un composite céramique pour bouclier de rentrée.</span></li>
         <li><time>2025</time><strong>Fin des essais au banc à plasma</strong><span>Publication des résultats à la suite de la campagne.</span></li>
-        <li><time>2025</time><strong>Panneau multicouche à l'échelle 1</strong><span>Intégration à la maquette du module d'habitation d'<span class="nw">ARTEMIS-9</span>.</span></li>
-        <li><time>2026</time><strong>Qualification des matériaux de l'habitat</strong><span>Dans le cadre de la phase d'intégration du programme.</span></li>
-        <li><time>2027</time><strong>Lancement d'<span class="nw">ARTEMIS-9</span></strong><span>Les matériaux étudiés dans ce numéro seront à bord.</span></li>
+        <li><time>2025</time><strong>Retour d'expérience</strong><span>Comportement des modules d'<span class="nw">ARTEMIS-9</span> après leur installation sur Mars.</span></li>
+        <li><time>2026</time><strong>Matériaux de construction martiens</strong><span>Premiers essais de briques de régolithe pour l'extension de la colonie.</span></li>
+        <li><time>2027</time><strong>Modules d'extension</strong><span>Les matériaux étudiés dans ce numéro équiperont les prochains envois vers la colonie.</span></li>
       </ol>
     </section>
 
     <footer class="colophon rv">
-      <p><strong>Hors-série N°2, octobre 2024.</strong> Directeur de la publication : Jean-Luc Rousseau. Coordination scientifique : Arnaud Lecomte. Contributions : pôles Matériaux composites, Structures avancées et Fatigue et rupture du DSMR, avec le DPET et le DSTI ; service Communication scientifique. La version imprimée (72 pages) comprend les fiches techniques des sept familles de matériaux.</p>
+      <p><strong>Hors-série N°2, octobre 2024.</strong> Directeur de la publication : Jean-Luc Rousseau. Coordination scientifique : Nathalie Garnier. Contributions : pôles Matériaux composites, Structures avancées et Fatigue et rupture du DSMR, avec le DPET et le DSTI ; service Communication scientifique. La version imprimée (72 pages) comprend les fiches techniques des sept familles de matériaux.</p>
       <nav class="lt-nav" aria-label="Autres hors-séries">
         <a href="lettre03.html" class="lt-prev"><i class="ph-light ph-arrow-left" aria-hidden="true"></i><span><small>Hors-série précédent</small>N°1 · Biologie humaine</span></a>
         <a href="../publications-ifras.html" class="lt-all"><span><small>Hors-série suivant</small>N°3 · IA embarquée</span><i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
@@ -1533,7 +1533,7 @@ a.ctrl { text-decoration: none; }
     <div class="rail-card">
       <p class="rail-title">Le DSMR en bref</p>
       <dl class="facts">
-        <div><dt>Direction</dt><dd>Arnaud Lecomte</dd></div>
+        <div><dt>Direction</dt><dd>Nathalie Garnier</dd></div>
         <div><dt>Pôles</dt><dd>Matériaux composites, Structures avancées, Fatigue et rupture</dd></div>
         <div><dt>Programmes</dt><dd><span class="nw">ARTEMIS-9</span>, ORION-3, ATLAS, PROMETHEUS</dd></div>
         <div><dt>Collaborations</dt><dd>DPET, DSTI</dd></div>
@@ -1747,8 +1747,8 @@ a.ctrl { text-decoration: none; }
       d: 'Vers <strong>450 °C</strong> pendant des milliers d\'heures. Les grilles doivent garder leur forme au dixième de millimètre : le molybdène, qui se dilate peu, reste la référence.' },
     { n: 'Rentrée depuis l\'orbite', t: [1600, 1600], ok: [5, 6], lim: [4],
       d: 'Environ <strong>1 600 °C</strong> pendant quelques minutes. Les composites céramiques peuvent être réutilisés ; les protections ablatives offrent davantage de marge.' },
-    { n: 'Retour de Mars', t: [2600, 2600], ok: [6], lim: [],
-      d: 'Au-delà de <strong>2 500 °C</strong> à 11 ou 12 km/s. Seules les protections ablatives y résistent : c\'est le choix retenu pour la capsule de retour d\'ARTEMIS-9.' }
+    { n: 'Rentrée interplanétaire', t: [2600, 2600], ok: [6], lim: [],
+      d: 'Au-delà de <strong>2 500 °C</strong> à 11 ou 12 km/s, la vitesse d\'une capsule qui revient de Mars. Seules les protections ablatives y résistent : c\'est aussi le choix retenu pour les capsules de descente d\'ARTEMIS-9.' }
   ];
   (function tmap() {
     const box = $('tmap'); if (!box) return;
