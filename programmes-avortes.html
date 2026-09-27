@@ -558,6 +558,8 @@ a { color: inherit; }
   border-top: 1px solid var(--border);
 }
 .prog:first-child { border-top: 0; }
+/* le halo dépasse volontairement à droite : on le coupe au bord de la page, sans créer de défilement horizontal */
+#contenu { overflow-x: clip; }
 /* halo coloré discret, propre à chaque programme */
 .prog::before {
   content: ""; position: absolute; top: 0; right: -10%;
@@ -817,6 +819,7 @@ a { color: inherit; }
   .orbit-wrap { height: 240px; margin: -30px 0 0; -webkit-mask-image: none; mask-image: none; }
   .orbit-node { font-size: 10px; padding: 3px 7px 3px 4px; gap: 6px; }
   .orbit-node::before { width: 7px; height: 7px; }
+  .orbit-node .on-x { display: none; }
   .hero-stat { padding: 20px 12px; }
   .hero-stat-label { font-size: 12px; }
   .prog { padding: 52px 0; }
@@ -871,9 +874,11 @@ a { color: inherit; }
   gap: 32px;
   align-items: start;
 }
-.period { padding-top: 44px; width: 220px; }
+.period { padding-top: 44px; width: max-content; min-width: 220px; }
 .period strong {
   display: block;
+  white-space: nowrap;
+  padding: 0 .06em .08em 0;
   font-family: "Syne", sans-serif;
   font-size: clamp(30px, 3vw, 40px);
   font-weight: 800; line-height: 1;
@@ -1094,9 +1099,9 @@ a { color: inherit; }
       <div class="orbit-wrap" id="orbit-wrap">
         <canvas class="orbit-canvas" id="orbit" aria-hidden="true"></canvas>
         <nav aria-label="Accès rapide aux programmes">
-      <a class="orbit-node" href="#daedalus" style="--c:#a78bfa" data-i="0">DAEDALUS <small>arrêté en 2019</small></a>
-      <a class="orbit-node" href="#phoenix" style="--c:#f97316" data-i="1">PHOENIX <small>arrêté en 2020</small></a>
-      <a class="orbit-node" href="#icarus2" style="--c:#facc15" data-i="2">ICARUS-2 <small>arrêté en 2022</small></a>
+      <a class="orbit-node" href="#daedalus" style="--c:#a78bfa" data-i="0">DAEDALUS <small><span class="on-x">arrêté en </span>2019</small></a>
+      <a class="orbit-node" href="#phoenix" style="--c:#f97316" data-i="1">PHOENIX <small><span class="on-x">arrêté en </span>2020</small></a>
+      <a class="orbit-node" href="#icarus2" style="--c:#facc15" data-i="2">ICARUS-2 <small><span class="on-x">arrêté en </span>2022</small></a>
         </nav>
       </div>
 
@@ -1593,12 +1598,36 @@ a { color: inherit; }
         }
         ctx.globalAlpha = 1;
 
-        /* étiquette fixe, posée au point de rupture */
+        p.node.style.opacity = dim ? '.5' : '1';
+      });
+    };
+
+    /* étiquettes : posées une fois par taille, près du point de rupture,
+       toujours dans la zone nette (hors des bords fondus), sans se chevaucher */
+    const mqNarrow = window.matchMedia('(max-width: 640px)');
+    const layout = () => {
+      const n = mqNarrow.matches;
+      const xmin = n ? 4 : w * .09, xmax = n ? w - 4 : w * .92, ymin = n ? 4 : h * .24, ymax = h - 4;
+      const boxes = paths.map((p) => {
         const [bx, by] = at(p, p.stop);
         const nw = p.node.offsetWidth, nh = p.node.offsetHeight;
-        const lx = Math.min(bx + 14, w - nw - 6);
-        p.node.style.transform = `translate(${lx.toFixed(1)}px, ${(by - nh - 10).toFixed(1)}px)`;
-        p.node.style.opacity = dim ? '.5' : '1';
+        let lx = bx + 12;
+        if (lx + nw > xmax) lx = bx - nw - 12;
+        lx = Math.max(xmin, Math.min(lx, xmax - nw));
+        let ly = by - nh - 10;
+        if (ly < ymin) ly = by + 12;
+        return { p, lx, ly, nw, nh };
+      }).sort((a, b) => a.ly - b.ly);
+      for (let i = 1; i < boxes.length; i++) {
+        for (let j = 0; j < i; j++) {
+          const a = boxes[j], b = boxes[i];
+          const overlapX = b.lx < a.lx + a.nw + 6 && a.lx < b.lx + b.nw + 6;
+          if (overlapX && b.ly < a.ly + a.nh + 6) b.ly = a.ly + a.nh + 6;
+        }
+      }
+      boxes.forEach((b) => {
+        b.ly = Math.max(ymin, Math.min(b.ly, ymax - b.nh));
+        b.p.node.style.transform = `translate(${b.lx.toFixed(1)}px, ${b.ly.toFixed(1)}px)`;
       });
     };
 
@@ -1618,7 +1647,8 @@ a { color: inherit; }
       n.addEventListener('focus', on); n.addEventListener('blur', off);
     });
 
-    size(); draw();
+    size(); layout(); draw();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { layout(); if (!running) draw(); });
     let visible = true;
     new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
@@ -1626,7 +1656,7 @@ a { color: inherit; }
     }).observe(wrap);
     document.addEventListener('visibilitychange', () => { document.hidden ? stop() : visible && start(); });
     let rt = 0;
-    window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { size(); draw(); }, 150); });
+    window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { size(); layout(); draw(); }, 150); });
   }
 
   {
