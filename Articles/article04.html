@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>L'intrication quantique préservée sur une liaison Terre–satellite simulée | Publications IFRAS</title>
-<meta name="description" content="Des paires de photons intriqués conservent 97,3 % de fidélité sur un canal simulant une liaison de 40 000 km vers un satellite géostationnaire.">
+<title>Mots de passe : la longueur protège mieux que la complexité | Publications IFRAS</title>
+<meta name="description" content="Entropie, longueur et diversité : ce que vaut vraiment chaque caractère d'un mot de passe, et la nouvelle politique d'accès de l'IFRAS.">
 <meta name="theme-color" content="#050b1e">
 <link rel="icon" type="image/png" sizes="1000x1000" href="../logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -852,6 +852,100 @@ td.gain { color: var(--ok); }
   #setupSvg text { display: none; }
 }
 
+/* =========================================================
+   ARTICLE : AUTHENTIFICATION
+   ========================================================= */
+.art-hero--lock::before {
+  background:
+    radial-gradient(ellipse 45% 70% at 76% 48%, rgba(52,211,153,.13), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(167,139,250,.1), transparent 60%);
+}
+.lockart svg { -webkit-mask-image: radial-gradient(ellipse 72% 72% at 50% 50%, #000 60%, transparent 100%); mask-image: radial-gradient(ellipse 72% 72% at 50% 50%, #000 60%, transparent 100%); }
+.lockart .reentry-tag { z-index: 2; }
+.lockart sup { font-size: 9px; }
+.ring { transform-box: view-box; transform-origin: 260px 224px; animation: spin var(--dur, 90s) linear infinite; animation-direction: var(--dir, normal); }
+@keyframes spin { to { transform: rotate(360deg); } }
+.ring text { font-family: var(--mono); }
+.chip-on { animation: chipOn 2.8s ease-in-out infinite alternate; animation-delay: var(--d, 0s); }
+@keyframes chipOn { from { opacity: .25; } to { opacity: 1; } }
+
+.chart svg { display: block; width: 100%; }
+.verdict-pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 500; color: var(--vc); background: color-mix(in srgb, var(--vc) 12%, transparent); border: 1px solid color-mix(in srgb, var(--vc) 30%, transparent); }
+
+/* menaces */
+.threats { list-style: none; margin: 22px 0 26px; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.threats li { display: grid; grid-template-columns: 34px 1fr; gap: 12px; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); transition: border-color 200ms ease, transform 200ms var(--ease-out); }
+.threats li:last-child { grid-column: 1 / -1; }
+.threats li > i { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; font-size: 19px; color: var(--tc); background: color-mix(in srgb, var(--tc) 12%, transparent); }
+.threats strong { display: block; font-size: 15px; font-weight: 500; color: var(--text-strong); }
+.threats span { display: block; margin-top: 2px; font-size: 14px; line-height: 1.5; color: var(--text-soft); }
+.threats em { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; font-style: normal; font-size: 13px; color: #6ee7b7; }
+@media (hover: hover) and (pointer: fine) { .threats li:hover { border-color: color-mix(in srgb, var(--tc) 45%, var(--border)); transform: translateY(-2px); } }
+
+/* figure 2 */
+.art .salt-verdict { margin: 10px 0 0; font-size: 14px; color: var(--text-soft); display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+#saltSvg .hashv { font-family: var(--mono); transition: fill 300ms ease; }
+.pkt { transition: opacity 200ms ease; }
+
+/* équations */
+.eqs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 22px 0 8px; }
+.eqc { padding: 14px 16px; border-radius: 14px; border: 1px solid var(--border); background: rgba(2,6,23,.45); text-align: center; }
+.eqc.hot { border-color: rgba(52,211,153,.4); background: rgba(52,211,153,.06); }
+.eqf { display: block; font-family: var(--mono); font-size: 17px; color: #e0e7ff; white-space: nowrap; }
+.eqc.hot .eqf { color: #6ee7b7; }
+.eqc small { display: block; margin-top: 4px; font-size: 12.5px; line-height: 1.4; color: var(--text-mute); }
+.art b.v { font-family: var(--mono); font-weight: 500; color: #6ee7b7; }
+
+/* figure 3 calculateur */
+.pools { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; }
+.pool { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 4px; border-radius: 10px; border: 1px solid var(--border); background: transparent; color: var(--text-soft); font: inherit; cursor: pointer; transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out); }
+.pool b { font-family: var(--mono); font-weight: 500; font-size: 12.5px; white-space: nowrap; }
+.pool small { font-size: 11.5px; color: var(--text-mute); }
+.pool:active { transform: scale(.96); }
+.pool[aria-pressed="true"] { color: #fff; border-color: #34d399; background: rgba(52,211,153,.1); }
+@media (hover: hover) and (pointer: fine) { .pool:hover { color: #fff; } }
+.scrub-l { font-size: 13px; color: var(--text-soft); }
+#lenRange { accent-color: #34d399; }
+.sample { margin-top: 14px; min-height: 40px; display: flex; flex-wrap: wrap; gap: 4px; }
+.sample span { width: 22px; height: 30px; display: grid; place-items: center; border-radius: 6px; background: #0a1436; border: 1px solid var(--border); font-family: var(--mono); font-size: 14px; color: #e0e7ff; animation: charIn 240ms var(--ease-out); }
+@keyframes charIn { from { opacity: 0; transform: translateY(4px) scale(.9); } }
+.bits { margin-top: 12px; display: grid; grid-template-columns: repeat(40, minmax(0, 1fr)); gap: 3px; }
+.bits i { aspect-ratio: 1; border-radius: 2px; background: #13204d; transition: background-color 240ms ease; }
+.bits i.on { background: var(--bc, #34d399); }
+.readout.hot strong { color: var(--rc, #34d399); transition: color 240ms ease; }
+
+/* tableau thermique */
+.tc-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+.seg-sm button { height: 28px; font-size: 12.5px; padding: 0 10px; }
+table.heat td.num { position: relative; transition: background-color 300ms ease; }
+table.heat td.num span { display: inline-block; transition: opacity 180ms ease, transform 180ms var(--ease-out); }
+table.heat.swap td.num span { opacity: 0; transform: translateY(3px); }
+table.heat td small { display: block; font-size: 12px; color: var(--text-mute); }
+
+/* figure 4 */
+.multi { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+/* règles */
+.rules { list-style: none; margin: 20px 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.rules li { display: grid; grid-template-columns: 30px 1fr; gap: 12px; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-light); }
+.rn { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-family: var(--mono); font-size: 13px; color: #03130d; background: #34d399; }
+.rules strong { display: block; font-size: 15px; font-weight: 500; color: var(--text-strong); }
+.rules span { display: block; margin-top: 2px; font-size: 14px; line-height: 1.5; color: var(--text-soft); }
+
+.keep { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 14px; color: var(--text-soft); }
+.keep li { display: flex; align-items: center; gap: 10px; }
+.keep i { font-size: 18px; color: #34d399; }
+
+@media (max-width: 900px) { .multi { grid-template-columns: 1fr; } }
+@media (max-width: 760px) {
+  .threats, .rules, .eqs { grid-template-columns: 1fr; }
+  .pools { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .bits { grid-template-columns: repeat(20, minmax(0, 1fr)); }
+  .sample span { width: 18px; height: 26px; font-size: 12.5px; }
+}
+@media (prefers-reduced-motion: reduce) { .ring, .chip-on { animation: none; } }
+.art .ctip-p { margin: 6px 0 0; max-width: 230px; font-size: 12.5px; line-height: 1.45; color: var(--text-soft); }
+
 </style>
 <script>document.documentElement.classList.add('js');</script>
 </head>
@@ -909,7 +1003,7 @@ td.gain { color: var(--ok); }
 <main id="contenu">
 
 <!-- ===== EN-TÊTE DE L'ARTICLE ===== -->
-<header class="art-hero art-hero--q">
+<header class="art-hero art-hero--lock">
   <div class="container art-hero-grid">
     <div>
       <ol class="crumbs hero-in" style="--i:0" aria-label="Fil d'Ariane">
@@ -917,54 +1011,32 @@ td.gain { color: var(--ok); }
         <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
         <li><a href="../publications-scientifiques.html">Publications scientifiques</a></li>
         <li aria-hidden="true"><i class="ph-light ph-caret-right"></i></li>
-        <li aria-current="page">Physique quantique</li>
+        <li aria-current="page">Cybersécurité</li>
       </ol>
       <div class="badges hero-in" style="--i:1">
-        <span class="badge" style="--b:#c084fc"><i class="ph-light ph-atom" aria-hidden="true"></i>Physique quantique · DSTI</span>
+        <span class="badge" style="--b:#34d399"><i class="ph-light ph-shield-check" aria-hidden="true"></i>Cybersécurité · DSIN</span>
         <span class="badge" style="--b:#60a5fa"><i class="ph-light ph-seal-check" aria-hidden="true"></i>Évalué par les pairs</span>
-        <span class="badge" style="--b:#34d399"><i class="ph-light ph-lock-simple-open" aria-hidden="true"></i>Accès libre</span>
+        <span class="badge" style="--b:#a78bfa"><i class="ph-light ph-buildings" aria-hidden="true"></i>Publication institutionnelle</span>
       </div>
-      <h1 class="art-title hero-in" style="--i:2">L'intrication quantique préservée sur une liaison Terre–satellite simulée</h1>
-      <p class="art-lede hero-in" style="--i:3">Deux photons jumeaux, séparés par l'équivalent de 40 000 km, restent liés à 97,3 %. L'expérience HERMES-QKD montre qu'un satellite géostationnaire pourrait distribuer des clés de chiffrement impossibles à intercepter sans être détecté.</p>
+      <h1 class="art-title hero-in" style="--i:2">Mots de passe : la longueur protège mieux que la complexité</h1>
+      <p class="art-lede hero-in" style="--i:3">La puissance de calcul a été multipliée par des millions depuis que nos règles de mots de passe ont été écrites. Nous mesurons ce que vaut vraiment chaque caractère, et pourquoi l'IFRAS passe à des mots de passe plus longs plutôt que plus compliqués.</p>
       <ul class="authors hero-in" style="--i:4" aria-label="Auteurs">
-        <li class="author"><span class="av" style="--ah:270" aria-hidden="true">PM</span><span><strong>Paul Mercier</strong><small>Responsable de l'expérience</small></span></li>
-        <li class="author"><span class="av" style="--ah:200" aria-hidden="true">NM</span><span><strong>Nadia Martin</strong><small>Information quantique</small></span></li>
-        <li class="author"><span class="av" style="--ah:30" aria-hidden="true">VT</span><span><strong>Valentin Tissot</strong><small>Métrologie quantique</small></span></li>
-        <li class="author"><span class="av" style="--ah:150" aria-hidden="true">IB</span><span><strong>Ingrid Brandt</strong><small>Photonique</small></span></li>
+        <li class="author"><span class="av" style="--ah:150" aria-hidden="true">IM</span><span><strong>Inès Martel</strong><small>Sécurité des systèmes</small></span></li>
+        <li class="author"><span class="av" style="--ah:230" aria-hidden="true">PG</span><span><strong>Paul Girard</strong><small>Cryptographie appliquée</small></span></li>
+        <li class="author"><span class="av" style="--ah:20" aria-hidden="true">MR</span><span><strong>Maëlle Roux</strong><small>Gouvernance des accès</small></span></li>
       </ul>
       <div class="meta-line hero-in" style="--i:5">
-        <span><i class="ph-light ph-calendar-blank" aria-hidden="true"></i>Publié le 9 décembre 2025</span>
+        <span><i class="ph-light ph-calendar-blank" aria-hidden="true"></i>Publié en septembre 2024</span>
         <span><i class="ph-light ph-clock" aria-hidden="true"></i>8 min de lecture</span>
-        <span><i class="ph-light ph-hash" aria-hidden="true"></i><code>IFRAS-DSTI-2025-041</code></span>
+        <span><i class="ph-light ph-hash" aria-hidden="true"></i><code>IFRAS-DSIN-2024-004</code></span>
       </div>
     </div>
 
-    <!-- Illustration : paire de photons entre la Terre et un satellite -->
-    <div class="reentry qlink hero-in" style="--i:3" aria-hidden="true">
-      <canvas id="qstars"></canvas>
-      <svg viewBox="0 0 520 447" id="qhero">
-        <defs>
-          <radialGradient id="earthG" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#1d4ed8"/><stop offset=".6" stop-color="#1e3a8a"/><stop offset="1" stop-color="#0b1540"/></radialGradient>
-          <radialGradient id="srcG"><stop offset="0" stop-color="#f5f3ff"/><stop offset=".35" stop-color="#c084fc" stop-opacity=".9"/><stop offset="1" stop-color="#a855f7" stop-opacity="0"/></radialGradient>
-        </defs>
-        <circle cx="60" cy="600" r="360" fill="url(#earthG)"/>
-        <circle cx="60" cy="600" r="360" fill="none" stroke="#60a5fa" stroke-opacity=".35" stroke-width="6"/>
-        <!-- station au sol -->
-        <g transform="translate(120 232)"><rect x="-10" y="6" width="20" height="16" rx="3" fill="#0a1436" stroke="#60a5fa"/><path d="M-14 6 L0 -12 L14 6 Z" fill="#1e3a8a" stroke="#60a5fa"/></g>
-        <!-- satellite -->
-        <g transform="translate(430 70) rotate(-20)">
-          <rect x="-40" y="-8" width="28" height="16" rx="2" fill="#312e81" stroke="#818cf8"/>
-          <rect x="12" y="-8" width="28" height="16" rx="2" fill="#312e81" stroke="#818cf8"/>
-          <rect x="-12" y="-12" width="24" height="24" rx="4" fill="#0a1436" stroke="#c084fc"/>
-          <circle cx="0" cy="0" r="5" fill="#c084fc"/>
-        </g>
-        <!-- lien -->
-        <path id="qpath" d="M120 232 Q 290 180 430 70" fill="none" stroke="#c084fc" stroke-opacity=".25" stroke-width="1.5" stroke-dasharray="3 6"/>
-        <circle cx="270" cy="178" r="34" fill="url(#srcG)" class="glow"/>
-        <g id="qphotons"></g>
-      </svg>
-      <span class="reentry-tag" style="right:0;top:28%"><i style="background:#c084fc"></i> Satellite <b>40 000 km</b></span>
-      <span class="reentry-tag" style="left:4%;bottom:26%">Station au sol</span>
+    <!-- Illustration : cadenas et anneaux de caractères -->
+    <div class="reentry lockart hero-in" style="--i:3" aria-hidden="true">
+      <svg viewBox="0 0 520 447" id="heroLock"></svg>
+      <span class="reentry-tag" style="right:2%;top:10%"><i style="background:#34d399"></i> 1 caractère <b>≈ +6 bits</b></span>
+      <span class="reentry-tag" style="left:2%;bottom:12%"><i style="background:#a78bfa"></i> 16 caractères <b>2<sup>105</sup></b></span>
     </div>
   </div>
 </header>
@@ -977,11 +1049,11 @@ td.gain { color: var(--ok); }
     <ol id="toc">
       <li class="toc-ind" aria-hidden="true"></li>
       <li><a href="#s-essentiel"><span>—</span>L'essentiel</a></li>
-      <li><a href="#s-intro"><span>1</span>L'intrication</a></li>
-      <li><a href="#s-methodes"><span>2</span>Le dispositif</a></li>
-      <li><a href="#s-resultats"><span>3</span>Résultats</a></li>
-      <li><a href="#s-discussion"><span>4</span>Discussion</a></li>
-      <li><a href="#s-conclusion"><span>5</span>Conclusion</a></li>
+      <li><a href="#s-intro"><span>1</span>Des règles d'un autre temps</a></li>
+      <li><a href="#s-methodes"><span>2</span>Menaces et parades</a></li>
+      <li><a href="#s-resultats"><span>3</span>Mesurer la force</a></li>
+      <li><a href="#s-discussion"><span>4</span>Longueur ou diversité</a></li>
+      <li><a href="#s-conclusion"><span>5</span>Recommandations</a></li>
     </ol>
     <p class="toc-time"><i class="ph-light ph-hourglass-medium" aria-hidden="true"></i><span id="timeLeft">8 min restantes</span></p>
   </nav>
@@ -993,192 +1065,185 @@ td.gain { color: var(--ok); }
       <div class="essentials rv">
         <div class="essentials-head"><i class="ph-light ph-lightning" aria-hidden="true"></i> L'essentiel en 30 secondes</div>
         <div class="kpis">
-          <div class="kpi"><strong>97,3<small> %</small></strong><span>de fidélité : les photons restent presque parfaitement liés</span></div>
-          <div class="kpi"><strong data-count="2630" data-suffix="">2 630</strong><span>paires envoyées pour une seule reçue, et pourtant ça marche</span></div>
-          <div class="kpi"><strong data-count="24" data-suffix=" σ">24<small> σ</small></strong><span>de certitude que le lien est bien quantique</span></div>
+          <div class="kpi"><strong>+6<small> bits</small></strong><span>apportés par chaque caractère aléatoire supplémentaire</span></div>
+          <div class="kpi"><strong>+0,6<small> bit</small></strong><span>seulement en ajoutant des symboles à un mot de passe déjà varié</span></div>
+          <div class="kpi"><strong data-count="15" data-suffix=" car.">15<small> car.</small></strong><span>longueur minimale désormais demandée à l'IFRAS</span></div>
         </div>
         <ul class="takeaways">
-          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>Un banc de laboratoire reproduit les pertes et le bruit d'une liaison vers un satellite géostationnaire.</li>
-          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>Malgré 34 dB de pertes, l'intrication des photons est conservée, sans relais intermédiaire.</li>
-          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>La marge est suffisante pour produire des clés secrètes : feu vert pour le satellite HERMES-1.</li>
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>La force d'un mot de passe se mesure en bits d'entropie : chaque bit double le nombre de combinaisons.</li>
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>Allonger un mot de passe rapporte bien plus que le compliquer.</li>
+          <li><i class="ph-light ph-check-circle" aria-hidden="true"></i>Ce calcul ne vaut que pour un mot de passe tiré au hasard : les motifs humains le rendent trompeur.</li>
         </ul>
       </div>
 
       <div class="abstract rv">
         <span class="label">Résumé</span>
-        <p>Distribuer des photons intriqués sur de très longues distances est la base des communications quantiques. Dans l'expérience HERMES-QKD, une source de paires de photons intriqués en polarisation (810 nm) est reliée à un émulateur qui reproduit les pertes (34,2 dB), la dispersion et le bruit d'une liaison de 40 000 km vers l'orbite géostationnaire. La fidélité mesurée par tomographie est de 97,3 ± 0,4 % et le paramètre de Bell atteint S = 2,73 ± 0,03, bien au-delà de la limite classique de 2. Ces résultats valident le modèle du programme HERMES et la faisabilité d'un satellite quantique géostationnaire.</p>
-        <div class="kw" aria-label="Mots-clés"><span>Intrication</span><span>Photons</span><span>Cryptographie quantique</span><span>Inégalité de Bell</span><span>HERMES</span></div>
+        <p>L'authentification par mot de passe reste le premier mécanisme de contrôle d'accès des infrastructures scientifiques. Les règles qui l'encadrent datent pourtant d'une époque où la puissance de calcul était des millions de fois plus faible qu'aujourd'hui. Nous quantifions la robustesse d'un mot de passe aléatoire par son entropie, E = L · log₂(B), où L est la longueur et B la taille du jeu de caractères, et en déduisons le temps nécessaire pour épuiser toutes les combinaisons. Un caractère supplémentaire apporte environ 6 bits, alors qu'élargir un jeu de 62 à 94 caractères n'en apporte que 0,6 par position. Nous montrons aussi que le stockage des empreintes avec un sel et une fonction de calcul volontairement lente multiplie la protection par un facteur de l'ordre de 10⁵. Ces résultats fondent la nouvelle politique d'accès de l'IFRAS : 15 caractères minimum, gestionnaire de mots de passe et double facteur.</p>
+        <div class="kw" aria-label="Mots-clés"><span>Authentification</span><span>Entropie</span><span>Mot de passe</span><span>Hachage</span><span>Politique d'accès</span></div>
       </div>
     </section>
 
-    <!-- 1. INTRODUCTION -->
+    <!-- 1. HISTORIQUE -->
     <section id="s-intro">
-      <h2><span class="n">01</span>L'intrication, une ressource fragile</h2>
-      <p>Deux <button class="term" type="button" data-term="photon">photons</button> <button class="term" type="button" data-term="intrication">intriqués</button> se comportent comme un seul objet, même très éloignés : mesurer la <button class="term" type="button" data-term="polarisation">polarisation</button> de l'un révèle instantanément celle de l'autre. Aucun résultat n'est fixé à l'avance, mais les deux sont toujours liés. C'est ce lien qui permet de fabriquer des clés de chiffrement : un espion qui intercepte un photon brise la corrélation et se trahit.</p>
+      <h2><span class="n">01</span>Des règles écrites pour un autre temps</h2>
+      <p>Les premières politiques de mots de passe datent des années 1980. Les comptes vivaient sur des serveurs partagés, accessibles depuis des terminaux internes, et le principal risque était un collègue indiscret. Six à huit caractères mêlant lettres et chiffres semblaient alors largement suffisants : tester toutes les combinaisons aurait demandé des années de calcul.</p>
+      <p>Depuis, les processeurs se sont multipliés sur chaque puce, les cartes graphiques ont rendu le calcul massivement parallèle et le calcul à la demande s'est généralisé. Ce qui constituait une barrière économique est devenu accessible à n'importe qui.</p>
 
       <figure class="fig rv" id="fig1">
         <div class="fig-stage">
-          <div class="fig-head">
-            <span class="fig-name">Mesurez vous-même des photons intriqués</span>
-            <button class="ctrl" type="button" id="bellPlay"><i class="ph-light ph-pause" aria-hidden="true"></i><span>Pause</span></button>
-          </div>
-          <div class="bell">
-            <div class="bell-side">
-              <span class="bell-who">Station au sol</span>
-              <svg viewBox="0 0 100 100" class="dial" id="dialA" aria-hidden="true"></svg>
-              <label class="bell-angle">Angle du filtre <output id="aOut">0°</output>
-                <input type="range" id="aRange" min="0" max="90" step="7.5" value="0" aria-label="Angle du filtre de la station au sol">
-              </label>
-            </div>
-            <div class="bell-mid">
-              <div class="bell-rows" aria-hidden="true"><div class="bell-row" id="rowA"></div><div class="bell-row" id="rowB"></div></div>
-              <div class="bell-stats">
-                <div><small>Résultats identiques</small><strong id="agree">—</strong></div>
-                <div><small>Prévision quantique</small><strong id="theory">100 %</strong></div>
-              </div>
-            </div>
-            <div class="bell-side">
-              <span class="bell-who">Satellite</span>
-              <svg viewBox="0 0 100 100" class="dial" id="dialB" aria-hidden="true"></svg>
-              <label class="bell-angle">Angle du filtre <output id="bOut">0°</output>
-                <input type="range" id="bRange" min="0" max="90" step="7.5" value="0" aria-label="Angle du filtre du satellite">
-              </label>
-            </div>
-          </div>
+          <div class="fig-head"><span class="fig-name">Puissance de calcul accessible à un particulier</span></div>
+          <div class="chart" id="power"><div class="ctip" id="powerTip"></div></div>
         </div>
-        <figcaption><b>Figure 1</b>Simulation : chaque paire donne un résultat « passe » (plein) ou « bloqué » (vide) de chaque côté. Avec des filtres alignés, les deux côtés obtiennent toujours le même résultat. En les décalant, l'accord suit la loi quantique cos²(écart d'angle) : 50 % à 45°, 0 % à 90°.</figcaption>
+        <figcaption><b>Figure 1</b>Ordre de grandeur de la puissance de calcul d'un ordinateur personnel haut de gamme, relative à 1985 (échelle logarithmique : chaque graduation est 100 fois plus haute que la précédente). Survolez les époques pour les détails.</figcaption>
       </figure>
-
-      <p>Le problème, c'est la distance. Dans une fibre optique, la moitié des photons est perdue tous les 15 km. Dans le vide spatial, les pertes sont bien plus faibles, ce qui a fait des satellites les meilleurs candidats. Jusqu'ici, les démonstrations se limitaient à l'orbite basse, vers 1 200 km. Le programme HERMES vise l'<strong>orbite géostationnaire</strong>, plus stable car le satellite y reste fixe dans le ciel, mais trente fois plus loin.</p>
     </section>
 
-    <!-- 2. LE DISPOSITIF -->
+    <!-- 2. MENACES -->
     <section id="s-methodes">
-      <h2><span class="n">02</span>Le dispositif</h2>
-      <h3>Une source de photons jumeaux</h3>
-      <p>Un laser violet (405 nm) traverse un cristal qui, très rarement, transforme un photon en deux photons infrarouges (810 nm) intriqués. Les paires sont séparées, filtrées, puis envoyées dans l'émulateur de canal avant d'atteindre deux détecteurs ultrasensibles, capables de compter les photons un par un.</p>
+      <h2><span class="n">02</span>Menaces et parades</h2>
+      <p>Un mot de passe peut être compromis de plusieurs façons. Chaque menace a sa parade, et aucune ne suffit seule.</p>
+
+      <ul class="threats rv">
+        <li style="--tc:#34d399"><i class="ph-light ph-infinity" aria-hidden="true"></i><div><strong>Essais exhaustifs</strong><span>Tester toutes les combinaisons une à une.</span><em><i class="ph-light ph-shield-check" aria-hidden="true"></i>Parade : longueur et tirage aléatoire.</em></div></li>
+        <li style="--tc:#60a5fa"><i class="ph-light ph-list-bullets" aria-hidden="true"></i><div><strong>Mots de passe courants</strong><span>Essayer d'abord les choix humains les plus fréquents.</span><em><i class="ph-light ph-shield-check" aria-hidden="true"></i>Parade : générer au hasard, avec un gestionnaire.</em></div></li>
+        <li style="--tc:#a78bfa"><i class="ph-light ph-table" aria-hidden="true"></i><div><strong>Tables pré-calculées</strong><span>Possible seulement si les empreintes stockées ont été volées.</span><em><i class="ph-light ph-shield-check" aria-hidden="true"></i>Parade : un sel unique par compte (figure 2).</em></div></li>
+        <li style="--tc:#fbbf24"><i class="ph-light ph-user-focus" aria-hidden="true"></i><div><strong>Manipulation</strong><span>Faux message qui pousse à saisir son mot de passe.</span><em><i class="ph-light ph-shield-check" aria-hidden="true"></i>Parade : double facteur et vigilance.</em></div></li>
+        <li style="--tc:#f87171"><i class="ph-light ph-bug" aria-hidden="true"></i><div><strong>Failles logicielles</strong><span>Mot de passe lu en mémoire ou dans des journaux.</span><em><i class="ph-light ph-shield-check" aria-hidden="true"></i>Parade : mises à jour, rien en clair.</em></div></li>
+      </ul>
+
+      <p>Côté serveur, un mot de passe n'est jamais conservé tel quel. On stocke son <button class="term" type="button" data-term="hash">empreinte</button>, calculée par une fonction à sens unique. Deux précautions changent tout : un <button class="term" type="button" data-term="sel">sel</button> aléatoire propre à chaque compte, et une fonction <strong>volontairement lente</strong>, qui rend chaque essai coûteux.</p>
 
       <figure class="fig rv" id="fig2">
         <div class="fig-stage">
-          <div class="fig-head"><span class="fig-name">Le banc HERMES-QKD</span></div>
-          <svg viewBox="0 0 680 260" id="setupSvg" role="img" aria-label="Schéma : laser, cristal, séparateur, filtres, émulateur de canal, détecteurs et compteur de coïncidences"></svg>
-          <div class="parts" role="group" aria-label="Éléments du banc" id="setupParts"></div>
-          <p class="part-desc" id="setupDesc" aria-live="polite">Survolez ou touchez un élément pour le décrire.</p>
+          <div class="fig-head">
+            <span class="fig-name">Deux comptes, le même mot de passe</span>
+            <div class="seg" role="group" aria-label="Mode de stockage" id="saltSeg">
+              <button type="button" data-s="0" aria-pressed="false">Sans sel</button>
+              <button type="button" data-s="1" aria-pressed="true">Avec sel</button>
+            </div>
+          </div>
+          <svg viewBox="0 0 640 250" id="saltSvg" aria-label="Schéma du calcul des empreintes pour deux comptes"></svg>
+          <p class="salt-verdict" id="saltVerdict" aria-live="polite"></p>
         </div>
-        <figcaption><b>Figure 2</b>Schéma de principe. Les deux photons d'une paire suivent chacun une voie jusqu'à un détecteur. Le compteur ne retient que les détections simultanées (à moins d'une nanoseconde près), qui signalent une paire complète.</figcaption>
+        <figcaption><b>Figure 2</b>Sans sel, deux comptes au même mot de passe ont la même empreinte : les repérer et les comparer à des tables pré-calculées devient possible. Avec un sel aléatoire par compte, les empreintes n'ont plus rien en commun. La fonction lente (ici 100 000 itérations) ralentit chaque essai d'autant.</figcaption>
       </figure>
+    </section>
 
-      <h3>40 000 km dans une boîte</h3>
-      <p>L'émulateur reproduit ce que subirait la lumière entre le sol et le satellite : l'affaiblissement du faisceau, l'étalement des impulsions et la lumière parasite du ciel. Les pertes s'expriment en <button class="term" type="button" data-term="db">décibels</button> : 34,2 dB signifient qu'une seule paire sur 2 630 arrive complète.</p>
+    <!-- 3. ENTROPIE -->
+    <section id="s-resultats">
+      <h2><span class="n">03</span>Mesurer la force d'un mot de passe</h2>
+      <p>Pour un mot de passe tiré au hasard, tout dépend de deux nombres : sa longueur <b class="v">L</b> et la taille du jeu de caractères possibles à chaque position, <b class="v">B</b>. Le nombre de combinaisons est C = B<sup>L</sup>. Comme ce nombre devient vite astronomique, on l'exprime en <button class="term" type="button" data-term="entropie">bits d'entropie</button>.</p>
+
+      <div class="eqs rv">
+        <div class="eqc"><span class="eqf">C = B<sup>L</sup></span><small>nombre de combinaisons</small></div>
+        <div class="eqc hot"><span class="eqf">E = L × log₂(B)</span><small>entropie, en bits</small></div>
+        <div class="eqc"><span class="eqf">T = 2<sup>E</sup> / R</span><small>temps pour tout essayer, à R essais par seconde</small></div>
+      </div>
 
       <figure class="fig rv" id="fig3">
         <div class="fig-stage">
           <div class="fig-head">
-            <span class="fig-name">Combien de paires arrivent à destination ?</span>
-            <div class="seg" role="group" aria-label="Orbite">
-              <button type="button" data-o="leo" aria-pressed="false">1 200 km</button>
-              <button type="button" data-o="meo" aria-pressed="false">20 000 km</button>
-              <button type="button" data-o="geo" aria-pressed="true">40 000 km</button>
+            <span class="fig-name">Calculateur d'entropie</span>
+            <div class="seg" role="group" aria-label="Stockage de l'empreinte" id="rateSeg">
+              <button type="button" data-r="9" aria-pressed="true">Fonction rapide</button>
+              <button type="button" data-r="4" aria-pressed="false">Fonction lente</button>
             </div>
           </div>
-          <div class="waffle"><canvas id="waffle"></canvas></div>
-          <div class="readouts">
-            <div class="readout"><small>Pertes du canal</small><strong id="wLoss">34,2 dB</strong></div>
-            <div class="readout"><small>Paires reçues</small><strong id="wRatio">1 sur 2 630</strong></div>
-            <div class="readout"><small>Coïncidences mesurées</small><strong id="wRate">68 par seconde</strong></div>
+          <div class="pools" role="group" aria-label="Jeu de caractères" id="poolSeg">
+            <button type="button" class="pool" data-b="10" aria-pressed="false"><b>0-9</b><small>10</small></button>
+            <button type="button" class="pool" data-b="26" aria-pressed="false"><b>a-z</b><small>26</small></button>
+            <button type="button" class="pool" data-b="36" aria-pressed="false"><b>a-z 0-9</b><small>36</small></button>
+            <button type="button" class="pool" data-b="52" aria-pressed="false"><b>a-z A-Z</b><small>52</small></button>
+            <button type="button" class="pool" data-b="62" aria-pressed="true"><b>a-z A-Z 0-9</b><small>62</small></button>
+            <button type="button" class="pool" data-b="94" aria-pressed="false"><b>+ symboles</b><small>94</small></button>
+          </div>
+          <div class="scrub">
+            <label for="lenRange" class="scrub-l">Longueur</label>
+            <input type="range" id="lenRange" min="4" max="24" value="12" step="1" aria-label="Longueur du mot de passe">
+            <output id="lenOut" for="lenRange">12</output>
+          </div>
+          <div class="sample" id="sample" aria-hidden="true"></div>
+          <div class="bits" id="bits" aria-hidden="true"></div>
+          <div class="readouts" aria-live="polite">
+            <div class="readout"><small>Entropie</small><strong id="roE">71 bits</strong></div>
+            <div class="readout"><small>Combinaisons</small><strong id="roC">3 × 10²¹</strong></div>
+            <div class="readout hot" id="roTBox"><small>Pour tout essayer</small><strong id="roT">102 000 ans</strong></div>
           </div>
         </div>
-        <figcaption><b>Figure 3</b>Chaque point représente une paire envoyée ; les points brillants sont les paires qui arrivent complètes. À 40 000 km, il n'en reste qu'une sur 2 630. La source en produit assez (environ 180 000 par seconde) pour que 68 paires par seconde soient détectées.</figcaption>
+        <figcaption><b>Figure 3</b>Entropie d'un mot de passe aléatoire selon sa longueur et son jeu de caractères. Chaque case représente un bit : un bit de plus double le travail. Temps calculés pour 10⁹ essais par seconde (empreinte rapide) ou 10⁴ (fonction lente, 100 000 itérations) ; en moyenne, la moitié du temps suffit.</figcaption>
       </figure>
+
+      <div class="table-wrap rv" id="tab1">
+        <div class="table-cap tc-row"><span><b>Tableau 1</b>Force selon le jeu de caractères et la longueur</span>
+          <span class="seg seg-sm" role="group" aria-label="Valeur affichée" id="tabSeg">
+            <button type="button" data-v="e" aria-pressed="true">Entropie</button>
+            <button type="button" data-v="c" aria-pressed="false">Combinaisons</button>
+            <button type="button" data-v="t" aria-pressed="false">Temps</button>
+          </span>
+        </div>
+        <div class="table-scroll">
+          <table class="heat" id="heat">
+            <thead><tr><th>Jeu de caractères</th><th class="num">8</th><th class="num">12</th><th class="num">15</th><th class="num">18</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="table-note">Temps pour épuiser toutes les combinaisons à 10⁹ essais par seconde, empreinte rapide sans sel. La couleur suit l'entropie : rouge sous 50 bits, vert au-delà de 80.</div>
+      </div>
+
+      <div class="note" style="--nc:#fbbf24">
+        <i class="ph-light ph-warning" aria-hidden="true"></i>
+        <p><span class="nt">Attention aux apparences</span>Ce calcul suppose un tirage au hasard. « Motdepasse2024! » coche toutes les cases (majuscule, chiffres, symbole) et affiche 98 bits théoriques, mais il suit un motif si courant qu'il figure parmi les tout premiers essais. Sa force réelle est quasi nulle.</p>
+      </div>
     </section>
 
-    <!-- 3. RÉSULTATS -->
-    <section id="s-resultats">
-      <h2><span class="n">03</span>Résultats</h2>
-      <h3>Une fidélité qui résiste aux pertes</h3>
-      <p>La <button class="term" type="button" data-term="fidelite">fidélité</button> mesure à quel point l'état reçu ressemble à l'état parfait. Elle baisse à mesure que les pertes augmentent, car le bruit de fond pèse de plus en plus face aux rares photons utiles. À la distance géostationnaire, elle atteint <strong>97,3 %</strong>, très au-dessus du seuil de 83,5 % sous lequel une clé ne pourrait plus être garantie secrète.</p>
+    <!-- 4. LONGUEUR OU DIVERSITÉ -->
+    <section id="s-discussion">
+      <h2><span class="n">04</span>Longueur ou diversité ?</h2>
+      <p>Les deux paramètres augmentent l'entropie, mais pas de la même façon. La longueur agit en <strong>multiplication</strong> : chaque caractère ajoute log₂(B) bits, environ 6 pour un jeu de 62. La diversité agit à l'intérieur d'un <strong>logarithme</strong> : passer de 62 à 94 caractères n'ajoute que 0,6 bit par position.</p>
 
       <figure class="fig rv" id="fig4">
         <div class="fig-stage">
-          <div class="fig-head">
-            <span class="fig-name">Fidélité selon les pertes du canal</span>
-            <div class="legend" aria-hidden="true">
-              <span class="lg static" style="--lc:#a855f7"><i></i>Mesures HERMES</span>
-              <span class="lg static" style="--lc:#94a3b8"><i></i>Modèle</span>
-            </div>
+          <div class="fig-head"><span class="fig-name">Deux leviers, deux pentes</span></div>
+          <div class="multi">
+            <div class="chart" id="byLen"><div class="ctip" id="byLenTip"></div></div>
+            <div class="chart" id="byPool"><div class="ctip" id="byPoolTip"></div></div>
           </div>
-          <div class="chart" id="fid"><div class="ctip" id="fidTip"></div></div>
         </div>
-        <figcaption><b>Figure 4</b>Fidélité mesurée (points, ±1σ) et prévue par le modèle HERMES (pointillés). La zone verte indique où une clé secrète peut être produite. D'après le modèle, la liaison resterait sûre jusqu'à environ 48 dB de pertes, ce qui laisse une marge de près de 14 dB à la distance géostationnaire.</figcaption>
+        <figcaption><b>Figure 4</b>À gauche, l'entropie croît en ligne droite avec la longueur, pour chaque jeu de caractères. À droite, elle s'aplatit quand on élargit le jeu, pour chaque longueur. Les deux graphiques partagent la même échelle verticale.</figcaption>
       </figure>
 
-      <div class="table-wrap rv">
-        <div class="table-cap"><b>Tableau 1</b>Résultats selon la distance simulée</div>
-        <div class="table-scroll">
-          <table>
-            <thead><tr><th>Liaison simulée</th><th class="num">Pertes</th><th class="num">Fidélité</th><th class="num">Paramètre S</th><th class="num">Paires/s</th></tr></thead>
-            <tbody>
-              <tr><td>Sans canal</td><td class="num">0 dB</td><td class="num">99,6 %</td><td class="num">2,81</td><td class="num">180 000</td></tr>
-              <tr><td>Orbite basse (1 200 km)</td><td class="num">14,8 dB</td><td class="num">98,9 %</td><td class="num">2,79</td><td class="num">5 900</td></tr>
-              <tr><td>Orbite moyenne (20 000 km)</td><td class="num">28,1 dB</td><td class="num">98,1 %</td><td class="num">2,76</td><td class="num">280</td></tr>
-              <tr class="hi"><td><strong>Géostationnaire (40 000 km)</strong></td><td class="num">34,2 dB</td><td class="num">97,3 %</td><td class="num">2,73</td><td class="num">68</td></tr>
-              <tr><td>Géostationnaire + turbulence</td><td class="num">36,7 dB</td><td class="num">96,1 %</td><td class="num">2,68</td><td class="num">38</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="table-note">Campagne de 150 jours, 120 millions de paires détectées. Incertitudes de ±0,1 à ±0,5 point sur la fidélité.</div>
-      </div>
-
-      <h3>La preuve par l'inégalité de Bell</h3>
-      <p>Pour s'assurer que le lien est bien quantique, on calcule le paramètre S de l'<button class="term" type="button" data-term="bell">inégalité de Bell</button>. Aucun mécanisme classique, même caché, ne peut dépasser S = 2. La physique quantique autorise jusqu'à 2,83. À 40 000 km simulés, nous mesurons <strong>S = 2,73 ± 0,03</strong>, soit 24 fois l'incertitude au-dessus de la limite classique.</p>
+      <p>Conséquence pratique : un mot de passe long et simple à retenir peut battre un mot de passe court et compliqué. Une <button class="term" type="button" data-term="phrase">phrase de passe</button> de six mots tirés au hasard dans une liste de 7 776 atteint 77 bits, plus qu'un mot de passe de 12 caractères aléatoires.</p>
 
       <figure class="fig rv" id="fig5">
         <div class="fig-stage">
-          <div class="fig-head"><span class="fig-name">Paramètre de Bell mesuré à 40 000 km</span></div>
-          <svg viewBox="0 0 680 150" id="bellGauge" style="width:100%" role="img" aria-label="Échelle de 0 à 3 : limite classique à 2, maximum quantique à 2,83, mesure à 2,73"></svg>
+          <div class="fig-head"><span class="fig-name">Quatre mots de passe comparés</span></div>
+          <div class="chart" id="cmp"></div>
         </div>
-        <figcaption><b>Figure 5</b>Le paramètre S sur son échelle. En dessous de 2, des corrélations classiques suffiraient à expliquer les résultats. La mesure (2,73) se place à 96 % du maximum permis par la physique quantique.</figcaption>
-      </figure>
-
-      <h3>Le portrait de l'état reçu</h3>
-      <p>La <button class="term" type="button" data-term="tomographie">tomographie</button> reconstruit l'état des deux photons à partir de 36 réglages de mesure. Le résultat, une grille de 4 × 4 valeurs, doit ressembler à quatre colonnes égales aux coins : c'est la signature d'une paire parfaitement intriquée.</p>
-
-      <figure class="fig rv" id="fig6">
-        <div class="fig-stage">
-          <div class="fig-head">
-            <span class="fig-name">Matrice densité reconstruite (partie réelle)</span>
-            <div class="seg" role="group" aria-label="État affiché">
-              <button type="button" data-rho="ideal" aria-pressed="false">État idéal</button>
-              <button type="button" data-rho="mesure" aria-pressed="true">Mesure à 40 000 km</button>
-            </div>
-          </div>
-          <div class="chart" id="rho"><div class="ctip" id="rhoTip"></div></div>
-        </div>
-        <figcaption><b>Figure 6</b>Chaque colonne représente une case de la matrice densité. Les quatre grandes colonnes aux coins (0,49 et 0,48) montrent que les deux photons sont à la fois « tous deux horizontaux » et « tous deux verticaux ». Les petites valeurs restantes, proches de 0, traduisent le bruit du canal. Basculez pour comparer avec l'état idéal.</figcaption>
+        <figcaption><b>Figure 5</b>Entropie de quatre types de mots de passe. La ligne pointillée marque 80 bits : à 10⁹ essais par seconde, épuiser 2⁸⁰ combinaisons prendrait environ 38 millions d'années. Le premier exemple n'a de force que sur le papier.</figcaption>
       </figure>
     </section>
 
-    <!-- 4. DISCUSSION -->
-    <section id="s-discussion">
-      <h2><span class="n">04</span>Discussion</h2>
-      <p>La fidélité mesurée (97,3 %) est légèrement inférieure à la prévision du modèle (97,6 %). L'écart vient surtout de l'alignement du cristal, précis à 0,03° près, et d'un léger défaut du filtre en bord de bande. Un cristal stabilisé en température et un nouveau filtre sont en cours de développement.</p>
+    <!-- 5. RECOMMANDATIONS -->
+    <section id="s-conclusion">
+      <h2><span class="n">05</span>Recommandations et politique de l'IFRAS</h2>
+      <p>La sécurité d'un mot de passe repose sur trois propriétés : sa <strong>longueur</strong>, la <strong>diversité</strong> de ses caractères et surtout son <strong>caractère aléatoire</strong>. La longueur est le levier le plus efficace et le plus simple à appliquer.</p>
 
-      <div class="note" style="--nc:#c084fc">
-        <i class="ph-light ph-key" aria-hidden="true"></i>
-        <p><span class="nt">Combien de clé secrète ?</span>Avec 1,8 % d'erreurs sur les bits, chaque paire détectée fournit environ 0,74 bit de <button class="term" type="button" data-term="cle">clé secrète</button>. Le banc produit donc une cinquantaine de bits secrets par seconde : de quoi renouveler une clé de chiffrement de 256 bits toutes les 5 secondes. Le satellite, équipé de télescopes plus grands, devrait faire bien mieux.</p>
+      <ol class="rules">
+        <li><span class="rn">1</span><div><strong>15 caractères minimum</strong><span>ou une phrase de passe de 6 mots tirés au hasard.</span></div></li>
+        <li><span class="rn">2</span><div><strong>Un gestionnaire de mots de passe</strong><span>pour générer et retenir un mot de passe différent par service.</span></div></li>
+        <li><span class="rn">3</span><div><strong>Le double facteur</strong><span>obligatoire pour tous les accès distants et les systèmes critiques.</span></div></li>
+        <li><span class="rn">4</span><div><strong>Côté serveur</strong><span>empreintes salées et fonctions lentes, jamais de mot de passe en clair.</span></div></li>
+      </ol>
+
+      <div class="note" style="--nc:#a78bfa">
+        <i class="ph-light ph-info" aria-hidden="true"></i>
+        <p><span class="nt">Transition</span>Les identifiants existants ne sont pas modifiés d'office, pour ne pas perturber les systèmes historiques validés. La nouvelle règle s'applique à chaque renouvellement.</p>
       </div>
 
-      <p>Le passage au vol demande de miniaturiser la source. La version embarquée intégrera le cristal et le filtre sur une puce photonique de 45 × 30 mm, bien plus robuste aux vibrations du lancement que le montage de laboratoire.</p>
-    </section>
-
-    <!-- 5. CONCLUSION -->
-    <section id="s-conclusion">
-      <h2><span class="n">05</span>Conclusion</h2>
-      <p>HERMES-QKD montre que l'intrication de photons survit, en laboratoire, aux pertes et au bruit d'une liaison géostationnaire, avec une marge confortable pour produire des clés secrètes. Le modèle du programme HERMES est validé : la conception du satellite peut avancer.</p>
       <ol class="next" aria-label="Prochaines étapes">
-        <li class="now" style="--nc:var(--ok)"><time>Déc. 2025</time><strong>Banc validé</strong><span>97,3 % de fidélité à 40 000 km simulés.</span></li>
-        <li><time>2026</time><strong>Revue de conception</strong><span>Source miniaturisée sur puce photonique.</span></li>
-        <li style="--nc:#c084fc"><time>2029</time><strong>Satellite HERMES-1</strong><span>Premier lien quantique géostationnaire.</span></li>
+        <li class="now" style="--nc:var(--ok)"><time>Sept. 2024</time><strong>15 caractères</strong><span>Nouvelle règle pour tout nouveau compte.</span></li>
+        <li><time>2025</time><strong>Double facteur</strong><span>Généralisé à tous les accès distants.</span></li>
+        <li style="--nc:#a78bfa"><time>2026</time><strong>Clés physiques</strong><span>Pour les systèmes de pilotage des missions.</span></li>
       </ol>
     </section>
 
@@ -1189,20 +1254,21 @@ td.gain { color: var(--ok); }
     <div class="rail-card rail-figs">
       <p class="rail-title">Figures</p>
       <ul class="fig-list">
-        <li><a href="#fig1"><i class="ph-light ph-arrows-left-right" aria-hidden="true"></i>Photons intriqués</a></li>
-        <li><a href="#fig2"><i class="ph-light ph-flow-arrow" aria-hidden="true"></i>Le banc HERMES-QKD</a></li>
-        <li><a href="#fig3"><i class="ph-light ph-dots-nine" aria-hidden="true"></i>Pertes du canal</a></li>
-        <li><a href="#fig4"><i class="ph-light ph-chart-line-down" aria-hidden="true"></i>Fidélité</a></li>
-        <li><a href="#fig5"><i class="ph-light ph-gauge" aria-hidden="true"></i>Inégalité de Bell</a></li>
-        <li><a href="#fig6"><i class="ph-light ph-cube" aria-hidden="true"></i>Matrice densité</a></li>
+        <li><a href="#fig1"><i class="ph-light ph-cpu" aria-hidden="true"></i>Puissance de calcul</a></li>
+        <li><a href="#fig2"><i class="ph-light ph-fingerprint" aria-hidden="true"></i>Empreinte et sel</a></li>
+        <li><a href="#fig3"><i class="ph-light ph-sliders-horizontal" aria-hidden="true"></i>Calculateur</a></li>
+        <li><a href="#tab1"><i class="ph-light ph-table" aria-hidden="true"></i>Tableau de force</a></li>
+        <li><a href="#fig4"><i class="ph-light ph-chart-line" aria-hidden="true"></i>Longueur ou diversité</a></li>
+        <li><a href="#fig5"><i class="ph-light ph-chart-bar-horizontal" aria-hidden="true"></i>Comparaison</a></li>
       </ul>
     </div>
     <div class="rail-card">
-      <p class="rail-title">Programme lié</p>
-      <a class="prog-link" href="../programmes-actifs.html#hermes">
-        <span class="pi" style="color:#c084fc;background:rgba(192,132,252,.12)"><i class="ph-light ph-atom" aria-hidden="true"></i></span>
-        <span><strong>HERMES</strong><small>Communication quantique interplanétaire</small></span>
-      </a>
+      <p class="rail-title">À retenir</p>
+      <ul class="keep">
+        <li><i class="ph-light ph-ruler" aria-hidden="true"></i>Allonger plutôt que compliquer</li>
+        <li><i class="ph-light ph-dice-five" aria-hidden="true"></i>Tirer au hasard</li>
+        <li><i class="ph-light ph-key" aria-hidden="true"></i>Un mot de passe par service</li>
+      </ul>
     </div>
   </aside>
 </div>
@@ -1211,17 +1277,17 @@ td.gain { color: var(--ok); }
 <section class="container related" aria-labelledby="relTitle">
   <h2 class="section-title" id="relTitle">À lire aussi</h2>
   <div class="related-grid">
-    <a class="rel" href="publications_scientifiques_01.html" style="--c:#fb7185">
+    <a class="rel" href="../Publication_scientifiques/publications_scientifiques_04.html" style="--c:#c084fc">
+      <div class="rel-img"><img src="../Assets/publication/quantique01.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Physique quantique</small><strong>L'intrication quantique préservée sur une liaison Terre–satellite simulée</strong></div>
+    </a>
+    <a class="rel" href="../Publication_scientifiques/publications_scientifiques_01.html" style="--c:#fb7185">
       <div class="rel-img"><img src="../Assets/accueil/alaune01.png" alt="" loading="lazy"></div>
       <div class="rel-body"><small>Matériaux</small><strong>Un bouclier céramique qui résiste à 2 250 °C pour la rentrée atmosphérique</strong></div>
     </a>
-    <a class="rel" href="publications_scientifiques_02.html" style="--c:#f97316">
-      <div class="rel-img"><img src="../Assets/accueil/alaune02.png" alt="" loading="lazy"></div>
-      <div class="rel-body"><small>Propulsion</small><strong>NK-125 : un propulseur ionique à grilles tri-étages validé à haute puissance</strong></div>
-    </a>
-    <a class="rel" href="publications_scientifiques_03.html" style="--c:#34d399">
-      <div class="rel-img"><img src="../Assets/publication/mars01.png" alt="" loading="lazy"></div>
-      <div class="rel-body"><small>Astrobiologie</small><strong>Des microbes qui se multiplient en conditions martiennes simulées</strong></div>
+    <a class="rel" href="../Publication_scientifiques/publications_scientifiques_05.html" style="--c:#67e8f9">
+      <div class="rel-img"><img src="../Assets/publication/exoplanete01.png" alt="" loading="lazy"></div>
+      <div class="rel-body"><small>Astrophysique</small><strong>Une super-Terre au cœur de la zone habitable d'une étoile orange</strong></div>
     </a>
   </div>
 </section>
@@ -1326,14 +1392,10 @@ td.gain { color: var(--ok); }
 
   /* ---------- Infobulles : termes expliqués ---------- */
   const TERMS = {
-    photon: ['Photon', "Grain élémentaire de lumière. Il transporte l'information à la vitesse de la lumière et peut être compté un par un avec des détecteurs très sensibles."],
-    intrication: ['Intrication', "Lien quantique entre deux particules : leurs propriétés restent corrélées quelle que soit la distance, sans qu'aucun signal ne circule entre elles."],
-    polarisation: ['Polarisation', "Direction dans laquelle vibre la lumière (horizontale, verticale, ou entre les deux). C'est elle qui porte ici l'information quantique."],
-    db: ['Décibel (dB)', "Échelle logarithmique des pertes : 10 dB divisent le signal par 10, 20 dB par 100, 30 dB par 1 000. 34,2 dB le divisent par environ 2 630."],
-    fidelite: ['Fidélité', "Ressemblance entre l'état reçu et l'état parfait, de 0 à 100 %. À 100 %, les photons sont parfaitement intriqués."],
-    bell: ['Inégalité de Bell', "Test proposé en 1964 : si le paramètre S dépasse 2, aucune explication classique ne peut rendre compte des corrélations observées."],
-    tomographie: ['Tomographie quantique', "Méthode qui reconstitue l'état complet des photons en les mesurant sous de nombreux angles différents, comme un scanner médical reconstruit un organe."],
-    cle: ['Clé secrète', "Suite de bits connue seulement de l'émetteur et du destinataire, qui sert à chiffrer les messages. Un espion laisserait des erreurs détectables."]
+    hash: ['Empreinte', "Résultat d'une fonction mathématique à sens unique appliquée au mot de passe. Le serveur conserve l'empreinte, jamais le mot de passe : il compare les empreintes à chaque connexion."],
+    sel: ['Sel', "Suite aléatoire propre à chaque compte, ajoutée au mot de passe avant le calcul de l'empreinte. Deux comptes au même mot de passe obtiennent alors des empreintes différentes."],
+    entropie: ['Entropie', "Mesure de l'imprévisibilité, en bits. Un mot de passe de E bits correspond à 2 puissance E combinaisons possibles : chaque bit supplémentaire double ce nombre."],
+    phrase: ['Phrase de passe', "Suite de mots courants tirés au hasard, par exemple avec des dés, dans une liste connue de 7 776 mots. Chaque mot apporte environ 12,9 bits, et la phrase reste facile à retenir."]
   };
   const tip = $('tip');
   let tipOpenAt = 0, hideT = null, tipOwner = null;
@@ -1378,381 +1440,315 @@ td.gain { color: var(--ok); }
   };
   const BLUE = '#3b82f6', ORANGE = '#ea580c';
 
-  const PURPLE = '#a855f7';
-
-  /* ---------- En-tête : paires de photons ---------- */
-  (function hero() {
-    const cv = $('qstars'); if (!cv) return;
-    const ctx = cv.getContext('2d');
-    let w, h, stars = [];
-    const size = () => {
-      const r = cv.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 2);
-      w = r.width; h = r.height; cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      stars = Array.from({ length: 70 }, () => ({ x: Math.random() * w, y: Math.random() * h * .75, r: Math.random() * 1.1 + .2, p: Math.random() * 6 }));
-    };
-    const path = $('qpath'), L = path.getTotalLength(), mid = L * 0.5, g = $('qphotons');
-    const pairs = [];
-    const spawn = () => {
-      const c = ['#c084fc', '#e9d5ff', '#a78bfa'][Math.floor(Math.random() * 3)];
-      const a = Math.random() * 180;
-      const mk = () => { const gg = svgEl('g', {}, g); svgEl('circle', { r: 7, fill: c, opacity: .25 }, gg); svgEl('circle', { r: 3, fill: '#fff' }, gg); svgEl('line', { x1: -7, x2: 7, y1: 0, y2: 0, stroke: c, 'stroke-width': 1.5 }, gg); return gg; };
-      pairs.push({ d: 0, a, va: 2 + Math.random() * 2, A: mk(), B: mk() });
-    };
-    let t = 0;
-    const frame = () => {
-      ctx.clearRect(0, 0, w, h);
-      t += 0.02;
-      for (const s of stars) { ctx.fillStyle = `rgba(233,213,255,${0.25 + 0.25 * Math.sin(t + s.p)})`; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fill(); }
-      if (Math.random() < 0.03 && pairs.length < 5) spawn();
-      for (let i = pairs.length - 1; i >= 0; i--) {
-        const p = pairs[i]; p.d += 1.6; p.a += p.va;
-        const pa = path.getPointAtLength(Math.max(0, mid - p.d)), pb = path.getPointAtLength(Math.min(L, mid + p.d));
-        /* polarisations corrélées : les deux photons tournent ensemble */
-        p.A.setAttribute('transform', `translate(${pa.x} ${pa.y}) rotate(${p.a})`);
-        p.B.setAttribute('transform', `translate(${pb.x} ${pb.y}) rotate(${p.a})`);
-        if (p.d > mid) { p.A.remove(); p.B.remove(); pairs.splice(i, 1); }
-      }
-    };
-    size(); new ResizeObserver(size).observe(cv);
-    if (!reduceMotion) loopWhileVisible(cv, frame); else frame();
-  })();
-
-  /* ---------- Figure 1 : mesures de Bell ---------- */
-  (function bell() {
-    const mkDial = (id) => {
-      const s = $(id);
-      svgEl('circle', { cx: 50, cy: 50, r: 44, fill: 'rgba(168,85,247,.08)', stroke: '#475394', 'stroke-width': 2 }, s);
-      for (let k = 0; k < 12; k++) { const a = k * Math.PI / 6; svgEl('line', { x1: 50 + Math.cos(a) * 38, y1: 50 + Math.sin(a) * 38, x2: 50 + Math.cos(a) * 42, y2: 50 + Math.sin(a) * 42, stroke: '#475394' }, s); }
-      const n = svgEl('g', { class: 'needle' }, s);
-      svgEl('line', { x1: 50, y1: 12, x2: 50, y2: 88, stroke: '#c084fc', 'stroke-width': 4, 'stroke-linecap': 'round' }, n);
-      svgEl('circle', { cx: 50, cy: 50, r: 5, fill: '#fff' }, s);
-      return n;
-    };
-    const nA = mkDial('dialA'), nB = mkDial('dialB');
-    const rowA = $('rowA'), rowB = $('rowB');
-    let a = 0, b = 0, same = 0, total = 0, playing = !reduceMotion;
-    const update = () => {
-      nA.style.transform = `rotate(${a}deg)`; nB.style.transform = `rotate(${b}deg)`;
-      $('aOut').textContent = `${fmt(a, a % 1 ? 1 : 0)}°`; $('bOut').textContent = `${fmt(b, b % 1 ? 1 : 0)}°`;
-      $('theory').textContent = `${fmt(Math.cos((a - b) * Math.PI / 180) ** 2 * 100)} %`;
-      same = 0; total = 0; $('agree').textContent = '—';
-    };
-    const shot = () => {
-      const ra = Math.random() < 0.5;
-      const rb = Math.random() < Math.cos((a - b) * Math.PI / 180) ** 2 ? ra : !ra;
-      total++; if (ra === rb) same++;
-      [[rowA, ra], [rowB, rb]].forEach(([row, r]) => {
-        const i = document.createElement('i');
-        if (r) i.classList.add('on'); if (ra !== rb) i.classList.add('diff');
-        row.appendChild(i);
-        while (row.children.length > 26) row.firstChild.remove();
-      });
-      $('agree').textContent = `${fmt(same / total * 100)} %`;
-    };
-    $('aRange').addEventListener('input', function () { a = Number(this.value); update(); });
-    $('bRange').addEventListener('input', function () { b = Number(this.value); update(); });
-    const btn = $('bellPlay');
-    const setBtn = () => { btn.querySelector('i').className = playing ? 'ph-light ph-pause' : 'ph-light ph-play'; btn.querySelector('span').textContent = playing ? 'Pause' : 'Reprendre'; };
-    btn.addEventListener('click', () => { playing = !playing; setBtn(); });
-    update(); setBtn();
-    for (let i = 0; i < 12; i++) shot();
-    let last = 0;
-    loopWhileVisible($('fig1'), (now) => { if (playing && now - last > 220) { last = now; shot(); } });
-  })();
-
-  /* ---------- Figure 2 : le banc ---------- */
-  (function setup() {
-    const svg = $('setupSvg');
-    const PARTS = {
-      laser: ['Laser 405 nm', "<b>Laser de pompe.</b> Une lumière violette continue de 50 mW qui fournit l'énergie aux paires de photons."],
-      cristal: ['Cristal', "<b>Cristal non linéaire.</b> Environ un photon violet sur un milliard s'y scinde en deux photons infrarouges intriqués."],
-      filtre: ['Filtres', "<b>Filtres spectraux.</b> Ne laissent passer qu'une bande de couleur ultra-étroite (0,8 picomètre) pour éliminer la lumière parasite."],
-      canal: ['Émulateur de canal', "<b>Émulateur de canal.</b> Affaiblit, étale et bruite la lumière exactement comme 40 000 km entre le sol et le satellite."],
-      detecteur: ['Détecteurs', "<b>Détecteurs de photons uniques.</b> Refroidis à quelques degrés au-dessus du zéro absolu, ils repèrent 92 % des photons qui les atteignent."],
-      coinc: ['Compteur', "<b>Compteur de coïncidences.</b> Ne garde que les détections simultanées à moins d'une nanoseconde : ce sont les paires complètes."]
-    };
-    const G = {};
-    const grp = (k) => (G[k] = svgEl('g', { 'data-part': k }, svg));
-    const box = (g, x, y, w, h, c, label, sub) => {
-      svgEl('rect', { x, y, width: w, height: h, rx: 8, fill: 'rgba(2,6,23,.6)', stroke: c, 'stroke-width': 1.5 }, g);
-      svgEl('text', { x: x + w / 2, y: y + h / 2 + (sub ? -2 : 4), 'text-anchor': 'middle', fill: '#e6e6e6', 'font-size': 12 }, g).textContent = label;
-      if (sub) svgEl('text', { x: x + w / 2, y: y + h / 2 + 13, 'text-anchor': 'middle', fill: '#8891b8', 'font-size': 10.5, class: 'mono' }, g).textContent = sub;
-    };
-    /* chemins lumineux */
-    const beams = svgEl('g', {}, svg);
-    svgEl('line', { x1: 96, y1: 130, x2: 142, y2: 130, stroke: '#818cf8', 'stroke-width': 2.5 }, beams);
-    const up = 'M160 130 L 196 70 L 290 70 L 490 70 L 516 70', dn = 'M160 130 L 196 190 L 290 190 L 490 190 L 516 190';
-    svgEl('path', { d: up, fill: 'none', stroke: '#c084fc', 'stroke-opacity': .45, 'stroke-width': 1.5 }, beams);
-    svgEl('path', { d: dn, fill: 'none', stroke: '#c084fc', 'stroke-opacity': .45, 'stroke-width': 1.5 }, beams);
-    svgEl('path', { d: 'M576 70 L 604 118 M576 190 L 604 142', stroke: '#34d399', 'stroke-width': 1.5, fill: 'none' }, beams);
-    box(grp('laser'), 12, 110, 84, 40, '#818cf8', 'Laser', '405 nm');
-    const cg = grp('cristal');
-    svgEl('path', { d: 'M142 108 L 172 130 L 142 152 Z', fill: 'rgba(168,85,247,.25)', stroke: '#c084fc', 'stroke-width': 1.5 }, cg);
-    svgEl('text', { x: 150, y: 96, 'text-anchor': 'middle', fill: '#e6e6e6', 'font-size': 12 }, cg).textContent = 'Cristal';
-    const fg = grp('filtre');
-    [70, 190].forEach((y) => svgEl('rect', { x: 214, y: y - 14, width: 22, height: 28, rx: 4, fill: 'rgba(52,211,153,.15)', stroke: '#34d399' }, fg));
-    svgEl('text', { x: 225, y: 44, 'text-anchor': 'middle', fill: '#e6e6e6', 'font-size': 12 }, fg).textContent = 'Filtres';
-    const chg = grp('canal');
-    svgEl('rect', { x: 270, y: 30, width: 210, height: 200, rx: 12, fill: 'rgba(249,115,22,.06)', stroke: '#f97316', 'stroke-dasharray': '5 4' }, chg);
-    svgEl('text', { x: 375, y: 22, 'text-anchor': 'middle', fill: '#fdba74', 'font-size': 12 }, chg).textContent = 'Émulateur de canal · 34,2 dB';
-    ['Affaiblissement', 'Étalement', 'Lumière parasite'].forEach((t, i) => {
-      svgEl('rect', { x: 312, y: 100 + i * 22 - 6, width: 126, height: 18, rx: 4, fill: 'rgba(249,115,22,.1)' }, chg);
-      svgEl('text', { x: 375, y: 100 + i * 22 + 7, 'text-anchor': 'middle', fill: '#fdba74', 'font-size': 11 }, chg).textContent = t;
-    });
-    const dg = grp('detecteur');
-    [70, 190].forEach((y, i) => box(dg, 516, y - 18, 60, 36, '#34d399', i ? 'Détect. B' : 'Détect. A'));
-    box(grp('coinc'), 604, 108, 70, 44, '#34d399', 'Compteur', '< 1 ns');
-    /* boutons */
-    const partsBox = $('setupParts');
-    const COL = { laser: '#818cf8', cristal: '#c084fc', filtre: '#34d399', canal: '#f97316', detecteur: '#34d399', coinc: '#6ee7b7' };
-    partsBox.innerHTML = Object.keys(PARTS).map((k) => `<button class="part" type="button" data-k="${k}" aria-pressed="false" style="--pc:${COL[k]}"><i></i>${PARTS[k][0]}</button>`).join('');
-    let pinned = null;
-    const focus = (k) => {
-      svg.classList.toggle('focus', !!k);
-      Object.entries(G).forEach(([n, g]) => g.classList.toggle('lit', n === k));
-      partsBox.querySelectorAll('.part').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.k === k)));
-      $('setupDesc').innerHTML = k ? PARTS[k][1] : 'Survolez ou touchez un élément pour le décrire.';
-    };
-    partsBox.querySelectorAll('.part').forEach((b) => {
-      if (canHover) { b.addEventListener('mouseenter', () => focus(b.dataset.k)); b.addEventListener('mouseleave', () => focus(pinned)); }
-      b.addEventListener('click', () => { pinned = pinned === b.dataset.k ? null : b.dataset.k; focus(pinned); });
-    });
-    /* photons : les deux membres d'une paire avancent ensemble */
-    const pU = svgEl('path', { d: up, fill: 'none' }, svg), pD = svgEl('path', { d: dn, fill: 'none' }, svg);
-    const LU = pU.getTotalLength();
-    const layer = svgEl('g', {}, svg);
-    const photons = [];
-    const spawn = () => {
-      const lost = Math.random() < 0.8;
-      const mk = () => svgEl('circle', { r: 3.5, fill: '#e9d5ff' }, layer);
-      photons.push({ d: 0, A: mk(), B: mk(), lostAt: lost ? 290 + Math.random() * 170 : Infinity, flash: 0 });
-    };
-    const step = () => {
-      if (Math.random() < 0.06) spawn();
-      for (let i = photons.length - 1; i >= 0; i--) {
-        const p = photons[i]; p.d += 3;
-        const a = pU.getPointAtLength(Math.min(p.d, LU)), b = pD.getPointAtLength(Math.min(p.d, LU));
-        p.A.setAttribute('cx', a.x); p.A.setAttribute('cy', a.y); p.B.setAttribute('cx', b.x); p.B.setAttribute('cy', b.y);
-        const lost = a.x > p.lostAt;
-        const op = lost ? Math.max(0, 1 - (a.x - p.lostAt) / 30) : 1;
-        p.A.setAttribute('opacity', op); p.B.setAttribute('opacity', op);
-        if (p.d >= LU || op === 0) {
-          if (p.d >= LU) { const f = svgEl('circle', { cx: 639, cy: 130, r: 8, fill: 'none', stroke: '#34d399', 'stroke-width': 2 }, layer); let k = 1; const fade = () => { k -= .06; f.setAttribute('r', 8 + (1 - k) * 18); f.setAttribute('opacity', k); if (k > 0) requestAnimationFrame(fade); else f.remove(); }; requestAnimationFrame(fade); }
-          p.A.remove(); p.B.remove(); photons.splice(i, 1);
-        }
-      }
-    };
-    if (!reduceMotion) loopWhileVisible(svg, step);
-  })();
-
-  /* ---------- Figure 3 : pertes du canal ---------- */
-  (function waffle() {
-    const cv = $('waffle'), ctx = cv.getContext('2d');
-    const ORB = {
-      leo: { loss: '14,8 dB', ratio: 30, rate: '5 900 par seconde' },
-      meo: { loss: '28,1 dB', ratio: 646, rate: '280 par seconde' },
-      geo: { loss: '34,2 dB', ratio: 2630, rate: '68 par seconde' }
-    };
-    const N = 2630;
-    let orb = ORB.geo, survivors = new Set(), anim = 1, raf = 0;
-    const pick = () => {
-      survivors = new Set(); const k = Math.max(1, Math.round(N / orb.ratio));
-      while (survivors.size < k) survivors.add(Math.floor(Math.random() * N));
-    };
-    const draw = () => {
-      const r = cv.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 2);
-      if (cv.width !== Math.round(r.width * dpr)) { cv.width = r.width * dpr; cv.height = r.height * dpr; }
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.clearRect(0, 0, r.width, r.height);
-      const cols = Math.ceil(Math.sqrt(N * r.width / r.height)), rows = Math.ceil(N / cols);
-      const cw = r.width / cols, ch = r.height / rows, rad = Math.min(cw, ch) * 0.32;
-      for (let i = 0; i < N; i++) {
-        const x = (i % cols + .5) * cw, y = (Math.floor(i / cols) + .5) * ch;
-        if (survivors.has(i)) continue;
-        /* les photons perdus s'éteignent progressivement */
-        const fade = Math.max(0, Math.min(1, anim * 1.6 - (i / N) * 0.6));
-        ctx.fillStyle = `rgba(168,85,247,${0.85 - fade * 0.55})`;
-        ctx.beginPath(); ctx.arc(x, y, rad, 0, Math.PI * 2); ctx.fill();
-      }
-      survivors.forEach((i) => {
-        const x = (i % cols + .5) * cw, y = (Math.floor(i / cols) + .5) * ch;
-        ctx.fillStyle = 'rgba(233,213,255,.25)'; ctx.beginPath(); ctx.arc(x, y, rad * 4 * Math.min(1, anim), 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(x, y, rad * 1.6, 0, Math.PI * 2); ctx.fill();
-      });
-    };
-    const run = () => {
-      cancelAnimationFrame(raf);
-      if (reduceMotion) { anim = 1; draw(); return; }
-      const t0 = performance.now();
-      const tick = (t) => { anim = Math.min(1, (t - t0) / 1100); draw(); if (anim < 1) raf = requestAnimationFrame(tick); };
-      raf = requestAnimationFrame(tick);
-    };
-    const set = (k) => {
-      orb = ORB[k]; pick();
-      document.querySelectorAll('#fig3 [data-o]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.o === k)));
-      $('wLoss').textContent = orb.loss; $('wRatio').textContent = `1 sur ${fmt(orb.ratio)}`; $('wRate').textContent = orb.rate;
-      run();
-    };
-    document.querySelectorAll('#fig3 [data-o]').forEach((b) => b.addEventListener('click', () => set(b.dataset.o)));
-    pick(); anim = 0; draw();
-    new ResizeObserver(draw).observe(cv);
-    onceVisible($('fig3'), run, '0px 0px -25% 0px');
-  })();
-
-  /* ---------- Figure 4 : fidélité selon les pertes ---------- */
-  (function fidelity() {
-    const box = $('fid'), tipEl = $('fidTip');
-    const W = Math.round(Math.max(330, Math.min(680, box.clientWidth))), H = W < 520 ? 290 : 320, m = { l: 48, r: 18, t: 16, b: 40 };
-    const eps = (L) => 0.005 + 0.00055 * L + 3.3e-6 * Math.pow(10, L / 10);
-    const F = (L) => (1 - 0.75 * eps(L)) * 100;
-    const PTS = [[0, 99.6, .1, 'Sans canal'], [14.8, 98.9, .2, 'Orbite basse'], [28.1, 98.1, .3, 'Orbite moyenne'], [34.2, 97.3, .4, 'Géostationnaire'], [36.7, 96.1, .5, 'Géostationnaire + turbulence']];
-    const x = (L) => m.l + L / 55 * (W - m.l - m.r);
-    const y = (f) => H - m.b - (f - 80) / 20 * (H - m.t - m.b);
-    const svg = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Fidélité mesurée et modèle en fonction des pertes, avec le seuil de sécurité à 83,5 %' });
+    /* ---------- aide : repère de graphique ---------- */
+  function frame(box, o) {
+    const W = Math.round(Math.max(o.minW || 300, Math.min(o.maxW || 680, box.clientWidth))), H = o.H || (W < 520 ? 280 : 300);
+    const m = Object.assign({ l: 50, r: 16, t: 16, b: 40 }, o.m || {});
+    const [x0, x1] = o.x, [y0, y1] = o.y;
+    const x = (v) => m.l + (v - x0) / (x1 - x0) * (W - m.l - m.r);
+    const y = (v) => H - m.b - (v - y0) / (y1 - y0) * (H - m.t - m.b);
+    const svg = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': o.aria || '' });
     box.prepend(svg);
-    /* zone sûre */
-    svgEl('rect', { x: m.l, y: y(100), width: W - m.l - m.r, height: y(83.5) - y(100), fill: 'rgba(52,211,153,.06)' }, svg);
-    [80, 85, 90, 95, 100].forEach((f) => {
-      svgEl('line', { x1: m.l, x2: W - m.r, y1: y(f), y2: y(f), stroke: '#13204d' }, svg);
-      svgEl('text', { x: m.l - 6, y: y(f) + 4, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 11, class: 'mono' }, svg).textContent = f + ' %';
+    (o.yt || []).forEach((v) => {
+      svgEl('line', { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: '#13204d' }, svg);
+      svgEl('text', { x: m.l - 6, y: y(v) + 4, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 11, class: 'mono' }, svg).textContent = o.yf ? o.yf(v) : fmt(v);
     });
-    [0, 10, 20, 30, 40, 50].forEach((L) => svgEl('text', { x: x(L), y: H - m.b + 18, 'text-anchor': 'middle', fill: '#8891b8', 'font-size': 11, class: 'mono' }, svg).textContent = L);
-    svgEl('text', { x: W - m.r, y: H - 3, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 11 }, svg).textContent = 'Pertes du canal (dB)';
-    svgEl('line', { x1: m.l, x2: W - m.r, y1: y(83.5), y2: y(83.5), stroke: '#f87171', 'stroke-dasharray': '6 5', 'stroke-width': 1.3 }, svg);
-    svgEl('text', { x: m.l + 6, y: y(83.5) + 16, fill: '#fca5a5', 'font-size': 11.5 }, svg).textContent = 'Seuil de sécurité : 83,5 %';
-    svgEl('text', { x: m.l + 6, y: y(83.5) - 8, fill: '#6ee7b7', 'font-size': 11.5 }, svg).textContent = 'Zone où une clé secrète est possible';
-    let Lmax = 0; for (let L = 0; L <= 55; L += 0.1) if (F(L) >= 83.5) Lmax = L;
-    const mp = []; for (let L = 0; L <= Lmax + 0.6; L += 0.25) mp.push(`${mp.length ? 'L' : 'M'}${x(L).toFixed(1)} ${y(Math.max(80, F(L))).toFixed(1)}`);
-    svgEl('path', { d: mp.join(' '), fill: 'none', stroke: '#94a3b8', 'stroke-width': 1.6, 'stroke-dasharray': '5 4' }, svg);
-    svgEl('line', { x1: x(Lmax), x2: x(Lmax), y1: y(83.5), y2: H - m.b, stroke: '#94a3b8', 'stroke-dasharray': '2 4' }, svg);
-    svgEl('text', { x: x(Lmax) - 4, y: H - m.b - 8, 'text-anchor': 'end', fill: '#aab3d6', 'font-size': 11 }, svg).textContent = `limite ≈ ${fmt(Lmax)} dB`;
-    const g = svgEl('g', { class: 'series' }, svg);
-    const line = svgEl('path', { d: PTS.slice(0, 4).map(([L, f], i) => `${i ? 'L' : 'M'}${x(L).toFixed(1)} ${y(f).toFixed(1)}`).join(' '), fill: 'none', stroke: PURPLE, 'stroke-width': 2, class: 'draw' }, g);
+    (o.xt || []).forEach((v) => svgEl('text', { x: x(v), y: H - m.b + 18, 'text-anchor': 'middle', fill: '#8891b8', 'font-size': 11, class: 'mono' }, svg).textContent = o.xf ? o.xf(v) : fmt(v));
+    if (o.xl) svgEl('text', { x: W - m.r, y: H - 3, 'text-anchor': 'end', fill: '#8891b8', 'font-size': 11 }, svg).textContent = o.xl;
+    if (o.yl) svgEl('text', { x: m.l + 4, y: m.t + 12, fill: '#8891b8', 'font-size': 11 }, svg).textContent = o.yl;
+    const hit = () => svgEl('rect', { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, class: 'hit' }, svg);
+    return { svg, W, H, m, x, y, hit };
+  }
+  const NBSP = ' ', GREEN = '#34d399';
+  const SUP = { '-': '⁻', 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴', 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹' };
+  const sup = (n) => String(n).split('').map((c) => SUP[c]).join('');
+  /* nombre en notation scientifique lisible : 3,2 × 10²¹ */
+  const sci = (log10v) => {
+    if (log10v < 6) return fmt(Math.round(Math.pow(10, log10v))).replace(/\s/g, NBSP);
+    const e = Math.floor(log10v), mnt = Math.pow(10, log10v - e);
+    return fmt(mnt, 1) + NBSP + '×' + NBSP + '10' + sup(e);
+  };
+  /* durée lisible à partir de log10(secondes) */
+  const YEAR = 3.156e7, UNIVERSE = 1.38e10;
+  const dur = (l10) => {
+    const s = Math.pow(10, l10);
+    if (l10 < 0) return 'moins d\'une seconde';
+    if (s < 60) return Math.round(s) + NBSP + 's';
+    if (s < 3600) return Math.round(s / 60) + NBSP + 'min';
+    if (s < 86400) return Math.round(s / 3600) + NBSP + 'h';
+    if (s < YEAR) return Math.round(s / 86400) + NBSP + 'jours';
+    const y = l10 - Math.log10(YEAR);
+    if (y > Math.log10(UNIVERSE)) return 'plus que l\'âge de l\'Univers';
+    if (y < 3) return fmt(Math.pow(10, y), Math.pow(10, y) < 10 ? 1 : 0) + NBSP + 'ans';
+    if (y < 6) return fmt(Math.round(Math.pow(10, y) / 1000) * 1000).replace(/\s/g, NBSP) + NBSP + 'ans';
+    if (y < 9) return fmt(Math.pow(10, y - 6), y < 7 ? 1 : 0) + NBSP + 'millions d\'années';
+    return fmt(Math.pow(10, y - 9), 1) + NBSP + 'milliard' + (y >= 9.3 ? 's' : '') + ' d\'années';
+  };
+  const strengthCol = (E) => (E < 50 ? '#f87171' : E < 80 ? '#fbbf24' : GREEN);
+  const POOLS = [
+    { b: 10, n: 'Chiffres', d: '0-9' }, { b: 26, n: 'Minuscules', d: 'a-z' }, { b: 36, n: 'Minuscules + chiffres', d: 'a-z 0-9' },
+    { b: 52, n: 'Lettres', d: 'a-z A-Z' }, { b: 62, n: 'Lettres + chiffres', d: 'a-z A-Z 0-9' }, { b: 94, n: 'Tous caractères', d: '+ symboles' }
+  ];
+  const charset = (b) => {
+    const d = '0123456789', l = 'abcdefghijklmnopqrstuvwxyz', u = l.toUpperCase();
+    const all = []; for (let c = 33; c <= 126; c++) all.push(String.fromCharCode(c));
+    return { 10: d, 26: l, 36: l + d, 52: l + u, 62: l + u + d, 94: all.join('') }[b];
+  };
+
+  /* ---------- En-tête : cadenas et anneaux de caractères ---------- */
+  (function hero() {
+    const s = $('heroLock'); if (!s) return;
+    const CX = 260, CY = 224;
+    const defs = svgEl('defs', {}, s);
+    const lg = svgEl('linearGradient', { id: 'lockBody', x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
+    svgEl('stop', { offset: 0, 'stop-color': '#16275c' }, lg); svgEl('stop', { offset: 1, 'stop-color': '#0a1436' }, lg);
+    const gl = svgEl('radialGradient', { id: 'lockGlow' }, defs);
+    svgEl('stop', { offset: 0, 'stop-color': GREEN, 'stop-opacity': 0.25 }, gl); svgEl('stop', { offset: 1, 'stop-color': GREEN, 'stop-opacity': 0 }, gl);
+    svgEl('circle', { cx: CX, cy: CY, r: 150, fill: 'url(#lockGlow)' }, s);
+    const cs = charset(94);
+    [[92, 22, '120s', 'normal', 0.5], [128, 30, '160s', 'reverse', 0.38], [164, 40, '200s', 'normal', 0.28], [200, 50, '260s', 'reverse', 0.2]].forEach(([r, n, d, dir, op], k) => {
+      const g = svgEl('g', { class: 'ring', style: `--dur:${d};--dir:${dir}` }, s);
+      svgEl('circle', { cx: CX, cy: CY, r, fill: 'none', stroke: '#1b2555', 'stroke-dasharray': '2 6' }, g);
+      for (let i = 0; i < n; i++) {
+        const a = i / n * Math.PI * 2, x = CX + Math.cos(a) * r, y = CY + Math.sin(a) * r;
+        const on = (i * 7 + k * 3) % 11 === 0;
+        svgEl('text', { x, y: y + 4, 'text-anchor': 'middle', 'font-size': 12, fill: on ? GREEN : '#8891b8', opacity: on ? 1 : op, class: on ? 'chip-on' : '', style: on ? `--d:${(-i * 0.4).toFixed(1)}s` : '', transform: `rotate(${(a * 180 / Math.PI + 90).toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})` }, g).textContent = cs[(i * 37 + k * 11) % cs.length];
+      }
+    });
+    /* cadenas */
+    svgEl('path', { d: `M${CX - 34} ${CY - 12} V${CY - 40} a34 34 0 0 1 68 0 V${CY - 12}`, fill: 'none', stroke: '#475394', 'stroke-width': 10, 'stroke-linecap': 'round' }, s);
+    svgEl('rect', { x: CX - 56, y: CY - 16, width: 112, height: 84, rx: 16, fill: 'url(#lockBody)', stroke: '#2b3a78' }, s);
+    svgEl('circle', { cx: CX, cy: CY + 16, r: 9, fill: '#03130d', stroke: GREEN }, s);
+    svgEl('rect', { x: CX - 3, y: CY + 22, width: 6, height: 20, rx: 3, fill: GREEN }, s);
+    /* afficheur de longueur */
+    const dots = svgEl('g', {}, s);
+    for (let i = 0; i < 16; i++) svgEl('circle', { cx: CX - 45 + i * 6, cy: CY + 56, r: 1.8, fill: GREEN, class: reduceMotion ? '' : 'chip-on', style: `--d:${(-i * 0.17).toFixed(2)}s` }, dots);
+  })();
+
+  /* ---------- Figure 1 : puissance de calcul ---------- */
+  (function power() {
+    const box = $('power'), tipEl = $('powerTip');
+    const DATA = [[1985, 0], [1990, 1], [1995, 2], [2000, 3], [2005, 4], [2008, 5.2], [2010, 6], [2015, 7], [2020, 8], [2024, 8.5]];
+    const ERAS = [
+      [1985, 1998, 'Terminaux', 'Serveurs partagés et terminaux internes : les règles de 6 à 8 caractères naissent ici.'],
+      [1998, 2005, 'Processeurs', 'L\'ordinateur personnel se généralise et Internet relie les machines.'],
+      [2005, 2010, 'Multicœurs', 'Plusieurs cœurs par puce : le calcul devient parallèle.'],
+      [2010, 2024, 'Cartes graphiques', 'Des milliers de petits calculateurs par carte, puis le calcul à la demande.']
+    ];
+    const narrow = box.clientWidth < 520;
+    const F = frame(box, { x: [1985, 2024], y: [0, 9], xt: narrow ? [1985, 2000, 2010, 2024] : [1985, 1990, 1995, 2000, 2005, 2010, 2015, 2020, 2024], yt: [0, 2, 4, 6, 8], xf: (v) => String(v), yf: (v) => '×' + (v === 0 ? '1' : v === 2 ? '100' : '10' + sup(v)), yl: 'Puissance relative à 1985', aria: 'Courbe montrant une puissance multipliée par environ 300 millions entre 1985 et 2024', m: { l: 54, t: 34 } });
+    const eraG = ERAS.map(([a, b, n], i) => {
+      const g = svgEl('g', {}, F.svg);
+      svgEl('rect', { x: F.x(a), y: F.m.t, width: F.x(b) - F.x(a), height: F.H - F.m.t - F.m.b, fill: i % 2 ? 'rgba(79,107,237,.05)' : 'rgba(52,211,153,.04)', class: 'era' }, g);
+      if (!narrow || i % 2 === 0 || i === 3) svgEl('text', { x: (F.x(a) + F.x(b)) / 2, y: F.m.t - 10, 'text-anchor': 'middle', fill: '#aab3d6', 'font-size': narrow ? 10.5 : 11.5 }, g).textContent = narrow && i === 3 ? 'GPU' : n;
+      return g;
+    });
+    const p = DATA.map(([yr, v], i) => `${i ? 'L' : 'M'}${F.x(yr).toFixed(1)} ${F.y(v).toFixed(1)}`).join(' ');
+    const area = svgEl('path', { d: `${p} L${F.x(2024)} ${F.y(0)} L${F.x(1985)} ${F.y(0)} Z`, fill: 'rgba(52,211,153,.08)', class: 'dot' }, F.svg);
+    const line = svgEl('path', { d: p, fill: 'none', stroke: GREEN, 'stroke-width': 2.4, class: 'draw' }, F.svg);
     line.style.setProperty('--len', Math.ceil(line.getTotalLength()));
-    const dots = PTS.map(([L, f, e], i) => {
-      svgEl('line', { x1: x(L), x2: x(L), y1: y(f - e), y2: y(f + e), stroke: PURPLE, 'stroke-width': 1.5, class: 'dot' }, g);
-      return svgEl('circle', { cx: x(L), cy: y(f), r: i === 3 ? 6 : 4.5, fill: i === 4 ? '#070f2b' : PURPLE, stroke: PURPLE, 'stroke-width': 2, class: 'dot' }, g);
+    const pts = DATA.map(([yr, v]) => svgEl('circle', { cx: F.x(yr), cy: F.y(v), r: 3.5, fill: GREEN, stroke: '#070f2b', 'stroke-width': 1.5, class: 'dot' }, F.svg));
+    svgEl('text', { x: F.x(2023), y: F.y(narrow ? 4.4 : 6.4), 'text-anchor': 'end', fill: '#fff', 'font-size': 12.5, 'font-weight': 500, class: 'dot' }, F.svg).textContent = '≈ ×300 millions';
+    const xh = svgEl('line', { y1: F.m.t, y2: F.H - F.m.b, stroke: '#aab3d6', 'stroke-opacity': 0.5, class: 'xhair' }, F.svg);
+    const hit = F.hit();
+    hit.addEventListener('pointermove', (e) => {
+      const rr = F.svg.getBoundingClientRect(), px = (e.clientX - rr.left) / rr.width * F.W;
+      let i = 0; DATA.forEach((d, k) => { if (Math.abs(F.x(d[0]) - px) < Math.abs(F.x(DATA[i][0]) - px)) i = k; });
+      const [yr, v] = DATA[i], era = ERAS.find(([a, b]) => yr >= a && yr < b) || ERAS[3];
+      pts.forEach((c, k) => c.setAttribute('r', k === i ? 6 : 3.5));
+      xh.setAttribute('x1', F.x(yr)); xh.setAttribute('x2', F.x(yr)); xh.classList.add('show');
+      tipEl.innerHTML = `<b>${yr} · ${era[2]}</b><div><span>Puissance</span><em>×${v < 6 ? fmt(Number(Math.pow(10, v).toPrecision(2))).replace(/\s/g, NBSP) : fmt(Math.pow(10, v - 6), v < 7 ? 1 : 0) + NBSP + 'million' + (v >= 6.3 ? 's' : '')}</em></div><p class="ctip-p">${era[3]}</p>`;
+      placeTip(tipEl, box, F.svg, F.W, F.H, F.x(yr), F.y(v));
     });
-    svgEl('text', { x: x(34.2) + 10, y: y(97.3) - 10, fill: '#e6e6e6', 'font-size': 12, class: 'dot' }, g).textContent = '97,3 % à 40 000 km';
-    const hit = svgEl('rect', { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, class: 'hit' }, svg);
-    const move = (e) => {
-      const r = svg.getBoundingClientRect(), px = (e.clientX - r.left) / r.width * W;
-      let i = 0; PTS.forEach((p, k) => { if (Math.abs(x(p[0]) - px) < Math.abs(x(PTS[i][0]) - px)) i = k; });
-      dots.forEach((d, k) => d.setAttribute('r', k === i ? 7 : (k === 3 ? 6 : 4.5)));
-      const [L, f, er, name] = PTS[i];
-      tipEl.innerHTML = `<b>${name}</b><div><span>Pertes</span><em>${fmt(L, 1)} dB</em></div><div><span>Fidélité mesurée</span><em>${fmt(f, 1)} ± ${fmt(er, 1)} %</em></div><div><span>Modèle</span><em>${fmt(F(L), 1)} %</em></div>`;
-      placeTip(tipEl, box, svg, W, H, x(L), y(f) + 40);
-    };
-    hit.addEventListener('pointermove', move); hit.addEventListener('pointerdown', move);
-    hit.addEventListener('pointerleave', () => { tipEl.classList.remove('show'); dots.forEach((d, k) => d.setAttribute('r', k === 3 ? 6 : 4.5)); });
+    hit.addEventListener('pointerleave', () => { tipEl.classList.remove('show'); xh.classList.remove('show'); pts.forEach((c) => c.setAttribute('r', 3.5)); });
     if (reduceMotion) box.classList.add('drawn'); else onceVisible(box, () => box.classList.add('drawn'), '0px 0px -25% 0px');
   })();
 
-  /* ---------- Figure 5 : paramètre de Bell ---------- */
-  (function gauge() {
-    const svg = $('bellGauge'), W = Math.round(Math.max(320, Math.min(680, svg.clientWidth || 680))), x0 = W < 520 ? 16 : 40, x1 = W - x0, y0 = 70, narrow = W < 520;
-    svg.setAttribute('viewBox', `0 0 ${W} ${narrow ? 170 : 150}`);
-    const x = (s) => x0 + s / 3 * (x1 - x0);
-    const defs = svgEl('defs', {}, svg);
-    const pat = svgEl('pattern', { id: 'hatch', width: 8, height: 8, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' }, defs);
-    svgEl('line', { x1: 0, y1: 0, x2: 0, y2: 8, stroke: '#475394', 'stroke-width': 2 }, pat);
-    svgEl('rect', { x: x(0), y: y0, width: x(2) - x(0), height: 22, rx: 6, fill: 'rgba(148,163,184,.18)' }, svg);
-    svgEl('rect', { x: x(2), y: y0, width: x(2.828) - x(2), height: 22, fill: 'rgba(168,85,247,.28)' }, svg);
-    svgEl('rect', { x: x(2.828), y: y0, width: x(3) - x(2.828), height: 22, fill: 'url(#hatch)' }, svg);
-    svgEl('text', { x: (x(0) + x(2)) / 2, y: y0 + 15, 'text-anchor': 'middle', fill: '#aab3d6', 'font-size': 12 }, svg).textContent = narrow ? 'Classique' : 'Explicable classiquement';
-    svgEl('text', { x: (x(2) + x(2.828)) / 2, y: y0 + 15, 'text-anchor': 'middle', fill: '#e9d5ff', 'font-size': 12 }, svg).textContent = 'Quantique';
-    (narrow ? [0, 1, 2, 2.828] : [0, 1, 2, 2.828, 3]).forEach((s) => {
-      svgEl('line', { x1: x(s), x2: x(s), y1: y0 + 22, y2: y0 + 30, stroke: '#475394' }, svg);
-      svgEl('text', { x: x(s), y: y0 + 46, 'text-anchor': 'middle', fill: '#8891b8', 'font-size': 11.5, class: 'mono' }, svg).textContent = s === 2.828 ? '2,83' : fmt(s);
-    });
-    svgEl('text', { x: x(2), y: y0 + 64, 'text-anchor': 'middle', fill: '#aab3d6', 'font-size': 11 }, svg).textContent = 'limite classique';
-    svgEl('text', { x: narrow ? x1 : x(2.828), y: narrow ? y0 + 80 : y0 + 64, 'text-anchor': narrow ? 'end' : 'middle', fill: '#aab3d6', 'font-size': 11 }, svg).textContent = 'maximum quantique';
-    const mk = svgEl('g', {}, svg);
-    svgEl('rect', { x: x(2.73) - x(0.03) + x0 - x0, y: y0 - 4, width: 0, height: 30, fill: 'none' }, mk);
-    svgEl('line', { x1: 0, x2: 0, y1: y0 - 6, y2: y0 + 28, stroke: '#fff', 'stroke-width': 2.5 }, mk);
-    svgEl('line', { x1: -(x(0.03) - x0), x2: x(0.03) - x0, y1: y0 - 6, y2: y0 - 6, stroke: '#fff', 'stroke-width': 1.5 }, mk);
-    svgEl('path', { d: 'M-7 -2 L7 -2 L0 8 Z', transform: `translate(0 ${y0 - 22})`, fill: '#fff' }, mk);
-    const lab = svgEl('text', { x: 0, y: y0 - 30, 'text-anchor': 'middle', fill: '#fff', 'font-size': 14, 'font-weight': 500 }, mk);
-    lab.textContent = 'S = 2,73';
-    const place = (s) => mk.setAttribute('transform', `translate(${x(s)} 0)`);
-    place(0);
-    const go = () => {
-      if (reduceMotion) return place(2.73);
-      const t0 = performance.now();
-      const tick = (t) => { const k = Math.min(1, (t - t0) / 1200), e = 1 - Math.pow(1 - k, 4); place(2.73 * e); if (k < 1) requestAnimationFrame(tick); };
-      requestAnimationFrame(tick);
+  /* ---------- Figure 2 : empreintes et sel ---------- */
+  (function salt() {
+    const s = $('saltSvg');
+    s.setAttribute('viewBox', '0 0 460 224');
+    /* petite fonction de brassage (illustration, pas une vraie fonction cryptographique) */
+    const mix = (str) => {
+      let h1 = 0x811c9dc5, h2 = 0x1b873593;
+      for (let i = 0; i < str.length; i++) { const c = str.charCodeAt(i); h1 = Math.imul(h1 ^ c, 16777619); h2 = Math.imul(h2 ^ c, 2246822519); }
+      return ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).slice(0, 12);
     };
-    onceVisible(svg, go, '0px 0px -25% 0px');
+    const PW = 'orbite2024', SALTS = ['7f3a91', 'c0e25b'];
+    const COLS = [[16, 112, 'Mot de passe'], [128, 196, 'Sel'], [212, 320, 'Fonction lente'], [336, 448, 'Empreinte']];
+    COLS.forEach(([a, b, t]) => svgEl('text', { x: (a + b) / 2, y: 20, 'text-anchor': 'middle', fill: '#8891b8', 'font-size': 12 }, s).textContent = t);
+    const ROWS = [74, 170], rows = [];
+    ROWS.forEach((y, r) => {
+      svgEl('text', { x: 16, y: y - 30, fill: '#aab3d6', 'font-size': 12.5, 'font-weight': 500 }, s).textContent = r ? 'Compte B' : 'Compte A';
+      svgEl('rect', { x: 16, y: y - 18, width: 96, height: 36, rx: 9, fill: '#0a1436', stroke: '#2b3a78' }, s);
+      svgEl('text', { x: 64, y: y + 5, 'text-anchor': 'middle', fill: '#e0e7ff', 'font-size': 13, class: 'mono' }, s).textContent = PW;
+      const sg = svgEl('g', { class: 'pkt' }, s);
+      svgEl('rect', { x: 128, y: y - 18, width: 68, height: 36, rx: 9, fill: 'rgba(167,139,250,.1)', stroke: '#a78bfa', 'stroke-opacity': 0.6 }, sg);
+      svgEl('text', { x: 162, y: y + 5, 'text-anchor': 'middle', fill: '#c4b5fd', 'font-size': 12.5, class: 'mono' }, sg).textContent = SALTS[r];
+      svgEl('rect', { x: 212, y: y - 18, width: 108, height: 36, rx: 9, fill: 'rgba(52,211,153,.08)', stroke: GREEN, 'stroke-opacity': 0.5 }, s);
+      svgEl('text', { x: 266, y: y + 5, 'text-anchor': 'middle', fill: '#6ee7b7', 'font-size': 12.5, class: 'mono' }, s).textContent = '×100' + NBSP + '000';
+      const hb = svgEl('rect', { x: 336, y: y - 18, width: 112, height: 36, rx: 9, fill: '#0a1436', stroke: '#2b3a78' }, s);
+      const hv = svgEl('text', { x: 392, y: y + 5, 'text-anchor': 'middle', fill: '#e0e7ff', 'font-size': 12.5, class: 'mono hashv' }, s);
+      [[112, 128], [196, 212], [320, 336]].forEach(([a, b]) => svgEl('line', { x1: a, x2: b, y1: y, y2: y, stroke: '#475394' }, s));
+      rows.push({ y, sg, hb, hv });
+    });
+    svgEl('text', { x: 230, y: 216, 'text-anchor': 'middle', fill: '#8891b8', 'font-size': 11.5 }, s).textContent = 'Empreintes simplifiées à 12 caractères';
+    const verdict = $('saltVerdict');
+    let salted = true;
+    const set = (v) => {
+      salted = v;
+      document.querySelectorAll('#saltSeg [data-s]').forEach((b) => b.setAttribute('aria-pressed', String(Boolean(Number(b.dataset.s)) === v)));
+      rows.forEach((r, i) => {
+        r.sg.style.opacity = v ? 1 : 0.12;
+        r.hv.textContent = mix(PW + (v ? SALTS[i] : ''));
+        r.hv.setAttribute('fill', v ? '#e0e7ff' : '#fca5a5');
+        r.hb.setAttribute('stroke', v ? '#2b3a78' : '#f87171');
+      });
+      verdict.innerHTML = v
+        ? '<span class="verdict-pill" style="--vc:#34d399"><i class="ph-light ph-check" aria-hidden="true"></i>Empreintes différentes</span>Impossible de voir que les deux comptes partagent le même mot de passe.'
+        : '<span class="verdict-pill" style="--vc:#f87171"><i class="ph-light ph-x" aria-hidden="true"></i>Empreintes identiques</span>Un seul calcul suffit pour les deux comptes, et les tables pré-calculées fonctionnent.';
+    };
+    document.querySelectorAll('#saltSeg [data-s]').forEach((b) => b.addEventListener('click', () => set(Boolean(Number(b.dataset.s)))));
+    set(true);
   })();
 
-  /* ---------- Figure 6 : matrice densité en 3D ---------- */
-  (function rho() {
-    const box = $('rho'), tipEl = $('rhoTip');
-    const B = ['HH', 'HV', 'VH', 'VV'];
-    const IDEAL = [[.5, 0, 0, .5], [0, 0, 0, 0], [0, 0, 0, 0], [.5, 0, 0, .5]];
-    const MES = [[.491, .004, -.003, .482], [.004, .009, .002, -.003], [-.003, .002, .009, .005], [.482, -.003, .005, .491]];
-    const W = Math.round(Math.max(330, Math.min(620, box.clientWidth))), H = Math.round(W * 0.62);
-    const cx = W / 2, cy = H * 0.4, dx = W * 0.085, dy = dx * 0.55, HMAX = H * 0.3;
-    const svg = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Histogramme 3D de la matrice densité 4 par 4 : quatre grandes colonnes aux coins' });
-    box.prepend(svg);
-    const P = (i, j) => [cx + (j - i) * dx, cy + (i + j) * dy];
-    /* sol */
-    const [a0, b0] = P(-0.5, -0.5), [a1, b1] = P(-0.5, 3.5), [a2, b2] = P(3.5, 3.5), [a3, b3] = P(3.5, -0.5);
-    svgEl('path', { d: `M${a0} ${b0} L${a1} ${b1} L${a2} ${b2} L${a3} ${b3} Z`, fill: 'rgba(168,85,247,.05)', stroke: '#1b2555' }, svg);
-    B.forEach((lbl, k) => {
-      const [lx, ly] = P(k, 3.9); svgEl('text', { x: lx + 6, y: ly + 10, fill: '#8891b8', 'font-size': 11.5, class: 'mono' }, svg).textContent = lbl;
-      const [mx, my] = P(3.9, k); svgEl('text', { x: mx - 24, y: my + 10, fill: '#8891b8', 'font-size': 11.5, class: 'mono' }, svg).textContent = lbl;
+  /* ---------- Figure 3 : calculateur ---------- */
+  (function calc() {
+    let B = 62, L = 12, R = 9;
+    const range = $('lenRange'), out = $('lenOut'), sample = $('sample'), bits = $('bits');
+    for (let i = 0; i < 160; i++) bits.appendChild(document.createElement('i'));
+    const cells = [...bits.children];
+    const roE = $('roE'), roC = $('roC'), roT = $('roT'), roTBox = $('roTBox');
+    const draw = (regen) => {
+      const E = L * Math.log2(B), l10C = L * Math.log10(B), col = strengthCol(E);
+      if (regen) {
+        const cs = charset(B), rnd = new Uint32Array(L);
+        (window.crypto || {}).getRandomValues ? crypto.getRandomValues(rnd) : rnd.forEach((_, i) => { rnd[i] = Math.random() * 1e9; });
+        sample.innerHTML = Array.from(rnd, (v) => `<span>${cs[v % cs.length].replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')}</span>`).join('');
+      }
+      cells.forEach((c, i) => { c.classList.toggle('on', i < Math.round(E)); });
+      bits.style.setProperty('--bc', col);
+      roE.textContent = fmt(E, 0) + NBSP + 'bits';
+      roC.textContent = sci(l10C);
+      roT.textContent = dur(l10C - R);
+      roTBox.style.setProperty('--rc', col);
+      out.textContent = L;
+    };
+    range.addEventListener('input', () => { L = Number(range.value); draw(true); });
+    document.querySelectorAll('#poolSeg .pool').forEach((b) => b.addEventListener('click', () => {
+      B = Number(b.dataset.b);
+      document.querySelectorAll('#poolSeg .pool').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      draw(true);
+    }));
+    document.querySelectorAll('#rateSeg [data-r]').forEach((b) => b.addEventListener('click', () => {
+      R = Number(b.dataset.r);
+      document.querySelectorAll('#rateSeg [data-r]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      draw(false);
+    }));
+    draw(true);
+  })();
+
+  /* ---------- Tableau 1 : carte thermique ---------- */
+  (function heat() {
+    const tb = document.querySelector('#heat tbody'), tbl = $('heat'), LENS = [8, 12, 15, 18];
+    tb.innerHTML = POOLS.map((p) => `<tr><td>${p.n}<small>${p.d} · ${p.b}</small></td>${LENS.map((l) => {
+      const E = l * Math.log2(p.b), t = Math.max(0, Math.min(1, (E - 30) / 70)), h = Math.round(t * 150);
+      return `<td class="num" style="background:hsla(${h},70%,45%,.16)" data-e="${E}" data-l="${l}" data-b="${p.b}"><span></span></td>`;
+    }).join('')}</tr>`).join('');
+    const cells = [...tb.querySelectorAll('td.num')];
+    const fill = (v) => cells.forEach((c) => {
+      const E = Number(c.dataset.e), l10 = Number(c.dataset.l) * Math.log10(Number(c.dataset.b));
+      c.querySelector('span').textContent = v === 'e' ? Math.round(E) + NBSP + 'bits' : v === 'c' ? sci(l10) : dur(l10 - 9);
     });
+    let tw = 0;
+    document.querySelectorAll('#tabSeg [data-v]').forEach((b) => b.addEventListener('click', () => {
+      document.querySelectorAll('#tabSeg [data-v]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      if (reduceMotion) return fill(b.dataset.v);
+      tbl.classList.add('swap'); clearTimeout(tw);
+      tw = setTimeout(() => { fill(b.dataset.v); tbl.classList.remove('swap'); }, 180);
+    }));
+    fill('e');
+  })();
+
+  /* ---------- Figure 4 : deux leviers ---------- */
+  (function levers() {
+    const PC = [{ b: 26, c: '#3b82f6', n: 'a-z' }, { b: 62, c: '#059669', n: 'a-z A-Z 0-9' }, { b: 94, c: '#ea580c', n: '+ symboles' }];
+    const LC = [{ l: 8, c: '#5b21b6', n: '8 car.' }, { l: 12, c: '#7c3aed', n: '12 car.' }, { l: 16, c: '#a78bfa', n: '16 car.' }];
+    const mk = (boxId, tipId, cfg) => {
+      const box = $(boxId), tipEl = $(tipId);
+      const F = frame(box, { x: cfg.x, y: [0, 160], xt: cfg.xt, yt: [0, 40, 80, 120, 160], xl: cfg.xl, yl: 'Entropie (bits)', maxW: 420, minW: 280, H: 280, m: { r: 74, l: 44 }, aria: cfg.aria });
+      svgEl('line', { x1: F.m.l, x2: F.W - F.m.r, y1: F.y(80), y2: F.y(80), stroke: '#8891b8', 'stroke-dasharray': '4 5', 'stroke-opacity': 0.6 }, F.svg);
+      svgEl('text', { x: F.m.l + 4, y: F.y(80) - 5, fill: '#8891b8', 'font-size': 10.5 }, F.svg).textContent = '80 bits';
+      cfg.series.forEach((sr) => {
+        const pts = []; for (let v = cfg.x[0]; v <= cfg.x[1] + 1e-9; v += (cfg.x[1] - cfg.x[0]) / 60) pts.push(`${pts.length ? 'L' : 'M'}${F.x(v).toFixed(1)} ${F.y(cfg.f(sr, v)).toFixed(1)}`);
+        const el = svgEl('path', { d: pts.join(' '), fill: 'none', stroke: sr.c, 'stroke-width': 2.4, class: 'draw' }, F.svg);
+        el.style.setProperty('--len', Math.ceil(el.getTotalLength()));
+        const ey = Math.max(F.m.t + 6, F.y(cfg.f(sr, cfg.x[1])));
+        svgEl('text', { x: F.x(cfg.x[1]) + 6, y: ey + 4, fill: '#e6e6e6', 'font-size': 11.5, class: 'dot' }, F.svg).textContent = sr.n;
+      });
+      if (cfg.note) svgEl('text', { x: cfg.note[0](F), y: cfg.note[1](F), fill: '#fff', 'font-size': 12, 'font-weight': 500, class: 'dot' }, F.svg).textContent = cfg.note[2];
+      const xh = svgEl('line', { y1: F.m.t, y2: F.H - F.m.b, stroke: '#aab3d6', 'stroke-opacity': 0.5, class: 'xhair' }, F.svg);
+      const hit = F.hit();
+      hit.addEventListener('pointermove', (e) => {
+        const rr = F.svg.getBoundingClientRect(), px = (e.clientX - rr.left) / rr.width * F.W;
+        let v = cfg.x[0] + (px - F.m.l) / (F.W - F.m.l - F.m.r) * (cfg.x[1] - cfg.x[0]);
+        v = Math.round(Math.max(cfg.x[0], Math.min(cfg.x[1], v)));
+        xh.setAttribute('x1', F.x(v)); xh.setAttribute('x2', F.x(v)); xh.classList.add('show');
+        tipEl.innerHTML = `<b>${cfg.tl(v)}</b>` + cfg.series.map((sr) => `<div><span style="--lc:${sr.c}"><i></i>${sr.n}</span><em>${fmt(cfg.f(sr, v), 1)}${NBSP}bits</em></div>`).join('');
+        placeTip(tipEl, box, F.svg, F.W, F.H, F.x(v), F.y(cfg.f(cfg.series[1], v)));
+      });
+      hit.addEventListener('pointerleave', () => { tipEl.classList.remove('show'); xh.classList.remove('show'); });
+      if (reduceMotion) box.classList.add('drawn'); else onceVisible(box, () => box.classList.add('drawn'), '0px 0px -25% 0px');
+    };
+    mk('byLen', 'byLenTip', { x: [4, 24], xt: [4, 8, 12, 16, 20, 24], xl: 'Longueur (caractères)', series: PC, f: (sr, l) => l * Math.log2(sr.b), tl: (v) => v + ' caractères',
+      note: [(F) => F.x(5), (F) => F.y(140), '≈ +6 bits par caractère'], aria: 'Entropie selon la longueur : trois droites, pente de 4,7 à 6,6 bits par caractère' });
+    mk('byPool', 'byPoolTip', { x: [10, 94], xt: [10, 26, 52, 94], xl: 'Taille du jeu', series: LC, f: (sr, b) => sr.l * Math.log2(b), tl: (v) => 'Jeu de ' + v + ' caractères',
+      note: [(F) => F.x(12), (F) => F.y(140), 'La courbe s\'aplatit'], aria: 'Entropie selon la taille du jeu de caractères : trois courbes qui s\'aplatissent' });
+  })();
+
+  /* ---------- Figure 5 : comparaison ---------- */
+  (function compare() {
+    const box = $('cmp');
+    const ITEMS = [
+      { t: '« Motdepasse2024! » (15 car., motif courant)', e: 98.3, fake: true },
+      { t: '12 caractères aléatoires, lettres + chiffres', e: 12 * Math.log2(62) },
+      { t: 'Phrase de 6 mots tirés au hasard', e: 6 * Math.log2(7776) },
+      { t: '16 caractères aléatoires, avec symboles', e: 16 * Math.log2(94) }
+    ];
+    const W = Math.round(Math.max(300, Math.min(680, box.clientWidth))), rowH = 54, top = 10, H = top + ITEMS.length * rowH + 30;
+    const ml = 4, mr = 60, x = (v) => ml + v / 120 * (W - ml - mr);
+    const svg = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Barres : motif courant quasi nul malgré 98 bits théoriques, 71 bits pour 12 caractères, 78 bits pour 6 mots, 105 bits pour 16 caractères' });
+    box.appendChild(svg);
+    const defs = svgEl('defs', {}, svg);
+    const pat = svgEl('pattern', { id: 'hatch', width: 6, height: 6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' }, defs);
+    svgEl('line', { x1: 0, y1: 0, x2: 0, y2: 6, stroke: '#f87171', 'stroke-opacity': 0.45, 'stroke-width': 2 }, pat);
     const bars = [];
-    const order = []; for (let i = 0; i < 4; i++) for (let j = 0; j < 4; j++) order.push([i, j]);
-    order.sort((p, q) => (p[0] + p[1]) - (q[0] + q[1]));
-    order.forEach(([i, j]) => {
-      const g = svgEl('g', { style: 'cursor:pointer' }, svg);
-      const top = svgEl('path', {}, g), left = svgEl('path', {}, g), right = svgEl('path', {}, g);
-      bars.push({ i, j, g, top, left, right, v: 0 });
+    ITEMS.forEach((it, i) => {
+      const y = top + i * rowH;
+      svgEl('text', { x: ml, y: y + 13, fill: '#e6e6e6', 'font-size': 13 }, svg).textContent = it.t;
+      svgEl('rect', { x: x(0), y: y + 22, width: x(120) - x(0), height: 16, rx: 5, fill: '#0e1838' }, svg);
+      const col = it.fake ? '#f87171' : strengthCol(it.e);
+      const b = svgEl('rect', { x: x(0), y: y + 22, width: 0, height: 16, rx: 5, fill: it.fake ? 'url(#hatch)' : col, stroke: it.fake ? '#f87171' : 'none', 'stroke-dasharray': it.fake ? '4 3' : '' }, svg);
+      const v = svgEl('text', { x: x(0) + 6, y: y + 34, fill: '#fff', 'font-size': 12.5, class: 'mono', opacity: 0 }, svg);
+      v.textContent = it.fake ? (W < 480 ? '98 bits en théorie seulement' : '98 bits sur le papier, ≈ 0 en réalité') : fmt(it.e, 0) + NBSP + 'bits';
+      bars.push({ b, v, w: x(it.e) - x(0), it });
     });
-    const s = 0.34; /* demi-largeur relative d'une colonne */
-    const drawBar = (b) => {
-      const [x, y] = P(b.i, b.j), h = Math.max(1.5, Math.abs(b.v) * 2 * HMAX), neg = b.v < 0;
-      const w = dx * s * 2, d = dy * s * 2;
-      const topY = y - h;
-      const corner = (ox, oy, yy) => `${x + ox} ${yy + oy}`;
-      b.top.setAttribute('d', `M${corner(0, -d, topY)} L${corner(w, 0, topY)} L${corner(0, d, topY)} L${corner(-w, 0, topY)} Z`);
-      b.left.setAttribute('d', `M${corner(-w, 0, topY)} L${corner(0, d, topY)} L${corner(0, d, y)} L${corner(-w, 0, y)} Z`);
-      b.right.setAttribute('d', `M${corner(0, d, topY)} L${corner(w, 0, topY)} L${corner(w, 0, y)} L${corner(0, d, y)} Z`);
-      const big = Math.abs(b.v) > 0.1, base = neg ? [148, 163, 184] : big ? [168, 85, 247] : [129, 140, 248];
-      const shade = (k) => `rgb(${base.map((c) => Math.round(c * k)).join(',')})`;
-      b.top.setAttribute('fill', shade(1.05)); b.left.setAttribute('fill', shade(.62)); b.right.setAttribute('fill', shade(.8));
-    };
-    let cur = 'mesure';
-    const target = (k) => (k === 'ideal' ? IDEAL : MES);
-    const setTo = (k, animate) => {
-      cur = k;
-      document.querySelectorAll('#fig6 [data-rho]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.rho === k)));
-      const T = target(k), from = bars.map((b) => b.v);
-      if (!animate || reduceMotion) { bars.forEach((b) => { b.v = T[b.i][b.j]; drawBar(b); }); return; }
-      const t0 = performance.now();
-      const tick = (t) => {
-        const q = Math.min(1, (t - t0) / 600), e = 1 - Math.pow(1 - q, 3);
-        bars.forEach((b, n) => { b.v = from[n] + (T[b.i][b.j] - from[n]) * e; drawBar(b); });
-        if (q < 1) requestAnimationFrame(tick);
+    const tx = x(80);
+    svgEl('line', { x1: tx, x2: tx, y1: top + 16, y2: H - 22, stroke: '#e6e6e6', 'stroke-dasharray': '4 4', 'stroke-opacity': 0.55 }, svg);
+    svgEl('text', { x: tx, y: H - 6, 'text-anchor': 'middle', fill: '#aab3d6', 'font-size': 11.5 }, svg).textContent = '80 bits';
+    const go = () => bars.forEach((r, i) => {
+      const t0 = performance.now() + i * 90;
+      const step = (now) => {
+        const q = reduceMotion ? 1 : Math.max(0, Math.min(1, (now - t0) / 800)), e = 1 - Math.pow(1 - q, 3);
+        r.b.setAttribute('width', (r.w * e).toFixed(1));
+        const lx = r.it.fake ? x(0) + 8 : x(0) + r.w * e + 6;
+        r.v.setAttribute('x', Math.min(lx, W - 4)); r.v.setAttribute('text-anchor', lx > W - 60 ? 'end' : 'start');
+        r.v.setAttribute('opacity', q);
+        if (q < 1) requestAnimationFrame(step);
       };
-      requestAnimationFrame(tick);
-    };
-    bars.forEach((b) => { b.v = 0; drawBar(b); });
-    bars.forEach((b) => {
-      const show = () => {
-        const v = target(cur)[b.i][b.j];
-        tipEl.innerHTML = `<b>ρ(${B[b.i]}, ${B[b.j]})</b><div><span>${cur === 'ideal' ? 'État idéal' : 'Mesure'}</span><em>${fmt(v, 3)}</em></div>`;
-        const [x, y] = P(b.i, b.j);
-        placeTip(tipEl, box, svg, W, H, x, y - Math.abs(v) * 2 * HMAX);
-        bars.forEach((o) => o.g.style.opacity = o === b ? 1 : .55);
-      };
-      b.g.addEventListener('pointerenter', show); b.g.addEventListener('pointerdown', show);
-      b.g.addEventListener('pointerleave', () => { tipEl.classList.remove('show'); bars.forEach((o) => o.g.style.opacity = 1); });
+      requestAnimationFrame(step);
     });
-    document.querySelectorAll('#fig6 [data-rho]').forEach((b) => b.addEventListener('click', () => setTo(b.dataset.rho, true)));
-    onceVisible(box, () => setTo('mesure', true), '0px 0px -25% 0px');
+    if (reduceMotion) go(); else onceVisible(box, go, '0px 0px -25% 0px');
   })();
 
   /* images des articles liés introuvables : on garde le fond coloré */
