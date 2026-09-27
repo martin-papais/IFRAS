@@ -668,6 +668,15 @@ body { background: var(--bg-dark); }
   .wire.run .pulse { animation: none; opacity: 1; transform: translateX(calc(var(--span, 200px) / 2)); }
   .state.ok::before { animation: none; }
 }
+
+.denied { max-width: 460px; margin: 12vh auto 0; padding: 36px 28px; text-align: center; display: grid; justify-items: center; gap: 12px;
+  border-radius: 18px; background: var(--bg-card); border: 1px solid var(--border-sub); animation: denyIn 260ms var(--ease-out) both; }
+.denied-ic { width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; font-size: 26px; color: #f87171;
+  background: rgba(248,113,113,.08); border: 1px solid rgba(248,113,113,.3); }
+.denied h1 { margin: 6px 0 0; font-family: "Syne", sans-serif; font-size: 24px; font-weight: 700; }
+.denied p { margin: 0 0 8px; font-size: 14.5px; line-height: 1.55; color: var(--text-soft); }
+.denied .btn { text-decoration: none; }
+@keyframes denyIn { from { opacity: 0; transform: translateY(6px); } }
 </style>
 </head>
 
@@ -1980,6 +1989,30 @@ async function init() {
   $('userAvatar').textContent = initials(user.email);
   $('userAvatar').style.setProperty('--ah', hueOf(user.email));
   $('userLabel').textContent = user.email.split('@')[0];
+  /* document personnel : réservé au propriétaire du coffre (Jean-Luc Rousseau) */
+  let allowed = false;
+  try {
+    const { data: rows } = await _sb.from('vault_private').select('*').eq('owner_id', user.id);
+    allowed = (rows || []).some((r) => /trajectoire_cach/i.test(r.file_url || ''));
+  } catch (e) {}
+  if (!allowed) {
+    try {
+      const { data: me } = await _sb.from('profiles').select('*').eq('id', user.id).single();
+      const n = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z]/g, '');
+      allowed = !!me && n(me.first_name) === 'jeanluc' && n(me.last_name) === 'rousseau';
+    } catch (e) {}
+  }
+  if (!allowed) {
+    $('contenu').innerHTML = `<section class="denied" role="alert">
+      <span class="denied-ic"><i class="ph-light ph-lock-key" aria-hidden="true"></i></span>
+      <h1>Accès refusé</h1>
+      <p>Ce document appartient au coffre personnel d'un autre agent. Il ne peut être consulté que depuis le compte de son propriétaire.</p>
+      <a class="btn btn-primary" href="coffre-fort.html"><i class="ph-light ph-arrow-left" aria-hidden="true"></i>Retour au coffre-fort</a>
+    </section>`;
+    document.title = 'Accès refusé | Espace IFRAS';
+    document.documentElement.classList.remove('auth-pending');
+    return;
+  }
   document.documentElement.classList.remove('auth-pending');
   initTrajectory();
 }
