@@ -124,13 +124,17 @@ a { color: inherit; }
   inset: 0 0 auto 0;
   z-index: 1000;
   height: var(--header-h);
-  background: rgba(5,11,30,.82);
-  backdrop-filter: blur(12px) saturate(140%);
-  -webkit-backdrop-filter: blur(12px) saturate(140%);
-  border-bottom: 1px solid var(--border);
+  background: transparent;
+  border-bottom: 1px solid transparent;
   transition: background-color 240ms ease, border-color 240ms ease, backdrop-filter 240ms ease;
 }
 
+.site-header.is-scrolled {
+  background: rgba(5,11,30,.82);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border-bottom-color: var(--border);
+}
 
 .header-inner {
   height: 100%;
@@ -1169,7 +1173,7 @@ a { color: inherit; }
           <div class="event-type">Colloque international</div>
           <h3>ISABS 2026 : International Symposium on Astrobiology &amp; Space Biology</h3>
           <p>Résultats ARTEMIS-9 et ORION-3 présentés devant plus de 600 scientifiques. Retransmission publique disponible.</p>
-          <div class="event-location"><i class="ph-light ph-map-pin" aria-hidden="true"></i> Palais des Congrès, Paris. Organisation IFRAS et CNES</div>
+          <div class="event-location"><i class="ph-light ph-map-pin" aria-hidden="true"></i> Palais des Congrès, Paris. Organisation IFRAS</div>
         </div>
         <span class="btn btn-primary event-cta">S'inscrire <i class="ph-light ph-arrow-right" aria-hidden="true"></i></span>
       </a>
@@ -1230,7 +1234,13 @@ a { color: inherit; }
 (() => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-
+  /* ---------- Header : fond qui apparaît après le hero (sans écouteur scroll) ---------- */
+  const header = document.getElementById('header');
+  const hero = document.querySelector('.hero');
+  new IntersectionObserver(([entry]) => {
+    header.classList.toggle('is-scrolled', !entry.isIntersecting);
+  }, { rootMargin: `-${parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'))}px 0px 0px 0px`, threshold: 0.02 })
+  .observe(hero);
 
   /* ---------- Menu mobile ---------- */
   const toggle = document.querySelector('.menu-toggle');
@@ -1241,6 +1251,7 @@ a { color: inherit; }
     toggle.setAttribute('aria-expanded', String(open));
     toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
     icon.className = open ? 'ph-light ph-x' : 'ph-light ph-list';
+    header.classList.toggle('is-scrolled', open || !isHeroVisible());
   };
   const isHeroVisible = () => hero.getBoundingClientRect().bottom > 80;
   toggle.addEventListener('click', () => setMenu(!panel.classList.contains('is-open')));
