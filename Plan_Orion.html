@@ -342,6 +342,8 @@ html.auth-pending .page { visibility: hidden; }
 .org-crumb a { color: var(--text-soft); text-decoration: none; }
 .p-title { margin: 0; font-family: "Syne", sans-serif; font-size: 32px; font-weight: 700; letter-spacing: -.02em; color: #fff; }
 .p-sub { margin: 6px 0 0; max-width: 62ch; font-size: 15px; line-height: 1.55; color: var(--text-soft); }
+.p-sub a { color: var(--text-main); text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); text-underline-offset: 3px; white-space: nowrap; transition: text-decoration-color 160ms ease; }
+@media (hover: hover) and (pointer: fine) { .p-sub a:hover { text-decoration-color: currentColor; } }
 .org-stats { display: flex; margin: 0; }
 .org-stats div { padding: 4px 18px; border-left: 1px solid var(--border-sub); }
 .org-stats div:first-child { border-left: 0; padding-left: 0; }
@@ -583,6 +585,7 @@ html.auth-pending .page { visibility: hidden; }
     <li><a href="tableau-de-bord.html" class="sub-tab"><i class="ph-light ph-squares-four" aria-hidden="true"></i> Tableau de bord</a></li>
     <li><a href="annuaire.html" class="sub-tab"><i class="ph-light ph-address-book" aria-hidden="true"></i> Annuaire</a></li>
     <li><a href="boutique.html" class="sub-tab"><i class="ph-light ph-storefront" aria-hidden="true"></i> Boutique</a></li>
+    <li><a href="agenda.html" class="sub-tab"><i class="ph-light ph-calendar-dots" aria-hidden="true"></i> Agenda</a></li>
   </ul>
 </nav>
 
@@ -594,7 +597,7 @@ html.auth-pending .page { visibility: hidden; }
       <div>
         <p class="org-crumb"><a href="coffre-fort.html">Coffre-fort</a><i class="ph-light ph-caret-right" aria-hidden="true"></i><span>Archive publique</span></p>
         <h1 class="p-title" id="p-title">Vaisseau Orion</h1>
-        <p class="p-sub">Plan d'architecture des trois ponts. Choisissez un pont, zoomez, puis touchez une salle pour afficher sa fiche.</p>
+        <p class="p-sub">Vaisseau du programme <a href="programmes-actifs.html#artemis9">ARTEMIS-9</a>, parti le 14 juillet 2024 avec quarante membres d'équipage. Choisissez un pont, zoomez, puis touchez une salle pour afficher sa fiche.</p>
       </div>
       <dl class="org-stats" id="pStats"></dl>
     </section>
@@ -645,7 +648,7 @@ html.auth-pending .page { visibility: hidden; }
       <aside class="panel" id="panel" aria-live="polite" aria-labelledby="pnTitle"></aside>
     </div>
 
-    <p class="org-note"><i class="ph-light ph-info" aria-hidden="true"></i><span>Document interne, étude d'architecture. Échelle : 1 carreau de la grille = 1 m. Les surfaces sont indicatives.</span></p>
+    <p class="org-note"><i class="ph-light ph-info" aria-hidden="true"></i><span>Document interne, plan de référence du programme ARTEMIS-9. Échelle : 1 carreau de la grille = 1 m. Les surfaces sont indicatives.</span></p>
   </main>
 </div>
 
