@@ -409,6 +409,14 @@ html.auth-pending .app { visibility: hidden; }
   border-right: 1px solid var(--border-sub);
 }
 .rail > * { flex-shrink: 0; }
+.ro-note {
+  display: flex; gap: 10px; align-items: flex-start; margin: -8px 0 0; padding: 10px 12px;
+  border-radius: 10px; font-size: 12.5px; line-height: 1.45; color: var(--text-soft);
+  background: rgba(248,113,113,.07); border: 1px solid rgba(248,113,113,.25);
+}
+.ro-note i { font-size: 17px; color: #f87171; flex-shrink: 0; margin-top: 1px; }
+.ro-note strong { color: #fca5a5; font-weight: 500; }
+.btn.is-off, .rsvp.is-off button { opacity: .55; }
 .new-btn { width: 100%; height: 42px; border-radius: 11px; font-size: 14px; }
 .new-btn i { font-size: 18px; }
 
@@ -1104,6 +1112,7 @@ textarea.inp { height: auto; min-height: 88px; padding: 10px 12px; line-height: 
   <!-- colonne de gauche : création, mini-calendrier, filtres, journée -->
   <aside class="rail" id="rail" aria-label="Navigation de l'agenda">
     <button class="btn btn-primary new-btn" id="newBtn" type="button" title="Nouvelle réunion (N)"><i class="ph-light ph-plus" aria-hidden="true"></i>Nouvelle réunion</button>
+    <p class="ro-note" id="roNote" hidden><i class="ph-light ph-prohibit" aria-hidden="true"></i><span><strong>Compte suspendu.</strong> Votre agenda est en lecture seule : vous ne pouvez ni créer, ni modifier, ni répondre aux invitations.</span></p>
 
     <section aria-labelledby="miniTitle">
       <div class="mini-head">
@@ -1589,8 +1598,26 @@ const A = {
   hidden: new Set(),
   open: null,        // { ev, start }
   scrollKey: '',
-  flash: null        // { id, start } à mettre en évidence après rendu
+  flash: null,       // { id, start } à mettre en évidence après rendu
+  suspended: false   // compte suspendu : agenda en lecture seule
 };
+const SUSPENDED = 'Ce compte est temporairement suspendu — action impossible';
+function blocked() { if (!A.suspended) return false; showToast(SUSPENDED); return true; }
+/* valeur de profiles.suspension : booléen ou texte (TRUE, true, oui…) */
+const isSuspendedValue = (v) => ['true', 't', '1', 'oui', 'yes'].includes(String(v ?? '').trim().toLowerCase());
+function setSuspended(on) {
+  A.suspended = !!on;
+  $('roNote').hidden = !A.suspended;
+  $('newBtn').classList.toggle('is-off', A.suspended);
+  if (A.open) fillPeek(false);
+}
+/* la base a refusé l'action car le compte est suspendu : on bascule en lecture seule */
+function suspendedError(error) {
+  if (!error || !/suspendu/i.test(error.message || '')) return false;
+  setSuspended(true);
+  showToast(SUSPENDED);
+  return true;
+}
 try { JSON.parse(sessionStorage.getItem('ifras_agenda_hidden') || '[]').forEach((k) => A.hidden.add(k)); } catch (e) {}
 
 /* ============================================================
@@ -2034,7 +2061,7 @@ function peekHtml(ev, start, end) {
     html += `<div class="join"><i class="ph-light ph-video-camera" aria-hidden="true" style="font-size:22px;color:var(--accent)"></i><div>ID de réunion<b>${esc(ev.meeting_code || 'IFR en attente')}</b></div><button class="btn btn-primary" type="button" id="pkJoin">Rejoindre</button></div>`;
   }
   if (ev.my_response && !ev.is_organizer) {
-    html += `<p class="sec-t">Votre réponse</p><div class="rsvp" role="radiogroup" aria-label="Votre réponse">${['accepte', 'provisoire', 'refuse'].map((r) =>
+    html += `<p class="sec-t">Votre réponse${A.suspended ? '<small>Lecture seule</small>' : ''}</p><div class="rsvp${A.suspended ? ' is-off' : ''}" role="radiogroup" aria-label="Votre réponse">${['accepte', 'provisoire', 'refuse'].map((r) =>
       `<button type="button" role="radio" data-r="${r}" aria-checked="${ev.my_response === r}"><i class="ph-light ${RESP[r].i}" aria-hidden="true"></i>${{ accepte: 'Accepter', provisoire: 'Provisoire', refuse: 'Refuser' }[r]}</button>`).join('')}</div>`;
   }
 
@@ -2103,21 +2130,23 @@ function join(start, end) {
   else showToast('Connexion à la salle en ligne IFRAS…', 'ok');
 }
 async function respond(r) {
+  if (blocked()) return;
   const { ev } = A.open;
   if (ev.my_response === r) return;
   const prev = ev.my_response;
   const setR = (v) => { ev.my_response = v; const a = ev.attendees.find((x) => isMe(x.profile_id)); if (a) a.response = v; };
   setR(r); fillPeek(true); renderView(); renderDayList();
   const { error } = await _sb.rpc('agenda_respond', { p_id: ev.id, p_response: r });
-  if (error) { setR(prev); if (A.open && A.open.ev === ev) fillPeek(true); renderView(); showToast('Réponse non enregistrée, réessayez.'); return; }
+  if (error) { setR(prev); if (A.open && A.open.ev === ev) fillPeek(true); renderView(); renderDayList(); if (!suspendedError(error)) showToast('Réponse non enregistrée, réessayez.'); return; }
   showToast({ accepte: 'Invitation acceptée', provisoire: 'Réponse provisoire envoyée', refuse: 'Invitation refusée' }[r], 'ok');
 }
 async function removeEvent() {
+  if (blocked()) return;
   const { ev } = A.open;
   const btn = $('pkYes'); btn.disabled = true;
   const { error } = await _sb.rpc('agenda_delete_event', { p_id: ev.id });
   btn.disabled = false;
-  if (error) { showToast(error.message || 'Suppression impossible'); return; }
+  if (error) { $('pkConfirm').hidden = true; if (!suspendedError(error)) showToast(error.message || 'Suppression impossible'); return; }
   A.series = A.series.filter((e) => e.id !== ev.id);
   closePeek();
   renderAll();
@@ -2260,6 +2289,7 @@ function clearErrors() {
   document.querySelectorAll('.dlg .inp.bad').forEach((el) => el.classList.remove('bad'));
 }
 function openForm(opts = {}) {
+  if (blocked()) return;
   const ev = opts.ev || null;
   F.ev = ev; F.opener = document.activeElement; F.optIndex = -1;
   clearErrors();
@@ -2317,6 +2347,7 @@ function closeForm() {
 }
 async function submitForm(e) {
   e.preventDefault();
+  if (blocked()) { closeForm(); return; }
   clearErrors();
   const title = f$('fTitle').value.trim();
   const start = formStart();
@@ -2341,7 +2372,7 @@ async function submitForm(e) {
   btn.disabled = true; label.textContent = F.ev ? 'Enregistrement…' : 'Envoi…';
   const res = F.ev ? await _sb.rpc('agenda_update_event', { p_id: F.ev.id, ...payload }) : await _sb.rpc('agenda_create_event', payload);
   btn.disabled = false; label.textContent = F.ev ? 'Enregistrer' : 'Envoyer';
-  if (res.error) { f$('eForm').textContent = res.error.message || 'Enregistrement impossible. Réessayez.'; return; }
+  if (res.error) { if (suspendedError(res.error)) { closeForm(); return; } f$('eForm').textContent = res.error.message || 'Enregistrement impossible. Réessayez.'; return; }
   const id = F.ev ? F.ev.id : res.data;
   const n = F.picked.length, edited = !!F.ev;
   closeForm();
@@ -2464,13 +2495,13 @@ view.addEventListener('click', (e) => {
   if (go) { const s = Number(go.dataset.goto); A.flash = { id: go.dataset.id, start: s }; A.scrollKey = ''; goTo(new Date(s)); return; }
   if (e.target.closest('[data-new]')) { openForm(); return; }
   const cell = e.target.closest('.m-cell');
-  if (cell) { const d = parseYmd(cell.dataset.cell); openForm({ start: new Date(d.getFullYear(), d.getMonth(), d.getDate(), 9, 0), duration: 30 }); }
+  if (cell && !A.suspended) { const d = parseYmd(cell.dataset.cell); openForm({ start: new Date(d.getFullYear(), d.getMonth(), d.getDate(), 9, 0), duration: 30 }); }
 });
 
 let drag = null;
 view.addEventListener('pointerdown', (e) => {
   const col = e.target.closest('.col');
-  if (!col || e.target.closest('.ev') || e.button !== 0) return;
+  if (A.suspended || !col || e.target.closest('.ev') || e.button !== 0) return;
   const rect = col.getBoundingClientRect();
   const perMin = rect.height / 1440;
   const at = (y) => clamp(Math.floor((y - rect.top) / perMin / 15) * 15, 0, 1425);
@@ -2508,7 +2539,7 @@ view.addEventListener('pointercancel', (e) => endDrag(e, true));
 $('pkClose').addEventListener('click', closePeek);
 $('peekScrim').addEventListener('click', closePeek);
 $('pkEdit').addEventListener('click', () => { if (A.open) openForm({ ev: A.open.ev }); });
-$('pkDelete').addEventListener('click', () => { $('pkConfirm').hidden = false; $('pkNo').focus(); });
+$('pkDelete').addEventListener('click', () => { if (blocked()) return; $('pkConfirm').hidden = false; $('pkNo').focus(); });
 $('pkNo').addEventListener('click', () => { $('pkConfirm').hidden = true; $('pkDelete').focus(); });
 $('pkYes').addEventListener('click', removeEvent);
 
@@ -2664,6 +2695,12 @@ async function init() {
   (profs || []).forEach((p) => { if (p && p.id) A.profiles.set(p.id, p); });
   A.me = A.profiles.get(user.id) || { id: user.id, email: user.email };
   if (!A.profiles.has(user.id)) A.profiles.set(user.id, A.me);
+  /* son propre profil, lu directement (comme la page Profil) pour connaître la suspension */
+  try {
+    const { data: mine } = await _sb.from('profiles').select('*').eq('id', user.id).single();
+    if (mine) { A.me = { ...A.me, ...mine }; A.profiles.set(user.id, A.me); }
+  } catch (e) {}
+  setSuspended(isSuspendedValue(A.me.suspension));
 
   document.documentElement.classList.remove('auth-pending');
   renderSeg(true);
