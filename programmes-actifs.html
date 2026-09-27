@@ -558,6 +558,8 @@ a { color: inherit; }
   border-top: 1px solid var(--border);
 }
 .prog:first-child { border-top: 0; }
+/* le halo dépasse volontairement à droite : on le coupe au bord de la page, sans créer de défilement horizontal */
+#contenu { overflow-x: clip; }
 /* halo coloré discret, propre à chaque programme */
 .prog::before {
   content: ""; position: absolute; top: 0; right: -10%;
@@ -921,7 +923,7 @@ a { color: inherit; }
         <ul>
           <li><a href="programmes-archives.html#apollox"><strong>APOLLO-X</strong><span>Cratères polaires lunaires</span></a></li>
           <li><a href="programmes-archives.html#delphi"><strong>DELPHI</strong><span>Prédiction sismique</span></a></li>
-          <li><a href="programmes-archives.html#cassinir"><strong>CASSINI-R</strong><span>Archives Cassini par IA</span></a></li>
+          <li><a href="programmes-archives.html#cassinir"><strong>CASSINI-R</strong><span>Archives saturniennes par IA</span></a></li>
         </ul>
       </div>
     </li>
@@ -1028,16 +1030,16 @@ a { color: inherit; }
       <section class="prog spy" id="artemis9" style="--c:#34d399" aria-labelledby="artemis9-title">
         <div class="prog-top reveal">
           <span class="card-code">ARTEMIS-9</span>
-          <span class="status" style="--s:var(--st-active)"><span class="live-dot" aria-hidden="true"></span> Actif, phase III</span>
+          <span class="status" style="--s:var(--st-active)"><span class="live-dot" aria-hidden="true"></span> Actif, en mission</span>
           <span class="status" style="--s:var(--st-restricted)"><i class="ph-light ph-lock-simple" aria-hidden="true"></i> Diffusion restreinte</span>
         </div>
-        <h2 class="prog-title reveal" id="artemis9-title" style="--i:1">Mission habitée longue durée sur Mars</h2>
-        <p class="lead reveal" style="--i:2">Le programme phare de l'IFRAS : six astronautes-chercheurs vivront dans une base martienne autonome en énergie et en ressources vitales. Un seul objectif relie toutes les équipes : tenir dans la durée.</p>
-        <div class="launch reveal" style="--i:3"><i class="ph-light ph-rocket" aria-hidden="true"></i> <span>Lancement <strong>T2 2027</strong><span id="launch-countdown"></span></span></div>
+        <h2 class="prog-title reveal" id="artemis9-title" style="--i:1">Première colonie permanente sur Mars</h2>
+        <p class="lead reveal" style="--i:2">Le programme phare de l'IFRAS : quarante femmes et hommes, formés de février à juin 2024 et partis le 14 juillet 2024 à bord du vaisseau Orion, fondent la première colonie permanente sur Mars. Il n'est pas prévu de retour : l'équipage doit rendre la base autonome en énergie et en ressources vitales, puis engager la terraformation.</p>
+        <div class="launch reveal" style="--i:3"><i class="ph-light ph-rocket" aria-hidden="true"></i> <span>Départ le <strong>14 juillet 2024</strong><span id="launch-countdown"></span></span></div>
         <div class="kpis">
-          <div class="kpi reveal" style="--i:3"><span class="kpi-val">18<small>mois</small></span><span class="kpi-label">Durée de séjour</span></div>
-          <div class="kpi reveal" style="--i:4"><span class="kpi-val">6</span><span class="kpi-label">Astronautes-chercheurs</span></div>
-          <div class="kpi reveal" style="--i:5"><span class="kpi-val">2027</span><span class="kpi-label">Lancement prévu</span></div>
+          <div class="kpi reveal" style="--i:3"><span class="kpi-val">40</span><span class="kpi-label">Membres d'équipage</span></div>
+          <div class="kpi reveal" style="--i:4"><span class="kpi-val">2024</span><span class="kpi-label">Départ, 14 juillet</span></div>
+          <div class="kpi reveal" style="--i:5"><span class="kpi-val">1<small>colonie</small></span><span class="kpi-label">Implantation permanente</span></div>
         </div>
 
         <div class="prog-body">
@@ -1049,7 +1051,7 @@ a { color: inherit; }
             <li class="reveal" style="--i:2"><i class="ph-light ph-house-line" aria-hidden="true"></i> Habitat autonome</li>
             <li class="reveal" style="--i:3"><i class="ph-light ph-lightning" aria-hidden="true"></i> Énergie en boucle fermée</li>
             <li class="reveal" style="--i:4"><i class="ph-light ph-first-aid" aria-hidden="true"></i> Télémédecine</li>
-            <li class="reveal" style="--i:5"><i class="ph-light ph-plant" aria-hidden="true"></i> Terraformation expérimentale</li>
+            <li class="reveal" style="--i:5"><i class="ph-light ph-plant" aria-hidden="true"></i> Terraformation</li>
             </ul>
           </div>
           <aside class="fiche reveal" style="--i:2" aria-label="Fiche ARTEMIS-9">
@@ -1057,6 +1059,8 @@ a { color: inherit; }
               <p class="fiche-label">Fiche</p>
               <dl>
                 <div class="fiche-row"><dt>Lancé en</dt><dd>2021</dd></div>
+                <div class="fiche-row"><dt>Vaisseau</dt><dd>Orion</dd></div>
+                <div class="fiche-row"><dt>Départ</dt><dd>14/07/2024</dd></div>
               </dl>
             </div>
             <div>
@@ -1318,7 +1322,7 @@ a { color: inherit; }
           <p>Trois programmes se préparent déjà. Découvrez aussi les missions clôturées et leurs résultats.</p>
         </div>
         <div class="cta-actions">
-          <a href="programmes.html#futurs" class="btn btn-primary">Programmes futurs <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
+          <a href="programmes-futurs.html" class="btn btn-primary">Programmes futurs <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
           <a href="publications.html" class="btn btn-ghost">Publications</a>
         </div>
       </div>
@@ -1446,13 +1450,11 @@ a { color: inherit; }
     document.querySelectorAll('[data-count]').forEach((el) => countIO.observe(el));
   }
 
-  /* ---------- Compte à rebours ARTEMIS-9 (début du T2 2027) ---------- */
+  /* ---------- Jours de mission ARTEMIS-9 (départ le 14 juillet 2024) ---------- */
   const countdown = document.getElementById('launch-countdown');
-  const launch = new Date(2027, 3, 1);
-  const now = new Date();
-  const months = (launch.getFullYear() - now.getFullYear()) * 12 + (launch.getMonth() - now.getMonth());
-  if (months > 1) countdown.textContent = `, dans environ ${months} mois`;
-  else if (months >= 0) countdown.textContent = ', imminent';
+  const departure = new Date(2024, 6, 14);
+  const days = Math.floor((Date.now() - departure.getTime()) / 86400000);
+  if (countdown && days > 0) countdown.textContent = `, jour ${days.toLocaleString('fr-FR')} de mission`;
 
   document.querySelectorAll('.prog').forEach((el) => revealIO.observe(el));
 
