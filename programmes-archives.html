@@ -558,6 +558,8 @@ a { color: inherit; }
   border-top: 1px solid var(--border);
 }
 .prog:first-child { border-top: 0; }
+/* le halo dépasse volontairement à droite : on le coupe au bord de la page, sans créer de défilement horizontal */
+#contenu { overflow-x: clip; }
 /* halo coloré discret, propre à chaque programme */
 .prog::before {
   content: ""; position: absolute; top: 0; right: -10%;
