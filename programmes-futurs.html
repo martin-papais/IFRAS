@@ -558,6 +558,8 @@ a { color: inherit; }
   border-top: 1px solid var(--border);
 }
 .prog:first-child { border-top: 0; }
+/* le halo dépasse volontairement à droite : on le coupe au bord de la page, sans créer de défilement horizontal */
+#contenu { overflow-x: clip; }
 /* halo coloré discret, propre à chaque programme */
 .prog::before {
   content: ""; position: absolute; top: 0; right: -10%;
@@ -1053,7 +1055,7 @@ a { color: inherit; }
         <ul>
           <li><a href="programmes-archives.html#apollox"><strong>APOLLO-X</strong><span>Cratères polaires lunaires</span></a></li>
           <li><a href="programmes-archives.html#delphi"><strong>DELPHI</strong><span>Prédiction sismique</span></a></li>
-          <li><a href="programmes-archives.html#cassinir"><strong>CASSINI-R</strong><span>Archives Cassini par IA</span></a></li>
+          <li><a href="programmes-archives.html#cassinir"><strong>CASSINI-R</strong><span>Archives saturniennes par IA</span></a></li>
         </ul>
       </div>
     </li>
