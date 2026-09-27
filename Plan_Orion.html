@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="fr" class="auth-pending">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan du vaisseau Orion | Espace IFRAS</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#050b1e">
+<link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+
+<style>
+/* =========================================================
+   THÈME : tout découle de --hue et --sat (réglables par l'utilisateur)
+   ========================================================= */
+:root {
+  --hue: 228;
+  --sat: 65%;
+
+  --bg-dark:    hsl(var(--hue), var(--sat), 4%);
+  --bg-main:    hsl(var(--hue), var(--sat), 7%);
+  --bg-light:   hsl(var(--hue), var(--sat), 10%);
+  --bg-hover:   hsl(var(--hue), var(--sat), 13%);
+  --bg-card:    hsl(var(--hue), var(--sat), 8%);
+  --border:     hsl(var(--hue), calc(var(--sat) - 10%), 20%);
+  --border-sub: hsl(var(--hue), calc(var(--sat) - 10%), 14%);
+  --accent:     hsl(var(--hue), 70%, 60%);
+  --accent-dim: hsl(var(--hue), 60%, 45%);
+  --text-main:  hsl(var(--hue), 20%, 88%);
+  --text-soft:  hsl(var(--hue), 20%, 66%);
+  --text-muted: hsl(var(--hue), 15%, 48%);
+  --unread-dot: hsl(var(--hue), 80%, 65%);
+  --danger: #fb7185;
+  --ok: #34d399;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --header-h: 68px;
+  --subnav-h: 48px;
+  --status-h: 30px;
+  --sidebar-w: 232px;
+  --list-w: 360px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: "DM Sans", "Segoe UI", system-ui, sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+}
+button { font: inherit; color: inherit; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+kbd {
+  display: inline-grid; place-items: center;
+  min-width: 20px; height: 20px; padding: 0 5px;
+  font: 500 11px/1 "DM Sans", sans-serif; color: var(--text-soft);
+  border: 1px solid var(--border); border-radius: 5px;
+  background: var(--bg-light);
+}
+
+/* =========================================================
+   HEADER (même structure que le site public)
+   ========================================================= */
+.site-header {
+  position: fixed; inset: 0 0 auto 0; z-index: 2000;
+  height: var(--header-h);
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  padding: 0 24px;
+  background: hsl(var(--hue), var(--sat), 5%);
+  border-bottom: 1px solid var(--border);
+}
+.header-left { display: flex; align-items: center; gap: 40px; }
+.logo-link img { height: 44px; width: auto; display: block; }
+.main-nav { list-style: none; display: flex; gap: 4px; margin: 0; padding: 0; }
+.main-nav a {
+  display: block; padding: 8px 12px;
+  color: var(--text-soft); text-decoration: none;
+  font-size: 14px; letter-spacing: .02em; border-radius: 6px;
+  transition: color 160ms ease;
+}
+@media (hover: hover) and (pointer: fine) { .main-nav a:hover { color: var(--text-main); } }
+
+.header-right { display: flex; align-items: center; gap: 10px; }
+.secure {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 12.5px; color: var(--text-soft);
+  padding: 6px 11px; border-radius: 999px;
+  border: 1px solid var(--border-sub);
+}
+.secure i { color: var(--ok); font-size: 15px; }
+
+.user-chip {
+  display: flex; align-items: center; gap: 9px;
+  padding: 4px 12px 4px 4px;
+  background: var(--bg-light); border: 1px solid var(--border);
+  border-radius: 999px; font-size: 13px; color: var(--text-main);
+}
+.avatar {
+  --ah: var(--hue);
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  display: grid; place-items: center;
+  background: linear-gradient(135deg, hsl(var(--ah), 55%, 42%), hsl(var(--ah), 70%, 62%));
+  font-family: "Syne", sans-serif; font-weight: 700; font-size: 11px; color: #fff;
+  letter-spacing: .02em;
+}
+
+.icon-btn {
+  width: 38px; height: 38px; border-radius: 10px;
+  display: grid; place-items: center;
+  border: 1px solid var(--border); background: var(--bg-light);
+  color: var(--text-soft); font-size: 18px; cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease, transform 160ms var(--ease-out);
+}
+.icon-btn:active { transform: scale(.95); }
+.icon-btn[aria-expanded="true"] { color: var(--text-main); border-color: var(--accent); }
+.icon-btn[aria-expanded="true"] i { transform: rotate(60deg); }
+.icon-btn i { transition: transform 300ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) { .icon-btn:hover { color: var(--text-main); border-color: var(--accent); } }
+
+/* ----- Panneau de réglages ----- */
+.settings { position: relative; }
+.settings-panel {
+  position: absolute; right: 0; top: calc(100% + 10px); z-index: 2100;
+  width: 290px; padding: 16px;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.55);
+  transform-origin: top right;
+  opacity: 0; transform: scale(.96) translateY(-4px);
+  visibility: hidden; pointer-events: none;
+  transition: opacity 160ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s linear 200ms;
+}
+.settings-panel.is-open {
+  opacity: 1; transform: none; visibility: visible; pointer-events: auto;
+  transition: opacity 160ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s;
+}
+.panel-title {
+  font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--text-muted); font-weight: 500;
+  margin: 0 0 12px;
+}
+.theme-label { font-size: 12.5px; color: var(--text-soft); margin: 0 0 8px; }
+.swatches { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+.swatch {
+  width: 24px; height: 24px; border-radius: 7px; padding: 0;
+  border: 2px solid transparent; cursor: pointer;
+  transition: transform 160ms var(--ease-out), border-color 160ms ease;
+}
+.swatch:active { transform: scale(.9); }
+.swatch.active { border-color: #fff; box-shadow: 0 0 0 2px var(--bg-light); }
+@media (hover: hover) and (pointer: fine) { .swatch:hover { transform: scale(1.12); } }
+
+.hue-wrap {
+  position: relative; height: 18px; border-radius: 9px; cursor: pointer; margin-bottom: 12px;
+  touch-action: none;
+  background: linear-gradient(90deg, hsl(0,65%,55%), hsl(60,65%,55%), hsl(120,65%,55%), hsl(180,65%,55%), hsl(240,65%,55%), hsl(300,65%,55%), hsl(360,65%,55%));
+}
+.hue-thumb {
+  position: absolute; top: 50%; left: 0;
+  width: 18px; height: 18px; border-radius: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,.45);
+  background: hsl(var(--hue), 65%, 55%);
+  pointer-events: none;
+}
+.sat-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.sat-label { font-size: 12px; color: var(--text-muted); width: 26px; }
+input[type=range].sat-range {
+  flex: 1; height: 4px; border-radius: 4px; cursor: pointer;
+  -webkit-appearance: none; appearance: none;
+  background: linear-gradient(90deg, hsl(var(--hue),0%,55%), hsl(var(--hue),100%,55%));
+}
+input[type=range].sat-range::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--accent); border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.35);
+}
+input[type=range].sat-range::-moz-range-thumb {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--accent); border: 2px solid #fff;
+}
+.hex-wrap { display: flex; align-items: center; gap: 8px; }
+.hex-preview { width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0; border: 1px solid var(--border); }
+.hex-input {
+  flex: 1 1 auto; min-width: 0; height: 30px;
+  background: var(--bg-dark); border: 1px solid var(--border-sub);
+  border-radius: 8px; padding: 0 10px; color: var(--text-main);
+  font-size: 13px; letter-spacing: .06em; outline: none;
+  transition: border-color 160ms ease;
+}
+.hex-input:focus { border-color: var(--accent); }
+.hex-input.invalid { border-color: rgba(251,113,133,.6); color: #fca5a5; animation: shake 300ms var(--ease-out); }
+@keyframes shake { 25% { transform: translateX(-3px); } 75% { transform: translateX(3px); } }
+.hex-apply {
+  height: 30px; padding: 0 12px; border-radius: 8px; flex-shrink: 0;
+  border: 1px solid var(--border); background: var(--bg-hover);
+  color: var(--text-soft); font-size: 12.5px; cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out);
+}
+.hex-apply:active { transform: scale(.96); }
+@media (hover: hover) and (pointer: fine) { .hex-apply:hover { background: var(--accent); border-color: var(--accent); color: #fff; } }
+
+.panel-divider { height: 1px; background: var(--border-sub); margin: 16px 0; }
+.panel-item {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 8px 8px; margin: 0 -8px; border-radius: 8px;
+  font-size: 13.5px; color: var(--text-soft); cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+.panel-item i { font-size: 16px; margin-right: 8px; vertical-align: -3px; }
+@media (hover: hover) and (pointer: fine) { .panel-item:hover { background: var(--bg-hover); color: var(--text-main); } }
+.toggle { position: relative; width: 34px; height: 20px; flex-shrink: 0; }
+.toggle input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.toggle-track { position: absolute; inset: 0; border-radius: 10px; background: var(--border); transition: background-color 200ms ease; pointer-events: none; }
+.toggle-thumb {
+  position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%;
+  background: #fff; pointer-events: none;
+  transition: transform 220ms var(--ease-out);
+}
+.toggle input:checked ~ .toggle-track { background: var(--accent); }
+.toggle input:checked ~ .toggle-thumb { transform: translateX(14px); }
+.toggle input:focus-visible ~ .toggle-track { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.logout {
+  width: 100%; height: 38px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text-soft); font-size: 13.5px; cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.logout:active { transform: scale(.98); }
+@media (hover: hover) and (pointer: fine) {
+  .logout:hover { background: rgba(251,113,133,.1); color: var(--danger); border-color: rgba(251,113,133,.35); }
+}
+
+/* =========================================================
+   SOUS-BANDEAU DE L'ESPACE PRIVÉ
+   ========================================================= */
+.subnav {
+  position: fixed; top: var(--header-h); left: 0; right: 0; z-index: 1500;
+  height: var(--subnav-h);
+  background: hsl(var(--hue), var(--sat), 6%);
+  border-bottom: 1px solid var(--border-sub);
+}
+.subnav-list {
+  height: 100%; margin: 0; padding: 0 16px; list-style: none;
+  display: flex; align-items: stretch; gap: 2px;
+  overflow-x: auto; scrollbar-width: none;
+}
+.subnav-list::-webkit-scrollbar { display: none; }
+.subnav-list li { display: flex; }
+.sub-tab {
+  position: relative;
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 14px;
+  color: var(--text-soft); text-decoration: none;
+  font-size: 14px; white-space: nowrap;
+  transition: color 160ms ease;
+}
+.sub-tab i { font-size: 17px; }
+.sub-tab::after {
+  content: ""; position: absolute; left: 14px; right: 14px; bottom: -1px; height: 2px;
+  background: var(--accent); border-radius: 2px;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+.sub-tab[aria-current="page"] { color: var(--text-main); font-weight: 500; }
+.sub-tab[aria-current="page"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) { .sub-tab:hover { color: var(--text-main); } }
+.tab-badge {
+  min-width: 18px; height: 18px; padding: 0 5px;
+  display: inline-grid; place-items: center;
+  border-radius: 999px; background: var(--accent); color: #fff;
+  font-size: 11px; font-weight: 500; font-variant-numeric: tabular-nums;
+}
+.tab-badge[hidden] { display: none; }
+
+/* =========================================================
+   BARRE D'ÉTAT (bas de l'écran)
+   ========================================================= */
+.statusbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 1500;
+  height: var(--status-h);
+  display: flex; align-items: center; gap: 22px;
+  padding: 0 16px;
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border-sub);
+  font-size: 12px; color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.statusbar span { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.statusbar i { font-size: 14px; }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 20%, transparent); }
+.statusbar .push { margin-left: auto; }
+.statusbar .warn { color: #facc15; }
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+.toast {
+  position: fixed; left: 50%; bottom: calc(var(--status-h) + 18px); z-index: 4000;
+  display: flex; align-items: center; gap: 10px;
+  max-width: calc(100vw - 32px);
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: hsl(var(--hue), 30%, 12%);
+  border: 1px solid rgba(251,113,133,.35);
+  color: #fecdd3; font-size: 14px;
+  box-shadow: 0 16px 40px rgba(0,0,0,.5);
+  transform: translate(-50%, 16px); opacity: 0; pointer-events: none;
+  transition: transform 260ms var(--ease-out), opacity 200ms ease;
+}
+.toast i { font-size: 18px; color: var(--danger); flex-shrink: 0; }
+.toast.show { transform: translate(-50%, 0); opacity: 1; }
+
+
+/* =========================================================
+   PLAN DU VAISSEAU
+   ========================================================= */
+.page { padding: calc(var(--header-h) + var(--subnav-h) + 24px) 28px calc(var(--status-h) + 40px); max-width: 1560px; margin: 0 auto; }
+html.auth-pending .page { visibility: hidden; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.toast { border-color: var(--border); color: var(--text-main); }
+.toast i { color: var(--ok); }
+
+.p-hero { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: end; padding: 24px 28px; border-radius: 18px; border: 1px solid var(--border); background: radial-gradient(ellipse 60% 120% at 0% 50%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 60%), var(--bg-card); animation: fadeUp 500ms var(--ease-out) both; }
+.p-hero > div { min-width: 0; }
+.org-crumb { display: flex; align-items: center; gap: 6px; margin: 0 0 8px; font-size: 13px; color: var(--text-muted); }
+.org-crumb a { color: var(--text-soft); text-decoration: none; }
+.p-title { margin: 0; font-family: "Syne", sans-serif; font-size: 32px; font-weight: 700; letter-spacing: -.02em; color: #fff; }
+.p-sub { margin: 6px 0 0; max-width: 62ch; font-size: 15px; line-height: 1.55; color: var(--text-soft); }
+.org-stats { display: flex; margin: 0; }
+.org-stats div { padding: 4px 18px; border-left: 1px solid var(--border-sub); }
+.org-stats div:first-child { border-left: 0; padding-left: 0; }
+.org-stats dt { font-size: 12px; color: var(--text-muted); }
+.org-stats dd { margin: 2px 0 0; font-family: "Syne", sans-serif; font-size: 24px; font-weight: 700; color: var(--text-main); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* outils */
+.p-tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 16px 0 12px; }
+.seg, .deck-tabs { display: inline-flex; gap: 2px; padding: 3px; border-radius: 11px; border: 1px solid var(--border); background: var(--bg-card); }
+.mode-btn, .deck-tab { display: inline-flex; align-items: center; gap: 7px; height: 34px; padding: 0 12px; border: 0; border-radius: 8px; background: transparent; color: var(--text-soft); font-size: 13.5px; cursor: pointer; white-space: nowrap; transition: background-color 160ms ease, color 160ms ease, transform 140ms var(--ease-out); }
+.mode-btn i { font-size: 16px; }
+.deck-tab b { display: inline-grid; place-items: center; min-width: 26px; height: 20px; padding: 0 5px; border-radius: 6px; font-size: 11.5px; font-weight: 600; color: var(--text-muted); background: var(--bg-light); }
+.mode-btn[aria-pressed="true"], .deck-tab[aria-selected="true"] { background: color-mix(in srgb, var(--accent) 18%, transparent); color: #fff; }
+.deck-tab[aria-selected="true"] b { background: var(--accent); color: #fff; }
+.mode-btn:active, .deck-tab:active { transform: scale(.97); }
+@media (hover: hover) and (pointer: fine) { .mode-btn:hover, .deck-tab:hover { color: var(--text-main); } }
+.p-search { position: relative; margin-left: auto; display: flex; align-items: center; width: min(320px, 100%); }
+.p-search > i { position: absolute; left: 12px; font-size: 17px; color: var(--text-muted); pointer-events: none; }
+.p-search input { width: 100%; height: 40px; padding: 0 40px 0 38px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-main); font: inherit; font-size: 14px; }
+.p-search input::-webkit-search-cancel-button { -webkit-appearance: none; display: none; }
+.p-search input::placeholder { color: var(--text-muted); }
+.p-search input:focus { outline: none; border-color: var(--accent); }
+.p-search kbd { position: absolute; right: 10px; }
+.p-search .clear { position: absolute; right: 8px; display: none; place-items: center; width: 26px; height: 26px; border: 0; border-radius: 6px; background: var(--bg-light); color: var(--text-soft); cursor: pointer; }
+.p-search.has-q .clear { display: grid; }
+.p-search.has-q kbd { display: none; }
+.p-res { position: absolute; z-index: 40; top: calc(100% + 6px); left: 0; right: 0; margin: 0; padding: 6px; list-style: none; border-radius: 12px; border: 1px solid var(--border); background: var(--bg-main); box-shadow: 0 18px 40px rgba(0,0,0,.45); transform-origin: top; animation: popIn 160ms var(--ease-out); }
+@keyframes popIn { from { opacity: 0; transform: scale(.98) translateY(-4px); } }
+.p-res li { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 8px 10px; border-radius: 8px; font-size: 13.5px; color: var(--text-main); cursor: pointer; }
+.p-res li i { width: 8px; height: 8px; border-radius: 2px; background: var(--c); }
+.p-res li small { font-size: 12px; color: var(--text-muted); }
+.p-res li.act { background: var(--bg-light); }
+.p-res li.none { display: block; color: var(--text-muted); cursor: default; }
+
+/* zone de travail */
+.work { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 14px; align-items: stretch; }
+.stage { position: relative; height: clamp(520px, calc(100dvh - var(--header-h) - var(--subnav-h) - var(--status-h) - 150px), 860px); border-radius: 18px; border: 1px solid var(--border); overflow: hidden; background: radial-gradient(ellipse 70% 60% at 50% 45%, hsl(var(--hue), 45%, 9%), var(--bg-dark) 75%); touch-action: none; }
+.plan-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; user-select: none; -webkit-user-select: none; transition: opacity 240ms ease; }
+.plan-svg.grabbing, .x3d.grabbing { cursor: grabbing; }
+.stage[data-mode="x3d"] .plan-svg, .stage[data-mode="x3d"] .zoom, .stage[data-mode="x3d"] .scale { opacity: 0; pointer-events: none; }
+
+/* éléments du plan */
+.hull-glow { fill: hsl(var(--hue), 45%, 7%); stroke: color-mix(in srgb, var(--accent) 45%, transparent); stroke-width: 3; }
+.hull { stroke: none; pointer-events: none; }
+.zone { fill: none; stroke: color-mix(in srgb, #8b5cf6 40%, transparent); stroke-width: 1; stroke-dasharray: 4 5; vector-effect: non-scaling-stroke; pointer-events: none; }
+.room { fill: color-mix(in srgb, var(--c) 17%, hsl(var(--hue), 45%, 8%)); stroke: color-mix(in srgb, var(--c) 60%, transparent); stroke-width: 1.2; vector-effect: non-scaling-stroke; cursor: pointer; transition: fill 140ms ease, stroke 140ms ease, opacity 200ms ease; }
+.room.circ { fill: hsl(var(--hue), 40%, 11%); stroke: hsl(var(--hue), 30%, 20%); cursor: grab; }
+.room.sub { fill: color-mix(in srgb, #38bdf8 22%, hsl(var(--hue), 45%, 9%)); stroke: color-mix(in srgb, #38bdf8 55%, transparent); }
+@media (hover: hover) and (pointer: fine) { .room:not(.circ):hover { fill: color-mix(in srgb, var(--c) 34%, hsl(var(--hue), 45%, 9%)); stroke: var(--c); } }
+.room:focus-visible { outline: none; stroke: #fff; stroke-width: 2; }
+.room.sel { fill: color-mix(in srgb, var(--c) 45%, hsl(var(--hue), 45%, 9%)); stroke: #fff; stroke-width: 2.2; }
+.cat-mode .room:not(.cat-on):not(.circ) { opacity: .18; }
+.cat-mode .room.cat-on { fill: color-mix(in srgb, var(--c) 38%, hsl(var(--hue), 45%, 9%)); stroke: var(--c); }
+.detail { fill: none; stroke: color-mix(in srgb, #8b5cf6 30%, transparent); stroke-width: 1; vector-effect: non-scaling-stroke; pointer-events: none; }
+.cell { fill: hsl(var(--hue), 40%, 12%); stroke: color-mix(in srgb, #8b5cf6 40%, transparent); stroke-width: 1; vector-effect: non-scaling-stroke; pointer-events: none; }
+.shaft { pointer-events: none; }
+.shaft rect { fill: hsl(var(--hue), 45%, 8%); stroke: #94a3b8; stroke-width: 1; vector-effect: non-scaling-stroke; }
+.shaft path { fill: none; stroke: #cbd5e1; stroke-width: 1.4; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }
+.nozzle { fill: hsl(var(--hue), 30%, 14%); stroke: color-mix(in srgb, #ea580c 50%, transparent); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.plume { fill: #ea580c; opacity: .35; filter: blur(6px); animation: plume 2.4s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 0; }
+@keyframes plume { 50% { opacity: .6; transform: scaleY(1.25); } }
+.lbl { font-family: "DM Sans", sans-serif; fill: #e2e8f0; text-anchor: middle; dominant-baseline: central; paint-order: stroke; stroke: hsl(var(--hue), 45%, 8%); stroke-width: 2.5px; stroke-linejoin: round; opacity: 0; pointer-events: none; transition: opacity 160ms ease; }
+.lbl.on { opacity: 1; }
+.lbl-c { fill: #7c8bb5; font-style: italic; }
+.lbl.sel { fill: #fff; font-weight: 600; }
+.cat-mode .lbl:not(.cat-on) { opacity: .12; }
+.zone-lbl { font-family: "DM Sans", sans-serif; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; fill: #a5b4fc; text-anchor: middle; opacity: 0; transition: opacity 160ms ease; pointer-events: none; }
+.zone-lbl.on { opacity: .8; }
+.bow { font-family: "DM Mono", monospace; font-size: 12px; letter-spacing: .4em; fill: #5b6b95; text-anchor: middle; pointer-events: none; }
+.deck-tag { font-family: "DM Sans", sans-serif; font-size: 34px; fill: #cbd5e1; text-anchor: end; }
+
+/* outils du plan */
+.zoom { position: absolute; right: 14px; bottom: 14px; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 4px; border-radius: 12px; border: 1px solid var(--border); background: color-mix(in srgb, var(--bg-main) 88%, transparent); transition: opacity 200ms ease; }
+.zoom button { display: grid; place-items: center; width: 34px; height: 34px; border: 0; border-radius: 8px; background: transparent; color: var(--text-soft); font-size: 17px; cursor: pointer; transition: background-color 140ms ease, transform 120ms var(--ease-out); }
+.zoom button:active { transform: scale(.94); }
+@media (hover: hover) and (pointer: fine) { .zoom button:hover { background: var(--bg-light); color: #fff; } }
+.zoom span { font-size: 11px; color: var(--text-muted); font-variant-numeric: tabular-nums; padding: 2px 0; }
+.scale { position: absolute; left: 16px; bottom: 16px; display: flex; flex-direction: column; gap: 4px; font-size: 11.5px; color: var(--text-muted); pointer-events: none; transition: opacity 200ms ease; }
+.scale span { display: block; height: 6px; width: 60px; border: 1px solid #7c8bb5; border-top: 0; }
+.ptip { position: absolute; left: 0; top: 0; z-index: 20; display: grid; grid-template-columns: 10px auto; gap: 2px 8px; align-items: center; max-width: 260px; padding: 8px 11px; border-radius: 10px; border: 1px solid var(--border); background: color-mix(in srgb, var(--bg-main) 94%, transparent); box-shadow: 0 10px 30px rgba(0,0,0,.4); pointer-events: none; opacity: 0; transition: opacity 120ms ease; }
+.ptip.show { opacity: 1; }
+.ptip i { width: 8px; height: 8px; border-radius: 2px; background: var(--c); }
+.ptip b { font-size: 13px; font-weight: 500; color: #fff; }
+.ptip span { grid-column: 2; font-size: 11.5px; color: var(--text-muted); }
+
+/* vue éclatée */
+.x3d { position: absolute; inset: 0; perspective: 2400px; perspective-origin: 50% 35%; opacity: 0; pointer-events: none; transition: opacity 260ms ease; cursor: grab; overflow: hidden; }
+.stage[data-mode="x3d"] .x3d { opacity: 1; pointer-events: auto; }
+.stack-wrap { position: absolute; left: 50%; top: 52%; width: 0; height: 0; transform-origin: 0 0; transform-style: preserve-3d; }
+.stack { position: absolute; left: 0; top: 0; width: 1400px; height: 940px; transform-style: preserve-3d; will-change: transform; }
+.xdeck { position: absolute; inset: 0; transform: translateZ(calc((var(--z) - 1) * 260px)); transform-style: preserve-3d; opacity: .42; transition: opacity 220ms ease; }
+.xdeck.active { opacity: 1; }
+.xdeck svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.xdeck:not(.active) .room { pointer-events: none; }
+.xdeck .hull-glow { cursor: pointer; }
+.xdeck.active .hull-glow { stroke: var(--accent); stroke-width: 4; }
+.xshaft { position: absolute; left: var(--sx); top: var(--sy); width: 3px; height: 520px; margin-left: -1.5px; transform-origin: 50% 0; transform: translateZ(260px) rotateX(-90deg); background: linear-gradient(#94a3b8, transparent 50%, #94a3b8); opacity: .5; pointer-events: none; }
+.x-hint { position: absolute; left: 16px; bottom: 14px; margin: 0; display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--text-muted); pointer-events: none; }
+.x-hint i { font-size: 16px; }
+
+/* panneau */
+.panel { position: relative; height: clamp(520px, calc(100dvh - var(--header-h) - var(--subnav-h) - var(--status-h) - 150px), 860px); overflow-y: auto; padding: 20px; border-radius: 18px; border: 1px solid var(--border); background: var(--bg-card); }
+.panel > * { animation: panIn 220ms var(--ease-out) both; }
+@keyframes panIn { from { opacity: 0; transform: translateY(4px); filter: blur(2px); } }
+.pn-back { display: inline-flex; align-items: center; gap: 6px; margin: -4px 0 14px; padding: 6px 10px 6px 6px; border: 0; border-radius: 8px; background: transparent; color: var(--text-soft); font-size: 13px; cursor: pointer; transition: background-color 140ms ease; }
+.pn-back:active { transform: scale(.97); }
+@media (hover: hover) and (pointer: fine) { .pn-back:hover { background: var(--bg-light); color: #fff; } }
+.pn-cat { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: color-mix(in srgb, var(--c) 70%, #fff); }
+.pn-cat i { width: 9px; height: 9px; border-radius: 3px; background: var(--c); }
+.pn-head h2 { margin: 8px 0 2px; font-family: "Syne", sans-serif; font-size: 22px; font-weight: 700; line-height: 1.2; color: #fff; }
+.pn-where { margin: 0; font-size: 13px; color: var(--text-muted); }
+.pn-desc { margin: 14px 0 16px; font-size: 14px; line-height: 1.6; color: var(--text-soft); }
+.pn-dims { display: grid; grid-template-columns: repeat(3, auto); justify-content: space-between; margin: 0 0 18px; border-top: 1px solid var(--border-sub); border-bottom: 1px solid var(--border-sub); }
+.pn-dims div { padding: 10px 8px 10px 0; }
+.pn-dims div + div { padding-left: 10px; border-left: 1px solid var(--border-sub); }
+.pn-dims dt { font-size: 11.5px; color: var(--text-muted); }
+.pn-dims dd { margin: 3px 0 0; white-space: nowrap; font-size: 13.5px; color: var(--text-main); font-variant-numeric: tabular-nums; }
+.pn-sec h3 { margin: 0 0 8px; font-size: 11.5px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); }
+.pn-sec + .pn-sec { margin-top: 16px; }
+.pn-list, .legend { display: grid; gap: 2px; }
+.pn-li, .lg { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto; gap: 10px; align-items: center; width: 100%; padding: 8px 8px; border: 0; border-radius: 9px; background: transparent; color: var(--text-main); font: inherit; font-size: 13.5px; text-align: left; cursor: pointer; transition: background-color 140ms ease, opacity 160ms ease; }
+.pn-li i, .lg i { width: 9px; height: 9px; border-radius: 3px; background: var(--c); }
+.pn-li small, .lg em { font-style: normal; font-size: 12px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.pn-li:active, .lg:active { transform: scale(.985); }
+@media (hover: hover) and (pointer: fine) { .pn-li:hover, .lg:hover { background: var(--bg-light); } }
+.lg.on { background: color-mix(in srgb, var(--c) 16%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 50%, transparent); }
+.lg.none { opacity: .4; cursor: default; }
+.pn-hint { margin: 10px 0 0; font-size: 12.5px; line-height: 1.5; color: var(--text-muted); }
+.org-note { display: flex; gap: 10px; align-items: flex-start; margin: 16px 0 0; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border-sub); font-size: 13px; line-height: 1.55; color: var(--text-muted); }
+.org-note i { font-size: 17px; margin-top: 1px; }
+
+@media (prefers-reduced-motion: reduce) { .plume { animation: none; } .panel > * { animation: none; } }
+@media (max-width: 1100px) {
+  .work { grid-template-columns: 1fr; }
+  .panel { height: auto; max-height: none; }
+  .p-hero { grid-template-columns: 1fr; align-items: start; }
+  .p-search { margin-left: 0; width: 100%; order: 3; }
+}
+@media (max-width: 720px) {
+  .page { padding-left: 16px; padding-right: 16px; }
+  .p-hero { padding: 20px; }
+  .p-title { font-size: 26px; }
+  .org-stats { display: grid; grid-template-columns: repeat(4, auto); justify-content: start; }
+  .org-stats div { padding: 2px 10px; }
+  .org-stats dd { font-size: 19px; }
+  .org-stats dt { font-size: 11px; }
+  .p-tools { gap: 8px; }
+  .seg, .deck-tabs { width: 100%; }
+  .mode-btn, .deck-tab { flex: 1; justify-content: center; padding: 0 6px; font-size: 12.5px; }
+  .deck-tab { flex-direction: column; gap: 1px; height: 46px; }
+  .stage { height: auto; aspect-ratio: 4 / 5; min-height: 0; }
+  .p-search kbd { display: none; }
+  .x-hint { right: 16px; }
+}
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1100px) {
+  .main-nav { display: none; }
+  .secure { display: none; }
+}
+@media (max-width: 720px) {
+  :root { --header-h: 60px; }
+  .site-header { padding: 0 14px; }
+  .logo-link img { height: 36px; }
+  #userLabel { display: none; }
+  .user-chip { padding: 3px; }
+  .statusbar .hide-sm { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
+}
+</style>
+</head>
+
+<body>
+
+<a class="skip-link sr-only" href="#contenu">Aller au contenu</a>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <div class="header-left">
+    <a href="index.html" class="logo-link" aria-label="IFRAS, accueil"><img src="logo.png" alt="Logo IFRAS" width="44" height="44"></a>
+    <nav aria-label="Navigation principale">
+      <ul class="main-nav">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="recherche.html">Recherche</a></li>
+        <li><a href="programmes.html">Programmes</a></li>
+        <li><a href="publications.html">Publications</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="header-right">
+    <span class="secure"><i class="ph-light ph-shield-check" aria-hidden="true"></i> Espace sécurisé</span>
+    <div class="user-chip" title="Compte connecté">
+      <span class="avatar" id="userAvatar">?</span>
+      <span id="userLabel">…</span>
+    </div>
+
+    <div class="settings">
+      <button class="icon-btn" id="settingsBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="settingsPanel" aria-label="Paramètres">
+        <i class="ph-light ph-gear-six" aria-hidden="true"></i>
+      </button>
+
+      <div class="settings-panel" id="settingsPanel" role="dialog" aria-label="Paramètres">
+        <p class="panel-title">Apparence</p>
+        <p class="theme-label">Couleur principale</p>
+        <div class="swatches" id="swatches"></div>
+
+        <p class="theme-label">Teinte personnalisée</p>
+        <div class="hue-wrap" id="hueWrap" role="slider" tabindex="0" aria-label="Teinte" aria-valuemin="0" aria-valuemax="360" aria-valuenow="228">
+          <span class="hue-thumb" id="hueThumb"></span>
+        </div>
+        <div class="sat-wrap">
+          <span class="sat-label">Sat.</span>
+          <input type="range" class="sat-range" id="satRange" min="20" max="90" value="65" aria-label="Saturation">
+        </div>
+
+        <p class="theme-label">Code HEX</p>
+        <div class="hex-wrap">
+          <span class="hex-preview" id="hexPreview"></span>
+          <input type="text" class="hex-input" id="hexInput" placeholder="#4f6bed" maxlength="7" spellcheck="false" autocomplete="off" aria-label="Couleur au format HEX">
+          <button class="hex-apply" id="hexApply" type="button">Appliquer</button>
+        </div>
+
+        <div class="panel-divider"></div>
+        <button class="logout" id="logoutBtn" type="button"><i class="ph-light ph-sign-out" aria-hidden="true"></i> Déconnexion</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== SOUS-BANDEAU ===== -->
+<nav class="subnav" aria-label="Espace personnel">
+  <ul class="subnav-list">
+    <li><a href="messagerie.html" class="sub-tab"><i class="ph-light ph-envelope-simple" aria-hidden="true"></i> Messagerie</a></li>
+    <li><a href="coffre-fort.html" class="sub-tab" aria-current="page"><i class="ph-light ph-vault" aria-hidden="true"></i> Coffre-fort</a></li>
+    <li><a href="profil.html" class="sub-tab"><i class="ph-light ph-user-circle" aria-hidden="true"></i> Profil</a></li>
+    <li><a href="tableau-de-bord.html" class="sub-tab"><i class="ph-light ph-squares-four" aria-hidden="true"></i> Tableau de bord</a></li>
+    <li><a href="annuaire.html" class="sub-tab"><i class="ph-light ph-address-book" aria-hidden="true"></i> Annuaire</a></li>
+    <li><a href="boutique.html" class="sub-tab"><i class="ph-light ph-storefront" aria-hidden="true"></i> Boutique</a></li>
+  </ul>
+</nav>
+
+
+<!-- ===== CONTENU ===== -->
+<div class="page">
+  <main id="contenu">
+    <section class="p-hero" aria-labelledby="p-title">
+      <div>
+        <p class="org-crumb"><a href="coffre-fort.html">Coffre-fort</a><i class="ph-light ph-caret-right" aria-hidden="true"></i><span>Archive publique</span></p>
+        <h1 class="p-title" id="p-title">Vaisseau Orion</h1>
+        <p class="p-sub">Plan d'architecture des trois ponts. Choisissez un pont, zoomez, puis touchez une salle pour afficher sa fiche.</p>
+      </div>
+      <dl class="org-stats" id="pStats"></dl>
+    </section>
+
+    <div class="p-tools">
+      <div class="seg" role="group" aria-label="Type de vue">
+        <button type="button" class="mode-btn" data-mode="plan" aria-pressed="true"><i class="ph-light ph-squares-four" aria-hidden="true"></i>Plan</button>
+        <button type="button" class="mode-btn" data-mode="x3d" aria-pressed="false"><i class="ph-light ph-stack" aria-hidden="true"></i>Vue éclatée 3D</button>
+      </div>
+      <div class="deck-tabs" role="tablist" aria-label="Ponts" id="deckTabs">
+        <button type="button" class="deck-tab" role="tab" aria-selected="false" tabindex="-1"><b>+1</b>Pont supérieur</button>
+        <button type="button" class="deck-tab" role="tab" aria-selected="true" tabindex="0"><b>0</b>Pont principal</button>
+        <button type="button" class="deck-tab" role="tab" aria-selected="false" tabindex="-1"><b>−1</b>Pont inférieur</button>
+      </div>
+      <div class="p-search" id="psearch">
+        <i class="ph-light ph-magnifying-glass" aria-hidden="true"></i>
+        <input type="search" id="pq" placeholder="Rechercher une salle…" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false" aria-controls="pres" aria-autocomplete="list" aria-label="Rechercher une salle">
+        <kbd aria-hidden="true">/</kbd>
+        <button type="button" class="clear" id="pclear" aria-label="Effacer"><i class="ph-light ph-x" aria-hidden="true"></i></button>
+        <ul class="p-res" id="pres" role="listbox" hidden></ul>
+      </div>
+    </div>
+
+    <div class="work">
+      <div class="stage" id="stage" data-mode="plan">
+        <svg id="planSvg" class="plan-svg" role="application" aria-label="Plan du pont, glisser pour déplacer, molette pour zoomer"></svg>
+        <div class="x3d" id="x3d" aria-label="Vue éclatée des trois ponts">
+          <div class="stack-wrap" id="stackWrap">
+            <div class="stack" id="stack">
+              <div class="xdeck" data-i="0" style="--z:2"><svg id="x-p2" class="stage-svg"></svg></div>
+              <div class="xdeck active" data-i="1" style="--z:1"><svg id="x-p1" class="stage-svg"></svg></div>
+              <div class="xdeck" data-i="2" style="--z:0"><svg id="x-p0" class="stage-svg"></svg></div>
+              <span class="xshaft" style="--sx:575px;--sy:410px"></span>
+              <span class="xshaft" style="--sx:825px;--sy:410px"></span>
+            </div>
+          </div>
+          <p class="x-hint"><i class="ph-light ph-hand-grabbing" aria-hidden="true"></i>Glissez pour faire pivoter. Touchez un pont pour le sélectionner.</p>
+        </div>
+        <div class="zoom" aria-label="Zoom">
+          <button type="button" id="zIn" aria-label="Zoomer"><i class="ph-light ph-plus" aria-hidden="true"></i></button>
+          <span id="zoomVal">100 %</span>
+          <button type="button" id="zOut" aria-label="Dézoomer"><i class="ph-light ph-minus" aria-hidden="true"></i></button>
+          <button type="button" id="zFit" aria-label="Tout voir"><i class="ph-light ph-corners-out" aria-hidden="true"></i></button>
+        </div>
+        <div class="scale" aria-hidden="true"><span></span>10 m</div>
+        <div class="ptip" id="ptip" role="tooltip"></div>
+      </div>
+      <aside class="panel" id="panel" aria-live="polite" aria-labelledby="pnTitle"></aside>
+    </div>
+
+    <p class="org-note"><i class="ph-light ph-info" aria-hidden="true"></i><span>Document interne, étude d'architecture. Échelle : 1 carreau de la grille = 1 m. Les surfaces sont indicatives.</span></p>
+  </main>
+</div>
+
+<!-- ===== BARRE D'ÉTAT ===== -->
+<footer class="statusbar" aria-label="État de la session">
+  <span><span class="status-dot" aria-hidden="true"></span> Connecté</span>
+  <span class="hide-sm"><i class="ph-light ph-lock-simple" aria-hidden="true"></i> Document interne</span>
+  <span class="push" id="idleLabel"><i class="ph-light ph-timer" aria-hidden="true"></i> Déconnexion auto dans 10:00</span>
+</footer>
+
+<div class="toast" id="toast" role="status"><i class="ph-light ph-check-circle" aria-hidden="true"></i><span></span></div>
+
+<script>
+/* ============================================================
+   SUPABASE (inchangé)
+   ============================================================ */
+const _sb = supabase.createClient(
+  "https://fqijbltymdeudnlitcrs.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZxaWpibHR5bWRldWRubGl0Y3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzOTQ2NDQsImV4cCI6MjA4NTk3MDY0NH0.HZA0VxkaRTGLRTBA0Vz51mJjw8Xuj8f__yzaQKpGfbE"
+);
+
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+/* ============================================================
+   THÈME (même logique que l'original : presets, teinte, saturation, HEX)
+   ============================================================ */
+const PRESETS = [
+  { label: 'Bleu IFRAS', h: 228, s: 65 },
+  { label: 'Indigo',     h: 248, s: 60 },
+  { label: 'Violet',     h: 270, s: 55 },
+  { label: 'Cyan',       h: 195, s: 65 },
+  { label: 'Vert',       h: 152, s: 55 },
+  { label: 'Émeraude',   h: 168, s: 60 },
+  { label: 'Ambre',      h: 38,  s: 75 },
+  { label: 'Rouge',      h: 355, s: 60 },
+  { label: 'Rose',       h: 330, s: 60 },
+  { label: 'Noir',       h: 228, s: 10, special: 'dark' },
+  { label: 'Blanc',      h: 228, s: 10, special: 'light' },
+];
+const THEME_VARS = ['--bg-dark', '--bg-main', '--bg-light', '--bg-hover', '--bg-card', '--border', '--border-sub', '--accent', '--accent-dim', '--text-main', '--text-soft', '--text-muted', '--unread-dot'];
+const SPECIAL = {
+  dark:  { header: 'hsl(0,0%,4%)', sub: 'hsl(0,0%,5%)', vars: ['hsl(0,0%,3%)', 'hsl(0,0%,6%)', 'hsl(0,0%,9%)', 'hsl(0,0%,13%)', 'hsl(0,0%,7%)', 'hsl(0,0%,18%)', 'hsl(0,0%,12%)', 'hsl(228,65%,60%)', 'hsl(228,55%,45%)', 'hsl(0,0%,90%)', 'hsl(0,0%,62%)', 'hsl(0,0%,44%)', 'hsl(228,70%,65%)'] },
+  light: { header: 'hsl(220,20%,95%)', sub: 'hsl(220,20%,94%)', vars: ['hsl(220,20%,96%)', 'hsl(220,20%,98%)', 'hsl(220,15%,93%)', 'hsl(220,15%,89%)', 'hsl(0,0%,100%)', 'hsl(220,15%,82%)', 'hsl(220,15%,88%)', 'hsl(228,65%,55%)', 'hsl(228,55%,40%)', 'hsl(220,25%,15%)', 'hsl(220,15%,38%)', 'hsl(220,10%,52%)', 'hsl(228,70%,55%)'] }
+};
+
+let currentH = 228, currentS = 65, currentSpecial = null;
+
+function setVisual(h, s, special) {
+  const root = document.documentElement;
+  const header = document.querySelector('.site-header');
+  const sub = document.querySelector('.subnav');
+  root.classList.toggle('theme-light', special === 'light');
+  if (special && SPECIAL[special]) {
+    const cfg = SPECIAL[special];
+    root.style.setProperty('--hue', 228);
+    root.style.setProperty('--sat', '8%');
+    THEME_VARS.forEach((v, i) => root.style.setProperty(v, cfg.vars[i]));
+    header.style.background = cfg.header;
+    sub.style.background = cfg.sub;
+    document.querySelector('meta[name="theme-color"]').content = cfg.header;
+  } else {
+    THEME_VARS.forEach((v) => root.style.removeProperty(v));
+    header.style.background = ''; sub.style.background = '';
+    root.style.setProperty('--hue', h);
+    root.style.setProperty('--sat', s + '%');
+  }
+  $('satRange').value = s;
+  updateHueThumb(h);
+  updateSwatches(h, s, special);
+  $('hexPreview').style.background = `hsl(${h},${s}%,55%)`;
+}
+
+function applyTheme(h, s, special) {
+  currentH = h; currentS = s; currentSpecial = special || null;
+  setVisual(h, s, special);
+  /* on vide le champ HEX (plus de valeur manuelle) puis on ré-affiche le message ouvert */
+  const hexInp = $('hexInput');
+  if (hexInp) { hexInp.value = ''; hexInp.classList.remove('invalid'); }
+  try { sessionStorage.setItem('ifras_theme', JSON.stringify({ h, s, special: special || null })); } catch (e) {}
+}
+
+
+function updateHueThumb(h) {
+  $('hueThumb').style.left = (h / 360 * 100) + '%';
+  $('hueWrap').setAttribute('aria-valuenow', h);
+}
+function updateSwatches(h, s, special) {
+  document.querySelectorAll('.swatch').forEach((sw) => {
+    const match = special
+      ? sw.dataset.special === special
+      : Number(sw.dataset.h) === h && Number(sw.dataset.s) === s && !sw.dataset.special;
+    sw.classList.toggle('active', match);
+    sw.setAttribute('aria-pressed', String(match));
+  });
+}
+
+function normalizeHex(hex) {
+  if (!hex || typeof hex !== 'string') return null;
+  hex = hex.trim().toLowerCase();
+  if (/^#[0-9a-f]{3}$/.test(hex)) return '#' + hex[1] + hex[1] + hex[2] + hex[2] + hex[3] + hex[3];
+  if (/^#[0-9a-f]{6}$/.test(hex)) return hex;
+  return null;
+}
+function colorsMatch(a, b) {
+  const na = normalizeHex(a), nb = normalizeHex(b);
+  return na && nb && na === nb;
+}
+
+function applyHex() {
+  const inp = $('hexInput');
+  const val = inp.value.trim();
+  const norm = normalizeHex(val);
+  if (!norm) {
+    inp.classList.remove('invalid'); void inp.offsetWidth; inp.classList.add('invalid');
+    return;
+  }
+  inp.classList.remove('invalid');
+  /* conversion en teinte / saturation */
+  const hex = norm.slice(1);
+  const r = parseInt(hex.slice(0, 2), 16) / 255, g = parseInt(hex.slice(2, 4), 16) / 255, b = parseInt(hex.slice(4, 6), 16) / 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  let hh = 0, ss = 0; const ll = (max + min) / 2;
+  if (max !== min) {
+    const d = max - min;
+    ss = ll > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: hh = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+      case g: hh = ((b - r) / d + 2) / 6; break;
+      case b: hh = ((r - g) / d + 4) / 6; break;
+    }
+  }
+  applyTheme(Math.round(hh * 360), Math.round(ss * 100), null);
+}
+
+(function buildSwatches() {
+  const wrap = $('swatches');
+  PRESETS.forEach((p) => {
+    const sw = document.createElement('button');
+    sw.type = 'button';
+    sw.className = 'swatch';
+    sw.dataset.h = p.h; sw.dataset.s = p.s;
+    if (p.special) sw.dataset.special = p.special;
+    sw.title = p.label;
+    sw.setAttribute('aria-label', p.label);
+    sw.style.background = p.special === 'dark' ? '#111' : p.special === 'light' ? '#eee' : `hsl(${p.h},${p.s}%,55%)`;
+    if (p.h === 228 && !p.special) sw.classList.add('active');
+    sw.addEventListener('click', () => applyTheme(p.h, p.s, p.special));
+    wrap.appendChild(sw);
+  });
+  $('hexPreview').style.background = `hsl(${currentH},${currentS}%,55%)`;
+})();
+
+/* barre de teinte : souris, doigt et clavier */
+(function initHueBar() {
+  const wrap = $('hueWrap');
+  let dragging = false;
+  const setFrom = (e) => {
+    const rect = wrap.getBoundingClientRect();
+    const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+    applyTheme(Math.round(x / rect.width * 360), currentS, null);
+  };
+  wrap.addEventListener('pointerdown', (e) => { dragging = true; wrap.setPointerCapture(e.pointerId); setFrom(e); });
+  wrap.addEventListener('pointermove', (e) => { if (dragging) setFrom(e); });
+  wrap.addEventListener('pointerup', () => { dragging = false; });
+  wrap.addEventListener('keydown', (e) => {
+    const step = e.shiftKey ? 20 : 5;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { e.preventDefault(); applyTheme((currentH + step) % 360, currentS, null); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { e.preventDefault(); applyTheme((currentH - step + 360) % 360, currentS, null); }
+  });
+  updateHueThumb(currentH);
+})();
+$('satRange').addEventListener('input', function () { applyTheme(currentH, parseInt(this.value, 10), null); });
+$('hexApply').addEventListener('click', applyHex);
+$('hexInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') applyHex(); });
+$('hexInput').addEventListener('input', function () {
+  const n = normalizeHex(this.value);
+  if (n) $('hexPreview').style.background = n;
+  this.classList.remove('invalid');
+});
+
+/* ============================================================
+   PANNEAU DE RÉGLAGES
+   ============================================================ */
+const settingsBtn = $('settingsBtn'), settingsPanel = $('settingsPanel');
+const setSettings = (open) => {
+  settingsPanel.classList.toggle('is-open', open);
+  settingsBtn.setAttribute('aria-expanded', String(open));
+};
+settingsBtn.addEventListener('click', () => setSettings(!settingsPanel.classList.contains('is-open')));
+document.addEventListener('click', (e) => { if (!e.target.closest('.settings')) setSettings(false); });
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+let toastTimer = null;
+function showToast(msg) {
+  const t = $('toast');
+  t.querySelector('span').textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+/* ============================================================
+   AUTH (inchangé) + décompte d'inactivité visible
+   ============================================================ */
+async function logout() {
+  try { sessionStorage.removeItem('ifras_theme'); } catch (e) {}
+  await _sb.auth.signOut();
+  window.location.href = 'connexion.html';
+}
+$('logoutBtn').addEventListener('click', logout);
+_sb.auth.onAuthStateChange((ev) => { if (ev === 'SIGNED_OUT') window.location.href = 'connexion.html'; });
+
+const IDLE_MS = 10 * 60 * 1000;
+let idleDeadline = Date.now() + IDLE_MS, inactivityTimer = null;
+function resetInactivityTimer() {
+  idleDeadline = Date.now() + IDLE_MS;
+  clearTimeout(inactivityTimer);
+  inactivityTimer = setTimeout(logout, IDLE_MS);
+}
+['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll', 'click'].forEach((e) =>
+  document.addEventListener(e, resetInactivityTimer, { passive: true, capture: true }));
+resetInactivityTimer();
+setInterval(() => {
+  const left = Math.max(0, idleDeadline - Date.now());
+  const el = $('idleLabel');
+  el.innerHTML = `<i class="ph-light ph-timer" aria-hidden="true"></i> Déconnexion auto dans ${Math.floor(left / 60000)}:${String(Math.floor(left / 1000) % 60).padStart(2, '0')}`;
+  el.classList.toggle('warn', left < 60000);
+}, 1000);
+
+function initials(email) {
+  const p = String(email || '?').split('@')[0].split(/[._-]/);
+  return ((p[0] || '?')[0] + (p[1] ? p[1][0] : '')).toUpperCase();
+}
+function hueOf(str) { let h = 0; for (const c of String(str)) h = (h * 31 + c.charCodeAt(0)) % 360; return h; }
+
+
+const DATA = {"decks":[{"id":"p2","n":"Pont supérieur","lv":"+1","rooms":[{"id":"p2-c0","n":"Axe principal","x":290,"y":390,"w":820,"h":40,"c":"circ"},{"id":"p2-c1","n":"Couloir transversal avant","x":560,"y":150,"w":30,"h":240,"c":"circ"},{"id":"p2-c2","n":"Couloir transversal arrière","x":810,"y":150,"w":30,"h":240,"c":"circ"},{"id":"p2-c3","n":"Coursive avant bâbord","x":290,"y":70,"w":270,"h":20,"c":"circ"},{"id":"p2-c4","n":"Coursive avant tribord","x":840,"y":70,"w":270,"h":20,"c":"circ"},{"id":"p2-c5","n":"Couloir d'aile B","x":290,"y":90,"w":20,"h":300,"c":"circ"},{"id":"p2-c6","n":"Couloir d'aile C","x":1090,"y":90,"w":20,"h":300,"c":"circ"},{"id":"p2-c7","n":"Couloir d'aile D","x":290,"y":430,"w":20,"h":300,"c":"circ"},{"id":"p2-c8","n":"Couloir d'aile E","x":1090,"y":430,"w":20,"h":300,"c":"circ"},{"id":"p2-c9","n":"Couloir pré-propulsion","x":290,"y":730,"w":820,"h":20,"c":"circ"},{"id":"p2-0","n":"Dôme d'observation","x":560,"y":20,"w":280,"h":130,"c":"vie"},{"id":"p2-1","n":"Baie avionique","x":590,"y":150,"w":220,"h":60,"c":"cmd"},{"id":"p2-2","n":"Abri anti-radiations","x":590,"y":210,"w":220,"h":180,"c":"secu"},{"id":"p2-3","n":"Réserve d'eau, bouclier B","x":310,"y":90,"w":250,"h":300,"c":"tech"},{"id":"p2-4","n":"Réserve d'eau, bouclier C","x":840,"y":90,"w":250,"h":300,"c":"tech"},{"id":"p2-5","n":"Radiateurs thermiques bâbord","x":130,"y":70,"w":160,"h":320,"c":"energie"},{"id":"p2-6","n":"Radiateurs thermiques tribord","x":1110,"y":70,"w":160,"h":320,"c":"energie"},{"id":"p2-7","n":"Banque de semences","x":130,"y":430,"w":160,"h":300,"c":"bio"},{"id":"p2-8","n":"Salle des antennes","x":1110,"y":430,"w":160,"h":300,"c":"cmd"},{"id":"p2-9","n":"Centre de simulation et formation","x":560,"y":430,"w":280,"h":210,"c":"vie"},{"id":"p2-10","n":"Salle de repos","x":560,"y":640,"w":170,"h":90,"c":"vie"},{"id":"p2-11","n":"Réserve d'eau, bouclier D","x":310,"y":430,"w":250,"h":300,"c":"tech"},{"id":"p2-12","n":"Réserve d'eau, bouclier E","x":840,"y":430,"w":250,"h":300,"c":"tech"},{"id":"p2-13","n":"Stockage haut","x":730,"y":640,"w":110,"h":90,"c":"tech"},{"id":"p2-14","n":"Radiateurs de propulsion","x":560,"y":750,"w":280,"h":70,"c":"energie"}],"zones":[]},{"id":"p1","n":"Pont principal","lv":"0","rooms":[{"id":"p1-r0","n":"Axe principal","x":290,"y":390,"w":820,"h":40,"c":"circ"},{"id":"p1-r1","n":"Couloir transversal avant","x":560,"y":150,"w":30,"h":240,"c":"circ"},{"id":"p1-r2","n":"Couloir transversal arrière","x":810,"y":150,"w":30,"h":240,"c":"circ"},{"id":"p1-r3","n":"Poste de commandement","x":560,"y":20,"w":280,"h":130,"c":"cmd"},{"id":"p1-r4","n":"Console de navigation","x":560,"y":20,"w":90,"h":30,"c":"cmd"},{"id":"p1-r5","n":"Console communications","x":750,"y":20,"w":90,"h":30,"c":"cmd"},{"id":"p1-r6","n":"Chambre de propulsion ionique","x":560,"y":750,"w":280,"h":50,"c":"energie"},{"id":"p1-r7","n":"Réacteur alpha","x":560,"y":800,"w":70,"h":40,"c":"energie"},{"id":"p1-r8","n":"Réacteur beta","x":630,"y":800,"w":70,"h":40,"c":"energie"},{"id":"p1-r9","n":"Réacteur gamma","x":700,"y":800,"w":70,"h":40,"c":"energie"},{"id":"p1-r11","n":"Couloir interne B","x":420,"y":90,"w":30,"h":300,"c":"circ"},{"id":"p1-r23","n":"Couloir interne C","x":950,"y":90,"w":30,"h":300,"c":"circ"},{"id":"p1-r35","n":"Couloir interne D","x":420,"y":430,"w":30,"h":300,"c":"circ"},{"id":"p1-r47","n":"Couloir interne E","x":950,"y":430,"w":30,"h":300,"c":"circ"},{"id":"p1-r58","n":"Centre médical et chirurgie","x":130,"y":480,"w":160,"h":170,"c":"sante"},{"id":"p1-r59","n":"Bloc opératoire","x":130,"y":480,"w":80,"h":40,"c":"sante"},{"id":"p1-r60","n":"Soins vétérinaires","x":210,"y":480,"w":80,"h":40,"c":"sante"},{"id":"p1-r61","n":"Pharmacie","x":130,"y":620,"w":50,"h":30,"c":"sante"},{"id":"p1-r62","n":"Salle de conférence et briefing","x":1110,"y":210,"w":160,"h":130,"c":"vie"},{"id":"p1-r63","n":"Salle serveurs","x":1110,"y":340,"w":130,"h":50,"c":"tech"},{"id":"p1-r64","n":"Laboratoire de phytobiologie","x":130,"y":650,"w":160,"h":40,"c":"bio"},{"id":"p1-r65","n":"Hydroponie alpha (récolte)","x":130,"y":280,"w":35,"h":110,"c":"bio"},{"id":"p1-r66","n":"Rangée de culture A","x":130,"y":70,"w":70,"h":60,"c":"bio"},{"id":"p1-r67","n":"Rangée de culture B","x":130,"y":130,"w":70,"h":60,"c":"bio"},{"id":"p1-r68","n":"Hydroponie beta (récolte)","x":165,"y":280,"w":35,"h":110,"c":"bio"},{"id":"p1-r69","n":"Rangée de culture C","x":130,"y":220,"w":70,"h":60,"c":"bio"},{"id":"p1-r70","n":"Stockage récolte","x":130,"y":190,"w":70,"h":30,"c":"bio"},{"id":"p1-r71","n":"Vivarium et entomologie","x":1110,"y":70,"w":80,"h":140,"c":"bio"},{"id":"p1-r72","n":"Insectarium","x":1190,"y":70,"w":80,"h":70,"c":"bio"},{"id":"p1-r73","n":"Stock nourriture","x":1190,"y":140,"w":80,"h":70,"c":"tech"},{"id":"p1-r74","n":"Filtration eau","x":1240,"y":340,"w":30,"h":50,"c":"tech"},{"id":"p1-r75","n":"Chambre cryogénique alpha","x":130,"y":430,"w":160,"h":50,"c":"sante"},{"id":"p1-r76","n":"Laboratoire de biologie moléculaire","x":130,"y":690,"w":160,"h":40,"c":"bio"},{"id":"p1-r77","n":"Salle d'analyse","x":130,"y":730,"w":160,"h":100,"c":"bio"},{"id":"p1-r78","n":"Local équipements","x":290,"y":750,"w":200,"h":50,"c":"tech"},{"id":"p1-r79","n":"Atelier maintenance et fabrication","x":1110,"y":480,"w":160,"h":250,"c":"tech"},{"id":"p1-r80","n":"Stockage","x":730,"y":640,"w":110,"h":90,"c":"tech"},{"id":"p1-r81","n":"Réservoir carburant bâbord","x":490,"y":750,"w":70,"h":90,"c":"energie"},{"id":"p1-r82","n":"SAS bâbord","x":350,"y":800,"w":80,"h":60,"c":"secu"},{"id":"p1-r83","n":"Coursive avant bâbord","x":290,"y":70,"w":270,"h":20,"c":"circ"},{"id":"p1-r84","n":"Couloir pré-propulsion","x":290,"y":730,"w":820,"h":20,"c":"circ"},{"id":"p1-r85","n":"Couloir d'aile B","x":290,"y":90,"w":20,"h":300,"c":"circ"},{"id":"p1-r86","n":"Coursive avant tribord","x":840,"y":70,"w":270,"h":20,"c":"circ"},{"id":"p1-r87","n":"Couloir d'aile C","x":1090,"y":90,"w":20,"h":300,"c":"circ"},{"id":"p1-r88","n":"Serre expérimentale","x":200,"y":70,"w":90,"h":150,"c":"bio"},{"id":"p1-r89","n":"Photobioréacteurs (air)","x":200,"y":220,"w":90,"h":170,"c":"bio"},{"id":"p1-r90","n":"Salle de vie commune","x":590,"y":150,"w":140,"h":130,"c":"vie"},{"id":"p1-r91","n":"Couloir d'aile D","x":290,"y":430,"w":20,"h":300,"c":"circ"},{"id":"p1-r92","n":"Couloir d'aile E","x":1090,"y":430,"w":20,"h":300,"c":"circ"},{"id":"p1-r93","n":"Cantine","x":560,"y":430,"w":280,"h":210,"c":"vie"},{"id":"p1-r94","n":"Cuisine","x":560,"y":640,"w":170,"h":90,"c":"vie"},{"id":"p1-r95","n":"Couloir sanitaire bâbord","x":130,"y":410,"w":160,"h":20,"c":"circ"},{"id":"p1-r104","n":"Couloir sanitaire tribord","x":1110,"y":410,"w":160,"h":20,"c":"circ"},{"id":"p1-r113","n":"Salle de sport","x":590,"y":280,"w":120,"h":110,"c":"vie"},{"id":"p1-r114","n":"Bibliothèque","x":710,"y":280,"w":100,"h":110,"c":"vie"},{"id":"p1-r115","n":"Salle de conférence","x":730,"y":150,"w":80,"h":130,"c":"vie"},{"id":"p1-r116","n":"Chambre cryogénique beta","x":1110,"y":430,"w":160,"h":50,"c":"sante"},{"id":"p1-r117","n":"Vestiaires M","x":590,"y":370,"w":60,"h":20,"c":"vie"},{"id":"p1-r118","n":"Vestiaires F","x":650,"y":370,"w":60,"h":20,"c":"vie"},{"id":"p1-r119","n":"Réacteur delta","x":770,"y":800,"w":70,"h":40,"c":"energie"},{"id":"p1-r120","n":"Réservoir carburant tribord","x":840,"y":750,"w":70,"h":90,"c":"energie"},{"id":"p1-r121","n":"Contrôle propulsion","x":910,"y":750,"w":200,"h":50,"c":"energie"},{"id":"p1-r122","n":"SAS tribord","x":970,"y":800,"w":80,"h":60,"c":"secu"},{"id":"p1-r123","n":"Baie de chargement","x":1110,"y":730,"w":160,"h":100,"c":"tech"},{"id":"p1-sanb","n":"Sanitaires communs bâbord","x":130,"y":390,"w":160,"h":20,"c":"hab"},{"id":"p1-sant","n":"Sanitaires communs tribord","x":1110,"y":390,"w":160,"h":20,"c":"hab"},{"id":"p1-B01","n":"Chambre B-01","x":310,"y":90,"w":110,"h":60,"c":"hab","q":"B"},{"id":"p1-sB01","n":"Salle d'eau B-01","x":310,"y":120,"w":30,"h":30,"c":"hab","sub":1,"q":"B"},{"id":"p1-B02","n":"Chambre B-02","x":310,"y":150,"w":110,"h":60,"c":"hab","q":"B"},{"id":"p1-sB02","n":"Salle d'eau B-02","x":310,"y":180,"w":30,"h":30,"c":"hab","sub":1,"q":"B"},{"id":"p1-B03","n":"Chambre B-03","x":310,"y":210,"w":110,"h":60,"c":"hab","q":"B"},{"id":"p1-sB03","n":"Salle d'eau B-03","x":310,"y":240,"w":30,"h":30,"c":"hab","sub":1,"q":"B"},{"id":"p1-B04","n":"Chambre B-04","x":310,"y":270,"w":110,"h":60,"c":"hab","q":"B"},{"id":"p1-sB04","n":"Salle d'eau B-04","x":310,"y":300,"w":30,"h":30,"c":"hab","sub":1,"q":"B"},{"id":"p1-B05","n":"Chambre B-05","x":310,"y":330,"w":110,"h":60,"c":"hab","q":"B"},{"id":"p1-sB05","n":"Salle d'eau B-05","x":310,"y":360,"w":30,"h":30,"c":"hab","sub":1,"q":"B"},{"id":"p1-B06","n":"Chambre B-06","x":450,"y":90,"w":110,"h":60,"c":"hab","q":"B"},{"id":"p1-sB06","n":"Salle d'eau B-06","x":530,"y":120,"w":30,"h":30,"c":"hab","sub":1,"q":"B"},{"id":"p1-B07","n":"Chambre B-07","x":450,"y":150,"w":110,"h":60,"c":"hab","q":"B"},{"id":"p1-sB07","n":"Salle d'eau B-07","x":530,"y":180,"w":30,"h":30,"c":"hab","sub":1,"q":"B"},{"id":"p1-B08","n":"Chambre B-08","x":450,"y":210,"w":110,"h":60,"c":"hab","q":"B"},{"id":"p1-sB08","n":"Salle d'eau B-08","x":530,"y":240,"w":30,"h":30,"c":"hab","sub":1,"q":"B"},{"id":"p1-B09","n":"Chambre B-09","x":450,"y":270,"w":110,"h":60,"c":"hab","q":"B"},{"id":"p1-sB09","n":"Salle d'eau B-09","x":530,"y":300,"w":30,"h":30,"c":"hab","sub":1,"q":"B"},{"id":"p1-B10","n":"Chambre B-10","x":450,"y":330,"w":110,"h":60,"c":"hab","q":"B"},{"id":"p1-sB10","n":"Salle d'eau B-10","x":530,"y":360,"w":30,"h":30,"c":"hab","sub":1,"q":"B"},{"id":"p1-C01","n":"Chambre C-01","x":840,"y":90,"w":110,"h":60,"c":"hab","q":"C"},{"id":"p1-sC01","n":"Salle d'eau C-01","x":840,"y":120,"w":30,"h":30,"c":"hab","sub":1,"q":"C"},{"id":"p1-C02","n":"Chambre C-02","x":840,"y":150,"w":110,"h":60,"c":"hab","q":"C"},{"id":"p1-sC02","n":"Salle d'eau C-02","x":840,"y":180,"w":30,"h":30,"c":"hab","sub":1,"q":"C"},{"id":"p1-C03","n":"Chambre C-03","x":840,"y":210,"w":110,"h":60,"c":"hab","q":"C"},{"id":"p1-sC03","n":"Salle d'eau C-03","x":840,"y":240,"w":30,"h":30,"c":"hab","sub":1,"q":"C"},{"id":"p1-C04","n":"Chambre C-04","x":840,"y":270,"w":110,"h":60,"c":"hab","q":"C"},{"id":"p1-sC04","n":"Salle d'eau C-04","x":840,"y":300,"w":30,"h":30,"c":"hab","sub":1,"q":"C"},{"id":"p1-C05","n":"Chambre C-05","x":840,"y":330,"w":110,"h":60,"c":"hab","q":"C"},{"id":"p1-sC05","n":"Salle d'eau C-05","x":840,"y":360,"w":30,"h":30,"c":"hab","sub":1,"q":"C"},{"id":"p1-C06","n":"Chambre C-06","x":980,"y":90,"w":110,"h":60,"c":"hab","q":"C"},{"id":"p1-sC06","n":"Salle d'eau C-06","x":1060,"y":120,"w":30,"h":30,"c":"hab","sub":1,"q":"C"},{"id":"p1-C07","n":"Chambre C-07","x":980,"y":150,"w":110,"h":60,"c":"hab","q":"C"},{"id":"p1-sC07","n":"Salle d'eau C-07","x":1060,"y":180,"w":30,"h":30,"c":"hab","sub":1,"q":"C"},{"id":"p1-C08","n":"Chambre C-08","x":980,"y":210,"w":110,"h":60,"c":"hab","q":"C"},{"id":"p1-sC08","n":"Salle d'eau C-08","x":1060,"y":240,"w":30,"h":30,"c":"hab","sub":1,"q":"C"},{"id":"p1-C09","n":"Chambre C-09","x":980,"y":270,"w":110,"h":60,"c":"hab","q":"C"},{"id":"p1-sC09","n":"Salle d'eau C-09","x":1060,"y":300,"w":30,"h":30,"c":"hab","sub":1,"q":"C"},{"id":"p1-C10","n":"Chambre C-10","x":980,"y":330,"w":110,"h":60,"c":"hab","q":"C"},{"id":"p1-sC10","n":"Salle d'eau C-10","x":1060,"y":360,"w":30,"h":30,"c":"hab","sub":1,"q":"C"},{"id":"p1-D01","n":"Chambre D-01","x":310,"y":430,"w":110,"h":60,"c":"hab","q":"D"},{"id":"p1-sD01","n":"Salle d'eau D-01","x":310,"y":460,"w":30,"h":30,"c":"hab","sub":1,"q":"D"},{"id":"p1-D02","n":"Chambre D-02","x":310,"y":490,"w":110,"h":60,"c":"hab","q":"D"},{"id":"p1-sD02","n":"Salle d'eau D-02","x":310,"y":520,"w":30,"h":30,"c":"hab","sub":1,"q":"D"},{"id":"p1-D03","n":"Chambre D-03","x":310,"y":550,"w":110,"h":60,"c":"hab","q":"D"},{"id":"p1-sD03","n":"Salle d'eau D-03","x":310,"y":580,"w":30,"h":30,"c":"hab","sub":1,"q":"D"},{"id":"p1-D04","n":"Chambre D-04","x":310,"y":610,"w":110,"h":60,"c":"hab","q":"D"},{"id":"p1-sD04","n":"Salle d'eau D-04","x":310,"y":640,"w":30,"h":30,"c":"hab","sub":1,"q":"D"},{"id":"p1-D05","n":"Chambre D-05","x":310,"y":670,"w":110,"h":60,"c":"hab","q":"D"},{"id":"p1-sD05","n":"Salle d'eau D-05","x":310,"y":700,"w":30,"h":30,"c":"hab","sub":1,"q":"D"},{"id":"p1-D06","n":"Chambre D-06","x":450,"y":430,"w":110,"h":60,"c":"hab","q":"D"},{"id":"p1-sD06","n":"Salle d'eau D-06","x":530,"y":460,"w":30,"h":30,"c":"hab","sub":1,"q":"D"},{"id":"p1-D07","n":"Chambre D-07","x":450,"y":490,"w":110,"h":60,"c":"hab","q":"D"},{"id":"p1-sD07","n":"Salle d'eau D-07","x":530,"y":520,"w":30,"h":30,"c":"hab","sub":1,"q":"D"},{"id":"p1-D08","n":"Chambre D-08","x":450,"y":550,"w":110,"h":60,"c":"hab","q":"D"},{"id":"p1-sD08","n":"Salle d'eau D-08","x":530,"y":580,"w":30,"h":30,"c":"hab","sub":1,"q":"D"},{"id":"p1-D09","n":"Chambre D-09","x":450,"y":610,"w":110,"h":60,"c":"hab","q":"D"},{"id":"p1-sD09","n":"Salle d'eau D-09","x":530,"y":640,"w":30,"h":30,"c":"hab","sub":1,"q":"D"},{"id":"p1-D10","n":"Chambre D-10","x":450,"y":670,"w":110,"h":60,"c":"hab","q":"D"},{"id":"p1-sD10","n":"Salle d'eau D-10","x":530,"y":700,"w":30,"h":30,"c":"hab","sub":1,"q":"D"},{"id":"p1-E01","n":"Chambre E-01","x":840,"y":430,"w":110,"h":60,"c":"hab","q":"E"},{"id":"p1-sE01","n":"Salle d'eau E-01","x":840,"y":460,"w":30,"h":30,"c":"hab","sub":1,"q":"E"},{"id":"p1-E02","n":"Chambre E-02","x":840,"y":490,"w":110,"h":60,"c":"hab","q":"E"},{"id":"p1-sE02","n":"Salle d'eau E-02","x":840,"y":520,"w":30,"h":30,"c":"hab","sub":1,"q":"E"},{"id":"p1-E03","n":"Chambre E-03","x":840,"y":550,"w":110,"h":60,"c":"hab","q":"E"},{"id":"p1-sE03","n":"Salle d'eau E-03","x":840,"y":580,"w":30,"h":30,"c":"hab","sub":1,"q":"E"},{"id":"p1-E04","n":"Chambre E-04","x":840,"y":610,"w":110,"h":60,"c":"hab","q":"E"},{"id":"p1-sE04","n":"Salle d'eau E-04","x":840,"y":640,"w":30,"h":30,"c":"hab","sub":1,"q":"E"},{"id":"p1-E05","n":"Chambre E-05","x":840,"y":670,"w":110,"h":60,"c":"hab","q":"E"},{"id":"p1-sE05","n":"Salle d'eau E-05","x":840,"y":700,"w":30,"h":30,"c":"hab","sub":1,"q":"E"},{"id":"p1-E06","n":"Chambre E-06","x":980,"y":430,"w":110,"h":60,"c":"hab","q":"E"},{"id":"p1-sE06","n":"Salle d'eau E-06","x":1060,"y":460,"w":30,"h":30,"c":"hab","sub":1,"q":"E"},{"id":"p1-E07","n":"Chambre E-07","x":980,"y":490,"w":110,"h":60,"c":"hab","q":"E"},{"id":"p1-sE07","n":"Salle d'eau E-07","x":1060,"y":520,"w":30,"h":30,"c":"hab","sub":1,"q":"E"},{"id":"p1-E08","n":"Chambre E-08","x":980,"y":550,"w":110,"h":60,"c":"hab","q":"E"},{"id":"p1-sE08","n":"Salle d'eau E-08","x":1060,"y":580,"w":30,"h":30,"c":"hab","sub":1,"q":"E"},{"id":"p1-E09","n":"Chambre E-09","x":980,"y":610,"w":110,"h":60,"c":"hab","q":"E"},{"id":"p1-sE09","n":"Salle d'eau E-09","x":1060,"y":640,"w":30,"h":30,"c":"hab","sub":1,"q":"E"},{"id":"p1-E10","n":"Chambre E-10","x":980,"y":670,"w":110,"h":60,"c":"hab","q":"E"},{"id":"p1-sE10","n":"Salle d'eau E-10","x":1060,"y":700,"w":30,"h":30,"c":"hab","sub":1,"q":"E"}],"zones":[{"n":"Quartier B","x":310,"y":90,"w":250,"h":300},{"n":"Quartier C","x":840,"y":90,"w":250,"h":300},{"n":"Quartier D","x":310,"y":430,"w":250,"h":300},{"n":"Quartier E","x":840,"y":430,"w":250,"h":300}],"details":[[310,90,11,30],[549,90,11,30],[310,150,11,30],[549,150,11,30],[310,210,11,30],[549,210,11,30],[310,270,11,30],[549,270,11,30],[310,330,11,30],[549,330,11,30],[840,90,11,30],[1079,90,11,30],[840,150,11,30],[1079,150,11,30],[840,210,11,30],[1079,210,11,30],[840,270,11,30],[1079,270,11,30],[840,330,11,30],[1079,330,11,30],[310,430,11,30],[549,430,11,30],[310,490,11,30],[549,490,11,30],[310,550,11,30],[549,550,11,30],[310,610,11,30],[549,610,11,30],[310,670,11,30],[549,670,11,30],[840,430,11,30],[1079,430,11,30],[840,490,11,30],[1079,490,11,30],[840,550,11,30],[1079,550,11,30],[840,610,11,30],[1079,610,11,30],[840,670,11,30],[1079,670,11,30]],"cells":[[130,390,20,20],[150,390,20,20],[170,390,20,20],[190,390,20,20],[210,390,20,20],[230,390,20,20],[250,390,20,20],[270,390,20,20],[1110,390,20,20],[1130,390,20,20],[1150,390,20,20],[1170,390,20,20],[1190,390,20,20],[1210,390,20,20],[1230,390,20,20],[1250,390,20,20]]},{"id":"p0","n":"Pont inférieur","lv":"−1","rooms":[{"id":"p0-c0","n":"Axe principal","x":290,"y":390,"w":820,"h":40,"c":"circ"},{"id":"p0-c1","n":"Couloir transversal avant","x":560,"y":150,"w":30,"h":240,"c":"circ"},{"id":"p0-c2","n":"Couloir transversal arrière","x":810,"y":150,"w":30,"h":240,"c":"circ"},{"id":"p0-c3","n":"Coursive avant bâbord","x":290,"y":70,"w":270,"h":20,"c":"circ"},{"id":"p0-c4","n":"Coursive avant tribord","x":840,"y":70,"w":270,"h":20,"c":"circ"},{"id":"p0-c5","n":"Couloir d'aile B","x":290,"y":90,"w":20,"h":300,"c":"circ"},{"id":"p0-c6","n":"Couloir d'aile C","x":1090,"y":90,"w":20,"h":300,"c":"circ"},{"id":"p0-c7","n":"Couloir d'aile D","x":290,"y":430,"w":20,"h":300,"c":"circ"},{"id":"p0-c8","n":"Couloir d'aile E","x":1090,"y":430,"w":20,"h":300,"c":"circ"},{"id":"p0-c9","n":"Couloir pré-propulsion","x":290,"y":730,"w":820,"h":20,"c":"circ"},{"id":"p0-0","n":"Soute avant","x":560,"y":20,"w":280,"h":130,"c":"tech"},{"id":"p0-1","n":"Poste de sécurité incendie","x":590,"y":150,"w":220,"h":240,"c":"secu"},{"id":"p0-2","n":"Recyclage de l'eau (AQUA-CYCLE)","x":130,"y":70,"w":160,"h":320,"c":"bio"},{"id":"p0-3","n":"Régénération de l'air","x":130,"y":430,"w":160,"h":300,"c":"bio"},{"id":"p0-4","n":"Chambres froides et vivres","x":310,"y":90,"w":250,"h":300,"c":"tech"},{"id":"p0-5","n":"Batteries et distribution électrique","x":840,"y":90,"w":250,"h":300,"c":"energie"},{"id":"p0-6","n":"Pièces de rechange","x":310,"y":430,"w":250,"h":300,"c":"tech"},{"id":"p0-7","n":"Traitement des déchets","x":840,"y":430,"w":250,"h":300,"c":"tech"},{"id":"p0-8","n":"Soute principale","x":560,"y":430,"w":280,"h":300,"c":"tech"},{"id":"p0-9","n":"Réservoirs d'eau potable","x":1110,"y":70,"w":160,"h":320,"c":"tech"},{"id":"p0-10","n":"Garage des rovers","x":1110,"y":430,"w":160,"h":300,"c":"tech"},{"id":"p0-11","n":"Salle des machines","x":560,"y":750,"w":280,"h":90,"c":"energie"},{"id":"p0-12","n":"Réservoirs de xénon bâbord","x":290,"y":750,"w":270,"h":90,"c":"energie"},{"id":"p0-13","n":"Réservoirs de xénon tribord","x":840,"y":750,"w":270,"h":90,"c":"energie"}],"zones":[]}]};
+/* ============================================================
+   PLAN DU VAISSEAU ORION
+   ============================================================ */
+const CATS = {
+  cmd:     { n: 'Commandement',          c: '#3b82f6', d: 'Pilotage, navigation et communications.' },
+  hab:     { n: 'Quartiers d\'équipage',  c: '#8b5cf6', d: 'Chambres individuelles et salles d\'eau.' },
+  vie:     { n: 'Vie commune',            c: '#eab308', d: 'Repas, sport, détente et réunions.' },
+  sante:   { n: 'Santé',                  c: '#0891b2', d: 'Soins, chirurgie et hibernation.' },
+  bio:     { n: 'Biologie et support vie', c: '#059669', d: 'Cultures, laboratoires, air et eau.' },
+  tech:    { n: 'Technique et stockage',  c: '#64748b', d: 'Maintenance, serveurs, soutes.' },
+  energie: { n: 'Énergie et propulsion',  c: '#ea580c', d: 'Réacteurs, propulseur ionique, réservoirs.' },
+  secu:    { n: 'Accès et sécurité',      c: '#e11d48', d: 'Sas, abri et poste incendie.' },
+  circ:    { n: 'Circulation',            c: '#94a3b8', d: 'Axes, coursives et couloirs.' }
+};
+const DESC = {
+  'Poste de commandement': 'Cœur du vaisseau : pilotage, supervision des systèmes et coordination de l\'équipage, avec les consoles de navigation et de communications.',
+  'Console de navigation': 'Calcul de trajectoire, guidage et suivi de position.',
+  'Console communications': 'Liaisons avec la Terre et entre les ponts.',
+  'Chambre de propulsion ionique': 'Propulseurs ioniques de croisière, issus des travaux du programme PROMETHEUS.',
+  'Contrôle propulsion': 'Supervision de la poussée, des réacteurs et de l\'alimentation des propulseurs.',
+  'Centre médical et chirurgie': 'Consultations, urgences et suivi médical de l\'équipage pendant toute la mission.',
+  'Bloc opératoire': 'Chirurgie en autonomie complète, sans évacuation possible.',
+  'Soins vétérinaires': 'Suivi des animaux embarqués pour les expériences biologiques.',
+  'Pharmacie': 'Stock de médicaments, suivi des dates et des doses.',
+  'Chambre cryogénique alpha': 'Hibernation médicale et conservation des échantillons biologiques.',
+  'Chambre cryogénique beta': 'Hibernation médicale et conservation des échantillons biologiques.',
+  'Salle de conférence et briefing': 'Réunions d\'équipage et préparation des sorties.',
+  'Salle serveurs': 'Calculateurs de bord, stockage des données scientifiques.',
+  'Filtration eau': 'Premier étage de filtration avant le recyclage du pont inférieur.',
+  'Serre expérimentale': 'Essais de nouvelles variétés en lumière artificielle.',
+  'Photobioréacteurs (air)': 'Microalgues qui absorbent le dioxyde de carbone et produisent de l\'oxygène.',
+  'Hydroponie alpha (récolte)': 'Cultures hors-sol à récolte continue.',
+  'Hydroponie beta (récolte)': 'Cultures hors-sol à récolte continue.',
+  'Vivarium et entomologie': 'Élevage d\'espèces étudiées et d\'insectes comestibles.',
+  'Insectarium': 'Production d\'insectes riches en protéines.',
+  'Laboratoire de phytobiologie': 'Étude de la croissance des plantes en gravité réduite.',
+  'Laboratoire de biologie moléculaire': 'Analyses génétiques et microbiologiques.',
+  'Salle d\'analyse': 'Préparation et mesure des échantillons.',
+  'Atelier maintenance et fabrication': 'Réparations et fabrication de pièces par impression 3D.',
+  'Baie de chargement': 'Transfert du fret et des équipements depuis les sas.',
+  'Salle de vie commune': 'Lieu de rencontre et de détente de l\'équipage.',
+  'Cantine': 'Repas collectifs, deux services par jour.',
+  'Cuisine': 'Préparation des repas à partir des récoltes et des vivres.',
+  'Salle de sport': 'Exercice quotidien obligatoire contre la perte osseuse et musculaire.',
+  'Bibliothèque': 'Lecture, travail au calme et archives de mission.',
+  'SAS bâbord': 'Sortie extravéhiculaire et amarrage.',
+  'SAS tribord': 'Sortie extravéhiculaire et amarrage.',
+  'Dôme d\'observation': 'Vue panoramique sur l\'espace, observation et détente.',
+  'Baie avionique': 'Électronique de vol et redondance des calculateurs.',
+  'Abri anti-radiations': 'Refuge blindé où l\'équipage se regroupe pendant les éruptions solaires.',
+  'Banque de semences': 'Réserve de graines et de souches pour les cultures.',
+  'Salle des antennes': 'Électronique des liaisons longue distance.',
+  'Centre de simulation et formation': 'Entraînement aux procédures et aux situations d\'urgence.',
+  'Salle de repos': 'Espace calme, lumière adaptée au rythme de sommeil.',
+  'Recyclage de l\'eau (AQUA-CYCLE)': 'Procédé de recyclage de l\'eau éprouvé par l\'IFRAS : plus de 98 % de l\'eau est réutilisée.',
+  'Régénération de l\'air': 'Élimination du dioxyde de carbone et production d\'oxygène.',
+  'Garage des rovers': 'Rovers d\'exploration de surface et leur maintenance.',
+  'Poste de sécurité incendie': 'Détection, extinction et commande des cloisons étanches.',
+  'Batteries et distribution électrique': 'Stockage de l\'énergie et répartition entre les ponts.',
+  'Salle des machines': 'Pompes, échangeurs thermiques et alimentation des propulseurs.'
+};
+const SCALE = 0.05; // 1 unité du plan = 5 cm
+const DECKS = DATA.decks;
+const ALL = [];
+DECKS.forEach((d, di) => d.rooms.forEach((r) => { r.deck = d.id; r.di = di; ALL.push(r); }));
+const BYID = Object.fromEntries(ALL.map((r) => [r.id, r]));
+const descOf = (r) => DESC[r.n] || (r.c === 'hab' && !r.sub ? `Chambre individuelle du quartier ${r.q} : couchette, bureau, rangements et salle d'eau privative.` : r.sub ? `Salle d'eau privative de la chambre ${r.n.slice(-4)}.` : /bouclier/.test(r.n) ? 'Réserve d\'eau placée au-dessus des chambres : elle sert aussi de protection contre les rayonnements.' : CATS[r.c].d);
+const norm = (s) => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const NS = 'http://www.w3.org/2000/svg';
+const el = (t, a = {}, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+
+/* ---------- coque : même silhouette sur les trois ponts ---------- */
+const HULL = 'M540 4 H860 Q900 4 930 26 L1120 60 H1260 Q1290 60 1290 90 V840 Q1290 880 1250 880 H150 Q110 880 110 840 V90 Q110 60 140 60 H280 L470 26 Q500 4 540 4 Z';
+
+/* ---------- construction d'un pont en SVG ---------- */
+function buildDeck(d, svg, big) {
+  svg.setAttribute('viewBox', '0 0 1400 940');
+  const defs = el('defs', {}, svg);
+  const pat = el('pattern', { id: 'grid-' + d.id + (big ? 'b' : ''), width: 20, height: 20, patternUnits: 'userSpaceOnUse' }, defs);
+  el('path', { d: 'M20 0H0V20', fill: 'none', stroke: 'rgba(148,163,184,.07)', 'stroke-width': 1 }, pat);
+  const g = el('g', { class: 'world' }, svg);
+  el('path', { d: HULL, class: 'hull-glow' }, g);
+  el('path', { d: HULL, class: 'hull', fill: `url(#grid-${d.id}${big ? 'b' : ''})` }, g);
+  if (d.id === 'p1') {
+    [[600, 840], [670, 840], [740, 840], [810, 840]].forEach(([x, y], i) => {
+      el('path', { d: `M${x - 22} ${y + 2} L${x + 22} ${y + 2} L${x + 30} ${y + 34} L${x - 30} ${y + 34} Z`, class: 'nozzle' }, g);
+      el('ellipse', { cx: x, cy: y + 46, rx: 22, ry: 12, class: 'plume', style: `animation-delay:${i * 180}ms` }, g);
+    });
+  }
+  (d.zones || []).forEach((z) => {
+    el('rect', { x: z.x - 3, y: z.y - 3, width: z.w + 6, height: z.h + 6, rx: 6, class: 'zone' }, g);
+  });
+  const rg = el('g', { class: 'rooms' }, g);
+  const order = [...d.rooms].sort((a, b) => (a.c === 'circ' ? 0 : 1) - (b.c === 'circ' ? 0 : 1) || (a.sub ? 1 : 0) - (b.sub ? 1 : 0) || b.w * b.h - a.w * a.h);
+  order.forEach((r) => {
+    const col = CATS[r.c].c;
+    const rect = el('rect', { x: r.x + 1, y: r.y + 1, width: r.w - 2, height: r.h - 2, rx: r.c === 'circ' ? 2 : 4, class: 'room ' + r.c + (r.sub ? ' sub' : ''), 'data-id': r.id, style: `--c:${col}`, tabindex: r.c === 'circ' || !big ? -1 : 0 }, rg);
+    if (big) { rect.setAttribute('role', 'button'); rect.setAttribute('aria-label', r.n); }
+    r['el' + (big ? 'B' : 'S') ] = rect;
+  });
+  (d.details || []).forEach(([x, y, w, h]) => el('rect', { x: x + 1.5, y: y + 1.5, width: w - 3, height: h - 3, class: 'detail' }, rg));
+  (d.cells || []).forEach(([x, y, w, h]) => el('rect', { x: x + 2, y: y + 2, width: w - 4, height: h - 4, rx: 2, class: 'cell' }, rg));
+  /* puits verticaux : mêmes positions sur tous les ponts */
+  [[575, 410], [825, 410]].forEach(([x, y]) => { const s = el('g', { class: 'shaft' }, g); el('rect', { x: x - 11, y: y - 13, width: 22, height: 26, rx: 5 }, s); el('path', { d: `M${x - 5} ${y + 2} l5 -6 l5 6 M${x - 5} ${y + 6} l5 6 l5 -6`.replace(/(\d)l/g, '$1 l') }, s); });
+  if (big) {
+    const lg = el('g', { class: 'labels' }, g);
+    order.forEach((r) => {
+      if (r.c === 'circ' && r.w < 200 && r.h < 200) return;
+      const vert = r.h > r.w * 1.4;
+      const len = r.n.length, room = (vert ? r.h : r.w) * 0.86, thick = (vert ? r.w : r.h);
+      const fit = Math.min(r.w * r.h > 20000 ? 17 : 13, thick * 0.34, room / (len * 0.56));
+      if (fit < 5.5) return; /* trop petit pour une étiquette lisible : l'infobulle prend le relais */
+      const fs = fit;
+      const cx = r.x + r.w / 2, cy = r.y + r.h / 2;
+      const t = el('text', { x: cx, y: cy, 'font-size': fs.toFixed(1), class: 'lbl ' + (r.c === 'circ' ? 'lbl-c' : ''), 'data-id': r.id, transform: vert ? `rotate(-90 ${cx} ${cy})` : '' }, lg);
+      t.textContent = r.n;
+      r.fs = fs; r.lbl = t;
+    });
+    (d.zones || []).forEach((z) => { const t = el('text', { x: z.x + z.w / 2, y: z.y - 8, class: 'zone-lbl' }, lg); t.textContent = z.n; });
+    const deckLbl = el('text', { x: 700, y: 932, class: 'bow' }, g); deckLbl.textContent = 'ARRIÈRE';
+    const bow = el('text', { x: 700, y: -2, class: 'bow' }, g); bow.textContent = 'AVANT';
+  } else {
+    const t = el('text', { x: 1300, y: 40, class: 'deck-tag' }, g); t.textContent = `${d.n} · niveau ${d.lv}`;
+  }
+}
+
+/* ============================================================
+   ÉTAT
+   ============================================================ */
+let deckIdx = 1, mode = 'plan', selId = null, catOn = null;
+const view = { x: 0, y: 0, k: 1 };
+const stage = $('stage'), planSvg = $('planSvg');
+
+function renderPlan() {
+  planSvg.replaceChildren();
+  buildDeck(DECKS[deckIdx], planSvg, true);
+  applyView(); applyCat(); markSel();
+}
+DECKS.forEach((d) => { const s = $('x-' + d.id); buildDeck(d, s, false); });
+
+/* ---------- zoom / déplacement (transform sur le monde) ---------- */
+const world = () => planSvg.querySelector('.world');
+function fitView(anim) {
+  const r = planSvg.getBoundingClientRect();
+  const k = Math.min(r.width / 1440, r.height / 960);
+  setView({ k, x: (r.width - 1400 * k) / 2, y: (r.height - 940 * k) / 2 }, anim);
+}
+let animId = 0;
+function setView(v, anim) {
+  cancelAnimationFrame(animId);
+  if (!anim || reduceMotion) { Object.assign(view, v); applyView(); return; }
+  const a = { ...view }, t0 = performance.now(), D = 420;
+  const step = (t) => {
+    const p = Math.min(1, (t - t0) / D), e = 1 - Math.pow(1 - p, 4);
+    view.x = a.x + (v.x - a.x) * e; view.y = a.y + (v.y - a.y) * e; view.k = a.k + (v.k - a.k) * e;
+    applyView(); if (p < 1) animId = requestAnimationFrame(step);
+  };
+  animId = requestAnimationFrame(step);
+}
+function applyView() {
+  const w = world(); if (!w) return;
+  const r = planSvg.getBoundingClientRect();
+  planSvg.setAttribute('viewBox', `0 0 ${Math.round(r.width)} ${Math.round(r.height)}`);
+  w.setAttribute('transform', `translate(${view.x.toFixed(2)} ${view.y.toFixed(2)}) scale(${view.k.toFixed(4)})`);
+  /* niveau de détail : une étiquette n'apparaît que si elle est lisible */
+  const px = view.k; // pixels écran par unité du plan
+  DECKS[deckIdx].rooms.forEach((rm) => {
+    if (!rm.lbl) return;
+    const size = Math.min(rm.fs, 15 / px);
+    if (rm._s !== size) { rm.lbl.setAttribute('font-size', size.toFixed(2)); rm._s = size; }
+    rm.lbl.classList.toggle('on', size * px >= 7.5 || (rm.id === selId && size * px >= 5.5));
+  });
+  planSvg.querySelectorAll('.zone-lbl').forEach((z) => z.classList.toggle('on', px > 0.45));
+  $('zoomVal').textContent = Math.round(px / baseK() * 100) + ' %';
+  document.querySelector('.scale span').style.width = (200 * px).toFixed(0) + 'px';
+}
+const baseK = () => { const r = planSvg.getBoundingClientRect(); return Math.min(r.width / 1440, r.height / 960) || 1; };
+function zoomAt(f, cx, cy, anim) {
+  const r = planSvg.getBoundingClientRect();
+  if (cx == null) { cx = r.width / 2; cy = r.height / 2; }
+  const k = Math.max(baseK() * 0.7, Math.min(baseK() * 7, view.k * f));
+  const wx = (cx - view.x) / view.k, wy = (cy - view.y) / view.k;
+  setView({ k, x: cx - wx * k, y: cy - wy * k }, anim);
+}
+planSvg.addEventListener('wheel', (e) => { if (mode !== 'plan') return; e.preventDefault(); const r = planSvg.getBoundingClientRect(); zoomAt(e.deltaY < 0 ? 1.14 : 1 / 1.14, e.clientX - r.left, e.clientY - r.top, false); }, { passive: false });
+
+/* glisser pour déplacer (souris et tactile, pincer pour zoomer) */
+const ptrs = new Map(); let drag = null, moved = false, pinch = null;
+planSvg.addEventListener('pointerdown', (e) => {
+  if (mode !== 'plan') return;
+  ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  planSvg.setPointerCapture(e.pointerId);
+  moved = false;
+  if (ptrs.size === 1) drag = { x: e.clientX, y: e.clientY, vx: view.x, vy: view.y };
+  if (ptrs.size === 2) { const [a, b] = [...ptrs.values()]; pinch = { d: Math.hypot(a.x - b.x, a.y - b.y), k: view.k, vx: view.x, vy: view.y, cx: (a.x + b.x) / 2, cy: (a.y + b.y) / 2 }; drag = null; }
+});
+planSvg.addEventListener('pointermove', (e) => {
+  if (!ptrs.has(e.pointerId)) { hover(e); return; }
+  ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if (pinch && ptrs.size === 2) {
+    const [a, b] = [...ptrs.values()], r = planSvg.getBoundingClientRect();
+    const k = Math.max(baseK() * 0.7, Math.min(baseK() * 7, pinch.k * Math.hypot(a.x - b.x, a.y - b.y) / pinch.d));
+    const cx = pinch.cx - r.left, cy = pinch.cy - r.top, wx = (cx - pinch.vx) / pinch.k, wy = (cy - pinch.vy) / pinch.k;
+    Object.assign(view, { k, x: cx - wx * k, y: cy - wy * k }); applyView(); moved = true; return;
+  }
+  if (drag) {
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    if (Math.abs(dx) + Math.abs(dy) > 4) { moved = true; planSvg.classList.add('grabbing'); hideTip(); }
+    if (moved) { view.x = drag.vx + dx; view.y = drag.vy + dy; applyView(); }
+  }
+});
+const endPtr = (e) => {
+  ptrs.delete(e.pointerId); planSvg.classList.remove('grabbing');
+  if (ptrs.size < 2) pinch = null;
+  if (!ptrs.size) drag = null;
+};
+planSvg.addEventListener('pointerup', (e) => {
+  const wasMoved = moved; endPtr(e);
+  if (wasMoved) return;
+  const t = document.elementFromPoint(e.clientX, e.clientY);
+  const rm = t && t.closest && t.closest('.room');
+  if (rm && !rm.classList.contains('circ')) select(rm.dataset.id, false); else if (!rm) select(null);
+});
+planSvg.addEventListener('pointercancel', endPtr);
+planSvg.addEventListener('pointerleave', hideTip);
+
+/* ---------- infobulle ---------- */
+const tip = $('ptip');
+function hover(e) {
+  const t = e.target.closest && e.target.closest('.room');
+  if (!t || !window.matchMedia('(hover: hover)').matches) { hideTip(); return; }
+  const r = BYID[t.dataset.id], box = stage.getBoundingClientRect();
+  tip.innerHTML = `<i style="--c:${CATS[r.c].c}"></i><b>${r.n}</b><span>${CATS[r.c].n}</span>`;
+  tip.classList.add('show');
+  let x = e.clientX - box.left + 14, y = e.clientY - box.top + 14;
+  if (x + tip.offsetWidth > box.width - 8) x = e.clientX - box.left - tip.offsetWidth - 14;
+  if (y + tip.offsetHeight > box.height - 8) y = e.clientY - box.top - tip.offsetHeight - 14;
+  tip.style.transform = `translate(${x}px, ${y}px)`;
+}
+function hideTip() { tip.classList.remove('show'); }
+
+/* ============================================================
+   SÉLECTION ET FICHE
+   ============================================================ */
+function select(id, fly = true) {
+  selId = id;
+  const r = id && BYID[id];
+  if (r && r.di !== deckIdx) setDeck(r.di, false);
+  markSel();
+  renderPanel();
+  if (r && fly && mode === 'plan') focusRoom(r);
+  if (r) history.replaceState(null, '', '#salle=' + encodeURIComponent(r.id)); else history.replaceState(null, '', location.pathname);
+}
+function focusRoom(r) {
+  const b = planSvg.getBoundingClientRect();
+  const k = Math.max(view.k, Math.min(baseK() * 5, Math.min(b.width * 0.5 / r.w, b.height * 0.5 / r.h), baseK() * 2.4));
+  setView({ k, x: b.width / 2 - (r.x + r.w / 2) * k, y: b.height / 2 - (r.y + r.h / 2) * k }, true);
+}
+function markSel() {
+  document.querySelectorAll('.room.sel').forEach((x) => x.classList.remove('sel'));
+  document.querySelectorAll('.lbl.sel').forEach((x) => x.classList.remove('sel'));
+  if (!selId) { stage.classList.remove('has-sel'); applyView(); return; }
+  stage.classList.add('has-sel');
+  document.querySelectorAll(`.room[data-id="${selId}"]`).forEach((x) => x.classList.add('sel'));
+  const r = BYID[selId]; if (r.lbl) r.lbl.classList.add('sel');
+  applyView();
+}
+const m = (v) => (v * SCALE).toLocaleString('fr-FR', { maximumFractionDigits: 1 });
+function renderPanel() {
+  const p = $('panel');
+  const r = selId && BYID[selId];
+  if (!r) { p.innerHTML = overviewHTML(); p.dataset.mode = 'overview'; return; }
+  const cat = CATS[r.c], d = DECKS[r.di];
+  const same = d.rooms.filter((x) => x.c === r.c && x.id !== r.id && !x.sub).slice(0, 6);
+  const inside = d.rooms.filter((x) => x.id !== r.id && x.x >= r.x && x.y >= r.y && x.x + x.w <= r.x + r.w && x.y + x.h <= r.y + r.h && x.c !== 'circ');
+  p.dataset.mode = 'room';
+  p.innerHTML = `
+    <button class="pn-back" type="button" data-act="back"><i class="ph-light ph-arrow-left" aria-hidden="true"></i>Vue d'ensemble</button>
+    <div class="pn-head" style="--c:${cat.c}">
+      <span class="pn-cat"><i></i>${cat.n}</span>
+      <h2 id="pnTitle">${r.n}</h2>
+      <p class="pn-where">${d.n}, niveau ${d.lv}${r.q ? ` · Quartier ${r.q}` : ''}</p>
+    </div>
+    <p class="pn-desc">${descOf(r)}</p>
+    <dl class="pn-dims">
+      <div><dt>Surface</dt><dd>${(r.w * r.h * SCALE * SCALE).toLocaleString('fr-FR', { maximumFractionDigits: 1 })} m²</dd></div>
+      <div><dt>Dimensions</dt><dd>${m(r.w)} × ${m(r.h)}&nbsp;m</dd></div>
+      <div><dt>Position</dt><dd>${Math.abs(r.x + r.w / 2 - 700) < 60 ? 'Axe central' : r.x + r.w / 2 < 700 ? 'Bâbord' : 'Tribord'}</dd></div>
+    </dl>
+    ${inside.length ? `<div class="pn-sec"><h3>Comprend</h3><div class="pn-list">${inside.map(li).join('')}</div></div>` : ''}
+    ${same.length ? `<div class="pn-sec"><h3>${cat.n} sur ce pont</h3><div class="pn-list">${same.map(li).join('')}</div></div>` : ''}`;
+}
+const li = (x) => `<button type="button" class="pn-li" data-go="${x.id}" style="--c:${CATS[x.c].c}"><i></i><span>${x.n}</span><small>${(x.w * x.h * SCALE * SCALE).toLocaleString('fr-FR', { maximumFractionDigits: 0 })} m²</small></button>`;
+function overviewHTML() {
+  const d = DECKS[deckIdx];
+  const counts = {}; d.rooms.forEach((r) => { if (r.c !== 'circ' && !r.sub) counts[r.c] = (counts[r.c] || 0) + 1; });
+  const area = d.rooms.filter((r) => r.c !== 'circ' && !r.sub).reduce((a, r) => a + r.w * r.h, 0) * SCALE * SCALE;
+  const intro = { p2: 'Observation, protection contre les rayonnements et réserves d\'eau placées au-dessus des quartiers.', p1: 'Le pont habité : commandement à l\'avant, quatre quartiers de dix chambres, vie commune au centre, santé et biologie à bâbord, ateliers à tribord, propulsion à l\'arrière.', p0: 'Support vie, énergie et soutes : les systèmes qui font vivre le vaisseau.' }[d.id];
+  return `
+    <div class="pn-head" style="--c:var(--accent)">
+      <span class="pn-cat"><i></i>Niveau ${d.lv}</span>
+      <h2 id="pnTitle">${d.n}</h2>
+    </div>
+    <p class="pn-desc">${intro}</p>
+    <dl class="pn-dims"><div><dt>Salles</dt><dd>${Object.values(counts).reduce((a, b) => a + b, 0)}</dd></div><div><dt>Surface utile</dt><dd>${Math.round(area).toLocaleString('fr-FR')} m²</dd></div><div><dt>Emprise</dt><dd>70 × 45 m</dd></div></dl>
+    <div class="pn-sec"><h3>Légende</h3><div class="legend">${Object.entries(CATS).filter(([k]) => k !== 'circ').map(([k, c]) => `<button type="button" class="lg${catOn === k ? ' on' : ''}${counts[k] ? '' : ' none'}" data-cat="${k}" style="--c:${c.c}" aria-pressed="${catOn === k}"${counts[k] ? '' : ' disabled'}><i></i><span>${c.n}</span><em>${counts[k] || 0}</em></button>`).join('')}</div>
+    <p class="pn-hint">Touchez une catégorie pour la mettre en évidence, ou une salle pour ouvrir sa fiche.</p></div>`;
+}
+$('panel').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-go],[data-act],[data-cat]'); if (!b) return;
+  if (b.dataset.go) select(b.dataset.go);
+  else if (b.dataset.act === 'back') { select(null); }
+  else if (b.dataset.cat) { catOn = catOn === b.dataset.cat ? null : b.dataset.cat; applyCat(); renderPanel(); }
+});
+function applyCat() {
+  document.querySelectorAll('.stage-svg, #planSvg').forEach((s) => s.classList.toggle('cat-mode', !!catOn));
+  document.querySelectorAll('.room').forEach((x) => x.classList.toggle('cat-on', !!catOn && x.classList.contains(catOn)));
+  document.querySelectorAll('.lbl').forEach((x) => { const r = BYID[x.dataset.id]; x.classList.toggle('cat-on', !!catOn && r && r.c === catOn); });
+}
+
+/* ============================================================
+   PONTS ET MODES
+   ============================================================ */
+const tabs = [...document.querySelectorAll('.deck-tab')];
+function setDeck(i, keepSel = true) {
+  deckIdx = i;
+  tabs.forEach((t, k) => { t.setAttribute('aria-selected', k === i); t.tabIndex = k === i ? 0 : -1; });
+  document.querySelectorAll('.xdeck').forEach((x, k) => x.classList.toggle('active', k === i));
+  if (!keepSel && selId && BYID[selId].di !== i) selId = null;
+  renderPlan();
+  if (!selId) renderPanel();
+  if (mode === 'plan') fitView(false);
+}
+tabs.forEach((t, i) => t.addEventListener('click', () => { if (selId && BYID[selId].di !== i) selId = null; setDeck(i); renderPanel(); history.replaceState(null, '', location.pathname); }));
+$('deckTabs').addEventListener('keydown', (e) => {
+  const k = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key]; if (!k) return;
+  e.preventDefault(); const i = (deckIdx + k + 3) % 3; tabs[i].click(); tabs[i].focus();
+});
+
+/* vue éclatée : les trois ponts empilés en 3D (CSS) */
+const rig = { rx: 58, rz: -32, trx: 58, trz: -32 };
+let rigRAF = 0;
+function applyRig() { $('stack').style.transform = `translate(-50%, -50%) rotateX(${rig.rx}deg) rotateZ(${rig.rz}deg)`; }
+function rigLoop() {
+  rig.rx += (rig.trx - rig.rx) * 0.16; rig.rz += (rig.trz - rig.rz) * 0.16;
+  applyRig();
+  if (Math.abs(rig.trx - rig.rx) + Math.abs(rig.trz - rig.rz) > 0.05) rigRAF = requestAnimationFrame(rigLoop); else rigRAF = 0;
+}
+function setMode(mo) {
+  mode = mo;
+  document.querySelectorAll('.mode-btn').forEach((b) => b.setAttribute('aria-pressed', b.dataset.mode === mo));
+  stage.dataset.mode = mo;
+  hideTip();
+  if (mo === 'plan') requestAnimationFrame(() => fitView(false));
+  else { rig.trx = 58; rig.trz = -32; if (!rigRAF) rigRAF = requestAnimationFrame(rigLoop); sizeStack(); }
+}
+document.querySelectorAll('.mode-btn').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
+function sizeStack() {
+  const r = $('x3d').getBoundingClientRect();
+  const s = Math.min(r.width / 1600, r.height / 1320);
+  $('stackWrap').style.transform = `scale(${s})`;
+}
+/* rotation à la souris / au doigt dans la vue éclatée */
+let rot = null;
+$('x3d').addEventListener('pointerdown', (e) => { if (e.target.closest('.room')) return; rot = { x: e.clientX, y: e.clientY, rx: rig.trx, rz: rig.trz }; $('x3d').setPointerCapture(e.pointerId); $('x3d').classList.add('grabbing'); });
+$('x3d').addEventListener('pointermove', (e) => {
+  if (!rot) { if (e.target.closest && e.target.closest('.room')) hover(e); else hideTip(); return; }
+  rig.trz = rot.rz + (e.clientX - rot.x) * 0.25;
+  rig.trx = Math.max(20, Math.min(75, rot.rx - (e.clientY - rot.y) * 0.2));
+  if (!rigRAF) rigRAF = requestAnimationFrame(rigLoop);
+});
+const endRot = () => { rot = null; $('x3d').classList.remove('grabbing'); };
+$('x3d').addEventListener('pointerup', endRot); $('x3d').addEventListener('pointercancel', endRot);
+$('x3d').addEventListener('click', (e) => {
+  const rm = e.target.closest('.room');
+  const xd = e.target.closest('.xdeck');
+  if (rm && !rm.classList.contains('circ')) { select(rm.dataset.id, false); return; }
+  if (xd) { const i = +xd.dataset.i; if (i !== deckIdx) { setDeck(i, false); renderPanel(); } }
+});
+
+/* ---------- boutons de zoom ---------- */
+$('zIn').addEventListener('click', () => zoomAt(1.3, null, null, true));
+$('zOut').addEventListener('click', () => zoomAt(1 / 1.3, null, null, true));
+$('zFit').addEventListener('click', () => fitView(true));
+window.addEventListener('resize', () => { if (mode === 'plan') fitView(false); else sizeStack(); });
+
+/* ============================================================
+   RECHERCHE
+   ============================================================ */
+const q = $('pq'), res = $('pres');
+let hits = [], hi = 0;
+function runSearch() {
+  const s = norm(q.value.trim());
+  $('psearch').classList.toggle('has-q', !!s);
+  if (!s) { res.hidden = true; q.setAttribute('aria-expanded', 'false'); return; }
+  hits = ALL.filter((r) => r.c !== 'circ' && (norm(r.n).includes(s) || norm(CATS[r.c].n).includes(s))).slice(0, 8);
+  hi = 0;
+  res.innerHTML = hits.length
+    ? hits.map((r, i) => `<li role="option" id="opt-${i}" class="${i === 0 ? 'act' : ''}" data-go="${r.id}" aria-selected="${i === 0}" style="--c:${CATS[r.c].c}"><i></i><span>${r.n}</span><small>${DECKS[r.di].n}</small></li>`).join('')
+    : '<li class="none">Aucune salle ne correspond.</li>';
+  res.hidden = false; q.setAttribute('aria-expanded', 'true');
+  if (hits.length) q.setAttribute('aria-activedescendant', 'opt-0');
+}
+q.addEventListener('input', runSearch);
+q.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    if (!hits.length) return; e.preventDefault();
+    hi = (hi + (e.key === 'ArrowDown' ? 1 : -1) + hits.length) % hits.length;
+    res.querySelectorAll('li').forEach((l, i) => { l.classList.toggle('act', i === hi); l.setAttribute('aria-selected', i === hi); });
+    q.setAttribute('aria-activedescendant', 'opt-' + hi);
+  }
+  if (e.key === 'Enter' && hits[hi]) { e.preventDefault(); pick(hits[hi].id); }
+  if (e.key === 'Escape') { q.value = ''; runSearch(); }
+});
+res.addEventListener('pointerdown', (e) => { const l = e.target.closest('[data-go]'); if (l) { e.preventDefault(); pick(l.dataset.go); } });
+function pick(id) { res.hidden = true; q.blur(); if (mode !== 'plan') setMode('plan'); requestAnimationFrame(() => select(id)); }
+$('pclear').addEventListener('click', () => { q.value = ''; runSearch(); q.focus(); });
+document.addEventListener('click', (e) => { if (!e.target.closest('#psearch')) res.hidden = true; });
+
+/* ---------- clavier ---------- */
+document.addEventListener('keydown', (e) => {
+  if (/input|textarea|select/i.test(document.activeElement.tagName)) return;
+  if (e.key === '/') { e.preventDefault(); q.focus(); }
+  else if (e.key === 'Escape' && selId) select(null);
+  else if ((e.key === '+' || e.key === '=') && mode === 'plan') zoomAt(1.3);
+  else if (e.key === '-' && mode === 'plan') zoomAt(1 / 1.3);
+  else if ((e.key === 'Enter' || e.key === ' ') && document.activeElement.classList.contains('room')) { e.preventDefault(); select(document.activeElement.dataset.id); }
+});
+
+/* ---------- démarrage de la vue ---------- */
+function startPlan() {
+  renderPlan(); renderPanel(); applyRig(); sizeStack();
+  fitView(false);
+  const m = location.hash.match(/salle=([^&]+)/);
+  if (m && BYID[decodeURIComponent(m[1])]) select(decodeURIComponent(m[1]));
+  $('pStats').innerHTML = [['Ponts', 3], ['Chambres', 40], ['Salles', ALL.filter((r) => r.c !== 'circ' && !r.sub).length], ['Longueur', '45 m']].map(([a, b]) => `<div><dt>${a}</dt><dd>${b}</dd></div>`).join('');
+}
+
+/* ============================================================
+   DÉMARRAGE : session obligatoire
+   ============================================================ */
+(function restoreTheme() {
+  try {
+    const saved = sessionStorage.getItem('ifras_theme');
+    if (saved) { const { h, s, special } = JSON.parse(saved); applyTheme(h, s, special); }
+  } catch (e) {}
+})();
+
+async function init() {
+  try {
+    const { data: { session } } = await _sb.auth.getSession();
+    if (!session) { window.location.replace('connexion.html'); return; }
+    const user = session.user;
+    $('userAvatar').textContent = initials(user.email);
+    $('userAvatar').style.setProperty('--ah', hueOf(user.email));
+    $('userLabel').textContent = user.email.split('@')[0];
+    document.documentElement.classList.remove('auth-pending');
+    startPlan();
+  } catch (e) { window.location.replace('connexion.html'); }
+}
+init();
+</script>
+
+</body>
+</html>
