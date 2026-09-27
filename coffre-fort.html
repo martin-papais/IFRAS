@@ -604,6 +604,16 @@ input[type=range].sat-range::-moz-range-thumb {
 html.theme-light .clearance, html.theme-light .tag { filter: brightness(.7) saturate(1.3); }
 html.theme-light .forbidden strong { color: #dc2626; }
 
+
+/* lien vers l'organigramme */
+.ref-link { display: grid; grid-template-columns: 38px minmax(0, 1fr) 18px; gap: 12px; align-items: center; padding: 10px; margin: 0 -6px; border-radius: 12px; color: var(--text-main); text-decoration: none; transition: background-color 160ms ease, transform 140ms var(--ease-out); }
+.ref-link:active { transform: scale(.98); }
+.ref-ic { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 10px; font-size: 20px; color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, transparent); }
+.ref-link strong { display: block; font-size: 14px; font-weight: 500; }
+.ref-link small { display: block; font-size: 12.5px; color: var(--text-muted); }
+.ref-link > i { color: var(--text-muted); transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) { .ref-link:hover { background: var(--bg-light); } .ref-link:hover > i { transform: translateX(3px); color: var(--text-main); } }
+
 /* =========================================================
    RESPONSIVE
    ========================================================= */
@@ -777,6 +787,15 @@ html.theme-light .forbidden strong { color: #dc2626; }
         <li class="rung" style="--c:#a78bfa;--k:3" data-level="4"><i class="ph-light ph-shield-star" aria-hidden="true"></i> Niveau 4 <span class="rung-bar" aria-hidden="true"></span></li>
       </ol>
       <p class="ladder-note" id="ladderNote">Chargement de votre profil…</p>
+    </section>
+
+    <section class="card">
+      <h2>Documents de référence</h2>
+      <a class="ref-link" href="organigramme.html">
+        <span class="ref-ic"><i class="ph-light ph-tree-structure" aria-hidden="true"></i></span>
+        <span><strong>Organigramme de l'institut</strong><small>Directions, services et responsables</small></span>
+        <i class="ph-light ph-arrow-right" aria-hidden="true"></i>
+      </a>
     </section>
 
     <section class="card">
@@ -1057,7 +1076,8 @@ function fileType(filename) {
     png: ['ph-file-image', '#c084fc'], jpg: ['ph-file-image', '#c084fc'], jpeg: ['ph-file-image', '#c084fc'], gif: ['ph-file-image', '#c084fc'], webp: ['ph-file-image', '#c084fc'], svg: ['ph-file-svg', '#c084fc'],
     zip: ['ph-file-zip', '#facc15'], rar: ['ph-file-zip', '#facc15'],
     mp4: ['ph-file-video', '#f472b6'], mp3: ['ph-file-audio', '#f472b6'],
-    txt: ['ph-file-text', '#aab3d6'], json: ['ph-file-code', '#67e8f9']
+    txt: ['ph-file-text', '#aab3d6'], json: ['ph-file-code', '#67e8f9'],
+    html: ['ph-tree-structure', '#60a5fa']
   };
   return map[ext] || ['ph-file', '#aab3d6'];
 }
@@ -1276,6 +1296,12 @@ function buildFileCard(f, type, i = 0) {
       ${f.description ? `<div class="file-desc">${esc(f.description)}</div>` : ''}
     </div>
     <div class="file-actions"><span class="pending"><i class="ph-light ph-circle-notch" aria-hidden="true"></i> Sécurisation du lien…</span></div>`;
+
+  /* document remplacé par une page du site (ex. organigramme.html) : on l'ouvre directement, sans lien signé */
+  if (/^[\w\-\/]+\.html(#.*)?$/.test(f.file_url || '')) {
+    card.querySelector('.file-actions').innerHTML = `<a class="fbtn fbtn--primary" href="${esc(f.file_url)}"><i class="ph-light ph-arrow-square-out" aria-hidden="true"></i> Ouvrir la page</a>`;
+    return card;
+  }
 
   getSignedUrl(f.file_url).then((url) => {
     const actions = card.querySelector('.file-actions');
