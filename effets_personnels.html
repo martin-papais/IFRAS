@@ -437,7 +437,8 @@ html.auth-pending .page { visibility: hidden; }
 .f-title { margin: 0; font-family: "Syne", sans-serif; font-weight: 700; font-size: 27px; line-height: 1.15; letter-spacing: -.01em; max-width: 22ch; }
 .f-sub { margin: 8px 0 0; font-size: 14px; line-height: 1.5; color: var(--ink-soft); max-width: 60ch; }
 
-.archive-stamp { position: absolute; top: 132px; right: 56px; width: 128px; height: 128px; color: var(--stamp-blue); opacity: .62; transform: rotate(-14deg); -webkit-mask-image: var(--ink-mask); mask-image: var(--ink-mask); pointer-events: none; }
+.archive-wrap { position: absolute; top: 132px; right: 56px; pointer-events: none; }
+.archive-stamp { display: block; width: 128px; height: 128px; color: var(--stamp-blue); opacity: var(--o, .62); transform: rotate(var(--t, -14deg)); -webkit-mask-image: var(--ink-mask); mask-image: var(--ink-mask); pointer-events: none; }
 
 /* champs */
 .f-fields { margin: 28px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
@@ -475,8 +476,9 @@ tr.is-out .it-name, tr.is-out .m { text-decoration: line-through; text-decoratio
 .stamp-ok {
   justify-self: center; align-self: center; display: grid; justify-items: center; gap: 2px;
   padding: 10px 20px 8px; border: 3px double var(--stamp-blue); border-radius: 6px; color: var(--stamp-blue);
-  transform: rotate(-7deg); -webkit-mask-image: var(--ink-mask); mask-image: var(--ink-mask); opacity: .85;
+  transform: translate(var(--x, 0), var(--y, 0)) rotate(var(--t, -7deg)) scale(var(--s, 1)); -webkit-mask-image: var(--ink-mask); mask-image: var(--ink-mask); opacity: var(--o, .85);
 }
+.stamp-ok--img { width: 210px; height: auto; padding: 0; border: 0; mix-blend-mode: multiply; -webkit-mask-image: none; mask-image: none; }
 .stamp-ok b { font-family: "Syne", sans-serif; font-weight: 800; font-size: 25px; letter-spacing: .14em; }
 .stamp-ok span { font-family: "DM Mono", monospace; font-size: 11px; letter-spacing: .12em; }
 
@@ -487,7 +489,8 @@ tr.is-out .it-name, tr.is-out .m { text-decoration: line-through; text-decoratio
 .signs { margin-top: 30px; display: grid; grid-template-columns: repeat(var(--n, 2), minmax(0, 1fr)); gap: 24px; }
 .sign { border-top: 1px solid var(--ink); padding-top: 6px; display: grid; gap: 2px; }
 .sign small { font-size: 11px; color: var(--ink-soft); }
-.sign .sig { font-family: "Caveat", cursive; font-size: 30px; line-height: 1; color: var(--pen); transform: rotate(-3deg); transform-origin: left; min-height: 36px; padding-top: 4px; white-space: nowrap; }
+.sig-img { display: block; height: 62px; width: auto; max-width: 100%; object-fit: contain; object-position: left center; margin-top: 2px; mix-blend-mode: multiply; transform: translateX(var(--x, 0)) rotate(var(--t, -3deg)); transform-origin: left center; }
+.sign .sig { font-family: "Caveat", cursive; font-size: 30px; line-height: 1; color: var(--pen); transform: translateX(var(--x, 0)) rotate(var(--t, -3deg)); transform-origin: left; min-height: 36px; padding-top: 4px; white-space: nowrap; }
 .sign--ds .sig { color: var(--stamp-ds); }
 .f-foot { margin-top: 34px; padding-top: 10px; border-top: .6px solid var(--ink); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 18px; font-family: "DM Mono", monospace; font-size: 10.5px; color: var(--ink-soft); }
 
@@ -506,7 +509,9 @@ tr.is-out .it-name, tr.is-out .m { text-decoration: line-through; text-decoratio
 .bed { position: relative; aspect-ratio: 4 / 3; display: grid; place-items: center; overflow: hidden;
   background: radial-gradient(ellipse at 50% 40%, hsl(220, 10%, 99%), hsl(220, 8%, 92%)); }
 .bed::after { content: ""; position: absolute; inset: 0; background: var(--grain); opacity: .16; mix-blend-mode: multiply; pointer-events: none; }
-.bed img { width: 100%; height: 100%; object-fit: contain; }
+.bed img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: 50% 50%; }
+/* planche seule sur sa ligne : centrée */
+.plate:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 11px); }
 .pl-num { position: absolute; top: 8px; left: 8px; z-index: 2; padding: 2px 6px; border-radius: 2px; background: hsl(220, 12%, 96%, .92); font-family: "DM Mono", monospace; font-size: 10.5px; color: var(--ink-soft); }
 .calib { display: grid; grid-template-columns: 1fr 1.6fr; gap: 10px; align-items: end; padding: 6px 10px 8px; border-top: 1px solid hsl(220, 12%, 86%); }
 .calib-grey { display: grid; grid-template-columns: repeat(8, 1fr); height: 10px; }
@@ -547,7 +552,8 @@ tr.is-out .it-name, tr.is-out .m { text-decoration: line-through; text-decoratio
 /* ---- responsive ---- */
 @media (max-width: 860px) {
   .sheet { padding: 44px 34px 34px 46px; }
-  .archive-stamp { width: 100px; height: 100px; top: 124px; right: 26px; }
+  .archive-wrap { top: 124px; right: 26px; }
+  .archive-stamp { width: 100px; height: 100px; }
   .f-fields { grid-template-columns: 1fr; }
   .f-totals { grid-template-columns: 1fr; }
   .stamp-ok { justify-self: end; }
@@ -562,7 +568,8 @@ tr.is-out .it-name, tr.is-out .m { text-decoration: line-through; text-decoratio
   .f-head { grid-template-columns: auto minmax(0, 1fr); }
   .f-form { grid-column: 1 / -1; text-align: left; }
   .f-title { font-size: 23px; max-width: 14ch; }
-  .archive-stamp { width: 74px; height: 74px; top: auto; right: 16px; margin-top: -4px; opacity: .5; }
+  .archive-wrap { top: auto; right: 16px; margin-top: -4px; }
+  .archive-stamp { width: 74px; height: 74px; }
   .f-title { padding-right: 70px; }
   .f-field { grid-template-columns: 1fr; gap: 2px; }
   .inv thead { display: none; }
@@ -574,6 +581,9 @@ tr.is-out .it-name, tr.is-out .m { text-decoration: line-through; text-decoratio
   .inv .p:empty { display: none; }
   .signs { grid-template-columns: 1fr; }
   .plates { grid-template-columns: 1fr; }
+  .stamp-ok { --x: 0px !important; justify-self: center; }
+  .stamp-ok--img { width: 170px; }
+  .plate:last-child:nth-child(odd) { width: 100%; }
 }
 @media print {
   .site-header, .subnav, .statusbar, .docbar, .toast, .zoom, .hole { display: none !important; }
@@ -930,7 +940,26 @@ const DOTATION = 2000;
 const nf = new Intl.NumberFormat('fr-FR');
 const grams = (n) => nf.format(n) + ' g';
 const NATURE = { ifras: 'Prise de vue logistique', perso: 'Document personnel numérisé' };
-const filesOf = (it) => String(it.images || '').split(';').map((f) => f.trim()).filter(Boolean);
+const filesOf = (it) => String(it.images || it.scan || '').split(';').map((f) => f.trim()).filter(Boolean);
+const slugName = (x) => String(x || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z-]/g, '');
+const sigBase = (f, l) => `signature_${slugName(f)}_${slugName(l)}`;
+const TAMPON = ['tampon_conforme.png', 'tampon_conforme.jpg'];
+/* signataires de la fiche : l'agent, la logistique (contre-visa de S. Covignac pour R. Aubanel), la DS si dérogation */
+function signersOf(profile, items) {
+  const first = profile.first_name || '', last = profile.last_name || '';
+  const list = [{ role: "Signature de l'agent", first, last }];
+  list.push(/aubanel/i.test(last) ? { role: 'Contrôle logistique', first: 'Sophie', last: 'Covignac' } : { role: 'Contrôle logistique', first: 'Richard', last: 'Aubanel' });
+  if (items.some((it) => it.statut === 'derog')) list.push({ role: 'Direction scientifique', first: 'Jean-Luc', last: 'Rousseau', ds: true });
+  return list;
+}
+const sigFiles = (signers) => signers.flatMap((p) => [sigBase(p.first, p.last) + '.png', sigBase(p.first, p.last) + '.jpg']);
+/* variations déterministes par fiche : un vrai tampon n'est jamais posé deux fois pareil */
+function jitter(seed) {
+  let h = 2166136261;
+  for (const c of String(seed)) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); }
+  const r = () => { h ^= h << 13; h ^= h >>> 17; h ^= h << 5; return ((h >>> 0) % 10000) / 10000; };
+  return r;
+}
 const STATUS = { '': ['Admis', 'ok'], refuse: ['Retiré', 'out'], derog: ['Dérogation DS', 'ds'] };
 const initialsOf = (first) => String(first || '').split('-').map((p) => p.charAt(0).toUpperCase() + '.').join('-');
 const pad = (n) => String(n).padStart(2, '0');
@@ -1014,12 +1043,19 @@ function render(profile, fiche, items, urls) {
 
   const field = (k, v) => `<div class="f-field"><dt>${k}</dt><dd>${esc(v || 'Non renseigné')}</dd></div>`;
   const pesee = utc(fiche.pesee_at);
-  const signs = [
-    `<div class="sign"><small>Signature de l'agent</small><span class="sig">${esc(initialsOf(first) + ' ' + last)}</span></div>`,
-    `<div class="sign"><small>Contrôle logistique</small><span class="sig">${isLogistics ? 'S. Covignac' : 'R. Aubanel'}</span></div>`,
-    hasDs ? `<div class="sign sign--ds"><small>Direction scientifique</small><span class="sig">J.-L. Rousseau</span></div>` : '',
-  ].filter(Boolean);
-  const pages = plates.length ? 2 : 1;
+  const rnd = jitter(fiche.cote || fullName);
+  const signs = signersOf(profile, items).map((p) => {
+    const b = sigBase(p.first, p.last), u = urls[b + '.png'] || urls[b + '.jpg'];
+    const tilt = (rnd() * 8 - 5).toFixed(1), dx = Math.round(rnd() * 24);
+    const name = initialsOf(p.first) + ' ' + p.last;
+    return `<div class="sign${p.ds ? ' sign--ds' : ''}"><small>${p.role}</small>${u
+      ? `<img class="sig-img" src="${esc(u)}" alt="Signature de ${esc(p.first + ' ' + p.last)}" style="--t:${tilt}deg;--x:${dx}px">`
+      : `<span class="sig" style="--t:${tilt}deg;--x:${dx}px">${esc(name)}</span>`}</div>`;
+  });
+  const stampVars = `--t:${(rnd() * 22 - 15).toFixed(1)}deg;--x:${Math.round(rnd() * 70 - 35)}px;--y:${Math.round(rnd() * 26 - 13)}px;--o:${(0.66 + rnd() * 0.26).toFixed(2)};--s:${(0.92 + rnd() * 0.14).toFixed(2)}`;
+  const archVars = `--t:${(rnd() * 30 - 24).toFixed(1)}deg;--o:${(0.45 + rnd() * 0.25).toFixed(2)}`;
+  const tamponUrl = urls[TAMPON[0]] || urls[TAMPON[1]];
+  const pages = 2;
 
   $('doc').innerHTML = `
   <article class="sheet" style="--i:0" aria-labelledby="fTitle">
@@ -1030,7 +1066,7 @@ function render(profile, fiche, items, urls) {
       <div class="f-form"><strong>FORMULAIRE LOG-07</strong>Réf. IFRAS/ARTEMIS-9/EP<br>Page 1 / ${pages}</div>
     </header>
     <div class="f-rule"></div>
-    ${ARCHIVE_STAMP}
+    <div class="archive-wrap" style="${archVars}">${ARCHIVE_STAMP}</div>
     <h1 class="f-title" id="fTitle">Inventaire des effets personnels</h1>
     <p class="f-sub">Mission ARTEMIS-9. Dotation individuelle limitée à ${grams(DOTATION)} pour l'ensemble du séjour. Pesée de contrôle à l'hôtel de transit, la veille du décollage.</p>
 
@@ -1058,7 +1094,9 @@ function render(profile, fiche, items, urls) {
         <div><dt>Marge non utilisée</dt><dd>${grams(Math.max(0, DOTATION - admitted))}</dd></div>
         <div><dt>Articles retirés à la pesée</dt><dd>${out.length ? `${out.length} (${grams(out.reduce((s, it) => s + it.masse_g, 0))})` : 'Aucun'}</dd></div>
       </dl>
-      ${admitted <= DOTATION ? `<div class="stamp-ok" aria-label="Fiche conforme"><b>CONFORME</b><span>${pesee.slice(0, 10)}</span></div>` : ''}
+      ${admitted <= DOTATION ? (tamponUrl
+        ? `<img class="stamp-ok stamp-ok--img" src="${esc(tamponUrl)}" alt="Tampon : conforme" style="${stampVars}">`
+        : `<div class="stamp-ok" aria-label="Fiche conforme" style="${stampVars}"><b>CONFORME</b><span>${pesee.slice(0, 10)}</span></div>`) : ''}
     </div>
 
     <div class="obs"><span class="obs-label">Observations du contrôle</span><p>${esc(fiche.observation || 'Néant.')}</p></div>
@@ -1068,7 +1106,7 @@ function render(profile, fiche, items, urls) {
     <footer class="f-foot"><span>Service Archives &amp; Documentation</span><span>Cote ${esc(fiche.cote)}</span><span>Numérisation : [Classifiée]</span></footer>
   </article>
 
-  ${plates.length ? `<article class="sheet" style="--i:1" aria-labelledby="plTitle">
+  <article class="sheet" style="--i:1" aria-label="Planches annexées">
     <header class="f-head">
       ${LOGO}
       <div class="f-inst">Planches annexées<small>${esc(fullName)}, cote ${esc(fiche.cote)}</small></div>
@@ -1076,9 +1114,9 @@ function render(profile, fiche, items, urls) {
     </header>
     <div class="f-rule"></div>
     <p class="f-sub">Prises de vue des articles présentés à la pesée et numérisation des documents personnels, avec gamme de gris et réglet de référence. Cliquez sur une planche pour l'agrandir.</p>
-    <div class="plates">${plates.map(plateHTML).join('')}</div>
+    ${plates.length ? `<div class="plates">${plates.map(plateHTML).join('')}</div>` : `<p class="plates-empty">Aucune planche n'est rattachée à cette fiche.</p>`}
     <footer class="f-foot"><span>Service Archives &amp; Documentation</span><span>${plates.length} planche${plates.length > 1 ? 's' : ''}</span><span>Cote ${esc(fiche.cote)}</span></footer>
-  </article>` : ''}`;
+  </article>`;
 
   document.title = `Effets personnels, ${fullName} | Espace IFRAS`;
   $('docMeta').textContent = fiche.cote || 'Coffre personnel';
@@ -1137,7 +1175,7 @@ async function loadInventory(user) {
   }
   const items = it.data || [];
   if (!fi.data || !items.length) { renderEmpty(); return; }
-  const urls = await signedUrls(items.flatMap(filesOf));
+  const urls = await signedUrls([...items.flatMap(filesOf), ...sigFiles(signersOf(profile, items)), ...TAMPON]);
   render(profile, fi.data, items, urls);
 }
 
