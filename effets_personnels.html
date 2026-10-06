@@ -506,9 +506,8 @@ tr.is-out .it-name, tr.is-out .m { text-decoration: line-through; text-decoratio
 .bed { position: relative; aspect-ratio: 4 / 3; display: grid; place-items: center; overflow: hidden;
   background: radial-gradient(ellipse at 50% 40%, hsl(220, 10%, 99%), hsl(220, 8%, 92%)); }
 .bed::after { content: ""; position: absolute; inset: 0; background: var(--grain); opacity: .16; mix-blend-mode: multiply; pointer-events: none; }
-.bed svg { width: 86%; height: 86%; }
-.bed img { width: 86%; height: 80%; object-fit: contain; filter: drop-shadow(0 8px 10px rgba(13, 20, 36, .28)); }
-.pl-num { position: absolute; top: 8px; left: 10px; z-index: 1; font-family: "DM Mono", monospace; font-size: 10.5px; color: var(--ink-soft); }
+.bed img { width: 100%; height: 100%; object-fit: contain; }
+.pl-num { position: absolute; top: 8px; left: 8px; z-index: 2; padding: 2px 6px; border-radius: 2px; background: hsl(220, 12%, 96%, .92); font-family: "DM Mono", monospace; font-size: 10.5px; color: var(--ink-soft); }
 .calib { display: grid; grid-template-columns: 1fr 1.6fr; gap: 10px; align-items: end; padding: 6px 10px 8px; border-top: 1px solid hsl(220, 12%, 86%); }
 .calib-grey { display: grid; grid-template-columns: repeat(8, 1fr); height: 10px; }
 .calib-grey i:nth-child(1) { background: #fafafa; } .calib-grey i:nth-child(2) { background: #dcdcdc; } .calib-grey i:nth-child(3) { background: #bdbdbd; } .calib-grey i:nth-child(4) { background: #9e9e9e; }
@@ -518,6 +517,7 @@ tr.is-out .it-name, tr.is-out .m { text-decoration: line-through; text-decoratio
   repeating-linear-gradient(90deg, var(--ink-soft) 0 1px, transparent 1px 2%) bottom / 100% 5px no-repeat;
   border-bottom: 1px solid var(--ink); }
 .plate figcaption { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; font-size: 12.5px; line-height: 1.4; }
+.plate figcaption small { grid-column: 1 / -1; font-family: "DM Mono", monospace; font-size: 10.5px; color: var(--ink-faint); }
 .plate figcaption b { font-weight: 500; } .plate figcaption span { font-family: "DM Mono", monospace; font-size: 11.5px; color: var(--ink-soft); white-space: nowrap; }
 .missing { display: grid; justify-items: center; gap: 6px; color: var(--ink-faint); text-align: center; padding: 16px; }
 .missing i { font-size: 30px; }
@@ -531,7 +531,6 @@ tr.is-out .it-name, tr.is-out .m { text-decoration: line-through; text-decoratio
 .zoom.in { opacity: 1; transform: scale(1); }
 .zoom::backdrop { background: hsl(var(--hue), 50%, 3%, .78); backdrop-filter: blur(3px); }
 .zoom-fig { margin: 0; padding: 18px 18px 16px; display: grid; gap: 12px; }
-.zoom-bed .bed svg { width: 90%; height: 90%; }
 .zoom-fig figcaption { font-size: 14px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; padding-right: 44px; }
 .zoom-fig figcaption span { font-family: "DM Mono", monospace; font-size: 12.5px; color: var(--ink-soft); }
 .zoom-close { position: absolute; top: 12px; right: 12px; z-index: 2; width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); display: grid; place-items: center; cursor: pointer; transition: transform 140ms var(--ease-out); }
@@ -922,525 +921,16 @@ function initials(email) {
 function hueOf(str) { let h = 0; for (const c of String(str)) h = (h * 31 + c.charCodeAt(0)) % 360; return h; }
 
 /* ============================================================
-   PLANCHES DESSINÉES : un gabarit par type d'objet
-   spec = "type|arg|arg" (colonne dessin de effets_personnels)
-   ============================================================ */
-let _vid = 0;
-const vid = () => 'v' + (++_vid);
-const X = (s) => esc(s);
-const lines = (s) => String(s || '').split('~');
-const tiltOf = (s) => { let h = 0; for (const c of String(s)) h = (h * 33 + c.charCodeAt(0)) % 997; return ((h % 7) - 3) * 0.7; };
-
-function svg(body, spec, defs = '') {
-  const f = vid();
-  return `<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-<defs><filter id="${f}" x="-25%" y="-25%" width="150%" height="160%"><feDropShadow dx="0" dy="7" stdDeviation="7" flood-color="#0d1424" flood-opacity=".30"/></filter>${defs}</defs>
-<g filter="url(#${f})" transform="rotate(${tiltOf(spec)} 200 150)">${body}</g></svg>`;
-}
-const metal = (id, a = '#f2f2ef', b = '#9a9b97', c = '#d6d6d2') =>
-  `<linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset=".55" stop-color="${b}"/><stop offset="1" stop-color="${c}"/></linearGradient>`;
-const glossV = (id, op = .35) =>
-  `<linearGradient id="${id}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".18" stop-color="#fff" stop-opacity="${op}"/><stop offset=".32" stop-color="#fff" stop-opacity="0"/></linearGradient>`;
-const isLight = (hex) => { const h = hex.replace('#', ''); const n = parseInt(h.length === 3 ? h.replace(/./g, '$&$&') : h, 16); return ((n >> 16) * .3 + ((n >> 8) & 255) * .59 + (n & 255) * .11) > 150; };
-const wrap = (s, max) => { const out = []; let cur = ''; String(s).split(' ').forEach((w) => { if ((cur + ' ' + w).trim().length > max && cur) { out.push(cur); cur = w; } else cur = (cur + ' ' + w).trim(); }); if (cur) out.push(cur); return out; };
-const CW = { Syne: .9, 'DM Sans': .58, 'DM Mono': .62, Caveat: .48 };
-const fit = (t, size, fam, max, ls = 0) => { const w = String(t).length * (size * (CW[fam] || .6) + ls); return w > max ? ` textLength="${max}" lengthAdjust="spacingAndGlyphs"` : ''; };
-const engrave = (x, y, t, size, fam, extra = '', max = 999) =>
-  `<text x="${x}" y="${y + 1.2}" text-anchor="middle" font-family="${fam}" font-size="${size}" fill="#fff" fill-opacity=".55" ${extra}${fit(t, size, fam, max)}>${X(t)}</text>
-   <text x="${x}" y="${y}" text-anchor="middle" font-family="${fam}" font-size="${size}" fill="#4a4c49" ${extra}${fit(t, size, fam, max)}>${X(t)}</text>`;
-
-const DIAL = {
-  montre:    { face: '#f4f1e8', ink: '#22252b', ring: 'm' },
-  chrono:    { face: '#1d2027', ink: '#eef0f3', ring: 'm' },
-  barometre: { face: '#f1ead8', ink: '#2c2620', ring: 'b' },
-  boussole:  { face: '#f4f4f0', ink: '#1f2a37', ring: 'm' },
-  vario:     { face: '#121418', ink: '#f2f3f5', ring: 'k' },
-};
-
-const DRAW = {
-  eventail() {
-    const n = 15;
-    return svg(`
-      ${Array.from({ length: n }, (_, i) => { const a0 = Math.PI + i * Math.PI / n, a1 = a0 + Math.PI / n; const P = (a, r) => `${200 + r * Math.cos(a)} ${250 + r * Math.sin(a)}`;
-        return `<path d="M${P(a0, 60)} L${P(a0, 190)} A190 190 0 0 1 ${P(a1, 190)} L${P(a1, 60)} A60 60 0 0 0 ${P(a0, 60)} Z" fill="${i % 2 ? '#a31c2c' : '#b8283a'}"/>`; }).join('')}
-      <path d="M10 250 A190 190 0 0 1 390 250" fill="none" stroke="#1d1d1f" stroke-width="5"/>
-      ${Array.from({ length: 9 }, (_, i) => `<circle cx="${200 + 130 * Math.cos(Math.PI + (i + .5) * Math.PI / 9)}" cy="${250 + 130 * Math.sin(Math.PI + (i + .5) * Math.PI / 9)}" r="9" fill="#f2d5a0" opacity=".85"/>`).join('')}
-      ${Array.from({ length: n + 1 }, (_, i) => `<path d="M200 250 L${200 + 62 * Math.cos(Math.PI + i * Math.PI / n)} ${250 + 62 * Math.sin(Math.PI + i * Math.PI / n)}" stroke="#2b1a10" stroke-width="5" stroke-linecap="round"/>`).join('')}
-      <circle cx="200" cy="250" r="9" fill="#c9a64a"/>`, 'fan');
-  },
-  herbier(latin, where) {
-    return svg(`
-      <rect x="92" y="10" width="216" height="282" fill="#f7f5ee"/>
-      <path d="M200 250 C 196 200, 206 150, 198 60" stroke="#6b5a3a" stroke-width="2.4" fill="none"/>
-      ${Array.from({ length: 11 }, (_, i) => { const y = 236 - i * 16, side = i % 2 ? 1 : -1; return `<ellipse cx="${200 + side * 12}" cy="${y}" rx="11" ry="4.5" fill="${i % 3 ? '#6f7d4a' : '#86915c'}" transform="rotate(${side * -28} ${200 + side * 12} ${y})"/>`; }).join('')}
-      ${[[192, 56], [204, 50], [198, 44], [208, 60]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="3.4" fill="#a68bb8"/>`).join('')}
-      <path d="M200 250 l-12 10 M200 250 l10 12 M200 250 l2 14" stroke="#7a6a4a" stroke-width="1.4"/>
-      <rect x="176" y="146" width="48" height="10" fill="#e9e2c7" opacity=".9" transform="rotate(-8 200 151)"/>
-      <rect x="182" y="222" width="40" height="10" fill="#e9e2c7" opacity=".9" transform="rotate(6 202 227)"/>
-      <rect x="196" y="244" width="104" height="40" fill="#fff" stroke="#b9b29a"/>
-      <text x="204" y="261" font-family="DM Sans" font-style="italic" font-size="11" fill="#2b2b2b"${fit(latin, 11, 'DM Sans', 90)}>${X(latin)}</text>
-      <text x="204" y="277" font-family="Caveat" font-size="14" fill="#23324f"${fit(where, 14, 'Caveat', 90)}>${X(where)}</text>`, 'herb' + latin);
-  },
-  medaille(a, b) {
-    const g = vid(), r = vid();
-    return svg(`
-      <circle cx="200" cy="58" r="15" fill="none" stroke="url(#${g})" stroke-width="5"/>
-      <path d="M200 0 v40" stroke="#8a6d4a" stroke-width="9" stroke-linecap="round"/>
-      <circle cx="200" cy="162" r="84" fill="url(#${r})"/>
-      <circle cx="200" cy="162" r="84" fill="none" stroke="#7d7e7a" stroke-width="2"/>
-      <circle cx="200" cy="162" r="70" fill="none" stroke="#8f908c" stroke-width="1.2"/>
-      <path d="M148 120 l30 -8 M236 214 l22 -14 M160 206 l10 4" stroke="#fff" stroke-opacity=".35" stroke-width="1"/>
-      ${engrave(200, 160, a, 38, 'Syne', 'font-weight="700" letter-spacing="5"')}
-      ${engrave(200, 196, b, 24, 'DM Mono', 'letter-spacing="3"')}`, 'm' + a,
-      metal(g) + `<radialGradient id="${r}" cx=".38" cy=".32" r=".8"><stop offset="0" stop-color="#f7f7f3"/><stop offset=".55" stop-color="#b8b9b4"/><stop offset="1" stop-color="#85867f"/></radialGradient>`);
-  },
-  tag(a, b, c) {
-    const g = vid();
-    return svg(`
-      <path d="M40 150 C 60 120, 80 112, 102 140" fill="none" stroke="#9b9c98" stroke-width="3" stroke-dasharray="5 3"/>
-      <rect x="92" y="86" width="230" height="128" rx="32" fill="url(#${g})" stroke="#7f807b" stroke-width="2"/>
-      <circle cx="122" cy="150" r="10" fill="#e9ebee" stroke="#7f807b" stroke-width="2"/>
-      ${[a, b, c].map((t, i) => engrave(232, 132 + i * 28, t, 17, 'DM Mono', 'letter-spacing="1.5"', 168)).join('')}`, 't' + a, metal(g));
-  },
-  ecusson(top, big, bottom) {
-    const p = vid();
-    return svg(`
-      <circle cx="200" cy="150" r="118" fill="#1a2747"/>
-      <circle cx="200" cy="150" r="112" fill="none" stroke="#c9a64a" stroke-width="10"/>
-      <circle cx="200" cy="150" r="112" fill="none" stroke="#f1dc96" stroke-width="2" stroke-dasharray="3 4"/>
-      <circle cx="200" cy="150" r="104" fill="url(#${p})"/>
-      <ellipse cx="200" cy="134" rx="64" ry="20" fill="none" stroke="#e8edf6" stroke-width="2.5" transform="rotate(-16 200 134)"/>
-      <circle cx="200" cy="134" r="17" fill="#f3c34a"/>
-      <circle cx="258" cy="116" r="5.5" fill="#e8edf6"/>
-      <text x="200" y="88" text-anchor="middle" font-family="DM Sans" font-weight="500" font-size="15" letter-spacing="5" fill="#e8edf6">${X(top)}</text>
-      <text x="200" y="200" text-anchor="middle" font-family="Syne" font-weight="800" font-size="28" letter-spacing="3" fill="#ffffff"${fit(big, 28, 'Syne', 170, 3)}>${X(big)}</text>
-      <text x="200" y="232" text-anchor="middle" font-family="DM Mono" font-size="15" letter-spacing="3" fill="#f1dc96" dy="2">${X(bottom)}</text>`, 'e' + big,
-      `<pattern id="${p}" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><rect width="4" height="4" fill="#1a2747"/><path d="M0 0 v4" stroke="#24345c" stroke-width="1.5"/></pattern>`);
-  },
-  plaque(a, b) {
-    return svg(`
-      <rect x="28" y="72" width="344" height="156" rx="16" fill="#1f418d"/>
-      <rect x="40" y="84" width="320" height="132" rx="10" fill="none" stroke="#f4f4f0" stroke-width="4"/>
-      ${[[52, 96], [348, 96], [52, 204], [348, 204]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="5" fill="#d8d9d4" stroke="#5b5f66"/>`).join('')}
-      <text x="200" y="152" text-anchor="middle" font-family="Syne" font-weight="800" font-size="32" letter-spacing="2" fill="#f4f4f0"${fit(a, 32, 'Syne', 290, 2)}>${X(a)}</text>
-      <text x="200" y="186" text-anchor="middle" font-family="DM Sans" font-size="14.5" letter-spacing="1" fill="#f4f4f0">${X(b)}</text>
-      <path d="M28 120 q6 6 0 16 z M338 228 q10 -8 22 -2 l-4 2 z M300 72 q8 7 18 0 z" fill="#d9d4c5"/>
-      <path d="M30 124 q3 3 0 7 z M342 227 q8 -5 14 -1 z" fill="#6e4a2a" opacity=".8"/>`, 'p' + a);
-  },
-  livre(title, author, sub, color = '#2f4a3a') {
-    const light = isLight(color), ink = light ? '#1b1d22' : '#f3f1ea', red = light ? '#9b1c1c' : ink;
-    const t = wrap(title, 13), g = vid();
-    return svg(`
-      <rect x="112" y="22" width="182" height="256" rx="3" fill="${color}"/>
-      <rect x="112" y="22" width="16" height="256" fill="#000" opacity=".18"/>
-      <rect x="112" y="22" width="182" height="256" rx="3" fill="url(#${g})"/>
-      <rect x="140" y="46" width="132" height="208" fill="none" stroke="${red}" stroke-width="1.4" opacity=".9"/>
-      <text x="206" y="80" text-anchor="middle" font-family="DM Sans" font-size="12" fill="${ink}" opacity=".85"${fit(author, 12, 'DM Sans', 118)}>${X(author)}</text>
-      ${t.map((l, i) => `<text x="206" y="${130 + i * 26 - (t.length - 1) * 10}" text-anchor="middle" font-family="Syne" font-weight="700" font-size="21" fill="${red}"${fit(l, 21, 'Syne', 118)}>${X(l)}</text>`).join('')}
-      <text x="206" y="236" text-anchor="middle" font-family="DM Mono" font-size="11" fill="${ink}" opacity=".75"${fit(sub, 11, 'DM Mono', 118)}>${X(sub)}</text>
-      <path d="M290 28 l4 6 v10 M118 270 l14 6" stroke="#fff" stroke-opacity=".25"/>`, 'l' + title,
-      `<linearGradient id="${g}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".10"/><stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".18"/></linearGradient>`);
-  },
-  carnet(label, color = '#1d232e') {
-    return svg(`
-      <rect x="104" y="18" width="204" height="264" rx="12" fill="${color}"/>
-      <rect x="104" y="18" width="204" height="264" rx="12" fill="none" stroke="#000" stroke-opacity=".25" stroke-width="2"/>
-      <path d="M118 18 v264" stroke="#000" stroke-opacity=".22" stroke-width="3"/>
-      <rect x="276" y="18" width="9" height="264" fill="#111" opacity=".8"/>
-      <rect x="140" y="70" width="122" height="54" rx="3" fill="#f2efe6"/>
-      <path d="M150 112 h102" stroke="#c9c3b4"/>
-      <text x="201" y="104" text-anchor="middle" font-family="Caveat" font-size="25" fill="#22324f"${fit(label, 25, 'Caveat', 108)}>${X(label)}</text>`, 'c' + label);
-  },
-  note(style, text) {
-    const L = lines(text);
-    if (style === 'serviette') {
-      return svg(`
-        <rect x="64" y="16" width="272" height="268" fill="#fbfbf7"/>
-        <rect x="76" y="28" width="248" height="244" fill="none" stroke="#d9d7cf" stroke-width="1.5" stroke-dasharray="1 5" stroke-linecap="round"/>
-        <path d="M200 16 v268 M64 150 h272" stroke="#000" stroke-opacity=".07" stroke-width="2"/>
-        <g transform="rotate(-4 200 150)">${L.map((l, i) => `<text x="96" y="${92 + i * 52}" font-family="Caveat" font-size="${i === L.length - 1 ? 30 : 25}" fill="#1e3a8a">${X(l)}</text>`).join('')}</g>
-        <circle cx="290" cy="230" r="20" fill="#7a5a3a" opacity=".12"/>`, 'n' + text);
-    }
-    if (style === 'verso') {
-      return svg(`
-        <rect x="46" y="44" width="308" height="212" fill="#eeece4"/>
-        <path d="M46 44 h308 v212 h-308 z" fill="none" stroke="#d6d2c5"/>
-        ${Array.from({ length: 9 }, (_, i) => `<path d="M${60 + i * 34} 60 l20 16" stroke="#c9c5b8" stroke-width=".8"/>`).join('')}
-        <g transform="rotate(-6 200 150)">${L.map((l, i) => `<text x="200" y="${142 + i * 46}" text-anchor="middle" font-family="Caveat" font-size="38" fill="#3f4245">${X(l)}</text>`).join('')}</g>`, 'v' + text);
-    }
-    if (style === 'carte') {
-      return svg(`
-        <rect x="52" y="54" width="296" height="192" fill="#fcfbf6"/>
-        <rect x="64" y="66" width="272" height="168" fill="none" stroke="#b9a35f" stroke-width="1"/>
-        <path d="M200 54 v192" stroke="#000" stroke-opacity=".06"/>
-        ${L.map((l, i) => `<text x="${i === L.length - 1 ? 300 : 86}" y="${116 + i * 40}" ${i === L.length - 1 ? 'text-anchor="end"' : ''} font-family="Caveat" font-size="${i === L.length - 1 ? 32 : 26}" fill="#1f2b4d">${X(l)}</text>`).join('')}`, 'k' + text);
-    }
-    return svg(`
-      <rect x="62" y="20" width="276" height="262" fill="#fdfdf9"/>
-      ${Array.from({ length: 9 }, (_, i) => `<path d="M62 ${62 + i * 25} h276" stroke="#a9c2e6" stroke-width=".8"/>`).join('')}
-      <path d="M96 20 v262" stroke="#e39a9a" stroke-width="1"/>
-      ${L.map((l, i) => `<text x="106" y="${58 + i * 50}" font-family="Caveat" font-size="${i ? 22 : 28}" fill="#23324f"${fit(l, i ? 22 : 28, 'Caveat', 206)}>${X(l)}</text>`).join('')}`, 'p' + text);
-  },
-  bocal(label, sub, color = '#7a4210') {
-    const g = vid(), l = vid();
-    return svg(`
-      <rect x="112" y="74" width="176" height="196" rx="28" fill="${color}"/>
-      <rect x="112" y="74" width="176" height="196" rx="28" fill="url(#${g})"/>
-      <rect x="120" y="44" width="160" height="40" rx="7" fill="url(#${l})"/>
-      ${Array.from({ length: 14 }, (_, i) => `<path d="M${130 + i * 10.5} 47 v34" stroke="#000" stroke-opacity=".12"/>`).join('')}
-      <rect x="126" y="132" width="148" height="84" rx="4" fill="#f4f0e5" stroke="#c9bfa6"/>
-      <text x="200" y="172" text-anchor="middle" font-family="Syne" font-weight="700" font-size="20" letter-spacing="1" fill="${color}"${fit(label, 20, 'Syne', 132, 1)}>${X(label)}</text>
-      <text x="200" y="196" text-anchor="middle" font-family="DM Sans" font-size="11" fill="#4a4237"${fit(sub, 11, 'DM Sans', 132)}>${X(sub)}</text>`, 'b' + label,
-      glossV(g, .32) + metal(l, '#e7dcc1', '#a08d5d', '#cdbd93'));
-  },
-  boite(label, sub, color = '#3a2a22') {
-    const g = vid();
-    return svg(`
-      <rect x="66" y="66" width="268" height="176" rx="18" fill="${color}"/>
-      <rect x="66" y="66" width="268" height="176" rx="18" fill="url(#${g})"/>
-      <path d="M66 104 h268" stroke="#000" stroke-opacity=".28" stroke-width="2"/>
-      <path d="M84 72 h232" stroke="#fff" stroke-opacity=".35" stroke-width="2" stroke-linecap="round"/>
-      <rect x="96" y="124" width="208" height="88" rx="8" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.4"/>
-      <text x="200" y="168" text-anchor="middle" font-family="Syne" font-weight="800" font-size="25" letter-spacing="2" fill="#fbf8f0"${fit(label, 25, 'Syne', 188, 2)}>${X(label)}</text>
-      <text x="200" y="194" text-anchor="middle" font-family="DM Sans" font-size="12.5" fill="#fbf8f0" opacity=".85"${fit(sub, 12.5, 'DM Sans', 188)}>${X(sub)}</text>`, 'x' + label,
-      `<linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset=".35" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".25"/></linearGradient>`);
-  },
-  sachet(label, sub) {
-    return svg(`
-      <path d="M110 64 L290 64 L304 272 L96 272 Z" fill="#b8905f"/>
-      <path d="M110 64 L290 64 L292 92 L108 92 Z" fill="#a47c4c"/>
-      <path d="M108 64 ${Array.from({ length: 18 }, (_, i) => `l5 -8 l5 8`).join(' ')}" fill="none" stroke="#8d6a3f" stroke-width="2"/>
-      <path d="M150 92 L144 272 M256 92 L262 272" stroke="#000" stroke-opacity=".08" stroke-width="6"/>
-      <rect x="132" y="138" width="136" height="86" fill="none" stroke="#3b2414" stroke-width="2"/>
-      <text x="200" y="182" text-anchor="middle" font-family="Syne" font-weight="800" font-size="27" letter-spacing="2" fill="#3b2414"${fit(label, 27, 'Syne', 120, 2)}>${X(label)}</text>
-      <text x="200" y="206" text-anchor="middle" font-family="DM Sans" font-size="11.5" fill="#3b2414"${fit(sub, 11.5, 'DM Sans', 124)}>${X(sub)}</text>`, 's' + label);
-  },
-  bouteille(text) {
-    const g = vid(), L = lines(text);
-    return svg(`
-      <path d="M180 18 h40 v58 c0 24 44 40 44 84 v108 c0 10 -8 16 -18 16 h-92 c-10 0 -18 -6 -18 -16 v-108 c0 -44 44 -60 44 -84 z" fill="#d8e4dc" fill-opacity=".55" stroke="#8ea597" stroke-width="2"/>
-      <path d="M144 176 h112 v92 c0 6 -4 10 -10 10 h-92 c-6 0 -10 -4 -10 -10 z" fill="#efe7c9" fill-opacity=".5"/>
-      <rect x="176" y="10" width="48" height="22" rx="3" fill="#5a3b22"/>
-      <path d="M180 18 h40 v58 c0 24 44 40 44 84 v108 c0 10 -8 16 -18 16 h-92 c-10 0 -18 -6 -18 -16 v-108 c0 -44 44 -60 44 -84 z" fill="url(#${g})"/>
-      <path d="M144 158 h112 v74 l-10 4 l6 8 l-14 6 h-94 z" fill="#d7c08a"/>
-      <path d="M144 158 h112 v74 l-10 4 l6 8 l-14 6 h-94 z" fill="none" stroke="#a88f55"/>
-      <circle cx="214" cy="214" r="18" fill="#8a6a2a" opacity=".18"/>
-      <circle cx="170" cy="176" r="9" fill="#8a6a2a" opacity=".15"/>
-      ${L.map((l, i) => `<text x="${i ? 156 + i * 14 : 200}" y="${182 + i * 25}" ${i ? '' : 'text-anchor="middle"'} font-family="Caveat" font-size="${i ? 25 : 17}" fill="#3a2a14" opacity="${i ? .9 : .7}"${fit(l, i ? 25 : 17, 'Caveat', i ? 80 : 96)}>${X(l)}</text>`).join('')}`, 'w' + text, glossV(g, .5));
-  },
-  cassette(title, sub) {
-    return svg(`
-      <rect x="48" y="58" width="304" height="188" rx="14" fill="#2a2b2f"/>
-      <rect x="64" y="72" width="272" height="104" rx="6" fill="#f1ede2"/>
-      <rect x="64" y="72" width="272" height="20" fill="#c2412d"/>
-      <path d="M92 110 v34 M84 118 v14 q8 10 16 0 v-14 M92 104 l-6 8 h12 z" stroke="#1f2a44" stroke-width="3" fill="none" stroke-linejoin="round"/>
-      <text x="112" y="137" font-family="Syne" font-weight="800" font-style="italic" font-size="30" letter-spacing="1" fill="#1f2a44"${fit(title, 30, 'Syne', 210, 1)}>${X(title)}</text>
-      <text x="112" y="160" font-family="Caveat" font-size="20" fill="#1f2a44">${X(sub)}</text>
-      <rect x="128" y="186" width="144" height="44" rx="22" fill="#111215"/>
-      ${[160, 240].map((x) => `<circle cx="${x}" cy="208" r="17" fill="#e8e3d6"/><circle cx="${x}" cy="208" r="8" fill="#111215"/>${Array.from({ length: 6 }, (_, i) => `<rect x="${x - 1.5}" y="196" width="3" height="6" fill="#111215" transform="rotate(${i * 60} ${x} 208)"/>`).join('')}`).join('')}
-      ${[[60, 70], [340, 70], [60, 234], [340, 234]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="4" fill="#55575c"/>`).join('')}`, 'k' + title);
-  },
-  cartouche(note) {
-    return svg(`
-      <path d="M78 52 h244 v20 h12 v184 c0 8 -6 14 -14 14 h-240 c-8 0 -14 -6 -14 -14 v-184 h12 z" fill="#8e9196"/>
-      <path d="M78 52 h244 v20 h12 v184 c0 8 -6 14 -14 14 h-240 c-8 0 -14 -6 -14 -14 v-184 h12 z" fill="none" stroke="#6b6e73" stroke-width="2"/>
-      <rect x="100" y="92" width="200" height="132" rx="6" fill="#77797e"/>
-      <rect x="108" y="100" width="184" height="116" rx="4" fill="#ecebe6"/>
-      <rect x="108" y="100" width="184" height="116" rx="4" fill="none" stroke="#c9c7bf"/>
-      <text x="200" y="168" text-anchor="middle" font-family="Caveat" font-size="38" fill="#14306e" transform="rotate(-5 200 160)">${X(note)}</text>
-      ${Array.from({ length: 6 }, (_, i) => `<rect x="${88 + i * 4}" y="236" width="2" height="22" fill="#6b6e73"/><rect x="${300 + i * 4}" y="236" width="2" height="22" fill="#6b6e73"/>`).join('')}`, 'g' + note);
-  },
-  qsl(call) {
-    return svg(`
-      <rect x="34" y="50" width="332" height="206" fill="#fbfaf6"/>
-      <rect x="34" y="50" width="332" height="44" fill="#123a6b"/>
-      <text x="52" y="80" font-family="DM Sans" font-weight="500" font-size="13" letter-spacing="3" fill="#e9eef7">CONFIRMING OUR QSO</text>
-      <text x="200" y="146" text-anchor="middle" font-family="Syne" font-weight="800" font-size="58" letter-spacing="4" fill="#b3261e"${fit(call, 58, 'Syne', 280, 4)}>${X(call)}</text>
-      <text x="200" y="166" text-anchor="middle" font-family="DM Mono" font-size="10.5" fill="#43474e">LOCATOR JN18 · FRANCE</text>
-      ${['RADIO', 'DATE', 'UTC', 'MHz', 'MODE', 'RST'].map((h, i) => `<rect x="${46 + i * 51.5}" y="184" width="51.5" height="48" fill="none" stroke="#9aa3b2"/><text x="${71.7 + i * 51.5}" y="198" text-anchor="middle" font-family="DM Mono" font-size="9" fill="#5b6270">${h}</text>`).join('')}
-      ${['F6KRT', '04.06.16', '19:42', '14.205', 'SSB', '59'].map((v, i) => `<text x="${71.7 + i * 51.5}" y="223" text-anchor="middle" font-family="Caveat" font-size="17" fill="#1e3a8a">${v}</text>`).join('')}`, 'q' + call);
-  },
-  cadran(type) {
-    const d = DIAL[type] || DIAL.montre, g = vid();
-    const ring = d.ring === 'b' ? metal(g, '#f0dfa8', '#a5803a', '#d9bd75') : d.ring === 'k' ? metal(g, '#5b5f66', '#1d1f24', '#3b3e44') : metal(g);
-    const ticks = Array.from({ length: 60 }, (_, i) => `<path d="M200 ${84 + (i % 5 ? 0 : 0)} v${i % 5 ? 5 : 11}" stroke="${d.ink}" stroke-width="${i % 5 ? 1 : 2.4}" transform="rotate(${i * 6} 200 150)"/>`).join('');
-    let face = ticks, extra = '';
-    if (type === 'montre') {
-      extra = `<rect x="168" y="0" width="64" height="70" rx="6" fill="#6b3f22"/><rect x="168" y="230" width="64" height="70" rx="6" fill="#6b3f22"/><rect x="284" y="140" width="16" height="20" rx="3" fill="url(#${g})"/>`;
-      face += [12, 3, 6, 9].map((n, i) => `<text x="${200 + 46 * Math.sin(i * Math.PI / 2)}" y="${150 - 46 * Math.cos(i * Math.PI / 2) + 7}" text-anchor="middle" font-family="Syne" font-weight="700" font-size="19" fill="${d.ink}">${n}</text>`).join('');
-      face += `<path d="M200 150 L200 102" stroke="${d.ink}" stroke-width="3.5" stroke-linecap="round" transform="rotate(-60 200 150)"/><path d="M200 150 L200 92" stroke="${d.ink}" stroke-width="2.5" stroke-linecap="round" transform="rotate(48 200 150)"/>`;
-    } else if (type === 'chrono') {
-      extra = `<rect x="168" y="0" width="64" height="70" rx="6" fill="#23252b"/><rect x="168" y="230" width="64" height="70" rx="6" fill="#23252b"/><rect x="286" y="140" width="16" height="20" rx="3" fill="url(#${g})"/><rect x="266" y="78" width="14" height="18" rx="3" fill="url(#${g})" transform="rotate(45 273 87)"/><rect x="266" y="204" width="14" height="18" rx="3" fill="url(#${g})" transform="rotate(-45 273 213)"/>`;
-      face += [[170, 150], [230, 150], [200, 185]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="16" fill="none" stroke="${d.ink}" stroke-opacity=".6"/><path d="M${x} ${y} v-12" stroke="#e8544a" stroke-width="1.6"/>`).join('');
-      face += `<path d="M200 150 L200 88" stroke="#e8544a" stroke-width="1.6" transform="rotate(110 200 150)"/><path d="M200 150 L200 104" stroke="${d.ink}" stroke-width="3.5" stroke-linecap="round" transform="rotate(-30 200 150)"/>`;
-    } else if (type === 'barometre') {
-      face = Array.from({ length: 41 }, (_, i) => `<path d="M200 86 v${i % 5 ? 5 : 10}" stroke="${d.ink}" stroke-width="${i % 5 ? .8 : 1.8}" transform="rotate(${-130 + i * 6.5} 200 150)"/>`).join('');
-      face += ['TEMPÊTE', 'PLUIE', 'VARIABLE', 'BEAU', 'SEC'].map((t, i) => `<text x="200" y="118" text-anchor="middle" font-family="DM Sans" font-weight="500" font-size="9.5" letter-spacing="1" fill="${d.ink}" transform="rotate(${-100 + i * 50} 200 150)">${t}</text>`).join('');
-      face += `<path d="M200 168 L200 92" stroke="#1d1f24" stroke-width="2.4" stroke-linecap="round" transform="rotate(38 200 150)"/><path d="M200 150 L200 96" stroke="#b8862f" stroke-width="1.6" transform="rotate(12 200 150)"/><text x="200" y="196" text-anchor="middle" font-family="DM Mono" font-size="10" fill="${d.ink}">hPa</text>`;
-      extra = `<circle cx="200" cy="40" r="12" fill="none" stroke="url(#${g})" stroke-width="5"/>`;
-    } else if (type === 'boussole') {
-      extra = `<rect x="80" y="40" width="240" height="220" rx="14" fill="#2e3a2c"/><rect x="88" y="48" width="224" height="204" rx="10" fill="none" stroke="#5c6b58"/>`;
-      face = Array.from({ length: 72 }, (_, i) => `<path d="M200 84 v${i % 2 ? 4 : 8}" stroke="${d.ink}" stroke-width=".9" transform="rotate(${i * 5} 200 150)"/>`).join('');
-      face += [['N', 0], ['E', 90], ['S', 180], ['O', 270]].map(([t, a]) => `<text x="200" y="112" text-anchor="middle" font-family="Syne" font-weight="700" font-size="16" fill="${t === 'N' ? '#c0392b' : d.ink}" transform="rotate(${a} 200 150)">${t}</text>`).join('');
-      face += `<g transform="rotate(24 200 150)"><path d="M200 96 l9 54 h-18 z" fill="#c0392b"/><path d="M200 204 l9 -54 h-18 z" fill="#e7e8ea" stroke="#8b8f97" stroke-width=".8"/></g><circle cx="200" cy="150" r="5" fill="#8b8f97"/>`;
-    } else if (type === 'vario') {
-      face = Array.from({ length: 21 }, (_, i) => `<path d="M200 84 v${i % 2 ? 6 : 12}" stroke="${d.ink}" stroke-width="${i % 2 ? 1 : 2}" transform="rotate(${-150 + i * 15} 200 150)"/>`).join('');
-      face += ['−5', '0', '+5'].map((t, i) => `<text x="200" y="114" text-anchor="middle" font-family="DM Mono" font-size="15" fill="${d.ink}" transform="rotate(${-120 + i * 120} 200 150)">${t}</text>`).join('');
-      face += `<text x="200" y="186" text-anchor="middle" font-family="DM Mono" font-size="11" fill="${d.ink}">m/s</text><path d="M200 150 L200 92" stroke="#f2f3f5" stroke-width="3" stroke-linecap="round" transform="rotate(-70 200 150)"/>`;
-      extra = [[106, 56], [294, 56], [106, 244], [294, 244]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="6" fill="#3b3e44"/>`).join('') + `<rect x="90" y="40" width="220" height="220" rx="18" fill="#2a2d33"/>`;
-    }
-    return svg(`${extra}
-      <circle cx="200" cy="150" r="88" fill="url(#${g})"/>
-      <circle cx="200" cy="150" r="76" fill="${d.face}"/>
-      ${face}
-      <circle cx="200" cy="150" r="4" fill="${d.ink}"/>
-      <path d="M150 104 a70 70 0 0 1 60 -30" stroke="#fff" stroke-opacity=".5" stroke-width="5" fill="none" stroke-linecap="round"/>`, 'd' + type, ring);
-  },
-  loupe() {
-    const g = vid(), gl = vid();
-    return svg(`
-      <rect x="236" y="176" width="34" height="110" rx="10" fill="#4a2e1c" transform="rotate(-45 253 231)"/>
-      <circle cx="170" cy="130" r="88" fill="url(#${g})"/>
-      <circle cx="170" cy="130" r="74" fill="#dfe8ee" fill-opacity=".5"/>
-      <circle cx="170" cy="130" r="74" fill="url(#${gl})"/>
-      ${Array.from({ length: 7 }, (_, i) => `<circle cx="${140 + (i % 3) * 30}" cy="${104 + Math.floor(i / 3) * 26}" r="${5 + (i % 2) * 3}" fill="#6b8f5a" opacity=".35"/>`).join('')}
-      <text x="170" y="64" text-anchor="middle" font-family="DM Mono" font-size="10" fill="#4a4c49">10×</text>`, 'loupe',
-      metal(g) + `<radialGradient id="${gl}" cx=".3" cy=".25" r=".7"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".25" stop-color="#fff" stop-opacity=".1"/><stop offset="1" stop-color="#9fb6c6" stop-opacity=".3"/></radialGradient>`);
-  },
-  oculaire() {
-    const g = vid();
-    return svg(`
-      <rect x="80" y="112" width="120" height="76" fill="url(#${g})"/>
-      <rect x="196" y="96" width="112" height="108" rx="6" fill="#16181c"/>
-      ${Array.from({ length: 20 }, (_, i) => `<path d="M${204 + i * 5} 100 v100" stroke="#3a3d43" stroke-width="2"/>`).join('')}
-      <rect x="304" y="104" width="22" height="92" rx="6" fill="#0d0e10"/>
-      <ellipse cx="326" cy="150" rx="6" ry="38" fill="#3c5a7a"/>
-      <text x="252" y="92" text-anchor="middle" font-family="DM Mono" font-size="13" fill="#4a4c49">25 mm</text>`, 'oc', metal(g, '#e8e8e4', '#a7a8a3', '#dcdcd8'));
-  },
-  lettre(text, seal) {
-    return svg(`
-      <rect x="40" y="56" width="320" height="192" fill="#f3efe2"/>
-      <path d="M40 56 L200 160 L360 56" fill="none" stroke="#cfc6ae" stroke-width="2"/>
-      <path d="M40 248 L160 140 M360 248 L240 140" stroke="#e1d9c4" stroke-width="1.5"/>
-      <circle cx="200" cy="158" r="30" fill="#8e1f1f"/>
-      <circle cx="200" cy="158" r="22" fill="none" stroke="#b33b3b" stroke-width="2"/>
-      <path d="M176 136 q-10 -6 -6 6 M226 182 q10 6 6 -6" fill="#8e1f1f"/>
-      <text x="200" y="166" text-anchor="middle" font-family="Syne" font-weight="800" font-size="20" fill="#5e1111">${X(seal)}</text>
-      <text x="64" y="232" font-family="Caveat" font-size="22" fill="#1f2b4d">${X(text)}</text>`, 'lt' + text);
-  },
-  scelle(text, sub) {
-    const p = vid();
-    return svg(`
-      <rect x="60" y="48" width="280" height="204" rx="12" fill="#c9ccd1"/>
-      <rect x="60" y="48" width="280" height="204" rx="12" fill="none" stroke="#9aa0a8" stroke-width="2" stroke-dasharray="6 5"/>
-      <rect x="60" y="118" width="280" height="36" fill="url(#${p})"/>
-      <rect x="116" y="170" width="168" height="62" rx="4" fill="#fbfbf9"/>
-      <text x="200" y="196" text-anchor="middle" font-family="DM Mono" font-size="13" letter-spacing="1" fill="#1f2937">${X(text)}</text>
-      <text x="200" y="218" text-anchor="middle" font-family="DM Mono" font-size="11" fill="#6b21a8">${X(sub)}</text>`, 'sc' + text,
-      `<pattern id="${p}" width="22" height="36" patternUnits="userSpaceOnUse" patternTransform="skewX(-35)"><rect width="22" height="36" fill="#fbfbf9"/><rect width="11" height="36" fill="#b91c1c"/></pattern>`);
-  },
-  carreau() {
-    const g = vid();
-    return svg(`
-      <rect x="100" y="50" width="200" height="200" rx="4" fill="url(#${g})"/>
-      <circle cx="200" cy="150" r="58" fill="none" stroke="#f4e7b5" stroke-opacity=".75" stroke-width="3"/>
-      ${Array.from({ length: 8 }, (_, i) => `<ellipse cx="200" cy="112" rx="10" ry="26" fill="#2f5d4d" fill-opacity=".55" transform="rotate(${i * 45} 200 150)"/>`).join('')}
-      <circle cx="200" cy="150" r="12" fill="#a9772f"/>
-      ${[[112, 62], [288, 62], [112, 238], [288, 238]].map(([x, y]) => `<path d="M${x} ${y} l12 0 l-12 12 z" fill="#f4e7b5" opacity=".6" transform="rotate(${x > 200 ? (y > 150 ? 180 : 90) : (y > 150 ? 270 : 0)} ${x} ${y})"/>`).join('')}`, 'tile',
-      `<linearGradient id="${g}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4c7a5c"/><stop offset=".4" stop-color="#9a8a3e"/><stop offset=".7" stop-color="#6a3f72"/><stop offset="1" stop-color="#2f5d6b"/></linearGradient>`);
-  },
-  savon(w) {
-    return svg(`
-      <path d="M110 110 L200 76 L300 104 L210 140 Z" fill="#b5bb83"/>
-      <path d="M110 110 L210 140 L210 250 L110 218 Z" fill="#8f975c"/>
-      <path d="M210 140 L300 104 L300 212 L210 250 Z" fill="#a0a86c"/>
-      <text x="160" y="190" text-anchor="middle" font-family="Syne" font-weight="700" font-size="18" fill="#6b7240" transform="rotate(17 160 190)">${X(w)}</text>`, 'savon');
-  },
-  pierre(color = '#7b1e2b', kind) {
-    const g = vid(), big = kind === 'galet';
-    const d = big ? 'M88 160 C 86 108, 170 78, 236 86 C 306 94, 330 140, 318 182 C 304 226, 222 236, 160 226 C 112 218, 90 196, 88 160 Z'
-      : 'M150 140 L176 104 L226 98 L258 128 L252 180 L214 206 L168 198 L144 170 Z';
-    return svg(`
-      <path d="${d}" fill="url(#${g})"/>
-      ${big ? `<path d="M120 140 C 150 112, 200 104, 240 110" stroke="#fff" stroke-opacity=".25" stroke-width="6" fill="none" stroke-linecap="round"/>`
-        : `<path d="M176 104 L196 150 L226 98 M196 150 L144 170 M196 150 L214 206 M196 150 L258 128" stroke="#fff" stroke-opacity=".18" fill="none"/>`}`, 'r' + color,
-      `<radialGradient id="${g}" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".2" stop-color="${color}"/><stop offset="1" stop-color="#14100e"/></radialGradient>`);
-  },
-  terrarium() {
-    return svg(`
-      <path d="M90 110 L150 80 L320 80 L260 110 Z" fill="#dce6ec" fill-opacity=".7" stroke="#8fa3b0"/>
-      <rect x="90" y="110" width="170" height="130" fill="#dce6ec" fill-opacity=".35" stroke="#8fa3b0"/>
-      <path d="M260 110 L320 80 L320 210 L260 240 Z" fill="#dce6ec" fill-opacity=".25" stroke="#8fa3b0"/>
-      ${Array.from({ length: 12 }, (_, i) => `<circle cx="${160 + (i % 6) * 22}" cy="${88 + Math.floor(i / 6) * 10}" r="1.8" fill="#6e8696"/>`).join('')}
-      <path d="M110 232 C 150 200, 190 214, 240 190" stroke="#6b4a2a" stroke-width="5" fill="none" stroke-linecap="round"/>
-      <path d="M118 236 h132" stroke="#a88a5c" stroke-width="10" stroke-linecap="round" opacity=".6"/>
-      <path d="M96 116 v118" stroke="#fff" stroke-opacity=".7" stroke-width="3"/>
-      <text x="175" y="160" text-anchor="middle" font-family="Caveat" font-size="22" fill="#2a3b5c">les grillons !</text>`, 'terra');
-  },
-  sonnaille() {
-    const g = vid();
-    return svg(`
-      <path d="M120 70 C 120 20, 280 20, 280 70" fill="none" stroke="#6e4423" stroke-width="22"/>
-      <path d="M120 70 C 120 20, 280 20, 280 70" fill="none" stroke="#8a5a32" stroke-width="2" stroke-dasharray="4 6"/>
-      <path d="M150 78 h100 l24 168 h-148 z" fill="url(#${g})"/>
-      <rect x="140" y="236" width="120" height="16" rx="4" fill="#7a5a26"/>
-      <circle cx="200" cy="262" r="12" fill="#3f2f17"/>
-      <path d="M168 96 l-14 130" stroke="#fff" stroke-opacity=".35" stroke-width="6" stroke-linecap="round"/>`, 'bell', metal(g, '#d9b979', '#8c6a2c', '#b8964f'));
-  },
-  empreinte(letter) {
-    return svg(`
-      <circle cx="200" cy="150" r="104" fill="#b8704f"/>
-      <circle cx="200" cy="150" r="104" fill="none" stroke="#8a4c32" stroke-width="3"/>
-      <ellipse cx="200" cy="170" rx="38" ry="32" fill="#8a4c32"/>
-      ${[[150, 116, -20], [182, 96, -6], [218, 96, 6], [250, 116, 20]].map(([x, y, r]) => `<ellipse cx="${x}" cy="${y}" rx="13" ry="18" fill="#8a4c32" transform="rotate(${r} ${x} ${y})"/>`).join('')}
-      <text x="200" y="236" text-anchor="middle" font-family="Caveat" font-size="30" fill="#6b3622">${X(letter)}</text>`, 'paw');
-  },
-  metronome() {
-    return svg(`
-      <path d="M160 30 h80 l42 236 h-164 z" fill="#6b3f22"/>
-      <path d="M160 30 h80 l42 236 h-164 z" fill="none" stroke="#4e2c17" stroke-width="2"/>
-      <path d="M176 60 h48 l26 160 h-100 z" fill="#efe6cf"/>
-      ${Array.from({ length: 12 }, (_, i) => `<path d="M196 ${72 + i * 12} h8" stroke="#3a2a1a"/>`).join('')}
-      <path d="M200 236 L232 64" stroke="#c9ccd1" stroke-width="4" stroke-linecap="round"/>
-      <rect x="216" y="112" width="20" height="16" rx="2" fill="#b49251" transform="rotate(10 226 120)"/>`, 'metro');
-  },
-  pelote() {
-    return svg(`
-      <circle cx="200" cy="150" r="82" fill="#efe6d2"/>
-      <path d="M128 110 C 180 140, 180 170, 140 214 M272 90 C 220 120, 222 170, 262 210" fill="none" stroke="#a4472f" stroke-width="2.4" stroke-dasharray="5 4"/>
-      <circle cx="200" cy="150" r="82" fill="none" stroke="#c9b893" stroke-width="2"/>
-      <path d="M150 96 a70 70 0 0 1 50 -16" stroke="#fff" stroke-width="8" stroke-linecap="round" opacity=".6" fill="none"/>`, 'pel');
-  },
-  baguettes() {
-    return svg(`
-      ${[0, 18].map((o) => `<path d="M${70 + o} ${232 - o * .4} L${330 + o} ${60 - o * .4} L${334 + o} ${66 - o * .4} L${76 + o} ${240 - o * .4} Z" fill="#7b1d1d"/><path d="M${270 + o} ${100 - o * .4} l18 -12 l4 6 l-18 12 z" fill="#c9a64a"/>`).join('')}`, 'bag');
-  },
-  bouchons() {
-    return svg(`${[70, 130, 190, 250, 310].map((x, i) => `
-      <path d="M${x} 44 v40" stroke="#2a2a2a" stroke-width="2"/>
-      <ellipse cx="${x}" cy="150" rx="${16 + (i % 2) * 4}" ry="${64 - (i % 3) * 6}" fill="#f2efe6"/>
-      <path d="M${x - 16 - (i % 2) * 4} 150 a${16 + (i % 2) * 4} ${64 - (i % 3) * 6} 0 0 1 ${32 + (i % 2) * 8} 0" fill="${['#d9381e', '#f08c00', '#2f6b3a', '#d9381e', '#1e4e8c'][i]}"/>
-      <path d="M${x} 214 v40" stroke="#6b4a2a" stroke-width="3"/>`).join('')}`, 'bouch');
-  },
-  circuit() {
-    return svg(`
-      <rect x="60" y="60" width="280" height="180" rx="6" fill="#2f6b3a"/>
-      ${['M80 90 h80 v40 h60', 'M80 210 h60 v-40 h100 v-60 h60', 'M240 220 v-30 h80', 'M180 80 v30', 'M300 90 v40'].map((p) => `<path d="${p}" fill="none" stroke="#c9b26b" stroke-width="2.4"/>`).join('')}
-      <rect x="170" y="140" width="70" height="40" rx="3" fill="#1a1c20"/>
-      ${Array.from({ length: 7 }, (_, i) => `<rect x="${174 + i * 9.5}" y="134" width="4" height="6" fill="#c9ccd1"/><rect x="${174 + i * 9.5}" y="180" width="4" height="6" fill="#c9ccd1"/>`).join('')}
-      <rect x="250" y="80" width="38" height="12" rx="6" fill="#d8c19a"/><path d="M258 80 v12 M266 80 v12 M276 80 v12" stroke="#8a3b2a" stroke-width="2"/>
-      <circle cx="110" cy="150" r="14" fill="#1e3a8a"/><path d="M104 150 h12" stroke="#c9ccd1" stroke-width="2"/>
-      ${[[80, 90], [220, 130], [80, 210], [320, 110], [320, 190]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="4.5" fill="#d9dbde"/>`).join('')}
-      <text x="276" y="226" font-family="Caveat" font-size="24" fill="#f5f5f0">S.L. 95</text>`, 'pcb');
-  },
-  cle(letter) {
-    const g = vid();
-    return svg(`
-      <rect x="50" y="96" width="120" height="96" rx="16" fill="#5a3420"/>
-      <rect x="58" y="104" width="104" height="80" rx="11" fill="none" stroke="#c99d6b" stroke-width="1.5" stroke-dasharray="4 4"/>
-      <text x="110" y="166" text-anchor="middle" font-family="Syne" font-weight="800" font-size="46" fill="#3a2010" opacity=".85">${X(letter)}</text>
-      <circle cx="182" cy="144" r="14" fill="none" stroke="url(#${g})" stroke-width="5"/>
-      <rect x="196" y="126" width="56" height="36" rx="10" fill="#1d1f24"/>
-      <path d="M252 136 h96 l-6 8 l6 6 h-14 l-4 8 l-8 -8 l-6 8 l-6 -8 h-58 z" fill="url(#${g})"/>`, 'key', metal(g));
-  },
-  pipe() {
-    const g = vid();
-    return svg(`
-      <path d="M90 92 h70 v86 c0 30 -70 30 -70 0 z" fill="url(#${g})"/>
-      <ellipse cx="125" cy="92" rx="35" ry="10" fill="#2a160c"/>
-      <path d="M156 160 C 200 160, 250 136, 330 118 l4 14 C 260 154, 200 186, 152 186 z" fill="url(#${g})"/>
-      <path d="M296 124 l38 -8 l4 14 l-36 10 z" fill="#111"/>`, 'pipe',
-      `<linearGradient id="${g}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9a5a32"/><stop offset=".6" stop-color="#5e3119"/><stop offset="1" stop-color="#3b1d0e"/></linearGradient>`);
-  },
-  periodique() {
-    const rows = [[0, 17], [0, 1, 12, 13, 14, 15, 16, 17], [0, 1, 12, 13, 14, 15, 16, 17], Array.from({ length: 18 }, (_, i) => i), Array.from({ length: 18 }, (_, i) => i), Array.from({ length: 18 }, (_, i) => i), Array.from({ length: 18 }, (_, i) => i)];
-    const col = (c) => c < 2 ? '#e8a87c' : c > 11 ? (c === 17 ? '#a9c6e8' : '#bfe0b0') : '#f0d98c';
-    return svg(`
-      <rect x="28" y="58" width="344" height="184" rx="6" fill="#fbfbf8"/>
-      <text x="42" y="80" font-family="Syne" font-weight="700" font-size="12" fill="#1f2937">Tableau périodique des éléments</text>
-      ${rows.map((r, y) => r.map((c) => `<rect x="${42 + c * 17.6}" y="${90 + y * 20}" width="16" height="18" rx="1.5" fill="${col(c)}"/>`).join('')).join('')}
-      <text x="50" y="103" text-anchor="middle" font-family="DM Mono" font-size="8" fill="#1f2937">H</text>
-      <text x="${50 + 17 * 17.6}" y="103" text-anchor="middle" font-family="DM Mono" font-size="8" fill="#1f2937">He</text>`, 'pt');
-  },
-  boule() {
-    const g = vid();
-    return svg(`
-      <circle cx="200" cy="150" r="88" fill="url(#${g})"/>
-      ${[-40, -14, 14, 40].map((o) => `<ellipse cx="200" cy="150" rx="${88 - Math.abs(o) * .6}" ry="12" fill="none" stroke="#4a4c50" stroke-opacity=".55" stroke-width="1.4" transform="rotate(-24 200 150) translate(0 ${o})"/>`).join('')}
-      <text x="200" y="196" text-anchor="middle" font-family="DM Mono" font-size="12" fill="#3a3c40" transform="rotate(-24 200 150)">700 · 74</text>`, 'boule',
-      `<radialGradient id="${g}" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="#ffffff"/><stop offset=".3" stop-color="#bfc2c6"/><stop offset="1" stop-color="#55585d"/></radialGradient>`);
-  },
-  dossard(num) {
-    return svg(`
-      <rect x="44" y="50" width="312" height="200" rx="6" fill="#fbfbf8"/>
-      <rect x="44" y="50" width="312" height="34" rx="6" fill="#c2412d"/>
-      <path d="M200 50 v200 M44 150 h312" stroke="#000" stroke-opacity=".08" stroke-width="2"/>
-      ${[[60, 66], [340, 66], [60, 234], [340, 234]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="5" fill="#e9ebee" stroke="#9aa0a8"/>`).join('')}
-      <text x="200" y="196" text-anchor="middle" font-family="Syne" font-weight="800" font-size="92" letter-spacing="2" fill="#16181c"${fit(num, 92, 'Syne', 270, 2)}>${X(num)}</text>`, 'dos' + num);
-  },
-  peson() {
-    const g = vid();
-    return svg(`
-      <circle cx="200" cy="32" r="14" fill="none" stroke="url(#${g})" stroke-width="5"/>
-      <rect x="176" y="46" width="48" height="190" rx="10" fill="url(#${g})"/>
-      <rect x="190" y="66" width="20" height="150" fill="#f4efdc"/>
-      ${Array.from({ length: 16 }, (_, i) => `<path d="M190 ${70 + i * 9} h${i % 5 ? 6 : 12}" stroke="#3a2a14"/>`).join('')}
-      <path d="M186 140 h28" stroke="#b91c1c" stroke-width="2"/>
-      <path d="M200 236 v18 c0 18 -22 18 -22 2" fill="none" stroke="#7a7c80" stroke-width="5" stroke-linecap="round"/>`, 'peson', metal(g, '#f0dfa8', '#a5803a', '#d9bd75'));
-  },
-  morse() {
-    const g = vid();
-    return svg(`
-      <rect x="60" y="176" width="280" height="56" rx="8" fill="#6b3f22"/>
-      <rect x="60" y="176" width="280" height="12" rx="6" fill="#8a5a32"/>
-      <rect x="110" y="140" width="210" height="14" rx="4" fill="url(#${g})" transform="rotate(-4 215 147)"/>
-      <rect x="276" y="150" width="20" height="28" fill="url(#${g})"/>
-      <ellipse cx="116" cy="138" rx="34" ry="12" fill="#151618"/>
-      <rect x="160" y="154" width="12" height="24" fill="url(#${g})"/>
-      ${[[90, 204], [310, 204]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="7" fill="url(#${g})"/>`).join('')}`, 'morse', metal(g, '#f0dfa8', '#a5803a', '#d9bd75'));
-  },
-  planeur() {
-    return svg(`
-      <path d="M200 30 C 206 30, 208 60, 207 120 L206 262 C 206 270, 194 270, 194 262 L193 120 C 192 60, 194 30, 200 30 Z" fill="#e2c99a"/>
-      <path d="M20 118 L380 118 L376 132 L24 132 Z" fill="#e8d2a6"/>
-      <path d="M150 244 L250 244 L248 254 L152 254 Z" fill="#e8d2a6"/>
-      <path d="M20 118 L380 118" stroke="#b9996a"/>
-      <path d="M196 56 h8" stroke="#3b6fa5" stroke-width="8" stroke-linecap="round"/>
-      <text x="300" y="150" font-family="Caveat" font-size="18" fill="#6b4f2a">R.C.</text>`, 'plan');
-  },
-  dessin(sig) {
-    return svg(`
-      <rect x="40" y="24" width="320" height="252" fill="#fefefb"/>
-      <path d="M200 24 v252 M40 150 h320" stroke="#000" stroke-opacity=".06" stroke-width="2"/>
-      <circle cx="96" cy="214" r="40" fill="#3b82f6"/>
-      <path d="M70 200 q14 -16 26 0 q10 14 26 4 M76 232 q16 -6 30 4" stroke="#22c55e" stroke-width="8" fill="none" stroke-linecap="round"/>
-      <path d="M248 70 l34 -26 l4 42 z" fill="#ef4444"/>
-      <path d="M236 104 L282 48 L300 66 L254 122 Z" fill="#f8fafc" stroke="#111827" stroke-width="3" stroke-linejoin="round"/>
-      <circle cx="270" cy="82" r="7" fill="#60a5fa" stroke="#111827" stroke-width="2"/>
-      <path d="M238 118 l-20 18 M250 124 l-12 24 M230 108 l-26 6" stroke="#f97316" stroke-width="6" stroke-linecap="round"/>
-      ${[[120, 60], [170, 92], [330, 120], [310, 210], [70, 70]].map(([x, y]) => `<path d="M${x} ${y - 9} l3 6 l7 1 l-5 5 l1 7 l-6 -3 l-6 3 l1 -7 l-5 -5 l7 -1 z" fill="#facc15"/>`).join('')}
-      <circle cx="168" cy="168" r="9" fill="none" stroke="#7c3aed" stroke-width="3"/><path d="M168 177 v26 M168 186 l-12 8 M168 186 l12 -6 M168 203 l-9 16 M168 203 l9 16" stroke="#7c3aed" stroke-width="3" stroke-linecap="round"/>
-      <circle cx="200" cy="180" r="7" fill="none" stroke="#db2777" stroke-width="3"/><path d="M200 187 v18 M200 194 l-12 -4 M200 194 l9 6 M200 205 l-7 12 M200 205 l7 12" stroke="#db2777" stroke-width="3" stroke-linecap="round"/>
-      <text x="150" y="132" font-family="Caveat" font-size="30" fill="#7c3aed" transform="rotate(-6 170 130)">PAPA</text>
-      <text x="340" y="264" text-anchor="end" font-family="Caveat" font-size="24" fill="#111827">${X(sig)}</text>`, 'kid');
-  },
-};
-function drawing(spec) {
-  if (!spec) return '';
-  const [t, ...a] = String(spec).split('|');
-  const fn = DRAW[t];
-  try { return fn ? fn(...a) : ''; } catch (e) { return ''; }
-}
-
-/* ============================================================
    INVENTAIRE DES EFFETS PERSONNELS
    tables effets_fiches + effets_personnels (lecture : propriétaire seul)
-   scans : bucket privé effets-personnels (liens signés 10 min)
+   images : bucket privé effets-personnels (liens signés 10 min), plusieurs vues séparées par « ; »
    ============================================================ */
 const BUCKET = 'effets-personnels';
 const DOTATION = 2000;
 const nf = new Intl.NumberFormat('fr-FR');
 const grams = (n) => nf.format(n) + ' g';
+const NATURE = { ifras: 'Prise de vue logistique', perso: 'Document personnel numérisé' };
+const filesOf = (it) => String(it.images || '').split(';').map((f) => f.trim()).filter(Boolean);
 const STATUS = { '': ['Admis', 'ok'], refuse: ['Retiré', 'out'], derog: ['Dérogation DS', 'ds'] };
 const initialsOf = (first) => String(first || '').split('-').map((p) => p.charAt(0).toUpperCase() + '.').join('-');
 const pad = (n) => String(n).padStart(2, '0');
@@ -1481,7 +971,7 @@ function plateHTML(p, k) {
       <div class="bed"><span class="pl-num">Pl. ${pad(p.num)}${p.face ? ' · ' + p.face : ''}</span>${p.body}</div>
       <div class="calib" aria-hidden="true"><div class="calib-grey">${'<i></i>'.repeat(8)}</div><div class="calib-ruler"></div></div>
     </button>
-    <figcaption><b>${esc(p.title)}</b><span>${grams(p.g)}</span></figcaption>
+    <figcaption><b>${esc(p.title)}</b><span>${grams(p.g)}</span><small>${esc(p.ref)}${p.nature ? ', ' + esc(p.nature.toLowerCase()) : ''}${p.out ? ', article retiré' : ''}</small></figcaption>
   </figure>`;
 }
 
@@ -1497,18 +987,18 @@ function render(profile, fiche, items, urls) {
   /* planches */
   const plates = [];
   let num = 0;
-  items.forEach((it) => {
-    if (it.statut === 'refuse' || !(it.dessin || it.scan)) return;
-    it.plate = ++num;
-    if (it.scan) {
-      const u = urls[it.scan];
-      plates.push({ num, face: it.dessin ? 'recto' : '', title: it.objet, g: it.masse_g, file: it.scan,
-        body: u ? `<img src="${esc(u)}" alt="${esc(it.objet + (it.detail ? ', ' + it.detail : ''))}" loading="lazy" decoding="async" data-file="${esc(it.scan)}">` : missingHTML(it.scan) });
-    }
-    if (it.dessin) {
-      const d = drawing(it.dessin);
-      if (d) plates.push({ num, face: it.scan ? 'verso' : '', title: it.objet, g: it.masse_g, body: d });
-    }
+  const series = String(fiche.cote || '').split('/').pop();
+  items.forEach((it, i) => {
+    const files = filesOf(it);
+    if (!files.length) return;
+    it.plate = num = i + 1; /* planche = numéro de ligne, comme le nom du fichier */
+    const views = files.length > 1 ? (/^photo|^carte|^tirage/i.test(it.objet) && files.length === 2 ? ['recto', 'verso'] : files.map((_, k) => 'vue ' + (k + 1))) : [''];
+    files.forEach((file, k) => {
+      const u = urls[file];
+      plates.push({ num, face: views[k], title: it.objet, g: it.masse_g, nature: NATURE[it.nature] || '', out: it.statut === 'refuse',
+        ref: `Scellé EP-${series}/${pad(i + 1)}`,
+        body: u ? `<img src="${esc(u)}" alt="${esc(it.objet + (it.detail ? ', ' + it.detail : ''))}" loading="lazy" decoding="async" data-file="${esc(file)}">` : missingHTML(file) });
+    });
   });
 
   const rows = items.map((it, i) => {
@@ -1585,7 +1075,7 @@ function render(profile, fiche, items, urls) {
       <div class="f-form"><strong>FORMULAIRE LOG-07</strong>Annexe photographique<br>Page 2 / ${pages}</div>
     </header>
     <div class="f-rule"></div>
-    <p class="f-sub">Numérisation des articles admis à bord, avec gamme de gris et réglet de référence. Cliquez sur une planche pour l'agrandir.</p>
+    <p class="f-sub">Prises de vue des articles présentés à la pesée et numérisation des documents personnels, avec gamme de gris et réglet de référence. Cliquez sur une planche pour l'agrandir.</p>
     <div class="plates">${plates.map(plateHTML).join('')}</div>
     <footer class="f-foot"><span>Service Archives &amp; Documentation</span><span>${plates.length} planche${plates.length > 1 ? 's' : ''}</span><span>Cote ${esc(fiche.cote)}</span></footer>
   </article>` : ''}`;
@@ -1604,7 +1094,7 @@ function openZoom(p, from) {
   const dlg = $('zoom');
   zoomReturn = from;
   $('zoomBed').innerHTML = `<div class="bed">${from.querySelector('.bed').innerHTML}</div>`;
-  $('zoomCap').innerHTML = `<b>Pl. ${pad(p.num)}${p.face ? ' · ' + p.face : ''}, ${esc(p.title)}</b><span>${grams(p.g)}</span>`;
+  $('zoomCap').innerHTML = `<b>Pl. ${pad(p.num)}${p.face ? ' · ' + p.face : ''}, ${esc(p.title)}</b><span>${esc(p.ref)}, ${grams(p.g)}</span>`;
   dlg.showModal();
   requestAnimationFrame(() => dlg.classList.add('in'));
 }
@@ -1635,10 +1125,20 @@ async function loadInventory(user) {
     _sb.from('effets_fiches').select('*').eq('owner_id', user.id).maybeSingle(),
     _sb.from('effets_personnels').select('*').eq('owner_id', user.id).order('ordre', { ascending: true }),
   ]);
+  let profile = pr.data;
+  /* profil rattaché par l'email si son id diffère de celui du compte */
+  if (!profile && user.email) {
+    try { ({ data: profile } = await _sb.from('profiles').select('*').ilike('email', user.email).limit(1).maybeSingle()); } catch (e) {}
+  }
+  if (!profile) {
+    const [f = '', l = ''] = String(user.email || '').split('@')[0].split('.');
+    const cap = (x) => x.replace(/(^|-)([a-z])/g, (m, a, b) => a + b.toUpperCase());
+    profile = { first_name: cap(f), last_name: cap(l) };
+  }
   const items = it.data || [];
   if (!fi.data || !items.length) { renderEmpty(); return; }
-  const urls = await signedUrls(items.filter((x) => x.scan && x.statut !== 'refuse').map((x) => x.scan));
-  render(pr.data || {}, fi.data, items, urls);
+  const urls = await signedUrls(items.flatMap(filesOf));
+  render(profile, fi.data, items, urls);
 }
 
 (function restoreTheme() {
