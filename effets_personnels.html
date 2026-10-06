@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="fr" class="auth-pending">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Effets personnels | Espace IFRAS</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#050b1e">
+<link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&family=Caveat:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+
+<style>
+/* =========================================================
+   THÈME : tout découle de --hue et --sat (réglables par l'utilisateur)
+   ========================================================= */
+:root {
+  --hue: 228;
+  --sat: 65%;
+
+  --bg-dark:    hsl(var(--hue), var(--sat), 4%);
+  --bg-main:    hsl(var(--hue), var(--sat), 7%);
+  --bg-light:   hsl(var(--hue), var(--sat), 10%);
+  --bg-hover:   hsl(var(--hue), var(--sat), 13%);
+  --bg-card:    hsl(var(--hue), var(--sat), 8%);
+  --border:     hsl(var(--hue), calc(var(--sat) - 10%), 20%);
+  --border-sub: hsl(var(--hue), calc(var(--sat) - 10%), 14%);
+  --accent:     hsl(var(--hue), 70%, 60%);
+  --accent-dim: hsl(var(--hue), 60%, 45%);
+  --text-main:  hsl(var(--hue), 20%, 88%);
+  --text-soft:  hsl(var(--hue), 20%, 66%);
+  --text-muted: hsl(var(--hue), 15%, 48%);
+  --unread-dot: hsl(var(--hue), 80%, 65%);
+  --danger: #fb7185;
+  --ok: #34d399;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --header-h: 68px;
+  --subnav-h: 48px;
+  --status-h: 30px;
+  --sidebar-w: 232px;
+  --list-w: 360px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: "DM Sans", "Segoe UI", system-ui, sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+}
+button { font: inherit; color: inherit; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+kbd {
+  display: inline-grid; place-items: center;
+  min-width: 20px; height: 20px; padding: 0 5px;
+  font: 500 11px/1 "DM Sans", sans-serif; color: var(--text-soft);
+  border: 1px solid var(--border); border-radius: 5px;
+  background: var(--bg-light);
+}
+
+/* =========================================================
+   HEADER (même structure que le site public)
+   ========================================================= */
+.site-header {
+  position: fixed; inset: 0 0 auto 0; z-index: 2000;
+  height: var(--header-h);
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  padding: 0 24px;
+  background: hsl(var(--hue), var(--sat), 5%);
+  border-bottom: 1px solid var(--border);
+}
+.header-left { display: flex; align-items: center; gap: 40px; }
+.logo-link img { height: 44px; width: auto; display: block; }
+.main-nav { list-style: none; display: flex; gap: 4px; margin: 0; padding: 0; }
+.main-nav a {
+  display: block; padding: 8px 12px;
+  color: var(--text-soft); text-decoration: none;
+  font-size: 14px; letter-spacing: .02em; border-radius: 6px;
+  transition: color 160ms ease;
+}
+@media (hover: hover) and (pointer: fine) { .main-nav a:hover { color: var(--text-main); } }
+
+.header-right { display: flex; align-items: center; gap: 10px; }
+.secure {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 12.5px; color: var(--text-soft);
+  padding: 6px 11px; border-radius: 999px;
+  border: 1px solid var(--border-sub);
+}
+.secure i { color: var(--ok); font-size: 15px; }
+
+.user-chip {
+  display: flex; align-items: center; gap: 9px;
+  padding: 4px 12px 4px 4px;
+  background: var(--bg-light); border: 1px solid var(--border);
+  border-radius: 999px; font-size: 13px; color: var(--text-main);
+}
+.avatar {
+  --ah: var(--hue);
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  display: grid; place-items: center;
+  background: linear-gradient(135deg, hsl(var(--ah), 55%, 42%), hsl(var(--ah), 70%, 62%));
+  font-family: "Syne", sans-serif; font-weight: 700; font-size: 11px; color: #fff;
+  letter-spacing: .02em;
+}
+
+.icon-btn {
+  width: 38px; height: 38px; border-radius: 10px;
+  display: grid; place-items: center;
+  border: 1px solid var(--border); background: var(--bg-light);
+  color: var(--text-soft); font-size: 18px; cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease, transform 160ms var(--ease-out);
+}
+.icon-btn:active { transform: scale(.95); }
+.icon-btn[aria-expanded="true"] { color: var(--text-main); border-color: var(--accent); }
+.icon-btn[aria-expanded="true"] i { transform: rotate(60deg); }
+.icon-btn i { transition: transform 300ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) { .icon-btn:hover { color: var(--text-main); border-color: var(--accent); } }
+
+/* ----- Panneau de réglages ----- */
+.settings { position: relative; }
+.settings-panel {
+  position: absolute; right: 0; top: calc(100% + 10px); z-index: 2100;
+  width: 290px; padding: 16px;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.55);
+  transform-origin: top right;
+  opacity: 0; transform: scale(.96) translateY(-4px);
+  visibility: hidden; pointer-events: none;
+  transition: opacity 160ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s linear 200ms;
+}
+.settings-panel.is-open {
+  opacity: 1; transform: none; visibility: visible; pointer-events: auto;
+  transition: opacity 160ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s;
+}
+.panel-title {
+  font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--text-muted); font-weight: 500;
+  margin: 0 0 12px;
+}
+.theme-label { font-size: 12.5px; color: var(--text-soft); margin: 0 0 8px; }
+.swatches { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+.swatch {
+  width: 24px; height: 24px; border-radius: 7px; padding: 0;
+  border: 2px solid transparent; cursor: pointer;
+  transition: transform 160ms var(--ease-out), border-color 160ms ease;
+}
+.swatch:active { transform: scale(.9); }
+.swatch.active { border-color: #fff; box-shadow: 0 0 0 2px var(--bg-light); }
+@media (hover: hover) and (pointer: fine) { .swatch:hover { transform: scale(1.12); } }
+
+.hue-wrap {
+  position: relative; height: 18px; border-radius: 9px; cursor: pointer; margin-bottom: 12px;
+  touch-action: none;
+  background: linear-gradient(90deg, hsl(0,65%,55%), hsl(60,65%,55%), hsl(120,65%,55%), hsl(180,65%,55%), hsl(240,65%,55%), hsl(300,65%,55%), hsl(360,65%,55%));
+}
+.hue-thumb {
+  position: absolute; top: 50%; left: 0;
+  width: 18px; height: 18px; border-radius: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,.45);
+  background: hsl(var(--hue), 65%, 55%);
+  pointer-events: none;
+}
+.sat-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.sat-label { font-size: 12px; color: var(--text-muted); width: 26px; }
+input[type=range].sat-range {
+  flex: 1; height: 4px; border-radius: 4px; cursor: pointer;
+  -webkit-appearance: none; appearance: none;
+  background: linear-gradient(90deg, hsl(var(--hue),0%,55%), hsl(var(--hue),100%,55%));
+}
+input[type=range].sat-range::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--accent); border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.35);
+}
+input[type=range].sat-range::-moz-range-thumb {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--accent); border: 2px solid #fff;
+}
+.hex-wrap { display: flex; align-items: center; gap: 8px; }
+.hex-preview { width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0; border: 1px solid var(--border); }
+.hex-input {
+  flex: 1 1 auto; min-width: 0; height: 30px;
+  background: var(--bg-dark); border: 1px solid var(--border-sub);
+  border-radius: 8px; padding: 0 10px; color: var(--text-main);
+  font-size: 13px; letter-spacing: .06em; outline: none;
+  transition: border-color 160ms ease;
+}
+.hex-input:focus { border-color: var(--accent); }
+.hex-input.invalid { border-color: rgba(251,113,133,.6); color: #fca5a5; animation: shake 300ms var(--ease-out); }
+@keyframes shake { 25% { transform: translateX(-3px); } 75% { transform: translateX(3px); } }
+.hex-apply {
+  height: 30px; padding: 0 12px; border-radius: 8px; flex-shrink: 0;
+  border: 1px solid var(--border); background: var(--bg-hover);
+  color: var(--text-soft); font-size: 12.5px; cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out);
+}
+.hex-apply:active { transform: scale(.96); }
+@media (hover: hover) and (pointer: fine) { .hex-apply:hover { background: var(--accent); border-color: var(--accent); color: #fff; } }
+
+.panel-divider { height: 1px; background: var(--border-sub); margin: 16px 0; }
+.panel-item {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 8px 8px; margin: 0 -8px; border-radius: 8px;
+  font-size: 13.5px; color: var(--text-soft); cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+.panel-item i { font-size: 16px; margin-right: 8px; vertical-align: -3px; }
+@media (hover: hover) and (pointer: fine) { .panel-item:hover { background: var(--bg-hover); color: var(--text-main); } }
+.toggle { position: relative; width: 34px; height: 20px; flex-shrink: 0; }
+.toggle input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.toggle-track { position: absolute; inset: 0; border-radius: 10px; background: var(--border); transition: background-color 200ms ease; pointer-events: none; }
+.toggle-thumb {
+  position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%;
+  background: #fff; pointer-events: none;
+  transition: transform 220ms var(--ease-out);
+}
+.toggle input:checked ~ .toggle-track { background: var(--accent); }
+.toggle input:checked ~ .toggle-thumb { transform: translateX(14px); }
+.toggle input:focus-visible ~ .toggle-track { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.logout {
+  width: 100%; height: 38px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text-soft); font-size: 13.5px; cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.logout:active { transform: scale(.98); }
+@media (hover: hover) and (pointer: fine) {
+  .logout:hover { background: rgba(251,113,133,.1); color: var(--danger); border-color: rgba(251,113,133,.35); }
+}
+
+/* =========================================================
+   SOUS-BANDEAU DE L'ESPACE PRIVÉ
+   ========================================================= */
+.subnav {
+  position: fixed; top: var(--header-h); left: 0; right: 0; z-index: 1500;
+  height: var(--subnav-h);
+  background: hsl(var(--hue), var(--sat), 6%);
+  border-bottom: 1px solid var(--border-sub);
+}
+.subnav-list {
+  height: 100%; margin: 0; padding: 0 16px; list-style: none;
+  display: flex; align-items: stretch; gap: 2px;
+  overflow-x: auto; scrollbar-width: none;
+}
+.subnav-list::-webkit-scrollbar { display: none; }
+.subnav-list li { display: flex; }
+.sub-tab {
+  position: relative;
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 14px;
+  color: var(--text-soft); text-decoration: none;
+  font-size: 14px; white-space: nowrap;
+  transition: color 160ms ease;
+}
+.sub-tab i { font-size: 17px; }
+.sub-tab::after {
+  content: ""; position: absolute; left: 14px; right: 14px; bottom: -1px; height: 2px;
+  background: var(--accent); border-radius: 2px;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+.sub-tab[aria-current="page"] { color: var(--text-main); font-weight: 500; }
+.sub-tab[aria-current="page"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) { .sub-tab:hover { color: var(--text-main); } }
+.tab-badge {
+  min-width: 18px; height: 18px; padding: 0 5px;
+  display: inline-grid; place-items: center;
+  border-radius: 999px; background: var(--accent); color: #fff;
+  font-size: 11px; font-weight: 500; font-variant-numeric: tabular-nums;
+}
+.tab-badge[hidden] { display: none; }
+
+/* =========================================================
+   BARRE D'ÉTAT (bas de l'écran)
+   ========================================================= */
+.statusbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 1500;
+  height: var(--status-h);
+  display: flex; align-items: center; gap: 22px;
+  padding: 0 16px;
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border-sub);
+  font-size: 12px; color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.statusbar span { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.statusbar i { font-size: 14px; }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 20%, transparent); }
+.statusbar .push { margin-left: auto; }
+.statusbar .warn { color: #facc15; }
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+.toast {
+  position: fixed; left: 50%; bottom: calc(var(--status-h) + 18px); z-index: 4000;
+  display: flex; align-items: center; gap: 10px;
+  max-width: calc(100vw - 32px);
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: hsl(var(--hue), 30%, 12%);
+  border: 1px solid rgba(251,113,133,.35);
+  color: #fecdd3; font-size: 14px;
+  box-shadow: 0 16px 40px rgba(0,0,0,.5);
+  transform: translate(-50%, 16px); opacity: 0; pointer-events: none;
+  transition: transform 260ms var(--ease-out), opacity 200ms ease;
+}
+.toast i { font-size: 18px; color: var(--danger); flex-shrink: 0; }
+.toast.show { transform: translate(-50%, 0); opacity: 1; }
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1100px) {
+  .main-nav { display: none; }
+  .secure { display: none; }
+}
+@media (max-width: 720px) {
+  :root { --header-h: 60px; }
+  .site-header { padding: 0 14px; }
+  .logo-link img { height: 36px; }
+  #userLabel { display: none; }
+  .user-chip { padding: 3px; }
+  .statusbar .hide-sm { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
+}
+
+/* =========================================================
+   PAGE EFFETS PERSONNELS (document d'archive)
+   ========================================================= */
+:root {
+  --paper: hsl(220, 14%, 95%);
+  --paper-2: hsl(220, 12%, 91%);
+  --bed: hsl(220, 10%, 97%);
+  --ink: hsl(225, 32%, 13%);
+  --ink-soft: hsl(225, 14%, 36%);
+  --ink-faint: hsl(225, 12%, 58%);
+  --rule: hsl(225, 14%, 76%);
+  --pen: hsl(224, 64%, 33%);
+  --stamp-red: hsl(356, 62%, 44%);
+  --stamp-blue: hsl(216, 58%, 38%);
+  --stamp-ds: hsl(266, 42%, 44%);
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.12 0 0 0 0 0.18 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --ink-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -2.6 2.1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
+}
+html.auth-pending .page { visibility: hidden; }
+.page {
+  padding: calc(var(--header-h) + var(--subnav-h) + 24px) 24px calc(var(--status-h) + 56px);
+  max-width: 1040px; margin: 0 auto;
+}
+.main { display: grid; gap: 20px; min-width: 0; }
+
+/* ---- barre du visionneur ---- */
+.docbar {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 14px;
+  padding: 10px 12px; border-radius: 14px; background: var(--bg-card); border: 1px solid var(--border-sub);
+}
+.docbar-back, .docbar-btn {
+  display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px; border-radius: 10px;
+  font-size: 14px; text-decoration: none; color: var(--text-soft); background: transparent; border: 1px solid var(--border-sub);
+  cursor: pointer; transition: background-color 160ms ease, color 160ms ease, transform 140ms var(--ease-out);
+}
+.docbar-back i, .docbar-btn i { font-size: 17px; }
+.docbar-back:active, .docbar-btn:active { transform: scale(0.97); }
+@media (hover: hover) and (pointer: fine) {
+  .docbar-back:hover, .docbar-btn:hover { background: var(--bg-light); color: var(--text-main); }
+}
+.docbar-back:focus-visible, .docbar-btn:focus-visible, .plate-btn:focus-visible, .pl-link:focus-visible, .zoom-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.docbar-file { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.docbar-file > i { font-size: 18px; color: var(--accent); flex-shrink: 0; }
+.docbar-name { font-family: "DM Mono", monospace; font-size: 13.5px; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.docbar-meta { font-size: 12.5px; color: var(--text-muted); white-space: nowrap; padding-left: 10px; border-left: 1px solid var(--border-sub); }
+
+/* ---- feuilles ---- */
+.doc { display: grid; gap: 28px; justify-items: center; }
+.sheet {
+  position: relative; width: 100%; max-width: 860px;
+  padding: 56px 64px 44px 72px;
+  background: var(--paper); color: var(--ink);
+  border-radius: 3px;
+  box-shadow: 0 1px 0 hsl(var(--hue), 30%, 3%, .6), 0 28px 60px -24px hsl(var(--hue), 60%, 2%, .85), 0 2px 6px hsl(var(--hue), 40%, 3%, .35);
+  font-family: "DM Sans", system-ui, sans-serif;
+  animation: sheetIn 420ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+  overflow: hidden;
+}
+.sheet::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: var(--grain); opacity: .22; mix-blend-mode: multiply;
+}
+.sheet::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 18px; pointer-events: none;
+  background: linear-gradient(90deg, hsl(220, 14%, 86%), transparent);
+}
+@keyframes sheetIn { from { opacity: 0; transform: translateY(10px); } }
+.hole {
+  position: absolute; left: 26px; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--bg-dark); box-shadow: inset 0 2px 3px rgba(0,0,0,.55), 0 0 0 1px hsl(220, 12%, 80%);
+}
+.hole:nth-of-type(1) { top: 26%; } .hole:nth-of-type(2) { top: 72%; }
+
+/* squelette */
+.sheet--skeleton { display: grid; gap: 14px; min-height: 520px; align-content: start; }
+.sk { display: block; height: 12px; border-radius: 3px; background: linear-gradient(90deg, var(--paper-2) 0%, hsl(220, 14%, 97%) 50%, var(--paper-2) 100%); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; }
+.sk--lg { height: 26px; } .sk-gap { height: 22px; }
+.sk--w40 { width: 40%; } .sk--w55 { width: 55%; } .sk--w60 { width: 60%; } .sk--w70 { width: 70%; } .sk--w85 { width: 85%; } .sk--w90 { width: 90%; }
+@keyframes shimmer { to { background-position: -200% 0; } }
+
+/* en-tête du formulaire */
+.f-head { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 14px; align-items: center; }
+.f-logo { width: 46px; height: 46px; }
+.f-inst { font-size: 11.5px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; line-height: 1.35; }
+.f-inst small { display: block; font-family: "DM Mono", monospace; font-size: 11px; letter-spacing: 0; text-transform: none; color: var(--ink-soft); font-weight: 400; }
+.f-form { text-align: right; font-family: "DM Mono", monospace; font-size: 11px; line-height: 1.5; color: var(--ink-soft); }
+.f-form strong { display: block; font-family: "DM Sans", sans-serif; font-size: 12px; letter-spacing: .1em; color: var(--ink); }
+.f-rule { height: 4px; margin: 16px 0 26px; border-top: 1.6px solid var(--ink); border-bottom: .6px solid var(--ink); }
+.f-title { margin: 0; font-family: "Syne", sans-serif; font-weight: 700; font-size: 27px; line-height: 1.15; letter-spacing: -.01em; max-width: 22ch; }
+.f-sub { margin: 8px 0 0; font-size: 14px; line-height: 1.5; color: var(--ink-soft); max-width: 60ch; }
+
+.archive-stamp { position: absolute; top: 132px; right: 56px; width: 128px; height: 128px; color: var(--stamp-blue); opacity: .62; transform: rotate(-14deg); -webkit-mask-image: var(--ink-mask); mask-image: var(--ink-mask); pointer-events: none; }
+
+/* champs */
+.f-fields { margin: 28px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+.f-field { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); align-items: baseline; gap: 10px; padding: 9px 0; border-bottom: 1px dotted var(--rule); min-width: 0; }
+.f-field dt { font-size: 11.5px; color: var(--ink-soft); }
+.f-field dd { margin: 0; font-family: "DM Mono", monospace; font-size: 13px; overflow-wrap: anywhere; }
+
+/* tableau */
+.f-section { margin: 34px 0 10px; font-family: "Syne", sans-serif; font-size: 15px; font-weight: 700; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.f-section span { font-family: "DM Mono", monospace; font-size: 11.5px; font-weight: 400; color: var(--ink-soft); }
+.inv { width: 100%; border-collapse: collapse; font-size: 13px; }
+.inv thead th { text-align: left; font-size: 11px; font-weight: 500; color: var(--ink-soft); padding: 8px 8px; border-top: 1.4px solid var(--ink); border-bottom: .8px solid var(--ink); }
+.inv td { padding: 9px 8px; vertical-align: top; border-bottom: 1px solid hsl(225, 14%, 86%); }
+.inv .n { width: 34px; font-family: "DM Mono", monospace; color: var(--ink-soft); }
+.inv .m { width: 84px; text-align: right; font-family: "DM Mono", monospace; white-space: nowrap; }
+.inv .p { width: 64px; text-align: center; white-space: nowrap; }
+.inv .s { width: 128px; text-align: right; }
+.inv th.m, .inv th.s { text-align: right; } .inv th.p { text-align: center; }
+.it-name { font-family: "DM Mono", monospace; font-size: 13px; }
+.it-det { display: block; margin-top: 2px; font-size: 12px; color: var(--ink-soft); line-height: 1.4; }
+.pl-link { font-family: "DM Mono", monospace; font-size: 12px; color: var(--pen); text-decoration: none; border-bottom: 1px solid currentColor; }
+.tag { display: inline-block; padding: 2px 7px 1px; border: 1.5px solid currentColor; border-radius: 3px; font-size: 10.5px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
+.tag--ok { color: var(--ink-faint); border-color: transparent; padding-right: 0; }
+.tag--out { color: var(--stamp-red); transform: rotate(-3deg); -webkit-mask-image: var(--ink-mask); mask-image: var(--ink-mask); }
+.tag--ds { color: var(--stamp-ds); transform: rotate(-2deg); -webkit-mask-image: var(--ink-mask); mask-image: var(--ink-mask); }
+tr.is-out .it-name, tr.is-out .m { text-decoration: line-through; text-decoration-thickness: 1.2px; color: var(--ink-faint); }
+
+/* totaux */
+.f-totals { margin-top: 22px; display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; align-items: start; }
+.tot { display: grid; gap: 0; font-size: 13px; }
+.tot div { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px dotted var(--rule); }
+.tot dt { color: var(--ink-soft); } .tot dd { margin: 0; font-family: "DM Mono", monospace; }
+.tot .tot-main { border-bottom: 1.4px solid var(--ink); }
+.tot .tot-main dt { color: var(--ink); font-weight: 500; } .tot .tot-main dd { font-size: 15px; font-weight: 500; }
+.stamp-ok {
+  justify-self: center; align-self: center; display: grid; justify-items: center; gap: 2px;
+  padding: 10px 20px 8px; border: 3px double var(--stamp-blue); border-radius: 6px; color: var(--stamp-blue);
+  transform: rotate(-7deg); -webkit-mask-image: var(--ink-mask); mask-image: var(--ink-mask); opacity: .85;
+}
+.stamp-ok b { font-family: "Syne", sans-serif; font-weight: 800; font-size: 25px; letter-spacing: .14em; }
+.stamp-ok span { font-family: "DM Mono", monospace; font-size: 11px; letter-spacing: .12em; }
+
+/* observations & signatures */
+.obs { margin-top: 30px; padding: 12px 16px 14px; border: 1px solid var(--rule); background: repeating-linear-gradient(transparent 0 29px, hsl(220, 20%, 84%) 29px 30px); background-position: 0 6px; min-height: 96px; }
+.obs-label { font-size: 11.5px; color: var(--ink-soft); }
+.obs p { margin: 4px 0 0; font-family: "Caveat", cursive; font-size: 22px; line-height: 30px; color: var(--pen); }
+.signs { margin-top: 30px; display: grid; grid-template-columns: repeat(var(--n, 2), minmax(0, 1fr)); gap: 24px; }
+.sign { border-top: 1px solid var(--ink); padding-top: 6px; display: grid; gap: 2px; }
+.sign small { font-size: 11px; color: var(--ink-soft); }
+.sign .sig { font-family: "Caveat", cursive; font-size: 30px; line-height: 1; color: var(--pen); transform: rotate(-3deg); transform-origin: left; min-height: 36px; padding-top: 4px; white-space: nowrap; }
+.sign--ds .sig { color: var(--stamp-ds); }
+.f-foot { margin-top: 34px; padding-top: 10px; border-top: .6px solid var(--ink); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 18px; font-family: "DM Mono", monospace; font-size: 10.5px; color: var(--ink-soft); }
+
+/* ---- planches ---- */
+.plates { margin-top: 24px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 22px; }
+.plate { margin: 0; display: grid; gap: 8px; animation: sheetIn 380ms var(--ease-out) both; animation-delay: calc(140ms + var(--k, 0) * 40ms); }
+.plate-btn {
+  display: block; width: 100%; padding: 0; border: 0; cursor: zoom-in; text-align: left;
+  background: var(--bed); border-radius: 2px; box-shadow: 0 0 0 1px hsl(220, 12%, 84%), 0 6px 16px -10px hsl(225, 30%, 20%, .35);
+  transition: transform 180ms var(--ease-out), box-shadow 180ms ease;
+}
+.plate-btn:active { transform: scale(0.985); }
+@media (hover: hover) and (pointer: fine) {
+  .plate-btn:hover { box-shadow: 0 0 0 1px hsl(220, 12%, 74%), 0 14px 26px -14px hsl(225, 30%, 20%, .5); }
+}
+.bed { position: relative; aspect-ratio: 4 / 3; display: grid; place-items: center; overflow: hidden;
+  background: radial-gradient(ellipse at 50% 40%, hsl(220, 10%, 99%), hsl(220, 8%, 92%)); }
+.bed::after { content: ""; position: absolute; inset: 0; background: var(--grain); opacity: .16; mix-blend-mode: multiply; pointer-events: none; }
+.bed svg { width: 86%; height: 86%; }
+.bed img { width: 86%; height: 80%; object-fit: contain; filter: drop-shadow(0 8px 10px rgba(13, 20, 36, .28)); }
+.pl-num { position: absolute; top: 8px; left: 10px; z-index: 1; font-family: "DM Mono", monospace; font-size: 10.5px; color: var(--ink-soft); }
+.calib { display: grid; grid-template-columns: 1fr 1.6fr; gap: 10px; align-items: end; padding: 6px 10px 8px; border-top: 1px solid hsl(220, 12%, 86%); }
+.calib-grey { display: grid; grid-template-columns: repeat(8, 1fr); height: 10px; }
+.calib-grey i:nth-child(1) { background: #fafafa; } .calib-grey i:nth-child(2) { background: #dcdcdc; } .calib-grey i:nth-child(3) { background: #bdbdbd; } .calib-grey i:nth-child(4) { background: #9e9e9e; }
+.calib-grey i:nth-child(5) { background: #7e7e7e; } .calib-grey i:nth-child(6) { background: #5e5e5e; } .calib-grey i:nth-child(7) { background: #3c3c3c; } .calib-grey i:nth-child(8) { background: #1c1c1c; }
+.calib-ruler { height: 12px; background:
+  repeating-linear-gradient(90deg, var(--ink) 0 1px, transparent 1px 10%) bottom / 100% 12px no-repeat,
+  repeating-linear-gradient(90deg, var(--ink-soft) 0 1px, transparent 1px 2%) bottom / 100% 5px no-repeat;
+  border-bottom: 1px solid var(--ink); }
+.plate figcaption { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; font-size: 12.5px; line-height: 1.4; }
+.plate figcaption b { font-weight: 500; } .plate figcaption span { font-family: "DM Mono", monospace; font-size: 11.5px; color: var(--ink-soft); white-space: nowrap; }
+.missing { display: grid; justify-items: center; gap: 6px; color: var(--ink-faint); text-align: center; padding: 16px; }
+.missing i { font-size: 30px; }
+.missing b { font-size: 12.5px; font-weight: 500; color: var(--ink-soft); }
+.missing code { font-family: "DM Mono", monospace; font-size: 11px; }
+.plates-empty { margin: 18px 0 0; font-size: 13.5px; color: var(--ink-soft); }
+
+/* ---- agrandissement ---- */
+.zoom { width: min(1000px, calc(100vw - 32px)); max-height: calc(100dvh - 40px); padding: 0; border: 0; border-radius: 6px; background: var(--paper); color: var(--ink); overflow: auto;
+  opacity: 0; transform: scale(0.96); transition: opacity 180ms ease, transform 220ms var(--ease-out); }
+.zoom.in { opacity: 1; transform: scale(1); }
+.zoom::backdrop { background: hsl(var(--hue), 50%, 3%, .78); backdrop-filter: blur(3px); }
+.zoom-fig { margin: 0; padding: 18px 18px 16px; display: grid; gap: 12px; }
+.zoom-bed .bed svg { width: 90%; height: 90%; }
+.zoom-fig figcaption { font-size: 14px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; padding-right: 44px; }
+.zoom-fig figcaption span { font-family: "DM Mono", monospace; font-size: 12.5px; color: var(--ink-soft); }
+.zoom-close { position: absolute; top: 12px; right: 12px; z-index: 2; width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); display: grid; place-items: center; cursor: pointer; transition: transform 140ms var(--ease-out); }
+.zoom-close i { font-size: 18px; }
+.zoom-close:active { transform: scale(0.95); }
+
+/* état vide */
+.denied { max-width: 460px; margin: 10vh auto 0; padding: 36px 28px; text-align: center; display: grid; justify-items: center; gap: 12px;
+  border-radius: 18px; background: var(--bg-card); border: 1px solid var(--border-sub); animation: sheetIn 260ms var(--ease-out) both; }
+.denied-ic { width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; font-size: 26px; color: var(--text-soft); background: var(--bg-light); border: 1px solid var(--border); }
+.denied h1 { margin: 6px 0 0; font-family: "Syne", sans-serif; font-size: 22px; font-weight: 700; }
+.denied p { margin: 0 0 8px; font-size: 14.5px; line-height: 1.55; color: var(--text-soft); }
+
+/* ---- responsive ---- */
+@media (max-width: 860px) {
+  .sheet { padding: 44px 34px 34px 46px; }
+  .archive-stamp { width: 100px; height: 100px; top: 124px; right: 26px; }
+  .f-fields { grid-template-columns: 1fr; }
+  .f-totals { grid-template-columns: 1fr; }
+  .stamp-ok { justify-self: end; }
+}
+@media (max-width: 720px) {
+  .page { padding-left: 16px; padding-right: 16px; }
+  .docbar { grid-template-columns: auto minmax(0, 1fr) auto; gap: 8px; padding: 8px; }
+  .docbar-back span, .docbar-btn span, .docbar-meta { display: none; }
+  .docbar-back, .docbar-btn { padding: 0 11px; }
+  .sheet { padding: 28px 18px 24px; }
+  .sheet::before, .hole { display: none; }
+  .f-head { grid-template-columns: auto minmax(0, 1fr); }
+  .f-form { grid-column: 1 / -1; text-align: left; }
+  .f-title { font-size: 23px; max-width: 14ch; }
+  .archive-stamp { width: 74px; height: 74px; top: auto; right: 16px; margin-top: -4px; opacity: .5; }
+  .f-title { padding-right: 70px; }
+  .f-field { grid-template-columns: 1fr; gap: 2px; }
+  .inv thead { display: none; }
+  .inv, .inv tbody { display: block; }
+  .inv tr { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; grid-template-areas: "n d m" "n p s"; gap: 4px 8px; padding: 10px 0; border-bottom: 1px solid hsl(225, 14%, 86%); }
+  .inv td { border: 0; padding: 0; width: auto !important; }
+  .inv .n { grid-area: n; } .inv td:nth-child(2) { grid-area: d; } .inv .m { grid-area: m; }
+  .inv .p { grid-area: p; text-align: left; } .inv .s { grid-area: s; }
+  .inv .p:empty { display: none; }
+  .signs { grid-template-columns: 1fr; }
+  .plates { grid-template-columns: 1fr; }
+}
+@media print {
+  .site-header, .subnav, .statusbar, .docbar, .toast, .zoom, .hole { display: none !important; }
+  body { background: #fff; }
+  .page { padding: 0; max-width: none; }
+  .sheet { box-shadow: none; max-width: none; padding: 12mm; break-after: page; animation: none; }
+  .plate { animation: none; break-inside: avoid; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <div class="header-left">
+    <a href="index.html" class="logo-link" aria-label="IFRAS, accueil"><img src="logo.png" alt="Logo IFRAS" width="44" height="44"></a>
+    <nav aria-label="Navigation principale">
+      <ul class="main-nav">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="recherche.html">Recherche</a></li>
+        <li><a href="programmes.html">Programmes</a></li>
+        <li><a href="publications.html">Publications</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="header-right">
+    <span class="secure"><i class="ph-light ph-shield-check" aria-hidden="true"></i> Espace sécurisé</span>
+    <div class="user-chip" title="Compte connecté">
+      <span class="avatar" id="userAvatar">?</span>
+      <span id="userLabel">…</span>
+    </div>
+
+    <div class="settings">
+      <button class="icon-btn" id="settingsBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="settingsPanel" aria-label="Paramètres">
+        <i class="ph-light ph-gear-six" aria-hidden="true"></i>
+      </button>
+
+      <div class="settings-panel" id="settingsPanel" role="dialog" aria-label="Paramètres">
+        <p class="panel-title">Apparence</p>
+        <p class="theme-label">Couleur principale</p>
+        <div class="swatches" id="swatches"></div>
+
+        <p class="theme-label">Teinte personnalisée</p>
+        <div class="hue-wrap" id="hueWrap" role="slider" tabindex="0" aria-label="Teinte" aria-valuemin="0" aria-valuemax="360" aria-valuenow="228">
+          <span class="hue-thumb" id="hueThumb"></span>
+        </div>
+        <div class="sat-wrap">
+          <span class="sat-label">Sat.</span>
+          <input type="range" class="sat-range" id="satRange" min="20" max="90" value="65" aria-label="Saturation">
+        </div>
+
+        <p class="theme-label">Code HEX</p>
+        <div class="hex-wrap">
+          <span class="hex-preview" id="hexPreview"></span>
+          <input type="text" class="hex-input" id="hexInput" placeholder="#4f6bed" maxlength="7" spellcheck="false" autocomplete="off" aria-label="Couleur au format HEX">
+          <button class="hex-apply" id="hexApply" type="button">Appliquer</button>
+        </div>
+
+        <div class="panel-divider"></div>
+        <button class="logout" id="logoutBtn" type="button"><i class="ph-light ph-sign-out" aria-hidden="true"></i> Déconnexion</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== SOUS-BANDEAU ===== -->
+<nav class="subnav" aria-label="Espace personnel">
+  <ul class="subnav-list">
+    <li><a href="messagerie.html" class="sub-tab"><i class="ph-light ph-envelope-simple" aria-hidden="true"></i> Messagerie</a></li>
+    <li><a href="coffre-fort.html" class="sub-tab" aria-current="page"><i class="ph-light ph-vault" aria-hidden="true"></i> Coffre-fort</a></li>
+    <li><a href="agenda.html" class="sub-tab"><i class="ph-light ph-calendar-blank" aria-hidden="true"></i> Agenda</a></li>
+    <li><a href="profil.html" class="sub-tab"><i class="ph-light ph-user-circle" aria-hidden="true"></i> Profil</a></li>
+    <li><a href="tableau-de-bord.html" class="sub-tab"><i class="ph-light ph-squares-four" aria-hidden="true"></i> Tableau de bord</a></li>
+    <li><a href="annuaire.html" class="sub-tab"><i class="ph-light ph-address-book" aria-hidden="true"></i> Annuaire</a></li>
+    <li><a href="boutique.html" class="sub-tab"><i class="ph-light ph-storefront" aria-hidden="true"></i> Boutique</a></li>
+  </ul>
+</nav>
+
+<!-- ===== CONTENU ===== -->
+<div class="page">
+  <main class="main" id="contenu">
+
+    <div class="docbar">
+      <a class="docbar-back" href="coffre-fort.html"><i class="ph-light ph-arrow-left" aria-hidden="true"></i><span>Coffre-fort</span></a>
+      <div class="docbar-file">
+        <i class="ph-light ph-file-text" aria-hidden="true"></i>
+        <span class="docbar-name">effets_personnels.html</span>
+        <span class="docbar-meta" id="docMeta">Coffre personnel</span>
+      </div>
+      <button class="docbar-btn" id="printBtn" type="button"><i class="ph-light ph-printer" aria-hidden="true"></i><span>Imprimer</span></button>
+    </div>
+
+    <div class="doc" id="doc" aria-live="polite">
+      <article class="sheet sheet--skeleton" aria-label="Chargement du document">
+        <span class="sk sk--w40"></span><span class="sk sk--w70 sk--lg"></span><span class="sk sk--w55"></span>
+        <span class="sk-gap"></span>
+        <span class="sk sk--w90"></span><span class="sk sk--w85"></span><span class="sk sk--w90"></span><span class="sk sk--w60"></span>
+      </article>
+    </div>
+
+  </main>
+</div>
+
+<dialog class="zoom" id="zoom" aria-label="Agrandissement de la planche">
+  <button class="zoom-close" id="zoomClose" type="button" aria-label="Fermer"><i class="ph-light ph-x" aria-hidden="true"></i></button>
+  <figure class="zoom-fig"><div class="zoom-bed" id="zoomBed"></div><figcaption id="zoomCap"></figcaption></figure>
+</dialog>
+
+<!-- ===== BARRE D'ÉTAT ===== -->
+<footer class="statusbar" aria-label="État de la session">
+  <span><span class="status-dot" aria-hidden="true"></span> Connecté</span>
+  <span class="hide-sm"><i class="ph-light ph-lock-simple" aria-hidden="true"></i> Chiffrement IFRAS actif</span>
+  <span class="hide-sm"><i class="ph-light ph-lock-key" aria-hidden="true"></i> Coffre personnel</span>
+  <span class="push" id="idleLabel"><i class="ph-light ph-timer" aria-hidden="true"></i> Déconnexion auto dans 10:00</span>
+</footer>
+
+<div class="toast" id="toast" role="status"><i class="ph-light ph-warning-circle" aria-hidden="true"></i><span></span></div>
+
+<script>
+/* ============================================================
+   SUPABASE (inchangé)
+   ============================================================ */
+const _sb = supabase.createClient(
+  "https://fqijbltymdeudnlitcrs.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZxaWpibHR5bWRldWRubGl0Y3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzOTQ2NDQsImV4cCI6MjA4NTk3MDY0NH0.HZA0VxkaRTGLRTBA0Vz51mJjw8Xuj8f__yzaQKpGfbE"
+);
+
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+/* ============================================================
+   THÈME (même logique que l'original : presets, teinte, saturation, HEX)
+   ============================================================ */
+const PRESETS = [
+  { label: 'Bleu IFRAS', h: 228, s: 65 },
+  { label: 'Indigo',     h: 248, s: 60 },
+  { label: 'Violet',     h: 270, s: 55 },
+  { label: 'Cyan',       h: 195, s: 65 },
+  { label: 'Vert',       h: 152, s: 55 },
+  { label: 'Émeraude',   h: 168, s: 60 },
+  { label: 'Ambre',      h: 38,  s: 75 },
+  { label: 'Rouge',      h: 355, s: 60 },
+  { label: 'Rose',       h: 330, s: 60 },
+  { label: 'Noir',       h: 228, s: 10, special: 'dark' },
+  { label: 'Blanc',      h: 228, s: 10, special: 'light' },
+];
+const THEME_VARS = ['--bg-dark', '--bg-main', '--bg-light', '--bg-hover', '--bg-card', '--border', '--border-sub', '--accent', '--accent-dim', '--text-main', '--text-soft', '--text-muted', '--unread-dot'];
+const SPECIAL = {
+  dark:  { header: 'hsl(0,0%,4%)', sub: 'hsl(0,0%,5%)', vars: ['hsl(0,0%,3%)', 'hsl(0,0%,6%)', 'hsl(0,0%,9%)', 'hsl(0,0%,13%)', 'hsl(0,0%,7%)', 'hsl(0,0%,18%)', 'hsl(0,0%,12%)', 'hsl(228,65%,60%)', 'hsl(228,55%,45%)', 'hsl(0,0%,90%)', 'hsl(0,0%,62%)', 'hsl(0,0%,44%)', 'hsl(228,70%,65%)'] },
+  light: { header: 'hsl(220,20%,95%)', sub: 'hsl(220,20%,94%)', vars: ['hsl(220,20%,96%)', 'hsl(220,20%,98%)', 'hsl(220,15%,93%)', 'hsl(220,15%,89%)', 'hsl(0,0%,100%)', 'hsl(220,15%,82%)', 'hsl(220,15%,88%)', 'hsl(228,65%,55%)', 'hsl(228,55%,40%)', 'hsl(220,25%,15%)', 'hsl(220,15%,38%)', 'hsl(220,10%,52%)', 'hsl(228,70%,55%)'] }
+};
+
+let currentH = 228, currentS = 65, currentSpecial = null;
+
+function setVisual(h, s, special) {
+  const root = document.documentElement;
+  const header = document.querySelector('.site-header');
+  const sub = document.querySelector('.subnav');
+  root.classList.toggle('theme-light', special === 'light');
+  if (special && SPECIAL[special]) {
+    const cfg = SPECIAL[special];
+    root.style.setProperty('--hue', 228);
+    root.style.setProperty('--sat', '8%');
+    THEME_VARS.forEach((v, i) => root.style.setProperty(v, cfg.vars[i]));
+    header.style.background = cfg.header;
+    sub.style.background = cfg.sub;
+    document.querySelector('meta[name="theme-color"]').content = cfg.header;
+  } else {
+    THEME_VARS.forEach((v) => root.style.removeProperty(v));
+    header.style.background = ''; sub.style.background = '';
+    root.style.setProperty('--hue', h);
+    root.style.setProperty('--sat', s + '%');
+  }
+  $('satRange').value = s;
+  updateHueThumb(h);
+  updateSwatches(h, s, special);
+  $('hexPreview').style.background = `hsl(${h},${s}%,55%)`;
+}
+
+function applyTheme(h, s, special) {
+  currentH = h; currentS = s; currentSpecial = special || null;
+  setVisual(h, s, special);
+  /* on vide le champ HEX (plus de valeur manuelle) puis on ré-affiche le message ouvert */
+  const hexInp = $('hexInput');
+  if (hexInp) { hexInp.value = ''; hexInp.classList.remove('invalid'); }
+  try { sessionStorage.setItem('ifras_theme', JSON.stringify({ h, s, special: special || null })); } catch (e) {}
+}
+
+
+function updateHueThumb(h) {
+  $('hueThumb').style.left = (h / 360 * 100) + '%';
+  $('hueWrap').setAttribute('aria-valuenow', h);
+}
+function updateSwatches(h, s, special) {
+  document.querySelectorAll('.swatch').forEach((sw) => {
+    const match = special
+      ? sw.dataset.special === special
+      : Number(sw.dataset.h) === h && Number(sw.dataset.s) === s && !sw.dataset.special;
+    sw.classList.toggle('active', match);
+    sw.setAttribute('aria-pressed', String(match));
+  });
+}
+
+function normalizeHex(hex) {
+  if (!hex || typeof hex !== 'string') return null;
+  hex = hex.trim().toLowerCase();
+  if (/^#[0-9a-f]{3}$/.test(hex)) return '#' + hex[1] + hex[1] + hex[2] + hex[2] + hex[3] + hex[3];
+  if (/^#[0-9a-f]{6}$/.test(hex)) return hex;
+  return null;
+}
+function colorsMatch(a, b) {
+  const na = normalizeHex(a), nb = normalizeHex(b);
+  return na && nb && na === nb;
+}
+
+function applyHex() {
+  const inp = $('hexInput');
+  const val = inp.value.trim();
+  const norm = normalizeHex(val);
+  if (!norm) {
+    inp.classList.remove('invalid'); void inp.offsetWidth; inp.classList.add('invalid');
+    return;
+  }
+  inp.classList.remove('invalid');
+  /* conversion en teinte / saturation */
+  const hex = norm.slice(1);
+  const r = parseInt(hex.slice(0, 2), 16) / 255, g = parseInt(hex.slice(2, 4), 16) / 255, b = parseInt(hex.slice(4, 6), 16) / 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  let hh = 0, ss = 0; const ll = (max + min) / 2;
+  if (max !== min) {
+    const d = max - min;
+    ss = ll > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: hh = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+      case g: hh = ((b - r) / d + 2) / 6; break;
+      case b: hh = ((r - g) / d + 4) / 6; break;
+    }
+  }
+  applyTheme(Math.round(hh * 360), Math.round(ss * 100), null);
+}
+
+(function buildSwatches() {
+  const wrap = $('swatches');
+  PRESETS.forEach((p) => {
+    const sw = document.createElement('button');
+    sw.type = 'button';
+    sw.className = 'swatch';
+    sw.dataset.h = p.h; sw.dataset.s = p.s;
+    if (p.special) sw.dataset.special = p.special;
+    sw.title = p.label;
+    sw.setAttribute('aria-label', p.label);
+    sw.style.background = p.special === 'dark' ? '#111' : p.special === 'light' ? '#eee' : `hsl(${p.h},${p.s}%,55%)`;
+    if (p.h === 228 && !p.special) sw.classList.add('active');
+    sw.addEventListener('click', () => applyTheme(p.h, p.s, p.special));
+    wrap.appendChild(sw);
+  });
+  $('hexPreview').style.background = `hsl(${currentH},${currentS}%,55%)`;
+})();
+
+/* barre de teinte : souris, doigt et clavier */
+(function initHueBar() {
+  const wrap = $('hueWrap');
+  let dragging = false;
+  const setFrom = (e) => {
+    const rect = wrap.getBoundingClientRect();
+    const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+    applyTheme(Math.round(x / rect.width * 360), currentS, null);
+  };
+  wrap.addEventListener('pointerdown', (e) => { dragging = true; wrap.setPointerCapture(e.pointerId); setFrom(e); });
+  wrap.addEventListener('pointermove', (e) => { if (dragging) setFrom(e); });
+  wrap.addEventListener('pointerup', () => { dragging = false; });
+  wrap.addEventListener('keydown', (e) => {
+    const step = e.shiftKey ? 20 : 5;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { e.preventDefault(); applyTheme((currentH + step) % 360, currentS, null); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { e.preventDefault(); applyTheme((currentH - step + 360) % 360, currentS, null); }
+  });
+  updateHueThumb(currentH);
+})();
+$('satRange').addEventListener('input', function () { applyTheme(currentH, parseInt(this.value, 10), null); });
+$('hexApply').addEventListener('click', applyHex);
+$('hexInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') applyHex(); });
+$('hexInput').addEventListener('input', function () {
+  const n = normalizeHex(this.value);
+  if (n) $('hexPreview').style.background = n;
+  this.classList.remove('invalid');
+});
+
+/* ============================================================
+   PANNEAU DE RÉGLAGES
+   ============================================================ */
+const settingsBtn = $('settingsBtn'), settingsPanel = $('settingsPanel');
+const setSettings = (open) => {
+  settingsPanel.classList.toggle('is-open', open);
+  settingsBtn.setAttribute('aria-expanded', String(open));
+};
+settingsBtn.addEventListener('click', () => setSettings(!settingsPanel.classList.contains('is-open')));
+document.addEventListener('click', (e) => { if (!e.target.closest('.settings')) setSettings(false); });
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+let toastTimer = null;
+function showToast(msg) {
+  const t = $('toast');
+  t.querySelector('span').textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+/* ============================================================
+   AUTH (inchangé) + décompte d'inactivité visible
+   ============================================================ */
+async function logout() {
+  try { sessionStorage.removeItem('ifras_theme'); } catch (e) {}
+  await _sb.auth.signOut();
+  window.location.href = 'connexion.html';
+}
+$('logoutBtn').addEventListener('click', logout);
+_sb.auth.onAuthStateChange((ev) => { if (ev === 'SIGNED_OUT') window.location.href = 'connexion.html'; });
+
+const IDLE_MS = 10 * 60 * 1000;
+let idleDeadline = Date.now() + IDLE_MS, inactivityTimer = null;
+function resetInactivityTimer() {
+  idleDeadline = Date.now() + IDLE_MS;
+  clearTimeout(inactivityTimer);
+  inactivityTimer = setTimeout(logout, IDLE_MS);
+}
+['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll', 'click'].forEach((e) =>
+  document.addEventListener(e, resetInactivityTimer, { passive: true, capture: true }));
+resetInactivityTimer();
+setInterval(() => {
+  const left = Math.max(0, idleDeadline - Date.now());
+  const el = $('idleLabel');
+  el.innerHTML = `<i class="ph-light ph-timer" aria-hidden="true"></i> Déconnexion auto dans ${Math.floor(left / 60000)}:${String(Math.floor(left / 1000) % 60).padStart(2, '0')}`;
+  el.classList.toggle('warn', left < 60000);
+}, 1000);
+
+function initials(email) {
+  const p = String(email || '?').split('@')[0].split(/[._-]/);
+  return ((p[0] || '?')[0] + (p[1] ? p[1][0] : '')).toUpperCase();
+}
+function hueOf(str) { let h = 0; for (const c of String(str)) h = (h * 31 + c.charCodeAt(0)) % 360; return h; }
+
+/* ============================================================
+   PLANCHES DESSINÉES : un gabarit par type d'objet
+   spec = "type|arg|arg" (colonne dessin de effets_personnels)
+   ============================================================ */
+let _vid = 0;
+const vid = () => 'v' + (++_vid);
+const X = (s) => esc(s);
+const lines = (s) => String(s || '').split('~');
+const tiltOf = (s) => { let h = 0; for (const c of String(s)) h = (h * 33 + c.charCodeAt(0)) % 997; return ((h % 7) - 3) * 0.7; };
+
+function svg(body, spec, defs = '') {
+  const f = vid();
+  return `<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+<defs><filter id="${f}" x="-25%" y="-25%" width="150%" height="160%"><feDropShadow dx="0" dy="7" stdDeviation="7" flood-color="#0d1424" flood-opacity=".30"/></filter>${defs}</defs>
+<g filter="url(#${f})" transform="rotate(${tiltOf(spec)} 200 150)">${body}</g></svg>`;
+}
+const metal = (id, a = '#f2f2ef', b = '#9a9b97', c = '#d6d6d2') =>
+  `<linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset=".55" stop-color="${b}"/><stop offset="1" stop-color="${c}"/></linearGradient>`;
+const glossV = (id, op = .35) =>
+  `<linearGradient id="${id}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".18" stop-color="#fff" stop-opacity="${op}"/><stop offset=".32" stop-color="#fff" stop-opacity="0"/></linearGradient>`;
+const isLight = (hex) => { const h = hex.replace('#', ''); const n = parseInt(h.length === 3 ? h.replace(/./g, '$&$&') : h, 16); return ((n >> 16) * .3 + ((n >> 8) & 255) * .59 + (n & 255) * .11) > 150; };
+const wrap = (s, max) => { const out = []; let cur = ''; String(s).split(' ').forEach((w) => { if ((cur + ' ' + w).trim().length > max && cur) { out.push(cur); cur = w; } else cur = (cur + ' ' + w).trim(); }); if (cur) out.push(cur); return out; };
+const CW = { Syne: .9, 'DM Sans': .58, 'DM Mono': .62, Caveat: .48 };
+const fit = (t, size, fam, max, ls = 0) => { const w = String(t).length * (size * (CW[fam] || .6) + ls); return w > max ? ` textLength="${max}" lengthAdjust="spacingAndGlyphs"` : ''; };
+const engrave = (x, y, t, size, fam, extra = '', max = 999) =>
+  `<text x="${x}" y="${y + 1.2}" text-anchor="middle" font-family="${fam}" font-size="${size}" fill="#fff" fill-opacity=".55" ${extra}${fit(t, size, fam, max)}>${X(t)}</text>
+   <text x="${x}" y="${y}" text-anchor="middle" font-family="${fam}" font-size="${size}" fill="#4a4c49" ${extra}${fit(t, size, fam, max)}>${X(t)}</text>`;
+
+const DIAL = {
+  montre:    { face: '#f4f1e8', ink: '#22252b', ring: 'm' },
+  chrono:    { face: '#1d2027', ink: '#eef0f3', ring: 'm' },
+  barometre: { face: '#f1ead8', ink: '#2c2620', ring: 'b' },
+  boussole:  { face: '#f4f4f0', ink: '#1f2a37', ring: 'm' },
+  vario:     { face: '#121418', ink: '#f2f3f5', ring: 'k' },
+};
+
+const DRAW = {
+  eventail() {
+    const n = 15;
+    return svg(`
+      ${Array.from({ length: n }, (_, i) => { const a0 = Math.PI + i * Math.PI / n, a1 = a0 + Math.PI / n; const P = (a, r) => `${200 + r * Math.cos(a)} ${250 + r * Math.sin(a)}`;
+        return `<path d="M${P(a0, 60)} L${P(a0, 190)} A190 190 0 0 1 ${P(a1, 190)} L${P(a1, 60)} A60 60 0 0 0 ${P(a0, 60)} Z" fill="${i % 2 ? '#a31c2c' : '#b8283a'}"/>`; }).join('')}
+      <path d="M10 250 A190 190 0 0 1 390 250" fill="none" stroke="#1d1d1f" stroke-width="5"/>
+      ${Array.from({ length: 9 }, (_, i) => `<circle cx="${200 + 130 * Math.cos(Math.PI + (i + .5) * Math.PI / 9)}" cy="${250 + 130 * Math.sin(Math.PI + (i + .5) * Math.PI / 9)}" r="9" fill="#f2d5a0" opacity=".85"/>`).join('')}
+      ${Array.from({ length: n + 1 }, (_, i) => `<path d="M200 250 L${200 + 62 * Math.cos(Math.PI + i * Math.PI / n)} ${250 + 62 * Math.sin(Math.PI + i * Math.PI / n)}" stroke="#2b1a10" stroke-width="5" stroke-linecap="round"/>`).join('')}
+      <circle cx="200" cy="250" r="9" fill="#c9a64a"/>`, 'fan');
+  },
+  herbier(latin, where) {
+    return svg(`
+      <rect x="92" y="10" width="216" height="282" fill="#f7f5ee"/>
+      <path d="M200 250 C 196 200, 206 150, 198 60" stroke="#6b5a3a" stroke-width="2.4" fill="none"/>
+      ${Array.from({ length: 11 }, (_, i) => { const y = 236 - i * 16, side = i % 2 ? 1 : -1; return `<ellipse cx="${200 + side * 12}" cy="${y}" rx="11" ry="4.5" fill="${i % 3 ? '#6f7d4a' : '#86915c'}" transform="rotate(${side * -28} ${200 + side * 12} ${y})"/>`; }).join('')}
+      ${[[192, 56], [204, 50], [198, 44], [208, 60]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="3.4" fill="#a68bb8"/>`).join('')}
+      <path d="M200 250 l-12 10 M200 250 l10 12 M200 250 l2 14" stroke="#7a6a4a" stroke-width="1.4"/>
+      <rect x="176" y="146" width="48" height="10" fill="#e9e2c7" opacity=".9" transform="rotate(-8 200 151)"/>
+      <rect x="182" y="222" width="40" height="10" fill="#e9e2c7" opacity=".9" transform="rotate(6 202 227)"/>
+      <rect x="196" y="244" width="104" height="40" fill="#fff" stroke="#b9b29a"/>
+      <text x="204" y="261" font-family="DM Sans" font-style="italic" font-size="11" fill="#2b2b2b"${fit(latin, 11, 'DM Sans', 90)}>${X(latin)}</text>
+      <text x="204" y="277" font-family="Caveat" font-size="14" fill="#23324f"${fit(where, 14, 'Caveat', 90)}>${X(where)}</text>`, 'herb' + latin);
+  },
+  medaille(a, b) {
+    const g = vid(), r = vid();
+    return svg(`
+      <circle cx="200" cy="58" r="15" fill="none" stroke="url(#${g})" stroke-width="5"/>
+      <path d="M200 0 v40" stroke="#8a6d4a" stroke-width="9" stroke-linecap="round"/>
+      <circle cx="200" cy="162" r="84" fill="url(#${r})"/>
+      <circle cx="200" cy="162" r="84" fill="none" stroke="#7d7e7a" stroke-width="2"/>
+      <circle cx="200" cy="162" r="70" fill="none" stroke="#8f908c" stroke-width="1.2"/>
+      <path d="M148 120 l30 -8 M236 214 l22 -14 M160 206 l10 4" stroke="#fff" stroke-opacity=".35" stroke-width="1"/>
+      ${engrave(200, 160, a, 38, 'Syne', 'font-weight="700" letter-spacing="5"')}
+      ${engrave(200, 196, b, 24, 'DM Mono', 'letter-spacing="3"')}`, 'm' + a,
+      metal(g) + `<radialGradient id="${r}" cx=".38" cy=".32" r=".8"><stop offset="0" stop-color="#f7f7f3"/><stop offset=".55" stop-color="#b8b9b4"/><stop offset="1" stop-color="#85867f"/></radialGradient>`);
+  },
+  tag(a, b, c) {
+    const g = vid();
+    return svg(`
+      <path d="M40 150 C 60 120, 80 112, 102 140" fill="none" stroke="#9b9c98" stroke-width="3" stroke-dasharray="5 3"/>
+      <rect x="92" y="86" width="230" height="128" rx="32" fill="url(#${g})" stroke="#7f807b" stroke-width="2"/>
+      <circle cx="122" cy="150" r="10" fill="#e9ebee" stroke="#7f807b" stroke-width="2"/>
+      ${[a, b, c].map((t, i) => engrave(232, 132 + i * 28, t, 17, 'DM Mono', 'letter-spacing="1.5"', 168)).join('')}`, 't' + a, metal(g));
+  },
+  ecusson(top, big, bottom) {
+    const p = vid();
+    return svg(`
+      <circle cx="200" cy="150" r="118" fill="#1a2747"/>
+      <circle cx="200" cy="150" r="112" fill="none" stroke="#c9a64a" stroke-width="10"/>
+      <circle cx="200" cy="150" r="112" fill="none" stroke="#f1dc96" stroke-width="2" stroke-dasharray="3 4"/>
+      <circle cx="200" cy="150" r="104" fill="url(#${p})"/>
+      <ellipse cx="200" cy="134" rx="64" ry="20" fill="none" stroke="#e8edf6" stroke-width="2.5" transform="rotate(-16 200 134)"/>
+      <circle cx="200" cy="134" r="17" fill="#f3c34a"/>
+      <circle cx="258" cy="116" r="5.5" fill="#e8edf6"/>
+      <text x="200" y="88" text-anchor="middle" font-family="DM Sans" font-weight="500" font-size="15" letter-spacing="5" fill="#e8edf6">${X(top)}</text>
+      <text x="200" y="200" text-anchor="middle" font-family="Syne" font-weight="800" font-size="28" letter-spacing="3" fill="#ffffff"${fit(big, 28, 'Syne', 170, 3)}>${X(big)}</text>
+      <text x="200" y="232" text-anchor="middle" font-family="DM Mono" font-size="15" letter-spacing="3" fill="#f1dc96" dy="2">${X(bottom)}</text>`, 'e' + big,
+      `<pattern id="${p}" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><rect width="4" height="4" fill="#1a2747"/><path d="M0 0 v4" stroke="#24345c" stroke-width="1.5"/></pattern>`);
+  },
+  plaque(a, b) {
+    return svg(`
+      <rect x="28" y="72" width="344" height="156" rx="16" fill="#1f418d"/>
+      <rect x="40" y="84" width="320" height="132" rx="10" fill="none" stroke="#f4f4f0" stroke-width="4"/>
+      ${[[52, 96], [348, 96], [52, 204], [348, 204]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="5" fill="#d8d9d4" stroke="#5b5f66"/>`).join('')}
+      <text x="200" y="152" text-anchor="middle" font-family="Syne" font-weight="800" font-size="32" letter-spacing="2" fill="#f4f4f0"${fit(a, 32, 'Syne', 290, 2)}>${X(a)}</text>
+      <text x="200" y="186" text-anchor="middle" font-family="DM Sans" font-size="14.5" letter-spacing="1" fill="#f4f4f0">${X(b)}</text>
+      <path d="M28 120 q6 6 0 16 z M338 228 q10 -8 22 -2 l-4 2 z M300 72 q8 7 18 0 z" fill="#d9d4c5"/>
+      <path d="M30 124 q3 3 0 7 z M342 227 q8 -5 14 -1 z" fill="#6e4a2a" opacity=".8"/>`, 'p' + a);
+  },
+  livre(title, author, sub, color = '#2f4a3a') {
+    const light = isLight(color), ink = light ? '#1b1d22' : '#f3f1ea', red = light ? '#9b1c1c' : ink;
+    const t = wrap(title, 13), g = vid();
+    return svg(`
+      <rect x="112" y="22" width="182" height="256" rx="3" fill="${color}"/>
+      <rect x="112" y="22" width="16" height="256" fill="#000" opacity=".18"/>
+      <rect x="112" y="22" width="182" height="256" rx="3" fill="url(#${g})"/>
+      <rect x="140" y="46" width="132" height="208" fill="none" stroke="${red}" stroke-width="1.4" opacity=".9"/>
+      <text x="206" y="80" text-anchor="middle" font-family="DM Sans" font-size="12" fill="${ink}" opacity=".85"${fit(author, 12, 'DM Sans', 118)}>${X(author)}</text>
+      ${t.map((l, i) => `<text x="206" y="${130 + i * 26 - (t.length - 1) * 10}" text-anchor="middle" font-family="Syne" font-weight="700" font-size="21" fill="${red}"${fit(l, 21, 'Syne', 118)}>${X(l)}</text>`).join('')}
+      <text x="206" y="236" text-anchor="middle" font-family="DM Mono" font-size="11" fill="${ink}" opacity=".75"${fit(sub, 11, 'DM Mono', 118)}>${X(sub)}</text>
+      <path d="M290 28 l4 6 v10 M118 270 l14 6" stroke="#fff" stroke-opacity=".25"/>`, 'l' + title,
+      `<linearGradient id="${g}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".10"/><stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".18"/></linearGradient>`);
+  },
+  carnet(label, color = '#1d232e') {
+    return svg(`
+      <rect x="104" y="18" width="204" height="264" rx="12" fill="${color}"/>
+      <rect x="104" y="18" width="204" height="264" rx="12" fill="none" stroke="#000" stroke-opacity=".25" stroke-width="2"/>
+      <path d="M118 18 v264" stroke="#000" stroke-opacity=".22" stroke-width="3"/>
+      <rect x="276" y="18" width="9" height="264" fill="#111" opacity=".8"/>
+      <rect x="140" y="70" width="122" height="54" rx="3" fill="#f2efe6"/>
+      <path d="M150 112 h102" stroke="#c9c3b4"/>
+      <text x="201" y="104" text-anchor="middle" font-family="Caveat" font-size="25" fill="#22324f"${fit(label, 25, 'Caveat', 108)}>${X(label)}</text>`, 'c' + label);
+  },
+  note(style, text) {
+    const L = lines(text);
+    if (style === 'serviette') {
+      return svg(`
+        <rect x="64" y="16" width="272" height="268" fill="#fbfbf7"/>
+        <rect x="76" y="28" width="248" height="244" fill="none" stroke="#d9d7cf" stroke-width="1.5" stroke-dasharray="1 5" stroke-linecap="round"/>
+        <path d="M200 16 v268 M64 150 h272" stroke="#000" stroke-opacity=".07" stroke-width="2"/>
+        <g transform="rotate(-4 200 150)">${L.map((l, i) => `<text x="96" y="${92 + i * 52}" font-family="Caveat" font-size="${i === L.length - 1 ? 30 : 25}" fill="#1e3a8a">${X(l)}</text>`).join('')}</g>
+        <circle cx="290" cy="230" r="20" fill="#7a5a3a" opacity=".12"/>`, 'n' + text);
+    }
+    if (style === 'verso') {
+      return svg(`
+        <rect x="46" y="44" width="308" height="212" fill="#eeece4"/>
+        <path d="M46 44 h308 v212 h-308 z" fill="none" stroke="#d6d2c5"/>
+        ${Array.from({ length: 9 }, (_, i) => `<path d="M${60 + i * 34} 60 l20 16" stroke="#c9c5b8" stroke-width=".8"/>`).join('')}
+        <g transform="rotate(-6 200 150)">${L.map((l, i) => `<text x="200" y="${142 + i * 46}" text-anchor="middle" font-family="Caveat" font-size="38" fill="#3f4245">${X(l)}</text>`).join('')}</g>`, 'v' + text);
+    }
+    if (style === 'carte') {
+      return svg(`
+        <rect x="52" y="54" width="296" height="192" fill="#fcfbf6"/>
+        <rect x="64" y="66" width="272" height="168" fill="none" stroke="#b9a35f" stroke-width="1"/>
+        <path d="M200 54 v192" stroke="#000" stroke-opacity=".06"/>
+        ${L.map((l, i) => `<text x="${i === L.length - 1 ? 300 : 86}" y="${116 + i * 40}" ${i === L.length - 1 ? 'text-anchor="end"' : ''} font-family="Caveat" font-size="${i === L.length - 1 ? 32 : 26}" fill="#1f2b4d">${X(l)}</text>`).join('')}`, 'k' + text);
+    }
+    return svg(`
+      <rect x="62" y="20" width="276" height="262" fill="#fdfdf9"/>
+      ${Array.from({ length: 9 }, (_, i) => `<path d="M62 ${62 + i * 25} h276" stroke="#a9c2e6" stroke-width=".8"/>`).join('')}
+      <path d="M96 20 v262" stroke="#e39a9a" stroke-width="1"/>
+      ${L.map((l, i) => `<text x="106" y="${58 + i * 50}" font-family="Caveat" font-size="${i ? 22 : 28}" fill="#23324f"${fit(l, i ? 22 : 28, 'Caveat', 206)}>${X(l)}</text>`).join('')}`, 'p' + text);
+  },
+  bocal(label, sub, color = '#7a4210') {
+    const g = vid(), l = vid();
+    return svg(`
+      <rect x="112" y="74" width="176" height="196" rx="28" fill="${color}"/>
+      <rect x="112" y="74" width="176" height="196" rx="28" fill="url(#${g})"/>
+      <rect x="120" y="44" width="160" height="40" rx="7" fill="url(#${l})"/>
+      ${Array.from({ length: 14 }, (_, i) => `<path d="M${130 + i * 10.5} 47 v34" stroke="#000" stroke-opacity=".12"/>`).join('')}
+      <rect x="126" y="132" width="148" height="84" rx="4" fill="#f4f0e5" stroke="#c9bfa6"/>
+      <text x="200" y="172" text-anchor="middle" font-family="Syne" font-weight="700" font-size="20" letter-spacing="1" fill="${color}"${fit(label, 20, 'Syne', 132, 1)}>${X(label)}</text>
+      <text x="200" y="196" text-anchor="middle" font-family="DM Sans" font-size="11" fill="#4a4237"${fit(sub, 11, 'DM Sans', 132)}>${X(sub)}</text>`, 'b' + label,
+      glossV(g, .32) + metal(l, '#e7dcc1', '#a08d5d', '#cdbd93'));
+  },
+  boite(label, sub, color = '#3a2a22') {
+    const g = vid();
+    return svg(`
+      <rect x="66" y="66" width="268" height="176" rx="18" fill="${color}"/>
+      <rect x="66" y="66" width="268" height="176" rx="18" fill="url(#${g})"/>
+      <path d="M66 104 h268" stroke="#000" stroke-opacity=".28" stroke-width="2"/>
+      <path d="M84 72 h232" stroke="#fff" stroke-opacity=".35" stroke-width="2" stroke-linecap="round"/>
+      <rect x="96" y="124" width="208" height="88" rx="8" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.4"/>
+      <text x="200" y="168" text-anchor="middle" font-family="Syne" font-weight="800" font-size="25" letter-spacing="2" fill="#fbf8f0"${fit(label, 25, 'Syne', 188, 2)}>${X(label)}</text>
+      <text x="200" y="194" text-anchor="middle" font-family="DM Sans" font-size="12.5" fill="#fbf8f0" opacity=".85"${fit(sub, 12.5, 'DM Sans', 188)}>${X(sub)}</text>`, 'x' + label,
+      `<linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset=".35" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".25"/></linearGradient>`);
+  },
+  sachet(label, sub) {
+    return svg(`
+      <path d="M110 64 L290 64 L304 272 L96 272 Z" fill="#b8905f"/>
+      <path d="M110 64 L290 64 L292 92 L108 92 Z" fill="#a47c4c"/>
+      <path d="M108 64 ${Array.from({ length: 18 }, (_, i) => `l5 -8 l5 8`).join(' ')}" fill="none" stroke="#8d6a3f" stroke-width="2"/>
+      <path d="M150 92 L144 272 M256 92 L262 272" stroke="#000" stroke-opacity=".08" stroke-width="6"/>
+      <rect x="132" y="138" width="136" height="86" fill="none" stroke="#3b2414" stroke-width="2"/>
+      <text x="200" y="182" text-anchor="middle" font-family="Syne" font-weight="800" font-size="27" letter-spacing="2" fill="#3b2414"${fit(label, 27, 'Syne', 120, 2)}>${X(label)}</text>
+      <text x="200" y="206" text-anchor="middle" font-family="DM Sans" font-size="11.5" fill="#3b2414"${fit(sub, 11.5, 'DM Sans', 124)}>${X(sub)}</text>`, 's' + label);
+  },
+  bouteille(text) {
+    const g = vid(), L = lines(text);
+    return svg(`
+      <path d="M180 18 h40 v58 c0 24 44 40 44 84 v108 c0 10 -8 16 -18 16 h-92 c-10 0 -18 -6 -18 -16 v-108 c0 -44 44 -60 44 -84 z" fill="#d8e4dc" fill-opacity=".55" stroke="#8ea597" stroke-width="2"/>
+      <path d="M144 176 h112 v92 c0 6 -4 10 -10 10 h-92 c-6 0 -10 -4 -10 -10 z" fill="#efe7c9" fill-opacity=".5"/>
+      <rect x="176" y="10" width="48" height="22" rx="3" fill="#5a3b22"/>
+      <path d="M180 18 h40 v58 c0 24 44 40 44 84 v108 c0 10 -8 16 -18 16 h-92 c-10 0 -18 -6 -18 -16 v-108 c0 -44 44 -60 44 -84 z" fill="url(#${g})"/>
+      <path d="M144 158 h112 v74 l-10 4 l6 8 l-14 6 h-94 z" fill="#d7c08a"/>
+      <path d="M144 158 h112 v74 l-10 4 l6 8 l-14 6 h-94 z" fill="none" stroke="#a88f55"/>
+      <circle cx="214" cy="214" r="18" fill="#8a6a2a" opacity=".18"/>
+      <circle cx="170" cy="176" r="9" fill="#8a6a2a" opacity=".15"/>
+      ${L.map((l, i) => `<text x="${i ? 156 + i * 14 : 200}" y="${182 + i * 25}" ${i ? '' : 'text-anchor="middle"'} font-family="Caveat" font-size="${i ? 25 : 17}" fill="#3a2a14" opacity="${i ? .9 : .7}"${fit(l, i ? 25 : 17, 'Caveat', i ? 80 : 96)}>${X(l)}</text>`).join('')}`, 'w' + text, glossV(g, .5));
+  },
+  cassette(title, sub) {
+    return svg(`
+      <rect x="48" y="58" width="304" height="188" rx="14" fill="#2a2b2f"/>
+      <rect x="64" y="72" width="272" height="104" rx="6" fill="#f1ede2"/>
+      <rect x="64" y="72" width="272" height="20" fill="#c2412d"/>
+      <path d="M92 110 v34 M84 118 v14 q8 10 16 0 v-14 M92 104 l-6 8 h12 z" stroke="#1f2a44" stroke-width="3" fill="none" stroke-linejoin="round"/>
+      <text x="112" y="137" font-family="Syne" font-weight="800" font-style="italic" font-size="30" letter-spacing="1" fill="#1f2a44"${fit(title, 30, 'Syne', 210, 1)}>${X(title)}</text>
+      <text x="112" y="160" font-family="Caveat" font-size="20" fill="#1f2a44">${X(sub)}</text>
+      <rect x="128" y="186" width="144" height="44" rx="22" fill="#111215"/>
+      ${[160, 240].map((x) => `<circle cx="${x}" cy="208" r="17" fill="#e8e3d6"/><circle cx="${x}" cy="208" r="8" fill="#111215"/>${Array.from({ length: 6 }, (_, i) => `<rect x="${x - 1.5}" y="196" width="3" height="6" fill="#111215" transform="rotate(${i * 60} ${x} 208)"/>`).join('')}`).join('')}
+      ${[[60, 70], [340, 70], [60, 234], [340, 234]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="4" fill="#55575c"/>`).join('')}`, 'k' + title);
+  },
+  cartouche(note) {
+    return svg(`
+      <path d="M78 52 h244 v20 h12 v184 c0 8 -6 14 -14 14 h-240 c-8 0 -14 -6 -14 -14 v-184 h12 z" fill="#8e9196"/>
+      <path d="M78 52 h244 v20 h12 v184 c0 8 -6 14 -14 14 h-240 c-8 0 -14 -6 -14 -14 v-184 h12 z" fill="none" stroke="#6b6e73" stroke-width="2"/>
+      <rect x="100" y="92" width="200" height="132" rx="6" fill="#77797e"/>
+      <rect x="108" y="100" width="184" height="116" rx="4" fill="#ecebe6"/>
+      <rect x="108" y="100" width="184" height="116" rx="4" fill="none" stroke="#c9c7bf"/>
+      <text x="200" y="168" text-anchor="middle" font-family="Caveat" font-size="38" fill="#14306e" transform="rotate(-5 200 160)">${X(note)}</text>
+      ${Array.from({ length: 6 }, (_, i) => `<rect x="${88 + i * 4}" y="236" width="2" height="22" fill="#6b6e73"/><rect x="${300 + i * 4}" y="236" width="2" height="22" fill="#6b6e73"/>`).join('')}`, 'g' + note);
+  },
+  qsl(call) {
+    return svg(`
+      <rect x="34" y="50" width="332" height="206" fill="#fbfaf6"/>
+      <rect x="34" y="50" width="332" height="44" fill="#123a6b"/>
+      <text x="52" y="80" font-family="DM Sans" font-weight="500" font-size="13" letter-spacing="3" fill="#e9eef7">CONFIRMING OUR QSO</text>
+      <text x="200" y="146" text-anchor="middle" font-family="Syne" font-weight="800" font-size="58" letter-spacing="4" fill="#b3261e"${fit(call, 58, 'Syne', 280, 4)}>${X(call)}</text>
+      <text x="200" y="166" text-anchor="middle" font-family="DM Mono" font-size="10.5" fill="#43474e">LOCATOR JN18 · FRANCE</text>
+      ${['RADIO', 'DATE', 'UTC', 'MHz', 'MODE', 'RST'].map((h, i) => `<rect x="${46 + i * 51.5}" y="184" width="51.5" height="48" fill="none" stroke="#9aa3b2"/><text x="${71.7 + i * 51.5}" y="198" text-anchor="middle" font-family="DM Mono" font-size="9" fill="#5b6270">${h}</text>`).join('')}
+      ${['F6KRT', '04.06.16', '19:42', '14.205', 'SSB', '59'].map((v, i) => `<text x="${71.7 + i * 51.5}" y="223" text-anchor="middle" font-family="Caveat" font-size="17" fill="#1e3a8a">${v}</text>`).join('')}`, 'q' + call);
+  },
+  cadran(type) {
+    const d = DIAL[type] || DIAL.montre, g = vid();
+    const ring = d.ring === 'b' ? metal(g, '#f0dfa8', '#a5803a', '#d9bd75') : d.ring === 'k' ? metal(g, '#5b5f66', '#1d1f24', '#3b3e44') : metal(g);
+    const ticks = Array.from({ length: 60 }, (_, i) => `<path d="M200 ${84 + (i % 5 ? 0 : 0)} v${i % 5 ? 5 : 11}" stroke="${d.ink}" stroke-width="${i % 5 ? 1 : 2.4}" transform="rotate(${i * 6} 200 150)"/>`).join('');
+    let face = ticks, extra = '';
+    if (type === 'montre') {
+      extra = `<rect x="168" y="0" width="64" height="70" rx="6" fill="#6b3f22"/><rect x="168" y="230" width="64" height="70" rx="6" fill="#6b3f22"/><rect x="284" y="140" width="16" height="20" rx="3" fill="url(#${g})"/>`;
+      face += [12, 3, 6, 9].map((n, i) => `<text x="${200 + 46 * Math.sin(i * Math.PI / 2)}" y="${150 - 46 * Math.cos(i * Math.PI / 2) + 7}" text-anchor="middle" font-family="Syne" font-weight="700" font-size="19" fill="${d.ink}">${n}</text>`).join('');
+      face += `<path d="M200 150 L200 102" stroke="${d.ink}" stroke-width="3.5" stroke-linecap="round" transform="rotate(-60 200 150)"/><path d="M200 150 L200 92" stroke="${d.ink}" stroke-width="2.5" stroke-linecap="round" transform="rotate(48 200 150)"/>`;
+    } else if (type === 'chrono') {
+      extra = `<rect x="168" y="0" width="64" height="70" rx="6" fill="#23252b"/><rect x="168" y="230" width="64" height="70" rx="6" fill="#23252b"/><rect x="286" y="140" width="16" height="20" rx="3" fill="url(#${g})"/><rect x="266" y="78" width="14" height="18" rx="3" fill="url(#${g})" transform="rotate(45 273 87)"/><rect x="266" y="204" width="14" height="18" rx="3" fill="url(#${g})" transform="rotate(-45 273 213)"/>`;
+      face += [[170, 150], [230, 150], [200, 185]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="16" fill="none" stroke="${d.ink}" stroke-opacity=".6"/><path d="M${x} ${y} v-12" stroke="#e8544a" stroke-width="1.6"/>`).join('');
+      face += `<path d="M200 150 L200 88" stroke="#e8544a" stroke-width="1.6" transform="rotate(110 200 150)"/><path d="M200 150 L200 104" stroke="${d.ink}" stroke-width="3.5" stroke-linecap="round" transform="rotate(-30 200 150)"/>`;
+    } else if (type === 'barometre') {
+      face = Array.from({ length: 41 }, (_, i) => `<path d="M200 86 v${i % 5 ? 5 : 10}" stroke="${d.ink}" stroke-width="${i % 5 ? .8 : 1.8}" transform="rotate(${-130 + i * 6.5} 200 150)"/>`).join('');
+      face += ['TEMPÊTE', 'PLUIE', 'VARIABLE', 'BEAU', 'SEC'].map((t, i) => `<text x="200" y="118" text-anchor="middle" font-family="DM Sans" font-weight="500" font-size="9.5" letter-spacing="1" fill="${d.ink}" transform="rotate(${-100 + i * 50} 200 150)">${t}</text>`).join('');
+      face += `<path d="M200 168 L200 92" stroke="#1d1f24" stroke-width="2.4" stroke-linecap="round" transform="rotate(38 200 150)"/><path d="M200 150 L200 96" stroke="#b8862f" stroke-width="1.6" transform="rotate(12 200 150)"/><text x="200" y="196" text-anchor="middle" font-family="DM Mono" font-size="10" fill="${d.ink}">hPa</text>`;
+      extra = `<circle cx="200" cy="40" r="12" fill="none" stroke="url(#${g})" stroke-width="5"/>`;
+    } else if (type === 'boussole') {
+      extra = `<rect x="80" y="40" width="240" height="220" rx="14" fill="#2e3a2c"/><rect x="88" y="48" width="224" height="204" rx="10" fill="none" stroke="#5c6b58"/>`;
+      face = Array.from({ length: 72 }, (_, i) => `<path d="M200 84 v${i % 2 ? 4 : 8}" stroke="${d.ink}" stroke-width=".9" transform="rotate(${i * 5} 200 150)"/>`).join('');
+      face += [['N', 0], ['E', 90], ['S', 180], ['O', 270]].map(([t, a]) => `<text x="200" y="112" text-anchor="middle" font-family="Syne" font-weight="700" font-size="16" fill="${t === 'N' ? '#c0392b' : d.ink}" transform="rotate(${a} 200 150)">${t}</text>`).join('');
+      face += `<g transform="rotate(24 200 150)"><path d="M200 96 l9 54 h-18 z" fill="#c0392b"/><path d="M200 204 l9 -54 h-18 z" fill="#e7e8ea" stroke="#8b8f97" stroke-width=".8"/></g><circle cx="200" cy="150" r="5" fill="#8b8f97"/>`;
+    } else if (type === 'vario') {
+      face = Array.from({ length: 21 }, (_, i) => `<path d="M200 84 v${i % 2 ? 6 : 12}" stroke="${d.ink}" stroke-width="${i % 2 ? 1 : 2}" transform="rotate(${-150 + i * 15} 200 150)"/>`).join('');
+      face += ['−5', '0', '+5'].map((t, i) => `<text x="200" y="114" text-anchor="middle" font-family="DM Mono" font-size="15" fill="${d.ink}" transform="rotate(${-120 + i * 120} 200 150)">${t}</text>`).join('');
+      face += `<text x="200" y="186" text-anchor="middle" font-family="DM Mono" font-size="11" fill="${d.ink}">m/s</text><path d="M200 150 L200 92" stroke="#f2f3f5" stroke-width="3" stroke-linecap="round" transform="rotate(-70 200 150)"/>`;
+      extra = [[106, 56], [294, 56], [106, 244], [294, 244]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="6" fill="#3b3e44"/>`).join('') + `<rect x="90" y="40" width="220" height="220" rx="18" fill="#2a2d33"/>`;
+    }
+    return svg(`${extra}
+      <circle cx="200" cy="150" r="88" fill="url(#${g})"/>
+      <circle cx="200" cy="150" r="76" fill="${d.face}"/>
+      ${face}
+      <circle cx="200" cy="150" r="4" fill="${d.ink}"/>
+      <path d="M150 104 a70 70 0 0 1 60 -30" stroke="#fff" stroke-opacity=".5" stroke-width="5" fill="none" stroke-linecap="round"/>`, 'd' + type, ring);
+  },
+  loupe() {
+    const g = vid(), gl = vid();
+    return svg(`
+      <rect x="236" y="176" width="34" height="110" rx="10" fill="#4a2e1c" transform="rotate(-45 253 231)"/>
+      <circle cx="170" cy="130" r="88" fill="url(#${g})"/>
+      <circle cx="170" cy="130" r="74" fill="#dfe8ee" fill-opacity=".5"/>
+      <circle cx="170" cy="130" r="74" fill="url(#${gl})"/>
+      ${Array.from({ length: 7 }, (_, i) => `<circle cx="${140 + (i % 3) * 30}" cy="${104 + Math.floor(i / 3) * 26}" r="${5 + (i % 2) * 3}" fill="#6b8f5a" opacity=".35"/>`).join('')}
+      <text x="170" y="64" text-anchor="middle" font-family="DM Mono" font-size="10" fill="#4a4c49">10×</text>`, 'loupe',
+      metal(g) + `<radialGradient id="${gl}" cx=".3" cy=".25" r=".7"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".25" stop-color="#fff" stop-opacity=".1"/><stop offset="1" stop-color="#9fb6c6" stop-opacity=".3"/></radialGradient>`);
+  },
+  oculaire() {
+    const g = vid();
+    return svg(`
+      <rect x="80" y="112" width="120" height="76" fill="url(#${g})"/>
+      <rect x="196" y="96" width="112" height="108" rx="6" fill="#16181c"/>
+      ${Array.from({ length: 20 }, (_, i) => `<path d="M${204 + i * 5} 100 v100" stroke="#3a3d43" stroke-width="2"/>`).join('')}
+      <rect x="304" y="104" width="22" height="92" rx="6" fill="#0d0e10"/>
+      <ellipse cx="326" cy="150" rx="6" ry="38" fill="#3c5a7a"/>
+      <text x="252" y="92" text-anchor="middle" font-family="DM Mono" font-size="13" fill="#4a4c49">25 mm</text>`, 'oc', metal(g, '#e8e8e4', '#a7a8a3', '#dcdcd8'));
+  },
+  lettre(text, seal) {
+    return svg(`
+      <rect x="40" y="56" width="320" height="192" fill="#f3efe2"/>
+      <path d="M40 56 L200 160 L360 56" fill="none" stroke="#cfc6ae" stroke-width="2"/>
+      <path d="M40 248 L160 140 M360 248 L240 140" stroke="#e1d9c4" stroke-width="1.5"/>
+      <circle cx="200" cy="158" r="30" fill="#8e1f1f"/>
+      <circle cx="200" cy="158" r="22" fill="none" stroke="#b33b3b" stroke-width="2"/>
+      <path d="M176 136 q-10 -6 -6 6 M226 182 q10 6 6 -6" fill="#8e1f1f"/>
+      <text x="200" y="166" text-anchor="middle" font-family="Syne" font-weight="800" font-size="20" fill="#5e1111">${X(seal)}</text>
+      <text x="64" y="232" font-family="Caveat" font-size="22" fill="#1f2b4d">${X(text)}</text>`, 'lt' + text);
+  },
+  scelle(text, sub) {
+    const p = vid();
+    return svg(`
+      <rect x="60" y="48" width="280" height="204" rx="12" fill="#c9ccd1"/>
+      <rect x="60" y="48" width="280" height="204" rx="12" fill="none" stroke="#9aa0a8" stroke-width="2" stroke-dasharray="6 5"/>
+      <rect x="60" y="118" width="280" height="36" fill="url(#${p})"/>
+      <rect x="116" y="170" width="168" height="62" rx="4" fill="#fbfbf9"/>
+      <text x="200" y="196" text-anchor="middle" font-family="DM Mono" font-size="13" letter-spacing="1" fill="#1f2937">${X(text)}</text>
+      <text x="200" y="218" text-anchor="middle" font-family="DM Mono" font-size="11" fill="#6b21a8">${X(sub)}</text>`, 'sc' + text,
+      `<pattern id="${p}" width="22" height="36" patternUnits="userSpaceOnUse" patternTransform="skewX(-35)"><rect width="22" height="36" fill="#fbfbf9"/><rect width="11" height="36" fill="#b91c1c"/></pattern>`);
+  },
+  carreau() {
+    const g = vid();
+    return svg(`
+      <rect x="100" y="50" width="200" height="200" rx="4" fill="url(#${g})"/>
+      <circle cx="200" cy="150" r="58" fill="none" stroke="#f4e7b5" stroke-opacity=".75" stroke-width="3"/>
+      ${Array.from({ length: 8 }, (_, i) => `<ellipse cx="200" cy="112" rx="10" ry="26" fill="#2f5d4d" fill-opacity=".55" transform="rotate(${i * 45} 200 150)"/>`).join('')}
+      <circle cx="200" cy="150" r="12" fill="#a9772f"/>
+      ${[[112, 62], [288, 62], [112, 238], [288, 238]].map(([x, y]) => `<path d="M${x} ${y} l12 0 l-12 12 z" fill="#f4e7b5" opacity=".6" transform="rotate(${x > 200 ? (y > 150 ? 180 : 90) : (y > 150 ? 270 : 0)} ${x} ${y})"/>`).join('')}`, 'tile',
+      `<linearGradient id="${g}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4c7a5c"/><stop offset=".4" stop-color="#9a8a3e"/><stop offset=".7" stop-color="#6a3f72"/><stop offset="1" stop-color="#2f5d6b"/></linearGradient>`);
+  },
+  savon(w) {
+    return svg(`
+      <path d="M110 110 L200 76 L300 104 L210 140 Z" fill="#b5bb83"/>
+      <path d="M110 110 L210 140 L210 250 L110 218 Z" fill="#8f975c"/>
+      <path d="M210 140 L300 104 L300 212 L210 250 Z" fill="#a0a86c"/>
+      <text x="160" y="190" text-anchor="middle" font-family="Syne" font-weight="700" font-size="18" fill="#6b7240" transform="rotate(17 160 190)">${X(w)}</text>`, 'savon');
+  },
+  pierre(color = '#7b1e2b', kind) {
+    const g = vid(), big = kind === 'galet';
+    const d = big ? 'M88 160 C 86 108, 170 78, 236 86 C 306 94, 330 140, 318 182 C 304 226, 222 236, 160 226 C 112 218, 90 196, 88 160 Z'
+      : 'M150 140 L176 104 L226 98 L258 128 L252 180 L214 206 L168 198 L144 170 Z';
+    return svg(`
+      <path d="${d}" fill="url(#${g})"/>
+      ${big ? `<path d="M120 140 C 150 112, 200 104, 240 110" stroke="#fff" stroke-opacity=".25" stroke-width="6" fill="none" stroke-linecap="round"/>`
+        : `<path d="M176 104 L196 150 L226 98 M196 150 L144 170 M196 150 L214 206 M196 150 L258 128" stroke="#fff" stroke-opacity=".18" fill="none"/>`}`, 'r' + color,
+      `<radialGradient id="${g}" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".2" stop-color="${color}"/><stop offset="1" stop-color="#14100e"/></radialGradient>`);
+  },
+  terrarium() {
+    return svg(`
+      <path d="M90 110 L150 80 L320 80 L260 110 Z" fill="#dce6ec" fill-opacity=".7" stroke="#8fa3b0"/>
+      <rect x="90" y="110" width="170" height="130" fill="#dce6ec" fill-opacity=".35" stroke="#8fa3b0"/>
+      <path d="M260 110 L320 80 L320 210 L260 240 Z" fill="#dce6ec" fill-opacity=".25" stroke="#8fa3b0"/>
+      ${Array.from({ length: 12 }, (_, i) => `<circle cx="${160 + (i % 6) * 22}" cy="${88 + Math.floor(i / 6) * 10}" r="1.8" fill="#6e8696"/>`).join('')}
+      <path d="M110 232 C 150 200, 190 214, 240 190" stroke="#6b4a2a" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <path d="M118 236 h132" stroke="#a88a5c" stroke-width="10" stroke-linecap="round" opacity=".6"/>
+      <path d="M96 116 v118" stroke="#fff" stroke-opacity=".7" stroke-width="3"/>
+      <text x="175" y="160" text-anchor="middle" font-family="Caveat" font-size="22" fill="#2a3b5c">les grillons !</text>`, 'terra');
+  },
+  sonnaille() {
+    const g = vid();
+    return svg(`
+      <path d="M120 70 C 120 20, 280 20, 280 70" fill="none" stroke="#6e4423" stroke-width="22"/>
+      <path d="M120 70 C 120 20, 280 20, 280 70" fill="none" stroke="#8a5a32" stroke-width="2" stroke-dasharray="4 6"/>
+      <path d="M150 78 h100 l24 168 h-148 z" fill="url(#${g})"/>
+      <rect x="140" y="236" width="120" height="16" rx="4" fill="#7a5a26"/>
+      <circle cx="200" cy="262" r="12" fill="#3f2f17"/>
+      <path d="M168 96 l-14 130" stroke="#fff" stroke-opacity=".35" stroke-width="6" stroke-linecap="round"/>`, 'bell', metal(g, '#d9b979', '#8c6a2c', '#b8964f'));
+  },
+  empreinte(letter) {
+    return svg(`
+      <circle cx="200" cy="150" r="104" fill="#b8704f"/>
+      <circle cx="200" cy="150" r="104" fill="none" stroke="#8a4c32" stroke-width="3"/>
+      <ellipse cx="200" cy="170" rx="38" ry="32" fill="#8a4c32"/>
+      ${[[150, 116, -20], [182, 96, -6], [218, 96, 6], [250, 116, 20]].map(([x, y, r]) => `<ellipse cx="${x}" cy="${y}" rx="13" ry="18" fill="#8a4c32" transform="rotate(${r} ${x} ${y})"/>`).join('')}
+      <text x="200" y="236" text-anchor="middle" font-family="Caveat" font-size="30" fill="#6b3622">${X(letter)}</text>`, 'paw');
+  },
+  metronome() {
+    return svg(`
+      <path d="M160 30 h80 l42 236 h-164 z" fill="#6b3f22"/>
+      <path d="M160 30 h80 l42 236 h-164 z" fill="none" stroke="#4e2c17" stroke-width="2"/>
+      <path d="M176 60 h48 l26 160 h-100 z" fill="#efe6cf"/>
+      ${Array.from({ length: 12 }, (_, i) => `<path d="M196 ${72 + i * 12} h8" stroke="#3a2a1a"/>`).join('')}
+      <path d="M200 236 L232 64" stroke="#c9ccd1" stroke-width="4" stroke-linecap="round"/>
+      <rect x="216" y="112" width="20" height="16" rx="2" fill="#b49251" transform="rotate(10 226 120)"/>`, 'metro');
+  },
+  pelote() {
+    return svg(`
+      <circle cx="200" cy="150" r="82" fill="#efe6d2"/>
+      <path d="M128 110 C 180 140, 180 170, 140 214 M272 90 C 220 120, 222 170, 262 210" fill="none" stroke="#a4472f" stroke-width="2.4" stroke-dasharray="5 4"/>
+      <circle cx="200" cy="150" r="82" fill="none" stroke="#c9b893" stroke-width="2"/>
+      <path d="M150 96 a70 70 0 0 1 50 -16" stroke="#fff" stroke-width="8" stroke-linecap="round" opacity=".6" fill="none"/>`, 'pel');
+  },
+  baguettes() {
+    return svg(`
+      ${[0, 18].map((o) => `<path d="M${70 + o} ${232 - o * .4} L${330 + o} ${60 - o * .4} L${334 + o} ${66 - o * .4} L${76 + o} ${240 - o * .4} Z" fill="#7b1d1d"/><path d="M${270 + o} ${100 - o * .4} l18 -12 l4 6 l-18 12 z" fill="#c9a64a"/>`).join('')}`, 'bag');
+  },
+  bouchons() {
+    return svg(`${[70, 130, 190, 250, 310].map((x, i) => `
+      <path d="M${x} 44 v40" stroke="#2a2a2a" stroke-width="2"/>
+      <ellipse cx="${x}" cy="150" rx="${16 + (i % 2) * 4}" ry="${64 - (i % 3) * 6}" fill="#f2efe6"/>
+      <path d="M${x - 16 - (i % 2) * 4} 150 a${16 + (i % 2) * 4} ${64 - (i % 3) * 6} 0 0 1 ${32 + (i % 2) * 8} 0" fill="${['#d9381e', '#f08c00', '#2f6b3a', '#d9381e', '#1e4e8c'][i]}"/>
+      <path d="M${x} 214 v40" stroke="#6b4a2a" stroke-width="3"/>`).join('')}`, 'bouch');
+  },
+  circuit() {
+    return svg(`
+      <rect x="60" y="60" width="280" height="180" rx="6" fill="#2f6b3a"/>
+      ${['M80 90 h80 v40 h60', 'M80 210 h60 v-40 h100 v-60 h60', 'M240 220 v-30 h80', 'M180 80 v30', 'M300 90 v40'].map((p) => `<path d="${p}" fill="none" stroke="#c9b26b" stroke-width="2.4"/>`).join('')}
+      <rect x="170" y="140" width="70" height="40" rx="3" fill="#1a1c20"/>
+      ${Array.from({ length: 7 }, (_, i) => `<rect x="${174 + i * 9.5}" y="134" width="4" height="6" fill="#c9ccd1"/><rect x="${174 + i * 9.5}" y="180" width="4" height="6" fill="#c9ccd1"/>`).join('')}
+      <rect x="250" y="80" width="38" height="12" rx="6" fill="#d8c19a"/><path d="M258 80 v12 M266 80 v12 M276 80 v12" stroke="#8a3b2a" stroke-width="2"/>
+      <circle cx="110" cy="150" r="14" fill="#1e3a8a"/><path d="M104 150 h12" stroke="#c9ccd1" stroke-width="2"/>
+      ${[[80, 90], [220, 130], [80, 210], [320, 110], [320, 190]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="4.5" fill="#d9dbde"/>`).join('')}
+      <text x="276" y="226" font-family="Caveat" font-size="24" fill="#f5f5f0">S.L. 95</text>`, 'pcb');
+  },
+  cle(letter) {
+    const g = vid();
+    return svg(`
+      <rect x="50" y="96" width="120" height="96" rx="16" fill="#5a3420"/>
+      <rect x="58" y="104" width="104" height="80" rx="11" fill="none" stroke="#c99d6b" stroke-width="1.5" stroke-dasharray="4 4"/>
+      <text x="110" y="166" text-anchor="middle" font-family="Syne" font-weight="800" font-size="46" fill="#3a2010" opacity=".85">${X(letter)}</text>
+      <circle cx="182" cy="144" r="14" fill="none" stroke="url(#${g})" stroke-width="5"/>
+      <rect x="196" y="126" width="56" height="36" rx="10" fill="#1d1f24"/>
+      <path d="M252 136 h96 l-6 8 l6 6 h-14 l-4 8 l-8 -8 l-6 8 l-6 -8 h-58 z" fill="url(#${g})"/>`, 'key', metal(g));
+  },
+  pipe() {
+    const g = vid();
+    return svg(`
+      <path d="M90 92 h70 v86 c0 30 -70 30 -70 0 z" fill="url(#${g})"/>
+      <ellipse cx="125" cy="92" rx="35" ry="10" fill="#2a160c"/>
+      <path d="M156 160 C 200 160, 250 136, 330 118 l4 14 C 260 154, 200 186, 152 186 z" fill="url(#${g})"/>
+      <path d="M296 124 l38 -8 l4 14 l-36 10 z" fill="#111"/>`, 'pipe',
+      `<linearGradient id="${g}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9a5a32"/><stop offset=".6" stop-color="#5e3119"/><stop offset="1" stop-color="#3b1d0e"/></linearGradient>`);
+  },
+  periodique() {
+    const rows = [[0, 17], [0, 1, 12, 13, 14, 15, 16, 17], [0, 1, 12, 13, 14, 15, 16, 17], Array.from({ length: 18 }, (_, i) => i), Array.from({ length: 18 }, (_, i) => i), Array.from({ length: 18 }, (_, i) => i), Array.from({ length: 18 }, (_, i) => i)];
+    const col = (c) => c < 2 ? '#e8a87c' : c > 11 ? (c === 17 ? '#a9c6e8' : '#bfe0b0') : '#f0d98c';
+    return svg(`
+      <rect x="28" y="58" width="344" height="184" rx="6" fill="#fbfbf8"/>
+      <text x="42" y="80" font-family="Syne" font-weight="700" font-size="12" fill="#1f2937">Tableau périodique des éléments</text>
+      ${rows.map((r, y) => r.map((c) => `<rect x="${42 + c * 17.6}" y="${90 + y * 20}" width="16" height="18" rx="1.5" fill="${col(c)}"/>`).join('')).join('')}
+      <text x="50" y="103" text-anchor="middle" font-family="DM Mono" font-size="8" fill="#1f2937">H</text>
+      <text x="${50 + 17 * 17.6}" y="103" text-anchor="middle" font-family="DM Mono" font-size="8" fill="#1f2937">He</text>`, 'pt');
+  },
+  boule() {
+    const g = vid();
+    return svg(`
+      <circle cx="200" cy="150" r="88" fill="url(#${g})"/>
+      ${[-40, -14, 14, 40].map((o) => `<ellipse cx="200" cy="150" rx="${88 - Math.abs(o) * .6}" ry="12" fill="none" stroke="#4a4c50" stroke-opacity=".55" stroke-width="1.4" transform="rotate(-24 200 150) translate(0 ${o})"/>`).join('')}
+      <text x="200" y="196" text-anchor="middle" font-family="DM Mono" font-size="12" fill="#3a3c40" transform="rotate(-24 200 150)">700 · 74</text>`, 'boule',
+      `<radialGradient id="${g}" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="#ffffff"/><stop offset=".3" stop-color="#bfc2c6"/><stop offset="1" stop-color="#55585d"/></radialGradient>`);
+  },
+  dossard(num) {
+    return svg(`
+      <rect x="44" y="50" width="312" height="200" rx="6" fill="#fbfbf8"/>
+      <rect x="44" y="50" width="312" height="34" rx="6" fill="#c2412d"/>
+      <path d="M200 50 v200 M44 150 h312" stroke="#000" stroke-opacity=".08" stroke-width="2"/>
+      ${[[60, 66], [340, 66], [60, 234], [340, 234]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="5" fill="#e9ebee" stroke="#9aa0a8"/>`).join('')}
+      <text x="200" y="196" text-anchor="middle" font-family="Syne" font-weight="800" font-size="92" letter-spacing="2" fill="#16181c"${fit(num, 92, 'Syne', 270, 2)}>${X(num)}</text>`, 'dos' + num);
+  },
+  peson() {
+    const g = vid();
+    return svg(`
+      <circle cx="200" cy="32" r="14" fill="none" stroke="url(#${g})" stroke-width="5"/>
+      <rect x="176" y="46" width="48" height="190" rx="10" fill="url(#${g})"/>
+      <rect x="190" y="66" width="20" height="150" fill="#f4efdc"/>
+      ${Array.from({ length: 16 }, (_, i) => `<path d="M190 ${70 + i * 9} h${i % 5 ? 6 : 12}" stroke="#3a2a14"/>`).join('')}
+      <path d="M186 140 h28" stroke="#b91c1c" stroke-width="2"/>
+      <path d="M200 236 v18 c0 18 -22 18 -22 2" fill="none" stroke="#7a7c80" stroke-width="5" stroke-linecap="round"/>`, 'peson', metal(g, '#f0dfa8', '#a5803a', '#d9bd75'));
+  },
+  morse() {
+    const g = vid();
+    return svg(`
+      <rect x="60" y="176" width="280" height="56" rx="8" fill="#6b3f22"/>
+      <rect x="60" y="176" width="280" height="12" rx="6" fill="#8a5a32"/>
+      <rect x="110" y="140" width="210" height="14" rx="4" fill="url(#${g})" transform="rotate(-4 215 147)"/>
+      <rect x="276" y="150" width="20" height="28" fill="url(#${g})"/>
+      <ellipse cx="116" cy="138" rx="34" ry="12" fill="#151618"/>
+      <rect x="160" y="154" width="12" height="24" fill="url(#${g})"/>
+      ${[[90, 204], [310, 204]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="7" fill="url(#${g})"/>`).join('')}`, 'morse', metal(g, '#f0dfa8', '#a5803a', '#d9bd75'));
+  },
+  planeur() {
+    return svg(`
+      <path d="M200 30 C 206 30, 208 60, 207 120 L206 262 C 206 270, 194 270, 194 262 L193 120 C 192 60, 194 30, 200 30 Z" fill="#e2c99a"/>
+      <path d="M20 118 L380 118 L376 132 L24 132 Z" fill="#e8d2a6"/>
+      <path d="M150 244 L250 244 L248 254 L152 254 Z" fill="#e8d2a6"/>
+      <path d="M20 118 L380 118" stroke="#b9996a"/>
+      <path d="M196 56 h8" stroke="#3b6fa5" stroke-width="8" stroke-linecap="round"/>
+      <text x="300" y="150" font-family="Caveat" font-size="18" fill="#6b4f2a">R.C.</text>`, 'plan');
+  },
+  dessin(sig) {
+    return svg(`
+      <rect x="40" y="24" width="320" height="252" fill="#fefefb"/>
+      <path d="M200 24 v252 M40 150 h320" stroke="#000" stroke-opacity=".06" stroke-width="2"/>
+      <circle cx="96" cy="214" r="40" fill="#3b82f6"/>
+      <path d="M70 200 q14 -16 26 0 q10 14 26 4 M76 232 q16 -6 30 4" stroke="#22c55e" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <path d="M248 70 l34 -26 l4 42 z" fill="#ef4444"/>
+      <path d="M236 104 L282 48 L300 66 L254 122 Z" fill="#f8fafc" stroke="#111827" stroke-width="3" stroke-linejoin="round"/>
+      <circle cx="270" cy="82" r="7" fill="#60a5fa" stroke="#111827" stroke-width="2"/>
+      <path d="M238 118 l-20 18 M250 124 l-12 24 M230 108 l-26 6" stroke="#f97316" stroke-width="6" stroke-linecap="round"/>
+      ${[[120, 60], [170, 92], [330, 120], [310, 210], [70, 70]].map(([x, y]) => `<path d="M${x} ${y - 9} l3 6 l7 1 l-5 5 l1 7 l-6 -3 l-6 3 l1 -7 l-5 -5 l7 -1 z" fill="#facc15"/>`).join('')}
+      <circle cx="168" cy="168" r="9" fill="none" stroke="#7c3aed" stroke-width="3"/><path d="M168 177 v26 M168 186 l-12 8 M168 186 l12 -6 M168 203 l-9 16 M168 203 l9 16" stroke="#7c3aed" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="200" cy="180" r="7" fill="none" stroke="#db2777" stroke-width="3"/><path d="M200 187 v18 M200 194 l-12 -4 M200 194 l9 6 M200 205 l-7 12 M200 205 l7 12" stroke="#db2777" stroke-width="3" stroke-linecap="round"/>
+      <text x="150" y="132" font-family="Caveat" font-size="30" fill="#7c3aed" transform="rotate(-6 170 130)">PAPA</text>
+      <text x="340" y="264" text-anchor="end" font-family="Caveat" font-size="24" fill="#111827">${X(sig)}</text>`, 'kid');
+  },
+};
+function drawing(spec) {
+  if (!spec) return '';
+  const [t, ...a] = String(spec).split('|');
+  const fn = DRAW[t];
+  try { return fn ? fn(...a) : ''; } catch (e) { return ''; }
+}
+
+/* ============================================================
+   INVENTAIRE DES EFFETS PERSONNELS
+   tables effets_fiches + effets_personnels (lecture : propriétaire seul)
+   scans : bucket privé effets-personnels (liens signés 10 min)
+   ============================================================ */
+const BUCKET = 'effets-personnels';
+const DOTATION = 2000;
+const nf = new Intl.NumberFormat('fr-FR');
+const grams = (n) => nf.format(n) + ' g';
+const STATUS = { '': ['Admis', 'ok'], refuse: ['Retiré', 'out'], derog: ['Dérogation DS', 'ds'] };
+const initialsOf = (first) => String(first || '').split('-').map((p) => p.charAt(0).toUpperCase() + '.').join('-');
+const pad = (n) => String(n).padStart(2, '0');
+function utc(ts) {
+  const d = new Date(ts);
+  if (isNaN(d)) return '';
+  return `${pad(d.getUTCDate())}/${pad(d.getUTCMonth() + 1)}/${d.getUTCFullYear()}, ${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())} UTC`;
+}
+
+const LOGO = `<svg class="f-logo" viewBox="-1.05 -1.05 2.1 2.1" aria-hidden="true"><circle r="1" fill="currentColor"/><ellipse rx=".65" ry=".34" fill="none" stroke="var(--paper)" stroke-width=".07"/><ellipse rx=".34" ry=".65" fill="none" stroke="var(--paper)" stroke-width=".07"/><circle r=".2" fill="var(--paper)"/><circle r=".1" fill="currentColor"/><circle cx=".65" r=".08" fill="var(--paper)"/></svg>`;
+const ARCHIVE_STAMP = `<svg class="archive-stamp" viewBox="0 0 120 120" aria-hidden="true">
+  <defs><path id="arcTxt" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0"/></defs>
+  <circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width="2.5"/>
+  <circle cx="60" cy="60" r="36" fill="none" stroke="currentColor" stroke-width="1.2"/>
+  <text font-family="DM Sans" font-weight="500" font-size="9.2" letter-spacing="1.6" fill="currentColor"><textPath href="#arcTxt">SERVICE ARCHIVES ET DOCUMENTATION · IFRAS ·</textPath></text>
+  <text x="60" y="57" text-anchor="middle" font-family="Syne" font-weight="800" font-size="12" letter-spacing="1" fill="currentColor">ARCHIVÉ</text>
+  <text x="60" y="71" text-anchor="middle" font-family="DM Mono" font-size="7.5" fill="currentColor">ART-9 / LOG</text>
+</svg>`;
+
+async function signedUrls(paths) {
+  if (!paths.length) return {};
+  try {
+    const { data } = await _sb.storage.from(BUCKET).createSignedUrls(paths, 600);
+    const map = {};
+    (data || []).forEach((d) => { const u = d.signedUrl || d.signedURL; if (u && !d.error) map[d.path] = u; });
+    return map;
+  } catch (e) { return {}; }
+}
+
+function missingHTML(file) {
+  return `<div class="missing"><i class="ph-light ph-image-broken" aria-hidden="true"></i><b>Numérisation indisponible</b><code>${esc(file)}</code></div>`;
+}
+
+/* une planche : num, face (recto / verso / ''), contenu, légende */
+function plateHTML(p, k) {
+  return `<figure class="plate" id="pl-${p.num}" style="--k:${k}">
+    <button class="plate-btn" type="button" data-plate="${k}" aria-label="Agrandir la planche ${p.num}${p.face ? ' ' + p.face : ''}">
+      <div class="bed"><span class="pl-num">Pl. ${pad(p.num)}${p.face ? ' · ' + p.face : ''}</span>${p.body}</div>
+      <div class="calib" aria-hidden="true"><div class="calib-grey">${'<i></i>'.repeat(8)}</div><div class="calib-ruler"></div></div>
+    </button>
+    <figcaption><b>${esc(p.title)}</b><span>${grams(p.g)}</span></figcaption>
+  </figure>`;
+}
+
+function render(profile, fiche, items, urls) {
+  const first = profile.first_name || '', last = profile.last_name || '';
+  const fullName = `${first} ${last}`.trim();
+  const kept = items.filter((it) => it.statut !== 'refuse');
+  const out = items.filter((it) => it.statut === 'refuse');
+  const admitted = kept.reduce((s, it) => s + it.masse_g, 0);
+  const hasDs = items.some((it) => it.statut === 'derog');
+  const isLogistics = /aubanel/i.test(last);
+
+  /* planches */
+  const plates = [];
+  let num = 0;
+  items.forEach((it) => {
+    if (it.statut === 'refuse' || !(it.dessin || it.scan)) return;
+    it.plate = ++num;
+    if (it.scan) {
+      const u = urls[it.scan];
+      plates.push({ num, face: it.dessin ? 'recto' : '', title: it.objet, g: it.masse_g, file: it.scan,
+        body: u ? `<img src="${esc(u)}" alt="${esc(it.objet + (it.detail ? ', ' + it.detail : ''))}" loading="lazy" decoding="async" data-file="${esc(it.scan)}">` : missingHTML(it.scan) });
+    }
+    if (it.dessin) {
+      const d = drawing(it.dessin);
+      if (d) plates.push({ num, face: it.scan ? 'verso' : '', title: it.objet, g: it.masse_g, body: d });
+    }
+  });
+
+  const rows = items.map((it, i) => {
+    const [label, cls] = STATUS[it.statut] || STATUS[''];
+    return `<tr class="${it.statut === 'refuse' ? 'is-out' : ''}">
+      <td class="n">${pad(i + 1)}</td>
+      <td><span class="it-name">${esc(it.objet)}</span>${it.detail ? `<span class="it-det">${esc(it.detail)}</span>` : ''}</td>
+      <td class="m">${nf.format(it.masse_g)}</td>
+      <td class="p">${it.plate ? `<a class="pl-link" href="#pl-${it.plate}">Pl. ${pad(it.plate)}</a>` : ''}</td>
+      <td class="s"><span class="tag tag--${cls}">${label}</span></td>
+    </tr>`;
+  }).join('');
+
+  const field = (k, v) => `<div class="f-field"><dt>${k}</dt><dd>${esc(v || 'Non renseigné')}</dd></div>`;
+  const pesee = utc(fiche.pesee_at);
+  const signs = [
+    `<div class="sign"><small>Signature de l'agent</small><span class="sig">${esc(initialsOf(first) + ' ' + last)}</span></div>`,
+    `<div class="sign"><small>Contrôle logistique</small><span class="sig">${isLogistics ? 'S. Covignac' : 'R. Aubanel'}</span></div>`,
+    hasDs ? `<div class="sign sign--ds"><small>Direction scientifique</small><span class="sig">J.-L. Rousseau</span></div>` : '',
+  ].filter(Boolean);
+  const pages = plates.length ? 2 : 1;
+
+  $('doc').innerHTML = `
+  <article class="sheet" style="--i:0" aria-labelledby="fTitle">
+    <span class="hole" aria-hidden="true"></span><span class="hole" aria-hidden="true"></span>
+    <header class="f-head">
+      ${LOGO}
+      <div class="f-inst">Institut Français de Recherche<br>Aéronautique et Spatiale<small>Direction des opérations, service Logistique</small></div>
+      <div class="f-form"><strong>FORMULAIRE LOG-07</strong>Réf. IFRAS/ARTEMIS-9/EP<br>Page 1 / ${pages}</div>
+    </header>
+    <div class="f-rule"></div>
+    ${ARCHIVE_STAMP}
+    <h1 class="f-title" id="fTitle">Inventaire des effets personnels</h1>
+    <p class="f-sub">Mission ARTEMIS-9. Dotation individuelle limitée à ${grams(DOTATION)} pour l'ensemble du séjour. Pesée de contrôle à l'hôtel de transit, la veille du décollage.</p>
+
+    <dl class="f-fields">
+      ${field('Agent', fullName)}
+      ${field('Fonction', profile.profession)}
+      ${field('Numéro d\'agent', profile.agent_id)}
+      ${field('Habilitation', profile.clearance)}
+      ${field('Lieu de pesée', 'Hôtel de transit, Kourou')}
+      ${field('Date de pesée', pesee)}
+      ${field('Cote d\'archive', fiche.cote)}
+      ${field('Classification', 'Restreint, usage interne')}
+    </dl>
+
+    <h2 class="f-section">Articles déclarés <span>${items.length} ligne${items.length > 1 ? 's' : ''}</span></h2>
+    <table class="inv">
+      <thead><tr><th class="n">N°</th><th>Désignation</th><th class="m">Masse (g)</th><th class="p">Planche</th><th class="s">Décision</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+
+    <div class="f-totals">
+      <dl class="tot">
+        <div class="tot-main"><dt>Masse admise à bord</dt><dd>${grams(admitted)}</dd></div>
+        <div><dt>Dotation autorisée</dt><dd>${grams(DOTATION)}</dd></div>
+        <div><dt>Marge non utilisée</dt><dd>${grams(Math.max(0, DOTATION - admitted))}</dd></div>
+        <div><dt>Articles retirés à la pesée</dt><dd>${out.length ? `${out.length} (${grams(out.reduce((s, it) => s + it.masse_g, 0))})` : 'Aucun'}</dd></div>
+      </dl>
+      ${admitted <= DOTATION ? `<div class="stamp-ok" aria-label="Fiche conforme"><b>CONFORME</b><span>${pesee.slice(0, 10)}</span></div>` : ''}
+    </div>
+
+    <div class="obs"><span class="obs-label">Observations du contrôle</span><p>${esc(fiche.observation || 'Néant.')}</p></div>
+
+    <div class="signs" style="--n:${signs.length}">${signs.join('')}</div>
+
+    <footer class="f-foot"><span>Service Archives &amp; Documentation</span><span>Cote ${esc(fiche.cote)}</span><span>Numérisation : [Classifiée]</span></footer>
+  </article>
+
+  ${plates.length ? `<article class="sheet" style="--i:1" aria-labelledby="plTitle">
+    <header class="f-head">
+      ${LOGO}
+      <div class="f-inst">Planches annexées<small>${esc(fullName)}, cote ${esc(fiche.cote)}</small></div>
+      <div class="f-form"><strong>FORMULAIRE LOG-07</strong>Annexe photographique<br>Page 2 / ${pages}</div>
+    </header>
+    <div class="f-rule"></div>
+    <p class="f-sub">Numérisation des articles admis à bord, avec gamme de gris et réglet de référence. Cliquez sur une planche pour l'agrandir.</p>
+    <div class="plates">${plates.map(plateHTML).join('')}</div>
+    <footer class="f-foot"><span>Service Archives &amp; Documentation</span><span>${plates.length} planche${plates.length > 1 ? 's' : ''}</span><span>Cote ${esc(fiche.cote)}</span></footer>
+  </article>` : ''}`;
+
+  document.title = `Effets personnels, ${fullName} | Espace IFRAS`;
+  $('docMeta').textContent = fiche.cote || 'Coffre personnel';
+
+  /* une image introuvable bascule sur l'avis de numérisation manquante */
+  $('doc').querySelectorAll('.bed img').forEach((img) => img.addEventListener('error', () => { img.outerHTML = missingHTML(img.dataset.file || ''); }, { once: true }));
+  $('doc').querySelectorAll('.plate-btn').forEach((b) => b.addEventListener('click', () => openZoom(plates[Number(b.dataset.plate)], b)));
+}
+
+/* ---- agrandissement ---- */
+let zoomReturn = null;
+function openZoom(p, from) {
+  const dlg = $('zoom');
+  zoomReturn = from;
+  $('zoomBed').innerHTML = `<div class="bed">${from.querySelector('.bed').innerHTML}</div>`;
+  $('zoomCap').innerHTML = `<b>Pl. ${pad(p.num)}${p.face ? ' · ' + p.face : ''}, ${esc(p.title)}</b><span>${grams(p.g)}</span>`;
+  dlg.showModal();
+  requestAnimationFrame(() => dlg.classList.add('in'));
+}
+function closeZoom() {
+  const dlg = $('zoom');
+  if (!dlg.open) return;
+  dlg.classList.remove('in');
+  setTimeout(() => { dlg.close(); if (zoomReturn) zoomReturn.focus(); }, reduceMotion ? 0 : 170);
+}
+$('zoomClose').addEventListener('click', closeZoom);
+$('zoom').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeZoom(); });
+$('zoom').addEventListener('cancel', (e) => { e.preventDefault(); closeZoom(); });
+$('printBtn').addEventListener('click', () => window.print());
+
+function renderEmpty() {
+  $('contenu').innerHTML = `<section class="denied" role="alert">
+    <span class="denied-ic"><i class="ph-light ph-package" aria-hidden="true"></i></span>
+    <h1>Aucun inventaire</h1>
+    <p>Aucune fiche d'effets personnels n'est rattachée à ce compte. Les fiches ne sont consultables que depuis le compte de l'agent concerné.</p>
+    <a class="docbar-back" href="coffre-fort.html"><i class="ph-light ph-arrow-left" aria-hidden="true"></i><span>Retour au coffre-fort</span></a>
+  </section>`;
+  document.title = 'Effets personnels | Espace IFRAS';
+}
+
+async function loadInventory(user) {
+  const [pr, fi, it] = await Promise.all([
+    _sb.from('profiles').select('*').eq('id', user.id).maybeSingle(),
+    _sb.from('effets_fiches').select('*').eq('owner_id', user.id).maybeSingle(),
+    _sb.from('effets_personnels').select('*').eq('owner_id', user.id).order('ordre', { ascending: true }),
+  ]);
+  const items = it.data || [];
+  if (!fi.data || !items.length) { renderEmpty(); return; }
+  const urls = await signedUrls(items.filter((x) => x.scan && x.statut !== 'refuse').map((x) => x.scan));
+  render(pr.data || {}, fi.data, items, urls);
+}
+
+(function restoreTheme() {
+  try {
+    const saved = sessionStorage.getItem('ifras_theme');
+    if (saved) { const { h, s, special } = JSON.parse(saved); applyTheme(h, s, special); }
+  } catch (e) {}
+})();
+
+async function init() {
+  let session = null;
+  try { ({ data: { session } } = await _sb.auth.getSession()); } catch (e) { session = null; }
+  if (!session) { window.location.replace('connexion.html'); return; }
+  const user = session.user;
+  $('userAvatar').textContent = initials(user.email);
+  $('userAvatar').style.setProperty('--ah', hueOf(user.email));
+  $('userLabel').textContent = user.email.split('@')[0];
+  document.documentElement.classList.remove('auth-pending');
+  try { await loadInventory(user); } catch (e) { renderEmpty(); }
+}
+init();
+</script>
+
+</body>
+</html>
