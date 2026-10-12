@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Programmes actifs | IFRAS</title>
-<meta name="description" content="Les six programmes actifs de l'IFRAS : exploration habitée, exoplanètes, propulsion, communication quantique, simulation et robotique.">
+<meta name="description" content="Les sept programmes actifs de l'IFRAS : colonie martienne, biosignatures, propulsion, communication quantique, océans glacés, robotique et surveillance orbitale.">
 <meta name="theme-color" content="#050b1e">
 <link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -647,6 +647,13 @@ a { color: inherit; }
   align-items: start;
 }
 
+/* Texte long : un paragraphe par idée */
+.lead + .lead { margin-top: 14px; }
+
+/* Départements pilotes, en pied de programme */
+.prog-depts { margin-top: 32px; }
+.prog-depts .depts { margin: 0; }
+
 /* Axes de recherche : icône + libellé, pas de paragraphe */
 .axes-label, .fiche-label {
   font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
@@ -894,7 +901,7 @@ a { color: inherit; }
   <ul class="subnav-list">
 
     <li class="subnav-item" style="--c:var(--st-active)">
-      <a class="subnav-trigger" href="programmes-actifs.html" aria-current="true" aria-haspopup="true" aria-expanded="false">Actifs <span class="subnav-count">6</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
+      <a class="subnav-trigger" href="programmes-actifs.html" aria-current="true" aria-haspopup="true" aria-expanded="false">Actifs <span class="subnav-count">7</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
       <div class="dropdown">
         <ul>
           <li><a href="#artemis9"><strong>ARTEMIS-9</strong><span>Mission habitée sur Mars</span></a></li>
@@ -903,6 +910,7 @@ a { color: inherit; }
           <li><a href="#hermes"><strong>HERMES</strong><span>Communication quantique</span></a></li>
           <li><a href="#atlas"><strong>ATLAS</strong><span>Environnements extraterrestres</span></a></li>
           <li><a href="#lynx"><strong>LYNX</strong><span>Robotique autonome</span></a></li>
+          <li><a href="#argo"><strong>ARGO</strong><span>Surveillance orbitale</span></a></li>
         </ul>
       </div>
     </li>
@@ -910,7 +918,7 @@ a { color: inherit; }
       <a class="subnav-trigger" href="programmes-futurs.html" aria-haspopup="true" aria-expanded="false">Futurs <span class="subnav-count">3</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
       <div class="dropdown">
         <ul>
-          <li><a href="programmes-futurs.html#noe"><strong>NOE</strong><span>Observation exosphérique, 2027</span></a></li>
+          <li><a href="programmes-futurs.html#noe"><strong>NOÉ</strong><span>Observation exosphérique, 2027</span></a></li>
           <li><a href="programmes-futurs.html#hera"><strong>HERA</strong><span>Habitabilité des exolunes, 2028</span></a></li>
           <li><a href="programmes-futurs.html#titan0"><strong>TITAN-0</strong><span>Sonde atmosphérique, 2029</span></a></li>
         </ul>
@@ -958,7 +966,7 @@ a { color: inherit; }
         </ol>
         <div class="live-badge hero-in" style="--i:1"><span class="live-dot" aria-hidden="true"></span> En cours d'exécution</div>
         <h1 id="hero-title"><span class="line"><span style="--i:0">Programmes</span></span><span class="line line--soft"><span style="--i:1">actifs</span></span></h1>
-        <p class="hero-desc hero-in" style="--i:3">Six programmes en orbite autour d'une même ambition : repousser les limites de l'exploration. Chacun réunit plusieurs départements de l'IFRAS.</p>
+        <p class="hero-desc hero-in" style="--i:3">Sept programmes en orbite autour d'une même ambition : repousser les limites de l'exploration. Chacun réunit plusieurs départements de l'IFRAS.</p>
         <div class="hero-actions hero-in" style="--i:4">
           <a href="#artemis9" class="btn btn-primary">Découvrir ARTEMIS-9 <i class="ph-light ph-arrow-down" aria-hidden="true"></i></a>
           <a href="programmes.html" class="btn btn-ghost">Tous les programmes</a>
@@ -974,6 +982,7 @@ a { color: inherit; }
       <a class="orbit-node" href="#hermes" style="--c:#c084fc" data-i="3">HERMES</a>
       <a class="orbit-node" href="#atlas" style="--c:#2dd4bf" data-i="4">ATLAS</a>
       <a class="orbit-node" href="#lynx" style="--c:#facc15" data-i="5">LYNX</a>
+      <a class="orbit-node" href="#argo" style="--c:#f472b6" data-i="6">ARGO</a>
         </nav>
       </div>
 
@@ -981,7 +990,7 @@ a { color: inherit; }
 
     <div class="hero-stats">
       <div class="hero-stat reveal" style="--i:0">
-        <span class="hero-stat-value" data-count="6">6</span>
+        <span class="hero-stat-value" data-count="7">7</span>
         <span class="hero-stat-label">Programmes actifs</span>
       </div>
       <div class="hero-stat reveal" style="--i:1">
@@ -1011,6 +1020,7 @@ a { color: inherit; }
           <li><a href="#hermes" data-target="hermes" style="--c:#c084fc">HERMES</a></li>
           <li><a href="#atlas" data-target="atlas" style="--c:#2dd4bf">ATLAS</a></li>
           <li><a href="#lynx" data-target="lynx" style="--c:#facc15">LYNX</a></li>
+          <li><a href="#argo" data-target="argo" style="--c:#f472b6">ARGO</a></li>
         </ul>
       </div>
       <a href="programmes.html" class="toc-back"><i class="ph-light ph-arrow-left" aria-hidden="true"></i> Tous les programmes</a>
@@ -1024,6 +1034,7 @@ a { color: inherit; }
         <a href="#hermes" data-target="hermes" style="--c:#c084fc">HERMES</a>
         <a href="#atlas" data-target="atlas" style="--c:#2dd4bf">ATLAS</a>
         <a href="#lynx" data-target="lynx" style="--c:#facc15">LYNX</a>
+        <a href="#argo" data-target="argo" style="--c:#f472b6">ARGO</a>
       </nav>
 
       <!-- ===== ARTEMIS-9 ===== -->
@@ -1034,13 +1045,21 @@ a { color: inherit; }
           <span class="status" style="--s:var(--st-restricted)"><i class="ph-light ph-lock-simple" aria-hidden="true"></i> Diffusion restreinte</span>
         </div>
         <h2 class="prog-title reveal" id="artemis9-title" style="--i:1">Première colonie permanente sur Mars</h2>
-        <p class="lead reveal" style="--i:2"> Lancé dans le cadre d’un ambitieux projet de colonisation spatiale, ARTEMIS-9 marque une étape décisive dans l’histoire de l’exploration humaine. Son objectif : établir la première colonie permanente sur Mars et préparer les conditions nécessaires à la survie durable d’une population humaine loin de la Terre. 
-De février à juin 2024, quarante femmes et hommes — scientifiques, ingénieurs, médecins et spécialistes des systèmes de survie — suivent une formation intensive destinée à les préparer à plusieurs années d’isolement. 
-Le 14 juillet 2024, l’équipage quitte la Terre à bord du vaisseau Orion (en hommage au programme ORION) sans aucun voyage de retour prévu. Les quarante colons ont pour mission d'établir une base autonome capable de subsister sans ravitaillement régulier depuis la Terre.
-Les premières années seront consacrées en grande partie à la mise en service de la base, à la production locale d’énergie, d'oxygène et de nourriture et à l’exploitation des ressources martiennes. L’objectif est de rendre la base pleinement autonome afin de pouvoir accueillir les futures missions du programme HERA.
-En parallèle, les équipes mèneront une étude continue de l’environnement martien et poursuivront l’exploration de la planète afin d’en approfondir les connaissances.
-À long terme, si les programmes ARTEMIS-9 et HERA se déroulent comme prévu, ils poseront ensemble les fondations du programme TERRARIA. Celui-ci aura pour objectif d’engager une modification progressive de l’environnement martien, un processus ambitieux connu sous le nom de terraformation. 
-Pour l’IFRAS, ARTEMIS-9 ne représente donc pas seulement une mission d’exploration, mais le premier test grandeur nature d’une humanité capable de vivre hors de son monde d’origine qui pourrait servir de fondation à de nombreux programmes futurs.</p>
+        <p class="lead reveal" style="--i:2">Lancé dans le cadre d’un ambitieux projet de colonisation spatiale, ARTEMIS-9 marque une étape décisive dans l’histoire de l’exploration humaine. Son objectif : établir la première colonie permanente sur Mars et préparer les conditions nécessaires à la survie durable d’une population humaine loin de la Terre.</p>
+        <p class="lead reveal" style="--i:2">De février à juin 2024, quarante femmes et hommes — scientifiques, ingénieurs, médecins et spécialistes des systèmes de survie — suivent une formation intensive destinée à les préparer à plusieurs années d’isolement.</p>
+        <p class="lead reveal" style="--i:2">Le 14 juillet 2024, l’équipage quitte la Terre à bord du vaisseau Orion, en hommage au programme ORION, sans qu'aucun voyage de retour soit prévu. Les quarante colons ont pour mission d’établir une base autonome capable de subsister sans ravitaillement régulier depuis la Terre.</p>
+        <p class="lead reveal" style="--i:2">Les premières années seront consacrées en grande partie à la mise en service de la base, à la production locale d’énergie, d’oxygène et de nourriture et à l’exploitation des ressources martiennes. L’objectif est de rendre la base pleinement autonome afin de pouvoir accueillir les futures missions du programme HERA.</p>
+        <p class="lead reveal" style="--i:2">En parallèle, les équipes mèneront une étude continue de l’environnement martien et poursuivront l’exploration de la planète afin d’en approfondir les connaissances.</p>
+        <p class="lead reveal" style="--i:2">À long terme, si les programmes ARTEMIS-9 et HERA se déroulent comme prévu, ils poseront ensemble les fondations du programme TERRARIA. Celui-ci aura pour objectif d’engager une modification progressive de l’environnement martien, un processus ambitieux connu sous le nom de terraformation.</p>
+        <p class="lead reveal" style="--i:2">Pour l’IFRAS, ARTEMIS-9 ne représente donc pas seulement une mission d’exploration, mais le premier test grandeur nature d’une humanité capable de vivre hors de son monde d’origine, appelé à servir de fondation à de nombreux programmes futurs.</p>
+        <div class="prog-depts reveal" style="--i:3">
+          <p class="fiche-label">Départements pilotes</p>
+          <ul class="depts">
+            <li><a href="DSVT.html" style="--d:#34d399" title="Sciences du Vivant et de la Terre">DSVT</a></li>
+            <li><a href="DPET.html" style="--d:#f97316" title="Physique Énergétique et Thermique">DPET</a></li>
+            <li><a href="DSMR.html" style="--d:#fb7185" title="Structures, Matériaux et Résistance">DSMR</a></li>
+          </ul>
+        </div>
       </section>
 
       <!-- ===== LUMA ===== -->
@@ -1050,10 +1069,18 @@ Pour l’IFRAS, ARTEMIS-9 ne représente donc pas seulement une mission d’expl
           <span class="status" style="--s:var(--st-active)"><span class="live-dot" aria-hidden="true"></span> Actif</span>
         </div>
         <h2 class="prog-title reveal" id="luma-title" style="--i:1">Biosignatures à grande distance</h2>
-        <p class="lead reveal" style="--i:2">Le programme LUMA a pour objectif de détecter d’éventuelles traces de vie sur des planètes situées au-delà du système solaire, sans nécessiter de sonde ni d’observation directe de leur surface.
-           Pour y parvenir, l’IFRAS s’appuie sur une méthode d’analyse spectrale permettant d’étudier la composition chimique des atmosphères planétaires à partir de la lumière qu’elles absorbent ou réfléchissent.
- Le système compare ensuite ces observations à des modèles simulant les processus géologiques, chimiques et atmosphériques connus. L’objectif est d’identifier les signatures qui pourraient être compatibles avec une activité biologique, tout en écartant autant que possible les explications non biologiques. 
-À terme, LUMA ambitionne d’établir un catalogue de mondes présentant des conditions chimiques particulièrement intrigantes, afin de guider les observations futures vers les cibles les plus prometteuses.</p>
+        <p class="lead reveal" style="--i:2">Le programme LUMA a pour objectif de détecter d’éventuelles traces de vie sur des planètes situées au-delà du système solaire, sans nécessiter de sonde ni d’observation directe de leur surface.</p>
+        <p class="lead reveal" style="--i:2">Pour y parvenir, l’IFRAS s’appuie sur une méthode d’analyse spectrale permettant d’étudier la composition chimique des atmosphères planétaires à partir de la lumière qu’elles absorbent ou réfléchissent.</p>
+        <p class="lead reveal" style="--i:2">Le système compare ensuite ces observations à des modèles simulant les processus géologiques, chimiques et atmosphériques connus. L’objectif est d’identifier les signatures qui pourraient être compatibles avec une activité biologique, tout en écartant autant que possible les explications non biologiques.</p>
+        <p class="lead reveal" style="--i:2">À terme, LUMA ambitionne d’établir un catalogue de mondes présentant des conditions chimiques particulièrement intrigantes, afin de guider les observations futures vers les cibles les plus prometteuses.</p>
+        <div class="prog-depts reveal" style="--i:3">
+          <p class="fiche-label">Départements pilotes</p>
+          <ul class="depts">
+            <li><a href="DAI.html" style="--d:#67e8f9" title="Astrophysique et Instrumentation">DAI</a></li>
+            <li><a href="DOL.html" style="--d:#38bdf8" title="Optique et Lumière">DOL</a></li>
+            <li><a href="DSVT.html" style="--d:#34d399" title="Sciences du Vivant et de la Terre">DSVT</a></li>
+          </ul>
+        </div>
       </section>
 
       <!-- ===== PROMETHEUS ===== -->
@@ -1063,13 +1090,21 @@ Pour l’IFRAS, ARTEMIS-9 ne représente donc pas seulement une mission d’expl
           <span class="status" style="--s:var(--st-active)"><span class="live-dot" aria-hidden="true"></span> Actif, phase II</span>
         </div>
         <h2 class="prog-title reveal" id="prometheus-title" style="--i:1">Propulsion ionique à plasma froid</h2>
-        <p class="lead reveal" style="--i:2">Le programme PROMETHEUS vise à développer une nouvelle génération de propulseurs ioniques capables d’assurer des missions spatiales de longue durée tout en limitant la quantité de carburant nécessaire. 
-           Contrairement aux moteurs chimiques traditionnels, qui produisent une poussée importante sur une courte période, la propulsion ionique accélère des particules chargées à très grande vitesse afin de générer une poussée faible, mais continue et particulièrement efficace.
-L’originalité du programme repose sur l’étude d’un système de propulsion fonctionnant à basse température, conçu pour réduire les contraintes thermiques imposées aux composants et améliorer la durabilité de l’ensemble. 
-Chaque amélioration doit permettre de réduire la masse de propergol embarquée et de consacrer davantage de place aux instruments scientifiques, aux systèmes de communication et aux équipements nécessaires à la mission.
-À terme, PROMETHEUS pourrait équiper des sondes destinées à explorer les régions éloignées du système solaire, maintenir des satellites sur des orbites complexes ou accompagner des missions nécessitant des corrections de trajectoire répétées. 
-Le programme représente ainsi une étape importante dans la recherche d’une propulsion spatiale plus endurante et économe en ressources, capable d’élargir les possibilités d’exploration sans augmenter de manière excessive la masse des véhicules.</p>
-        </section>
+        <p class="lead reveal" style="--i:2">Le programme PROMETHEUS vise à développer une nouvelle génération de propulseurs ioniques capables d’assurer des missions spatiales de longue durée tout en limitant la quantité de carburant nécessaire.</p>
+        <p class="lead reveal" style="--i:2">Contrairement aux moteurs chimiques traditionnels, qui produisent une poussée importante sur une courte période, la propulsion ionique accélère des particules chargées à très grande vitesse afin de générer une poussée faible, mais continue et particulièrement efficace.</p>
+        <p class="lead reveal" style="--i:2">L’originalité du programme repose sur l’étude d’un système de propulsion fonctionnant à basse température, conçu pour réduire les contraintes thermiques imposées aux composants et améliorer la durabilité de l’ensemble.</p>
+        <p class="lead reveal" style="--i:2">Chaque amélioration doit permettre de réduire la masse de propergol embarquée et de consacrer davantage de place aux instruments scientifiques, aux systèmes de communication et aux équipements nécessaires à la mission.</p>
+        <p class="lead reveal" style="--i:2">À terme, PROMETHEUS pourrait équiper des sondes destinées à explorer les régions éloignées du système solaire, maintenir des satellites sur des orbites complexes ou accompagner des missions nécessitant des corrections de trajectoire répétées.</p>
+        <p class="lead reveal" style="--i:2">Le programme représente ainsi une étape importante dans la recherche d’une propulsion spatiale plus endurante et économe en ressources, capable d’élargir les possibilités d’exploration sans augmenter de manière excessive la masse des véhicules.</p>
+        <div class="prog-depts reveal" style="--i:3">
+          <p class="fiche-label">Départements pilotes</p>
+          <ul class="depts">
+            <li><a href="DPET.html" style="--d:#f97316" title="Physique Énergétique et Thermique">DPET</a></li>
+            <li><a href="DPM.html" style="--d:#c084fc" title="Physique et Mécanique">DPM</a></li>
+            <li><a href="DSMR.html" style="--d:#fb7185" title="Structures, Matériaux et Résistance">DSMR</a></li>
+          </ul>
+        </div>
+      </section>
 
       <!-- ===== HERMES ===== -->
       <section class="prog spy" id="hermes" style="--c:#c084fc" aria-labelledby="hermes-title">
@@ -1078,11 +1113,19 @@ Le programme représente ainsi une étape importante dans la recherche d’une p
           <span class="status" style="--s:var(--st-phase)"><i class="ph-light ph-flask" aria-hidden="true"></i> Phase expérimentale</span>
         </div>
         <h2 class="prog-title reveal" id="hermes-title" style="--i:1">Communication quantique interplanétaire</h2>
-        <p class="lead reveal" style="--i:2">Le programme HERMES vise à développer un système de communication quantique capable de protéger les échanges de données entre les stations terrestres et les vaisseaux en mission dans l’espace profond. 
-           À mesure que les missions spatiales deviennent plus autonomes et s’éloignent de la Terre, la sécurisation des communications représente un enjeu stratégique majeur : une interception, une falsification ou une compromission des clés de chiffrement pourrait mettre en danger l’intégrité des données et le contrôle des opérations.
-Au cœur du programme se trouve la distribution quantique de clés, une méthode qui exploite les propriétés de systèmes quantiques pour permettre à deux correspondants de partager des informations cryptées. Toute tentative d’interception susceptible de perturber les états quantiques sont détectables.
-L’objectif est de mettre au point une infrastructure capable de distribuer régulièrement des clés cryptographiques entre la Terre et les missions interplanétaires, même lorsque les conditions de transmission sont difficiles. 
-Une avancée de cette ampleur dans le domaine de la cryptographie pourrait, à long terme, trouver des applications dans de nombreux secteurs publics, notamment les télécommunications, la défense et la sécurisation des données sensibles.</p>
+        <p class="lead reveal" style="--i:2">Le programme HERMES vise à développer un système de communication quantique capable de protéger les échanges de données entre les stations terrestres et les vaisseaux en mission dans l’espace profond.</p>
+        <p class="lead reveal" style="--i:2">À mesure que les missions spatiales deviennent plus autonomes et s’éloignent de la Terre, la sécurisation des communications représente un enjeu stratégique majeur : une interception, une falsification ou une compromission des clés de chiffrement pourrait mettre en danger l’intégrité des données et le contrôle des opérations.</p>
+        <p class="lead reveal" style="--i:2">Au cœur du programme se trouve la distribution quantique de clés, une méthode qui exploite les propriétés de systèmes quantiques pour permettre à deux correspondants de partager une clé de chiffrement secrète. Toute tentative d’interception perturbe ces états quantiques et devient donc détectable.</p>
+        <p class="lead reveal" style="--i:2">L’objectif est de mettre au point une infrastructure capable de distribuer régulièrement des clés cryptographiques entre la Terre et les missions interplanétaires, même lorsque les conditions de transmission sont difficiles.</p>
+        <p class="lead reveal" style="--i:2">Une avancée de cette ampleur dans le domaine de la cryptographie pourrait, à long terme, trouver des applications dans de nombreux secteurs publics, notamment les télécommunications, la défense et la sécurisation des données sensibles.</p>
+        <div class="prog-depts reveal" style="--i:3">
+          <p class="fiche-label">Départements pilotes</p>
+          <ul class="depts">
+            <li><a href="DOL.html" style="--d:#38bdf8" title="Optique et Lumière">DOL</a></li>
+            <li><a href="DSTI.html" style="--d:#818cf8" title="Simulation et Traitement de l'Information">DSTI</a></li>
+            <li><a href="DMA.html" style="--d:#facc15" title="Mathématiques Appliquées">DMA</a></li>
+          </ul>
+        </div>
       </section>
 
       <!-- ===== ATLAS ===== -->
@@ -1092,9 +1135,17 @@ Une avancée de cette ampleur dans le domaine de la cryptographie pourrait, à l
           <span class="status" style="--s:var(--st-active)"><span class="live-dot" aria-hidden="true"></span> Actif</span>
         </div>
         <h2 class="prog-title reveal" id="atlas-title" style="--i:1">Étudier les océans souterrains d’Europe et d’Encelade à distance</h2>
-        <p class="lead reveal" style="--i:2">Le programme ATLAS a pour objectif d’étudier les océans souterrains d’Europe, l’une des lunes de Jupiter, et d’Encelade, une lune de Saturne. Sous leur épaisse croûte de glace, ces deux astres pourraient abriter de vastes étendues d’eau liquide. Maintenus en partie à l’état liquide par la chaleur produite à l’intérieur de ces lunes, ces océans constituent des environnements particulièrement intéressants pour la recherche de conditions favorables à l’apparition de la vie.
-Pour mener cette étude, l’IFRAS prévoit de développer des sondes capables d’observer ces lunes depuis leur orbite. Équipées de systèmes d’imagerie à haute résolution, de radars pénétrant la glace et de spectromètres, elles recueilleront des données sur la structure des surfaces, l’épaisseur des couches glacées et la composition des matériaux présents. Ces observations permettront notamment de repérer les zones où la glace pourrait être plus fine et d’identifier d’éventuels échanges entre les océans internes et la surface.
-Cette approche permettra de cartographier les régions les plus prometteuses et de déterminer les zones qui mériteraient, à terme, une exploration plus approfondie. Les données récoltées serviront également à préparer de futures missions capables d’analyser directement les matériaux de surface, voire d’étudier les océans sous la glace à l’aide de technologies adaptées.</p>
+        <p class="lead reveal" style="--i:2">Le programme ATLAS a pour objectif d’étudier les océans souterrains d’Europe, l’une des lunes de Jupiter, et d’Encelade, une lune de Saturne. Sous leur épaisse croûte de glace, ces deux astres pourraient abriter de vastes étendues d’eau liquide. Maintenus en partie à l’état liquide par la chaleur produite à l’intérieur de ces lunes, ces océans constituent des environnements particulièrement intéressants pour la recherche de conditions favorables à l’apparition de la vie.</p>
+        <p class="lead reveal" style="--i:2">Pour mener cette étude, l’IFRAS prévoit de développer des sondes capables d’observer ces lunes depuis leur orbite. Équipées de systèmes d’imagerie à haute résolution, de radars pénétrant la glace et de spectromètres, elles recueilleront des données sur la structure des surfaces, l’épaisseur des couches glacées et la composition des matériaux présents. Ces observations permettront notamment de repérer les zones où la glace pourrait être plus fine et d’identifier d’éventuels échanges entre les océans internes et la surface.</p>
+        <p class="lead reveal" style="--i:2">Cette approche permettra de cartographier les régions les plus prometteuses et de déterminer les zones qui mériteraient, à terme, une exploration plus approfondie. Les données récoltées serviront également à préparer de futures missions capables d’analyser directement les matériaux de surface, voire d’étudier les océans sous la glace à l’aide de technologies adaptées.</p>
+        <div class="prog-depts reveal" style="--i:3">
+          <p class="fiche-label">Départements pilotes</p>
+          <ul class="depts">
+            <li><a href="DAI.html" style="--d:#67e8f9" title="Astrophysique et Instrumentation">DAI</a></li>
+            <li><a href="DSVT.html" style="--d:#34d399" title="Sciences du Vivant et de la Terre">DSVT</a></li>
+            <li><a href="DOL.html" style="--d:#38bdf8" title="Optique et Lumière">DOL</a></li>
+          </ul>
+        </div>
       </section>
 
       <!-- ===== LYNX ===== -->
@@ -1104,30 +1155,45 @@ Cette approche permettra de cartographier les régions les plus prometteuses et 
           <span class="status" style="--s:var(--st-phase)"><i class="ph-light ph-flask" aria-hidden="true"></i> Phase expérimentale</span>
         </div>
         <h2 class="prog-title reveal" id="lynx-title" style="--i:1">Robotique autonome en milieu hostile</h2>
-        <p class="lead reveal" style="--i:2">Le programme LYNX vise à développer une flotte de robots spatiaux légers capables d’explorer des environnements inconnus de manière autonome. Conçus pour fonctionner en groupe, ces robots pourront se déplacer sur des terrains difficiles, cartographier leur environnement et collecter des données scientifiques sans dépendre en permanence des commandes envoyées depuis la Terre.
-Chaque robot disposera de capteurs, de systèmes de navigation autonome et d’une intelligence embarquée lui permettant d’analyser son environnement, d’identifier des obstacles et d’adapter son comportement en fonction des conditions rencontrées. Grâce à un système de coordination distribué, la flotte pourra répartir les tâches entre ses unités : certains robots cartographieront une zone, d’autres analyseront des échantillons ou examineront des anomalies détectées au cours de l’exploration.
-Cette organisation collective permettra de poursuivre les opérations même si une partie de la flotte devient indisponible. L’objectif est de limiter la dépendance à un centre de contrôle unique et de réduire les conséquences des pertes de communication, inévitables lors d’explorations à grande distance.
-Les robots seront aussi conçus pour détecter les signes d’usure, diagnostiquer certaines défaillances et effectuer des opérations de réparation simples à l’aide de pièces interchangeables ou de modules de rechange.
-Les recherches porteront également sur la prise de décision collective : comment répartir les ressources, éviter les conflits entre unités et maintenir un objectif commun lorsque les communications sont limitées ? Chaque robot devra pouvoir prendre des décisions locales tout en respectant les priorités générales de la mission et des règles de sécurité définies avant le départ.
-Dans le futur ces flottes pourraient préparer des sites d’atterrissage, inspecter des infrastructures, rechercher des ressources locales ou assister la construction de futures bases.</p>
+        <p class="lead reveal" style="--i:2">Le programme LYNX vise à développer une flotte de robots spatiaux légers capables d’explorer des environnements inconnus de manière autonome. Conçus pour fonctionner en groupe, ces robots pourront se déplacer sur des terrains difficiles, cartographier leur environnement et collecter des données scientifiques sans dépendre en permanence des commandes envoyées depuis la Terre.</p>
+        <p class="lead reveal" style="--i:2">Chaque robot disposera de capteurs, de systèmes de navigation autonome et d’une intelligence embarquée lui permettant d’analyser son environnement, d’identifier des obstacles et d’adapter son comportement en fonction des conditions rencontrées. Grâce à un système de coordination distribué, la flotte pourra répartir les tâches entre ses unités : certains robots cartographieront une zone, d’autres analyseront des échantillons ou examineront des anomalies détectées au cours de l’exploration.</p>
+        <p class="lead reveal" style="--i:2">Cette organisation collective permettra de poursuivre les opérations même si une partie de la flotte devient indisponible. L’objectif est de limiter la dépendance à un centre de contrôle unique et de réduire les conséquences des pertes de communication, inévitables lors d’explorations à grande distance.</p>
+        <p class="lead reveal" style="--i:2">Les robots seront aussi conçus pour détecter les signes d’usure, diagnostiquer certaines défaillances et effectuer des opérations de réparation simples à l’aide de pièces interchangeables ou de modules de rechange.</p>
+        <p class="lead reveal" style="--i:2">Les recherches porteront également sur la prise de décision collective : comment répartir les ressources, éviter les conflits entre unités et maintenir un objectif commun lorsque les communications sont limitées ? Chaque robot devra pouvoir prendre des décisions locales tout en respectant les priorités générales de la mission et des règles de sécurité définies avant le départ.</p>
+        <p class="lead reveal" style="--i:2">À terme, ces flottes pourraient préparer des sites d’atterrissage, inspecter des infrastructures, rechercher des ressources locales ou assister la construction de futures bases.</p>
+        <div class="prog-depts reveal" style="--i:3">
+          <p class="fiche-label">Départements pilotes</p>
+          <ul class="depts">
+            <li><a href="DSTI.html" style="--d:#818cf8" title="Simulation et Traitement de l'Information">DSTI</a></li>
+            <li><a href="DPM.html" style="--d:#c084fc" title="Physique et Mécanique">DPM</a></li>
+            <li><a href="DMA.html" style="--d:#facc15" title="Mathématiques Appliquées">DMA</a></li>
+          </ul>
+        </div>
       </section>
 
 
       <!-- ===== ARGO ===== -->
-      <section class="prog spy" id="argo" style="--c:#facc15" aria-labelledby="argo-title">
+      <section class="prog spy" id="argo" style="--c:#f472b6" aria-labelledby="argo-title">
         <div class="prog-top reveal">
           <span class="card-code">ARGO</span>
           <span class="status" style="--s:var(--st-phase)"><i class="ph-light ph-flask" aria-hidden="true"></i> Phase expérimentale</span>
         </div>
         <h2 class="prog-title reveal" id="argo-title" style="--i:1">Détection de l'inconnu</h2>
-        <p class="lead reveal" style="--i:2">Le programme ARGO vise à renforcer la surveillance de l’orbite terrestre en détectant et en suivant les objets dont l’identité, l’origine ou la trajectoire restent incertaines. Dans un espace de plus en plus encombré par les satellites et les débris spatiaux, certains objets sont difficiles à identifier avec précision. ARGO ambitionne de réduire ces zones d’incertitude en établissant une représentation aussi complète et actualisée que possible de l’environnement orbital.
-Pour y parvenir, l’IFRAS prévoit de combiner les données issues de plusieurs sources : radars terrestres, télescopes optiques, capteurs infrarouges et réseaux de surveillance spatiale. Ces systèmes permettront de détecter les objets, de mesurer leur position et leur vitesse, puis de calculer leurs trajectoires probables. En croisant les observations, le programme cherchera à distinguer les objets déjà répertoriés de ceux dont les caractéristiques ne correspondent à aucune entrée connue dans les catalogues disponibles.
-Un système d’analyse automatisée comparera ensuite les nouvelles mesures aux observations précédentes afin de repérer les changements de trajectoire, les accélérations inattendues ou les comportements difficiles à expliquer. Lorsqu’un objet ne pourra pas être identifié avec suffisamment de certitude, il sera classé comme objet orbital non identifié et fera l’objet d’un suivi renforcé. 
-Les trajectoires calculées seront régulièrement réévaluées à mesure que de nouvelles données seront recueillies.
-Au-delà de l’identification, ARGO aura également une fonction préventive. En estimant les risques de rapprochement avec des satellites opérationnels, le programme pourra signaler et anticiper certaines collisions évitables.</p>
+        <p class="lead reveal" style="--i:2">Le programme ARGO vise à renforcer la surveillance de l’orbite terrestre en détectant et en suivant les objets dont l’identité, l’origine ou la trajectoire restent incertaines. Dans un espace de plus en plus encombré par les satellites et les débris spatiaux, certains objets sont difficiles à identifier avec précision. ARGO ambitionne de réduire ces zones d’incertitude en établissant une représentation aussi complète et actualisée que possible de l’environnement orbital.</p>
+        <p class="lead reveal" style="--i:2">Pour y parvenir, l’IFRAS prévoit de combiner les données issues de plusieurs sources : radars terrestres, télescopes optiques, capteurs infrarouges et réseaux de surveillance spatiale. Ces systèmes permettront de détecter les objets, de mesurer leur position et leur vitesse, puis de calculer leurs trajectoires probables. En croisant les observations, le programme cherchera à distinguer les objets déjà répertoriés de ceux dont les caractéristiques ne correspondent à aucune entrée connue dans les catalogues disponibles.</p>
+        <p class="lead reveal" style="--i:2">Un système d’analyse automatisée comparera ensuite les nouvelles mesures aux observations précédentes afin de repérer les changements de trajectoire, les accélérations inattendues ou les comportements difficiles à expliquer. Lorsqu’un objet ne pourra pas être identifié avec suffisamment de certitude, il sera classé comme objet orbital non identifié et fera l’objet d’un suivi renforcé.</p>
+        <p class="lead reveal" style="--i:2">Les trajectoires calculées seront régulièrement réévaluées à mesure que de nouvelles données seront recueillies.</p>
+        <p class="lead reveal" style="--i:2">Au-delà de l’identification, ARGO aura également une fonction préventive. En estimant les risques de rapprochement avec des satellites opérationnels, le programme pourra signaler et anticiper certaines collisions évitables.</p>
+        <div class="prog-depts reveal" style="--i:3">
+          <p class="fiche-label">Départements pilotes</p>
+          <ul class="depts">
+            <li><a href="DAI.html" style="--d:#67e8f9" title="Astrophysique et Instrumentation">DAI</a></li>
+            <li><a href="DOL.html" style="--d:#38bdf8" title="Optique et Lumière">DOL</a></li>
+            <li><a href="DSTI.html" style="--d:#818cf8" title="Simulation et Traitement de l'Information">DSTI</a></li>
+          </ul>
+        </div>
       </section>
 
-       
       <div class="cta-band reveal">
         <div>
           <h2>Et après ?</h2>
@@ -1311,7 +1377,7 @@ Au-delà de l’identification, ARGO aura également une fonction préventive. E
     const orbits = nodes.map((node, i) => ({
       node,
       color: getComputedStyle(node).getPropertyValue('--c').trim(),
-      k: 0.34 + i * 0.13,                      /* rayon relatif */
+      k: 0.34 + i * (0.65 / (nodes.length - 1)),   /* rayon relatif, de 0.34 à 0.99 */
       phase: i * 2.4 + 0.6,                    /* départ réparti sur le cercle */
       x: 0, y: 0, depth: 0
     }));
@@ -1325,7 +1391,7 @@ Au-delà de l’identification, ARGO aura également une fonction préventive. E
       canvas.width = w * dpr; canvas.height = h * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       cx = w / 2; cy = h / 2;
-      R = Math.min(w < 600 ? w / 2 - 50 : w * 0.46, h * 1.05) / (0.34 + 5 * 0.13);   /* marge pour les étiquettes sur mobile */
+      R = Math.min(w < 600 ? w / 2 - 50 : w * 0.46, h * 1.05) / 0.99;   /* marge pour les étiquettes sur mobile */
     };
 
     const project = (o, a) => {
