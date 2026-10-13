@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Programmes futurs | IFRAS</title>
-<meta name="description" content="Les trois programmes futurs de l'IFRAS : NOE, HERA et TITAN, de la météo spatiale aux lunes glacées de Jupiter et Saturne.">
+<meta name="description" content="Les cinq programmes futurs de l'IFRAS : NOÉ, HERA, TITAN, ORPHÉE et SOLSTICE, du vivant en orbite à la colonisation de Mars et aux lunes de Saturne.">
 <meta name="theme-color" content="#050b1e">
 <link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -607,6 +607,9 @@ a { color: inherit; }
   max-width: 22ch;
   text-wrap: balance;
 }
+.lead + .lead { margin-top: 14px; }
+.prog-depts { margin-top: 32px; }
+.prog-depts .depts { margin: 0; }
 .lead {
   margin: 0;
   max-width: 60ch;
@@ -1025,26 +1028,29 @@ a { color: inherit; }
   <ul class="subnav-list">
 
     <li class="subnav-item" style="--c:var(--st-active)">
-      <a class="subnav-trigger" href="programmes-actifs.html" aria-haspopup="true" aria-expanded="false">Actifs <span class="subnav-count">6</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
+      <a class="subnav-trigger" href="programmes-actifs.html" aria-haspopup="true" aria-expanded="false">Actifs <span class="subnav-count">7</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
       <div class="dropdown">
         <ul>
           <li><a href="programmes-actifs.html#artemis9"><strong>ARTEMIS-9</strong><span>Mission habitée sur Mars</span></a></li>
-          <li><a href="programmes-actifs.html#orion3"><strong>ORION-3</strong><span>Biosignatures d'exoplanètes</span></a></li>
+          <li><a href="programmes-actifs.html#luma"><strong>LUMA</strong><span>Biosignatures d'exoplanètes</span></a></li>
           <li><a href="programmes-actifs.html#prometheus"><strong>PROMETHEUS</strong><span>Propulsion ionique</span></a></li>
           <li><a href="programmes-actifs.html#hermes"><strong>HERMES</strong><span>Communication quantique</span></a></li>
-          <li><a href="programmes-actifs.html#atlas"><strong>ATLAS</strong><span>Environnements extraterrestres</span></a></li>
+          <li><a href="programmes-actifs.html#atlas"><strong>ATLAS</strong><span>Océans d'Europe et d'Encelade</span></a></li>
           <li><a href="programmes-actifs.html#lynx"><strong>LYNX</strong><span>Robotique autonome</span></a></li>
+          <li><a href="programmes-actifs.html#argo"><strong>ARGO</strong><span>Surveillance orbitale</span></a></li>
         </ul>
       </div>
     </li>
 
     <li class="subnav-item" style="--c:var(--st-future)">
-      <a class="subnav-trigger" href="programmes-futurs.html" aria-current="true" aria-haspopup="true" aria-expanded="false">Futurs <span class="subnav-count">3</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
+      <a class="subnav-trigger" href="programmes-futurs.html" aria-current="true" aria-haspopup="true" aria-expanded="false">Futurs <span class="subnav-count">5</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
       <div class="dropdown">
         <ul>
-          <li><a href="#noe"><strong>NOE</strong><span>Observation exosphérique, 2027</span></a></li>
-          <li><a href="#hera"><strong>HERA</strong><span>Habitabilité des exolunes, 2028</span></a></li>
+          <li><a href="#noe"><strong>NOÉ</strong><span>Étude du vivant en orbite, 2027</span></a></li>
+          <li><a href="#hera"><strong>HERA</strong><span>Nouveaux équipages pour Mars, 2028</span></a></li>
           <li><a href="#titan"><strong>TITAN</strong><span>Sonde atmosphérique, 2029</span></a></li>
+          <li><a href="#orphee"><strong>ORPHÉE</strong><span>Sonification planétaire, 2029</span></a></li>
+          <li><a href="#solstice"><strong>SOLSTICE</strong><span>Centrale solaire orbitale, 2030</span></a></li>
         </ul>
       </div>
     </li>
@@ -1090,7 +1096,7 @@ a { color: inherit; }
         </ol>
         <div class="live-badge hero-in" style="--i:1"><i class="ph-light ph-hourglass-medium" aria-hidden="true"></i> En préparation</div>
         <h1 id="hero-title"><span class="line"><span style="--i:0">Programmes</span></span><span class="line line--soft"><span style="--i:1">futurs</span></span></h1>
-        <p class="hero-desc hero-in" style="--i:3">Trois missions sélectionnées pour écrire la prochaine génération de l'IFRAS. Leurs trajectoires sont tracées, leur lancement dépend encore de leur maturité et de leur financement.</p>
+        <p class="hero-desc hero-in" style="--i:3">Cinq missions sélectionnées pour écrire la prochaine génération de l'IFRAS. Leurs trajectoires sont tracées, leur lancement dépend encore de leur maturité et de leur financement.</p>
         <div class="hero-actions hero-in" style="--i:4">
           <a href="#noe" class="btn btn-primary">Voir le calendrier <i class="ph-light ph-arrow-down" aria-hidden="true"></i></a>
           <a href="programmes.html" class="btn btn-ghost">Tous les programmes</a>
@@ -1100,9 +1106,11 @@ a { color: inherit; }
       <div class="orbit-wrap" id="orbit-wrap">
         <canvas class="orbit-canvas" id="orbit" aria-hidden="true"></canvas>
         <nav aria-label="Accès rapide aux programmes">
-      <a class="orbit-node" href="#noe" style="--c:#34d399" data-i="0">NOE <small>2027</small></a>
+      <a class="orbit-node" href="#noe" style="--c:#34d399" data-i="0">NOÉ <small>2027</small></a>
       <a class="orbit-node" href="#hera" style="--c:#38bdf8" data-i="1">HERA <small>2028</small></a>
       <a class="orbit-node" href="#titan" style="--c:#f97316" data-i="2">TITAN <small>2029</small></a>
+      <a class="orbit-node" href="#orphee" style="--c:#c084fc" data-i="3">ORPHÉE <small>2029</small></a>
+      <a class="orbit-node" href="#solstice" style="--c:#facc15" data-i="4">SOLSTICE <small>2030</small></a>
         </nav>
       </div>
 
@@ -1110,7 +1118,7 @@ a { color: inherit; }
 
     <div class="hero-stats">
       <div class="hero-stat reveal" style="--i:0">
-        <span class="hero-stat-value" data-count="3">3</span>
+        <span class="hero-stat-value" data-count="5">5</span>
         <span class="hero-stat-label">Programmes en développement</span>
       </div>
       <div class="hero-stat reveal" style="--i:1">
@@ -1125,7 +1133,7 @@ a { color: inherit; }
   </div>
 </section>
 
-<!-- ===== PROGRAMMES ===== -->
+      <!-- ===== PROGRAMMES ===== -->
 <div class="container">
   <div class="layout">
 
@@ -1134,9 +1142,11 @@ a { color: inherit; }
       <div class="toc-track">
         <span class="toc-indicator" aria-hidden="true"></span>
         <ul class="toc-list" id="toc">
-          <li><a href="#noe" data-target="noe" style="--c:#34d399">NOE</a></li>
+          <li><a href="#noe" data-target="noe" style="--c:#34d399">NOÉ</a></li>
           <li><a href="#hera" data-target="hera" style="--c:#38bdf8">HERA</a></li>
           <li><a href="#titan" data-target="titan" style="--c:#f97316">TITAN</a></li>
+          <li><a href="#orphee" data-target="orphee" style="--c:#c084fc">ORPHÉE</a></li>
+          <li><a href="#solstice" data-target="solstice" style="--c:#facc15">SOLSTICE</a></li>
         </ul>
       </div>
       <a href="programmes.html" class="toc-back"><i class="ph-light ph-arrow-left" aria-hidden="true"></i> Tous les programmes</a>
@@ -1144,25 +1154,27 @@ a { color: inherit; }
 
     <div class="content">
       <nav class="toc-mobile" id="toc-mobile" aria-label="Programmes futurs">
-        <a href="#noe" data-target="noe" style="--c:#34d399">NOE</a>
+        <a href="#noe" data-target="noe" style="--c:#34d399">NOÉ</a>
         <a href="#hera" data-target="hera" style="--c:#38bdf8">HERA</a>
         <a href="#titan" data-target="titan" style="--c:#f97316">TITAN</a>
+        <a href="#orphee" data-target="orphee" style="--c:#c084fc">ORPHÉE</a>
+        <a href="#solstice" data-target="solstice" style="--c:#facc15">SOLSTICE</a>
       </nav>
 
-      <!-- ===== NOE ===== -->
+      <!-- ===== NOÉ ===== -->
       <section class="prog spy" id="noe" style="--c:#34d399" aria-labelledby="noe-title">
         <div class="prog-head">
           <div>
             <div class="prog-top reveal">
-              <span class="card-code">NOE</span>
+              <span class="card-code">NOÉ</span>
               <span class="status" style="--s:var(--st-future)"><i class="ph-light ph-hourglass-medium" aria-hidden="true"></i> Phase C · réalisation</span>
             </div>
             <h2 class="prog-title reveal" id="noe-title" style="--i:1">Étude du vivant en orbite</h2>
-            <p class="lead reveal" style="--i:2">Le programme NOÉ vise à étudier les effets de l’environnement spatial sur différents organismes vivants grâce à une plateforme orbitale spécialement conçue pour accueillir des animaux dans des conditions contrôlées. En plaçant ces organismes en orbite terrestre, l’IFRAS souhaite approfondir les connaissances sur les effets de la microgravité, des rayonnements cosmiques et des modifications du cycle jour-nuit sur les fonctions biologiques.
-La plateforme NOÉ sera équipée de plusieurs modules expérimentaux permettant d’héberger différentes espèces animales dans des environnements adaptés à leurs besoins. Chaque module disposera de systèmes de régulation de la température, de l’humidité, de la qualité de l’air et de l’alimentation, ainsi que de dispositifs de surveillance destinés à suivre en continu l’état de santé des organismes étudiés. Des capteurs et des caméras permettront d’observer leurs déplacements, leurs comportements, leurs périodes de repos et leurs interactions avec leur environnement.
-Les recherches porteront notamment sur les modifications du comportement, du métabolisme, de l’orientation et des rythmes biologiques en microgravité. Les équipes étudieront également la manière dont les organismes réagissent aux contraintes propres aux missions spatiales, comme le confinement prolongé et l’exposition à un environnement radiatif différent de celui de la Terre. Les données recueillies seront comparées à celles d’organismes similaires maintenus au sol, afin de distinguer les effets de la microgravité de ceux liés aux autres conditions expérimentales.
-Les premières études ont été transmises par le programme ARTEMIS-9, dont les travaux préliminaires nous ont fourni une partie des données nécessaires. 
-L’objectif est de préparer les futurs programmes FAUNE, qui auront pour mission d’acheminer des animaux sur Mars afin de développer un nouvel écosystème sur Mars. NOÉ s’inscrit ainsi en complémentarité avec le programme HERA, destiné à envoyer de nouveaux équipages humains sur la planète afin de développer des colonies permanentes.</p>
+            <p class="lead reveal" style="--i:2">Le programme NOÉ vise à étudier les effets de l’environnement spatial sur différents organismes vivants grâce à une plateforme orbitale spécialement conçue pour accueillir des animaux dans des conditions contrôlées. En plaçant ces organismes en orbite terrestre, l’IFRAS souhaite approfondir les connaissances sur les effets de la microgravité, des rayonnements cosmiques et des modifications du cycle jour-nuit sur les fonctions biologiques.</p>
+            <p class="lead reveal" style="--i:2">La plateforme NOÉ sera équipée de plusieurs modules expérimentaux permettant d’héberger différentes espèces animales dans des environnements adaptés à leurs besoins. Chaque module disposera de systèmes de régulation de la température, de l’humidité, de la qualité de l’air et de l’alimentation, ainsi que de dispositifs de surveillance destinés à suivre en continu l’état de santé des organismes étudiés. Des capteurs et des caméras permettront d’observer leurs déplacements, leurs comportements, leurs périodes de repos et leurs interactions avec leur environnement.</p>
+            <p class="lead reveal" style="--i:2">Les recherches porteront notamment sur les modifications du comportement, du métabolisme, de l’orientation et des rythmes biologiques en microgravité. Les équipes étudieront également la manière dont les organismes réagissent aux contraintes propres aux missions spatiales, comme le confinement prolongé et l’exposition à un environnement radiatif différent de celui de la Terre. Les données recueillies seront comparées à celles d’organismes similaires maintenus au sol, afin de distinguer les effets de la microgravité de ceux liés aux autres conditions expérimentales.</p>
+            <p class="lead reveal" style="--i:2">Les premières études ont été transmises par le programme ARTEMIS-9, dont les travaux préliminaires ont fourni une partie des données nécessaires.</p>
+            <p class="lead reveal" style="--i:2">L’objectif est de préparer les futurs programmes FAUNE, qui auront pour mission d’acheminer des animaux sur Mars afin d’y développer un nouvel écosystème. NOÉ s’inscrit ainsi en complémentarité avec le programme HERA, destiné à envoyer de nouveaux équipages humains sur la planète afin de développer des colonies permanentes.</p>
           </div>
           <div class="horizon reveal" style="--i:2">
             <strong>2027</strong>
@@ -1184,6 +1196,14 @@ L’objectif est de préparer les futurs programmes FAUNE, qui auront pour missi
           </div>
           <p class="cond"><i class="ph-light ph-check-circle" style="color:#34d399" aria-hidden="true"></i> Financement entièrement acquis : les premières unités de vol sont en assemblage.</p>
         </div>
+        <div class="prog-depts reveal" style="--i:4">
+          <p class="fiche-label">Départements pilotes</p>
+          <ul class="depts">
+            <li><a href="DSVT.html" style="--d:#34d399" title="Sciences du Vivant et de la Terre">DSVT</a></li>
+            <li><a href="DPET.html" style="--d:#f97316" title="Physique Énergétique et Thermique">DPET</a></li>
+            <li><a href="DSTI.html" style="--d:#818cf8" title="Simulation et Traitement de l'Information">DSTI</a></li>
+          </ul>
+        </div>
       </section>
 
       <!-- ===== HERA ===== -->
@@ -1194,11 +1214,11 @@ L’objectif est de préparer les futurs programmes FAUNE, qui auront pour missi
               <span class="card-code">HERA</span>
               <span class="status" style="--s:var(--st-future)"><i class="ph-light ph-hourglass-medium" aria-hidden="true"></i> Phase B · définition</span>
             </div>
-            <h2 class="prog-title reveal" id="hera-title" style="--i:1">Habitabilité des lunes glacées</h2>
-            <p class="lead reveal" style="--i:2">Son objectif est d'organiser l'envoi de nouveaux équipages humains sur Mars afin d'y établir des colonies permanentes et de préparer une présence humaine durable en dehors de la Terre.
-En s'appuyant sur les résultats de la mission ARTEMIS-9, HERA vise à accroître progressivement la population humaine sur Mars en acheminant de nouveaux colons aux profils et aux compétences variés. Leur arrivée permettra d'agrandir la base existante, de développer de nouvelles infrastructures et de renforcer des secteurs essentiels tels que la médecine, l'ingénierie, l'agriculture et la maintenance des systèmes de survie. À mesure que la colonie se développera, cette main-d'œuvre supplémentaire favorisera l'exploration de la planète, l'exploitation de ses ressources et l'autonomie de ses installations. À plus long terme, l'augmentation de la population doit également permettre d'envisager le développement d'une communauté martienne capable de se renouveler sur place. Cette croissance devra néanmoins être soigneusement encadrée, notamment durant les premières phases du programme, afin de garantir une gestion durable des ressources essentielles telles que l'eau, l'oxygène, la nourriture et l'énergie.
-Au-delà des infrastructures, HERA devra répondre aux défis humains liés à une installation de longue durée sur une autre planète. La sélection et la préparation des équipages, la gestion de l'isolement, le suivi médical et la stabilité psychologique constitueront des axes importants du programme. 
-Le programme HERA travaillera en étroite collaboration avec ARTEMIS-9, chargé des premières étapes de l'installation martienne, ainsi qu'avec NOÉ et les futurs programmes FAUNE et TERRARIA, qui étudieront respectivement les effets de l'environnement spatial sur les organismes vivants, l'adaptation des animaux aux conditions martiennes et les possibilités de transformation progressive de l'environnement de la planète. Les données issues de ces différents programmes contribueront à mieux comprendre les conditions nécessaires au maintien et au développement durable de la vie sur Mars.</p>
+            <h2 class="prog-title reveal" id="hera-title" style="--i:1">De nouveaux équipages pour Mars</h2>
+            <p class="lead reveal" style="--i:2">Le programme HERA a pour objectif d'organiser l'envoi de nouveaux équipages humains sur Mars afin d'y établir des colonies permanentes et de préparer une présence humaine durable en dehors de la Terre.</p>
+            <p class="lead reveal" style="--i:2">En s'appuyant sur les résultats de la mission ARTEMIS-9, HERA vise à accroître progressivement la population humaine sur Mars en acheminant de nouveaux colons aux profils et aux compétences variés. Leur arrivée permettra d'agrandir la base existante, de développer de nouvelles infrastructures et de renforcer des secteurs essentiels tels que la médecine, l'ingénierie, l'agriculture et la maintenance des systèmes de survie. À mesure que la colonie se développera, cette main-d'œuvre supplémentaire favorisera l'exploration de la planète, l'exploitation de ses ressources et l'autonomie de ses installations. À plus long terme, l'augmentation de la population doit également permettre d'envisager le développement d'une communauté martienne capable de se renouveler sur place. Cette croissance devra néanmoins être soigneusement encadrée, notamment durant les premières phases du programme, afin de garantir une gestion durable des ressources essentielles telles que l'eau, l'oxygène, la nourriture et l'énergie.</p>
+            <p class="lead reveal" style="--i:2">Au-delà des infrastructures, HERA devra répondre aux défis humains liés à une installation de longue durée sur une autre planète. La sélection et la préparation des équipages, la gestion de l'isolement, le suivi médical et la stabilité psychologique constitueront des axes importants du programme.</p>
+            <p class="lead reveal" style="--i:2">Le programme HERA travaillera en étroite collaboration avec ARTEMIS-9, chargé des premières étapes de l'installation martienne, ainsi qu'avec NOÉ et les futurs programmes FAUNE et TERRARIA, qui étudieront respectivement les effets de l'environnement spatial sur les organismes vivants, l'adaptation des animaux aux conditions martiennes et les possibilités de transformation progressive de l'environnement de la planète. Les données issues de ces différents programmes contribueront à mieux comprendre les conditions nécessaires au maintien et au développement durable de la vie sur Mars.</p>
           </div>
           <div class="horizon reveal" style="--i:2">
             <strong>2028</strong>
@@ -1220,6 +1240,14 @@ Le programme HERA travaillera en étroite collaboration avec ARTEMIS-9, chargé 
           </div>
           <p class="cond"><i class="ph-light ph-hourglass-medium" style="color:#a78bfa" aria-hidden="true"></i> Validation du financement pluriannuel attendue fin 2026, avant le passage en phase C.</p>
         </div>
+        <div class="prog-depts reveal" style="--i:4">
+          <p class="fiche-label">Départements pilotes</p>
+          <ul class="depts">
+            <li><a href="DSVT.html" style="--d:#34d399" title="Sciences du Vivant et de la Terre">DSVT</a></li>
+            <li><a href="DSMR.html" style="--d:#fb7185" title="Structures, Matériaux et Résistance">DSMR</a></li>
+            <li><a href="DPET.html" style="--d:#f97316" title="Physique Énergétique et Thermique">DPET</a></li>
+          </ul>
+        </div>
       </section>
 
       <!-- ===== TITAN ===== -->
@@ -1231,10 +1259,10 @@ Le programme HERA travaillera en étroite collaboration avec ARTEMIS-9, chargé 
               <span class="status" style="--s:var(--st-future)"><i class="ph-light ph-hourglass-medium" aria-hidden="true"></i> Phase A · faisabilité</span>
             </div>
             <h2 class="prog-title reveal" id="titan-title" style="--i:1">Sonde atmosphérique de Titan</h2>
-            <p class="lead reveal" style="--i:2">TITAN est la première sonde spatiale entièrement conçue par l’IFRAS. Dédiée à l’exploration de Titan, la plus grande lune de Saturne, elle a pour objectif d’étudier l’un des environnements les plus intrigants du Système solaire. Dissimulée sous une épaisse atmosphère riche en azote et enveloppée de brumes orangées, Titan présente des caractéristiques qui rappellent certaines hypothèses sur la Terre primitive, avant l’apparition de la vie.
-La mission sera conçue pour étudier l’atmosphère et la surface de cette lune en combinant plusieurs instruments scientifiques. Après son arrivée dans le système saturnien, la sonde libérera un ballon autonome destiné à descendre dans l’atmosphère de Titan. Une fois déployé, celui-ci dérivera au gré des vents et effectuera des mesures à différentes altitudes, tandis que la sonde principale assurera la collecte et la transmission des données vers la Terre.
-L’un des principaux objectifs de TITAN sera de déterminer jusqu’où la chimie complexe peut progresser dans un environnement très différent de celui de la Terre actuelle. Si Titan ne constitue pas une reproduction exacte de notre planète primitive, ses conditions froides et sa chimie riche en carbone offrent un laboratoire naturel pour étudier certaines étapes possibles de l’évolution chimique précédant l’apparition de la vie. La mission cherchera donc à identifier les molécules présentes, à comprendre les mécanismes qui les produisent et à évaluer les conditions dans lesquelles des réactions plus complexes pourraient se dérouler.
-À long terme, les données récoltées par TITAN contribueront à mieux comprendre les origines chimiques du vivant et à déterminer si des environnements très différents de la Terre peuvent réunir certaines des conditions nécessaires à son émergence.</p>
+            <p class="lead reveal" style="--i:2">TITAN est la première sonde spatiale entièrement conçue par l’IFRAS. Dédiée à l’exploration de Titan, la plus grande lune de Saturne, elle a pour objectif d’étudier l’un des environnements les plus intrigants du Système solaire. Dissimulée sous une épaisse atmosphère riche en azote et enveloppée de brumes orangées, Titan présente des caractéristiques qui rappellent certaines hypothèses sur la Terre primitive, avant l’apparition de la vie.</p>
+            <p class="lead reveal" style="--i:2">La mission sera conçue pour étudier l’atmosphère et la surface de cette lune en combinant plusieurs instruments scientifiques. Après son arrivée dans le système saturnien, la sonde libérera un ballon autonome destiné à descendre dans l’atmosphère de Titan. Une fois déployé, celui-ci dérivera au gré des vents et effectuera des mesures à différentes altitudes, tandis que la sonde principale assurera la collecte et la transmission des données vers la Terre.</p>
+            <p class="lead reveal" style="--i:2">L’un des principaux objectifs de TITAN sera de déterminer jusqu’où la chimie complexe peut progresser dans un environnement très différent de celui de la Terre actuelle. Si Titan ne constitue pas une reproduction exacte de notre planète primitive, ses conditions froides et sa chimie riche en carbone offrent un laboratoire naturel pour étudier certaines étapes possibles de l’évolution chimique précédant l’apparition de la vie. La mission cherchera donc à identifier les molécules présentes, à comprendre les mécanismes qui les produisent et à évaluer les conditions dans lesquelles des réactions plus complexes pourraient se dérouler.</p>
+            <p class="lead reveal" style="--i:2">À long terme, les données récoltées par TITAN contribueront à mieux comprendre les origines chimiques du vivant et à déterminer si des environnements très différents de la Terre peuvent réunir certaines des conditions nécessaires à son émergence.</p>
           </div>
           <div class="horizon reveal" style="--i:2">
             <strong>2029</strong>
@@ -1247,35 +1275,41 @@ L’un des principaux objectifs de TITAN sera de déterminer jusqu’où la chim
           <div class="phase-rail" style="--p:0.0">
             <span class="phase-fill" aria-hidden="true"></span>
             <ol class="phase-track">
-            <li class="phase " style="--k:1"><b>Phase A</b><span>Faisabilité</span></li>
+            <li class="phase now" style="--k:0" aria-current="step"><b>Phase A</b><span>En cours</span></li>
             <li class="phase " style="--k:1"><b>Phase B</b><span>Définition</span></li>
             <li class="phase " style="--k:2"><b>Phase C</b><span>Réalisation</span></li>
-            <li class="phase now" style="--k:0" aria-current="step"><b>Phase D</b><span>En cours</span></li>
+            <li class="phase " style="--k:3"><b>Phase D</b><span>Qualification</span></li>
             <li class="phase " style="--k:4"><b>Lancement</b><span>2029</span></li>
             </ol>
           </div>
           <p class="cond"><i class="ph-light ph-warning" style="color:#facc15" aria-hidden="true"></i> Décision de poursuite fin 2026, selon les essais du ballon en chambre ATLAS.</p>
         </div>
-   </section>
+        <div class="prog-depts reveal" style="--i:4">
+          <p class="fiche-label">Départements pilotes</p>
+          <ul class="depts">
+            <li><a href="DAI.html" style="--d:#67e8f9" title="Astrophysique et Instrumentation">DAI</a></li>
+            <li><a href="DSVT.html" style="--d:#34d399" title="Sciences du Vivant et de la Terre">DSVT</a></li>
+            <li><a href="DPET.html" style="--d:#f97316" title="Physique Énergétique et Thermique">DPET</a></li>
+          </ul>
+        </div>
+      </section>
 
-
-             <!-- ===== ORPHÉE ===== -->
-      <section class="prog spy" id="orphee" style="--c:#f97316" aria-labelledby="orphee-title">
+      <!-- ===== ORPHÉE ===== -->
+      <section class="prog spy" id="orphee" style="--c:#c084fc" aria-labelledby="orphee-title">
         <div class="prog-head">
           <div>
             <div class="prog-top reveal">
               <span class="card-code">ORPHÉE</span>
               <span class="status" style="--s:var(--st-future)"><i class="ph-light ph-hourglass-medium" aria-hidden="true"></i> Phase D · qualification</span>
             </div>
-            <h2 class="prog-title reveal" id="titan-title" style="--i:1">Cartographie sonore des mondes planétaires</h2>
-            <p class="lead reveal" style="--i:2">Le programme ORPHÉE vise à enregistrer et à interpréter les phénomènes électromagnétiques produits dans l’environnement des planètes afin de les convertir en représentations sonores. En étudiant ces signaux, l’IFRAS souhaite développer une nouvelle méthode de visualisation des phénomènes spatiaux, capable de rendre perceptibles certaines variations physiques qui échappent à l’observation directe.
-Chaque planète possède un environnement électromagnétique qui lui est propre, influencé notamment par son champ magnétique, son atmosphère, son interaction avec le vent solaire et, dans certains cas, l’activité de son noyau. Ces phénomènes génèrent des signaux que des instruments adaptés peuvent mesurer.
-ORPHÉE collectera ces données afin d'en extraire les variations de fréquence, d'intensité et de rythme caractéristiques de chaque environnement planétaire.
-Les signaux enregistrés seront ensuite traités par des algorithmes capables de filtrer les interférences, de distinguer les phénomènes récurrents des événements inhabituels et de convertir les mesures en paramètres sonores. Certaines fréquences pourront être transposées dans la gamme audible, tandis que les variations d’intensité ou de fréquence pourront être représentées par des changements de tonalité, de rythme ou de texture sonore. 
-L’un des objectifs du programme sera de comparer les signatures électromagnétiques de plusieurs planètes du Système solaire. Les émissions radio de Jupiter, les variations du champ magnétique terrestre ou les interactions entre le vent solaire et l’environnement de Saturne pourront ainsi donner lieu à des compositions sonores distinctes, directement fondées sur les mesures recueillies.
-ORPHÉE ne se limitera pas à une démarche de représentation. La sonification pourra également servir d’outil complémentaire d’analyse, en facilitant la détection de changements rapides ou de motifs difficiles à repérer dans de longues séries de données numériques. Les résultats sonores seront systématiquement associés à leurs données d’origine afin de distinguer les phénomènes réellement mesurés des choix de transformation nécessaires pour les rendre audibles.
-À long terme, l’IFRAS souhaite constituer une bibliothèque sonore des environnements planétaires, regroupant les signatures électromagnétiques de différents mondes et leur évolution au fil du temps. Cette archive pourra soutenir la recherche scientifique, mais aussi contribuer à la médiation scientifique en offrant une autre manière de découvrir les phénomènes qui façonnent le Système solaire.
-</p>
+            <h2 class="prog-title reveal" id="orphee-title" style="--i:1">Cartographie sonore des mondes planétaires</h2>
+            <p class="lead reveal" style="--i:2">Le programme ORPHÉE vise à enregistrer et à interpréter les phénomènes électromagnétiques produits dans l’environnement des planètes afin de les convertir en représentations sonores. En étudiant ces signaux, l’IFRAS souhaite développer une nouvelle manière de percevoir les phénomènes spatiaux, capable de rendre perceptibles certaines variations physiques qui échappent à l’observation directe.</p>
+            <p class="lead reveal" style="--i:2">Chaque planète possède un environnement électromagnétique qui lui est propre, influencé notamment par son champ magnétique, son atmosphère, son interaction avec le vent solaire et, dans certains cas, l’activité de son noyau. Ces phénomènes génèrent des signaux que des instruments adaptés peuvent mesurer.</p>
+            <p class="lead reveal" style="--i:2">ORPHÉE collectera ces données afin d'en extraire les variations de fréquence, d'intensité et de rythme caractéristiques de chaque environnement planétaire.</p>
+            <p class="lead reveal" style="--i:2">Les signaux enregistrés seront ensuite traités par des algorithmes capables de filtrer les interférences, de distinguer les phénomènes récurrents des événements inhabituels et de convertir les mesures en paramètres sonores. Certaines fréquences pourront être transposées dans la gamme audible, tandis que les variations d’intensité ou de fréquence pourront être représentées par des changements de tonalité, de rythme ou de texture sonore.</p>
+            <p class="lead reveal" style="--i:2">L’un des objectifs du programme sera de comparer les signatures électromagnétiques de plusieurs planètes du Système solaire. Les émissions radio de Jupiter, les variations du champ magnétique terrestre ou les interactions entre le vent solaire et l’environnement de Saturne pourront ainsi donner lieu à des compositions sonores distinctes, directement fondées sur les mesures recueillies.</p>
+            <p class="lead reveal" style="--i:2">ORPHÉE ne se limitera pas à une démarche de représentation. La sonification pourra également servir d’outil complémentaire d’analyse, en facilitant la détection de changements rapides ou de motifs difficiles à repérer dans de longues séries de données numériques. Les résultats sonores seront systématiquement associés à leurs données d’origine afin de distinguer les phénomènes réellement mesurés des choix de transformation nécessaires pour les rendre audibles.</p>
+            <p class="lead reveal" style="--i:2">À long terme, l’IFRAS souhaite constituer une bibliothèque sonore des environnements planétaires, regroupant les signatures électromagnétiques de différents mondes et leur évolution au fil du temps. Cette archive pourra soutenir la recherche scientifique, mais aussi contribuer à la médiation scientifique en offrant une autre manière de découvrir les phénomènes qui façonnent le Système solaire.</p>
           </div>
           <div class="horizon reveal" style="--i:2">
             <strong>2029</strong>
@@ -1285,35 +1319,43 @@ ORPHÉE ne se limitera pas à une démarche de représentation. La sonification 
 
         <div class="phases reveal" style="--i:3">
           <p class="axes-label">Maturité du programme</p>
-          <div class="phase-rail" style="--p:0.0">
+          <div class="phase-rail" style="--p:0.75">
             <span class="phase-fill" aria-hidden="true"></span>
             <ol class="phase-track">
-            <li class="phase " style="--k:1"><b>Phase A</b><span>Faisabilité</span></li>
-            <li class="phase " style="--k:1"><b>Phase B</b><span>Définition</span></li>
-            <li class="phase " style="--k:2"><b>Phase C</b><span>Réalisation</span></li>
-            <li class="phase now" style="--k:0" aria-current="step"><b>Phase D</b><span>En cours</span></li>
+            <li class="phase done" style="--k:0"><b>Phase A</b><span>Faisabilité</span></li>
+            <li class="phase done" style="--k:1"><b>Phase B</b><span>Définition</span></li>
+            <li class="phase done" style="--k:2"><b>Phase C</b><span>Réalisation</span></li>
+            <li class="phase now" style="--k:3" aria-current="step"><b>Phase D</b><span>En cours</span></li>
             <li class="phase " style="--k:4"><b>Lancement</b><span>2029</span></li>
             </ol>
           </div>
-          <p class="cond"><i class="ph-light ph-warning" style="color:#facc15" aria-hidden="true"></i> Recrutement d'expert qui travailleront sur le sujet</p>
+          <p class="cond"><i class="ph-light ph-warning" style="color:#facc15" aria-hidden="true"></i> Recrutement en cours des experts chargés du traitement des signaux.</p>
         </div>
-   </section>
+        <div class="prog-depts reveal" style="--i:4">
+          <p class="fiche-label">Départements pilotes</p>
+          <ul class="depts">
+            <li><a href="DAI.html" style="--d:#67e8f9" title="Astrophysique et Instrumentation">DAI</a></li>
+            <li><a href="DSTI.html" style="--d:#818cf8" title="Simulation et Traitement de l'Information">DSTI</a></li>
+            <li><a href="DMA.html" style="--d:#facc15" title="Mathématiques Appliquées">DMA</a></li>
+          </ul>
+        </div>
+      </section>
 
-
-                <!-- ===== SOLSTICE ===== -->
-      <section class="prog spy" id="solstice" style="--c:#f97316" aria-labelledby="solstice-title">
+      <!-- ===== SOLSTICE ===== -->
+      <section class="prog spy" id="solstice" style="--c:#facc15" aria-labelledby="solstice-title">
         <div class="prog-head">
           <div>
             <div class="prog-top reveal">
               <span class="card-code">SOLSTICE</span>
               <span class="status" style="--s:var(--st-future)"><i class="ph-light ph-hourglass-medium" aria-hidden="true"></i> Phase A · faisabilité</span>
             </div>
-            <h2 class="prog-title reveal" id="titan-title" style="--i:1">Centrale solaire orbitale</h2>
-            <p class="lead reveal" style="--i:2">Capter l’énergie du Soleil au-delà de l’atmosphère pour alimenter la Terre.
-Le programme SOLSTICE vise à concevoir une centrale solaire installée en orbite terrestre, capable de collecter l’énergie du Soleil et de la transmettre vers la surface de la Terre. En s’affranchissant des nuages et de l’alternance du jour et de la nuit, cette installation pourrait bénéficier d’une exposition solaire prolongée.
-La centrale sera constituée de panneaux photovoltaïques modulaires qui convertiront le rayonnement solaire en électricité. Celle-ci sera ensuite transmise sans fil vers une station de réception terrestre, notamment grâce à un faisceau de micro-ondes. Une antenne réceptrice au sol permettra de convertir l’énergie reçue en électricité exploitable.
-L’un des principaux défis du programme sera d’assurer une transmission efficace et sécurisée entre l’orbite et la Terre. Les équipes devront également développer des structures capables de résister aux conditions spatiales et d’être assemblées puis entretenues en orbite.
-À long terme, SOLSTICE ambitionne de fournir une source d’énergie complémentaire aux réseaux terrestres et de démontrer le potentiel des infrastructures énergétiques spatiales. La faisabilité du projet dépendra toutefois du rendement de la transmission, du coût des lancements et de la fiabilité des équipements.
+            <h2 class="prog-title reveal" id="solstice-title" style="--i:1">Centrale solaire orbitale</h2>
+            <p class="lead reveal" style="--i:2">Capter l’énergie du Soleil au-delà de l’atmosphère pour alimenter la Terre.</p>
+            <p class="lead reveal" style="--i:2">Le programme SOLSTICE vise à concevoir une centrale solaire installée en orbite terrestre, capable de collecter l’énergie du Soleil et de la transmettre vers la surface de la Terre. En s’affranchissant des nuages et de l’alternance du jour et de la nuit, cette installation pourrait bénéficier d’une exposition solaire prolongée.</p>
+            <p class="lead reveal" style="--i:2">La centrale sera constituée de panneaux photovoltaïques modulaires qui convertiront le rayonnement solaire en électricité. Celle-ci sera ensuite transmise sans fil vers une station de réception terrestre, au moyen d’un faisceau de micro-ondes. Une antenne réceptrice au sol permettra de convertir l’énergie reçue en électricité exploitable.</p>
+            <p class="lead reveal" style="--i:2">L’un des principaux défis du programme sera d’assurer une transmission efficace et sécurisée entre l’orbite et la Terre. Les équipes devront également développer des structures capables de résister aux conditions spatiales et d’être assemblées puis entretenues en orbite.</p>
+            <p class="lead reveal" style="--i:2">À long terme, SOLSTICE ambitionne de fournir une source d’énergie complémentaire aux réseaux terrestres et de démontrer le potentiel des infrastructures énergétiques spatiales. La faisabilité du projet dépendra toutefois du rendement de la transmission, du coût des lancements et de la fiabilité des équipements.</p>
+          </div>
           <div class="horizon reveal" style="--i:2">
             <strong>2030</strong>
             <span data-launch="2030-10">Lancement prévu</span>
@@ -1332,14 +1374,22 @@ L’un des principaux défis du programme sera d’assurer une transmission effi
             <li class="phase " style="--k:4"><b>Lancement</b><span>2030</span></li>
             </ol>
           </div>
-          <p class="cond"><i class="ph-light ph-warning" style="color:#facc15" aria-hidden="true"></i>Recherche de partenaire pour le financement</p>
+          <p class="cond"><i class="ph-light ph-warning" style="color:#facc15" aria-hidden="true"></i> Recherche de partenaires pour le financement.</p>
         </div>
-   </section>    
+        <div class="prog-depts reveal" style="--i:4">
+          <p class="fiche-label">Départements pilotes</p>
+          <ul class="depts">
+            <li><a href="DPET.html" style="--d:#f97316" title="Physique Énergétique et Thermique">DPET</a></li>
+            <li><a href="DSMR.html" style="--d:#fb7185" title="Structures, Matériaux et Résistance">DSMR</a></li>
+            <li><a href="DPM.html" style="--d:#c084fc" title="Physique et Mécanique">DPM</a></li>
+          </ul>
+        </div>
+      </section>
 
       <div class="cta-band reveal" style="background:radial-gradient(ellipse 50% 90% at 100% 0%, rgba(52,211,153,.14), transparent 60%), var(--bg-light)">
         <div>
           <h2>Déjà en mission</h2>
-          <p>Six programmes sont en cours d'exécution, de la mission habitée sur Mars à la robotique autonome.</p>
+          <p>Sept programmes sont en cours d'exécution, de la mission habitée sur Mars à la surveillance orbitale.</p>
         </div>
         <div class="cta-actions">
           <a href="programmes-actifs.html" class="btn btn-primary">Programmes actifs <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
@@ -1513,10 +1563,13 @@ L’un des principaux défis du programme sera d’assurer une transmission effi
     const EARTH = 0.2;
     const E_ANGLE = 0.55;
     /* chaque programme : rayon et angle de destination, durée du trajet (s) */
+    const MARS = 0.34, M_ANGLE = -0.95;
     const TARGETS = [
-      { r: EARTH, a: E_ANGLE - 1.05, dur: 5, lag: true },   /* NOE : point de Lagrange L5, sur l'orbite terrestre */
-      { r: 0.56, a: -0.42, dur: 7 },                           /* HERA : Jupiter */
-      { r: 0.86, a: 0.12, dur: 9 }                             /* TITAN : Saturne */
+      { loop: 0.04, dur: 4, ly: 18 },                          /* NOÉ : orbite terrestre basse */
+      { r: MARS, a: M_ANGLE, dur: 6 },                         /* HERA : Mars */
+      { r: 0.86, a: 0.12, dur: 9 },                            /* TITAN : Saturne */
+      { r: 0.56, a: -0.42, dur: 7.5 },                         /* ORPHÉE : Jupiter */
+      { station: true, d: 0.085, q: 2.45 }                     /* SOLSTICE : centrale fixe en orbite géostationnaire */
     ];
     const missions = nodes.map((node, i) => ({
       node, ...TARGETS[i],
@@ -1540,8 +1593,9 @@ L’un des principaux défis du programme sera d’assurer une transmission effi
     const path = (m, t) => {
       const k = ease(t);
       const a0 = E_ANGLE, a1 = m.a;
-      if (m.lag) {                                   /* L5 : on reste près de l'orbite, petite boucle vers l'extérieur */
-        return pt(EARTH + Math.sin(Math.PI * t) * 0.07, a0 + (a1 - a0) * k);
+      if (m.loop) {                                  /* orbite autour de la Terre */
+        const [ex, ey] = pt(EARTH, E_ANGLE), q = Math.PI * 2 * t - Math.PI / 2;
+        return [ex + Math.cos(q) * m.loop * S, ey + Math.sin(q) * m.loop * S * SQ];
       }
       return pt(EARTH + (m.r - EARTH) * k, a0 + (a1 - a0) * k);
     };
@@ -1567,14 +1621,16 @@ L’un des principaux défis du programme sera d’assurer une transmission effi
 
       /* orbites */
       ctx.lineWidth = 1;
-      [EARTH, 0.56, 0.86].forEach((r) => {
+      [EARTH, MARS, 0.56, 0.86].forEach((r) => {
         ctx.strokeStyle = 'rgba(170,179,214,.14)';
         ctx.beginPath(); ctx.ellipse(sx, sy, r * S, r * S * SQ, 0, 0, Math.PI * 2); ctx.stroke();
       });
 
       /* planètes */
       const [ex, ey] = pt(EARTH, E_ANGLE);
-      body(ex, ey, 5, '#bae6fd', '#2563eb');
+      body(ex, ey, 6, '#bae6fd', '#2563eb');
+      const [mx, my] = pt(MARS, M_ANGLE);
+      body(mx, my, 4.5, '#fecaca', '#b91c1c');
       const [jx, jy] = pt(0.56, -0.42);
       body(jx, jy, 10, '#fde7c7', '#b45309');
       const [tx, ty] = pt(0.86, 0.12);
@@ -1585,6 +1641,45 @@ L’un des principaux défis du programme sera d’assurer une transmission effi
 
       missions.forEach((m, i) => {
         const dim = hovered !== -1 && hovered !== i;
+        if (m.station) {                           /* SOLSTICE : la centrale reste fixe et envoie son faisceau vers la Terre */
+          const [ex, ey] = pt(EARTH, E_ANGLE);
+          const R0 = m.d * S, cx = ex + Math.cos(m.q) * R0, cy = ey + Math.sin(m.q) * R0;
+          const a = dim ? 0.3 : 1;
+          /* orbite géostationnaire */
+          ctx.setLineDash([2, 4]); ctx.strokeStyle = m.color; ctx.lineWidth = 1;
+          ctx.globalAlpha = (hovered === i ? 0.5 : 0.18) * a;
+          ctx.beginPath(); ctx.arc(ex, ey, R0, 0, Math.PI * 2); ctx.stroke();
+          /* faisceau d'énergie : tirets qui descendent vers la Terre */
+          const ux = (ex - cx) / R0, uy = (ey - cy) / R0;
+          ctx.setLineDash([3, 5]); ctx.lineDashOffset = -time * 16; ctx.lineWidth = 1.6;
+          ctx.globalAlpha = 0.75 * a;
+          ctx.beginPath(); ctx.moveTo(cx + ux * 8, cy + uy * 8); ctx.lineTo(ex - ux * 8, ey - uy * 8); ctx.stroke();
+          ctx.setLineDash([]); ctx.lineDashOffset = 0;
+          /* halo qui respire */
+          const pulse = 11 + Math.sin(time * 2.2) * 2.5;
+          const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, pulse);
+          g.addColorStop(0, m.color); g.addColorStop(1, 'transparent');
+          ctx.globalAlpha = 0.45 * a; ctx.fillStyle = g;
+          ctx.beginPath(); ctx.arc(cx, cy, pulse, 0, Math.PI * 2); ctx.fill();
+          /* la centrale : module central + deux ailes de panneaux, perpendiculaires au faisceau */
+          ctx.globalAlpha = a;
+          ctx.save(); ctx.translate(cx, cy); ctx.scale(1.35, 1.35); ctx.rotate(Math.atan2(uy, ux) + Math.PI / 2);
+          ctx.fillStyle = '#1e293b'; ctx.strokeStyle = m.color; ctx.lineWidth = 1;
+          [-1, 1].forEach((sd) => {
+            ctx.fillRect(sd * 4.5 - (sd < 0 ? 9 : 0), -2.5, 9, 5);
+            ctx.strokeRect(sd * 4.5 - (sd < 0 ? 9 : 0), -2.5, 9, 5);
+            ctx.beginPath(); ctx.moveTo(sd * 4.5 + sd * 4.5, -2.5); ctx.lineTo(sd * 4.5 + sd * 4.5, 2.5); ctx.stroke();
+          });
+          ctx.fillStyle = '#fff'; ctx.fillRect(-2.5, -2.5, 5, 5);
+          ctx.restore();
+          ctx.globalAlpha = 1;
+          /* étiquette à droite de la centrale */
+          const nh = m.node.offsetHeight, nw = m.node.offsetWidth;
+          const lx = Math.max(4, cx - nw / 2 - 10), ly = cy + 16;   /* sous la centrale, zone dégagée */   /* écran étroit : au-dessus */
+          m.node.style.transform = `translate(${lx.toFixed(1)}px, ${ly.toFixed(1)}px)`;
+          m.node.style.opacity = dim ? '.5' : '1';
+          return;
+        }
         /* trajectoire complète, en pointillés */
         ctx.setLineDash([3, 5]);
         ctx.strokeStyle = m.color;
@@ -1617,9 +1712,9 @@ L’un des principaux défis du programme sera d’assurer une transmission effi
         ctx.globalAlpha = 1;
 
         /* étiquette fixe, posée sur la destination */
-        const [dx, dy] = path(m, 1);
+        const [dx, dy] = m.loop ? pt(EARTH, E_ANGLE) : path(m, 1);
         const nw = m.node.offsetWidth, nh = m.node.offsetHeight;
-        let lx = dx + 16, ly = dy - nh / 2 - (m.lag ? -14 : 18);
+        let lx = dx + (m.loop ? m.loop * S + 8 : 16), ly = dy - nh / 2 + (m.loop ? m.ly : -18);
         lx = Math.min(lx, (w < 600 ? w - 4 : w * 0.9) - nw);
         m.node.style.transform = `translate(${lx.toFixed(1)}px, ${ly.toFixed(1)}px)`;
         m.node.style.opacity = dim ? '.5' : '1';
