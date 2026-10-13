@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Programmes archivés | IFRAS</title>
-<meta name="description" content="Les programmes archivés de l'IFRAS : EREBUS, ECHO et CASSINI, des missions clôturées dont les résultats continuent de vivre.">
+<meta name="description" content="Les six programmes archivés de l'IFRAS : CHRONOS, EREBUS, ECHO, ORION, ARTEMIS-1 à 8 et CASSINI, des missions clôturées dont les résultats continuent de vivre.">
 <meta name="theme-color" content="#050b1e">
 <link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -607,6 +607,9 @@ a { color: inherit; }
   max-width: 22ch;
   text-wrap: balance;
 }
+.lead + .lead { margin-top: 14px; }
+.prog-depts { margin-top: 32px; }
+.prog-depts .depts { margin: 0; }
 .lead {
   margin: 0;
   max-width: 60ch;
@@ -940,7 +943,7 @@ a { color: inherit; }
   .period strong { text-align: left; }
 }
 @media (max-width: 640px) {
-  .orbit-wrap { -webkit-mask-image: none; mask-image: none; }
+  .orbit-wrap { -webkit-mask-image: none; mask-image: none; height: 340px; }
   .wins li { font-size: 14px; padding: 14px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -997,38 +1000,44 @@ a { color: inherit; }
   <ul class="subnav-list">
 
     <li class="subnav-item" style="--c:var(--st-active)">
-      <a class="subnav-trigger" href="programmes-actifs.html" aria-haspopup="true" aria-expanded="false">Actifs <span class="subnav-count">6</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
+      <a class="subnav-trigger" href="programmes-actifs.html" aria-haspopup="true" aria-expanded="false">Actifs <span class="subnav-count">7</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
       <div class="dropdown">
         <ul>
           <li><a href="programmes-actifs.html#artemis9"><strong>ARTEMIS-9</strong><span>Mission habitée sur Mars</span></a></li>
-          <li><a href="programmes-actifs.html#orion3"><strong>ORION-3</strong><span>Biosignatures d'exoplanètes</span></a></li>
+          <li><a href="programmes-actifs.html#luma"><strong>LUMA</strong><span>Biosignatures d'exoplanètes</span></a></li>
           <li><a href="programmes-actifs.html#prometheus"><strong>PROMETHEUS</strong><span>Propulsion ionique</span></a></li>
           <li><a href="programmes-actifs.html#hermes"><strong>HERMES</strong><span>Communication quantique</span></a></li>
-          <li><a href="programmes-actifs.html#atlas"><strong>ATLAS</strong><span>Environnements extraterrestres</span></a></li>
+          <li><a href="programmes-actifs.html#atlas"><strong>ATLAS</strong><span>Océans d'Europe et d'Encelade</span></a></li>
           <li><a href="programmes-actifs.html#lynx"><strong>LYNX</strong><span>Robotique autonome</span></a></li>
+          <li><a href="programmes-actifs.html#argo"><strong>ARGO</strong><span>Surveillance orbitale</span></a></li>
         </ul>
       </div>
     </li>
 
     <li class="subnav-item" style="--c:var(--st-future)">
-      <a class="subnav-trigger" href="programmes-futurs.html" aria-haspopup="true" aria-expanded="false">Futurs <span class="subnav-count">3</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
+      <a class="subnav-trigger" href="programmes-futurs.html" aria-haspopup="true" aria-expanded="false">Futurs <span class="subnav-count">5</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
       <div class="dropdown">
         <ul>
-          <li><a href="programmes-futurs.html#noe"><strong>NOE</strong><span>Observation exosphérique, 2027</span></a></li>
-          <li><a href="programmes-futurs.html#hera"><strong>HERA</strong><span>Habitabilité des exolunes, 2028</span></a></li>
-          <li><a href="programmes-futurs.html#titan0"><strong>TITAN-0</strong><span>Sonde atmosphérique, 2029</span></a></li>
+          <li><a href="programmes-futurs.html#noe"><strong>NOÉ</strong><span>Étude du vivant en orbite, 2027</span></a></li>
+          <li><a href="programmes-futurs.html#hera"><strong>HERA</strong><span>Nouveaux équipages pour Mars, 2028</span></a></li>
+          <li><a href="programmes-futurs.html#titan"><strong>TITAN</strong><span>Sonde atmosphérique, 2029</span></a></li>
+          <li><a href="programmes-futurs.html#orphee"><strong>ORPHÉE</strong><span>Sonification planétaire, 2029</span></a></li>
+          <li><a href="programmes-futurs.html#solstice"><strong>SOLSTICE</strong><span>Centrale solaire orbitale, 2030</span></a></li>
         </ul>
       </div>
     </li>
 
 
     <li class="subnav-item subnav-item--end" style="--c:var(--st-archived)">
-      <a class="subnav-trigger" href="programmes-archives.html" aria-current="true" aria-haspopup="true" aria-expanded="false">Archivés <span class="subnav-count">3</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
+      <a class="subnav-trigger" href="programmes-archives.html" aria-current="true" aria-haspopup="true" aria-expanded="false">Archivés <span class="subnav-count">6</span> <i class="ph-light ph-caret-down" aria-hidden="true"></i></a>
       <div class="dropdown">
         <ul>
           <li><a href="#erebus"><strong>EREBUS</strong><span>Cratères polaires lunaires</span></a></li>
           <li><a href="#echo"><strong>ECHO</strong><span>Prédiction sismique</span></a></li>
           <li><a href="#cassini"><strong>CASSINI</strong><span>Archives saturniennes par IA</span></a></li>
+          <li><a href="#orion"><strong>ORION</strong><span>Sites de colonie sur Mars</span></a></li>
+          <li><a href="#artemis18"><strong>ARTEMIS-1/8</strong><span>Vaisseau modulaire longue durée</span></a></li>
+          <li><a href="#chronos"><strong>CHRONOS</strong><span>Mesure du temps en orbite</span></a></li>
         </ul>
       </div>
     </li>
@@ -1073,9 +1082,12 @@ a { color: inherit; }
       <div class="orbit-wrap" id="orbit-wrap">
         <canvas class="orbit-canvas" id="orbit" aria-hidden="true"></canvas>
         <nav aria-label="Accès rapide aux programmes">
-      <a class="orbit-node" href="#erebus" style="--c:#60a5fa" data-i="0">EREBUS <small>2014–2022</small></a>
-      <a class="orbit-node" href="#echo" style="--c:#34d399" data-i="1">ECHO <small>2016–2023</small></a>
-      <a class="orbit-node" href="#cassini" style="--c:#f97316" data-i="2">CASSINI <small>2019–2021</small></a>
+      <a class="orbit-node" href="#chronos" style="--c:#facc15" data-i="0">CHRONOS <small>2011–2014</small></a>
+      <a class="orbit-node" href="#erebus" style="--c:#60a5fa" data-i="1">EREBUS <small>2014–2022</small></a>
+      <a class="orbit-node" href="#echo" style="--c:#34d399" data-i="2">ECHO <small>2016–2023</small></a>
+      <a class="orbit-node" href="#orion" style="--c:#f87171" data-i="3">ORION <small>2019–2021</small></a>
+      <a class="orbit-node" href="#artemis18" style="--c:#c084fc" data-i="4">ARTEMIS-1/8 <small>2021–2024</small></a>
+      <a class="orbit-node" href="#cassini" style="--c:#f97316" data-i="5">CASSINI <small>2022–2025</small></a>
         </nav>
       </div>
 
@@ -1083,7 +1095,7 @@ a { color: inherit; }
 
     <div class="hero-stats">
       <div class="hero-stat reveal" style="--i:0">
-        <span class="hero-stat-value" data-count="3">3</span>
+        <span class="hero-stat-value" data-count="6">6</span>
         <span class="hero-stat-label">Programmes clôturés</span>
       </div>
       <div class="hero-stat reveal" style="--i:1">
@@ -1091,14 +1103,14 @@ a { color: inherit; }
         <span class="hero-stat-label">Publications produites</span>
       </div>
       <div class="hero-stat reveal" style="--i:2">
-        <span class="hero-stat-value">2014</span>
+        <span class="hero-stat-value">2011</span>
         <span class="hero-stat-label">Premier déploiement</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== PROGRAMMES ===== -->
+      <!-- ===== PROGRAMMES ===== -->
 <div class="container">
   <div class="layout">
 
@@ -1110,6 +1122,9 @@ a { color: inherit; }
           <li><a href="#erebus" data-target="erebus" style="--c:#60a5fa">EREBUS</a></li>
           <li><a href="#echo" data-target="echo" style="--c:#34d399">ECHO</a></li>
           <li><a href="#cassini" data-target="cassini" style="--c:#f97316">CASSINI</a></li>
+          <li><a href="#orion" data-target="orion" style="--c:#f87171">ORION</a></li>
+          <li><a href="#artemis18" data-target="artemis18" style="--c:#c084fc">ARTEMIS-1/8</a></li>
+          <li><a href="#chronos" data-target="chronos" style="--c:#facc15">CHRONOS</a></li>
         </ul>
       </div>
       <a href="programmes.html" class="toc-back"><i class="ph-light ph-arrow-left" aria-hidden="true"></i> Tous les programmes</a>
@@ -1120,6 +1135,9 @@ a { color: inherit; }
         <a href="#erebus" data-target="erebus" style="--c:#60a5fa">EREBUS</a>
         <a href="#echo" data-target="echo" style="--c:#34d399">ECHO</a>
         <a href="#cassini" data-target="cassini" style="--c:#f97316">CASSINI</a>
+        <a href="#orion" data-target="orion" style="--c:#f87171">ORION</a>
+        <a href="#artemis18" data-target="artemis18" style="--c:#c084fc">ARTEMIS-1/8</a>
+        <a href="#chronos" data-target="chronos" style="--c:#facc15">CHRONOS</a>
       </nav>
 
       <!-- ===== EREBUS ===== -->
@@ -1131,16 +1149,16 @@ a { color: inherit; }
               <span class="status" style="--s:var(--st-archived)"><i class="ph-light ph-archive" aria-hidden="true"></i> Archivé en 2022</span>
             </div>
             <h2 class="prog-title reveal" id="erebus-title" style="--i:1">Exploration robotique des cratères polaires lunaires</h2>
-            <p class="lead reveal" style="--i:2">Le programme EREBUS avait pour objectif d’explorer les cratères situés au pôle Sud de la Lune, dont certaines régions restent plongées dans une ombre permanente. Ces environnements extrêmement froids étaient considérés comme des sites prometteurs pour la présence de glace d’eau, une ressource essentielle au développement de futures bases lunaires.
-Pour mener cette mission, l’IFRAS avait déployé six petits rovers autonomes chargés d’explorer les cratères polaires. Équipés de caméras, de capteurs thermiques et d’instruments d’analyse, ils cartographiaient les terrains, mesuraient les températures et transmettaient régulièrement leurs observations vers la Terre. Les premières phases de la mission se déroulèrent avec succès : les six unités fonctionnaient correctement et les données recueillies permettaient d'améliorer progressivement la compréhension de ces régions encore peu explorées.
-Les opérations s’étaient révélées particulièrement complexes. L’obscurité permanente de certaines zones, les températures extrêmes et les difficultés de communication limitaient les déplacements et la transmission des données. Les rovers avaient donc été conçus pour effectuer une partie de leurs observations de manière autonome, en adaptant leurs itinéraires aux contraintes du terrain et en transmettant leurs résultats lorsque les conditions le permettaient.
-Cependant, à mesure que les rovers s’enfonçaient dans les cratères, les conditions du terrain devinrent de plus en plus difficiles. Les reliefs escarpés et la visibilité réduite compliquaient leurs déplacements. L’un après l’autre, les six appareils finirent par s'enfoncer dans des zones plongées dans une ombre permanente. Cela empêchaient leurs panneaux solaires de capter suffisamment de lumière pour recharger leurs batteries.
-Malgré plusieurs tentatives de réorientation et de récupération à distance, les rovers perdirent progressivement leur capacité à fonctionner et cessèrent finalement de transmettre. Le dernier signal marqua la fin des opérations du programme.
-EREBUS fut considéré comme un succès scientifique. Avant leur immobilisation, les appareils avaient transmis une quantité importante de données sur les températures, la topographie et les conditions environnementales des cratères polaires. Ces informations permirent de mieux comprendre les risques liés à l’exploration des régions en ombre permanente et de préciser les contraintes auxquelles devront répondre les futures missions robotiques.</p>
+            <p class="lead reveal" style="--i:2">Le programme EREBUS avait pour objectif d’explorer les cratères situés au pôle Sud de la Lune, dont certaines régions restent plongées dans une ombre permanente. Ces environnements extrêmement froids étaient considérés comme des sites prometteurs pour la présence de glace d’eau, une ressource essentielle au développement de futures bases lunaires.</p>
+            <p class="lead reveal" style="--i:2">Pour mener cette mission, l’IFRAS avait déployé six petits rovers autonomes chargés d’explorer les cratères polaires. Équipés de caméras, de capteurs thermiques et d’instruments d’analyse, ils cartographiaient les terrains, mesuraient les températures et transmettaient régulièrement leurs observations vers la Terre. Les premières phases de la mission se déroulèrent avec succès : les six unités fonctionnaient correctement et les données recueillies permettaient d'améliorer progressivement la compréhension de ces régions encore peu explorées.</p>
+            <p class="lead reveal" style="--i:2">Les opérations s’étaient révélées particulièrement complexes. L’obscurité permanente de certaines zones, les températures extrêmes et les difficultés de communication limitaient les déplacements et la transmission des données. Les rovers avaient donc été conçus pour effectuer une partie de leurs observations de manière autonome, en adaptant leurs itinéraires aux contraintes du terrain et en transmettant leurs résultats lorsque les conditions le permettaient.</p>
+            <p class="lead reveal" style="--i:2">Cependant, à mesure que les rovers s’enfonçaient dans les cratères, les conditions du terrain devinrent de plus en plus difficiles. Les reliefs escarpés et la visibilité réduite compliquaient leurs déplacements. L’un après l’autre, les six appareils finirent par s'enfoncer dans des zones plongées dans une ombre permanente, ce qui empêchait leurs panneaux solaires de capter suffisamment de lumière pour recharger leurs batteries.</p>
+            <p class="lead reveal" style="--i:2">Malgré plusieurs tentatives de réorientation et de récupération à distance, les rovers perdirent progressivement leur capacité à fonctionner et cessèrent finalement de transmettre. Le dernier signal marqua la fin des opérations du programme.</p>
+            <p class="lead reveal" style="--i:2">EREBUS fut considéré comme un succès scientifique. Avant leur immobilisation, les appareils avaient transmis une quantité importante de données sur les températures, la topographie et les conditions environnementales des cratères polaires. Ces informations permirent de mieux comprendre les risques liés à l’exploration des régions en ombre permanente et de préciser les contraintes auxquelles devront répondre les futures missions robotiques.</p>
           </div>
           <div class="period reveal" style="--i:2">
             <strong>2014<span>→</span>2022</strong>
-            <span class="span-track" aria-hidden="true"><span class="span-bar" style="--from:9.1%;--len:81.8%"></span></span>
+            <span class="span-track" aria-hidden="true"><span class="span-bar" style="--from:25.0%;--len:56.2%"></span></span>
             <span class="span-meta"><span>8 ans d'opérations</span></span>
           </div>
         </div>
@@ -1149,13 +1167,21 @@ EREBUS fut considéré comme un succès scientifique. Avant leur immobilisation,
           <div>
             <p class="axes-label">Ce qu'il a laissé</p>
             <ul class="wins">
-            <li class="reveal" style="--i:0"><i class="ph-light ph-drop" aria-hidden="true"></i> De la glace quasi pure sous la surface, bien plus abondante que prévu</li>
+            <li class="reveal" style="--i:0"><i class="ph-light ph-drop" aria-hidden="true"></i> Des indices de glace d'eau dans les zones d'ombre permanente</li>
             <li class="reveal" style="--i:1"><i class="ph-light ph-map-trifold" aria-hidden="true"></i> La première carte haute résolution des zones d'ombre permanente</li>
-            <li class="reveal" style="--i:2"><i class="ph-light ph-flask" aria-hidden="true"></i> De l'oxygène produit sur place à partir de glace lunaire</li>
-            <li class="reveal" style="--i:3"><i class="ph-light ph-robot" aria-hidden="true"></i> Des rovers toujours actifs, bien au-delà de leur durée de vie prévue</li>
+            <li class="reveal" style="--i:2"><i class="ph-light ph-thermometer-cold" aria-hidden="true"></i> Des relevés thermiques inédits au fond des cratères</li>
+            <li class="reveal" style="--i:3"><i class="ph-light ph-robot" aria-hidden="true"></i> Les contraintes à respecter pour les futurs rovers en ombre permanente</li>
             </ul>
           </div>
          </div>
+        <div class="prog-depts reveal" style="--i:4">
+          <p class="fiche-label">Départements pilotes</p>
+          <ul class="depts">
+            <li><a href="DSVT.html" style="--d:#34d399" title="Sciences du Vivant et de la Terre">DSVT</a></li>
+            <li><a href="DPM.html" style="--d:#c084fc" title="Physique et Mécanique">DPM</a></li>
+            <li><a href="DPET.html" style="--d:#f97316" title="Physique Énergétique et Thermique">DPET</a></li>
+          </ul>
+        </div>
       </section>
 
       <!-- ===== ECHO ===== -->
@@ -1167,14 +1193,14 @@ EREBUS fut considéré comme un succès scientifique. Avant leur immobilisation,
               <span class="status" style="--s:var(--st-archived)"><i class="ph-light ph-archive" aria-hidden="true"></i> Archivé en 2023</span>
             </div>
             <h2 class="prog-title reveal" id="echo-title" style="--i:1">Prédiction sismique depuis l’orbite</h2>
-            <p class="lead reveal" style="--i:2">Le programme ECHO avait pour objectif d’étudier les éventuelles perturbations de l’ionosphère précédant les grands séismes. Pour cela, l’IFRAS avait déployé une constellation de microsatellites chargés de surveiller en continu les variations de densité électronique et les anomalies électromagnétiques dans les hautes couches de l’atmosphère. En croisant ces mesures avec les données des stations sismiques terrestres, les chercheurs espéraient identifier des signaux susceptibles d’annoncer une activité sismique imminente.
-Les satellites transmettaient leurs observations à un système d’analyse capable de repérer des variations inhabituelles et de les comparer aux événements sismiques enregistrés. Cette approche devait permettre de détecter des tendances invisibles à partir des seules mesures au sol et, à terme, d’améliorer les systèmes d’alerte précoce. Toutefois, distinguer un éventuel signal précurseur d’un phénomène atmosphérique ou solaire ordinaire s’est révélé particulièrement complexe.
-Le pogramme a permis de recueillir une importante quantité de données sur les interactions entre la Terre et son ionosphère. Bien que les résultats ne garantissent pas une fiabilité à 100 %, les données recueillies par ECHO restent exploitées par les spécialistes de la surveillance sismique afin d’affiner leurs analyses et d’améliorer l’anticipation des risques de séisme.
-ECHO a finalement été cloturé, les données recueillies étant suffisantes et aucune nouvelle information pertinente n’ayant été détectée pour justifier la poursuite des recherches.</p>
+            <p class="lead reveal" style="--i:2">Le programme ECHO avait pour objectif d’étudier les éventuelles perturbations de l’ionosphère précédant les grands séismes. Pour cela, l’IFRAS avait déployé une constellation de microsatellites chargés de surveiller en continu les variations de densité électronique et les anomalies électromagnétiques dans les hautes couches de l’atmosphère. En croisant ces mesures avec les données des stations sismiques terrestres, les chercheurs espéraient identifier des signaux susceptibles d’annoncer une activité sismique imminente.</p>
+            <p class="lead reveal" style="--i:2">Les satellites transmettaient leurs observations à un système d’analyse capable de repérer des variations inhabituelles et de les comparer aux événements sismiques enregistrés. Cette approche devait permettre de détecter des tendances invisibles à partir des seules mesures au sol et, à terme, d’améliorer les systèmes d’alerte précoce. Toutefois, distinguer un éventuel signal précurseur d’un phénomène atmosphérique ou solaire ordinaire s’est révélé particulièrement complexe.</p>
+            <p class="lead reveal" style="--i:2">Le programme a permis de recueillir une importante quantité de données sur les interactions entre la Terre et son ionosphère. Bien que les résultats ne garantissent pas une fiabilité totale, les données recueillies par ECHO restent exploitées par les spécialistes de la surveillance sismique afin d’affiner leurs analyses et d’améliorer l’anticipation des risques de séisme.</p>
+            <p class="lead reveal" style="--i:2">ECHO a finalement été clôturé, les données recueillies étant suffisantes et aucune nouvelle information pertinente n’ayant été détectée pour justifier la poursuite des recherches.</p>
           </div>
           <div class="period reveal" style="--i:2">
             <strong>2016<span>→</span>2023</strong>
-            <span class="span-track" aria-hidden="true"><span class="span-bar" style="--from:27.3%;--len:72.7%"></span></span>
+            <span class="span-track" aria-hidden="true"><span class="span-bar" style="--from:37.5%;--len:50.0%"></span></span>
             <span class="span-meta"><span>7 ans d'opérations</span></span>
           </div>
         </div>
@@ -1183,12 +1209,20 @@ ECHO a finalement été cloturé, les données recueillies étant suffisantes et
           <div>
             <p class="axes-label">Ce qu'il a laissé</p>
             <ul class="wins">
-            <li class="reveal" style="--i:0"><i class="ph-light ph-globe-hemisphere-east" aria-hidden="true"></i> Le lien entre ionosphère et séismes démontré à l'échelle du globe</li>
-            <li class="reveal" style="--i:1"><i class="ph-light ph-brain" aria-hidden="true"></i> Un modèle d'IA capable d'alerter plusieurs jours avant un séisme majeur</li>
-            <li class="reveal" style="--i:2"><i class="ph-light ph-shield-check" aria-hidden="true"></i> Un modèle confié aux services de protection civile : mission accomplie</li>
+            <li class="reveal" style="--i:0"><i class="ph-light ph-globe-hemisphere-east" aria-hidden="true"></i> Une base mondiale de mesures de l'ionosphère avant et après les séismes</li>
+            <li class="reveal" style="--i:1"><i class="ph-light ph-brain" aria-hidden="true"></i> Un système d'analyse capable de repérer les anomalies ionosphériques</li>
+            <li class="reveal" style="--i:2"><i class="ph-light ph-shield-check" aria-hidden="true"></i> Des données toujours exploitées par les spécialistes de la surveillance sismique</li>
             </ul>
           </div>
        </div>
+        <div class="prog-depts reveal" style="--i:4">
+          <p class="fiche-label">Départements pilotes</p>
+          <ul class="depts">
+            <li><a href="DSVT.html" style="--d:#34d399" title="Sciences du Vivant et de la Terre">DSVT</a></li>
+            <li><a href="DSTI.html" style="--d:#818cf8" title="Simulation et Traitement de l'Information">DSTI</a></li>
+            <li><a href="DMA.html" style="--d:#facc15" title="Mathématiques Appliquées">DMA</a></li>
+          </ul>
+        </div>
       </section>
 
       <!-- ===== CASSINI ===== -->
@@ -1197,18 +1231,18 @@ ECHO a finalement été cloturé, les données recueillies étant suffisantes et
           <div>
             <div class="prog-top reveal">
               <span class="card-code">CASSINI</span>
-              <span class="status" style="--s:var(--st-archived)"><i class="ph-light ph-archive" aria-hidden="true"></i> Archivé en 2021</span>
+              <span class="status" style="--s:var(--st-archived)"><i class="ph-light ph-archive" aria-hidden="true"></i> Archivé en 2025</span>
             </div>
             <h2 class="prog-title reveal" id="cassini-title" style="--i:1">Relire Saturne avec l’intelligence artificielle</h2>
-            <p class="lead reveal" style="--i:2">Le programme CASSINI avait pour objectif de réexaminer les archives d’observation de Saturne afin d’en extraire de nouvelles informations, sans avoir à envoyer de sonde supplémentaire. Pour cela, l’IFRAS avait développé un système d’intelligence artificielle capable d’analyser les images collectées lors d’anciennes missions, notamment celles de la sonde Cassini. Ces données, déjà étudiées par les chercheurs, pouvaient encore contenir des détails difficiles à distinguer avec les méthodes d’analyse traditionnelles.
-L’intelligence artificielle examinait les images à différentes échelles, comparait les observations prises à plusieurs moments et recherchait des variations subtiles dans l’atmosphère de Saturne, ses anneaux et ses nombreux satellites. Elle permettait notamment de repérer des structures peu visibles, de suivre l’évolution de certaines formations nuageuses et de mettre en évidence des changements qui avaient échappé aux premières analyses. Les résultats étaient ensuite vérifiés par les chercheurs afin de distinguer les véritables observations des artefacts liés au traitement informatique.
-Le programme a permis de réinterpréter une partie des données historiques et d’en tirer de nouvelles pistes d’étude sur le système saturnien. Il a également démontré l’intérêt de l’intelligence artificielle pour prolonger la valeur scientifique des missions spatiales, même longtemps après leur achèvement. En réexaminant des observations déjà disponibles, CASSINI a ainsi contribué à approfondir les connaissances sur Saturne sans nécessiter de nouvelle mission coûteuse.
-Le programme a finalement été clôturé après l’analyse de l’ensemble des archives jugées pertinentes.</p>
+            <p class="lead reveal" style="--i:2">Le programme CASSINI avait pour objectif de réexaminer les archives d’observation de Saturne afin d’en extraire de nouvelles informations, sans avoir à envoyer de sonde supplémentaire. Pour cela, l’IFRAS avait développé un système d’intelligence artificielle capable d’analyser les images collectées lors d’anciennes missions, notamment celles de la sonde Cassini. Ces données, déjà étudiées par les chercheurs, pouvaient encore contenir des détails difficiles à distinguer avec les méthodes d’analyse traditionnelles.</p>
+            <p class="lead reveal" style="--i:2">L’intelligence artificielle examinait les images à différentes échelles, comparait les observations prises à plusieurs moments et recherchait des variations subtiles dans l’atmosphère de Saturne, ses anneaux et ses nombreux satellites. Elle permettait notamment de repérer des structures peu visibles, de suivre l’évolution de certaines formations nuageuses et de mettre en évidence des changements qui avaient échappé aux premières analyses. Les résultats étaient ensuite vérifiés par les chercheurs afin de distinguer les véritables observations des artefacts liés au traitement informatique.</p>
+            <p class="lead reveal" style="--i:2">Le programme a permis de réinterpréter une partie des données historiques et d’en tirer de nouvelles pistes d’étude sur le système saturnien. Il a également démontré l’intérêt de l’intelligence artificielle pour prolonger la valeur scientifique des missions spatiales, même longtemps après leur achèvement. En réexaminant des observations déjà disponibles, CASSINI a ainsi contribué à approfondir les connaissances sur Saturne sans nécessiter de nouvelle mission coûteuse.</p>
+            <p class="lead reveal" style="--i:2">Le programme a finalement été clôturé après l’analyse de l’ensemble des archives jugées pertinentes.</p>
           </div>
           <div class="period reveal" style="--i:2">
-            <strong>2019<span>→</span>2021</strong>
-            <span class="span-track" aria-hidden="true"><span class="span-bar" style="--from:54.5%;--len:27.3%"></span></span>
-            <span class="span-meta"><span>2 ans de retraitement</span></span>
+            <strong>2022<span>→</span>2025</strong>
+            <span class="span-track" aria-hidden="true"><span class="span-bar" style="--from:75.0%;--len:25.0%"></span></span>
+            <span class="span-meta"><span>3 ans de retraitement</span></span>
           </div>
         </div>
 
@@ -1221,6 +1255,138 @@ Le programme a finalement été clôturé après l’analyse de l’ensemble des
             <li class="reveal" style="--i:2"><i class="ph-light ph-database" aria-hidden="true"></i> Toutes les données retraitées ouvertes à la communauté</li>
             </ul>
           </div>
+        </div>
+        <div class="prog-depts reveal" style="--i:4">
+          <p class="fiche-label">Départements pilotes</p>
+          <ul class="depts">
+            <li><a href="DAI.html" style="--d:#67e8f9" title="Astrophysique et Instrumentation">DAI</a></li>
+            <li><a href="DSTI.html" style="--d:#818cf8" title="Simulation et Traitement de l'Information">DSTI</a></li>
+            <li><a href="DMA.html" style="--d:#facc15" title="Mathématiques Appliquées">DMA</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ===== ORION ===== -->
+      <section class="prog spy" id="orion" style="--c:#f87171" aria-labelledby="orion-title">
+        <div class="prog-head">
+          <div>
+            <div class="prog-top reveal">
+              <span class="card-code">ORION</span>
+              <span class="status" style="--s:var(--st-archived)"><i class="ph-light ph-archive" aria-hidden="true"></i> Archivé en 2021</span>
+            </div>
+            <h2 class="prog-title reveal" id="orion-title" style="--i:1">Identification de sites favorables à l’installation d’une colonie sur Mars</h2>
+            <p class="lead reveal" style="--i:2">Le programme ORION constituait la première étape du projet de colonisation martienne de l’IFRAS. Son objectif était d’identifier les régions de Mars les plus adaptées à l’implantation d’une base permanente, en étudiant les conditions environnementales, les ressources disponibles et les risques auxquels les futurs colons pourraient être confrontés. Les équipes cherchaient notamment à repérer des zones présentant des réserves potentielles de glace d’eau, un terrain relativement stable et des conditions favorables à la construction d’infrastructures.</p>
+            <p class="lead reveal" style="--i:2">Pour mener ces recherches, l’IFRAS a exploité des images satellitaires, des relevés topographiques et des données recueillies par les précédentes missions d’exploration martienne. Les chercheurs ont comparé différentes régions en fonction de leur composition géologique, de leur exposition au Soleil, des températures, du relief et de leur accessibilité. Une attention particulière a été portée à la présence de ressources utilisables sur place, indispensables pour limiter la dépendance des futurs habitants aux ravitaillements depuis la Terre.</p>
+            <p class="lead reveal" style="--i:2">Les résultats d’ORION ont permis de sélectionner les zones les plus prometteuses pour l’installation de la première base martienne. Ces travaux ont également contribué à définir les besoins techniques et logistiques d’une présence humaine durable sur la planète. Les conclusions du programme ont ainsi servi de fondation aux missions ARTEMIS, en orientant le choix du site et en fournissant les premières données nécessaires à la préparation de la colonie.</p>
+            <p class="lead reveal" style="--i:2">Une fois les principales analyses achevées et les zones prioritaires identifiées, le programme a été clôturé. Les données recueillies ont été conservées afin de guider les futures missions martiennes de l’IFRAS.</p>
+          </div>
+          <div class="period reveal" style="--i:2">
+            <strong>2019<span>→</span>2021</strong>
+            <span class="span-track" aria-hidden="true"><span class="span-bar" style="--from:56.2%;--len:18.8%"></span></span>
+            <span class="span-meta"><span>2 ans d'analyse</span></span>
+          </div>
+        </div>
+
+        <div class="prog-body">
+          <div>
+            <p class="axes-label">Ce qu'il a laissé</p>
+            <ul class="wins">
+            <li class="reveal" style="--i:0"><i class="ph-light ph-map-pin" aria-hidden="true"></i> Plusieurs sites favorables à l'installation d'une colonie</li>
+            <li class="reveal" style="--i:1"><i class="ph-light ph-map-trifold" aria-hidden="true"></i> De nouvelles cartes de Mars, plus précises</li>
+            <li class="reveal" style="--i:2"><i class="ph-light ph-path" aria-hidden="true"></i> La trajectoire et la fenêtre de départ les plus favorables</li>
+            </ul>
+          </div>
+        </div>
+        <div class="prog-depts reveal" style="--i:4">
+          <p class="fiche-label">Départements pilotes</p>
+          <ul class="depts">
+            <li><a href="DSVT.html" style="--d:#34d399" title="Sciences du Vivant et de la Terre">DSVT</a></li>
+            <li><a href="DAI.html" style="--d:#67e8f9" title="Astrophysique et Instrumentation">DAI</a></li>
+            <li><a href="DSTI.html" style="--d:#818cf8" title="Simulation et Traitement de l'Information">DSTI</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ===== ARTEMIS-1/8 ===== -->
+      <section class="prog spy" id="artemis18" style="--c:#c084fc" aria-labelledby="artemis18-title">
+        <div class="prog-head">
+          <div>
+            <div class="prog-top reveal">
+              <span class="card-code">ARTEMIS-1/8</span>
+              <span class="status" style="--s:var(--st-archived)"><i class="ph-light ph-archive" aria-hidden="true"></i> Archivé en 2024</span>
+            </div>
+            <h2 class="prog-title reveal" id="artemis18-title" style="--i:1">Conception d'un vaisseau modulaire longue durée</h2>
+            <p class="lead reveal" style="--i:2">La série des programmes ARTEMIS-1 à ARTEMIS-8 constituait une étape essentielle dans la préparation de la mission ARTEMIS-9. Lancés sur une période de trois ans, ces huit programmes avaient pour objectif commun de concevoir et de construire un vaisseau capable de transporter un équipage humain jusqu’à Mars, tout en assurant sa sécurité pendant le voyage. Le vaisseau devait également emporter le matériel et les ressources nécessaires à l’installation de la première base permanente de l’IFRAS sur la planète rouge.</p>
+            <p class="lead reveal" style="--i:2">Pour respecter ce calendrier ambitieux, les différentes phases du projet n’ont pas été menées exclusivement les unes après les autres. Certaines missions de développement ont été conduites en parallèle, mobilisant plusieurs équipes sur des aspects distincts du vaisseau. Tandis que certaines étudiaient les systèmes de propulsion et de navigation, d’autres travaillaient sur les modules habitables, les dispositifs de survie ou la protection de l’équipage contre les rayonnements cosmiques. Cette organisation a permis de raccourcir les délais de conception et de progresser simultanément sur plusieurs éléments, tout en prévoyant des phases communes d’intégration et de vérification.</p>
+            <p class="lead reveal" style="--i:2">Le vaisseau a été conçu selon une architecture modulaire composée de douze compartiments distincts. Plutôt que d’être construit intégralement sur Terre, chaque compartiment a été acheminé séparément en orbite, puis directement assemblé dans l’espace. Cette méthode a permis de réunir progressivement les différentes sections du vaisseau et d’intégrer les systèmes indispensables à son fonctionnement : propulsion, navigation, communications, espaces de vie et dispositifs de maintien des conditions de survie. L’assemblage orbital a représenté l’un des défis majeurs du projet, nécessitant une coordination rigoureuse entre les équipes au sol et les opérations menées en orbite.</p>
+            <p class="lead reveal" style="--i:2">Au fil des huit programmes, les équipes ont réalisé des simulations, évalué la fiabilité des équipements et procédé à des essais sur les différents systèmes. Les prototypes et les premières configurations ont été améliorés à mesure que de nouvelles contraintes étaient identifiées. Les dernières phases ont principalement porté sur l’intégration des douze compartiments, la vérification de leur compatibilité et les tests nécessaires avant le départ. Une attention particulière a été accordée à la gestion des ressources essentielles — eau, oxygène et énergie — afin de garantir le fonctionnement du vaisseau durant un voyage de longue durée.</p>
+            <p class="lead reveal" style="--i:2">À l’issue de ces trois années de développement, le vaisseau a été finalisé et préparé pour la mission ARTEMIS-9. Les huit programmes ont ainsi permis à l’IFRAS de concrétiser son projet de transport interplanétaire habité et de réunir les capacités techniques nécessaires au lancement de la première expédition permanente vers Mars.</p>
+          </div>
+          <div class="period reveal" style="--i:2">
+            <strong>2021<span>→</span>2024</strong>
+            <span class="span-track" aria-hidden="true"><span class="span-bar" style="--from:68.8%;--len:25.0%"></span></span>
+            <span class="span-meta"><span>3 ans de construction</span></span>
+          </div>
+        </div>
+
+        <div class="prog-body">
+          <div>
+            <p class="axes-label">Ce qu'il a laissé</p>
+            <ul class="wins">
+            <li class="reveal" style="--i:0"><i class="ph-light ph-rocket-launch" aria-hidden="true"></i> Un vaisseau opérationnel capable d'accueillir humains, animaux et plantes</li>
+            <li class="reveal" style="--i:1"><i class="ph-light ph-cube" aria-hidden="true"></i> Une technique de construction par compartiments assemblés en orbite</li>
+            <li class="reveal" style="--i:2"><i class="ph-light ph-hourglass" aria-hidden="true"></i> Des progrès décisifs pour les voyages de longue durée</li>
+            </ul>
+          </div>
+        </div>
+        <div class="prog-depts reveal" style="--i:4">
+          <p class="fiche-label">Départements pilotes</p>
+          <ul class="depts">
+            <li><a href="DSMR.html" style="--d:#fb7185" title="Structures, Matériaux et Résistance">DSMR</a></li>
+            <li><a href="DPET.html" style="--d:#f97316" title="Physique Énergétique et Thermique">DPET</a></li>
+            <li><a href="DPM.html" style="--d:#c084fc" title="Physique et Mécanique">DPM</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ===== CHRONOS ===== -->
+      <section class="prog spy" id="chronos" style="--c:#facc15" aria-labelledby="chronos-title">
+        <div class="prog-head">
+          <div>
+            <div class="prog-top reveal">
+              <span class="card-code">CHRONOS</span>
+              <span class="status" style="--s:var(--st-archived)"><i class="ph-light ph-archive" aria-hidden="true"></i> Archivé en 2014</span>
+            </div>
+            <h2 class="prog-title reveal" id="chronos-title" style="--i:1">Mesurer le temps en orbite</h2>
+            <p class="lead reveal" style="--i:2">Le programme CHRONOS avait pour objectif d’étudier les infimes différences d’écoulement du temps entre la surface de la Terre et l’espace. Selon les théories de la relativité, le temps ne s’écoule pas exactement à la même vitesse pour tous les observateurs : la gravité et la vitesse de déplacement influencent la mesure du temps. L’IFRAS souhaitait approfondir l’étude de ces effets en déployant un réseau de sondes capables de réaliser des mesures temporelles d’une précision exceptionnelle.</p>
+            <p class="lead reveal" style="--i:2">Chaque sonde était équipée d’horloges atomiques de haute précision, conçues pour mesurer les variations du temps avec une stabilité remarquable. Placées sur différentes orbites, les sondes comparaient leurs mesures entre elles et les transmettaient à des stations terrestres. Les chercheurs pouvaient ainsi analyser les écarts enregistrés en tenant compte de l’altitude, de la vitesse orbitale et de l’influence du champ gravitationnel terrestre. La comparaison entre les mesures réelles et les prévisions théoriques permettait d’évaluer avec précision les effets relativistes.</p>
+            <p class="lead reveal" style="--i:2">Le principal défi du programme résidait dans la capacité à distinguer les minuscules variations temporelles des erreurs de mesure, des perturbations électroniques et des imprécisions liées à la transmission des signaux. Les équipes devaient donc calibrer régulièrement les instruments et corriger les effets liés à l’environnement spatial. La synchronisation des horloges et la fiabilité des communications entre les sondes constituaient également des éléments essentiels pour garantir la qualité des résultats.</p>
+            <p class="lead reveal" style="--i:2">Les données recueillies par CHRONOS devaient contribuer à améliorer les méthodes de mesure du temps dans l’espace et à approfondir la compréhension des effets relativistes en orbite. Ces recherches pouvaient également présenter un intérêt pour les systèmes de navigation par satellite, les communications spatiales et les futures missions nécessitant une synchronisation extrêmement précise. Au-delà de ses applications techniques, le programme visait à tester les limites des instruments de mesure temporelle dans l’environnement spatial.</p>
+          </div>
+          <div class="period reveal" style="--i:2">
+            <strong>2011<span>→</span>2014</strong>
+            <span class="span-track" aria-hidden="true"><span class="span-bar" style="--from:6.2%;--len:25.0%"></span></span>
+            <span class="span-meta"><span>3 ans de mesures</span></span>
+          </div>
+        </div>
+
+        <div class="prog-body">
+          <div>
+            <p class="axes-label">Ce qu'il a laissé</p>
+            <ul class="wins">
+            <li class="reveal" style="--i:0"><i class="ph-light ph-clock" aria-hidden="true"></i> Des données plus précises sur la dilatation du temps en orbite</li>
+            <li class="reveal" style="--i:1"><i class="ph-light ph-function" aria-hidden="true"></i> Une nouvelle méthode de correction des écarts entre horloges</li>
+            <li class="reveal" style="--i:2"><i class="ph-light ph-ruler" aria-hidden="true"></i> Des horloges spatiales plus stables, utiles à la navigation par satellite</li>
+            </ul>
+          </div>
+        </div>
+        <div class="prog-depts reveal" style="--i:4">
+          <p class="fiche-label">Départements pilotes</p>
+          <ul class="depts">
+            <li><a href="DPM.html" style="--d:#c084fc" title="Physique et Mécanique">DPM</a></li>
+            <li><a href="DOL.html" style="--d:#38bdf8" title="Optique et Lumière">DOL</a></li>
+            <li><a href="DMA.html" style="--d:#facc15" title="Mathématiques Appliquées">DMA</a></li>
+          </ul>
         </div>
       </section>
 
@@ -1396,8 +1562,11 @@ Le programme a finalement été clôturé après l’analyse de l’ensemble des
     const canvas = document.getElementById('orbit');
     const ctx = canvas.getContext('2d');
     const nodes = [...wrap.querySelectorAll('.orbit-node')];
-    const Y0 = 2013, Y1 = 2024;
-    const SPANS = [[2014, 2022, 0.30, 70], [2016, 2023, 0.52, 46], [2019, 2021, 0.74, 26]];   /* début, fin, couloir, nb de points */
+    const Y0 = 2010, Y1 = 2026;
+    const SPANS = [                                  /* début, fin, couloir (hauteur relative), nb de points */
+      [2011, 2014, 0.27, 24], [2014, 2022, 0.375, 70], [2016, 2023, 0.48, 46],
+      [2019, 2021, 0.585, 30], [2021, 2024, 0.69, 40], [2022, 2025, 0.795, 26]
+    ];
     const lanes = nodes.map((node, i) => {
       const [a, b, ly, n] = SPANS[i];
       return {
@@ -1405,7 +1574,7 @@ Le programme a finalement été clôturé après l’analyse de l’ensemble des
         color: getComputedStyle(node).getPropertyValue('--c').trim(),
         dots: Array.from({ length: n }, () => ({
           t: Math.random(),
-          dy: (Math.random() + Math.random() + Math.random() - 1.5) * 16,
+          dy: (Math.random() + Math.random() + Math.random() - 1.5) * 7,
           r: Math.random() * 1.4 + 0.8
         }))
       };
@@ -1438,7 +1607,7 @@ Le programme a finalement été clôturé après l’analyse de l’ensemble des
         ctx.strokeStyle = 'rgba(170,179,214,.05)';
         ctx.lineWidth = 1;
         ctx.beginPath(); ctx.moveTo(x, h * 0.12); ctx.lineTo(x, axisY); ctx.stroke();
-        if ((y - 2014) % 3 === 0) {
+        if ((y - Y0) % 3 === 0) {
           ctx.fillStyle = x <= scan ? 'rgba(170,179,214,.7)' : 'rgba(136,145,184,.4)';
           ctx.fillText(String(y), x, axisY + 18);
         }
@@ -1479,8 +1648,9 @@ Le programme a finalement été clôturé après l’analyse de l’ensemble des
         ctx.globalAlpha = 1;
 
         /* étiquette cliquable au début du couloir */
-        const nh = l.node.offsetHeight;
-        l.node.style.transform = `translate(${(xa - 6).toFixed(1)}px, ${(ya - nh - 22).toFixed(1)}px)`;
+        const nh = l.node.offsetHeight, nw = l.node.offsetWidth;
+        const lx = Math.min(xa - 6, w - nw - 6);           /* reste dans le cadre à droite */
+        l.node.style.transform = `translate(${lx.toFixed(1)}px, ${(ya - nh - 10).toFixed(1)}px)`;
         l.node.style.opacity = dim ? '.45' : '1';
       });
 
